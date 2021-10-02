@@ -12,5 +12,7 @@ public class Main {
 		Zapateria modelo = new Zapateria(new DAOSQLFactory());
 		Controlador controlador = new Controlador(vista, modelo);
 		controlador.inicializar();
+		
+		
 	}
 }
