@@ -1,4 +1,4 @@
-CREATE DATABASE `zapateria`;
+CREATE DATABASE IF NOT EXISTS`zapateria`;
 USE zapateria;
 CREATE TABLE IF NOT EXISTS`producto`
 (
@@ -38,4 +38,17 @@ CREATE TABLE IF NOT EXISTS empleados
 	tipoEmpleado varchar(45) DEFAULT NULL,
 	contrasenia varchar(45) DEFAULT NULL,
 	PRIMARY KEY (idEmpleado)
+);
+
+CREATE TABLE IF NOT EXISTS sucursales
+(
+	idSucursal int(11) NOT NULL AUTO_INCREMENT,
+	telefono varchar(45) DEFAULT NULL,
+	calle varchar(45) DEFAULT NULL,
+	altura varchar(45) DEFAULT NULL,
+	provincia varchar(45) DEFAULT NULL,
+	localidad varchar(45) DEFAULT NULL,
+	pais varchar(45) DEFAULT NULL,
+	codPostal varchar(45) DEFAULT NULL,
+	PRIMARY KEY (idSucursal)
 );

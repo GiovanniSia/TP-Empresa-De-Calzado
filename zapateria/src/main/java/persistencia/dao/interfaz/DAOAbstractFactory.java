@@ -6,4 +6,6 @@ public interface DAOAbstractFactory {
 	public ClienteDAO createClienteDAO();
 	
 	public EmpleadoDAO createEmpleadoDAO();
+	
+	public SucursalDAO createSucursalDAO();
 }
