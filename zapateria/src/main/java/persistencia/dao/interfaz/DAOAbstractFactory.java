@@ -1,5 +1,7 @@
 package persistencia.dao.interfaz;
 
 public interface DAOAbstractFactory {
-	public ProductoDAO createProductoDAO();
+	public MaestroProductoDAO createMaestroProductoDAO();
+	public StockDAO createStockDAO();
+	public FacturaDAO createFacturaDAO();
 }
