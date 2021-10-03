@@ -2,24 +2,24 @@ package dto;
 
 public class EmpleadoDTO {
 
-	int idEmpleado;
-	String CUIL, nombre, apellido, correo, tipoEmpleado, contrasenia;
+	int IdEmpleado;
+	String CUIL, Nombre, Apellido, CorreoElectronico, TipoEmpleado, Contra;
 
-	public EmpleadoDTO(int idEmpleado, String CUIL, String nombre, String apellido, String correo,
-			String tipoEmpleado, String contrasenia) {
-		
-		this.idEmpleado = idEmpleado;
-		this.CUIL = CUIL;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.correo = correo;
-		this.tipoEmpleado = tipoEmpleado;
-		this.contrasenia = contrasenia;
+	public EmpleadoDTO(int idEmpleado, String cUIL, String nombre, String apellido, String correoElectronico,
+			String tipoEmpleado, String Contra) {
+		super();
+		IdEmpleado = idEmpleado;
+		CUIL = cUIL;
+		Nombre = nombre;
+		Apellido = apellido;
+		CorreoElectronico = correoElectronico;
+		TipoEmpleado = tipoEmpleado;
+		Contra = Contra;
 	}
 	
 	
 	public int getIdEmpleado() {
-		return idEmpleado;
+		return IdEmpleado;
 	}
 
 	public String getCUIL() {
@@ -27,23 +27,22 @@ public class EmpleadoDTO {
 	}
 
 	public String getNombre() {
-		return nombre;
+		return Nombre;
 	}
 
 	public String getApellido() {
-		return apellido;
+		return Apellido;
 	}
 
-	public String getCorreo() {
-		return correo;
+	public String getCorreoElectronico() {
+		return CorreoElectronico;
 	}
 
 	public String getTipoEmpleado() {
-		return tipoEmpleado;
+		return TipoEmpleado;
 	}
 
-	public String getContrasenia() {
-		return contrasenia;
+	public String getContra() {
+		return Contra;
 	}
-	
 }

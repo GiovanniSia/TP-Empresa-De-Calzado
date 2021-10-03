@@ -2,42 +2,42 @@ package dto;
 
 public class ClienteDTO {
 
-	int idCliente;
-	String nombre;
-	String apellido;
-	String correo;
-	int limiteCredito;
-	int creditoDisponible;
-	String tipoCliente;
-	String impuestoAFIP;
-	String estado;
-	String calle;
-	String altura;
-	String pais;
-	String provincia;
-	String localidad;
-	String codPostal;
+	int IdCliente;
+	String Nombre;
+	String Apellido;
+	String CorreoElectronico;
+	int LimiteCredito;
+	int CreditoDisponible;
+	String TipoCliente;
+	String ImpuestoAFIP;
+	String Estado;
+	String Calle;
+	String Altura;
+	String Pais;
+	String Provincia;
+	String Localidad;
+	String CodPostal;
 
 
-	public ClienteDTO(int idCliente, String nombre, String apellido, String correo, int limiteCredito,
+	public ClienteDTO(int idCliente, String nombre, String apellido, String correoElectronico, int limiteCredito,
 			int creditoDisponible, String tipoCliente, String impuestoAFIP, String estado, String calle, String altura,
 			String pais, String provincia, String localidad, String codPostal) {
 
-		this.idCliente = idCliente;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.correo = correo;
-		this.limiteCredito = limiteCredito;
-		this.creditoDisponible = creditoDisponible;
-		this.tipoCliente = tipoCliente;
-		this.impuestoAFIP = impuestoAFIP;
-		this.estado = estado;
-		this.calle = calle;
-		this.altura = altura;
-		this.pais = pais;
-		this.provincia = provincia;
-		this.localidad = localidad;
-		this.codPostal = codPostal;
+		this.IdCliente = idCliente;
+		this.Nombre = nombre;
+		this.Apellido = apellido;
+		this.CorreoElectronico = correoElectronico;
+		this.LimiteCredito = limiteCredito;
+		this.CreditoDisponible = creditoDisponible;
+		this.TipoCliente = tipoCliente;
+		this.ImpuestoAFIP = impuestoAFIP;
+		this.Estado = estado;
+		this.Calle = calle;
+		this.Altura = altura;
+		this.Pais = pais;
+		this.Provincia = provincia;
+		this.Localidad = localidad;
+		this.CodPostal = codPostal;
 	}
 	
 	
@@ -45,76 +45,76 @@ public class ClienteDTO {
 	
 	
 	public int getIdCliente() {
-		return idCliente;
+		return IdCliente;
 	}
 
 
 	public String getNombre() {
-		return nombre;
+		return Nombre;
 	}
 
 
 	public String getApellido() {
-		return apellido;
+		return Apellido;
 	}
 
 
 	public String getCorreo() {
-		return correo;
+		return CorreoElectronico;
 	}
 
 
 	public int getLimiteCredito() {
-		return limiteCredito;
+		return LimiteCredito;
 	}
 
 
 	public int getCreditoDisponible() {
-		return creditoDisponible;
+		return CreditoDisponible;
 	}
 
 
 	public String getTipoCliente() {
-		return tipoCliente;
+		return TipoCliente;
 	}
 
 
 	public String getImpuestoAFIP() {
-		return impuestoAFIP;
+		return ImpuestoAFIP;
 	}
 
 
 	public String getEstado() {
-		return estado;
+		return Estado;
 	}
 
 
 	public String getCalle() {
-		return calle;
+		return Calle;
 	}
 
 
 	public String getAltura() {
-		return altura;
+		return Altura;
 	}
 
 
 	public String getPais() {
-		return pais;
+		return Pais;
 	}
 
 
 	public String getProvincia() {
-		return provincia;
+		return Provincia;
 	}
 
 
 	public String getLocalidad() {
-		return localidad;
+		return Localidad;
 	}
 
 
 	public String getCodPostal() {
-		return codPostal;
+		return CodPostal;
 	}
 }

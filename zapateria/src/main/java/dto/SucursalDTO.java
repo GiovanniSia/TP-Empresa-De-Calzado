@@ -2,57 +2,57 @@ package dto;
 
 public class SucursalDTO {
 
-	int idSucursal;
+	int IdSucursal;
 
-	String telefono, calle, altura, provincia, localidad, pais, codPostal, nombre;
+	String Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre;
 	
 	public SucursalDTO(int idSucursal, String telefono, String calle, String altura, String provincia, String localidad,
-			String pais, String codPostal, String nombre) {
-
-		this.idSucursal = idSucursal;
-		this.telefono = telefono;
-		this.calle = calle;
-		this.altura = altura;
-		this.provincia = provincia;
-		this.localidad = localidad;
-		this.pais = pais;
-		this.codPostal = codPostal;
-		this.nombre = nombre;
+			String pais, String codigoPostal, String nombre) {
+		super();
+		IdSucursal = idSucursal;
+		Telefono = telefono;
+		Calle = calle;
+		Altura = altura;
+		Provincia = provincia;
+		Localidad = localidad;
+		Pais = pais;
+		CodigoPostal = codigoPostal;
+		Nombre = nombre;
 	}
-	
+
 	public int getIdSucursal() {
-		return idSucursal;
+		return IdSucursal;
 	}
 
 	public String getTelefono() {
-		return telefono;
+		return Telefono;
 	}
 
 	public String getCalle() {
-		return calle;
+		return Calle;
 	}
 
 	public String getAltura() {
-		return altura;
+		return Altura;
 	}
 
 	public String getProvincia() {
-		return provincia;
+		return Provincia;
 	}
 
 	public String getLocalidad() {
-		return localidad;
+		return Localidad;
 	}
 
 	public String getPais() {
-		return pais;
+		return Pais;
 	}
 
-	public String getCodPostal() {
-		return codPostal;
+	public String getCodigoPostal() {
+		return CodigoPostal;
 	}
-	
+
 	public String getNombre() {
-		return this.nombre;
+		return Nombre;
 	}
 }

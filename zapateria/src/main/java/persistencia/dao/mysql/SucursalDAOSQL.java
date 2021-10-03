@@ -13,14 +13,10 @@ import persistencia.dao.interfaz.SucursalDAO;
 
 public class SucursalDAOSQL implements SucursalDAO{
 
-	int idSucursal;
-
-	String telefono, calle, altura, provincia, localidad, pais, codPostal;
-	
 	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String delete = "DELETE FROM sucursales WHERE idSucursal = ?";
-	private static final String update = "UPDATE sucursales set telefono=?, calle=?, altura=?, provincia=?, localidad=?, pais=?, codPostal, nombre=? where idSucursal=?";
-	private static final String readall = "SELECT * FROM sucursales";
+	private static final String delete = "DELETE FROM sucursales WHERE IdSucursal = ?";
+	private static final String update = "UPDATE sucursales set Telefono=?, Calle=?, Altura=?, Provincia=?, Localidad=?, Pais=?, CodigoPostal, Nombre=? where IdSucursal=?";
+	private static final String readall = "SELECT * FROM Sucursales";
 	
 	@Override
 	public boolean insert(SucursalDTO sucursal) {
@@ -37,7 +33,7 @@ public class SucursalDAOSQL implements SucursalDAO{
 			statement.setString(5, sucursal.getProvincia());
 			statement.setString(6, sucursal.getLocalidad());
 			statement.setString(7, sucursal.getPais());
-			statement.setString(8, sucursal.getCodPostal());
+			statement.setString(8, sucursal.getCodigoPostal());
 			statement.setString(9, sucursal.getNombre());
 			
 			if (statement.executeUpdate() > 0) {
@@ -88,7 +84,7 @@ public class SucursalDAOSQL implements SucursalDAO{
 			statement.setString(4, sucursal_nueva.getProvincia());
 			statement.setString(5, sucursal_nueva.getLocalidad());
 			statement.setString(6, sucursal_nueva.getPais());
-			statement.setString(7, sucursal_nueva.getCodPostal());
+			statement.setString(7, sucursal_nueva.getCodigoPostal());
 			statement.setString(8, sucursal_nueva.getNombre());
 
 			statement.setInt(9, id_sucursal_a_actualizar);
@@ -123,15 +119,15 @@ public class SucursalDAOSQL implements SucursalDAO{
 
 	
 	private SucursalDTO getSucursalDTO(ResultSet resultSet) throws SQLException {
-		int idSucursal = resultSet.getInt("idSucursal");
-		String telefono = resultSet.getString("telefono");
-		String calle = resultSet.getString("calle");
-		String altura = resultSet.getString("altura");
-		String provincia = resultSet.getString("provincia");
-		String localidad = resultSet.getString("localidad");
-		String pais = resultSet.getString("pais");
-		String codPostal = resultSet.getString("codPostal");
-		String nombre = resultSet.getString("nombre");
+		int idSucursal = resultSet.getInt("IdSucursal");
+		String telefono = resultSet.getString("Telefono");
+		String calle = resultSet.getString("Calle");
+		String altura = resultSet.getString("Altura");
+		String provincia = resultSet.getString("Provincia");
+		String localidad = resultSet.getString("Localidad");
+		String pais = resultSet.getString("Pais");
+		String codPostal = resultSet.getString("CodigoPostal");
+		String nombre = resultSet.getString("Nombre");
 		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
 	}
 	

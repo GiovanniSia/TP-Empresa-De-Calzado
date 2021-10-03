@@ -13,9 +13,9 @@ import persistencia.dao.interfaz.EmpleadoDAO;
 
 public class EmpleadoDAOSQL implements EmpleadoDAO{
 	
-	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?)";
-	private static final String delete = "DELETE FROM empleados WHERE idEmpleado = ?";
-	private static final String update = "UPDATE empleados set CUIL=?, nombre=?, apellido=?, correo=?, tipoEmpleado=?, contrasenia=? where idEmpleado=?";
+	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?, ?)";
+	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
+	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
 	private static final String readall = "SELECT * FROM empleados";
 	
 	@Override
@@ -30,9 +30,9 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 			statement.setString(2, empleado.getCUIL());
 			statement.setString(3, empleado.getNombre());
 			statement.setString(4, empleado.getApellido());
-			statement.setString(5, empleado.getCorreo());
+			statement.setString(5, empleado.getCorreoElectronico());
 			statement.setString(6, empleado.getTipoEmpleado());
-			statement.setString(7, empleado.getContrasenia());
+			statement.setString(7, empleado.getContra());
 			
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -78,9 +78,9 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 			statement.setString(1, empleado_nuevo.getCUIL());
 			statement.setString(2, empleado_nuevo.getNombre());
 			statement.setString(3, empleado_nuevo.getApellido());
-			statement.setString(4, empleado_nuevo.getCorreo());
+			statement.setString(4, empleado_nuevo.getCorreoElectronico());
 			statement.setString(5, empleado_nuevo.getTipoEmpleado());
-			statement.setString(6, empleado_nuevo.getContrasenia());
+			statement.setString(6, empleado_nuevo.getContra());
 
 			statement.setInt(7, id_empleado_a_actualizar);
 
@@ -112,13 +112,13 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 	}
 	private EmpleadoDTO getEmpleadoDTO(ResultSet resultSet) throws SQLException {
 		
-		int idEmpleado = resultSet.getInt("idEmpleado");
+		int idEmpleado = resultSet.getInt("IdEmpleado");
 		String CUIL = resultSet.getString("CUIL");
-		String nombre = resultSet.getString("nombre");
-		String apellido = resultSet.getString("apellido");
-		String correo = resultSet.getString("correo");
-		String tipoEmpleado = resultSet.getString("tipoEmpleado");
-		String contrasenia = resultSet.getString("contrasenia");
+		String nombre = resultSet.getString("Nombre");
+		String apellido = resultSet.getString("Apellido");
+		String correo = resultSet.getString("Correo");
+		String tipoEmpleado = resultSet.getString("TipoEmpleado");
+		String contrasenia = resultSet.getString("Contra");
 		return new EmpleadoDTO(idEmpleado, CUIL, nombre, apellido, correo, tipoEmpleado, contrasenia);
 	}
 

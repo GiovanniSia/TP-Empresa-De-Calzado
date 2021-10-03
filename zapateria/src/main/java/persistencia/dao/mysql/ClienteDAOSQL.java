@@ -14,8 +14,8 @@ public class ClienteDAOSQL implements ClienteDAO{
 	
 	private static final String insert = "INSERT INTO clientes VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM clientes WHERE idCliente = ?";
-	private static final String update = "UPDATE clientes set nombre=?, apellido=?, correo=?, limiteCredito=?, creditoDisponible=?, tipoCliente=?, impuestoAFIP=?, estado=?, calle=?, altura=?, pais=?, provincia=?, localidad=?, codPostal=? where idCliente=?";
-	private static final String readall = "SELECT * FROM clientes";
+	private static final String update = "UPDATE clientes set Nombre=?, Apellido=?, CorreoElectronico=?, LimiteCredito=?, CreditoDisponible=?, TipoCliente=?, ImpuestoAFIP=?, Estado=?, Calle=?, Altura=?, Pais=?, Provincia=?, Localidad=?, CodPostal=? where IdCliente=?";
+	private static final String readall = "SELECT * FROM Clientes";
 
 	@Override
 	public boolean insert(ClienteDTO cliente) {
@@ -129,21 +129,21 @@ public class ClienteDAOSQL implements ClienteDAO{
 	}
 
 	private ClienteDTO getClienteDTO(ResultSet resultSet) throws SQLException {
-		int idCliente = resultSet.getInt("idCliente");
-		String nombre = resultSet.getString("nombre");
-		String apellido = resultSet.getString("apellido");
-		String correo = resultSet.getString("correo");
-		int limiteCredito = resultSet.getInt("limiteCredito");
-		int creditoDisponible = resultSet.getInt("creditoDisponible");
-		String tipoCliente = resultSet.getString("tipoCliente");
-		String impuestoAFIP = resultSet.getString("impuestoAFIP");
-		String estado = resultSet.getString("estado");
-		String calle = resultSet.getString("calle");
-		String altura = resultSet.getString("altura");
-		String pais = resultSet.getString("pais");
-		String provincia = resultSet.getString("provincia");
-		String localidad = resultSet.getString("localidad");
-		String codPostal = resultSet.getString("codPostal");
+		int idCliente = resultSet.getInt("IdCliente");
+		String nombre = resultSet.getString("Nombre");
+		String apellido = resultSet.getString("Apellido");
+		String correo = resultSet.getString("Correo");
+		int limiteCredito = resultSet.getInt("LimiteCredito");
+		int creditoDisponible = resultSet.getInt("CreditoDisponible");
+		String tipoCliente = resultSet.getString("TipoCliente");
+		String impuestoAFIP = resultSet.getString("ImpuestoAFIP");
+		String estado = resultSet.getString("Estado");
+		String calle = resultSet.getString("Calle");
+		String altura = resultSet.getString("Altura");
+		String pais = resultSet.getString("Pais");
+		String provincia = resultSet.getString("Provincia");
+		String localidad = resultSet.getString("Localidad");
+		String codPostal = resultSet.getString("CodPostal");
 		return new ClienteDTO(idCliente, nombre, apellido, correo, limiteCredito, creditoDisponible, tipoCliente, impuestoAFIP, estado, calle, altura, pais, provincia, localidad, codPostal);
 	}
 	
