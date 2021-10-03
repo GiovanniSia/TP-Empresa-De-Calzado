@@ -42,20 +42,49 @@ public class generarOrdenesFabricacion {
 	}
 	
 	public static void crearOrdenFabricacion(int idSucursal, MaestroProductoDTO producto) {
+		//Codigo automatico
+		
+		//OrdenFabricaDTO orden = new OrdenFabricaDTO(0,producto.getIdMaestroProducto(), fechaRequerido, producto.getCantidadAReponer(), codLote, idSucursal);
+		String fechaRequerido = crearFechaRequerido(producto);
+		String codLote = crearCodigoLote(producto);
+		OrdenFabricaDTO orden = fabricarOrdenFabricacion(producto.getIdMaestroProducto(), fechaRequerido, producto.getCantidadAReponer(), codLote, idSucursal);
+		//DAOSQLFactory a = new DAOSQLFactory();
+		//a.createOrdenFabricaDAO().insert(orden);
+		insertarOrdenFabricacion(orden);
+	}
+	
+	public static OrdenFabricaDTO fabricarOrdenFabricacion(int idProducto, String fechaRequerido, int getCantidadAReponer, String codLote, int idSucursal) {
+		OrdenFabricaDTO orden = new OrdenFabricaDTO(0,idProducto, fechaRequerido, getCantidadAReponer, codLote, idSucursal);
+		return orden;
+	}
+	
+	public static void insertarOrdenFabricacion(OrdenFabricaDTO orden) {
+		DAOSQLFactory a = new DAOSQLFactory();
+		a.createOrdenFabricaDAO().insert(orden);
+	}
+	
+	public static String crearCodigoLote(MaestroProductoDTO producto) {
+		java.util.Date fechaActual = new java.util.Date();
+		fechaActual.setDate(fechaActual.getDate());
+		int dias = fechaActual.getDate();
+		int mes = fechaActual.getMonth() + 1;
+		int anio = fechaActual.getYear() + 1900;
+		String fechaRequerido = anio+""+mes+""+dias;
+		
+		int hora = fechaActual.getHours();
+		int minuto = fechaActual.getMinutes();
+		String codLote = "L"+fechaRequerido+""+hora+""+minuto;
+		return codLote;
+	}
+	
+	public static String crearFechaRequerido(MaestroProductoDTO producto) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate()+producto.getDiasParaReponer());
 		int dias = fechaActual.getDate();
 		int mes = fechaActual.getMonth() + 1;
 		int anio = fechaActual.getYear() + 1900;
 		String fechaRequerido = anio+"-"+mes+"-"+dias;
-		
-		int hora = fechaActual.getHours()+1;
-		int minuto = fechaActual.getMinutes()+1;
-		String codLote = "L"+fechaRequerido+""+hora+""+minuto;
-		
-		OrdenFabricaDTO orden = new OrdenFabricaDTO(0,producto.getIdMaestroProducto(), fechaRequerido, producto.getCantidadAReponer(), codLote, idSucursal);
-		DAOSQLFactory a = new DAOSQLFactory();
-		a.createOrdenFabricaDAO().insert(orden);
+		return fechaRequerido;
 	}
 	
 	//CODIGO PARA VERLO ANDAR
