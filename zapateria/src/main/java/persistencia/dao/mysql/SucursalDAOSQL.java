@@ -17,9 +17,9 @@ public class SucursalDAOSQL implements SucursalDAO{
 
 	String telefono, calle, altura, provincia, localidad, pais, codPostal;
 	
-	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM sucursales WHERE idSucursal = ?";
-	private static final String update = "UPDATE sucursales set telefono=?, calle=?, altura=?, provincia=?, localidad=?, pais=?, codPostal where idSucursal=?";
+	private static final String update = "UPDATE sucursales set telefono=?, calle=?, altura=?, provincia=?, localidad=?, pais=?, codPostal, nombre=? where idSucursal=?";
 	private static final String readall = "SELECT * FROM sucursales";
 	
 	@Override
@@ -38,6 +38,7 @@ public class SucursalDAOSQL implements SucursalDAO{
 			statement.setString(6, sucursal.getLocalidad());
 			statement.setString(7, sucursal.getPais());
 			statement.setString(8, sucursal.getCodPostal());
+			statement.setString(9, sucursal.getNombre());
 			
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -88,8 +89,9 @@ public class SucursalDAOSQL implements SucursalDAO{
 			statement.setString(5, sucursal_nueva.getLocalidad());
 			statement.setString(6, sucursal_nueva.getPais());
 			statement.setString(7, sucursal_nueva.getCodPostal());
+			statement.setString(8, sucursal_nueva.getNombre());
 
-			statement.setInt(8, id_sucursal_a_actualizar);
+			statement.setInt(9, id_sucursal_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -129,7 +131,8 @@ public class SucursalDAOSQL implements SucursalDAO{
 		String localidad = resultSet.getString("localidad");
 		String pais = resultSet.getString("pais");
 		String codPostal = resultSet.getString("codPostal");
-		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal);
+		String nombre = resultSet.getString("nombre");
+		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
 	}
 	
 }

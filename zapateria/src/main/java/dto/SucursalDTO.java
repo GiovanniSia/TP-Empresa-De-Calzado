@@ -4,10 +4,10 @@ public class SucursalDTO {
 
 	int idSucursal;
 
-	String telefono, calle, altura, provincia, localidad, pais, codPostal;
+	String telefono, calle, altura, provincia, localidad, pais, codPostal, nombre;
 	
 	public SucursalDTO(int idSucursal, String telefono, String calle, String altura, String provincia, String localidad,
-			String pais, String codPostal) {
+			String pais, String codPostal, String nombre) {
 
 		this.idSucursal = idSucursal;
 		this.telefono = telefono;
@@ -17,6 +17,7 @@ public class SucursalDTO {
 		this.localidad = localidad;
 		this.pais = pais;
 		this.codPostal = codPostal;
+		this.nombre = nombre;
 	}
 	
 	public int getIdSucursal() {
@@ -49,5 +50,9 @@ public class SucursalDTO {
 
 	public String getCodPostal() {
 		return codPostal;
+	}
+	
+	public String getNombre() {
+		return this.nombre;
 	}
 }

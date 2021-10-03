@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS clientes
 	correo varchar(45) DEFAULT NULL,
 	limiteCredito int(10) DEFAULT NULL,
 	creditoDisponible int(10) DEFAULT NULL,
-	tipoCliente ENUM('mayorista', 'minorista'),
-	impuestoAFIP ENUM( 'Responsable Inscripto', 'Monotributista', 'Consumidor Final', 'Exento'),
-	estado ENUM('Activo','Moroso'),
+	tipoCliente varchar(45) DEFAULT NULL,
+	impuestoAFIP varchar(45) DEFAULT NULL,
+	estado varchar(45) DEFAULT NULL,
 	calle  varchar(45) DEFAULT NULL,
 	altura varchar(45) DEFAULT NULL,
 	pais varchar(45) DEFAULT NULL,
@@ -27,6 +27,10 @@ CREATE TABLE IF NOT EXISTS clientes
 	codPostal varchar(45) DEFAULT NULL,
 	PRIMARY KEY(idCliente)
 );
+
+
+
+
 
 CREATE TABLE IF NOT EXISTS empleados
 (
@@ -50,5 +54,6 @@ CREATE TABLE IF NOT EXISTS sucursales
 	localidad varchar(45) DEFAULT NULL,
 	pais varchar(45) DEFAULT NULL,
 	codPostal varchar(45) DEFAULT NULL,
+	nombre varchar(45) DEFAULT NULL,
 	PRIMARY KEY (idSucursal)
 );
