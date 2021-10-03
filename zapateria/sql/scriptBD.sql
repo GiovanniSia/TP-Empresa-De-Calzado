@@ -29,7 +29,7 @@ CREATE TABLE `empleados`
   `Apellido` varchar(45) NOT NULL,
   `CorreoElectronico` varchar(45) NOT NULL,
   `TipoEmpleado` varchar(45) NOT NULL,
-  `Contraseña` varchar(45) NOT NULL,
+  `Contra` varchar(45) NOT NULL,
   PRIMARY KEY (`IdEmpleado`)
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE `movimientosCaja`
   `Detalle` varchar(45) NOT NULL,
   `TipoDeMovimiento` varchar(45) NOT NULL,
   `Monto` int(11) NOT NULL,
-  `CodMoneda` int(11) NOT NULL,
+  `IdMoneda` int(11) NOT NULL,
   `Monto_Convertido` int(11) NOT NULL,
   `IdFactura` int(11) NOT NULL,
   `IdCierre` int(11) NOT NULL,
