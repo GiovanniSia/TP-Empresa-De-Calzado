@@ -98,6 +98,17 @@ CREATE TABLE `valorMoneda`
   PRIMARY KEY (`IdMoneda`)
 );
 
+CREATE TABLE `ModoDePago`
+(
+  `IdModoDePago` int(11) NOT NULL AUTO_INCREMENT,
+  `MetodoDePago` varchar(45) NOT NULL,
+  `IdFactura` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `idMovimientoCaja` int(11) NOT NULL,
+  `Tarjeta` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdMoneda`)
+);
+
 CREATE TABLE `medioPago`
 (
   `IdMedioDePago` int(11) NOT NULL AUTO_INCREMENT,
@@ -145,6 +156,7 @@ CREATE TABLE `Sucursales`
   `Localidad` varchar(45) NOT NULL,
   `Pais` varchar(45) NOT NULL,
   `CodigoPostal` varchar(45) NOT NULL,
+  `Nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`IdSucursal`)
 );
 
