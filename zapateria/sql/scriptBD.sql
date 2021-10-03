@@ -174,6 +174,9 @@ CREATE TABLE `maestroProductos`
   `Talle` varchar(45) NOT NULL,
   `UnidadMedida` int(11) NOT NULL,
   `Estado` varchar(45) NOT NULL,
+  
+  `CantidadAReponer` int(11) NOT NULL,
+  `DiasParaReponer` int(11) NOT NULL,
   PRIMARY KEY (`IdMaestroProducto`)
 );
 

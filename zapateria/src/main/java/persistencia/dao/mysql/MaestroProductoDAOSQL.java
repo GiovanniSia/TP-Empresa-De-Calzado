@@ -46,7 +46,10 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		String talle = resultSet.getString("Talle");
 		int unidadMedida = resultSet.getInt("UnidadMedida");
 		String estado = resultSet.getString("Estado");
-		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado);
+		
+		int CantidadAReponer = resultSet.getInt("CantidadAReponer");
+		int DiasParaReponer = resultSet.getInt("DiasParaReponer");
+		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 }
 
