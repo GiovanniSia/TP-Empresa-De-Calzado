@@ -13,8 +13,8 @@ import persistencia.dao.interfaz.OrdenFabricaDAO;
 
 public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 	
-	private static final String insert = "INSERT INTO ordenFabrica(IdOrdenFabrica, IdProd, FechaRequerido, Cantidad, CodigoLote, "
-			+ "IdSucursal) VALUES(?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO ordenFabrica(IdProd, FechaRequerido, Cantidad, CodigoLote, "
+			+ "IdSucursal) VALUES(?, ?, ?, ?, ?)";
 	private static final String readall = "SELECT * FROM ordenFabrica";
 	
 	public boolean insert(OrdenFabricaDTO ordenAInsertar) {
@@ -23,9 +23,7 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 		boolean isInsertExitoso = false;
 		try {
 			statement = conexion.prepareStatement(insert);
-			
-			statement.setInt(1, ordenAInsertar.getIdOrdenFabrica());
-			statement.setInt(2, ordenAInsertar.getIdProd());
+			statement.setInt(1, ordenAInsertar.getIdProd());
 			
 			java.util.Date fecha = new java.util.Date();
 			/*
@@ -34,13 +32,13 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 			System.out.println(fecha.getMonth() + 1);
 			System.out.println(fecha.getYear() + 1900);
 			*/
-			statement.setString(3, ordenAInsertar.getFechaRequerido());
+			statement.setString(2, ordenAInsertar.getFechaRequerido());
 			//statement.setString(3, "1987-01-01");
 			//+getYear()+"-"+getMonth()+"-"+getDay()
 			
-			statement.setInt(4, ordenAInsertar.getCantidad());
-			statement.setString(5, ordenAInsertar.getCodigoLote());
-			statement.setInt(6, ordenAInsertar.getIdSucursal());
+			statement.setInt(3, ordenAInsertar.getCantidad());
+			statement.setString(4, ordenAInsertar.getCodigoLote());
+			statement.setInt(5, ordenAInsertar.getIdSucursal());
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
