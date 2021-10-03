@@ -227,6 +227,7 @@ CREATE TABLE `ordenFabrica`
   `FechaRequerido` DATE NOT NULL,
   `Cantidad` int(11) NOT NULL,
   `CodigoLote` varchar(45) NOT NULL,
+  `IdSucursal` int(11) NOT NULL,
   PRIMARY KEY (`IdOrdenFabrica`)
 );
 

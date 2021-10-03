@@ -12,4 +12,6 @@ public interface DAOAbstractFactory {
 	public MaestroProductoDAO createMaestroProductoDAO();
 	public StockDAO createStockDAO();
 	public FacturaDAO createFacturaDAO();
+	
+	public OrdenFabricaDAO createOrdenFabricaDAO();
 }
