@@ -4,21 +4,22 @@ import java.sql.Date;
 
 public class FacturaDTO {
 	private int idFactura;
-	private double montoPendiente;
+	private int montoPendiente;
 	private String detalle;
 	private int idCliente;
 	private int idEmpleado;
 	private Date fecha;
 	private String tipoFactura;
-	private int nroFacturaCompleta;
+	private String nroFacturaCompleta;
 	private int idSucursal;
-	private double descuento;
-	private double totalFactura;
+	private int terceraParte;
+	private int descuento;
+	private int totalFactura;
 	private int idMedioDePago;
 	private String tipoVenta;	
 	
-	public FacturaDTO(int idFactura, double montoPendiente, String detalle, int idCliente, int idEmpleado, Date fecha,
-			String tipoFactura, int nroFacturaCompleta, int idSucursal, double descuento, double totalFactura,
+	public FacturaDTO(int idFactura, int montoPendiente, String detalle, int idCliente, int idEmpleado, Date fecha,
+			String tipoFactura, String nroFacturaCompleta, int idSucursal,int terceraParte, int descuento, int totalFactura,
 			int idMedioDePago, String tipoVenta) {
 		super();
 		this.idFactura = idFactura;
@@ -30,6 +31,7 @@ public class FacturaDTO {
 		this.tipoFactura = tipoFactura;
 		this.nroFacturaCompleta = nroFacturaCompleta;
 		this.idSucursal = idSucursal;
+		this.terceraParte = terceraParte;
 		this.descuento = descuento;
 		this.totalFactura = totalFactura;
 		this.idMedioDePago = idMedioDePago;
@@ -41,10 +43,10 @@ public class FacturaDTO {
 	public void setIdFactura(int idFactura) {
 		this.idFactura = idFactura;
 	}
-	public double getMontoPendiente() {
+	public int getMontoPendiente() {
 		return montoPendiente;
 	}
-	public void setMontoPendiente(double montoPendiente) {
+	public void setMontoPendiente(int montoPendiente) {
 		this.montoPendiente = montoPendiente;
 	}
 	public String getDetalle() {
@@ -77,10 +79,10 @@ public class FacturaDTO {
 	public void setTipoFactura(String tipoFactura) {
 		this.tipoFactura = tipoFactura;
 	}
-	public int getNroFacturaCompleta() {
+	public String getNroFacturaCompleta() {
 		return nroFacturaCompleta;
 	}
-	public void setNroFacturaCompleta(int nroFacturaCompleta) {
+	public void setNroFacturaCompleta(String nroFacturaCompleta) {
 		this.nroFacturaCompleta = nroFacturaCompleta;
 	}
 	public int getIdScurusal() {
@@ -89,16 +91,24 @@ public class FacturaDTO {
 	public void setIdScurusal(int idSucursal) {
 		this.idSucursal = idSucursal;
 	}
-	public double getDescuento() {
+	
+	public int getTerceraParte() {
+		return terceraParte;
+	}
+	public void setTerceraParte(int terceraParte) {
+		this.terceraParte = terceraParte;
+	}
+	
+	public int getDescuento() {
 		return descuento;
 	}
-	public void setDescuento(double descuento) {
+	public void setDescuento(int descuento) {
 		this.descuento = descuento;
 	}
-	public double getTotalFactura() {
+	public int getTotalFactura() {
 		return totalFactura;
 	}
-	public void setTotalFactura(double totalFactura) {
+	public void setTotalFactura(int totalFactura) {
 		this.totalFactura = totalFactura;
 	}
 	public int getIdMedioDePago() {

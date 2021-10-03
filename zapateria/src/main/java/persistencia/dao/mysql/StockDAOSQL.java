@@ -13,7 +13,7 @@ import persistencia.dao.interfaz.StockDAO;
 import dto.StockDTO;
 
 public class StockDAOSQL implements StockDAO {
-	private static final String readall = "SELECT * FROM Stock";
+	private static final String readall = "SELECT * FROM stock";
 
 
 
@@ -39,7 +39,7 @@ public class StockDAOSQL implements StockDAO {
 		int idSucursal = resultSet.getInt("IdSucursal");
 		int idProducto = resultSet.getInt("IdProducto");
 		String codigoLote = resultSet.getString("CodigoLote");
-		int stockDisponible = resultSet.getInt("StockDsiponible");
+		int stockDisponible = resultSet.getInt("StockDisponible");
 		
 		return new StockDTO(idStock,idSucursal,idProducto,codigoLote,stockDisponible);
 	}

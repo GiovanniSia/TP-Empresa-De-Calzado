@@ -21,6 +21,7 @@ CREATE TABLE `clientes`
   `CodPostal` varchar(45) NOT NULL,
   PRIMARY KEY (`IdCliente`)
 );
+
 CREATE TABLE `empleados`
 (
   `IdEmpleado` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,7 +50,7 @@ CREATE TABLE `movimientosCaja`
   PRIMARY KEY (`IdMovimientosCaja`)
 );
 
-CREATE TABLE `Factura(venta)`
+CREATE TABLE `factura`
 (
   `IdFactura` int(11) NOT NULL AUTO_INCREMENT,
   `MontoPendiente` int(11) NOT NULL,
@@ -116,7 +117,7 @@ CREATE TABLE `medioPago`
   PRIMARY KEY (`IdMedioDePago`)
 );
 
-CREATE TABLE `HistorialCambioMoneda`
+CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,
   `IdMoneda` int(11) NOT NULL,
@@ -127,7 +128,7 @@ CREATE TABLE `HistorialCambioMoneda`
   PRIMARY KEY (`IdCambioMoneda`)
 );
 
-CREATE TABLE `CierreCaja`
+CREATE TABLE `cierreCaja`
 (
   `IdCierre` int(11) NOT NULL AUTO_INCREMENT,
   `IdSucursal` int(11) NOT NULL,
@@ -136,7 +137,7 @@ CREATE TABLE `CierreCaja`
   PRIMARY KEY (`IdCierre`)
 );
 
-CREATE TABLE `Stock`
+CREATE TABLE `stock`
 (
   `IdStock` int(11) NOT NULL AUTO_INCREMENT,
   `IdSucursal` int(11) NOT NULL,
@@ -146,7 +147,7 @@ CREATE TABLE `Stock`
   PRIMARY KEY (`IdStock`)
 );
 
-CREATE TABLE `Sucursales`
+CREATE TABLE `sucursales`
 (
   `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
   `Telefono` varchar(45) NOT NULL,
@@ -160,7 +161,7 @@ CREATE TABLE `Sucursales`
   PRIMARY KEY (`IdSucursal`)
 );
 
-CREATE TABLE `MaestroProductos`
+CREATE TABLE `maestroProductos`
 (
   `IdMaestroProducto` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(45) NOT NULL,
@@ -176,7 +177,7 @@ CREATE TABLE `MaestroProductos`
   PRIMARY KEY (`IdMaestroProducto`)
 );
 
-CREATE TABLE `Recetas`
+CREATE TABLE `recetas`
 (
   `IdReceta` int(11) NOT NULL AUTO_INCREMENT,
   `IdProducto` int(11) NOT NULL,
@@ -184,7 +185,7 @@ CREATE TABLE `Recetas`
   PRIMARY KEY (`IdReceta`)
 );
 
-CREATE TABLE `Proveedor`
+CREATE TABLE `proveedor`
 (
   `Idproveedor` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
@@ -194,7 +195,7 @@ CREATE TABLE `Proveedor`
   PRIMARY KEY (`Idproveedor`)
 );
 
-CREATE TABLE `PasosReceta`
+CREATE TABLE `pasosReceta`
 (
   `IdPasoReceta` int(11) NOT NULL AUTO_INCREMENT,
   `IdReceta` int(11) NOT NULL,
@@ -203,14 +204,14 @@ CREATE TABLE `PasosReceta`
   PRIMARY KEY (`IdPasoReceta`)
 );
 
-CREATE TABLE `Paso`
+CREATE TABLE `paso`
 (
   `IdPaso` int(11) NOT NULL AUTO_INCREMENT,
-  `Descripción` varchar(45) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
   PRIMARY KEY (`IdPaso`)
 );
 
-CREATE TABLE `MaterialesDePaso`
+CREATE TABLE `materialesDePaso`
 (
   `IdMaterialDePaso` int(11) NOT NULL AUTO_INCREMENT,
   `IdMaterial` int(11) NOT NULL,
@@ -219,7 +220,7 @@ CREATE TABLE `MaterialesDePaso`
   PRIMARY KEY (`IdMaterialDePaso`)
 );
 
-CREATE TABLE `OrdenFabrica`
+CREATE TABLE `ordenFabrica`
 (
   `IdOrdenFabrica` int(11) NOT NULL AUTO_INCREMENT,
   `IdProd` int(11) NOT NULL,
@@ -229,21 +230,13 @@ CREATE TABLE `OrdenFabrica`
   PRIMARY KEY (`IdOrdenFabrica`)
 );
 
-CREATE TABLE `FabricacionesEnMarcha`
+CREATE TABLE `fabricacionesEnMarcha`
 (
   `IdOrdenFabrica` int(11) NOT NULL AUTO_INCREMENT,
   `IdReceta` int(11) NOT NULL,
   `NroPasoActual` int(11) NOT NULL,
   PRIMARY KEY (`IdOrdenFabrica`)
 );
-
-
-
-
-
-
-
-
 
 CREATE TABLE `estadoMaterialFabricacion`
 (

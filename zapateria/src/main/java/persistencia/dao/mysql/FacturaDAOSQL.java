@@ -13,7 +13,7 @@ import persistencia.dao.interfaz.FacturaDAO;
 import dto.FacturaDTO;
 
 public class FacturaDAOSQL implements FacturaDAO {
-	private static final String readall = "SELECT * FROM Factura";
+	private static final String readall = "SELECT * FROM factura";
 
 
 
@@ -36,20 +36,20 @@ public class FacturaDAOSQL implements FacturaDAO {
 
 	private FacturaDTO getFacturaDTO(ResultSet resultSet) throws SQLException {
 		int idFactura = resultSet.getInt("IdFactura");
-		double montoPendiente = resultSet.getDouble("MontoPendiente");
+		int montoPendiente = resultSet.getInt("MontoPendiente");
 		String detalle = resultSet.getString("Detalle");
 		int idCliente = resultSet.getInt("IdCliente");
 		int idEmpleado = resultSet.getInt("IdEmpleado");
 		Date fecha = resultSet.getDate("Fecha");
 		String tipoFactura = resultSet.getString("TipoFactura");
-		int nroFacturaCompleta = resultSet.getInt("NroFacturaCompleta");
+		String nroFacturaCompleta = resultSet.getString("NroFacturaCompleta");
 		int idSucursal = resultSet.getInt("IdSucursal");
-		double descuento = resultSet.getDouble("Descuento");
-		double totalFactura = resultSet.getDouble("TotalFactura");
+		int terceraParte = resultSet.getInt("TerceraParte");
+		int descuento = resultSet.getInt("Descuento");
+		int totalFactura = resultSet.getInt("TotalFactura");
 		int idMedioDePago = resultSet.getInt("IdMedioDePago");
 		String tipoVenta = resultSet.getString("TipoVenta");
 		
-		return new FacturaDTO(idFactura,montoPendiente,detalle,idCliente,idEmpleado,fecha,tipoFactura,nroFacturaCompleta,idSucursal,descuento,totalFactura,idMedioDePago,tipoVenta);
+		return new FacturaDTO(idFactura,montoPendiente,detalle,idCliente,idEmpleado,fecha,tipoFactura,nroFacturaCompleta,idSucursal,terceraParte,descuento,totalFactura,idMedioDePago,tipoVenta);
 	}
 }
-

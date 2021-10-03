@@ -16,7 +16,7 @@ public class SucursalDAOSQL implements SucursalDAO{
 	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM sucursales WHERE IdSucursal = ?";
 	private static final String update = "UPDATE sucursales set Telefono=?, Calle=?, Altura=?, Provincia=?, Localidad=?, Pais=?, CodigoPostal, Nombre=? where IdSucursal=?";
-	private static final String readall = "SELECT * FROM Sucursales";
+	private static final String readall = "SELECT * FROM sucursales";
 	
 	@Override
 	public boolean insert(SucursalDTO sucursal) {

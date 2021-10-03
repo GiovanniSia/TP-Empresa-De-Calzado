@@ -15,7 +15,7 @@ public class ClienteDAOSQL implements ClienteDAO{
 	private static final String insert = "INSERT INTO clientes VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM clientes WHERE idCliente = ?";
 	private static final String update = "UPDATE clientes set Nombre=?, Apellido=?, CorreoElectronico=?, LimiteCredito=?, CreditoDisponible=?, TipoCliente=?, ImpuestoAFIP=?, Estado=?, Calle=?, Altura=?, Pais=?, Provincia=?, Localidad=?, CodPostal=? where IdCliente=?";
-	private static final String readall = "SELECT * FROM Clientes";
+	private static final String readall = "SELECT * FROM clientes";
 
 	@Override
 	public boolean insert(ClienteDTO cliente) {

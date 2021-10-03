@@ -13,7 +13,7 @@ import persistencia.dao.interfaz.MaestroProductoDAO;
 import dto.MaestroProductoDTO;
 
 public class MaestroProductoDAOSQL implements MaestroProductoDAO {
-	private static final String readall = "SELECT * FROM MaestroProductos";
+	private static final String readall = "SELECT * FROM maestroProductos";
 
 
 
@@ -43,7 +43,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		int precioVenta = resultSet.getInt("PrecioVenta");
 		int puntoRepositorio = resultSet.getInt("PuntoRepositorio");
 		int idProveedor = resultSet.getInt("IdProveedor");
-		int talle = resultSet.getInt("Talle");
+		String talle = resultSet.getString("Talle");
 		int unidadMedida = resultSet.getInt("UnidadMedida");
 		String estado = resultSet.getString("Estado");
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado);

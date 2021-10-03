@@ -10,12 +10,12 @@ public class MaestroProductoDTO {
 	private int precioVenta;
 	private int puntoRepositorio;
 	private int idProveedor;
-	private int talle;
+	private String talle;
 	private int unidadMedida;
 	private String estado;
 
 	public MaestroProductoDTO(int idMaestroProducto, String descripcion, String tipo, String fabricado, int precioCosto,
-			int precioVenta, int puntoRepositorio, int idProveedor, int talle, int unidadMedida, String estado) {
+			int precioVenta, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado) {
 		this.idMaestroProducto = idMaestroProducto;
 		this.descripcion = descripcion;
 		this.tipo = tipo;
@@ -93,11 +93,11 @@ public class MaestroProductoDTO {
 		this.idProveedor = idProveedor;
 	}
 
-	public int getTalle() {
+	public String getTalle() {
 		return talle;
 	}
 
-	public void setTalle(int talle) {
+	public void setTalle(String talle) {
 		this.talle = talle;
 	}
 

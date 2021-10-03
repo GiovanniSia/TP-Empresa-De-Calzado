@@ -14,7 +14,7 @@ public class EmpleadoDTO {
 		Apellido = apellido;
 		CorreoElectronico = correoElectronico;
 		TipoEmpleado = tipoEmpleado;
-		Contra = Contra;
+		this.Contra = Contra;
 	}
 	
 	
