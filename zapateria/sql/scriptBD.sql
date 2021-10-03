@@ -106,7 +106,7 @@ CREATE TABLE `ModoDePago`
   `Cantidad` int(11) NOT NULL,
   `idMovimientoCaja` int(11) NOT NULL,
   `Tarjeta` varchar(45) NOT NULL,
-  PRIMARY KEY (`IdMoneda`)
+  PRIMARY KEY (`IdModoDePago`)
 );
 
 CREATE TABLE `medioPago`
