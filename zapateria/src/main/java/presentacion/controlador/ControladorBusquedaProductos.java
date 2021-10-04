@@ -1,6 +1,7 @@
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -41,14 +42,26 @@ public class ControladorBusquedaProductos {
 		this.stock = new Stock(new DAOSQLFactory());
 		this.listaStock = this.stock.readAll();
 		
-		this.vistaBusquedaProductos.getBtnBuscar().addActionListener(a -> realizarBusqueda(a));
-
+		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.vistaBusquedaProductos.getTxtIdSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		escribirTablaCompleta();
 		this.vistaBusquedaProductos.show();
 		}
 	
 	
 	//Busca el producto dado el nombre y el idSucursal
-	public void realizarBusqueda(ActionEvent a) {
+//	public void realizarBusqueda(ActionEvent a) {
+	public void realizarBusqueda() {
 		this.vistaBusquedaProductos.getModelTabla().setRowCount(0);//borrar datos de la tabla
 		this.vistaBusquedaProductos.getModelTabla().setColumnCount(0);
 		this.vistaBusquedaProductos.getModelTabla().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnas());
@@ -131,8 +144,5 @@ public class ControladorBusquedaProductos {
 		Object[] fila = { descr,codLote,idSucursal,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
 	}
-	
-	public static void main(String[] args) {
-//		new ControladorBusquedaProductos();
-	}
+
 }

@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
 
 public class vistaBusquedaProductos {
 
@@ -20,7 +19,6 @@ public class vistaBusquedaProductos {
 
 	private JTextField txtNombreProducto;
 	private JTextField txtIdSucursal;
-	private JButton btnBuscar; 
 	
 	private JTable table;
 	private DefaultTableModel modelTabla;
@@ -94,34 +92,7 @@ public class vistaBusquedaProductos {
 		this.table.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.table.getColumnModel().getColumn(0).setResizable(false);
 		
-		scrollPane.setViewportView(table);
-		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(733, 10, 125, 23);
-		frame.getContentPane().add(btnBuscar);
-		/*
-		table.setBounds(10, 74, 768, 533);
-		frame.getContentPane().add(table);
-		*/
-
-		
-		
-		/*
-		 JScrollPane scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(224, 10, 202, 243);
-		frame.getContentPane().add(scrollPane);
-		
-		modelTabla = new DefaultTableModel(null,nombreColumnas);
-		table = new JTable(modelTabla);
-		
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(103);
-		this.table.getColumnModel().getColumn(0).setResizable(false);
-		
-		scrollPane.setViewportView(table);
-		 
-		 */
-		
-		
+		scrollPane.setViewportView(table);		
 	}
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -144,9 +115,6 @@ public class vistaBusquedaProductos {
 	}
 	public JTextField getTxtIdSucursal() {
 		return txtIdSucursal;
-	}
-	public JButton getBtnBuscar() {
-		return btnBuscar;
 	}
 	public JTable getTable() {
 		return table;
