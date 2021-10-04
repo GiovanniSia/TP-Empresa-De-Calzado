@@ -1,13 +1,10 @@
 package presentacion.controlador;
 
-
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
-
+import javax.swing.JOptionPane;
 import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -22,88 +19,83 @@ public class ControladorBusquedaCliente {
 		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
 		this.cliente = cliente;
 	}
-	
+
 	public void inicializar() {
 		this.cliente = new Cliente(new DAOSQLFactory());
-	
+
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		
+		//Botones
 		this.ventanaBusquedaCliente.getBtnAtras().addActionListener(a -> atras(a));
-		this.ventanaBusquedaCliente.getBtnPasarAVenta().addActionListener(p ->pasarAVenta(p));
-
-		//Lambdas para filtrar presionando ENTER
-//		this.ventanaBusquedaCliente.getTxtFieldCodCliente().addActionListener(f -> filtrarPorCodCliente(f));
-//		this.ventanaBusquedaCliente.getTxtFieldNombre().addActionListener(f -> filtrarPorNombre(f));
-//		this.ventanaBusquedaCliente.getTxtFieldApellido().addActionListener(f-> filtrarPorApellido(f));
-//		this.ventanaBusquedaCliente.getTxtFieldDNI().addActionListener(f-> filtrarPorDNI(f));
+		this.ventanaBusquedaCliente.getBtnPasarAVenta().addActionListener(p -> pasarAVenta(p));
 		
+		//TextField
 		this.ventanaBusquedaCliente.getTxtFieldCodCliente().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla=cliente.filtrarPorCodCliente(ventanaBusquedaCliente.getTxtFieldCodCliente().getText()); 	
+				clienteEnTabla = cliente.filtrarPorCodCliente(ventanaBusquedaCliente.getTxtFieldCodCliente().getText());
 				llenarTabla(clienteEnTabla);
 			}
-		});;
+		});
+
 		this.ventanaBusquedaCliente.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla=cliente.filtrarPorNombre(ventanaBusquedaCliente.getTxtFieldNombre().getText()); 	
+				clienteEnTabla = cliente.filtrarPorNombre(ventanaBusquedaCliente.getTxtFieldNombre().getText());
 				llenarTabla(clienteEnTabla);
 			}
-		});;
-		
+		});
+
 		this.ventanaBusquedaCliente.getTxtFieldApellido().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla=cliente.filtrarPorApellido(ventanaBusquedaCliente.getTxtFieldApellido().getText()); 	
+				clienteEnTabla = cliente.filtrarPorApellido(ventanaBusquedaCliente.getTxtFieldApellido().getText());
 				llenarTabla(clienteEnTabla);
 			}
-		});;
+		});
+
 		this.ventanaBusquedaCliente.getTxtFieldDNI().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla=cliente.filtrarPorDNI(ventanaBusquedaCliente.getTxtFieldDNI().getText()); 	
+				clienteEnTabla = cliente.filtrarPorDNI(ventanaBusquedaCliente.getTxtFieldDNI().getText());
 				llenarTabla(clienteEnTabla);
 			}
-		});;
+		});
+		
 		this.mostrarVentana();
-		this.mostrarClientesEnTabla();
 	}
-	
-	//Filtrar presionando ENTER
-//	public void filtrarPorCodCliente(ActionEvent f) {
-//		clienteEnTabla=cliente.filtrarPorCodCliente(ventanaBusquedaCliente.getTxtFieldCodCliente().getText()); 	
-//		llenarTabla(clienteEnTabla);
-//	}
-//	
-//	public void filtrarPorNombre(ActionEvent f) {
-//		clienteEnTabla=cliente.filtrarPorNombre(ventanaBusquedaCliente.getTxtFieldNombre().getText()); 	
-//		llenarTabla(clienteEnTabla);
-//	}
-//	
-//	public void filtrarPorApellido(ActionEvent f) {
-//		clienteEnTabla=cliente.filtrarPorApellido(ventanaBusquedaCliente.getTxtFieldApellido().getText()); 	
-//		llenarTabla(clienteEnTabla);
-//	}
-//	
-//	public void filtrarPorDNI(ActionEvent f) {
-//		clienteEnTabla=cliente.filtrarPorDNI(ventanaBusquedaCliente.getTxtFieldDNI().getText()); 	
-//		llenarTabla(clienteEnTabla);
-//	}
 	
 	public void atras(ActionEvent a) {
 		this.ventanaBusquedaCliente.cerrar();
 	}
-	
-	//Aqui ya se selecciona un cliente, agregar advertencia si no selecciono algun cliente
+
 	public void pasarAVenta(ActionEvent p) {
-		
+		clienteSeleccionado();
 	}
-	
+
+	public void clienteSeleccionado() {
+		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un cliente");
+			return;
+		}
+
+		String codCliente = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 0).toString();
+		String nombre = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 1).toString();
+		String apellido = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 2).toString();
+		String DNI = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 3).toString();
+		String correoElectronico = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 4)
+				.toString();
+		String estado = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 5).toString();
+		System.out.println("Cliente Seleccionado: " + codCliente + ", " + nombre + ", " + apellido + ", " + DNI + ", "
+				+ correoElectronico + ", " + estado);
+	}
+
 	public void mostrarVentana() {
 		this.ventanaBusquedaCliente.show();
+		this.mostrarClientesEnTabla();
 	}
-	
+
 	public void mostrarClientesEnTabla() {
 		this.clienteEnTabla = cliente.readAll();
 		this.llenarTabla(clienteEnTabla);
@@ -112,7 +104,8 @@ public class ControladorBusquedaCliente {
 	public void llenarTabla(List<ClienteDTO> clienteEnTabla) {
 		this.ventanaBusquedaCliente.getModelCliente().setRowCount(0);
 		this.ventanaBusquedaCliente.getModelCliente().setColumnCount(0);
-		this.ventanaBusquedaCliente.getModelCliente().setColumnIdentifiers(this.ventanaBusquedaCliente.getNombreColumnas());
+		this.ventanaBusquedaCliente.getModelCliente()
+				.setColumnIdentifiers(this.ventanaBusquedaCliente.getNombreColumnas());
 		for (ClienteDTO c : clienteEnTabla) {
 			int codCliente = c.getIdCliente();
 			String nombre = c.getNombre();
@@ -120,10 +113,10 @@ public class ControladorBusquedaCliente {
 			String DNI = c.getDNI();
 			String correo = c.getCorreo();
 			String estado = c.getEstado();
-			
+
 			Object[] fila = { codCliente, nombre, apellido, DNI, correo, estado };
 			this.ventanaBusquedaCliente.getModelCliente().addRow(fila);
 		}
 	}
-	
+
 }

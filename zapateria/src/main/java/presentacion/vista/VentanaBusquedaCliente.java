@@ -1,12 +1,9 @@
 package presentacion.vista;
 
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,9 +13,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 
 public class VentanaBusquedaCliente extends JFrame {
 
@@ -41,6 +35,7 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JTextField txtFieldCodCliente;
 	private JLabel lblFiltrarPor;
 	private JLabel lblElegirCliente;
+	private JScrollPane spCliente;
 
 	public VentanaBusquedaCliente() {
 		initialize();
@@ -58,7 +53,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		JScrollPane spCliente = new JScrollPane();
+		spCliente = new JScrollPane();
 		spCliente.setBounds(10, 11, 776, 145);
 		panel.add(spCliente);
 
@@ -172,6 +167,9 @@ public class VentanaBusquedaCliente extends JFrame {
 	public JButton getBtnPasarAVenta() {
 		return btnPasarAVenta;
 	}
+	public JScrollPane getSpCliente() {
+		return spCliente;
+	}
 
 	public JButton getBtnAtras() {
 		return btnAtras;
@@ -203,10 +201,6 @@ public class VentanaBusquedaCliente extends JFrame {
 
 	public JTextField getTxtFieldCodCliente() {
 		return txtFieldCodCliente;
-	}
-
-	public int filaClienteSeleccionada() {
-		return tablaClientes.getSelectedRow();
 	}
 	
 }
