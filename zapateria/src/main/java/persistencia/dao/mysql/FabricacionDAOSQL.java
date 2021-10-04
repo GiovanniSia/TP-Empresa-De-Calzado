@@ -18,7 +18,6 @@ import persistencia.dao.interfaz.OrdenFabricaDAO;
 public class FabricacionDAOSQL {
 	
 	private static final String readAllReceta = "SELECT * FROM recetas";
-	
 	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso;";
 	private static final String readAllMaterialesFromOnePaso = "SELECT * FROM materialesDePaso mdp, maestroProductos mp WHERE mdp.IdPaso = ? AND mdp.IdMaterial = mp.IdMaestroProducto;";
 	private static final String readAllCantidadMaterialesFromOnePaso = "SELECT * FROM materialesDePaso WHERE IdPaso = ? AND IdMaterial = ?;";
@@ -41,7 +40,7 @@ public class FabricacionDAOSQL {
 		return recetas;
 	}
 	
-	private RecetaDTO getRecetaDTO(ResultSet resultSet) throws SQLException {
+	private static RecetaDTO getRecetaDTO(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("IdReceta");
 		int IdProducto = resultSet.getInt("IdProducto");
 		String Descripcion = resultSet.getString("Descripcion");
@@ -247,7 +246,47 @@ public class FabricacionDAOSQL {
 		return isInsertExitoso;
 	}
 	
+	public static void completarOrden(FabricacionesDTO fabri) {
+		if(verificarSiOrdenCompleta(fabri)) {
+			fabri.completarOrden();
+			actualizarFabricacionEnMarcha(fabri);
+			//dar de alta stock
+		}
+	}
+	
+	public static boolean verificarSiOrdenCompleta(FabricacionesDTO fabri) {
+		int idReceta = fabri.getIdReceta();
+		int re = readCantPasosReceta(idReceta);
+		if(fabri.getNroPasoActual() > re) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static final String readOneReceta = "SELECT COUNT(*) FROM pasosReceta WHERE IdReceta = ?";
+	public static int readCantPasosReceta(int idReceta) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		int ret = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readOneReceta);
+			statement.setInt(1, idReceta);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				ret = resultSet.getInt("COUNT(*)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private static final String insertStock = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?);";
+
+	
 	public static void main(String[] args) {
+		//System.out.println(readCantPasosReceta(1));
 		/*
 		List<PasoDeRecetaDTO> pasos = readAllPasosFromOneReceta(1);
 		for(PasoDeRecetaDTO p: pasos) {
