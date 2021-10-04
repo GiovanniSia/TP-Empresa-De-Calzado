@@ -24,7 +24,7 @@ public class vistaBusquedaProductos {
 	
 	private JTable table;
 	private DefaultTableModel modelTabla;
-	private String[] nombreColumnas = { "Nombre", "Codigo Lote", "Id Sucursal", " Stock Disponible","Tipo", "Fabricado", "Costo Producción", "Precio Venta", "Punto de Reposición"};
+	private String[] nombreColumnas = { "Nombre", "Codigo Lote", "Id Sucursal", " Stock Disponible","Tipo", "Fabricado", "Costo Produccion", "Precio Venta", "Punto de Reposicion"};
 
 	private JScrollPane scrollPane;
 
