@@ -55,13 +55,17 @@ public class ControladorBusquedaProductos {
 	
 	//Busca el producto dado el nombre y el idSucursal
 	public void realizarBusqueda(ActionEvent a) {
+		this.vistaBusquedaProductos.getModelTabla().setRowCount(0);//borrar datos de la tabla
+		this.vistaBusquedaProductos.getModelTabla().setColumnCount(0);
+		this.vistaBusquedaProductos.getModelTabla().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnas());
+		
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
 		String txtSucu = this.vistaBusquedaProductos.getTxtIdSucursal().getText();
 		
-		if(txtNombre.equals("") &&  txtSucu == null) {
+		if(txtNombre.equals("") &&  txtSucu.equals("")) {
 //			nombreVacio pero sucursal no
 			System.out.println("el nombre esta vacio y el id sucursal vacio");
-//			escribirTablaCompleta();
+			escribirTablaCompleta();
 			return;
 		}
 		
@@ -80,9 +84,7 @@ public class ControladorBusquedaProductos {
 		
 		int txtSucursal = Integer.parseInt(this.vistaBusquedaProductos.getTxtIdSucursal().getText());
 		
-		this.vistaBusquedaProductos.getModelTabla().setRowCount(0);//borrar datos de la tabla
-		this.vistaBusquedaProductos.getModelTabla().setColumnCount(0);
-		this.vistaBusquedaProductos.getModelTabla().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnas());
+		
 		
 
 
@@ -90,12 +92,12 @@ public class ControladorBusquedaProductos {
 		//caso todos los campos complt
 		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(txtNombre);//posibles valores
 
-		
-		
-		
+			
 		//caso todos los campos completos
-		for(MaestroProductoDTO m: productosPosibles) {
-			for(StockDTO s: this.listaStock) {
+		for(StockDTO s: this.listaStock) {
+			for(MaestroProductoDTO m: productosPosibles) {
+			
+//				System.out.println("nombre Producto: " + m.getDescripcion()+"\nIdProd: "+ m.getIdMaestroProducto()+ "\nIdProductoStock: "+ s.getIdProducto()+"\nidSucursal del stock: "+s.getIdSucursal()+"\nsucursal: "+txtSucursal+"\ncodigoLote: "+s.getCodigoLote());
 				if(txtSucursal == s.getIdSucursal() && s.getIdProducto() == m.getIdMaestroProducto()) {
 					
 					String descr = m.getDescripcion();
