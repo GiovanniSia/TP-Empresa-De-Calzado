@@ -268,12 +268,18 @@ public class FabricacionDAOSQL {
 	}
 	
 	public static void completarOrden(FabricacionesDTO fabri, int diaLlega) {
-		if(verificarSiOrdenCompleta(fabri)) {
-			fabri.completarOrden();
-			actualizarFabricacionEnMarcha(fabri);
-			//dar de alta stock
-			
-		}
+		fabri.completarOrden();
+		java.util.Date fechaActual = new java.util.Date();
+		fechaActual.setDate(fechaActual.getDate());
+		int dia = fechaActual.getDate();
+		int mes = fechaActual.getMonth() + 1;
+		int anio = fechaActual.getYear() + 1900;
+		fabri.setAnioCompletado(anio);
+		fabri.setDiaCompletado(dia);
+		fabri.setMesCompletado(mes);
+		fabri.setDiaDisponible(diaLlega);
+		actualizarFabricacionEnMarcha(fabri);
+		//dar de alta stock cuando llegue el dia completado + dia disponible
 	}
 	
 	public static boolean verificarSiOrdenCompleta(FabricacionesDTO fabri) {
@@ -327,19 +333,19 @@ public class FabricacionDAOSQL {
 		f.setNroPasoActual(300);
 		actualizarFabricacionEnMarcha(f);
 		*/
-		
-		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,15,"activo");
+		/*
+		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,6,"activo");
 		//insertFabricacionEnMarcha(fa);
-		fa.setAnioCompletado(21);
-		fa.setMesCompletado(9);
-		fa.setDiaCompletado(2);
+		//fa.completarOrden();
 		
-		actualizarFabricacionEnMarcha(fa);
+		System.out.println(verificarSiOrdenCompleta(fa));
 		
+		//actualizarFabricacionEnMarcha(fa);
+		completarOrden(fa,5);
 		for(FabricacionesDTO f: readAllFabricacionesEnMarcha()) {
 			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
 		}
-		
+		*/
 		
 	}
 
