@@ -26,15 +26,11 @@ public class ControladorBusquedaProductos {
 	List<MaestroProductoDTO> listaMaestroProducto;
 	MaestroProducto maestroProducto;
 	
-//	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
-//		this.maestroProducto = maestroProducto;
-//		this.stock = stock;
-//		this.sucursal = sucursal;
-//	}
-	public ControladorBusquedaProductos() {
-		inicializar();
+	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+		this.maestroProducto = maestroProducto;
+		this.stock = stock;
+		this.sucursal = sucursal;
 	}
-	
 	
 	public void inicializar() {
 		this.vistaBusquedaProductos = new vistaBusquedaProductos();
@@ -46,9 +42,7 @@ public class ControladorBusquedaProductos {
 		this.listaStock = this.stock.readAll();
 		
 		this.vistaBusquedaProductos.getBtnBuscar().addActionListener(a -> realizarBusqueda(a));
-		
-		
-		
+
 		this.vistaBusquedaProductos.show();
 		}
 	
@@ -62,83 +56,41 @@ public class ControladorBusquedaProductos {
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
 		String txtSucu = this.vistaBusquedaProductos.getTxtIdSucursal().getText();
 		
-		if(txtNombre.equals("") &&  txtSucu.equals("")) {
-//			nombreVacio pero sucursal no
-			System.out.println("el nombre esta vacio y el id sucursal vacio");
+		if(txtNombre.equals("") &&  txtSucu.equals("")) { //nombreVacio pero sucursal no
 			escribirTablaCompleta();
 			return;
 		}
 		
-		if(txtNombre.equals("") && txtSucu != null) {
-			//ambos vacios
-			System.out.println("el nombre esta vacio y el idSucursal lleno");
+		if(txtNombre.equals("") && txtSucu != null) {//ambos vacios
 			escribirTablaDadoIdSucursal(Integer.parseInt(txtSucu));
 			return;
 		}
 		
-		if(txtNombre!=null && txtSucu == null) {
-			System.out.println("el nombre esta lleno y el idSucursal vacio");
+		if(txtNombre!=null && txtSucu.equals("")) {
 			escribirTablaDadoProducto(txtNombre);
 			return;
 		}
 		
-		int txtSucursal = Integer.parseInt(this.vistaBusquedaProductos.getTxtIdSucursal().getText());
-		
-		
-		
+		int txtSucursal = Integer.parseInt(this.vistaBusquedaProductos.getTxtIdSucursal().getText());			
 
-
-			
-		//caso todos los campos complt
-		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(txtNombre);//posibles valores
-
-			
 		//caso todos los campos completos
+		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(txtNombre);//posibles valores
+		
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: productosPosibles) {
-			
 //				System.out.println("nombre Producto: " + m.getDescripcion()+"\nIdProd: "+ m.getIdMaestroProducto()+ "\nIdProductoStock: "+ s.getIdProducto()+"\nidSucursal del stock: "+s.getIdSucursal()+"\nsucursal: "+txtSucursal+"\ncodigoLote: "+s.getCodigoLote());
 				if(txtSucursal == s.getIdSucursal() && s.getIdProducto() == m.getIdMaestroProducto()) {
-					
-					String descr = m.getDescripcion();
-					String codigoLote = s.getCodigoLote();
-					int stockDisp = s.getStockDisponible();
-					String tipo = m.getTipo();
-					String fabricado = m.getFabricado();
-					int precioCosto = m.getPrecioCosto();
-					int precioVenta = m.getPrecioVenta();
-					int puntoRepositorio = m.getPuntoRepositorio();
-					
-					Object[] fila = { descr,codigoLote,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
-					this.vistaBusquedaProductos.getModelTabla().addRow(fila);
+					agregarATabla(s,m);
 				}
 			}
-		}
-					
-
-			
-				
-			
-		
-		System.out.println("por lo menos se ejecuto");
-		
+		}		
 	}	
 	
 	public void escribirTablaCompleta() {
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
 				if(s.getIdProducto()== m.getIdMaestroProducto()) {
-					String descr = m.getDescripcion();
-					String codLote = s.getCodigoLote(); 
-					int stockDisp = s.getStockDisponible();
-					String tipo = m.getTipo();
-					String fabricado = m.getFabricado();
-					int precioCosto = m.getPrecioCosto();
-					int precioVenta = m.getPrecioVenta();
-					int puntoRepositorio = m.getPuntoRepositorio();
-					
-					Object[] fila = { descr,codLote,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
-					this.vistaBusquedaProductos.getModelTabla().addRow(fila);
+					agregarATabla(s,m);
 				}
 			}
 		}
@@ -146,28 +98,41 @@ public class ControladorBusquedaProductos {
 	public void escribirTablaDadoIdSucursal(int idSucursal){
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
-				if(m.getIdMaestroProducto()==s.getIdStock() && idSucursal == s.getIdStock()) {
-					String descr = m.getDescripcion();
-					String codLote = s.getCodigoLote(); 
-					int stockDisp = s.getStockDisponible();
-					String tipo = m.getTipo();
-					String fabricado = m.getFabricado();
-					int precioCosto = m.getPrecioCosto();
-					int precioVenta = m.getPrecioVenta();
-					int puntoRepositorio = m.getPuntoRepositorio();
-					
-					Object[] fila = { descr,codLote,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
-					this.vistaBusquedaProductos.getModelTabla().addRow(fila);
+				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
+					agregarATabla(s,m);
 				}
 			}
 		}
 	}
 
 	public void escribirTablaDadoProducto(String nombre) {
-
+		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(nombre);//posibles valores
+		for(MaestroProductoDTO m: productosPosibles){
+			for(StockDTO s: this.listaStock){
+//				System.out.println("nombre Producto: " + m.getDescripcion()+"\nIdProd: "+ m.getIdMaestroProducto()+ "\nIdProductoStock: "+ s.getIdProducto()+"\nidSucursal del stock: "+s.getIdSucursal()+"\nsucursal: "+txtSucursal+"\ncodigoLote: "+s.getCodigoLote());
+				if(m.getIdMaestroProducto()==s.getIdProducto()) {
+					agregarATabla(s,m);
+				}
+			}
+		}
+	}
+	
+	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
+		String descr = m.getDescripcion();
+		String codLote = s.getCodigoLote(); 
+		int idSucursal = s.getIdSucursal();
+		int stockDisp = s.getStockDisponible();
+		String tipo = m.getTipo();
+		String fabricado = m.getFabricado();
+		int precioCosto = m.getPrecioCosto();
+		int precioVenta = m.getPrecioVenta();
+		int puntoRepositorio = m.getPuntoRepositorio();
+		
+		Object[] fila = { descr,codLote,idSucursal,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
+		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
 	}
 	
 	public static void main(String[] args) {
-		new ControladorBusquedaProductos();
+//		new ControladorBusquedaProductos();
 	}
 }

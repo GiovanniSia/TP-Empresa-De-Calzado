@@ -24,7 +24,7 @@ public class vistaBusquedaProductos {
 	
 	private JTable table;
 	private DefaultTableModel modelTabla;
-	private String[] nombreColumnas = { "Nombre", "Codigo Lote", " Stock Disponible","Tipo", "Fabricado", "Costo Producción", "Precio Venta", "Punto de Reposición"};
+	private String[] nombreColumnas = { "Nombre", "Codigo Lote", "Id Sucursal", " Stock Disponible","Tipo", "Fabricado", "Costo Producción", "Precio Venta", "Punto de Reposición"};
 
 	private JScrollPane scrollPane;
 
@@ -60,7 +60,7 @@ public class vistaBusquedaProductos {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 882, 654);
+		frame.setBounds(100, 100, 953, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -85,7 +85,7 @@ public class vistaBusquedaProductos {
 		frame.getContentPane().add(txtIdSucursal);
 		
 		scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(10, 74, 848, 533);
+		scrollPane.setBounds(10, 74, 919, 533);
 		frame.getContentPane().add(scrollPane);
 		
 		modelTabla = new DefaultTableModel(null, nombreColumnas);
