@@ -16,6 +16,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class VentanaBusquedaCliente extends JFrame {
@@ -92,6 +94,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(lblNombre);
 
 		txtFieldNombre = new JTextField();
+
 		txtFieldNombre.setBounds(108, 67, 116, 20);
 		panel_1.add(txtFieldNombre);
 
