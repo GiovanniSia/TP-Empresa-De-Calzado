@@ -162,10 +162,32 @@ public class FabricacionDAOSQL {
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
-	private static final String readAllFabricacionesPendientes = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'completo'";
+	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'activo'";
 	
-	private static FabricacionesDTO readAllFabricacionesEnMarcha(){
-		return new FabricacionesDTO(0,0,0,0,"completo");
+	public static List<FabricacionesDTO> readAllFabricacionesEnMarcha(){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllFabricacionesEnMarcha);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getFabricacionesEnMarcha(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
+	}
+	
+	private static FabricacionesDTO getFabricacionesEnMarcha(ResultSet resultSet) throws SQLException {
+		int IdFabricacionesEnMarcha = resultSet.getInt("IdFabricacionesEnMarcha");
+		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+		int IdReceta = resultSet.getInt("IdReceta");
+		int NroPasoActual = resultSet.getInt("NroPasoActual");
+		String Estado = resultSet.getString("Estado");
+		return new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
 	}
 	
 	/*
