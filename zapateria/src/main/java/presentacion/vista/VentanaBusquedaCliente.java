@@ -6,7 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,10 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-import dto.ClienteDTO;
-
 import java.awt.Color;
+
 
 public class VentanaBusquedaCliente extends JFrame {
 
@@ -43,19 +40,6 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JLabel lblFiltrarPor;
 	private JLabel lblElegirCliente;
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					VentanaBusquedaCliente frame = new VentanaBusquedaCliente();
-//					frame.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
 	public VentanaBusquedaCliente() {
 		initialize();
 	}
@@ -78,12 +62,6 @@ public class VentanaBusquedaCliente extends JFrame {
 
 		modelCliente = new DefaultTableModel(null, nombreColumnas);
 		tablaClientes = new JTable(modelCliente);
-		tablaClientes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int filaSeleccionada = tablaClientes.rowAtPoint(e.getPoint());
-			}
-		});
 		
 		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
@@ -175,7 +153,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		});
 		this.frame.setVisible(true);
 	}
-	
+
 	public void cerrar() {
 		this.txtFieldCodCliente.setText(null);
 		this.txtFieldNombre.setText(null);
@@ -224,7 +202,6 @@ public class VentanaBusquedaCliente extends JFrame {
 		return txtFieldCodCliente;
 	}
 
-	
 	public int filaClienteSeleccionada() {
 		return tablaClientes.getSelectedRow();
 	}
