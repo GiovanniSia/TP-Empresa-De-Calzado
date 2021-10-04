@@ -6,7 +6,6 @@ import java.util.List;
 
 import dto.ClienteDTO;
 import modelo.Cliente;
-import persistencia.conexion.Conexion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
 
@@ -22,13 +21,38 @@ public class ControladorBusquedaCliente {
 	
 	public void inicializar() {
 		this.cliente = new Cliente(new DAOSQLFactory());
-		this.clienteEnTabla = this.cliente.readAll();
-		this.mostrarVentana();
-		
-		//this.ventanaBusquedaCliente.mostrarVentana();
+	
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
+		
 		this.ventanaBusquedaCliente.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaBusquedaCliente.getBtnPasarAVenta().addActionListener(p ->pasarAVenta(p));
+		this.ventanaBusquedaCliente.getTxtFieldCodCliente().addActionListener(f -> filtrarPorCodCliente(f));
+		this.ventanaBusquedaCliente.getTxtFieldNombre().addActionListener(f -> filtrarPorNombre(f));
+		this.ventanaBusquedaCliente.getTxtFieldApellido().addActionListener(f-> filtrarPorApellido(f));
+		this.ventanaBusquedaCliente.getTxtFieldDNI().addActionListener(f-> filtrarPorDNI(f));
+		
+		this.mostrarVentana();
+		this.mostrarClientesEnTabla();
+	}
+	
+	public void filtrarPorCodCliente(ActionEvent f) {
+		clienteEnTabla=cliente.filtrarPorCodCliente(ventanaBusquedaCliente.getTxtFieldCodCliente().getText()); 	
+		llenarTabla(clienteEnTabla);
+	}
+	
+	public void filtrarPorNombre(ActionEvent f) {
+		clienteEnTabla=cliente.filtrarPorNombre(ventanaBusquedaCliente.getTxtFieldNombre().getText()); 	
+		llenarTabla(clienteEnTabla);
+	}
+	
+	public void filtrarPorApellido(ActionEvent f) {
+		clienteEnTabla=cliente.filtrarPorApellido(ventanaBusquedaCliente.getTxtFieldApellido().getText()); 	
+		llenarTabla(clienteEnTabla);
+	}
+	
+	public void filtrarPorDNI(ActionEvent f) {
+		clienteEnTabla=cliente.filtrarPorDNI(ventanaBusquedaCliente.getTxtFieldDNI().getText()); 	
+		llenarTabla(clienteEnTabla);
 	}
 	
 	public void atras(ActionEvent a) {
@@ -40,15 +64,19 @@ public class ControladorBusquedaCliente {
 	}
 	
 	public void mostrarVentana() {
-		llenarTabla();
 		this.ventanaBusquedaCliente.show();
 	}
+	
+	public void mostrarClientesEnTabla() {
+		this.clienteEnTabla = cliente.readAll();
+		this.llenarTabla(clienteEnTabla);
+	}
 
-	public void llenarTabla() {
+	public void llenarTabla(List<ClienteDTO> clienteEnTabla) {
 		this.ventanaBusquedaCliente.getModelCliente().setRowCount(0);
 		this.ventanaBusquedaCliente.getModelCliente().setColumnCount(0);
 		this.ventanaBusquedaCliente.getModelCliente().setColumnIdentifiers(this.ventanaBusquedaCliente.getNombreColumnas());
-		for (ClienteDTO c : this.clienteEnTabla) {
+		for (ClienteDTO c : clienteEnTabla) {
 			int codCliente = c.getIdCliente();
 			String nombre = c.getNombre();
 			String apellido = c.getApellido();
@@ -60,7 +88,5 @@ public class ControladorBusquedaCliente {
 			this.ventanaBusquedaCliente.getModelCliente().addRow(fila);
 		}
 	}
-	
-	
 	
 }
