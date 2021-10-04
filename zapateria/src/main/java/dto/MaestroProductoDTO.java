@@ -140,4 +140,16 @@ public class MaestroProductoDTO {
 		this.estado = estado;
 	}
 
+	@Override
+	public String toString() {
+		return "MaestroProductoDTO [idMaestroProducto=" + idMaestroProducto + ", descripcion=" + descripcion + ", tipo="
+				+ tipo + ", fabricado=" + fabricado + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta
+				+ ", puntoRepositorio=" + puntoRepositorio + ", idProveedor=" + idProveedor + ", talle=" + talle
+				+ ", unidadMedida=" + unidadMedida + ", estado=" + estado + ", CantidadAReponer=" + CantidadAReponer
+				+ ", DiasParaReponer=" + DiasParaReponer + "]";
+	}
+
+	
+	
+	
 }

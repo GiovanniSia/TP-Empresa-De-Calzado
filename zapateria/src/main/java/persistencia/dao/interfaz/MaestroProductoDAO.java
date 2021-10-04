@@ -7,6 +7,6 @@ import dto.MaestroProductoDTO;
 public interface MaestroProductoDAO {
 	public List<MaestroProductoDTO> readAll();
 	
-	public List<MaestroProductoDTO> getMaestroProducto(String nombre);
+	public List<MaestroProductoDTO> getMaestroProductoAproximado(String nombreColumna, String txtAprox);
 	
 }

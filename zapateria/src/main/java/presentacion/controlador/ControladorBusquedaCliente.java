@@ -15,11 +15,15 @@ public class ControladorBusquedaCliente {
 	private Cliente cliente;
 	private List<ClienteDTO> clienteEnTabla;
 
-	public ControladorBusquedaCliente(VentanaBusquedaCliente ventanaBusquedaCliente, Cliente cliente) {
-		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
-		this.cliente = cliente;
-	}
+//	public ControladorBusquedaCliente(VentanaBusquedaCliente ventanaBusquedaCliente, Cliente cliente) {
+//		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
+//		this.cliente = cliente;
+//	}
 
+	public ControladorBusquedaCliente() {
+		inicializar();
+	}
+	
 	public void inicializar() {
 		this.cliente = new Cliente(new DAOSQLFactory());
 
@@ -135,4 +139,8 @@ public class ControladorBusquedaCliente {
 		}
 	}
 
+	public static void main(String[] args) {
+		new ControladorBusquedaCliente();
+	}
+	
 }

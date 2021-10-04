@@ -18,8 +18,8 @@ public class MaestroProducto {
 		return this.maestroProducto.readAll();
 	}
 	
-	public List<MaestroProductoDTO> getMaestroProducto(String nombre){
-		return this.maestroProducto.getMaestroProducto(nombre);
+	public List<MaestroProductoDTO> getMaestroProductoAproximado(String nombreColumna, String txtAprox){
+		return this.maestroProducto.getMaestroProductoAproximado(nombreColumna,txtAprox);
 	}
 	
 }

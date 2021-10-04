@@ -9,22 +9,47 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JButton;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JSpinner;
 
 public class vistaBusquedaProductos {
 
 	private JFrame frame;
-
-	private JTextField txtNombreProducto;
-	private JTextField txtIdSucursal;
 	
-	private JTable table;
-	private DefaultTableModel modelTabla;
-	private String[] nombreColumnas = { "Nombre", "Codigo Lote", "Id Sucursal", " Stock Disponible","Tipo", "Fabricado", "Costo Produccion", "Precio Venta", "Punto de Reposicion"};
+	private JTable tableProductosFiltrados;
+	private DefaultTableModel modelTablaProductosFiltrados;
+	private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Venta"};
+	private JScrollPane scrollPaneProductosFiltrados;
 
-	private JScrollPane scrollPane;
+	private JTable tableCarrito;
+	private DefaultTableModel modelTablaCarrito;
+	private String[] nombreColumnasCarrito = { "Producto Elegido", "Cantidad", "Precio Total"};
+	private JScrollPane scrollPaneCarrito;
+	
+	private JLabel lblValorTotal;
+	private JTextField txtNombreProducto;
+	private JTextField txtTalle;
+	private JTextField txtPrecio;
+	private JLabel lblNombre;
+	private JLabel lblTalle;
+	private JLabel lblPrecioVenta;
+	private JComboBox comboBoxCategoria;
+	private JLabel lblCategoria;
+	private JButton btnAniadirProd;
+	private JLabel lblAniadir;
+	private JPanel panel_1;
+	private JLabel lblTitulo;
+	private JLabel lblSubtitulo;
+
+
 
 	/**
 	 * Launch the application.
@@ -58,42 +83,149 @@ public class vistaBusquedaProductos {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 953, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Zapatería Argento - Realizar Venta");
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		
-		JLabel lblNombreProducto = new JLabel("Nombre de Producto");
-		lblNombreProducto.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNombreProducto.setBounds(10, 10, 159, 23);
-		frame.getContentPane().add(lblNombreProducto);
+		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(10, 96, 919, 419);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		//Tabla productos filtrados
+		scrollPaneProductosFiltrados = new JScrollPane(this.tableProductosFiltrados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneProductosFiltrados.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPaneProductosFiltrados.setBounds(10, 70, 548, 339);
+		panel.add(scrollPaneProductosFiltrados);
+		tableProductosFiltrados = new JTable(modelTablaProductosFiltrados);
+		
+		this.tableProductosFiltrados.getColumnModel().getColumn(0).setPreferredWidth(103);
+		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
+		
+		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
 		txtNombreProducto = new JTextField();
-		txtNombreProducto.setBounds(179, 10, 217, 27);
-		frame.getContentPane().add(txtNombreProducto);
 		txtNombreProducto.setColumns(10);
+		txtNombreProducto.setBounds(188, 41, 69, 19);
+		panel.add(txtNombreProducto);		
 		
-		JLabel lblNewLabel = new JLabel("Id Sucursal");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel.setBounds(406, 10, 130, 20);
-		frame.getContentPane().add(lblNewLabel);
+		txtTalle = new JTextField();
+		txtTalle.setColumns(10);
+		txtTalle.setBounds(283, 41, 29, 19);
+		panel.add(txtTalle);
 		
-		txtIdSucursal = new JTextField();
-		txtIdSucursal.setColumns(10);
-		txtIdSucursal.setBounds(496, 10, 217, 27);
-		frame.getContentPane().add(txtIdSucursal);
+		txtPrecio = new JTextField();
+		txtPrecio.setColumns(10);
+		txtPrecio.setBounds(351, 41, 69, 19);
+		panel.add(txtPrecio);
 		
-		scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(10, 74, 919, 533);
-		frame.getContentPane().add(scrollPane);
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setBounds(188, 23, 69, 13);
+		panel.add(lblNombre);
 		
-		modelTabla = new DefaultTableModel(null, nombreColumnas);
-		table = new JTable(modelTabla);
+		lblTalle = new JLabel("Talle");
+		lblTalle.setBounds(283, 23, 29, 13);
+		panel.add(lblTalle);
 		
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(103);
-		this.table.getColumnModel().getColumn(0).setResizable(false);
+		lblPrecioVenta = new JLabel("Precio Venta");
+		lblPrecioVenta.setBounds(351, 23, 69, 13);
+		panel.add(lblPrecioVenta);
 		
-		scrollPane.setViewportView(table);		
+		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
+		lblFiltrarPor.setBounds(10, 0, 69, 13);
+		panel.add(lblFiltrarPor);
+		
+		comboBoxCategoria = new JComboBox();
+		comboBoxCategoria.setBounds(52, 41, 113, 19);
+		comboBoxCategoria.addItem("Sin seleccionar");
+		panel.add(comboBoxCategoria);
+		
+		lblCategoria = new JLabel("Categoria");
+		lblCategoria.setToolTipText("Categoria");
+		lblCategoria.setBounds(74, 23, 76, 13);
+		panel.add(lblCategoria);
+		
+		btnAniadirProd = new JButton("->");
+		btnAniadirProd.setBounds(447, 40, 55, 21);
+		panel.add(btnAniadirProd);
+		
+		lblAniadir = new JLabel("A\u00F1adir");
+		lblAniadir.setBounds(459, 23, 39, 13);
+		panel.add(lblAniadir);
+		
+		lblValorTotal = new JLabel("US$10000008");
+		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblValorTotal.setBounds(776, 370, 133, 39);
+		panel.add(lblValorTotal);
+		
+		JLabel lblTotal = new JLabel("Total: ");
+		lblTotal.setFont(new Font("Dialog", Font.BOLD, 17));
+		lblTotal.setBounds(653, 370, 113, 39);
+		panel.add(lblTotal);
+		
+		//Tabla carrito
+
+		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito);
+		
+		scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPaneCarrito.setBounds(588, 70, 321, 284);
+		panel.add(scrollPaneCarrito);
+		
+		tableCarrito = new JTable(modelTablaCarrito);
+		
+		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
+		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
+		
+		scrollPaneCarrito.setViewportView(tableCarrito);
+		
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(779, 41, 47, 19);
+		panel.add(spinner);
+		
+		JLabel lblCantidad = new JLabel("Cantidad");
+		lblCantidad.setBounds(711, 41, 55, 19);
+		panel.add(lblCantidad);
+		//
+		
+		
+		JButton btnAtras = new JButton("< Atr\u00E1s");
+		btnAtras.setBounds(20, 534, 93, 28);
+		frame.getContentPane().add(btnAtras);
+		
+		JButton btnPasarAElegir = new JButton("Pasar a elegir cliente");
+		btnPasarAElegir.setFont(new Font("Consolas", Font.PLAIN, 28));
+		btnPasarAElegir.setBounds(211, 527, 419, 63);
+		frame.getContentPane().add(btnPasarAElegir);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(10, 10, 919, 41);
+		frame.getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblTitulo = new JLabel("Zapater\u00EDa");
+		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 20));
+		lblTitulo.setBounds(10, 10, 195, 21);
+		panel_1.add(lblTitulo);
+		
+		lblSubtitulo = new JLabel("Productos");
+		lblSubtitulo.setFont(new Font("Arial", Font.BOLD, 27));
+		lblSubtitulo.setBounds(20, 61, 195, 21);
+		frame.getContentPane().add(lblSubtitulo);
 	}
+	
+	
+	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.frame.addWindowListener(new WindowAdapter() {
@@ -113,16 +245,79 @@ public class vistaBusquedaProductos {
 	public JTextField getTxtNombreProducto() {
 		return txtNombreProducto;
 	}
-	public JTextField getTxtIdSucursal() {
-		return txtIdSucursal;
-	}
+//	public JTextField getTxtIdSucursal() {
+//		return txtIdSucursal;
+//	}
 	public JTable getTable() {
-		return table;
+		return tableProductosFiltrados;
 	}
 	public DefaultTableModel getModelTabla() {
-		return modelTabla;
+		return modelTablaProductosFiltrados;
 	}
 	public String[] getNombreColumnas() {
-		return nombreColumnas;
+		return nombreColumnasProductosFiltrados;
+	}
+	
+	
+	public JTable getTableProductosFiltrados() {
+		return tableProductosFiltrados;
+	}
+
+
+
+	public DefaultTableModel getModelTablaProductosFiltrados() {
+		return modelTablaProductosFiltrados;
+	}
+
+
+
+	public String[] getNombreColumnasProductosFiltrados() {
+		return nombreColumnasProductosFiltrados;
+	}
+
+
+
+	public JTable getTableCarrito() {
+		return tableCarrito;
+	}
+
+
+
+	public DefaultTableModel getModelTablaCarrito() {
+		return modelTablaCarrito;
+	}
+
+
+
+	public String[] getNombreColumnasCarrito() {
+		return nombreColumnasCarrito;
+	}
+
+
+
+	public JLabel getLblValorTotal() {
+		return lblValorTotal;
+	}
+
+
+
+	public JTextField getTxtTalle() {
+		return txtTalle;
+	}
+
+
+
+	public JTextField getTxtPrecio() {
+		return txtPrecio;
+	}
+
+
+
+	public JComboBox getComboBoxCategoria() {
+		return comboBoxCategoria;
+	}
+
+	public JButton getBtnAniadirProd() {
+		return btnAniadirProd;
 	}
 }

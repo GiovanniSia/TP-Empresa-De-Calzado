@@ -17,6 +17,7 @@ import presentacion.vista.vistaBusquedaProductos;
 
 public class ControladorBusquedaProductos {
 	
+	private final int idSucursal=1;
 	
 	Stock stock;
 	List<StockDTO> listaStock;
@@ -27,10 +28,13 @@ public class ControladorBusquedaProductos {
 	List<MaestroProductoDTO> listaMaestroProducto;
 	MaestroProducto maestroProducto;
 	
-	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
-		this.maestroProducto = maestroProducto;
-		this.stock = stock;
-		this.sucursal = sucursal;
+//	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+//		this.maestroProducto = maestroProducto;
+//		this.stock = stock;
+//		this.sucursal = sucursal;
+//	}
+	public ControladorBusquedaProductos() {
+		inicializar();
 	}
 	
 	public void inicializar() {
@@ -48,12 +52,24 @@ public class ControladorBusquedaProductos {
 				realizarBusqueda();
 			}
 		});
-		this.vistaBusquedaProductos.getTxtIdSucursal().addKeyListener(new KeyAdapter() {
+		this.vistaBusquedaProductos.getTxtTalle().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				realizarBusqueda();
 			}
 		});
+		this.vistaBusquedaProductos.getTxtPrecio().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+//		this.vistaBusquedaProductos.getTxtIdSucursal().addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				realizarBusqueda();
+//			}
+//		});
 		escribirTablaCompleta();
 		this.vistaBusquedaProductos.show();
 		}
@@ -67,82 +83,112 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getModelTabla().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnas());
 		
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
-		String txtSucu = this.vistaBusquedaProductos.getTxtIdSucursal().getText();
+		String cbCategoria = (String) this.vistaBusquedaProductos.getComboBoxCategoria().getSelectedItem();
+		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
+		String txtPrecio = this.vistaBusquedaProductos.getTxtPrecio().getText();
 		
-		if(txtNombre.equals("") &&  txtSucu.equals("")) { //nombreVacio pero sucursal no
+		if(cbCategoria.equals("Sin seleccionar") &&	txtNombre.equals("") && txtTalle.equals("") && txtPrecio.equals("")) { //todo vacio
 			escribirTablaCompleta();
 			return;
 		}
 		
-		if(txtNombre.equals("") && txtSucu != null) {//ambos vacios
-			escribirTablaDadoIdSucursal(Integer.parseInt(txtSucu));
+		if(cbCategoria.equals("Sin seleccionar") && txtNombre!=null && txtTalle.equals("") && txtPrecio.equals("")) {//nombre solo
+			escribirTablaConUnFiltro("Descripcion",txtNombre);
 			return;
 		}
-		
-		if(txtNombre!=null && txtSucu.equals("")) {
-			escribirTablaDadoProducto(txtNombre);
+		if(cbCategoria.equals("Sin seleccionar") && txtNombre.equals("") && txtTalle != null && txtPrecio.equals("")) {//talle solo
+			escribirTablaConUnFiltro("Talle",txtTalle);
 			return;
 		}
-		
-		int txtSucursal = Integer.parseInt(this.vistaBusquedaProductos.getTxtIdSucursal().getText());			
-
-		//caso todos los campos completos
-		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(txtNombre);//posibles valores
-		
-		for(StockDTO s: this.listaStock) {
-			for(MaestroProductoDTO m: productosPosibles) {
-//				System.out.println("nombre Producto: " + m.getDescripcion()+"\nIdProd: "+ m.getIdMaestroProducto()+ "\nIdProductoStock: "+ s.getIdProducto()+"\nidSucursal del stock: "+s.getIdSucursal()+"\nsucursal: "+txtSucursal+"\ncodigoLote: "+s.getCodigoLote());
-				if(txtSucursal == s.getIdSucursal() && s.getIdProducto() == m.getIdMaestroProducto()) {
-					agregarATabla(s,m);
-				}
-			}
-		}		
+		if(cbCategoria.equals("Sin seleccionar") &&	txtNombre.equals("") && txtTalle.equals("") && txtPrecio!=null) { //precio vacio
+			escribirTablaConUnFiltro("PrecioVenta",txtPrecio);
+			return;
+		}
+		if(cbCategoria.equals("Sin seleccionar") && txtNombre != null && txtTalle != null && txtPrecio.equals("")) {//nombre y talle
+			escribirTablaConDosFiltros("Descripcion", txtNombre, "Talle", txtTalle);
+			return;
+		}
+		//verificar
+		if(cbCategoria.equals("Sin seleccionar") && txtNombre != null && txtTalle.equals("") && txtPrecio!=null) {//nombre y precio
+			escribirTablaConDosFiltros("Descripcion", txtNombre, "PrecioVenta", txtPrecio);
+			return;
+		}
+		if(cbCategoria.equals("Sin seleccionar") && txtNombre.equals("") && txtTalle != null && txtPrecio!=null) {//talle y precio
+			escribirTablaConDosFiltros("Talle", txtTalle, "PrecioVenta", txtPrecio);
+			return;
+		}
+//		if(cbCategoria.equals("Sin seleccionar") && txtNombre.equals("") && txtTalle != null && txtPrecio!=null) {//TodoCompleto (falta categoria)
+//			escribirTablaConTodosLosDatos("Descripcion", txtNombre, "Talle", txtPrecio,"");
+//			return;
+//		}
 	}	
 	
 	public void escribirTablaCompleta() {
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
-				if(s.getIdProducto()== m.getIdMaestroProducto()) {
-					agregarATabla(s,m);
-				}
-			}
-		}
-	}
-	public void escribirTablaDadoIdSucursal(int idSucursal){
-		for(StockDTO s: this.listaStock) {
-			for(MaestroProductoDTO m: this.listaMaestroProducto) {
-				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
+				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m)) {
 					agregarATabla(s,m);
 				}
 			}
 		}
 	}
 
-	public void escribirTablaDadoProducto(String nombre) {
-		List<MaestroProductoDTO> productosPosibles = this.maestroProducto.getMaestroProducto(nombre);//posibles valores
-		for(MaestroProductoDTO m: productosPosibles){
-			for(StockDTO s: this.listaStock){
-//				System.out.println("nombre Producto: " + m.getDescripcion()+"\nIdProd: "+ m.getIdMaestroProducto()+ "\nIdProductoStock: "+ s.getIdProducto()+"\nidSucursal del stock: "+s.getIdSucursal()+"\nsucursal: "+txtSucursal+"\ncodigoLote: "+s.getCodigoLote());
-				if(m.getIdMaestroProducto()==s.getIdProducto()) {
+	public void escribirTablaConUnFiltro(String nombreColumna, String aprox){
+		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado(nombreColumna,aprox);
+
+		for(StockDTO s: this.listaStock) {
+			for(MaestroProductoDTO m: productosAproximados) {
+				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m)) {
 					agregarATabla(s,m);
 				}
 			}
 		}
 	}
 	
-	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
-		String descr = m.getDescripcion();
-		String codLote = s.getCodigoLote(); 
-		int idSucursal = s.getIdSucursal();
-		int stockDisp = s.getStockDisponible();
-		String tipo = m.getTipo();
-		String fabricado = m.getFabricado();
-		int precioCosto = m.getPrecioCosto();
-		int precioVenta = m.getPrecioVenta();
-		int puntoRepositorio = m.getPuntoRepositorio();
+	public void escribirTablaConDosFiltros(String nombreColumna, String aprox, String nombreColumna2, String aprox2) {
+		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado(nombreColumna,aprox);
+		List<MaestroProductoDTO> productosAproximados2 = this.maestroProducto.getMaestroProductoAproximado(nombreColumna2,aprox2);
+		List<MaestroProductoDTO> productos = interseccionProducto(productosAproximados,productosAproximados2);
 		
-		Object[] fila = { descr,codLote,idSucursal,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
+		for(StockDTO s: this.listaStock) {
+			for(MaestroProductoDTO p: productos) {
+				if(p.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,p)) {
+					agregarATabla(s,p);
+				}
+			}
+		}
+	}
+
+	
+	public List<MaestroProductoDTO> interseccionProducto(List<MaestroProductoDTO> n, List<MaestroProductoDTO> m){
+		List<MaestroProductoDTO> inter = new ArrayList<MaestroProductoDTO>();
+		for(MaestroProductoDTO nn: n) {
+			for(MaestroProductoDTO mm: m) {
+				if(nn.getIdMaestroProducto()==mm.getIdMaestroProducto()) {
+					inter.add(nn);
+				}
+			}
+		}
+		return inter;
+	}
+	
+	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
+		
+//private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Venta"};
+		String nombre=m.getDescripcion();
+		String talle = m.getTalle();
+		int precioVenta = m.getPrecioVenta();
+		
+		Object[] fila = { nombre,talle,precioVenta};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
 	}
 
+	
+	public boolean esAptoParaVender(StockDTO s, MaestroProductoDTO m) {
+		return m.getEstado().equals("Activo") && m.getTipo().equals("PT") && m.getFabricado().equals("S");
+	}
+	
+	public static void main(String[] args) {
+		new ControladorBusquedaProductos();
+	}
 }
