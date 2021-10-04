@@ -21,6 +21,7 @@ public class FabricacionDAOSQL {
 	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso;";
 	private static final String readAllMaterialesFromOnePaso = "SELECT * FROM materialesDePaso mdp, maestroProductos mp WHERE mdp.IdPaso = ? AND mdp.IdMaterial = mp.IdMaestroProducto;";
 	private static final String readAllCantidadMaterialesFromOnePaso = "SELECT * FROM materialesDePaso WHERE IdPaso = ? AND IdMaterial = ?;";
+	private static final String readOnePaso = "SELECT * FROM paso WHERE IdPaso = ?";
 	
 	public List<RecetaDTO> readAllReceta() {
 		PreparedStatement statement;
@@ -78,7 +79,8 @@ public class FabricacionDAOSQL {
 				cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
 			}
 		}
-		PasoDeRecetaDTO paso = new PasoDeRecetaDTO(IdPasoReceta,IdReceta,NroOrden,IdPaso,new PasoDTO(0,"", materiales, cantidades));
+		String descr = obtenerDescrpcionPaso(IdPaso);
+		PasoDeRecetaDTO paso = new PasoDeRecetaDTO(IdPasoReceta,IdReceta,NroOrden,IdPaso,new PasoDTO(IdPaso,descr, materiales, cantidades));
 		return paso;
 	}
 	
@@ -135,6 +137,25 @@ public class FabricacionDAOSQL {
 			e.printStackTrace();
 		}
 		return lista;
+		
+	}
+	
+	public static String obtenerDescrpcionPaso(int idPaso){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String ret = "";
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readOnePaso);
+			statement.setInt(1,idPaso);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				ret = resultSet.getString("Descripcion");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
 		
 	}
 	
