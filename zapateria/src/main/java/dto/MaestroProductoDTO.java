@@ -13,9 +13,13 @@ public class MaestroProductoDTO {
 	private String talle;
 	private int unidadMedida;
 	private String estado;
+	
+	private int CantidadAReponer;
+	private int DiasParaReponer;
 
 	public MaestroProductoDTO(int idMaestroProducto, String descripcion, String tipo, String fabricado, int precioCosto,
-			int precioVenta, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado) {
+			int precioVenta, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado, 
+			int CantidadAReponer, int DiasParaReponer) {
 		this.idMaestroProducto = idMaestroProducto;
 		this.descripcion = descripcion;
 		this.tipo = tipo;
@@ -27,6 +31,25 @@ public class MaestroProductoDTO {
 		this.talle = talle;
 		this.unidadMedida = unidadMedida;
 		this.estado = estado;
+		
+		this.CantidadAReponer = CantidadAReponer; //Agregado para la generacion de ordenes de manufactura
+		this.DiasParaReponer = DiasParaReponer;
+	}
+
+	public int getDiasParaReponer() {
+		return DiasParaReponer;
+	}
+
+	public void setDiasParaReponer(int diasParaReponer) {
+		DiasParaReponer = diasParaReponer;
+	}
+
+	public int getCantidadAReponer() {
+		return CantidadAReponer;
+	}
+
+	public void setCantidadAReponer(int cantidadAReponer) {
+		CantidadAReponer = cantidadAReponer;
 	}
 
 	public int getIdMaestroProducto() {

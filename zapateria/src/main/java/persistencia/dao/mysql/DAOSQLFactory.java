@@ -8,6 +8,7 @@ import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.EmpleadoDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
+import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
 
@@ -38,6 +39,11 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public SucursalDAO createSucursalDAO() {
 		return new SucursalDAOSQL();
+	}
+
+	@Override
+	public OrdenFabricaDAO createOrdenFabricaDAO() {
+		return new OrdenFabricaDAOSQL();
 	}
 
 }
