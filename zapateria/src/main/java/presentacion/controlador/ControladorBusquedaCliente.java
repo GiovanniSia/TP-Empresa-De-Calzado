@@ -80,15 +80,31 @@ public class ControladorBusquedaCliente {
 			return;
 		}
 
+		List<ClienteDTO> clientes = cliente.readAll();
+	
 		String codCliente = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 0).toString();
-		String nombre = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 1).toString();
-		String apellido = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 2).toString();
-		String DNI = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 3).toString();
-		String correoElectronico = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 4)
-				.toString();
-		String estado = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 5).toString();
-		System.out.println("Cliente Seleccionado: " + codCliente + ", " + nombre + ", " + apellido + ", " + DNI + ", "
-				+ correoElectronico + ", " + estado);
+		for (ClienteDTO c : clientes) {			
+			//Obtengo el objeto cilente con todos sus valores
+			if (codCliente.equals(""+c.getIdCliente()+"")) {
+				int IdCliente = c.getIdCliente();
+				String Nombre = c.getNombre();
+				String Apellido = c.getApellido();
+				String DNI = c.getDNI();
+				String CorreoElectronico = c.getCorreo();
+				int LimiteCredito = c.getLimiteCredito();
+				int CreditoDisponible = c.getCreditoDisponible();
+				String TipoCliente = c.getTipoCliente();
+				String ImpuestoAFIP = c.getImpuestoAFIP();
+				String Estado = c.getEstado();
+				String Calle = c.getCalle();
+				String Altura = c.getAltura();
+				String Pais = c.getPais();
+				String Provincia = c.getProvincia(); 
+				String Localidad = c.getLocalidad();
+				String CodPostal = c.getCodPostal();
+				System.out.println("Cliente Seleccionado: "+ IdCliente+", "+Nombre+", "+Apellido+", "+DNI+", "+Calle+", "+TipoCliente+", etc.");			
+			}
+		}
 	}
 
 	public void mostrarVentana() {
