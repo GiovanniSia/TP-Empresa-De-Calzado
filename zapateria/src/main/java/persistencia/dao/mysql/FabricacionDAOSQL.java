@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.FabricacionesDTO;
+import dto.GeneroDTO;
 import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -188,6 +189,35 @@ public class FabricacionDAOSQL {
 		int NroPasoActual = resultSet.getInt("NroPasoActual");
 		String Estado = resultSet.getString("Estado");
 		return new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
+	}
+	
+	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?)";
+	public boolean insert(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insertFabricacionesEnMarcha);
+			statement.setInt(1, fabri.getIdOrdenFabrica());
+			statement.setInt(2, fabri.getIdReceta());
+			statement.setInt(3, fabri.getNroPasoActual());
+			statement.setString(4, fabri.getEstado());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
 	}
 	
 	/*
