@@ -72,13 +72,13 @@ public class ControladorBusquedaProductos {
 		if(txtNombre.equals("") && txtSucu != null) {
 			//ambos vacios
 			System.out.println("el nombre esta vacio y el idSucursal lleno");
-//			escribirTablaCompleta();
+			escribirTablaDadoIdSucursal(Integer.parseInt(txtSucu));
 			return;
 		}
 		
 		if(txtNombre!=null && txtSucu == null) {
 			System.out.println("el nombre esta lleno y el idSucursal vacio");
-			//nombreCompleto pero IdSucursal no
+			escribirTablaDadoProducto(txtNombre);
 			return;
 		}
 		
@@ -143,12 +143,10 @@ public class ControladorBusquedaProductos {
 			}
 		}
 	}
-	
-
-	public void escribirTodosProductos(int idSucursal) {
+	public void escribirTablaDadoIdSucursal(int idSucursal){
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
-				if(m.getIdMaestroProducto()==s.getIdProducto() && s.getIdSucursal()==idSucursal) {
+				if(m.getIdMaestroProducto()==s.getIdStock() && idSucursal == s.getIdStock()) {
 					String descr = m.getDescripcion();
 					String codLote = s.getCodigoLote(); 
 					int stockDisp = s.getStockDisponible();
@@ -163,6 +161,10 @@ public class ControladorBusquedaProductos {
 				}
 			}
 		}
+	}
+
+	public void escribirTablaDadoProducto(String nombre) {
+
 	}
 	
 	public static void main(String[] args) {
