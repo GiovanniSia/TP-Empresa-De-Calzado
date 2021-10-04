@@ -6,4 +6,7 @@ import dto.MaestroProductoDTO;
 
 public interface MaestroProductoDAO {
 	public List<MaestroProductoDTO> readAll();
+	
+	public List<MaestroProductoDTO> getMaestroProducto(String nombre);
+	
 }

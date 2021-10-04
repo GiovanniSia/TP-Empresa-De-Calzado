@@ -17,4 +17,9 @@ public class MaestroProducto {
 	public List<MaestroProductoDTO> readAll(){
 		return this.maestroProducto.readAll();
 	}
+	
+	public List<MaestroProductoDTO> getMaestroProducto(String nombre){
+		return this.maestroProducto.getMaestroProducto(nombre);
+	}
+	
 }

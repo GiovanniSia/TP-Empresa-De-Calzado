@@ -14,9 +14,7 @@ import dto.MaestroProductoDTO;
 
 public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 	private static final String readall = "SELECT * FROM maestroProductos";
-
-
-
+	
 	public List<MaestroProductoDTO> readAll() {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
@@ -47,6 +45,26 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		int unidadMedida = resultSet.getInt("UnidadMedida");
 		String estado = resultSet.getString("Estado");
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado);
+	}
+
+	@Override
+	public List<MaestroProductoDTO> getMaestroProducto(String nombre) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel =  "SELECT * FROM maestroProductos WHERE Descripcion like '"+nombre+"%'";
+		ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+//			statement.setString(1, nombre);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maestroProducto.add(getMaestroProductoDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maestroProducto;
 	}
 }
 

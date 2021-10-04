@@ -5,6 +5,12 @@ import java.awt.event.ActionListener;
 
 public class Controlador implements ActionListener {
 
+	
+	public void inicializar() {
+		
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	}
