@@ -242,6 +242,9 @@ CREATE TABLE `fabricacionesEnMarcha`
   `IdReceta` int(11) NOT NULL,
   `NroPasoActual` int(11) NOT NULL,
   `Estado` varchar(45) NOT NULL,
+  
+  `FechaCompletado` DATE NOT NULL,
+  `DiaDisponible` int(11) NOT NULL,
   PRIMARY KEY (`IdFabricacionesEnMarcha`)
 );
 

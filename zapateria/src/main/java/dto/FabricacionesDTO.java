@@ -7,6 +7,11 @@ public class FabricacionesDTO {
 	private int IdReceta;
 	private int NroPasoActual;
 	private String Estado;
+	
+	private int diaCompletado;
+	private int mesCompletado;
+	private int anioCompletado;
+	private int diaDisponible;
 
 	public FabricacionesDTO(int idFabricacionesEnMarcha, int idOrdenFabrica, int idReceta, int nroPasoActual,
 			String estado) {
@@ -16,6 +21,11 @@ public class FabricacionesDTO {
 		IdReceta = idReceta;
 		NroPasoActual = nroPasoActual;
 		Estado = estado;
+		
+		diaCompletado = 27;
+		mesCompletado = 5;
+		anioCompletado = 1999;
+		diaDisponible = 15;
 	}
 	
 	public void cancelarOrden() {
@@ -75,6 +85,38 @@ public class FabricacionesDTO {
 
 	public void setEstado(String estado) {
 		Estado = estado;
+	}
+	
+	public int getDiaCompletado() {
+		return diaCompletado;
+	}
+
+	public void setDiaCompletado(int diaCompletado) {
+		this.diaCompletado = diaCompletado;
+	}
+
+	public int getMesCompletado() {
+		return mesCompletado;
+	}
+
+	public void setMesCompletado(int mesCompletado) {
+		this.mesCompletado = mesCompletado;
+	}
+
+	public int getAnioCompletado() {
+		return anioCompletado;
+	}
+
+	public void setAnioCompletado(int anioCompletado) {
+		this.anioCompletado = anioCompletado;
+	}
+
+	public int getDiaDisponible() {
+		return diaDisponible;
+	}
+
+	public void setDiaDisponible(int diaDisponible) {
+		this.diaDisponible = diaDisponible;
 	}
 
 }

@@ -186,10 +186,24 @@ public class FabricacionDAOSQL {
 		int IdReceta = resultSet.getInt("IdReceta");
 		int NroPasoActual = resultSet.getInt("NroPasoActual");
 		String Estado = resultSet.getString("Estado");
-		return new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
+		
+		String fechaC = resultSet.getString("FechaCompletado");
+		String aux = fechaC.substring(8, 10);
+		int diaC = Integer.parseInt(aux);
+		aux = fechaC.substring(5, 7);
+		int mesC = Integer.parseInt(aux);
+		aux = fechaC.substring(0, 4);
+		int anioC = Integer.parseInt(aux);
+		FabricacionesDTO ret = new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
+		ret.setDiaCompletado(diaC);
+		ret.setMesCompletado(mesC);
+		ret.setAnioCompletado(anioC);
+		int DiaDisponible = resultSet.getInt("DiaDisponible");
+		ret.setDiaDisponible(DiaDisponible);
+		return ret;
 	}
 	
-	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?);";
+	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado, FechaCompletado, DiaDisponible) VALUES(?, ?, ?, ?, ?, ?);";
 	public static boolean insertFabricacionEnMarcha(FabricacionesDTO fabri) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -201,6 +215,9 @@ public class FabricacionDAOSQL {
 			statement.setInt(2, fabri.getIdReceta());
 			statement.setInt(3, fabri.getNroPasoActual());
 			statement.setString(4, fabri.getEstado());
+			String diaCompletado = fabri.getAnioCompletado()+"-"+fabri.getMesCompletado()+"-"+fabri.getDiaCompletado();
+			statement.setString(5, diaCompletado);//fechaCompletado
+			statement.setInt(6, fabri.getDiaDisponible());//dia disponible
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -218,7 +235,7 @@ public class FabricacionDAOSQL {
 		return isInsertExitoso;
 	}
 	
-	private static final String actualizarFabricacionEnMarcha = "UPDATE fabricacionesEnMarcha SET NroPasoActual = ?, Estado = ? WHERE IdFabricacionesEnMarcha = ?;";
+	private static final String actualizarFabricacionEnMarcha = "UPDATE fabricacionesEnMarcha SET NroPasoActual = ?, Estado = ?, FechaCompletado = ?, DiaDisponible = ? WHERE IdFabricacionesEnMarcha = ?;";
 	public static boolean actualizarFabricacionEnMarcha(FabricacionesDTO fabri) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -228,7 +245,11 @@ public class FabricacionDAOSQL {
 			statement = conexion.prepareStatement(actualizarFabricacionEnMarcha);
 			statement.setInt(1, fabri.getNroPasoActual());
 			statement.setString(2, fabri.getEstado());
-			statement.setInt(3, fabri.getIdFabricacionesEnMarcha());
+			statement.setInt(5, fabri.getIdFabricacionesEnMarcha());
+			
+			String diaCompletado = fabri.getAnioCompletado()+"-"+fabri.getMesCompletado()+"-"+fabri.getDiaCompletado();
+			statement.setString(3, diaCompletado);//fechaCompletado
+			statement.setInt(4, fabri.getDiaDisponible());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -246,11 +267,12 @@ public class FabricacionDAOSQL {
 		return isInsertExitoso;
 	}
 	
-	public static void completarOrden(FabricacionesDTO fabri) {
+	public static void completarOrden(FabricacionesDTO fabri, int diaLlega) {
 		if(verificarSiOrdenCompleta(fabri)) {
 			fabri.completarOrden();
 			actualizarFabricacionEnMarcha(fabri);
 			//dar de alta stock
+			
 		}
 	}
 	
@@ -305,13 +327,19 @@ public class FabricacionDAOSQL {
 		f.setNroPasoActual(300);
 		actualizarFabricacionEnMarcha(f);
 		*/
-		/*
-		FabricacionesDTO fa = new FabricacionesDTO(3,1,1,15,"cancelado");
-		insertFabricacionEnMarcha(fa);
+		
+		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,15,"activo");
+		//insertFabricacionEnMarcha(fa);
+		fa.setAnioCompletado(21);
+		fa.setMesCompletado(9);
+		fa.setDiaCompletado(2);
+		
+		actualizarFabricacionEnMarcha(fa);
+		
 		for(FabricacionesDTO f: readAllFabricacionesEnMarcha()) {
 			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
 		}
-		*/
+		
 		
 	}
 
