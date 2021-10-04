@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -84,7 +85,7 @@ public class FabricacionDAOSQL {
 		return paso;
 	}
 	
-	public static List<MaestroProductoDTO> readAllMaterialesFromOnePaso(int idPaso) {
+	private static List<MaestroProductoDTO> readAllMaterialesFromOnePaso(int idPaso) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<MaestroProductoDTO> material = new ArrayList<MaestroProductoDTO>();
@@ -120,7 +121,7 @@ public class FabricacionDAOSQL {
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 	
-	public static Integer obtenerCantidadMaterial(int idPaso, int idMaterial){
+	private static Integer obtenerCantidadMaterial(int idPaso, int idMaterial){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		Integer lista = 0;
@@ -140,7 +141,7 @@ public class FabricacionDAOSQL {
 		
 	}
 	
-	public static String obtenerDescrpcionPaso(int idPaso){
+	private static String obtenerDescrpcionPaso(int idPaso){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		String ret = "";
@@ -159,6 +160,15 @@ public class FabricacionDAOSQL {
 		
 	}
 	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
+	private static final String readAllFabricacionesPendientes = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'completo'";
+	
+	private static FabricacionesDTO readAllFabricacionesEnMarcha(){
+		return new FabricacionesDTO(0,0,0,0,"completo");
+	}
+	
+	/*
 	public static void main(String[] args) {
 		List<PasoDeRecetaDTO> pasos = readAllPasosFromOneReceta(1);
 		for(PasoDeRecetaDTO p: pasos) {
@@ -170,6 +180,6 @@ public class FabricacionDAOSQL {
 				System.out.print("[" +p.getPasosDTO().getMateriales().get(x).getIdMaestroProducto() + " "+ p.getPasosDTO().getMateriales().get(x).getDescripcion()+ " CantidadUsada= " + p.getPasosDTO().getCantidadUsada().get(x) +"]");
 			}
 		}
-	}
+	}*/
 
 }
