@@ -34,4 +34,8 @@ public class Cliente {
 	public List<ClienteDTO> filtrarPorCodCliente(String valor){
 		return this.cliente.filtrarPorCodCliente(valor);
 	}
+	
+	public List<ClienteDTO> filtrarPorNombre(String valor){
+		return this.cliente.filtrarPorNombre(valor);
+	}
 }

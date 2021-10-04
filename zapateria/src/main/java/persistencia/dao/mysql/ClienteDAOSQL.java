@@ -155,15 +155,8 @@ public class ClienteDAOSQL implements ClienteDAO{
 	}
 	
 	public List<ClienteDTO> filtrarPorCodCliente(String valor) {
-		
-		VentanaBusquedaCliente ventanaBusquedaCliente = new VentanaBusquedaCliente();
-		
+				
 		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
-		
-		String[] titulos = {"Cod. Cliente" , "Nombre" , "Apellido" , "DNI" , "Correo Electronico", "Estado"};
-		String[] registros = new String[7];
-		
-		DefaultTableModel modelo = new DefaultTableModel(null, titulos);
 		
 		String SQL = "select * from clientes where IdCliente like '"+ valor +"%'";
 		
@@ -171,8 +164,7 @@ public class ClienteDAOSQL implements ClienteDAO{
 			Connection conexion = Conexion.getConexion().getSQLConexion();
 			
 			Statement st=conexion.createStatement();
-			ResultSet rs=st.executeQuery(SQL);
-			 
+			ResultSet rs=st.executeQuery(SQL);	 
 	
           while (rs.next()) {
         	  listaCliente.add(getClienteDTO(rs));
@@ -182,8 +174,41 @@ public class ClienteDAOSQL implements ClienteDAO{
 			System.out.println("Error al mostrar datos: "+ e.getMessage());
 		}
 		 return listaCliente;
-
 	}
+	
+	public List<ClienteDTO> filtrarPorNombre(String valor) {
+		
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+		
+		String SQL = "select * from clientes where Nombre like '"+ valor +"%'";
+		
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+			
+			Statement st=conexion.createStatement();
+			ResultSet rs=st.executeQuery(SQL);	 
+	
+          while (rs.next()) {
+        	  listaCliente.add(getClienteDTO(rs));
+          }
+   
+		}catch (Exception e) {
+			System.out.println("Error al mostrar datos: "+ e.getMessage());
+		}
+		 return listaCliente;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
