@@ -7,6 +7,7 @@ CREATE TABLE `clientes`
   `IdCliente` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   `Apellido` varchar(45) NOT NULL,
+  `DNI` varchar(45) NOT NULL,
   `CorreoElectronico` varchar(45) NOT NULL,
   `LimiteCredito` int(11) NOT NULL,
   `CreditoDisponible` int(11) NOT NULL,

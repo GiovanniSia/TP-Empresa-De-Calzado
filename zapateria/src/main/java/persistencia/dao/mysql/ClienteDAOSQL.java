@@ -4,15 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
 
 import dto.ClienteDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ClienteDAO;
+import presentacion.vista.VentanaBusquedaCliente;
+import java.util.List;
 
-public class ClienteDAOSQL implements ClienteDAO{
-	
-	private static final String insert = "INSERT INTO clientes VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+public class ClienteDAOSQL implements ClienteDAO {
+
+	private static final String insert = "INSERT INTO clientes VALUES(?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM clientes WHERE idCliente = ?";
 	private static final String update = "UPDATE clientes set Nombre=?, Apellido=?, CorreoElectronico=?, LimiteCredito=?, CreditoDisponible=?, TipoCliente=?, ImpuestoAFIP=?, Estado=?, Calle=?, Altura=?, Pais=?, Provincia=?, Localidad=?, CodPostal=? where IdCliente=?";
 	private static final String readall = "SELECT * FROM clientes";
@@ -24,23 +29,24 @@ public class ClienteDAOSQL implements ClienteDAO{
 		boolean isInsertExitoso = false;
 		try {
 			statement = conexion.prepareStatement(insert);
-			
+
 			statement.setInt(1, cliente.getIdCliente());
 			statement.setString(2, cliente.getNombre());
 			statement.setString(3, cliente.getApellido());
-			statement.setString(4, cliente.getCorreo());
-			statement.setInt(5, cliente.getLimiteCredito());
-			statement.setInt(6, cliente.getCreditoDisponible());
-			statement.setString(7, cliente.getTipoCliente());
-			statement.setString(8, cliente.getImpuestoAFIP());
-			statement.setString(9, cliente.getEstado());
-			statement.setString(10, cliente.getCalle());
-			statement.setString(11, cliente.getAltura());
-			statement.setString(12, cliente.getPais());
-			statement.setString(13, cliente.getProvincia());
-			statement.setString(14, cliente.getLocalidad());
-			statement.setString(15, cliente.getCodPostal());
-			
+			statement.setString(4, cliente.getDNI());
+			statement.setString(5, cliente.getCorreo());
+			statement.setInt(6, cliente.getLimiteCredito());
+			statement.setInt(7, cliente.getCreditoDisponible());
+			statement.setString(8, cliente.getTipoCliente());
+			statement.setString(9, cliente.getImpuestoAFIP());
+			statement.setString(10, cliente.getEstado());
+			statement.setString(11, cliente.getCalle());
+			statement.setString(12, cliente.getAltura());
+			statement.setString(13, cliente.getPais());
+			statement.setString(14, cliente.getProvincia());
+			statement.setString(15, cliente.getLocalidad());
+			statement.setString(16, cliente.getCodPostal());
+
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
@@ -83,22 +89,22 @@ public class ClienteDAOSQL implements ClienteDAO{
 		try {
 			statement = conexion.prepareStatement(update);
 
-
 			statement.setString(1, cliente_nuevo.getNombre());
 			statement.setString(2, cliente_nuevo.getApellido());
-			statement.setString(3, cliente_nuevo.getCorreo());
-			statement.setInt(4, cliente_nuevo.getLimiteCredito());
-			statement.setInt(5, cliente_nuevo.getCreditoDisponible());
-			statement.setString(6, cliente_nuevo.getTipoCliente());
-			statement.setString(7, cliente_nuevo.getImpuestoAFIP());
-			statement.setString(8, cliente_nuevo.getEstado());
-			statement.setString(9, cliente_nuevo.getCalle());
-			statement.setString(10, cliente_nuevo.getAltura());
-			statement.setString(11, cliente_nuevo.getPais());
-			statement.setString(12, cliente_nuevo.getProvincia());
-			statement.setString(13, cliente_nuevo.getLocalidad());
-			statement.setString(14, cliente_nuevo.getCodPostal());
-			statement.setInt(15, id_cliente_a_actualizar);
+			statement.setString(3, cliente_nuevo.getDNI());
+			statement.setString(4, cliente_nuevo.getCorreo());
+			statement.setInt(5, cliente_nuevo.getLimiteCredito());
+			statement.setInt(6, cliente_nuevo.getCreditoDisponible());
+			statement.setString(7, cliente_nuevo.getTipoCliente());
+			statement.setString(8, cliente_nuevo.getImpuestoAFIP());
+			statement.setString(9, cliente_nuevo.getEstado());
+			statement.setString(10, cliente_nuevo.getCalle());
+			statement.setString(11, cliente_nuevo.getAltura());
+			statement.setString(12, cliente_nuevo.getPais());
+			statement.setString(13, cliente_nuevo.getProvincia());
+			statement.setString(14, cliente_nuevo.getLocalidad());
+			statement.setString(15, cliente_nuevo.getCodPostal());
+			statement.setInt(16, id_cliente_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -132,7 +138,8 @@ public class ClienteDAOSQL implements ClienteDAO{
 		int idCliente = resultSet.getInt("IdCliente");
 		String nombre = resultSet.getString("Nombre");
 		String apellido = resultSet.getString("Apellido");
-		String correo = resultSet.getString("Correo");
+		String DNI = resultSet.getString("DNI");
+		String correo = resultSet.getString("CorreoElectronico");
 		int limiteCredito = resultSet.getInt("LimiteCredito");
 		int creditoDisponible = resultSet.getInt("CreditoDisponible");
 		String tipoCliente = resultSet.getString("TipoCliente");
@@ -144,7 +151,96 @@ public class ClienteDAOSQL implements ClienteDAO{
 		String provincia = resultSet.getString("Provincia");
 		String localidad = resultSet.getString("Localidad");
 		String codPostal = resultSet.getString("CodPostal");
-		return new ClienteDTO(idCliente, nombre, apellido, correo, limiteCredito, creditoDisponible, tipoCliente, impuestoAFIP, estado, calle, altura, pais, provincia, localidad, codPostal);
+		return new ClienteDTO(idCliente, nombre, apellido, DNI, correo, limiteCredito, creditoDisponible, tipoCliente,
+				impuestoAFIP, estado, calle, altura, pais, provincia, localidad, codPostal);
 	}
-	
+
+	public List<ClienteDTO> filtrarPorCodCliente(String valor) {
+
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+
+		String SQL = "select * from clientes where IdCliente like '" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaCliente.add(getClienteDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaCliente;
+	}
+
+	public List<ClienteDTO> filtrarPorNombre(String valor) {
+
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+
+		String SQL = "select * from clientes where Nombre like '" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaCliente.add(getClienteDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaCliente;
+	}
+
+	public List<ClienteDTO> filtrarPorApellido(String valor) {
+
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+
+		String SQL = "select * from clientes where Apellido like '" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaCliente.add(getClienteDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaCliente;
+	}
+
+	public List<ClienteDTO> filtradoPorDNI(String valor) {
+
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+
+		String SQL = "select * from clientes where DNI like '" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaCliente.add(getClienteDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaCliente;
+	}
+
 }

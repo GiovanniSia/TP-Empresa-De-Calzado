@@ -30,4 +30,20 @@ public class Cliente {
 	public List<ClienteDTO> readAll(){
 		return this.cliente.readAll();
 	}
+	
+	public List<ClienteDTO> filtrarPorCodCliente(String valor){
+		return this.cliente.filtrarPorCodCliente(valor);
+	}
+	
+	public List<ClienteDTO> filtrarPorNombre(String valor){
+		return this.cliente.filtrarPorNombre(valor);
+	}
+	
+	public List<ClienteDTO> filtrarPorApellido(String valor){
+		return this.cliente.filtrarPorApellido(valor);
+	}
+	
+	public List<ClienteDTO> filtrarPorDNI(String valor){
+		return this.cliente.filtradoPorDNI(valor);
+	}
 }
