@@ -17,6 +17,25 @@ public class FabricacionesDTO {
 		NroPasoActual = nroPasoActual;
 		Estado = estado;
 	}
+	
+	public void cancelarOrden() {
+		Estado = "cancelado";
+	}
+	
+	public void completarOrden() {
+		Estado = "completo";
+	}
+	
+	public void sumarUnPaso() {
+		NroPasoActual++;
+	}
+	
+	public void restarUnPaso() {
+		if(NroPasoActual == 1) {
+			return;
+		}
+		NroPasoActual--;
+	}
 
 	public int getIdFabricacionesEnMarcha() {
 		return IdFabricacionesEnMarcha;

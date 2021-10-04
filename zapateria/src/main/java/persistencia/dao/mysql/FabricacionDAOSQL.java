@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.FabricacionesDTO;
-import dto.GeneroDTO;
 import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -191,8 +190,8 @@ public class FabricacionDAOSQL {
 		return new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
 	}
 	
-	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?)";
-	public boolean insert(FabricacionesDTO fabri) {
+	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?);";
+	public static boolean insertFabricacionEnMarcha(FabricacionesDTO fabri) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
@@ -220,8 +219,36 @@ public class FabricacionDAOSQL {
 		return isInsertExitoso;
 	}
 	
-	/*
+	private static final String actualizarFabricacionEnMarcha = "UPDATE fabricacionesEnMarcha SET NroPasoActual = ?, Estado = ? WHERE IdFabricacionesEnMarcha = ?;";
+	public static boolean actualizarFabricacionEnMarcha(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(actualizarFabricacionEnMarcha);
+			statement.setInt(1, fabri.getNroPasoActual());
+			statement.setString(2, fabri.getEstado());
+			statement.setInt(3, fabri.getIdFabricacionesEnMarcha());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
 	public static void main(String[] args) {
+		/*
 		List<PasoDeRecetaDTO> pasos = readAllPasosFromOneReceta(1);
 		for(PasoDeRecetaDTO p: pasos) {
 			System.out.println();
@@ -232,6 +259,21 @@ public class FabricacionDAOSQL {
 				System.out.print("[" +p.getPasosDTO().getMateriales().get(x).getIdMaestroProducto() + " "+ p.getPasosDTO().getMateriales().get(x).getDescripcion()+ " CantidadUsada= " + p.getPasosDTO().getCantidadUsada().get(x) +"]");
 			}
 		}
-	}*/
+		*/
+		/*
+		FabricacionesDTO f = new FabricacionesDTO(2,1,1,15,"activo");
+		//insertFabricacionEnMarcha(f);
+		f.setNroPasoActual(300);
+		actualizarFabricacionEnMarcha(f);
+		*/
+		/*
+		FabricacionesDTO fa = new FabricacionesDTO(3,1,1,15,"cancelado");
+		insertFabricacionEnMarcha(fa);
+		for(FabricacionesDTO f: readAllFabricacionesEnMarcha()) {
+			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
+		}
+		*/
+		
+	}
 
 }
