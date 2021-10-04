@@ -28,6 +28,10 @@ public class FabricacionesDTO {
 		diaDisponible = 15;
 	}
 	
+	public void entregadaLaOrden() {
+		Estado = "entregado";
+	}
+	
 	public void cancelarOrden() {
 		Estado = "cancelado";
 	}

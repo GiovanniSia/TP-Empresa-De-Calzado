@@ -267,7 +267,7 @@ public class FabricacionDAOSQL {
 		return isInsertExitoso;
 	}
 	
-	public static void completarOrden(FabricacionesDTO fabri, int diaLlega) {
+	public static FabricacionesDTO completarOrden(FabricacionesDTO fabri, int diaLlega) {
 		fabri.completarOrden();
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate());
@@ -279,6 +279,7 @@ public class FabricacionDAOSQL {
 		fabri.setMesCompletado(mes);
 		fabri.setDiaDisponible(diaLlega);
 		actualizarFabricacionEnMarcha(fabri);
+		return fabri;
 		//dar de alta stock cuando llegue el dia completado + dia disponible
 	}
 	
@@ -311,7 +312,42 @@ public class FabricacionDAOSQL {
 	}
 	
 	private static final String insertStock = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?);";
-
+	public static void actualizarSiLlegoFechaDeEntrega(FabricacionesDTO f) {
+		java.util.Date fechaActual = new java.util.Date();
+		fechaActual.setDate(fechaActual.getDate());
+		int anio = fechaActual.getYear();
+		int mes = fechaActual.getMonth();
+		int dia = fechaActual.getDate();
+		
+		java.util.Date fechaEntrega = new java.util.Date();
+		fechaEntrega.setYear(f.getAnioCompletado()-1900);
+		fechaEntrega.setMonth(f.getMesCompletado()-1);
+		fechaEntrega.setDate(f.getDiaCompletado()+f.getDiaDisponible());
+		
+		if(fechaActual.getDate() == fechaEntrega.getDate() && fechaActual.getMonth() == fechaEntrega.getMonth() 
+				&& fechaActual.getYear() == fechaEntrega.getYear()) {
+			f.entregadaLaOrden();
+			actualizarFabricacionEnMarcha(f);
+		}
+	}
+	
+	private static final String readAllFabricacionesCompletas = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'completo'";
+	public static List<FabricacionesDTO> readAllFabricacionesCompletas(){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllFabricacionesCompletas);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getFabricacionesEnMarcha(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
+	}
 	
 	public static void main(String[] args) {
 		//System.out.println(readCantPasosReceta(1));
@@ -333,19 +369,16 @@ public class FabricacionDAOSQL {
 		f.setNroPasoActual(300);
 		actualizarFabricacionEnMarcha(f);
 		*/
-		/*
-		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,6,"activo");
+		
+		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,7,"activo");
 		//insertFabricacionEnMarcha(fa);
-		//fa.completarOrden();
 		
-		System.out.println(verificarSiOrdenCompleta(fa));
+		fa = completarOrden(fa,1);
 		
-		//actualizarFabricacionEnMarcha(fa);
-		completarOrden(fa,5);
 		for(FabricacionesDTO f: readAllFabricacionesEnMarcha()) {
 			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
 		}
-		*/
+		
 		
 	}
 
