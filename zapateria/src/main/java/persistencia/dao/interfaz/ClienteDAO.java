@@ -17,4 +17,8 @@ public interface ClienteDAO {
 	public List<ClienteDTO> filtrarPorCodCliente(String valor);
 	
 	public List<ClienteDTO> filtrarPorNombre(String valor);
+	
+	public List<ClienteDTO> filtrarPorApellido(String valor);
+	
+	public List<ClienteDTO> filtradoPorDNI(String valor);
 }
