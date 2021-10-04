@@ -30,4 +30,8 @@ public class Cliente {
 	public List<ClienteDTO> readAll(){
 		return this.cliente.readAll();
 	}
+	
+	public List<ClienteDTO> filtrarPorCodCliente(String valor){
+		return this.cliente.filtrarPorCodCliente(valor);
+	}
 }

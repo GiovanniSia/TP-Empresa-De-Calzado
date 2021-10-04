@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
 
 import dto.ClienteDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ClienteDAO;
-
+import presentacion.vista.VentanaBusquedaCliente;
+import java.util.List;
 public class ClienteDAOSQL implements ClienteDAO{
 	
 	private static final String insert = "INSERT INTO clientes VALUES(?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -149,5 +153,41 @@ public class ClienteDAOSQL implements ClienteDAO{
 		String codPostal = resultSet.getString("CodPostal");
 		return new ClienteDTO(idCliente, nombre, apellido,DNI, correo, limiteCredito, creditoDisponible, tipoCliente, impuestoAFIP, estado, calle, altura, pais, provincia, localidad, codPostal);
 	}
+	
+	public List<ClienteDTO> filtrarPorCodCliente(String valor) {
+		
+		VentanaBusquedaCliente ventanaBusquedaCliente = new VentanaBusquedaCliente();
+		
+		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
+		
+		String[] titulos = {"Cod. Cliente" , "Nombre" , "Apellido" , "DNI" , "Correo Electronico", "Estado"};
+		String[] registros = new String[7];
+		
+		DefaultTableModel modelo = new DefaultTableModel(null, titulos);
+		
+		String SQL = "select * from clientes where IdCliente like '"+ valor +"%'";
+		
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+			
+			Statement st=conexion.createStatement();
+			ResultSet rs=st.executeQuery(SQL);
+			 
+	
+          while (rs.next()) {
+        	  listaCliente.add(getClienteDTO(rs));
+          }
+   
+		}catch (Exception e) {
+			System.out.println("Error al mostrar datos: "+ e.getMessage());
+		}
+		 return listaCliente;
+
+	}
+	
+	
+	
+	
+	
 	
 }
