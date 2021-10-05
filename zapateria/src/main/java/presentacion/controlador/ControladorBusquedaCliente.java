@@ -10,18 +10,14 @@ import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
 
-public class ControladorBusquedaCliente {
+public class ControladorBusquedaCliente {	
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
 	private Cliente cliente;
 	private List<ClienteDTO> clienteEnTabla;
 
-//	public ControladorBusquedaCliente(VentanaBusquedaCliente ventanaBusquedaCliente, Cliente cliente) {
-//		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
-//		this.cliente = cliente;
-//	}
-
-	public ControladorBusquedaCliente() {
-		inicializar();
+	public ControladorBusquedaCliente(VentanaBusquedaCliente ventanaBusquedaCliente, Cliente cliente) {
+		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
+		this.cliente = cliente;
 	}
 	
 	public void inicializar() {
@@ -75,6 +71,7 @@ public class ControladorBusquedaCliente {
 
 	public void pasarAVenta(ActionEvent p) {
 		clienteSeleccionado();
+		
 	}
 
 	public void clienteSeleccionado() {
@@ -139,8 +136,8 @@ public class ControladorBusquedaCliente {
 		}
 	}
 
-	public static void main(String[] args) {
-		new ControladorBusquedaCliente();
-	}
+//	public static void main(String[] args) {
+//		new ControladorBusquedaCliente();
+//	}
 	
 }

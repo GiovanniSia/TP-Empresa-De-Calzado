@@ -54,5 +54,4 @@ public class StockDTO {
 	public void setStockDisponible(int stockDisponible) {
 		this.stockDisponible = stockDisponible;
 	}
-
 }

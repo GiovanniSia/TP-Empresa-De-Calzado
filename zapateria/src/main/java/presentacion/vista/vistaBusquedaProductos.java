@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
+import javax.swing.JRadioButton;
 
 public class vistaBusquedaProductos {
 
@@ -37,10 +38,8 @@ public class vistaBusquedaProductos {
 	private JLabel lblValorTotal;
 	private JTextField txtNombreProducto;
 	private JTextField txtTalle;
-	private JTextField txtPrecio;
 	private JLabel lblNombre;
 	private JLabel lblTalle;
-	private JLabel lblPrecioVenta;
 	private JComboBox comboBoxCategoria;
 	private JLabel lblCategoria;
 	private JButton btnAniadirProd;
@@ -131,11 +130,6 @@ public class vistaBusquedaProductos {
 		txtTalle.setBounds(283, 41, 29, 19);
 		panel.add(txtTalle);
 		
-		txtPrecio = new JTextField();
-		txtPrecio.setColumns(10);
-		txtPrecio.setBounds(351, 41, 69, 19);
-		panel.add(txtPrecio);
-		
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(188, 23, 69, 13);
 		panel.add(lblNombre);
@@ -143,10 +137,6 @@ public class vistaBusquedaProductos {
 		lblTalle = new JLabel("Talle");
 		lblTalle.setBounds(283, 23, 29, 13);
 		panel.add(lblTalle);
-		
-		lblPrecioVenta = new JLabel("Precio Venta");
-		lblPrecioVenta.setBounds(351, 23, 69, 13);
-		panel.add(lblPrecioVenta);
 		
 		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
 		lblFiltrarPor.setBounds(10, 0, 69, 13);
@@ -211,6 +201,10 @@ public class vistaBusquedaProductos {
 		lbl_quitarDeCarrito = new JLabel("Quitar del carrito");
 		lbl_quitarDeCarrito.setBounds(614, 23, 113, 13);
 		panel.add(lbl_quitarDeCarrito);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Precio Mayorista");
+		rdbtnNewRadioButton.setBounds(327, 40, 103, 21);
+		panel.add(rdbtnNewRadioButton);
 		//
 		
 		
@@ -322,9 +316,7 @@ public class vistaBusquedaProductos {
 
 
 
-	public JTextField getTxtPrecio() {
-		return txtPrecio;
-	}
+
 
 
 
