@@ -4,6 +4,7 @@ import java.util.List;
 
 import dto.ClienteDTO;
 import dto.FabricacionesDTO;
+import dto.OrdenFabricaDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 
@@ -15,7 +16,7 @@ public interface FabricacionDAO {
 	
 	public List<FabricacionesDTO> readAllFabricacionesEnMarcha();
 	
-	public List<FabricacionesDTO> readAllOrdenesSinTrabajar();
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar();
 	
 	public boolean insertFabricacionEnMarcha(FabricacionesDTO fabri);
 	

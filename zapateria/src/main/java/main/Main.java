@@ -1,5 +1,7 @@
 package main;
 
+import presentacion.controlador.fabrica.ControladorOperario;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -9,6 +11,8 @@ public class Main {
 		Controlador controlador = new Controlador(vista, modelo);
 		controlador.inicializar();
 		*/
+		ControladorOperario co = new ControladorOperario();
+		co.inicializar();
 		
 	}
 }

@@ -183,21 +183,31 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	}
 	
 	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'));";
-	public List<FabricacionesDTO> readAllOrdenesSinTrabajar(){
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		ArrayList<OrdenFabricaDTO> fabri = new ArrayList<OrdenFabricaDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readAllOrdenesSinTrabajar);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				fabri.add(getFabricacionesEnMarcha(resultSet));
+				fabri.add(getOrdenFabricaDTO(resultSet));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return fabri;
+	}
+	
+	private OrdenFabricaDTO getOrdenFabricaDTO(ResultSet resultSet) throws SQLException {
+		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+		int IdProd = resultSet.getInt("IdProd");
+		String FechaRequerido = resultSet.getString("FechaRequerido");
+		int Cantidad = resultSet.getInt("Cantidad");
+		String CodigoLote = resultSet.getString("CodigoLote");
+		int IdSucursal = resultSet.getInt("IdSucursal");
+		return new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
 	}
 	
 	private FabricacionesDTO getFabricacionesEnMarcha(ResultSet resultSet) throws SQLException {
