@@ -4,18 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
+import dto.RecetaDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 
 public class ControladorOperario implements ActionListener {
 
+	static final String error = "[HiperLink error]";
 	VentanaBuscarOrdenesPendientes ventana;
 	List<OrdenFabricaDTO> ordenesEnLista;
 	
 	public ControladorOperario() {
 		ventana = new VentanaBuscarOrdenesPendientes();
+		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
 		actualizarTabla();
 	}
 	
@@ -42,7 +46,7 @@ public class ControladorOperario implements ActionListener {
 		for(OrdenFabricaDTO o: ordenesEnLista) {
 			MaestroProductoDTO producto = buscarProducto(o.getIdProd());
 			if(producto == null) {
-				nombreProducto = "[HiperLink error]";
+				nombreProducto = error;
 			}else {
 				nombreProducto = producto.getDescripcion();
 			}
@@ -66,6 +70,29 @@ public class ControladorOperario implements ActionListener {
 			}
 		}
 		return null;
+	}
+	
+	public void trabajarUnPedidoSeleccionado(ActionEvent s) {
+		int[] filasSeleccionadas = ventana.getTablaOrdenesPendientes().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return;
+		}
+		crearFabricacionEnMarcha(filasSeleccionadas[0]);
+		actualizarTabla();
+	}
+	
+	public void crearFabricacionEnMarcha(int filaSeleccionada) {
+		OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filaSeleccionada);
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<RecetaDTO>listaRecetas = a.createFabricacionDAO().readAllReceta();	//EN UN FUTURO TENDRA QUE CAMBIAR A RECETAS DISPONIBLES
+		RecetaDTO receta = new RecetaDTO(1,1,error);
+		for(RecetaDTO r: listaRecetas) {
+			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
+				receta = r;
+			}
+		}
+		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenATrabajar.getIdOrdenFabrica(), receta.getIdReceta(), 1, "activo");
+		a.createFabricacionDAO().insertFabricacionEnMarcha(fabricacion);
 	}
 	
 	@Override
