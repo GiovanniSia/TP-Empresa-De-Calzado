@@ -48,7 +48,14 @@ public class vistaBusquedaProductos {
 	private JPanel panel_1;
 	private JLabel lblTitulo;
 	private JLabel lblSubtitulo;
+	private JLabel lbl_quitarDeCarrito;
 
+
+	private JButton btnQuitarProducto;
+	private JButton btnAtras;
+	private JButton btnPasarAElegir;
+	
+	private JSpinner spinner;
 
 
 	/**
@@ -163,7 +170,7 @@ public class vistaBusquedaProductos {
 		lblAniadir.setBounds(459, 23, 39, 13);
 		panel.add(lblAniadir);
 		
-		lblValorTotal = new JLabel("US$10000008");
+		lblValorTotal = new JLabel("$0");
 		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblValorTotal.setBounds(776, 370, 133, 39);
 		panel.add(lblValorTotal);
@@ -189,21 +196,29 @@ public class vistaBusquedaProductos {
 		
 		scrollPaneCarrito.setViewportView(tableCarrito);
 		
-		JSpinner spinner = new JSpinner();
+		spinner = new JSpinner();
 		spinner.setBounds(779, 41, 47, 19);
 		panel.add(spinner);
 		
 		JLabel lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setBounds(711, 41, 55, 19);
 		panel.add(lblCantidad);
+		
+		btnQuitarProducto = new JButton("<-");
+		btnQuitarProducto.setBounds(614, 40, 55, 21);
+		panel.add(btnQuitarProducto);
+		
+		lbl_quitarDeCarrito = new JLabel("Quitar del carrito");
+		lbl_quitarDeCarrito.setBounds(614, 23, 113, 13);
+		panel.add(lbl_quitarDeCarrito);
 		//
 		
 		
-		JButton btnAtras = new JButton("< Atr\u00E1s");
+		btnAtras = new JButton("< Atr\u00E1s");
 		btnAtras.setBounds(20, 534, 93, 28);
 		frame.getContentPane().add(btnAtras);
 		
-		JButton btnPasarAElegir = new JButton("Pasar a elegir cliente");
+		btnPasarAElegir = new JButton("Pasar a elegir cliente");
 		btnPasarAElegir.setFont(new Font("Consolas", Font.PLAIN, 28));
 		btnPasarAElegir.setBounds(211, 527, 419, 63);
 		frame.getContentPane().add(btnPasarAElegir);
@@ -320,4 +335,24 @@ public class vistaBusquedaProductos {
 	public JButton getBtnAniadirProd() {
 		return btnAniadirProd;
 	}
+	public JButton getBtnQuitarProducto() {
+		return btnQuitarProducto;
+	}
+
+
+
+	public JButton getBtnAtras() {
+		return btnAtras;
+	}
+
+
+
+	public JButton getBtnPasarAElegir() {
+		return btnPasarAElegir;
+	}
+
+	public JSpinner getSpinner() {
+		return spinner;
+	}
 }
+
