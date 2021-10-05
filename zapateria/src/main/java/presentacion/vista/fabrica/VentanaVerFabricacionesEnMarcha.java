@@ -16,20 +16,20 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaBuscarOrdenesPendientes extends JFrame {
+public class VentanaVerFabricacionesEnMarcha extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Sucursal", "Producto", "Fecha requerido", "Cantidad" };
+	private String[] nombreColumnas = { "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JPanel panel_2;
 	private JScrollPane spCliente;
 
-	private JButton btnTrabajarPedido;
-	private JButton btnVerFabricaciones;
+	private JButton btnSeleccionarProceso;
+	private JButton btnVerOrdenesPendientes;
 
-	public VentanaBuscarOrdenesPendientes() {
+	public VentanaVerFabricacionesEnMarcha() {
 		initialize();
 	}
 
@@ -59,21 +59,21 @@ public class VentanaBuscarOrdenesPendientes extends JFrame {
 
 		spCliente.setViewportView(tabla);
 
-		btnTrabajarPedido = new JButton("Seleccionar orden");
-		btnTrabajarPedido.addActionListener(new ActionListener() {
+		btnSeleccionarProceso = new JButton("Seleccionar proceso");
+		btnSeleccionarProceso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnTrabajarPedido.setBounds(38, 167, 177, 23);
-		panel.add(btnTrabajarPedido);
+		btnSeleccionarProceso.setBounds(38, 167, 177, 23);
+		panel.add(btnSeleccionarProceso);
 		
-		btnVerFabricaciones = new JButton("Ver fabricaciones en marcha");
-		btnVerFabricaciones.addActionListener(new ActionListener() {
+		btnVerOrdenesPendientes = new JButton("Ver ordenes de fabricacion");
+		btnVerOrdenesPendientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerFabricaciones.setBounds(609, 167, 177, 23);
-		panel.add(btnVerFabricaciones);
+		btnVerOrdenesPendientes.setBounds(609, 167, 177, 23);
+		panel.add(btnVerOrdenesPendientes);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 95, 806, 95);
@@ -84,10 +84,6 @@ public class VentanaBuscarOrdenesPendientes extends JFrame {
 		panel_2.setBackground(Color.GRAY);
 		panel_2.setBounds(0, 0, 806, 41);
 		frame.getContentPane().add(panel_2);
-		
-		JLabel lblNewLabel = new JLabel("Ordenes de fabricacion pendientes");
-		lblNewLabel.setBounds(10, 59, 277, 25);
-		frame.getContentPane().add(lblNewLabel);
 	}
 
 	public void show() {
@@ -122,10 +118,10 @@ public class VentanaBuscarOrdenesPendientes extends JFrame {
 	}
 
 	public JButton getBtnTrabajarPedido() {
-		return btnTrabajarPedido;
+		return btnSeleccionarProceso;
 	}
 	
 	public JButton getBtnVerFabricaciones() {
-		return btnVerFabricaciones;
+		return btnVerOrdenesPendientes;
 	}
 }

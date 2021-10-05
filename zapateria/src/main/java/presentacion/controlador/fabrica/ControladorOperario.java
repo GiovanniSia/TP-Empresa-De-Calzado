@@ -10,6 +10,7 @@ import dto.OrdenFabricaDTO;
 import dto.RecetaDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
+import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
 
 public class ControladorOperario implements ActionListener {
 
@@ -17,10 +18,18 @@ public class ControladorOperario implements ActionListener {
 	VentanaBuscarOrdenesPendientes ventana;
 	List<OrdenFabricaDTO> ordenesEnLista;
 	
+	VentanaVerFabricacionesEnMarcha ventanaTrabajos;
+	List<FabricacionesDTO> trabajosEnLista;
+	
 	public ControladorOperario() {
 		ventana = new VentanaBuscarOrdenesPendientes();
 		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
 		actualizarTabla();
+		
+		ventanaTrabajos = new VentanaVerFabricacionesEnMarcha();
+		ventana.getBtnVerFabricaciones().addActionListener(r->abrirVentanaTrabajos(r));
+		
+		ventanaTrabajos = new VentanaVerFabricacionesEnMarcha();
 	}
 	
 	public void inicializar() {
@@ -30,7 +39,7 @@ public class ControladorOperario implements ActionListener {
 	
 	public void actualizarTabla() {
 		recuperarListaDeOrdenesPendientes();
-		llenarTabla();
+		llenarTablaOrdenes();
 	}
 
 	private void recuperarListaDeOrdenesPendientes() {
@@ -38,9 +47,9 @@ public class ControladorOperario implements ActionListener {
 		ordenesEnLista = a.createFabricacionDAO().readAllOrdenesSinTrabajar();
 	}
 	
-	private void llenarTabla() {
+	private void llenarTablaOrdenes() {
 		ventana.getTablaOrdenesPendientes().removeAll();
-		reiniciarTabla();
+		reiniciarTablaOrdenes();
 		String nombreProducto = "";
 		//"Sucursal", "Producto", "Fecha requerido", "Cantidad"
 		for(OrdenFabricaDTO o: ordenesEnLista) {
@@ -55,7 +64,7 @@ public class ControladorOperario implements ActionListener {
 		}
 	}
 
-	private void reiniciarTabla() {
+	private void reiniciarTablaOrdenes() {
 		ventana.getModelOrdenes().setRowCount(0);
 		ventana.getModelOrdenes().setColumnCount(0);
 		ventana.getModelOrdenes().setColumnIdentifiers(ventana.getNombreColumnas());
@@ -93,6 +102,50 @@ public class ControladorOperario implements ActionListener {
 		}
 		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenATrabajar.getIdOrdenFabrica(), receta.getIdReceta(), 1, "activo");
 		a.createFabricacionDAO().insertFabricacionEnMarcha(fabricacion);
+	}
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * *
+	
+	private void reiniciarTablaTrabajos() {
+		ventanaTrabajos.getModelOrdenes().setRowCount(0);
+		ventanaTrabajos.getModelOrdenes().setColumnCount(0);
+		ventanaTrabajos.getModelOrdenes().setColumnIdentifiers(ventana.getNombreColumnas());
+	}
+	
+	private void llenarTablaTrabajos() {
+		reiniciarTablaTrabajos();
+		
+		DAOSQLFactory a = new DAOSQLFactory();
+		trabajosEnLista = a.createFabricacionDAO().readAllFabricacionesEnMarcha();
+		
+		List<OrdenFabricaDTO> todasLasOrdenes = a.createOrdenFabricaDAO().readAll();
+		
+		OrdenFabricaDTO orden = null;
+		for(FabricacionesDTO f: trabajosEnLista) {
+			String nombreProducto = null;
+			for(OrdenFabricaDTO of: todasLasOrdenes) {
+				if(of.getIdOrdenFabrica() == f.getIdOrdenFabrica()) {
+					orden = of;
+					MaestroProductoDTO producto = buscarProducto(orden.getIdProd());
+					if(producto == null) {
+						nombreProducto = error;
+					}else {
+						nombreProducto = producto.getDescripcion();
+					}
+					String descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()).getPasosDTO().getDescripcion();
+					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado()};
+					ventanaTrabajos.getModelOrdenes().addRow(agregar);
+				}
+			}
+		}
+		//"Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado"
+		
+	}
+	
+	public void abrirVentanaTrabajos(ActionEvent s) {
+		llenarTablaTrabajos();
+		ventanaTrabajos.show();
+		ventana.cerrar();
 	}
 	
 	@Override
