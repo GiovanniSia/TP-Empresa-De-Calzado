@@ -446,8 +446,8 @@ public class FabricacionDAOSQL {
 		actualizarFabricacionEnMarcha(f);
 		*/
 		
-		//DEBES INSERTAR UNA ORDEN DE FABRICACION DE ID = 1
-		
+		//DEBES INSERTAR tres ORDENes DE FABRICACION DE ID = 1 2 3
+		/*
 		FabricacionesDTO fa = new FabricacionesDTO(1,1,1,7,"activo");
 		FabricacionesDTO fa1 = new FabricacionesDTO(2,2,1,7,"activo");
 		FabricacionesDTO fa2 = new FabricacionesDTO(3,3,1,7,"activo");
