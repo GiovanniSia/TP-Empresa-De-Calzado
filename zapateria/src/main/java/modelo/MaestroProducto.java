@@ -22,4 +22,15 @@ public class MaestroProducto {
 		return this.maestroProducto.getMaestroProducto(nombre);
 	}
 	
+	public List<MaestroProductoDTO> filtrarPorCodProducto(String valor){
+		return this.maestroProducto.filtrarPorCodProducto(valor);
+	}
+	
+	public List<MaestroProductoDTO> filtrarPorDescripcion(String valor){
+		return this.maestroProducto.filtrarPorDescripcion(valor);
+	}
+	
+	public List<MaestroProductoDTO> filtrarPorTalle(String valor){
+		return this.maestroProducto.filtrarPorTalle(valor);
+	}
 }

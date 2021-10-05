@@ -4,12 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.MaestroProductoDAO;
-
+import dto.ClienteDTO;
 import dto.MaestroProductoDTO;
 
 public class MaestroProductoDAOSQL implements MaestroProductoDAO {
@@ -38,7 +39,8 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		String tipo = resultSet.getString("Tipo");
 		String fabricado = resultSet.getString("Fabricado");
 		int precioCosto = resultSet.getInt("PrecioCosto");
-		int precioVenta = resultSet.getInt("PrecioVenta");
+		int precioMayorista = resultSet.getInt("PrecioMayorista");
+		int precioMinorista = resultSet.getInt("PrecioMinorista");
 		int puntoRepositorio = resultSet.getInt("PuntoRepositorio");
 		int idProveedor = resultSet.getInt("IdProveedor");
 		String talle = resultSet.getString("Talle");
@@ -47,7 +49,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		
 		int CantidadAReponer = resultSet.getInt("CantidadAReponer");
 		int DiasParaReponer = resultSet.getInt("DiasParaReponer");
-		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
+		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioMayorista,precioMinorista,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 
 	@Override
@@ -69,5 +71,79 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		}
 		return maestroProducto;
 	}
+	
+	
+	
+	
+	
+	public List<MaestroProductoDTO> filtrarPorCodProducto(String valor) {
+
+		ArrayList<MaestroProductoDTO> listaMaestroProducto = new ArrayList<MaestroProductoDTO>();
+
+		String SQL = "select * from maestroProducto where IdMaestroProducto like '%" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaMaestroProducto.add(getMaestroProductoDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaMaestroProducto;
+	}
+
+	public List<MaestroProductoDTO> filtrarPorDescripcion(String valor) {
+
+		ArrayList<MaestroProductoDTO> listaMaestroProducto = new ArrayList<MaestroProductoDTO>();
+
+		String SQL = "select * from maestroProducto where Descripcion like '%" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaMaestroProducto.add(getMaestroProductoDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaMaestroProducto;
+	}
+	
+	public List<MaestroProductoDTO> filtrarPorTalle(String valor) {
+
+		ArrayList<MaestroProductoDTO> listaMaestroProducto = new ArrayList<MaestroProductoDTO>();
+
+		String SQL = "select * from maestroProducto where Talle like '%" + valor + "%'";
+
+		try {
+			Connection conexion = Conexion.getConexion().getSQLConexion();
+
+			Statement st = conexion.createStatement();
+			ResultSet rs = st.executeQuery(SQL);
+
+			while (rs.next()) {
+				listaMaestroProducto.add(getMaestroProductoDTO(rs));
+			}
+
+		} catch (Exception e) {
+			System.out.println("Error al mostrar datos: " + e.getMessage());
+		}
+		return listaMaestroProducto;
+	}
+	
+	
+	
+	
 }
 
