@@ -9,6 +9,7 @@ import java.util.List;
 
 import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
+import dto.OrdenFabricaDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
@@ -311,7 +312,6 @@ public class FabricacionDAOSQL {
 		return ret;
 	}
 	
-	private static final String insertStock = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado) VALUES(?, ?, ?, ?);";
 	public static void actualizarSiLlegoFechaDeEntrega(FabricacionesDTO f) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate());
@@ -324,10 +324,11 @@ public class FabricacionDAOSQL {
 		fechaEntrega.setMonth(f.getMesCompletado()-1);
 		fechaEntrega.setDate(f.getDiaCompletado()+f.getDiaDisponible());
 		
-		if(fechaActual.getDate() == fechaEntrega.getDate() && fechaActual.getMonth() == fechaEntrega.getMonth() 
+		if(fechaActual.getDate() >= fechaEntrega.getDate() && fechaActual.getMonth() == fechaEntrega.getMonth() 
 				&& fechaActual.getYear() == fechaEntrega.getYear()) {
 			f.entregadaLaOrden();
 			actualizarFabricacionEnMarcha(f);
+			pasarOrdenAStock(f);
 		}
 	}
 	
@@ -347,6 +348,81 @@ public class FabricacionDAOSQL {
 			e.printStackTrace();
 		}
 		return fabri;
+	}
+	
+	private static final String readOneordenFabricacionAndFabricacionEnMarcha 
+	= "SELECT * FROM ordenFabrica WHERE IdOrdenFabrica = ?;";
+	public static boolean pasarOrdenAStock(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			ResultSet resultSet; // Guarda el resultado de la query
+			statement = conexion.prepareStatement(readOneordenFabricacionAndFabricacionEnMarcha);
+			statement.setInt(1, fabri.getIdOrdenFabrica());
+			resultSet = statement.executeQuery();
+			
+			//List<FabricacionesDTO> fabricacionesCompletas = readAllFabricacionesCompletas(); 
+			OrdenFabricaDTO a;
+			int IdOrdenFabrica;
+			int IdProd;
+			String FechaRequerido;
+			int Cantidad;
+			String CodigoLote;
+			int IdSucursal;
+			if (resultSet.next()) {
+				System.out.println("Entro");
+				IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+				IdProd = resultSet.getInt("IdProd");
+				FechaRequerido = resultSet.getString("FechaRequerido");
+				Cantidad = resultSet.getInt("Cantidad");
+				CodigoLote = resultSet.getString("CodigoLote");
+				System.out.println(CodigoLote);
+				IdSucursal = resultSet.getInt("IdSucursal");
+				a =  new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
+				insertarStock(a);
+				
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
+	private static final String insertStock = "INSERT INTO stock(IdSucursal, IdProducto, CodigoLote, StockDisponible) VALUES(?, ?, ?, ?);";
+	private static boolean insertarStock(OrdenFabricaDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insertStock);
+			statement.setInt(1, fabri.getIdSucursal());
+			statement.setInt(2, fabri.getIdProd());
+			statement.setString(3, fabri.getCodigoLote());
+			statement.setInt(4, fabri.getCantidad());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
 	}
 	
 	public static void main(String[] args) {
@@ -370,14 +446,32 @@ public class FabricacionDAOSQL {
 		actualizarFabricacionEnMarcha(f);
 		*/
 		
-		FabricacionesDTO fa = new FabricacionesDTO(2,1,1,7,"activo");
-		//insertFabricacionEnMarcha(fa);
+		//DEBES INSERTAR UNA ORDEN DE FABRICACION DE ID = 1
 		
-		fa = completarOrden(fa,1);
+		FabricacionesDTO fa = new FabricacionesDTO(1,1,1,7,"activo");
+		FabricacionesDTO fa1 = new FabricacionesDTO(2,2,1,7,"activo");
+		FabricacionesDTO fa2 = new FabricacionesDTO(3,3,1,7,"activo");
 		
+		
+		insertFabricacionEnMarcha(fa);
+		insertFabricacionEnMarcha(fa1);
+		insertFabricacionEnMarcha(fa2);
+		
+		fa = completarOrden(fa,0);
+		fa1 = completarOrden(fa1,0);
+		fa1.setDiaCompletado(1);
+		actualizarFabricacionEnMarcha(fa1);
+		fa1.setDiaCompletado(3);
+		fa2 = completarOrden(fa2,2);
+		
+		for(FabricacionesDTO f: readAllFabricacionesCompletas()) {
+			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
+			actualizarSiLlegoFechaDeEntrega(f);
+		}
+		/*
 		for(FabricacionesDTO f: readAllFabricacionesEnMarcha()) {
 			System.out.println(f.getIdFabricacionesEnMarcha() + " " + f.getNroPasoActual() + " " + f.getEstado());
-		}
+		}*/
 		
 		
 	}
