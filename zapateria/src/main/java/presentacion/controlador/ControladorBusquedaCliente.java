@@ -9,21 +9,31 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
+import presentacion.vista.vistaBusquedaProductos;
+
 
 public class ControladorBusquedaCliente {	
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
 	private Cliente cliente;
 	private List<ClienteDTO> clienteEnTabla;
-
-	public ControladorBusquedaCliente(VentanaBusquedaCliente ventanaBusquedaCliente, Cliente cliente) {
-		this.ventanaBusquedaCliente = ventanaBusquedaCliente;
+	
+	ControladorBusquedaProductos controladorBusquedaProductos;
+	
+	private ClienteDTO clienteSeleccionado;
+	
+	public ControladorBusquedaCliente(Cliente cliente,ControladorBusquedaProductos controladorBusquedaProductos) {
+		this.controladorBusquedaProductos=controladorBusquedaProductos;
+		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		this.cliente = cliente;
 	}
 	
 	public void inicializar() {
+		System.out.println("se ejecuta el contorlador de cliente");
+		
 		this.cliente = new Cliente(new DAOSQLFactory());
 
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
+		
 		
 		//Botones
 		this.ventanaBusquedaCliente.getBtnAtras().addActionListener(a -> atras(a));
@@ -62,7 +72,7 @@ public class ControladorBusquedaCliente {
 			}
 		});
 		
-		this.mostrarVentana();
+//		this.mostrarVentana();
 	}
 	
 	public void atras(ActionEvent a) {
@@ -70,15 +80,17 @@ public class ControladorBusquedaCliente {
 	}
 
 	public void pasarAVenta(ActionEvent p) {
-		clienteSeleccionado();
-		
+		if(clienteSeleccionado()) {
+			this.ventanaBusquedaCliente.cerrar();
+			controladorBusquedaProductos.inicializar();
+		}		
 	}
 
-	public void clienteSeleccionado() {
+	public boolean clienteSeleccionado() {
 		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
 		if (filaSeleccionada == -1) {
 			JOptionPane.showMessageDialog(null, "Seleccione un cliente");
-			return;
+			return false;
 		}
 
 		List<ClienteDTO> clientes = cliente.readAll();
@@ -87,25 +99,28 @@ public class ControladorBusquedaCliente {
 		for (ClienteDTO c : clientes) {			
 			//Obtengo el objeto cilente con todos sus valores
 			if (codCliente.equals(""+c.getIdCliente()+"")) {
-				int IdCliente = c.getIdCliente();
-				String Nombre = c.getNombre();
-				String Apellido = c.getApellido();
-				String DNI = c.getDNI();
-				String CorreoElectronico = c.getCorreo();
-				int LimiteCredito = c.getLimiteCredito();
-				int CreditoDisponible = c.getCreditoDisponible();
-				String TipoCliente = c.getTipoCliente();
-				String ImpuestoAFIP = c.getImpuestoAFIP();
-				String Estado = c.getEstado();
-				String Calle = c.getCalle();
-				String Altura = c.getAltura();
-				String Pais = c.getPais();
-				String Provincia = c.getProvincia(); 
-				String Localidad = c.getLocalidad();
-				String CodPostal = c.getCodPostal();
-				System.out.println("Cliente Seleccionado: "+ IdCliente+", "+Nombre+", "+Apellido+", "+DNI+", "+Calle+", "+TipoCliente+", etc.");			
+//				int IdCliente = c.getIdCliente();
+//				String Nombre = c.getNombre();
+//				String Apellido = c.getApellido();
+//				String DNI = c.getDNI();
+//				String CorreoElectronico = c.getCorreo();
+//				int LimiteCredito = c.getLimiteCredito();
+//				int CreditoDisponible = c.getCreditoDisponible();
+//				String TipoCliente = c.getTipoCliente();
+//				String ImpuestoAFIP = c.getImpuestoAFIP();
+//				String Estado = c.getEstado();
+//				String Calle = c.getCalle();
+//				String Altura = c.getAltura();
+//				String Pais = c.getPais();
+//				String Provincia = c.getProvincia(); 
+//				String Localidad = c.getLocalidad();
+//				String CodPostal = c.getCodPostal();
+//				System.out.println("Cliente Seleccionado: "+ IdCliente+", "+Nombre+", "+Apellido+", "+DNI+", "+Calle+", "+TipoCliente+", etc.");
+				this.clienteSeleccionado = c;
+				return true;
 			}
 		}
+		return false;
 	}
 
 	public void mostrarVentana() {
@@ -136,6 +151,10 @@ public class ControladorBusquedaCliente {
 		}
 	}
 
+	public ClienteDTO getClienteSeleccionado() {
+		return this.clienteSeleccionado;
+	}
+	
 //	public static void main(String[] args) {
 //		new ControladorBusquedaCliente();
 //	}

@@ -7,6 +7,8 @@ import modelo.Cliente;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
+import modelo.Zapateria;
+import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.vistaBusquedaProductos;
 
@@ -15,6 +17,7 @@ public class Controlador implements ActionListener {
 	MaestroProducto maestroProducto;
 	Stock stock;
 	Sucursal sucursal;
+	Cliente cliente;
 	
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
@@ -23,20 +26,49 @@ public class Controlador implements ActionListener {
 	VentanaBusquedaCliente ventanaBusquedaCliente;
 	
 	
-	public  Controlador() {
-		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
-		this.vistaBusquedaProducto = new vistaBusquedaProductos();
-		
-//		this.controladorBusquedaProducto = new ControladorBusquedaProductos(maestroProducto,stock,sucursal); 
+	public Controlador(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal, Cliente cliente) {
+		this.maestroProducto = maestroProducto;
+		this.stock = stock;
+		this.sucursal = sucursal;
+		this.cliente = cliente;
+
+
 	}
 	
 	public void inicializar() {
-//		this.controladorBusquedaCliente = new controladorBusquedaCliente(ventanaBusquedaCliente, cliente) ; 
+		System.out.println("se ejecuta el controlador papi");
+		
+		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
+		this.vistaBusquedaProducto = new vistaBusquedaProductos();
+		
+		this.controladorBusquedaProducto = new ControladorBusquedaProductos(maestroProducto,stock,sucursal);
+		this.controladorBusquedaCliente = new ControladorBusquedaCliente(cliente,controladorBusquedaProducto);
+		
+		
+		
+		//por ahora cuando se inicia se inicia la ventana de cliente
+		controladorBusquedaCliente.inicializar();		
+		this.controladorBusquedaCliente.mostrarVentana();
+
+		
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	}
-
+	
+	
+	public static void main(String[] args) {
+		
+		Cliente cliente = new Cliente(new DAOSQLFactory());
+		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
+		Stock stock = new Stock(new DAOSQLFactory());
+		Sucursal sucursal = new Sucursal(new DAOSQLFactory());
+		
+		Controlador controlador = new Controlador(maestroProducto,stock, sucursal, cliente);
+		
+		controlador.inicializar();
+	}
+	
 }

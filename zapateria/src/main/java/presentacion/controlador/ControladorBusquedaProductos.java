@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dto.ClienteDTO;
 import dto.MaestroProductoDTO;
 import dto.ProductoEnCarritoDTO;
 import dto.StockDTO;
@@ -38,32 +39,37 @@ public class ControladorBusquedaProductos {
 	
 	List<MaestroProductoDTO> listaMaestroProducto;
 	
+	ClienteDTO clienteSeleccionado;
 	
 	List<MaestroProductoDTO> productosEnTabla;
 	
 	List<ProductoEnCarritoDTO> carrito; 
 	
-//	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
-//		this.maestroProducto = maestroProducto;
-//		this.stock = stock;
-//		this.sucursal = sucursal;
-//		this.carrito=new ArrayList<ProductoEnCarritoDTO>();
+	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+		this.maestroProducto = maestroProducto;
+		this.stock = stock;
+		this.sucursal = sucursal;
+
+//		inicializar();
+	}
+//	public ControladorBusquedaProductos() {
+//		carrito=new ArrayList<ProductoEnCarritoDTO>();
 //		productosEnTabla = new ArrayList<MaestroProductoDTO>();
 //		this.vistaBusquedaProductos = new vistaBusquedaProductos();
 //		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 //		this.stock = new Stock(new DAOSQLFactory());
 //		inicializar();
 //	}
-	public ControladorBusquedaProductos() {
-		carrito=new ArrayList<ProductoEnCarritoDTO>();
+	
+	public void inicializar() {
+		System.out.println("se ejecuta el controlador de productos");
+		this.carrito=new ArrayList<ProductoEnCarritoDTO>();
 		productosEnTabla = new ArrayList<MaestroProductoDTO>();
 		this.vistaBusquedaProductos = new vistaBusquedaProductos();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.stock = new Stock(new DAOSQLFactory());
-		inicializar();
-	}
-	
-	public void inicializar() {
+		
+		
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
 		
@@ -117,7 +123,6 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getModelTabla().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnas());
 				
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
-		String cbCategoria = (String) this.vistaBusquedaProductos.getComboBoxCategoria().getSelectedItem();
 		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
 		
 		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle);
@@ -289,7 +294,9 @@ public class ControladorBusquedaProductos {
 		//se deberia abrir la ventana de elegir cliente
 	}
 	
-	public static void main(String[] args) {
-		new ControladorBusquedaProductos();
+
+	public void establecerClienteElegido(ClienteDTO cliente) {
+		this.clienteSeleccionado = cliente;
 	}
+	
 }

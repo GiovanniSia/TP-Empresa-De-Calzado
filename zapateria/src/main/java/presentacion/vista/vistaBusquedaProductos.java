@@ -40,8 +40,6 @@ public class vistaBusquedaProductos {
 	private JTextField txtTalle;
 	private JLabel lblNombre;
 	private JLabel lblTalle;
-	private JComboBox comboBoxCategoria;
-	private JLabel lblCategoria;
 	private JButton btnAniadirProd;
 	private JLabel lblAniadir;
 	private JPanel panel_1;
@@ -122,35 +120,25 @@ public class vistaBusquedaProductos {
 		
 		txtNombreProducto = new JTextField();
 		txtNombreProducto.setColumns(10);
-		txtNombreProducto.setBounds(188, 41, 69, 19);
+		txtNombreProducto.setBounds(75, 42, 69, 19);
 		panel.add(txtNombreProducto);		
 		
 		txtTalle = new JTextField();
 		txtTalle.setColumns(10);
-		txtTalle.setBounds(283, 41, 29, 19);
+		txtTalle.setBounds(220, 41, 29, 19);
 		panel.add(txtTalle);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(188, 23, 69, 13);
+		lblNombre.setBounds(75, 23, 69, 13);
 		panel.add(lblNombre);
 		
 		lblTalle = new JLabel("Talle");
-		lblTalle.setBounds(283, 23, 29, 13);
+		lblTalle.setBounds(220, 23, 29, 13);
 		panel.add(lblTalle);
 		
 		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
 		lblFiltrarPor.setBounds(10, 0, 69, 13);
 		panel.add(lblFiltrarPor);
-		
-		comboBoxCategoria = new JComboBox();
-		comboBoxCategoria.setBounds(52, 41, 113, 19);
-		comboBoxCategoria.addItem("Sin seleccionar");
-		panel.add(comboBoxCategoria);
-		
-		lblCategoria = new JLabel("Categoria");
-		lblCategoria.setToolTipText("Categoria");
-		lblCategoria.setBounds(74, 23, 76, 13);
-		panel.add(lblCategoria);
 		
 		btnAniadirProd = new JButton("->");
 		btnAniadirProd.setBounds(447, 40, 55, 21);
@@ -201,10 +189,6 @@ public class vistaBusquedaProductos {
 		lbl_quitarDeCarrito = new JLabel("Quitar del carrito");
 		lbl_quitarDeCarrito.setBounds(614, 23, 113, 13);
 		panel.add(lbl_quitarDeCarrito);
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Precio Mayorista");
-		rdbtnNewRadioButton.setBounds(327, 40, 103, 21);
-		panel.add(rdbtnNewRadioButton);
 		//
 		
 		
@@ -312,16 +296,6 @@ public class vistaBusquedaProductos {
 
 	public JTextField getTxtTalle() {
 		return txtTalle;
-	}
-
-
-
-
-
-
-
-	public JComboBox getComboBoxCategoria() {
-		return comboBoxCategoria;
 	}
 
 	public JButton getBtnAniadirProd() {
