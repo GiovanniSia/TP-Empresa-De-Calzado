@@ -6,6 +6,7 @@ package persistencia.dao.mysql;
 import persistencia.dao.interfaz.ClienteDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.EmpleadoDAO;
+import persistencia.dao.interfaz.FabricacionDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
@@ -44,6 +45,10 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public OrdenFabricaDAO createOrdenFabricaDAO() {
 		return new OrdenFabricaDAOSQL();
+	}
+	
+	public FabricacionDAO createFabricacionDAO() {
+		return new FabricacionDAOSQL();
 	}
 
 }
