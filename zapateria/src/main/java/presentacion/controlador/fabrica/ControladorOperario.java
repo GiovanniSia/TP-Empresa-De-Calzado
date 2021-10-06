@@ -8,7 +8,9 @@ import java.util.List;
 import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
+import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
+import dto.StockDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
@@ -58,7 +60,21 @@ public class ControladorOperario implements ActionListener {
 		ventanaUnaTrabajo.getBtnRetrocederUnPaso().addActionListener(r->retrocederUnPaso(r));
 		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
 		
-		
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<RecetaDTO> rec = a.createFabricacionDAO().readAllReceta();
+		for(RecetaDTO r: rec) {
+			System.out.println("* * * * * ");
+			System.out.println("RECETA: " + r.getDescripcion());
+			List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(r.getIdReceta());
+			for(PasoDeRecetaDTO p: pasos) {
+				System.out.println("	PASO NROorden:" + p.getNroOrden() + ", " + p.getPasosDTO().getDescripcion());
+				int x = 0;
+				for(MaestroProductoDTO mp:  p.getPasosDTO().getMateriales()) {
+					System.out.println("		Material: " + mp.getDescripcion() + ", cantidadUsada: " + p.getPasosDTO().getCantidadUsada().get(x));
+					x++;
+				}
+			}
+		}
 	}
 	
 	public void inicializar() {
@@ -133,10 +149,12 @@ public class ControladorOperario implements ActionListener {
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
 				if(a.createFabricacionDAO().isRecetaDisponible(r)) {
-					//System.out.println("LEI RECETA DISPONIBLE");s
-					//receta = r;
-					recetasEnLista.add(r);
-					this.ventanaElegirReceta.getComboBox().addItem(r.getDescripcion());
+					if(existeMaterialSuficiente(r, ordenSeleccionado.getCantidad())) {
+						//System.out.println("LEI RECETA DISPONIBLE");s
+						//receta = r;
+						recetasEnLista.add(r);
+						this.ventanaElegirReceta.getComboBox().addItem(r.getDescripcion());
+					}
 				}
 			}
 		}
@@ -266,6 +284,33 @@ public class ControladorOperario implements ActionListener {
 		}
 	}
 	
+	public boolean existeMaterialSuficiente(RecetaDTO receta, int cantidadDeseada) {
+		boolean ret = true;
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(receta.getIdReceta());
+		for(PasoDeRecetaDTO p: pasos) {
+			int x = 0;
+			for(MaestroProductoDTO mp: p.getPasosDTO().getMateriales()) {
+				ret = ret && hayStockSuficienteDeUnMaterial(mp.getIdMaestroProducto(), p.getPasosDTO().getCantidadUsada().get(x)*cantidadDeseada);
+				x++;
+			}
+		}
+		return ret;
+	}
+	
+	private boolean hayStockSuficienteDeUnMaterial(int idMaestroProducto, int i) {
+		//Primero cuento todo el stock luego juzgo
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<StockDTO> todoElStock = a.createStockDAO().readAll();
+		int cantidadTotalDisponible = 0;
+		for(StockDTO s: todoElStock) {
+			if(s.getIdProducto() == idMaestroProducto) {
+				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();
+			}
+		}
+		return cantidadTotalDisponible >= i;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	}

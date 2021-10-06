@@ -89,11 +89,12 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int IdPaso = resultSet.getInt("IdPaso");
 		
 		List<MaestroProductoDTO> materiales = new ArrayList<MaestroProductoDTO>();
-		materiales = readAllMaterialesFromOnePaso(IdPaso);
+		materiales = readAllMaterialesFromOnePaso(IdPasoReceta);
 		List<Integer> cantidades = new ArrayList<Integer>();
 		if(materiales.size()>0) {
 			for(MaestroProductoDTO m : materiales) {
-				cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
+				//cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
+				cantidades.add(obtenerCantidadMaterial(IdPasoReceta,m.getIdMaestroProducto()));
 			}
 		}
 		String descr = obtenerDescrpcionPaso(IdPaso);
