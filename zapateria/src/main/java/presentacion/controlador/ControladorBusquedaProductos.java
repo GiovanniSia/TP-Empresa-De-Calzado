@@ -45,20 +45,20 @@ public class ControladorBusquedaProductos {
 	
 	List<ProductoEnCarritoDTO> carrito; 
 	
-	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
-		this.maestroProducto = maestroProducto;
-		this.stock = stock;
-		this.sucursal = sucursal;
-	}
-	
-//	public ControladorBusquedaProductos() {
-//		carrito=new ArrayList<ProductoEnCarritoDTO>();
-//		productosEnTabla = new ArrayList<MaestroProductoDTO>();
-//		this.vistaBusquedaProductos = new vistaBusquedaProductos();
-//		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-//		this.stock = new Stock(new DAOSQLFactory());
-//		inicializar();
+//	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+//		this.maestroProducto = maestroProducto;
+//		this.stock = stock;
+//		this.sucursal = sucursal;
 //	}
+	
+	public ControladorBusquedaProductos() {
+		carrito=new ArrayList<ProductoEnCarritoDTO>();
+		productosEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.vistaBusquedaProductos = new vistaBusquedaProductos();
+		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
+		this.stock = new Stock(new DAOSQLFactory());
+		inicializar();
+	}
 	
 	public void inicializar() {
 		System.out.println("se ejecuta el controlador de productos");
@@ -67,12 +67,10 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos = new vistaBusquedaProductos();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.stock = new Stock(new DAOSQLFactory());
-		
-		
+				
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
-				
-		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
+//		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
 			@Override
@@ -126,16 +124,20 @@ public class ControladorBusquedaProductos {
 		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
 		
 		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle);
-		
+		System.out.println("productos aprox: "+productosAproximados.size());
 		escribirTabla(productosAproximados);
 	}
+	
+	
 	public void escribirTablaCompleta() {
 		productosEnTabla.removeAll(productosEnTabla);
+		System.out.println("deberia escribir tabla completa");
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m)) {
 					agregarATabla(s,m);
 					productosEnTabla.add(m);
+					System.out.println("se deberia agregar prod");
 				}
 			}
 		}
@@ -296,8 +298,8 @@ public class ControladorBusquedaProductos {
 	}
 	
 	
-//	public static void main(String[] args) {
-//		new ControladorBusquedaProductos();
-//	}
+	public static void main(String[] args) {
+		new ControladorBusquedaProductos();
+	}
 	
 }

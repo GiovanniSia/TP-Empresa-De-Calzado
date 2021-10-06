@@ -37,7 +37,8 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getTxtFiltroCodProducto().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				maestroProductoEnTabla = producto.filtrarPorCodProducto(ventanaModificarMProducto.getTxtFiltroCodProducto().getText());
+//				maestroProductoEnTabla = producto.filtrarPorCodProducto(ventanaModificarMProducto.getTxtFiltroCodProducto().getText());
+				maestroProductoEnTabla = producto.getMaestroProductoAproximado("IdMaestroProducto",ventanaModificarMProducto.getTxtFiltroCodProducto().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});
@@ -45,7 +46,8 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getTxtFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				maestroProductoEnTabla = producto.filtrarPorDescripcion(ventanaModificarMProducto.getTxtFiltroDescripcion().getText());
+//				maestroProductoEnTabla = producto.filtrarPorDescripcion(ventanaModificarMProducto.getTxtFiltroDescripcion().getText());
+				maestroProductoEnTabla = producto.getMaestroProductoAproximado("Descripcion",ventanaModificarMProducto.getTxtFiltroDescripcion().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});
@@ -53,7 +55,8 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getTxtFiltroTalle().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				maestroProductoEnTabla = producto.filtrarPorTalle(ventanaModificarMProducto.getTxtFiltroTalle().getText());
+//				maestroProductoEnTabla = producto.filtrarPorTalle(ventanaModificarMProducto.getTxtFiltroTalle().getText());
+				maestroProductoEnTabla = producto.getMaestroProductoAproximado("Talle",ventanaModificarMProducto.getTxtFiltroTalle().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});		

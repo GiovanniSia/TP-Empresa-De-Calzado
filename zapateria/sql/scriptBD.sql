@@ -270,8 +270,8 @@ insert into estadoMaterialFabricacion values(2,'inactivo');
 insert into estadoMaterialFabricacion values(3,'suspendido');
 insert into estadoMaterialFabricacion values(4,'desactualizado');
 
-insert into maestroProductos values(1,"Zapato Xixo", "TP","S",30,100,120,20,2,"M",300,"Activo",3,2);
-insert into maestroProductos values(2,"Zapatilla Muca", "TP","S",15,120,170,520,2,"M",300,"Activo",3,2);
+insert into maestroProductos values(1,"Zapato Xixo", "PT","S",30,100,120,20,2,"M",300,"Activo",3,2);
+insert into maestroProductos values(2,"Zapatilla Muca", "PT","S",15,120,170,520,2,"M",300,"Activo",3,2);
 insert into maestroProductos values(3,"Zapato Zzz", "MP","S",40,120,150,202,2,"M",300,"Activo",3,2);
 insert into maestroProductos values(4,"Zapatilla Sausa", "MP","S",20,100,120,320,2,"M",300,"Activo",3,2);
 
