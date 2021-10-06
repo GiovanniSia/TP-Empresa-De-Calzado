@@ -168,13 +168,13 @@ CREATE TABLE `historialCambioMProducto`
   `IdEmpleado` int(11) NOT NULL,
   `IdMaestroProducto` int(11) NOT NULL,
   `Fecha` Date NOT NULL,
-  `PrecioCostoAntiguo` int(11) NOT NULL,
-  `PrecioCostoNuevo` int(11) NOT NULL,
-  `PrecioMayoristaAntiguo` int(11) NOT NULL,
-  `PrecioMayoristaNuevo` int(11) NOT NULL,
-  `PrecioMinoristaAntiguo` int(11) NOT NULL,
-  `PrecioMinoristaNuevo` int(11) NOT NULL,
-  PRIMARY KEY (IdHistorialCambioMProducto)
+  `PrecioCostoAntiguo` double(11,2) NOT NULL,
+  `PrecioCostoNuevo` double(11,2) NOT NULL,
+  `PrecioMayoristaAntiguo` double(11,2) NOT NULL,
+  `PrecioMayoristaNuevo` double(11,2) NOT NULL,
+  `PrecioMinoristaAntiguo` double(11,2) NOT NULL,
+  `PrecioMinoristaNuevo` double(11,2) NOT NULL,
+  PRIMARY KEY (`IdHistorialCambioMProducto`)
 );
 
 CREATE TABLE `maestroProductos`
@@ -183,9 +183,9 @@ CREATE TABLE `maestroProductos`
   `Descripcion` varchar(45) NOT NULL,
   `Tipo` varchar(45) NOT NULL,
   `Fabricado` varchar(45) NOT NULL,
-  `PrecioCosto` int(11) NOT NULL,
-  `PrecioMayorista` int(11) NOT NULL,
-  `PrecioMinorista` int(11) NOT NULL,
+  `PrecioCosto` double(11,2) NOT NULL,
+  `PrecioMayorista` double(11,2) NOT NULL,
+  `PrecioMinorista` double(11,2) NOT NULL,
   `PuntoRepositorio` int(11) NOT NULL,
   `IdProveedor` int(11) NOT NULL,
   `Talle` varchar(45) NOT NULL,
@@ -264,7 +264,27 @@ CREATE TABLE `estadoMaterialFabricacion`
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
 insert into estadoMaterialFabricacion values(1,'activo');
 insert into estadoMaterialFabricacion values(2,'inactivo');
 insert into estadoMaterialFabricacion values(3,'suspendido');
 insert into estadoMaterialFabricacion values(4,'desactualizado');
+
+insert into maestroProductos values(1,"Zapato Xixo", "TP","S",30,100,120,20,2,"M",300,"Activo",3,2);
+insert into maestroProductos values(2,"Zapatilla Muca", "TP","S",15,120,170,520,2,"M",300,"Activo",3,2);
+insert into maestroProductos values(3,"Zapato Zzz", "MP","S",40,120,150,202,2,"M",300,"Activo",3,2);
+insert into maestroProductos values(4,"Zapatilla Sausa", "MP","S",20,100,120,320,2,"M",300,"Activo",3,2);
+
+INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
+INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
+INSERT INTO stock VALUES(3,3,3,"ASDF5325",2000);
+INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
+INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
+INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
+
+insert into clientes values(1, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(2, "Adriana", "Aula","523004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(3, "Pedra", "Pula","223004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(4, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(5, "Delta", "Aula","523004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(6, "Puda", "Pula","223004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");

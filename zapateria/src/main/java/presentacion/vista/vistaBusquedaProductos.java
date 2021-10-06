@@ -32,7 +32,7 @@ public class vistaBusquedaProductos {
 	
 	private JTable tableProductosFiltrados;
 	private DefaultTableModel modelTablaProductosFiltrados;
-	private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Venta","Stock Disp","Cod Lote"};
+	private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Minorista","Stock Disp","Cod Lote"};
 	private JScrollPane scrollPaneProductosFiltrados;
 
 	private JTable tableCarrito;

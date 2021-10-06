@@ -38,9 +38,9 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		String descripcion = resultSet.getString("Descripcion");
 		String tipo = resultSet.getString("Tipo");
 		String fabricado = resultSet.getString("Fabricado");
-		int precioCosto = resultSet.getInt("PrecioCosto");
-		int precioMayorista = resultSet.getInt("PrecioMayorista");
-		int precioMinorista = resultSet.getInt("PrecioMinorista");
+		double precioCosto = resultSet.getDouble("PrecioCosto");
+		double precioMayorista = resultSet.getDouble("PrecioMayorista");
+		double precioMinorista = resultSet.getDouble("PrecioMinorista");
 		int puntoRepositorio = resultSet.getInt("PuntoRepositorio");
 		int idProveedor = resultSet.getInt("IdProveedor");
 		String talle = resultSet.getString("Talle");

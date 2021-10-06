@@ -6,9 +6,9 @@ public class MaestroProductoDTO {
 	private String descripcion;
 	private String tipo;
 	private String fabricado;
-	private int precioCosto;
-	private int precioMayorista;
-	private int precioMinorista;
+	private double precioCosto;
+	private double precioMayorista;
+	private double precioMinorista;
 	private int puntoRepositorio;
 	private int idProveedor;
 	private String talle;
@@ -18,8 +18,8 @@ public class MaestroProductoDTO {
 	private int CantidadAReponer;
 	private int DiasParaReponer;
 
-	public MaestroProductoDTO(int idMaestroProducto, String descripcion, String tipo, String fabricado, int precioCosto,
-			int precioMayorista, int precioMinorista, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado, 
+	public MaestroProductoDTO(int idMaestroProducto, String descripcion, String tipo, String fabricado, double precioCosto,
+			double precioMayorista, double precioMinorista, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado, 
 			int CantidadAReponer, int DiasParaReponer) {
 		this.idMaestroProducto = idMaestroProducto;
 		this.descripcion = descripcion;
@@ -86,27 +86,27 @@ public class MaestroProductoDTO {
 		this.fabricado = fabricado;
 	}
 
-	public int getPrecioCosto() {
+	public double getPrecioCosto() {
 		return precioCosto;
 	}
 
-	public void setPrecioCosto(int precioCosto) {
+	public void setPrecioCosto(double precioCosto) {
 		this.precioCosto = precioCosto;
 	}
 
-	public int getPrecioMayorista() {
+	public double getPrecioMayorista() {
 		return precioMayorista;
 	}
 
-	public void setPrecioMayorista(int precioMayorista) {
+	public void setPrecioMayorista(double precioMayorista) {
 		this.precioMayorista = precioMayorista;
 	}
 	
-	public int getPrecioMinorista() {
+	public double getPrecioMinorista() {
 		return precioMinorista;
 	}
 
-	public void setPrecioMinorista(int precioMinorista) {
+	public void setPrecioMinorista(double precioMinorista) {
 		this.precioMinorista = precioMinorista;
 	}
 
@@ -150,14 +150,7 @@ public class MaestroProductoDTO {
 		this.estado = estado;
 	}
 
-	@Override
-	public String toString() {
-		return "MaestroProductoDTO [idMaestroProducto=" + idMaestroProducto + ", descripcion=" + descripcion + ", tipo="
-				+ tipo + ", fabricado=" + fabricado + ", precioCosto=" + precioCosto + ", precioVenta=" + precioVenta
-				+ ", puntoRepositorio=" + puntoRepositorio + ", idProveedor=" + idProveedor + ", talle=" + talle
-				+ ", unidadMedida=" + unidadMedida + ", estado=" + estado + ", CantidadAReponer=" + CantidadAReponer
-				+ ", DiasParaReponer=" + DiasParaReponer + "]";
-	}
+
 
 	
 	
