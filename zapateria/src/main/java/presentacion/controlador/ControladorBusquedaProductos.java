@@ -45,20 +45,20 @@ public class ControladorBusquedaProductos {
 	
 	List<ProductoEnCarritoDTO> carrito; 
 	
-//	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
-//		this.maestroProducto = maestroProducto;
-//		this.stock = stock;
-//		this.sucursal = sucursal;
-//	}
-	
-	public ControladorBusquedaProductos() {
-		carrito=new ArrayList<ProductoEnCarritoDTO>();
-		productosEnTabla = new ArrayList<MaestroProductoDTO>();
-		this.vistaBusquedaProductos = new vistaBusquedaProductos();
-		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		this.stock = new Stock(new DAOSQLFactory());
-		inicializar();
+	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+		this.maestroProducto = maestroProducto;
+		this.stock = stock;
+		this.sucursal = sucursal;
 	}
+	
+//	public ControladorBusquedaProductos() {
+//		carrito=new ArrayList<ProductoEnCarritoDTO>();
+//		productosEnTabla = new ArrayList<MaestroProductoDTO>();
+//		this.vistaBusquedaProductos = new vistaBusquedaProductos();
+//		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
+//		this.stock = new Stock(new DAOSQLFactory());
+//		inicializar();
+//	}
 	
 	public void inicializar() {
 		System.out.println("se ejecuta el controlador de productos");
@@ -298,8 +298,8 @@ public class ControladorBusquedaProductos {
 	}
 	
 	
-	public static void main(String[] args) {
-		new ControladorBusquedaProductos();
-	}
+//	public static void main(String[] args) {
+//		new ControladorBusquedaProductos();
+//	}
 	
 }
