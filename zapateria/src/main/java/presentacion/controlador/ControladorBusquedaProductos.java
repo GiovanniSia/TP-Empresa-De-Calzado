@@ -138,7 +138,8 @@ public class ControladorBusquedaProductos {
 		String tipo = m.getTipo();
 		String fabricado = m.getFabricado();
 		int precioCosto = m.getPrecioCosto();
-		int precioVenta = m.getPrecioVenta();
+		//AGREGAR PRECIO MAYORISTA
+		int precioVenta = m.getPrecioMinorista();
 		int puntoRepositorio = m.getPuntoRepositorio();
 		
 		Object[] fila = { descr,codLote,idSucursal,stockDisp,tipo,fabricado,precioCosto,precioVenta,puntoRepositorio };
