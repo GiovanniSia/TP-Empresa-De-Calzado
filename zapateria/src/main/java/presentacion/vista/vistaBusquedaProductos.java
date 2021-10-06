@@ -32,13 +32,20 @@ public class vistaBusquedaProductos {
 	
 	private JTable tableProductosFiltrados;
 	private DefaultTableModel modelTablaProductosFiltrados;
-	private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Minorista","Stock Disp","Cod Lote"};
+	private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio","Stock Disp","Cod Lote"};
 	private JScrollPane scrollPaneProductosFiltrados;
 
 	private JTable tableCarrito;
 	private DefaultTableModel modelTablaCarrito;
-	private String[] nombreColumnasCarrito = { "Producto Elegido", "Cantidad", "Precio Total"};
+	private String[] nombreColumnasCarrito = { "Producto Elegido", "Cantidad", "Precio Total","Cod Lote","Talle"};
 	private JScrollPane scrollPaneCarrito;
+	
+	
+
+	private JTable tableCliente;
+	private DefaultTableModel modelTablaCliente;
+	private String[] nombreColumnasCliente = { "Nombre", "Apellido", "DNI", "Tipo de Cliente"};
+	private JScrollPane scrollPaneCliente;
 	
 	private JLabel lblValorTotal;
 	private JTextField txtNombreProducto;
@@ -57,8 +64,8 @@ public class vistaBusquedaProductos {
 	private JButton btnAtras;
 	private JButton btnPasarAElegir;
 	
-	private JSpinner spinner;
-
+	private JSpinner spinnerCarrito;
+	private JSpinner spinnerProductos;
 
 	/**
 	 * Launch the application.
@@ -103,7 +110,7 @@ public class vistaBusquedaProductos {
 			e.printStackTrace();
 		}
 		
-		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados);
+		
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -112,49 +119,52 @@ public class vistaBusquedaProductos {
 		panel.setLayout(null);
 		
 		//Tabla productos filtrados
+		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados);
+		
 		scrollPaneProductosFiltrados = new JScrollPane(this.tableProductosFiltrados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneProductosFiltrados.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
-		scrollPaneProductosFiltrados.setBounds(10, 70, 548, 339);
-		panel.add(scrollPaneProductosFiltrados);
-		tableProductosFiltrados = new JTable(modelTablaProductosFiltrados);
+		scrollPaneProductosFiltrados.setBounds(10, 167, 548, 242);
 		
+		tableProductosFiltrados = new JTable(modelTablaProductosFiltrados);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
-		
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
+		
+		panel.add(scrollPaneProductosFiltrados);
 		
 		txtNombreProducto = new JTextField();
 		txtNombreProducto.setColumns(10);
-		txtNombreProducto.setBounds(75, 42, 69, 19);
+		txtNombreProducto.setBounds(10, 138, 69, 19);
 		panel.add(txtNombreProducto);		
 		
 		txtTalle = new JTextField();
 		txtTalle.setColumns(10);
-		txtTalle.setBounds(220, 41, 29, 19);
+		txtTalle.setBounds(115, 138, 29, 19);
 		panel.add(txtTalle);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(75, 23, 69, 13);
+		lblNombre.setBounds(10, 121, 69, 13);
 		panel.add(lblNombre);
 		
 		lblTalle = new JLabel("Talle");
-		lblTalle.setBounds(220, 23, 29, 13);
+		lblTalle.setBounds(115, 121, 29, 13);
 		panel.add(lblTalle);
 		
 		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
-		lblFiltrarPor.setBounds(10, 0, 69, 13);
+		lblFiltrarPor.setBounds(10, 100, 69, 13);
 		panel.add(lblFiltrarPor);
 		
 		btnAniadirProd = new JButton("->");
-		btnAniadirProd.setBounds(447, 40, 55, 21);
+		btnAniadirProd.setBounds(443, 136, 55, 21);
 		panel.add(btnAniadirProd);
 		
 		lblAniadir = new JLabel("A\u00F1adir");
-		lblAniadir.setBounds(459, 23, 39, 13);
+		lblAniadir.setBounds(443, 121, 39, 13);
 		panel.add(lblAniadir);
 		
 		lblValorTotal = new JLabel("$0");
-		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblValorTotal.setForeground(new Color(0, 100, 0));
+		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblValorTotal.setBounds(776, 370, 133, 39);
 		panel.add(lblValorTotal);
 		
@@ -179,9 +189,9 @@ public class vistaBusquedaProductos {
 		
 		scrollPaneCarrito.setViewportView(tableCarrito);
 		
-		spinner = new JSpinner();
-		spinner.setBounds(779, 41, 47, 19);
-		panel.add(spinner);
+		spinnerCarrito = new JSpinner();
+		spinnerCarrito.setBounds(779, 41, 47, 19);
+		panel.add(spinnerCarrito);
 		
 		JLabel lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setBounds(711, 41, 55, 19);
@@ -194,8 +204,31 @@ public class vistaBusquedaProductos {
 		lbl_quitarDeCarrito = new JLabel("Quitar del carrito");
 		lbl_quitarDeCarrito.setBounds(614, 23, 113, 13);
 		panel.add(lbl_quitarDeCarrito);
-		//
 		
+		JLabel lblClienteSeleccionado = new JLabel("Cliente Seleccionado:");
+		lblClienteSeleccionado.setBounds(10, 0, 134, 13);
+		panel.add(lblClienteSeleccionado);
+
+		
+		
+		//Tabla Cliente
+		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente);
+		
+		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneCliente.setBounds(10, 23, 548, 42);
+		
+		tableCliente = new JTable(modelTablaCliente);
+		this.tableCliente.getColumnModel().getColumn(0).setPreferredWidth(103);
+		this.tableCliente.getColumnModel().getColumn(0).setResizable(false);
+		scrollPaneCliente.setViewportView(tableCliente);
+		
+		panel.add(scrollPaneCliente);
+		
+		spinnerProductos = new JSpinner();
+		spinnerProductos.setBounds(386, 138, 47, 19);
+		panel.add(spinnerProductos);
+		
+		//
 		
 		btnAtras = new JButton("< Atr\u00E1s");
 		btnAtras.setBounds(20, 534, 93, 28);
@@ -331,7 +364,34 @@ public class vistaBusquedaProductos {
 	}
 
 	public JSpinner getSpinner() {
-		return spinner;
+		return spinnerCarrito;
 	}
+	
+	public JTable getTableCliente() {
+		return tableCliente;
+	}
+
+
+
+	public DefaultTableModel getModelTablaCliente() {
+		return modelTablaCliente;
+	}
+
+
+
+	public String[] getNombreColumnasCliente() {
+		return nombreColumnasCliente;
+	}
+
+
+
+	public JScrollPane getScrollPaneCliente() {
+		return scrollPaneCliente;
+	}
+
+	public JSpinner getSpinnerProductos() {
+		return spinnerProductos;
+	}
+	
 }
 
