@@ -16,6 +16,8 @@ import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
 public class ControladorOperario implements ActionListener {
 
 	static final String error = "[HiperLink error]";
+	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
+	
 	VentanaBuscarOrdenesPendientes ventana;
 	List<OrdenFabricaDTO> ordenesEnLista;
 	
@@ -144,7 +146,13 @@ public class ControladorOperario implements ActionListener {
 					}else {
 						nombreProducto = producto.getDescripcion();
 					}
-					String descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
+					String descrPaso;
+					if(a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).size() < f.getNroPasoActual()) {
+						descrPaso = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;	//Esta completo por lo que se esta enviando
+					}else {
+						descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
+					}
+					
 					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado()};
 					ventanaTrabajos.getModelOrdenes().addRow(agregar);
 				}
@@ -171,7 +179,9 @@ public class ControladorOperario implements ActionListener {
 			return;
 		}
 		fabricacionTrabajando = trabajosEnLista.get(ventanaTrabajos.getTablaFabricacionesEnMarcha().getSelectedRows()[0]);
-		ventanaUnaTrabajo.show();
+		if(fabricacionTrabajando.getEstado().equals("activo")) {
+			ventanaUnaTrabajo.show();
+		}
 	}
 	
 	public void avanzarUnPaso(ActionEvent s) {
@@ -183,6 +193,9 @@ public class ControladorOperario implements ActionListener {
 			fabricacionTrabajando.completarOrden();
 			a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
 			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			
+			ventanaUnaTrabajo.cerrar();
+			
 			//a.createFabricacionDAO().actualizarSiLlegoFechaDeEntrega(fabricacionTrabajando);
 		}
 		llenarTablaTrabajos();
@@ -203,6 +216,18 @@ public class ControladorOperario implements ActionListener {
 		DAOSQLFactory a = new DAOSQLFactory();
 		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
+	}
+	
+	public void actualizarTodosLosTrabajosListosParaLosEnvios() {
+		//ESTA FUNCION ES MAS PARA EL MODELO YA PARA QUE SEA USADA AL FFINAL DE CADA DIA O AL INICIO, DARA DE ALTA EL STOCK DE 
+		//LOS TRABAJOS COMPLETOS CUYAS FECHAS DE LLEGADA PASEN A LA ACTUAL
+		//, LITERALMENTE RECORRE TODAS LOS PROCESOS DE TRABAJO COMPLETADOS Y 
+		//VERFICA SI LA FECHA ESTA LISTA PARA EL ENVIO
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<FabricacionesDTO> todasLasOrdenesCompletas = a.createFabricacionDAO().readAllFabricacionesCompletas();
+		for(FabricacionesDTO of: todasLasOrdenesCompletas) {
+			a.createFabricacionDAO().actualizarSiLlegoFechaDeEntrega(of);
+		}
 	}
 	
 	@Override

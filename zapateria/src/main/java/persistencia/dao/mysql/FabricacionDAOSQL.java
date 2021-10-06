@@ -163,7 +163,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
-	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'activo'";
+	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'activo' OR Estado = 'completo'";
 	
 	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(){
 		PreparedStatement statement;
