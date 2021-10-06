@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import dto.MaestroProductoDTO;
+import modelo.HistorialCambioMProducto;
 import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaModificarMProducto;
@@ -97,10 +98,10 @@ public class ControladorModificarMProducto {
 	
 	//Abrir ventana para ver la tabla historialCambioMProducto
 	public void verHistorialDeCambios(ActionEvent v) {
-		
-		
-		
-		
+		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
+		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
+		controlador.inicializar();
+		controlador.mostrarVentana();	
 	}
 	
 	

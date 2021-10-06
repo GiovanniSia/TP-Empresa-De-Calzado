@@ -7,6 +7,7 @@ import java.util.List;
 
 import dto.HistorialCambioMProductoDTO;
 import modelo.HistorialCambioMProducto;
+import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaHistorialCambioMProducto;
 
@@ -94,10 +95,10 @@ public class ControladorHistorialCambioMProducto {
 		}
 	}
 
-	public static void main(String[] args) {
-		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
-		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
-	}
+//	public static void main(String[] args) {
+//		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
+//		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
+//	}
 }
