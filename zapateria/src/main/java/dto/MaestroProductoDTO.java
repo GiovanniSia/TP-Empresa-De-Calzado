@@ -7,7 +7,8 @@ public class MaestroProductoDTO {
 	private String tipo;
 	private String fabricado;
 	private int precioCosto;
-	private int precioVenta;
+	private int precioMayorista;
+	private int precioMinorista;
 	private int puntoRepositorio;
 	private int idProveedor;
 	private String talle;
@@ -18,14 +19,15 @@ public class MaestroProductoDTO {
 	private int DiasParaReponer;
 
 	public MaestroProductoDTO(int idMaestroProducto, String descripcion, String tipo, String fabricado, int precioCosto,
-			int precioVenta, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado, 
+			int precioMayorista, int precioMinorista, int puntoRepositorio, int idProveedor, String talle, int unidadMedida, String estado, 
 			int CantidadAReponer, int DiasParaReponer) {
 		this.idMaestroProducto = idMaestroProducto;
 		this.descripcion = descripcion;
 		this.tipo = tipo;
 		this.fabricado = fabricado;
 		this.precioCosto = precioCosto;
-		this.precioVenta = precioVenta;
+		this.precioMayorista = precioMayorista;
+		this.precioMinorista = precioMinorista;
 		this.puntoRepositorio = puntoRepositorio;
 		this.idProveedor = idProveedor;
 		this.talle = talle;
@@ -92,12 +94,20 @@ public class MaestroProductoDTO {
 		this.precioCosto = precioCosto;
 	}
 
-	public int getPrecioVenta() {
-		return precioVenta;
+	public int getPrecioMayorista() {
+		return precioMayorista;
 	}
 
-	public void setPrecioVenta(int precioVenta) {
-		this.precioVenta = precioVenta;
+	public void setPrecioMayorista(int precioMayorista) {
+		this.precioMayorista = precioMayorista;
+	}
+	
+	public int getPrecioMinorista() {
+		return precioMinorista;
+	}
+
+	public void setPrecioMinorista(int precioMinorista) {
+		this.precioMinorista = precioMinorista;
 	}
 
 	public int getPuntoRepositorio() {

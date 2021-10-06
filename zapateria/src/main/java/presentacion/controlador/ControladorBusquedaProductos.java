@@ -158,10 +158,10 @@ public class ControladorBusquedaProductos {
 //private String[] nombreColumnasProductosFiltrados = { "Nombre", "Talle", "Precio Venta"};
 		String nombre=m.getDescripcion();
 		String talle = m.getTalle();
-		int precioVenta = m.getPrecioVenta();
+		double precioMinorista = m.getPrecioMinorista();
 		int stockDisp = s.getStockDisponible();
 		String codLote = s.getCodigoLote();
-		Object[] fila = { nombre,talle,precioVenta,stockDisp,codLote};
+		Object[] fila = { nombre,talle,precioMinorista,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
 	}
 
@@ -220,7 +220,7 @@ public class ControladorBusquedaProductos {
 		
 		for(ProductoEnCarritoDTO m: this.carrito) {
 			String nombre=m.getProducto().getDescripcion();
-			int precioVenta = m.getProducto().getPrecioVenta();
+			double precioVenta = m.getProducto().getPrecioMinorista();
 			int cantObj = m.getCantidad();
 			Object[] fila = { nombre,cantObj,precioVenta};
 			this.vistaBusquedaProductos.getModelTablaCarrito().addRow(fila);			
@@ -232,7 +232,7 @@ public class ControladorBusquedaProductos {
 		int total=0;
 		for(ProductoEnCarritoDTO m: this.carrito) {
 			for(int i=0; i<m.getCantidad(); i++) {
-				total += m.getProducto().getPrecioVenta();
+				total += m.getProducto().getPrecioMinorista();
 			}
 		}
 		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+total);

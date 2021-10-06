@@ -108,16 +108,16 @@ public class FabricacionDAOSQL {
 		String tipo = resultSet.getString("mp.Tipo");
 		String fabricado = resultSet.getString("mp.Fabricado");
 		int precioCosto = resultSet.getInt("mp.PrecioCosto");
-		int precioVenta = resultSet.getInt("mp.PrecioVenta");
+		int precioMayorista = resultSet.getInt("mp.PrecioMayorista");
+		int precioMinorista = resultSet.getInt("mp.PrecioMinorista");
 		int puntoRepositorio = resultSet.getInt("mp.PuntoRepositorio");
 		int idProveedor = resultSet.getInt("mp.IdProveedor");
 		String talle = resultSet.getString("mp.Talle");
 		int unidadMedida = resultSet.getInt("mp.UnidadMedida");
 		String estado = resultSet.getString("mp.Estado");
-		
 		int CantidadAReponer = resultSet.getInt("mp.CantidadAReponer");
 		int DiasParaReponer = resultSet.getInt("mp.DiasParaReponer");
-		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioVenta,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
+		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioMayorista,precioMinorista,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 	
 	public static Integer obtenerCantidadMaterial(int idPaso, int idMaterial){

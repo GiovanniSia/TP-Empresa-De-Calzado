@@ -162,6 +162,21 @@ CREATE TABLE `sucursales`
   PRIMARY KEY (`IdSucursal`)
 );
 
+CREATE TABLE `historialCambioMProducto`
+(
+  `IdHistorialCambioMProducto` int(11) NOT NULL AUTO_INCREMENT,
+  `IdEmpleado` int(11) NOT NULL,
+  `IdMaestroProducto` int(11) NOT NULL,
+  `Fecha` Date NOT NULL,
+  `PrecioCostoAntiguo` int(11) NOT NULL,
+  `PrecioCostoNuevo` int(11) NOT NULL,
+  `PrecioMayoristaAntiguo` int(11) NOT NULL,
+  `PrecioMayoristaNuevo` int(11) NOT NULL,
+  `PrecioMinoristaAntiguo` int(11) NOT NULL,
+  `PrecioMinoristaNuevo` int(11) NOT NULL,
+  PRIMARY KEY (IdHistorialCambioMProducto)
+);
+
 CREATE TABLE `maestroProductos`
 (
   `IdMaestroProducto` int(11) NOT NULL AUTO_INCREMENT,
@@ -169,13 +184,13 @@ CREATE TABLE `maestroProductos`
   `Tipo` varchar(45) NOT NULL,
   `Fabricado` varchar(45) NOT NULL,
   `PrecioCosto` int(11) NOT NULL,
-  `PrecioVenta` int(11) NOT NULL,
+  `PrecioMayorista` int(11) NOT NULL,
+  `PrecioMinorista` int(11) NOT NULL,
   `PuntoRepositorio` int(11) NOT NULL,
   `IdProveedor` int(11) NOT NULL,
   `Talle` varchar(45) NOT NULL,
   `UnidadMedida` int(11) NOT NULL,
   `Estado` varchar(45) NOT NULL,
-  
   `CantidadAReponer` int(11) NOT NULL,
   `DiasParaReponer` int(11) NOT NULL,
   PRIMARY KEY (`IdMaestroProducto`)
