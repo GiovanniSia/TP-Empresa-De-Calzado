@@ -3,9 +3,12 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 import dto.MaestroProductoDTO;
 import modelo.MaestroProducto;
@@ -33,11 +36,27 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(null);
 		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(null);
 		
+		//Tabla
+		this.ventanaModificarMProducto.getTablaProducto().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int filaSeleccionada = ventanaModificarMProducto.getTablaProducto().rowAtPoint(e.getPoint());
+				JTable tablaProducto =ventanaModificarMProducto.getTablaProducto();
+				ventanaModificarMProducto.getLblActualizarDescripcion().setText(tablaProducto.getValueAt(filaSeleccionada, 1).toString());
+				ventanaModificarMProducto.getTxtActualizarPrecioCosto().setText(tablaProducto.getValueAt(filaSeleccionada, 3).toString());
+				ventanaModificarMProducto.getTxtActualizarPrecioMayorista().setText(tablaProducto.getValueAt(filaSeleccionada, 4).toString());
+				ventanaModificarMProducto.getTxtActualizarPrecioMinorista().setText(tablaProducto.getValueAt(filaSeleccionada, 5).toString());
+				ventanaModificarMProducto.getSpinnerPuntoRepositorio().setValue(tablaProducto.getValueAt(filaSeleccionada, 6));
+				ventanaModificarMProducto.getSpinnerCantidadAReponer().setValue(tablaProducto.getValueAt(filaSeleccionada, 7));
+				ventanaModificarMProducto.getSpinnerDiasParaReponer().setValue(tablaProducto.getValueAt(filaSeleccionada, 8));		
+				
+			}
+		});
+		
 		//TextFiltos
 		this.ventanaModificarMProducto.getTxtFiltroCodProducto().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-//				maestroProductoEnTabla = producto.filtrarPorCodProducto(ventanaModificarMProducto.getTxtFiltroCodProducto().getText());
 				maestroProductoEnTabla = producto.getMaestroProductoAproximado("IdMaestroProducto",ventanaModificarMProducto.getTxtFiltroCodProducto().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
@@ -46,7 +65,6 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getTxtFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-//				maestroProductoEnTabla = producto.filtrarPorDescripcion(ventanaModificarMProducto.getTxtFiltroDescripcion().getText());
 				maestroProductoEnTabla = producto.getMaestroProductoAproximado("Descripcion",ventanaModificarMProducto.getTxtFiltroDescripcion().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
@@ -55,7 +73,6 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getTxtFiltroTalle().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-//				maestroProductoEnTabla = producto.filtrarPorTalle(ventanaModificarMProducto.getTxtFiltroTalle().getText());
 				maestroProductoEnTabla = producto.getMaestroProductoAproximado("Talle",ventanaModificarMProducto.getTxtFiltroTalle().getText(),null,null);
 				llenarTabla(maestroProductoEnTabla);
 			}
