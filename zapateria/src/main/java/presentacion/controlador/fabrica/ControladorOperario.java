@@ -111,7 +111,10 @@ public class ControladorOperario implements ActionListener {
 		RecetaDTO receta = new RecetaDTO(1,1,error);
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
-				receta = r;
+				if(a.createFabricacionDAO().isRecetaDisponible(r)) {
+					System.out.println("LEI RECETA DISPONIBLE");
+					receta = r;
+				}
 			}
 		}
 		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenATrabajar.getIdOrdenFabrica(), receta.getIdReceta(), 1, "activo");

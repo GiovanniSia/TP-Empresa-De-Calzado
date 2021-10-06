@@ -12,6 +12,8 @@ public interface FabricacionDAO {
 
 	public List<RecetaDTO> readAllReceta();
 	
+	public boolean isRecetaDisponible(RecetaDTO receta);
+	
 	public List<PasoDeRecetaDTO> readAllPasosFromOneReceta(int idReceta);
 	
 	public List<FabricacionesDTO> readAllFabricacionesEnMarcha();

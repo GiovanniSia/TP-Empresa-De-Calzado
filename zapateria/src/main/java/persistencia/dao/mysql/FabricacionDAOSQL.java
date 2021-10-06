@@ -19,6 +19,7 @@ import persistencia.dao.interfaz.OrdenFabricaDAO;
 
 public class FabricacionDAOSQL implements FabricacionDAO{
 	
+	private static final String estadoActivoDeUnMaterial = "Activo";
 	private static final String readAllReceta = "SELECT * FROM recetas";
 	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso;";
 	private static final String readAllMaterialesFromOnePaso = "SELECT * FROM materialesDePaso mdp, maestroProductos mp WHERE mdp.IdPaso = ? AND mdp.IdMaterial = mp.IdMaestroProducto;";
@@ -47,6 +48,20 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int IdProducto = resultSet.getInt("IdProducto");
 		String Descripcion = resultSet.getString("Descripcion");
 		return new RecetaDTO(id, IdProducto, Descripcion);
+	}
+	
+	public boolean isRecetaDisponible(RecetaDTO receta) {	
+		//Una receta se encuentra disponible si todos sus materiales estan activos
+		boolean ret = true;
+		List<PasoDeRecetaDTO> pasosDeLaReceta = this.readAllPasosFromOneReceta(receta.getIdReceta());
+		for(PasoDeRecetaDTO pdr: pasosDeLaReceta) {
+			MaestroProductoDTO mpAux;
+			for(int x = 0; x < pdr.getPasosDTO().getMateriales().size(); x++) {
+				mpAux = pdr.getPasosDTO().getMateriales().get(x);
+				ret = ret && mpAux.getEstado().equals(estadoActivoDeUnMaterial);
+			}
+		}
+		return ret;
 	}
 	
 	public List<PasoDeRecetaDTO> readAllPasosFromOneReceta(int idReceta) {
