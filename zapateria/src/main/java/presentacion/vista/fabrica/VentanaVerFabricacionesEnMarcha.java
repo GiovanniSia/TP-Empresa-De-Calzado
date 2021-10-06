@@ -52,11 +52,6 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
 
-		tabla.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tabla.getColumnModel().getColumn(0).setResizable(false);
-		tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tabla.getColumnModel().getColumn(1).setResizable(false);
-
 		spCliente.setViewportView(tabla);
 
 		btnSeleccionarProceso = new JButton("Seleccionar proceso");
@@ -105,7 +100,7 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 		this.setVisible(true);
 	}
 
-	public JTable getTablaOrdenesPendientes() {
+	public JTable getTablaFabricacionesEnMarcha() {
 		return tabla;
 	}
 

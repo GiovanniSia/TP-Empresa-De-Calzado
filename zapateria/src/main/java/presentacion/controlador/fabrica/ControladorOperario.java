@@ -10,6 +10,7 @@ import dto.OrdenFabricaDTO;
 import dto.RecetaDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
+import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
 
 public class ControladorOperario implements ActionListener {
@@ -21,6 +22,9 @@ public class ControladorOperario implements ActionListener {
 	VentanaVerFabricacionesEnMarcha ventanaTrabajos;
 	List<FabricacionesDTO> trabajosEnLista;
 	
+	FabricacionesDTO fabricacionTrabajando;
+	VentanaTrabajarUnPedido ventanaUnaTrabajo;
+	
 	public ControladorOperario() {
 		ventana = new VentanaBuscarOrdenesPendientes();
 		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
@@ -30,6 +34,14 @@ public class ControladorOperario implements ActionListener {
 		ventana.getBtnVerFabricaciones().addActionListener(r->abrirVentanaTrabajos(r));
 		
 		ventanaTrabajos = new VentanaVerFabricacionesEnMarcha();
+		ventanaTrabajos.getBtnVerFabricaciones().addActionListener(r->abrirVentanaOrdenes(r));
+		
+		ventanaUnaTrabajo = new VentanaTrabajarUnPedido();
+		ventanaTrabajos.getBtnTrabajarPedido().addActionListener(r->abrirUnaVentanaDeUnTrabajo(r));
+		
+		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
+		ventanaUnaTrabajo.getBtnRetrocederUnPaso().addActionListener(r->retrocederUnPaso(r));
+		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
 	}
 	
 	public void inicializar() {
@@ -109,7 +121,7 @@ public class ControladorOperario implements ActionListener {
 	private void reiniciarTablaTrabajos() {
 		ventanaTrabajos.getModelOrdenes().setRowCount(0);
 		ventanaTrabajos.getModelOrdenes().setColumnCount(0);
-		ventanaTrabajos.getModelOrdenes().setColumnIdentifiers(ventana.getNombreColumnas());
+		ventanaTrabajos.getModelOrdenes().setColumnIdentifiers(ventanaTrabajos.getNombreColumnas());
 	}
 	
 	private void llenarTablaTrabajos() {
@@ -132,7 +144,7 @@ public class ControladorOperario implements ActionListener {
 					}else {
 						nombreProducto = producto.getDescripcion();
 					}
-					String descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()).getPasosDTO().getDescripcion();
+					String descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
 					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado()};
 					ventanaTrabajos.getModelOrdenes().addRow(agregar);
 				}
@@ -146,6 +158,51 @@ public class ControladorOperario implements ActionListener {
 		llenarTablaTrabajos();
 		ventanaTrabajos.show();
 		ventana.cerrar();
+	}
+	
+	public void abrirVentanaOrdenes(ActionEvent s) {
+		llenarTablaOrdenes();
+		ventanaTrabajos.cerrar();
+		ventana.show();
+	}
+	
+	public void abrirUnaVentanaDeUnTrabajo(ActionEvent s) {
+		if(ventanaTrabajos.getTablaFabricacionesEnMarcha().getSelectedRows().length == 0) {
+			return;
+		}
+		fabricacionTrabajando = trabajosEnLista.get(ventanaTrabajos.getTablaFabricacionesEnMarcha().getSelectedRows()[0]);
+		ventanaUnaTrabajo.show();
+	}
+	
+	public void avanzarUnPaso(ActionEvent s) {
+		fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
+		DAOSQLFactory a = new DAOSQLFactory();
+		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		
+		if(fabricacionTrabajando.getNroPasoActual() > a.createFabricacionDAO().readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
+			fabricacionTrabajando.completarOrden();
+			a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
+			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			//a.createFabricacionDAO().actualizarSiLlegoFechaDeEntrega(fabricacionTrabajando);
+		}
+		llenarTablaTrabajos();
+	}
+	
+	public void retrocederUnPaso(ActionEvent s) {
+		if(fabricacionTrabajando.getNroPasoActual() == 1) {
+			return;
+		}
+		fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()-1);
+		DAOSQLFactory a = new DAOSQLFactory();
+		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		llenarTablaTrabajos();
+	}
+	
+	public void cancelarOrden(ActionEvent s) {
+		fabricacionTrabajando.cancelarOrden();
+		DAOSQLFactory a = new DAOSQLFactory();
+		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		llenarTablaTrabajos();
 	}
 	
 	@Override
