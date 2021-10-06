@@ -307,9 +307,9 @@ public class VentanaModificarMProducto extends JFrame {
 		this.txtActualizarPrecioMayorista.setText(null);
 		this.txtActualizarPrecioMinorista.setText(null);
 
-		this.spinnerCantidadAReponer.setValue(null);
-		this.spinnerDiasParaReponer.setValue(null);
-		this.spinnerPuntoRepositorio.setValue(null);
+		this.spinnerCantidadAReponer.setValue(0);
+		this.spinnerDiasParaReponer.setValue(0);
+		this.spinnerPuntoRepositorio.setValue(0);
 
 		frame.setVisible(false);
 	}

@@ -32,9 +32,9 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		
 		//Botones
-		this.ventanaModificarMProducto.getBtnAtras().addActionListener(null);
-		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(null);
-		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(null);
+		this.ventanaModificarMProducto.getBtnAtras().addActionListener(a->atras(a));
+		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(c->actualizarProducto(c));
+		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(v->verHistorialDeCambios(v));
 		
 		//Tabla
 		this.ventanaModificarMProducto.getTablaProducto().addMouseListener(new MouseAdapter() {
@@ -77,17 +77,33 @@ public class ControladorModificarMProducto {
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});		
-		//TextActualizar
-		this.mostrarVentana();
+		
+
+//		this.mostrarVentana();
 	}
 	
 	public void atras(ActionEvent a) {
 		this.ventanaModificarMProducto.cerrar();
 	}
 
-	public void pasarAVenta(ActionEvent p) {
-		maestroProductoSeleccionado();
+	//Se actualizar la tabla maestroProducto y historialCambioMProducto
+	public void actualizarProducto(ActionEvent p) {
+		
+		
+		
+		
+		
 	}
+	
+	//Abrir ventana para ver la tabla historialCambioMProducto
+	public void verHistorialDeCambios(ActionEvent v) {
+		
+		
+		
+		
+	}
+	
+	
 
 	public void maestroProductoSeleccionado() {
 		int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
@@ -103,7 +119,7 @@ public class ControladorModificarMProducto {
 			//Obtengo el objeto cilente con todos sus valores
 			if (codProducto.equals(""+mp.getIdMaestroProducto()+"")) {
 				
-				System.out.println(" Producto seleccionado");			
+//				System.out.println(" Producto seleccionado");			
 			}
 		}
 	}
@@ -142,10 +158,10 @@ public class ControladorModificarMProducto {
 	}
 	
 	public static void main(String[] args) {
-//		VentanaModificarMProducto vista = new VentanaModificarMProducto();
 		MaestroProducto modelo = new MaestroProducto(new DAOSQLFactory());
 		ControladorModificarMProducto controlador = new ControladorModificarMProducto(modelo);
 		controlador.inicializar();
+		controlador.mostrarVentana();
 	}
 
 }
