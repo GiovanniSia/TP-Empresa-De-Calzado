@@ -82,6 +82,7 @@ public class ControladorBusquedaCliente {
 	public void pasarAVenta(ActionEvent p) {
 		if(clienteSeleccionado()) {
 			this.ventanaBusquedaCliente.cerrar();
+			this.controladorBusquedaProductos.establecerClienteElegido(this.clienteSeleccionado);
 			controladorBusquedaProductos.inicializar();
 		}		
 	}

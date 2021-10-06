@@ -49,9 +49,8 @@ public class ControladorBusquedaProductos {
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
 		this.sucursal = sucursal;
-
-//		inicializar();
 	}
+	
 //	public ControladorBusquedaProductos() {
 //		carrito=new ArrayList<ProductoEnCarritoDTO>();
 //		productosEnTabla = new ArrayList<MaestroProductoDTO>();
@@ -72,7 +71,8 @@ public class ControladorBusquedaProductos {
 		
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
-		
+				
+		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
 			@Override
@@ -280,10 +280,6 @@ public class ControladorBusquedaProductos {
 		actualzarTablaCarrito();
 	}
 	
-	
-	
-	
-	
 	public void volverAtras(ActionEvent a) {
 		this.vistaBusquedaProductos.cerrar();
 		//se deberia abrir la pantalla anterior
@@ -298,5 +294,10 @@ public class ControladorBusquedaProductos {
 	public void establecerClienteElegido(ClienteDTO cliente) {
 		this.clienteSeleccionado = cliente;
 	}
+	
+	
+//	public static void main(String[] args) {
+//		new ControladorBusquedaProductos();
+//	}
 	
 }

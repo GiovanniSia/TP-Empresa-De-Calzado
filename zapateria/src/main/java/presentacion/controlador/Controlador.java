@@ -31,12 +31,9 @@ public class Controlador implements ActionListener {
 		this.stock = stock;
 		this.sucursal = sucursal;
 		this.cliente = cliente;
-
-
 	}
 	
 	public void inicializar() {
-		System.out.println("se ejecuta el controlador papi");
 		
 		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
 		this.vistaBusquedaProducto = new vistaBusquedaProductos();
