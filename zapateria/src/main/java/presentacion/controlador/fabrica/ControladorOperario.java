@@ -2,6 +2,7 @@ package presentacion.controlador.fabrica;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import dto.FabricacionesDTO;
@@ -10,6 +11,7 @@ import dto.OrdenFabricaDTO;
 import dto.RecetaDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
+import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
 
@@ -20,16 +22,27 @@ public class ControladorOperario implements ActionListener {
 	
 	VentanaBuscarOrdenesPendientes ventana;
 	List<OrdenFabricaDTO> ordenesEnLista;
+	OrdenFabricaDTO ordenSeleccionado;
+	RecetaDTO recetaSeleccionado;
 	
 	VentanaVerFabricacionesEnMarcha ventanaTrabajos;
 	List<FabricacionesDTO> trabajosEnLista;
 	
+	List<RecetaDTO> recetasEnLista;
+	
 	FabricacionesDTO fabricacionTrabajando;
 	VentanaTrabajarUnPedido ventanaUnaTrabajo;
+	
+	VentanaSeleccionarUnaReceta ventanaElegirReceta;
 	
 	public ControladorOperario() {
 		ventana = new VentanaBuscarOrdenesPendientes();
 		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
+		
+		ventanaElegirReceta = new VentanaSeleccionarUnaReceta();
+		ventanaElegirReceta.getBtnElegirReceta().addActionListener(r->crearTrabajoEnMarcha(r));//trabajarUnPedidoSeleccionado
+		
+		
 		actualizarTabla();
 		
 		ventanaTrabajos = new VentanaVerFabricacionesEnMarcha();
@@ -44,6 +57,8 @@ public class ControladorOperario implements ActionListener {
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
 		ventanaUnaTrabajo.getBtnRetrocederUnPaso().addActionListener(r->retrocederUnPaso(r));
 		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		
+		
 	}
 	
 	public void inicializar() {
@@ -100,25 +115,43 @@ public class ControladorOperario implements ActionListener {
 		if(filasSeleccionadas.length == 0) {
 			return;
 		}
-		crearFabricacionEnMarcha(filasSeleccionadas[0]);
-		actualizarTabla();
+		OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filasSeleccionadas[0]);
+		ordenSeleccionado = ordenATrabajar;
+		inicializarComboBoxRecetas(filasSeleccionadas[0]);
+		this.ventanaElegirReceta.show();
 	}
 	
-	public void crearFabricacionEnMarcha(int filaSeleccionada) {
+	public void inicializarComboBoxRecetas(int filaSeleccionada) {
 		OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filaSeleccionada);
+		ordenSeleccionado = ordenATrabajar;
+		
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<RecetaDTO>listaRecetas = a.createFabricacionDAO().readAllReceta();	//EN UN FUTURO TENDRA QUE CAMBIAR A RECETAS DISPONIBLES
-		RecetaDTO receta = new RecetaDTO(1,1,error);
+		//RecetaDTO receta = new RecetaDTO(1,1,error);
+		recetasEnLista = new ArrayList<RecetaDTO>();
+		this.ventanaElegirReceta.getComboBox().removeAllItems();
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
 				if(a.createFabricacionDAO().isRecetaDisponible(r)) {
-					System.out.println("LEI RECETA DISPONIBLE");
-					receta = r;
+					//System.out.println("LEI RECETA DISPONIBLE");s
+					//receta = r;
+					recetasEnLista.add(r);
+					this.ventanaElegirReceta.getComboBox().addItem(r.getDescripcion());
 				}
 			}
 		}
-		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenATrabajar.getIdOrdenFabrica(), receta.getIdReceta(), 1, "activo");
+	}
+	
+	public void crearTrabajoEnMarcha(ActionEvent s) {
+		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
+			return;
+		}
+		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
+		DAOSQLFactory a = new DAOSQLFactory();
+		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenSeleccionado.getIdOrdenFabrica(), recetaSeleccionado.getIdReceta(), 1, "activo");
 		a.createFabricacionDAO().insertFabricacionEnMarcha(fabricacion);
+		actualizarTabla();
+		this.ventanaElegirReceta.cerrar();
 	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * *
