@@ -167,12 +167,15 @@ public class ControladorOperario implements ActionListener {
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
 				if(a.createFabricacionDAO().isRecetaDisponible(r)) {
+					/*
 					if(existeMaterialSuficiente(r, ordenSeleccionado.getCantidad())) {
 						//System.out.println("LEI RECETA DISPONIBLE");s
 						//receta = r;
 						recetasEnLista.add(r);
 						this.ventanaElegirReceta.getComboBox().addItem(r.getDescripcion());
-					}
+					}*/
+					recetasEnLista.add(r);
+					this.ventanaElegirReceta.getComboBox().addItem(r.getDescripcion());
 				}
 			}
 		}
@@ -475,6 +478,13 @@ public class ControladorOperario implements ActionListener {
 				ventanaMostrarIngredientes.getModelOrdenes().addRow(agregar);
 			}
 		}
+		
+		if(existeMaterialSuficiente(recetaSeleccionado, ordenSeleccionado.getCantidad())) {
+			this.ventanaMostrarIngredientes.getLblMensaje().setText("Hay materiales suficientes");
+		}else {
+			this.ventanaMostrarIngredientes.getLblMensaje().setText("No hay materiales suficientes");
+		}
+		
 		ventanaMostrarIngredientes.show();
 	}
 	

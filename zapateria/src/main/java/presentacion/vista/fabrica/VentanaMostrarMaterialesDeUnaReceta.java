@@ -29,6 +29,7 @@ public class VentanaMostrarMaterialesDeUnaReceta extends JFrame {
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
+	private JLabel lblMensaje;
 
 	public VentanaMostrarMaterialesDeUnaReceta() {
 		initialize();
@@ -36,18 +37,18 @@ public class VentanaMostrarMaterialesDeUnaReceta extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 409, 264);
+		frame.setBounds(100, 100, 409, 301);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 376, 210);
+		panel.setBounds(10, 11, 376, 240);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		btnTrabajar = new JButton("Pasar a produccion");
-		btnTrabajar.setBounds(103, 176, 154, 23);
+		btnTrabajar.setBounds(103, 206, 154, 23);
 		panel.add(btnTrabajar);
 		
 		lblSolicitado = new JLabel("New label");
@@ -61,6 +62,10 @@ public class VentanaMostrarMaterialesDeUnaReceta extends JFrame {
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
 		spCliente.setViewportView(tabla);
+		
+		lblMensaje = new JLabel("New label");
+		lblMensaje.setBounds(10, 167, 356, 28);
+		panel.add(lblMensaje);
 		
 	}
 
@@ -101,5 +106,9 @@ public class VentanaMostrarMaterialesDeUnaReceta extends JFrame {
 
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
+	}
+
+	public JLabel getLblMensaje() {
+		return lblMensaje;
 	}
 }
