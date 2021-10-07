@@ -11,6 +11,7 @@ import dto.OrdenFabricaDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import dto.StockDTO;
+import dto.SucursalDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
@@ -37,7 +38,10 @@ public class ControladorOperario implements ActionListener {
 	
 	VentanaSeleccionarUnaReceta ventanaElegirReceta;
 	
-	public ControladorOperario() {
+	int idFabrica;
+	
+	public ControladorOperario(SucursalDTO fabrica) {
+		this.idFabrica = fabrica.getIdSucursal();
 		ventana = new VentanaBuscarOrdenesPendientes();
 		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
 		
@@ -224,6 +228,7 @@ public class ControladorOperario implements ActionListener {
 	
 	public void abrirVentanaOrdenes(ActionEvent s) {
 		llenarTablaOrdenes();
+		actualizarTabla();
 		ventanaTrabajos.cerrar();
 		ventana.show();
 	}
@@ -270,6 +275,7 @@ public class ControladorOperario implements ActionListener {
 		DAOSQLFactory a = new DAOSQLFactory();
 		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
+		ventanaUnaTrabajo.cerrar();
 	}
 	
 	public void actualizarTodosLosTrabajosListosParaLosEnvios() {
@@ -304,7 +310,7 @@ public class ControladorOperario implements ActionListener {
 		List<StockDTO> todoElStock = a.createStockDAO().readAll();
 		int cantidadTotalDisponible = 0;
 		for(StockDTO s: todoElStock) {
-			if(s.getIdProducto() == idMaestroProducto) {
+			if(s.getIdProducto() == idMaestroProducto && s.getIdSucursal() == this.idFabrica) {
 				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();
 			}
 		}
