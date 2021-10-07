@@ -216,13 +216,21 @@ public class ControladorOperario implements ActionListener {
 					}else {
 						descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
 					}
-					
-					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado()};
+					// "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado", "Fecha completada", "Dias envio"
+					String fechaCompletado;
+					String diasEnvio = "";
+					if(f.getEstado().equals("completo")) {
+						fechaCompletado = f.getAnioCompletado() + "-" + f.getMesCompletado() + "-" + f.getDiaCompletado();
+						diasEnvio = "" + f.getDiaDisponible();
+					}else {
+						fechaCompletado = "";
+						diasEnvio = "No";
+					}
+					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado(), fechaCompletado, diasEnvio};
 					ventanaTrabajos.getModelOrdenes().addRow(agregar);
 				}
 			}
 		}
-		//"Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado"
 		
 	}
 	
