@@ -270,10 +270,13 @@ insert into estadoMaterialFabricacion values(2,'inactivo');
 insert into estadoMaterialFabricacion values(3,'suspendido');
 insert into estadoMaterialFabricacion values(4,'desactualizado');
 
-insert into maestroProductos values(1,"Zapato Xixo", "PT","S",30,100,120,20,2,"M",300,"Activo",3,2);
-insert into maestroProductos values(2,"Zapatilla Muca", "PT","S",15,120,170,520,2,"M",300,"Activo",3,2);
-insert into maestroProductos values(3,"Zapato Zzz", "MP","S",40,120,150,202,2,"M",300,"Activo",3,2);
-insert into maestroProductos values(4,"Zapatilla Sausa", "MP","S",20,100,120,320,2,"M",300,"Activo",3,2);
+
+INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,3 ,2,"M",200,"Activo",2200,100);
+INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",500,100);
+INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
+INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
+INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(6,"ZapatillaAdidas"  ,"PT","S",100 ,8050,1100,5  ,2,"M",300,"Activo",200,100);
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
@@ -282,9 +285,10 @@ INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
 INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
 INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
 
-insert into clientes values(1, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(2, "Adriana", "Aula","523004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(3, "Pedra", "Pula","223004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(4, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(5, "Delta", "Aula","523004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(6, "Puda", "Pula","223004","juanS@mgail.com",200,100,"ayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(1, "Default", "Default","00000000","",0,0,"Minorista","Excento","Activo","0","0","","","","0");
+insert into clientes values(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(3, "Adriana", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(4, "Pedra", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(5, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(6, "Delta", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(7, "Puda", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
