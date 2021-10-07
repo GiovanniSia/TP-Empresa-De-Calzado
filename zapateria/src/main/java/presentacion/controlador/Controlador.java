@@ -35,19 +35,18 @@ public class Controlador implements ActionListener {
 	
 	public void inicializar() {
 		
+		
 		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
 		this.vistaBusquedaProducto = new vistaBusquedaProductos();
 		
-		this.controladorBusquedaProducto = new ControladorBusquedaProductos(maestroProducto,stock,sucursal);
-		this.controladorBusquedaCliente = new ControladorBusquedaCliente(cliente,controladorBusquedaProducto);
-		
-		
+		this.controladorBusquedaCliente = new ControladorBusquedaCliente(cliente);
+
+		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
+		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
 		
 		//por ahora cuando se inicia se inicia la ventana de cliente
 		controladorBusquedaCliente.inicializar();		
 		this.controladorBusquedaCliente.mostrarVentana();
-
-		
 	}
 	
 	

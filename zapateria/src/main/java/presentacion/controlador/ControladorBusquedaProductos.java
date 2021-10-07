@@ -22,6 +22,7 @@ import dto.ClienteDTO;
 import dto.MaestroProductoDTO;
 import dto.ProductoEnCarritoDTO;
 import dto.StockDTO;
+import modelo.Cliente;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
@@ -34,6 +35,7 @@ public class ControladorBusquedaProductos {
 	private final int idSucursal=1;//esto esta hardcodeado
 //	private final List<MaestroProductoDTO> carrito;
 	
+	ControladorBusquedaCliente controladorBusquedaCliente;
 	
 	List<StockDTO> listaStock;
 	
@@ -55,6 +57,10 @@ public class ControladorBusquedaProductos {
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
 		this.sucursal = sucursal;
+	}
+	
+	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {
+		this.controladorBusquedaCliente = c;
 	}
 	
 //	public ControladorBusquedaProductos() {
@@ -328,6 +334,11 @@ public class ControladorBusquedaProductos {
 	
 	public void volverAtras(ActionEvent a) {
 		this.vistaBusquedaProductos.cerrar();
+//		Cliente cliente = new Cliente(new DAOSQLFactory());
+//		ControladorBusquedaCliente c = new ControladorBusquedaCliente(cliente);
+		
+		this.controladorBusquedaCliente.inicializar();
+		this.controladorBusquedaCliente.mostrarVentana();
 		//se deberia abrir la pantalla anterior
 	}
 	
@@ -339,6 +350,7 @@ public class ControladorBusquedaProductos {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
+			//se deberia guardar en la bd el carrito con el productoACobrar
 			this.vistaBusquedaProductos.cerrar();
 		}
 	}

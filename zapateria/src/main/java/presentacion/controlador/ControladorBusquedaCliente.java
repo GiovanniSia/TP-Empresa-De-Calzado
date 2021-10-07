@@ -21,11 +21,18 @@ public class ControladorBusquedaCliente {
 	
 	private ClienteDTO clienteSeleccionado;
 	
-	public ControladorBusquedaCliente(Cliente cliente,ControladorBusquedaProductos controladorBusquedaProductos) {
-		this.controladorBusquedaProductos=controladorBusquedaProductos;
+	public ControladorBusquedaCliente(Cliente cliente) {
+		
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		this.cliente = cliente;
 	}
+	
+	public void setControladorBusquedaProducto(ControladorBusquedaProductos c) {
+		this.controladorBusquedaProductos=c;
+	}
+	
+	
+	
 	
 	public void inicializar() {
 		System.out.println("se ejecuta el contorlador de cliente");
@@ -83,7 +90,9 @@ public class ControladorBusquedaCliente {
 		if(clienteSeleccionado()) {
 			this.ventanaBusquedaCliente.cerrar();
 			this.controladorBusquedaProductos.establecerClienteElegido(this.clienteSeleccionado);
+			
 			controladorBusquedaProductos.inicializar();
+			
 		}		
 	}
 
@@ -155,6 +164,9 @@ public class ControladorBusquedaCliente {
 	public ClienteDTO getClienteSeleccionado() {
 		return this.clienteSeleccionado;
 	}
+	
+	
+	
 	
 //	public static void main(String[] args) {
 //		new ControladorBusquedaCliente();
