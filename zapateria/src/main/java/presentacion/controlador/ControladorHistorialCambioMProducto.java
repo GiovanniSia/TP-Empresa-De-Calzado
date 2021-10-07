@@ -7,7 +7,6 @@ import java.util.List;
 
 import dto.HistorialCambioMProductoDTO;
 import modelo.HistorialCambioMProducto;
-import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaHistorialCambioMProducto;
 
