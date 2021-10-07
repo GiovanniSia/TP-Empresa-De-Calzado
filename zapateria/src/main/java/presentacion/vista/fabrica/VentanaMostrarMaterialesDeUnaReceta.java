@@ -16,21 +16,21 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaTrabajarUnPedido extends JFrame {
+public class VentanaMostrarMaterialesDeUnaReceta extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	
-	JButton btnAvanzarUnPaso;
-	JButton btnRetrocederUnPaso;
-	JButton btnCancelar;
+	JButton btnTrabajar;
+	
+	JLabel lblSolicitado;
 	
 	private String[] nombreColumnas = { "Material", "Cantidad" };
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 
-	public VentanaTrabajarUnPedido() {
+	public VentanaMostrarMaterialesDeUnaReceta() {
 		initialize();
 	}
 
@@ -46,25 +46,22 @@ public class VentanaTrabajarUnPedido extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		btnAvanzarUnPaso = new JButton("Avanzar un paso");
-		btnAvanzarUnPaso.setBounds(10, 11, 154, 23);
-		panel.add(btnAvanzarUnPaso);
+		btnTrabajar = new JButton("Pasar a produccion");
+		btnTrabajar.setBounds(103, 176, 154, 23);
+		panel.add(btnTrabajar);
 		
-		btnRetrocederUnPaso = new JButton("Volver un paso");
-		btnRetrocederUnPaso.setBounds(174, 11, 154, 23);
-		panel.add(btnRetrocederUnPaso);
-		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 45, 154, 23);
-		panel.add(btnCancelar);
+		lblSolicitado = new JLabel("New label");
+		lblSolicitado.setBounds(10, 11, 356, 38);
+		panel.add(lblSolicitado);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 79, 356, 120);
+		spCliente.setBounds(10, 44, 356, 112);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
 		spCliente.setViewportView(tabla);
+		
 	}
 
 	public void show() {
@@ -86,19 +83,15 @@ public class VentanaTrabajarUnPedido extends JFrame {
 		this.setVisible(true);
 	}
 
-	public JButton getBtnAvanzarUnPaso() {
-		return btnAvanzarUnPaso;
+	public JButton getBtnTrabajar() {
+		return btnTrabajar;
 	}
 
-	public JButton getBtnRetrocederUnPaso() {
-		return btnRetrocederUnPaso;
-	}
-
-	public JButton getBtnCancelar() {
-		return btnCancelar;
+	public JLabel getLblSolicitado() {
+		return lblSolicitado;
 	}
 	
-	public JTable getTablaIngredientes() {
+	public JTable getTablaOrdenesPendientes() {
 		return tabla;
 	}
 

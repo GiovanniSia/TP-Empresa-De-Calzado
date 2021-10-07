@@ -15,6 +15,7 @@ import dto.SucursalDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 import presentacion.vista.fabrica.VentanaIngresarFechaDeLlegada;
+import presentacion.vista.fabrica.VentanaMostrarMaterialesDeUnaReceta;
 import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
@@ -43,13 +44,20 @@ public class ControladorOperario implements ActionListener {
 	
 	int idFabrica;
 	
+	VentanaMostrarMaterialesDeUnaReceta ventanaMostrarIngredientes;
+	
 	public ControladorOperario(SucursalDTO fabrica) {
+		
+		ventanaMostrarIngredientes = new VentanaMostrarMaterialesDeUnaReceta();
+		ventanaMostrarIngredientes.getBtnTrabajar().addActionListener(r->crearTrabajoEnMarcha(r));;
+		
+		
 		this.idFabrica = fabrica.getIdSucursal();
 		ventana = new VentanaBuscarOrdenesPendientes();
 		ventana.getBtnTrabajarPedido().addActionListener(r->trabajarUnPedidoSeleccionado(r));
 		
 		ventanaElegirReceta = new VentanaSeleccionarUnaReceta();
-		ventanaElegirReceta.getBtnElegirReceta().addActionListener(r->crearTrabajoEnMarcha(r));//trabajarUnPedidoSeleccionado
+		ventanaElegirReceta.getBtnElegirReceta().addActionListener(r->botonSeleccionarReceta(r));//trabajarUnPedidoSeleccionado
 		
 		
 		actualizarTabla();
@@ -180,6 +188,7 @@ public class ControladorOperario implements ActionListener {
 		a.createFabricacionDAO().insertFabricacionEnMarcha(fabricacion);
 		actualizarTabla();
 		this.ventanaElegirReceta.cerrar();
+		ventanaMostrarIngredientes.cerrar();
 	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * *
@@ -253,11 +262,39 @@ public class ControladorOperario implements ActionListener {
 		}
 		fabricacionTrabajando = trabajosEnLista.get(ventanaTrabajos.getTablaFabricacionesEnMarcha().getSelectedRows()[0]);
 		if(fabricacionTrabajando.getEstado().equals("activo")) {
+			reiniciarTablaIngredientesDeUnTrabajo();
 			ventanaUnaTrabajo.show();
 		}
 		if(fabricacionTrabajando.getEstado().equals("completo")) {
+			reiniciarTablaIngredientesDeUnTrabajo();
 			this.ventanaDiaDeLlegada.show();
 		}
+	}
+	
+	private void reiniciarTablaIngredientesDeUnTrabajo() {
+		ventanaUnaTrabajo.getModelOrdenes().setRowCount(0);
+		ventanaUnaTrabajo.getModelOrdenes().setColumnCount(0);
+		ventanaUnaTrabajo.getModelOrdenes().setColumnIdentifiers(ventanaUnaTrabajo.getNombreColumnas());
+		
+		OrdenFabricaDTO of = this.getOrdenManufactura(this.fabricacionTrabajando.getIdOrdenFabrica());
+		
+		PasoDeRecetaDTO p = this.getPasoActual();
+		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
+			Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
+			ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
+		}
+	}
+	
+	private OrdenFabricaDTO getOrdenManufactura(int idOrdenManufactura) {
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<OrdenFabricaDTO> todasLasOrdenes = a.createOrdenFabricaDAO().readAll();
+		OrdenFabricaDTO orden = null;
+		for(OrdenFabricaDTO of: todasLasOrdenes) {
+			if(of.getIdOrdenFabrica() == idOrdenManufactura) {
+				return of;
+			}
+		}
+		return orden;
 	}
 	
 	public PasoDeRecetaDTO getPasoActual() {
@@ -341,6 +378,7 @@ public class ControladorOperario implements ActionListener {
 		}else {
 			this.ventanaTrabajos.ventanaErrorMaterialesNoSuficientes();
 		}
+		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
 	public void retrocederUnPaso(ActionEvent s) {
@@ -351,6 +389,7 @@ public class ControladorOperario implements ActionListener {
 		DAOSQLFactory a = new DAOSQLFactory();
 		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
+		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
 	public void cancelarOrden(ActionEvent s) {
@@ -359,6 +398,7 @@ public class ControladorOperario implements ActionListener {
 		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
 		ventanaUnaTrabajo.cerrar();
+		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
 	public void actualizarTodosLosTrabajosListosParaLosEnvios() {
@@ -411,6 +451,37 @@ public class ControladorOperario implements ActionListener {
 		this.actualizarTabla();
 		this.reiniciarTablaTrabajos();
 		llenarTablaTrabajos();
+	}
+	
+	private void botonSeleccionarReceta(ActionEvent s) {
+		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
+		String nombreProducto = "";
+		MaestroProductoDTO producto = buscarProducto(this.ordenSeleccionado.getIdProd());
+		if(producto == null) {
+			nombreProducto = error;
+		}else {
+			nombreProducto = producto.getDescripcion();
+		}
+		ventanaMostrarIngredientes.getLblSolicitado().setText(nombreProducto + ", cantidad ordenada: " + this.ordenSeleccionado.getCantidad() + ".");
+		
+		//String texto = "";
+		reiniciarTablaIngredientes();
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(recetaSeleccionado.getIdReceta());
+		for(PasoDeRecetaDTO p: pasos) {
+			for(int x = 0; x < p.getPasosDTO().getMateriales().size(); x++) {
+				//texto = texto + "" + p.getPasosDTO().getMateriales().get(x).getDescripcion() + " Cantidad usada: "+ (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad());
+				Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())};
+				ventanaMostrarIngredientes.getModelOrdenes().addRow(agregar);
+			}
+		}
+		ventanaMostrarIngredientes.show();
+	}
+	
+	public void reiniciarTablaIngredientes() {
+		ventanaMostrarIngredientes.getModelOrdenes().setRowCount(0);
+		ventanaMostrarIngredientes.getModelOrdenes().setColumnCount(0);
+		ventanaMostrarIngredientes.getModelOrdenes().setColumnIdentifiers(ventanaMostrarIngredientes.getNombreColumnas());
 	}
 
 	@Override
