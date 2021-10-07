@@ -14,17 +14,17 @@ public class HistorialCambioMProducto {
 		this.historialCambioMProducto = metodo_persistencia.createHistorialCambioMProductoDAO();
 	}
 	
-	public void insert(HistorialCambioMProductoDTO cliente) {
-		this.historialCambioMProducto.insert(cliente);
+	public void insert(HistorialCambioMProductoDTO historialCambioMProducto) {
+		this.historialCambioMProducto.insert(historialCambioMProducto);
 	}
 		
 
-	public void delete(HistorialCambioMProductoDTO cliente_a_eliminar) {
-		this.historialCambioMProducto.delete(cliente_a_eliminar);
+	public void delete(HistorialCambioMProductoDTO historialCambioMProducto_a_eliminar) {
+		this.historialCambioMProducto.delete(historialCambioMProducto_a_eliminar);
 	}
 	
-	public void update(int id_cliente_a_actualizar, HistorialCambioMProductoDTO cliente_nuevo) {
-		this.historialCambioMProducto.update(id_cliente_a_actualizar, cliente_nuevo);
+	public void update(int id_historialCambioMProducto_a_actualizar, HistorialCambioMProductoDTO historialCambioMProducto_nuevo) {
+		this.historialCambioMProducto.update(id_historialCambioMProducto_a_actualizar, historialCambioMProducto_nuevo);
 	}
 
 	public List<HistorialCambioMProductoDTO> readAll(){

@@ -13,7 +13,7 @@ import dto.MaestroProductoDTO;
 public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 	private static final String insert = "INSERT INTO maestroProductos VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM maestroProductos WHERE IdMaestroProducto = ?";
-	private static final String update = "UPDATE maestroProductos set IdMaestroProducto=?, Descripcion=?, Tipo=?, Fabricado=?, PrecioCosto=?, PrecioMayorista=?, PrecioMinorista=?, PuntoRepositorio=?, IdProveedor=?, Talle=?,UnidadMedida=?,Estado=?,CantidadAReponer=?,DiasParaReponer=?";
+	private static final String update = "UPDATE maestroProductos set Descripcion=?, Tipo=?, Fabricado=?, PrecioCosto=?, PrecioMayorista=?, PrecioMinorista=?, PuntoRepositorio=?, IdProveedor=?, Talle=?,UnidadMedida=?,Estado=?,CantidadAReponer=?,DiasParaReponer=? where IdMaestroProducto=?";
 	private static final String readall = "SELECT * FROM maestroProductos";
 
 	@Override

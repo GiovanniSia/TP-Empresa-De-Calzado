@@ -15,7 +15,7 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 
 	private static final String insert = "INSERT INTO historialCambioMProducto VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM historialCambioMProducto WHERE IdHistorialCambioMProducto = ?";												
-	private static final String update = "UPDATE historialCambioMProducto set IdHistorialCambioMProducto=?, IdEmpleado=?, IdMaestroProducto=?, Fecha=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=?";
+	private static final String update = "UPDATE historialCambioMProducto set IdEmpleado=?, IdMaestroProducto=?, Fecha=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=? where IdHistorialCambioMProducto=?";
 	private static final String readall = "SELECT * FROM historialCambioMProducto";
 
 	@Override
@@ -83,19 +83,19 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		try {
 			statement = conexion.prepareStatement(update);
 
-			statement.setInt(1, historialCambioMProducto_nuevo.getIdEmpleado());
-			statement.setInt(2, historialCambioMProducto_nuevo.getIdMaestroProducto());
-			statement.setString(3, historialCambioMProducto_nuevo.getFecha());
+			statement.setInt(1, historialCambioMProducto_nuevo.getIdMaestroProducto());
+			statement.setString(2, historialCambioMProducto_nuevo.getFecha());
 
-			statement.setDouble(4, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
-			statement.setDouble(5, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
+			statement.setDouble(3, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
+			statement.setDouble(4, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
 
-			statement.setDouble(6, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
-			statement.setDouble(7, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
+			statement.setDouble(5, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
+			statement.setDouble(6, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
 
-			statement.setDouble(8, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
-			statement.setDouble(9, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
-			statement.setDouble(10, id_historialCambioMProducto_a_actualizar);
+			statement.setDouble(7, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
+			statement.setDouble(8, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
+			statement.setDouble(9, id_historialCambioMProducto_a_actualizar);
+			statement.setInt(10, historialCambioMProducto_nuevo.getIdEmpleado());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
