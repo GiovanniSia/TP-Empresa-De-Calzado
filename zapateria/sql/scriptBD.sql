@@ -35,89 +35,6 @@ CREATE TABLE `empleados`
   PRIMARY KEY (`IdEmpleado`)
 );
 
-CREATE TABLE `movimientosCaja`
-(
-  `IdMovimientosCaja` int(11) NOT NULL AUTO_INCREMENT,
-  `IdSucursal` int(11) NOT NULL,
-  `Fecha` DATE NOT NULL,
-  `Detalle` varchar(45) NOT NULL,
-  `TipoDeMovimiento` varchar(45) NOT NULL,
-  `Monto` int(11) NOT NULL,
-  `IdMoneda` int(11) NOT NULL,
-  `Monto_Convertido` int(11) NOT NULL,
-  `IdFactura` int(11) NOT NULL,
-  `IdCierre` int(11) NOT NULL,
-  `IdEmpleado` int(11) NOT NULL,
-  PRIMARY KEY (`IdMovimientosCaja`)
-);
-
-CREATE TABLE `factura`
-(
-  `IdFactura` int(11) NOT NULL AUTO_INCREMENT,
-  `MontoPendiente` int(11) NOT NULL,
-  `Detalle` varchar(45) NOT NULL,
-  `IdCliente` int(11) NOT NULL,
-  `IdEmpleado` int(11) NOT NULL,
-  `Fecha` DATE NOT NULL,
-  
-  `TipoFactura` varchar(45) NOT NULL,
-  `NroFacturaCompleta` varchar(45) NOT NULL,
-  `IdSucursal` int(11) NOT NULL,
-  `TerceraParte` int(11) NOT NULL,
-  
-  `Descuento` int(11) NOT NULL,
-  `TotalFactura` int(11) NOT NULL,
-  `IdMedioDePago` int(11) NOT NULL,
-  `TipoVenta` varchar(45) NOT NULL,
-  PRIMARY KEY (`IdFactura`)
-);
-
-CREATE TABLE `cajaSucursal`
-(
-  `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
-  `IdMoneda` int(11) NOT NULL,
-  `CantidadEnCaja` int(11) NOT NULL,
-  PRIMARY KEY (`IdSucursal`)
-);
-
-CREATE TABLE `detalle`
-(
-  `IdDetalle` int(11) NOT NULL AUTO_INCREMENT,
-  `IdProducto` int(11) NOT NULL,
-  `Cantidad` int(11) NOT NULL,
-  `Descripcion` varchar(45) NOT NULL,
-  `PrecioCosto` int(11) NOT NULL,
-  `PrecioVenta` int(11) NOT NULL,
-  `Monto` int(11) NOT NULL,
-  PRIMARY KEY (`IdDetalle`)
-);
-
-CREATE TABLE `valorMoneda`
-(
-  `IdMoneda` int(11) NOT NULL AUTO_INCREMENT,
-  `Descripcion` varchar(45) NOT NULL,
-  `TasaConversion` int(11) NOT NULL,
-  PRIMARY KEY (`IdMoneda`)
-);
-
-CREATE TABLE `ModoDePago`
-(
-  `IdModoDePago` int(11) NOT NULL AUTO_INCREMENT,
-  `MetodoDePago` varchar(45) NOT NULL,
-  `IdFactura` int(11) NOT NULL,
-  `Cantidad` int(11) NOT NULL,
-  `idMovimientoCaja` int(11) NOT NULL,
-  `Tarjeta` varchar(45) NOT NULL,
-  PRIMARY KEY (`IdModoDePago`)
-);
-
-CREATE TABLE `medioPago`
-(
-  `IdMedioDePago` int(11) NOT NULL AUTO_INCREMENT,
-  `MetodoDePago` varchar(45) NOT NULL,
-  PRIMARY KEY (`IdMedioDePago`)
-);
-
 CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,
@@ -127,15 +44,6 @@ CREATE TABLE `historialCambioMoneda`
   `NuevaTasa` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
   PRIMARY KEY (`IdCambioMoneda`)
-);
-
-CREATE TABLE `cierreCaja`
-(
-  `IdCierre` int(11) NOT NULL AUTO_INCREMENT,
-  `IdSucursal` int(11) NOT NULL,
-  `FechaCierre` DATE NOT NULL,
-  `SaldoTotal` int(11) NOT NULL,
-  PRIMARY KEY (`IdCierre`)
 );
 
 CREATE TABLE `stock`
@@ -270,6 +178,108 @@ insert into estadoMaterialFabricacion values(2,'inactivo');
 insert into estadoMaterialFabricacion values(3,'suspendido');
 insert into estadoMaterialFabricacion values(4,'desactualizado');
 
+CREATE TABLE `Ingresos`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `CodSuc` int(11) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `Hora` TIME NOT NULL,
+  `Tipo` varchar(45) NOT NULL,
+  `Cliente` int(11) NOT NULL,
+  `TipoFac` varchar(45) NOT NULL,
+  `NroFac` int(11) NOT NULL,
+  `Mp` varchar(45) NOT NULL,
+  `Cantidad` double(11,2) NOT NULL,
+  `Cotiz` double(11,2) NOT NULL,
+  `Operacion` varchar(45) NOT NULL,
+  `Total` double(45,2) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Egresos`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `CodSuc` int(11) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `Hora` TIME NOT NULL,
+  `Tipo` varchar(45) NOT NULL,
+  `Detalle` varchar(45) NOT NULL,
+  `Total` double(45,2) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Caja`
+(					
+  `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
+  `Fecha` DATE NOT NULL,
+  `Hora` TIME NOT NULL,
+  `Apertura` int(11) NOT NULL,
+  `Cierre` int(11) NOT NULL,	
+  `AperturaNombre` varchar(45) NOT NULL,
+  `CierreNombre` varchar(45) NOT NULL,
+  `AuditApertura` TIME NOT NULL,
+  `AuditCierre` TIME NOT NULL,
+  PRIMARY KEY (`IdSucursal`)
+);
+
+CREATE TABLE `Factura`
+(								
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MontoPendiente` double(45,2) NOT NULL,
+  `IdCliente` int(11) NOT NULL,
+  `NombreCliente` varchar(45) NOT NULL,
+  `IdEmpleado` int(11) NOT NULL,
+  `NombreEmpleado` varchar(45) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `TipoFactura` varchar(45) NOT NULL,
+  `NroFacturaCompleta` varchar(45) NOT NULL,
+  `IdSucursal` int(11) NOT NULL,
+  `Descuento` double(45,2) NOT NULL,
+  `TotalFactura` double(45,2) NOT NULL,
+  `TipoVenta` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Detalle`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdProducto` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
+  `PrecioCosto` double(45,2) NOT NULL,
+  `PrecioVenta` double(45,2) NOT NULL,
+  `Monto` double(45,2) NOT NULL,
+  `idFactura` int(11) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `Carrito`
+(
+  `idCarrito` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCliente` int(11) NOT NULL,
+  `idSucursal` int(11) NOT NULL,
+  `Total` double(45,2) NOT NULL,
+  PRIMARY KEY (`idCarrito`)
+);
+
+CREATE TABLE `DetalleCarrito`
+(					
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idCarrito` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
+  `idStock` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `precio` double(45,2) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `MedioPago`
+(					
+  `IdMoneda` varchar(45) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
+  `TasaConversion` double(45,2) NOT NULL,
+  PRIMARY KEY (`IdMoneda`)
+);
 
 INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,3 ,2,"M",200,"Activo",2200,100);
 INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",500,100);
