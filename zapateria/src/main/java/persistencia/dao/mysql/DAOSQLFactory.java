@@ -11,9 +11,15 @@ import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
+import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 
 public class DAOSQLFactory implements DAOAbstractFactory {
 
+	@Override
+	public HistorialCambioMProductoDAO createHistorialCambioMProductoDAO() {
+		return new HistorialCambioMProductoDAOSQL();
+	}
+	
 	public MaestroProductoDAO createMaestroProductoDAO() {
 		return new MaestroProductoDAOSQL();
 	}

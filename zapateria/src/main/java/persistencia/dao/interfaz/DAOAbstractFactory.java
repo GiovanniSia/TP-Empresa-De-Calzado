@@ -9,6 +9,8 @@ public interface DAOAbstractFactory {
 	public SucursalDAO createSucursalDAO();
 
 	
+	public HistorialCambioMProductoDAO createHistorialCambioMProductoDAO();
+	
 	public MaestroProductoDAO createMaestroProductoDAO();
 	public StockDAO createStockDAO();
 	public FacturaDAO createFacturaDAO();
