@@ -34,12 +34,12 @@ public class VentanaIngresarFechaDeLlegada extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		btnIngresarFecha = new JButton("Completa");
-		btnIngresarFecha.setBounds(212, 92, 154, 23);
+		btnIngresarFecha = new JButton("Completar");
+		btnIngresarFecha.setBounds(196, 92, 154, 23);
 		panel.add(btnIngresarFecha);
 		
 		spinner = new JSpinner();
-		spinner.setBounds(86, 93, 30, 20);
+		spinner.setBounds(59, 93, 57, 20);
 		panel.add(spinner);
 		
 		JLabel lblNewLabel = new JLabel("En cuantos dias llegara a la fabrica");

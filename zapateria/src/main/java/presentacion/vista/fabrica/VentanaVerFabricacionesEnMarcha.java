@@ -29,6 +29,7 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 
 	private JButton btnSeleccionarProceso;
 	private JButton btnVerOrdenesPendientes;
+	private JLabel lblNewLabel;
 
 	public VentanaVerFabricacionesEnMarcha() {
 		initialize();
@@ -46,12 +47,12 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 191, 806, 203);
+		panel.setBounds(0, 64, 806, 314);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 11, 776, 145);
+		spCliente.setBounds(10, 11, 776, 258);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -64,7 +65,7 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSeleccionarProceso.setBounds(38, 167, 177, 23);
+		btnSeleccionarProceso.setBounds(10, 280, 177, 23);
 		panel.add(btnSeleccionarProceso);
 		
 		btnVerOrdenesPendientes = new JButton("Ver ordenes de fabricacion");
@@ -72,18 +73,18 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerOrdenesPendientes.setBounds(609, 167, 177, 23);
+		btnVerOrdenesPendientes.setBounds(609, 280, 177, 23);
 		panel.add(btnVerOrdenesPendientes);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 95, 806, 95);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 41);
+		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
+		
+		lblNewLabel = new JLabel("Ordenes de fabricacion pendientes");
+		lblNewLabel.setBounds(10, 21, 324, 32);
+		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 	}
 
 	public void show() {
