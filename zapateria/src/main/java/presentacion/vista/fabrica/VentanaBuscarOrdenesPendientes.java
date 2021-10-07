@@ -72,7 +72,7 @@ public class VentanaBuscarOrdenesPendientes extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerFabricaciones.setBounds(609, 250, 177, 23);
+		btnVerFabricaciones.setBounds(552, 250, 234, 23);
 		panel.add(btnVerFabricaciones);
 
 		panel_2 = new JPanel();

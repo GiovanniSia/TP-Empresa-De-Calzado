@@ -12,6 +12,10 @@ import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
+import modelo.Fabricacion;
+import modelo.MaestroProducto;
+import modelo.OrdenFabrica;
+import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 import presentacion.vista.fabrica.VentanaIngresarFechaDeLlegada;
@@ -46,7 +50,17 @@ public class ControladorOperario implements ActionListener {
 	
 	VentanaMostrarMaterialesDeUnaReceta ventanaMostrarIngredientes;
 	
+	Fabricacion modeloFabricacion;
+	MaestroProducto modeloProducto;
+	OrdenFabrica modeloOrden;
+	Stock modeloStock;
+	
 	public ControladorOperario(SucursalDTO fabrica) {
+		
+		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
+		modeloProducto = new MaestroProducto(new DAOSQLFactory());
+		modeloOrden = new OrdenFabrica(new DAOSQLFactory());
+		modeloStock = new Stock(new DAOSQLFactory());
 		
 		ventanaMostrarIngredientes = new VentanaMostrarMaterialesDeUnaReceta();
 		ventanaMostrarIngredientes.getBtnTrabajar().addActionListener(r->crearTrabajoEnMarcha(r));;
@@ -77,7 +91,7 @@ public class ControladorOperario implements ActionListener {
 		
 		ventanaDiaDeLlegada = new VentanaIngresarFechaDeLlegada();
 		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
-		
+		/*
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<RecetaDTO> rec = a.createFabricacionDAO().readAllReceta();
 		for(RecetaDTO r: rec) {
@@ -92,7 +106,7 @@ public class ControladorOperario implements ActionListener {
 					x++;
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void inicializar() {
@@ -106,8 +120,7 @@ public class ControladorOperario implements ActionListener {
 	}
 
 	private void recuperarListaDeOrdenesPendientes() {
-		DAOSQLFactory a = new DAOSQLFactory();
-		ordenesEnLista = a.createFabricacionDAO().readAllOrdenesSinTrabajar();
+		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar();
 	}
 	
 	private void llenarTablaOrdenes() {
@@ -134,8 +147,7 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	private MaestroProductoDTO buscarProducto(int idProducto) {
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<MaestroProductoDTO> todosLosProductos = a.createMaestroProductoDAO().readAll();
+		List<MaestroProductoDTO> todosLosProductos = modeloProducto.readAll();
 		for(MaestroProductoDTO mp: todosLosProductos) {
 			if(mp.getIdMaestroProducto() == idProducto) {
 				return mp;
@@ -158,15 +170,13 @@ public class ControladorOperario implements ActionListener {
 	public void inicializarComboBoxRecetas(int filaSeleccionada) {
 		OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filaSeleccionada);
 		ordenSeleccionado = ordenATrabajar;
-		
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<RecetaDTO>listaRecetas = a.createFabricacionDAO().readAllReceta();	//EN UN FUTURO TENDRA QUE CAMBIAR A RECETAS DISPONIBLES
+		List<RecetaDTO>listaRecetas = modeloFabricacion.readAllReceta();	//EN UN FUTURO TENDRA QUE CAMBIAR A RECETAS DISPONIBLES
 		//RecetaDTO receta = new RecetaDTO(1,1,error);
 		recetasEnLista = new ArrayList<RecetaDTO>();
 		this.ventanaElegirReceta.getComboBox().removeAllItems();
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
-				if(a.createFabricacionDAO().isRecetaDisponible(r)) {
+				if(modeloFabricacion.isRecetaDisponible(r)) {
 					/*
 					if(existeMaterialSuficiente(r, ordenSeleccionado.getCantidad())) {
 						//System.out.println("LEI RECETA DISPONIBLE");s
@@ -186,9 +196,8 @@ public class ControladorOperario implements ActionListener {
 			return;
 		}
 		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
-		DAOSQLFactory a = new DAOSQLFactory();
 		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenSeleccionado.getIdOrdenFabrica(), recetaSeleccionado.getIdReceta(), 1, "activo");
-		a.createFabricacionDAO().insertFabricacionEnMarcha(fabricacion);
+		modeloFabricacion.insertFabricacionEnMarcha(fabricacion);
 		actualizarTabla();
 		this.ventanaElegirReceta.cerrar();
 		ventanaMostrarIngredientes.cerrar();
@@ -204,11 +213,9 @@ public class ControladorOperario implements ActionListener {
 	
 	private void llenarTablaTrabajos() {
 		reiniciarTablaTrabajos();
+		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha();
 		
-		DAOSQLFactory a = new DAOSQLFactory();
-		trabajosEnLista = a.createFabricacionDAO().readAllFabricacionesEnMarcha();
-		
-		List<OrdenFabricaDTO> todasLasOrdenes = a.createOrdenFabricaDAO().readAll();
+		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		
 		OrdenFabricaDTO orden = null;
 		for(FabricacionesDTO f: trabajosEnLista) {
@@ -223,10 +230,10 @@ public class ControladorOperario implements ActionListener {
 						nombreProducto = producto.getDescripcion();
 					}
 					String descrPaso;
-					if(a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).size() < f.getNroPasoActual()) {
+					if(modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size() < f.getNroPasoActual()) {
 						descrPaso = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;	//Esta completo por lo que se esta enviando
 					}else {
-						descrPaso = a.createFabricacionDAO().readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
+						descrPaso = modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
 					}
 					// "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado", "Fecha completada", "Dias envio"
 					String fechaCompletado;
@@ -289,8 +296,7 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	private OrdenFabricaDTO getOrdenManufactura(int idOrdenManufactura) {
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<OrdenFabricaDTO> todasLasOrdenes = a.createOrdenFabricaDAO().readAll();
+		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		OrdenFabricaDTO orden = null;
 		for(OrdenFabricaDTO of: todasLasOrdenes) {
 			if(of.getIdOrdenFabrica() == idOrdenManufactura) {
@@ -301,8 +307,7 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	public PasoDeRecetaDTO getPasoActual() {
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta());
+		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta());
 		PasoDeRecetaDTO pasoActual = pasos.get(0);
 		for(PasoDeRecetaDTO p: pasos) {
 			if(p.getNroOrden() == fabricacionTrabajando.getNroPasoActual()) {
@@ -313,8 +318,7 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	public OrdenFabricaDTO getOrdenDeFabricacionDelTrabajoActual() {
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<OrdenFabricaDTO> ordenes = a.createOrdenFabricaDAO().readAll();
+		List<OrdenFabricaDTO> ordenes = modeloOrden.readAll();
 		OrdenFabricaDTO ordenTra = ordenes.get(0);
 		for(OrdenFabricaDTO of: ordenes) {
 			if(of.getIdOrdenFabrica() == fabricacionTrabajando.getIdOrdenFabrica()) {
@@ -335,8 +339,6 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	public void avanzarUnPaso(ActionEvent s) {
-		DAOSQLFactory a = new DAOSQLFactory();
-		
 		PasoDeRecetaDTO pasoActual = getPasoActual();
 		OrdenFabricaDTO ordenTra = getOrdenDeFabricacionDelTrabajoActual();
 		boolean tengoMateriales = hayMaterialesSuficientesParaDarPaso(pasoActual, ordenTra);
@@ -348,22 +350,22 @@ public class ControladorOperario implements ActionListener {
 			int restante = 0;
 			for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
 				cantidadADescontar = pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad();
-				for(StockDTO ss: a.createStockDAO().readAll()) {
+				for(StockDTO ss: modeloStock.readAll()) {
 					if(ss.getIdProducto() == mp.getIdMaestroProducto() && ss.getIdSucursal() == this.idFabrica) {
 						restante = ss.getStockDisponible() - cantidadADescontar;
 						if(restante < 0){
 							cantidadADescontar = -restante;
 							restante = 0;
 						}
-						a.createFabricacionDAO().actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
+						modeloFabricacion.actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
 					}
 				}
 				cont++;
 			}
 			//
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
-			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
-			if(fabricacionTrabajando.getNroPasoActual() > a.createFabricacionDAO().readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
+			modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			if(fabricacionTrabajando.getNroPasoActual() > modeloFabricacion.readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
 				/*
 				fabricacionTrabajando.completarOrden();
 				a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
@@ -372,7 +374,7 @@ public class ControladorOperario implements ActionListener {
 				ventanaUnaTrabajo.cerrar();
 				*/
 				fabricacionTrabajando.completarOrden();
-				a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 				this.ventanaDiaDeLlegada.show();
 				this.ventanaUnaTrabajo.cerrar();
 			}
@@ -389,16 +391,14 @@ public class ControladorOperario implements ActionListener {
 			return;
 		}
 		fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()-1);
-		DAOSQLFactory a = new DAOSQLFactory();
-		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
 		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
 	public void cancelarOrden(ActionEvent s) {
 		fabricacionTrabajando.cancelarOrden();
-		DAOSQLFactory a = new DAOSQLFactory();
-		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		llenarTablaTrabajos();
 		ventanaUnaTrabajo.cerrar();
 		reiniciarTablaIngredientesDeUnTrabajo();
@@ -409,17 +409,15 @@ public class ControladorOperario implements ActionListener {
 		//LOS TRABAJOS COMPLETOS CUYAS FECHAS DE LLEGADA PASEN A LA ACTUAL
 		//, LITERALMENTE RECORRE TODAS LOS PROCESOS DE TRABAJO COMPLETADOS Y 
 		//VERFICA SI LA FECHA ESTA LISTA PARA EL ENVIO
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<FabricacionesDTO> todasLasOrdenesCompletas = a.createFabricacionDAO().readAllFabricacionesCompletas();
+		List<FabricacionesDTO> todasLasOrdenesCompletas = modeloFabricacion.readAllFabricacionesCompletas();
 		for(FabricacionesDTO of: todasLasOrdenesCompletas) {
-			a.createFabricacionDAO().actualizarSiLlegoFechaDeEntrega(of);
+			modeloFabricacion.actualizarSiLlegoFechaDeEntrega(of);
 		}
 	}
 	
 	public boolean existeMaterialSuficiente(RecetaDTO receta, int cantidadDeseada) {
 		boolean ret = true;
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(receta.getIdReceta());
+		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(receta.getIdReceta());
 		for(PasoDeRecetaDTO p: pasos) {
 			int x = 0;
 			for(MaestroProductoDTO mp: p.getPasosDTO().getMateriales()) {
@@ -432,8 +430,7 @@ public class ControladorOperario implements ActionListener {
 	
 	private boolean hayStockSuficienteDeUnMaterial(int idMaestroProducto, int i) {
 		//Primero cuento todo el stock luego juzgo
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<StockDTO> todoElStock = a.createStockDAO().readAll();
+		List<StockDTO> todoElStock = modeloStock.readAll();
 		int cantidadTotalDisponible = 0;
 		for(StockDTO s: todoElStock) {
 			if(s.getIdProducto() == idMaestroProducto && s.getIdSucursal() == this.idFabrica) {
@@ -448,8 +445,7 @@ public class ControladorOperario implements ActionListener {
 		if(valorIngresado < 0) {
 			return;
 		}
-		DAOSQLFactory a = new DAOSQLFactory();
-		a.createFabricacionDAO().completarOrden(fabricacionTrabajando, valorIngresado);
+		modeloFabricacion.completarOrden(fabricacionTrabajando, valorIngresado);
 		this.ventanaDiaDeLlegada.cerrar();
 		this.actualizarTabla();
 		this.reiniciarTablaTrabajos();
@@ -469,8 +465,7 @@ public class ControladorOperario implements ActionListener {
 		
 		//String texto = "";
 		reiniciarTablaIngredientes();
-		DAOSQLFactory a = new DAOSQLFactory();
-		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(recetaSeleccionado.getIdReceta());
+		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionado.getIdReceta());
 		for(PasoDeRecetaDTO p: pasos) {
 			for(int x = 0; x < p.getPasosDTO().getMateriales().size(); x++) {
 				//texto = texto + "" + p.getPasosDTO().getMateriales().get(x).getDescripcion() + " Cantidad usada: "+ (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad());

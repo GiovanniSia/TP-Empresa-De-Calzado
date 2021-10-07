@@ -73,7 +73,7 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerOrdenesPendientes.setBounds(609, 280, 177, 23);
+		btnVerOrdenesPendientes.setBounds(549, 280, 237, 23);
 		panel.add(btnVerOrdenesPendientes);
 
 		panel_2 = new JPanel();
