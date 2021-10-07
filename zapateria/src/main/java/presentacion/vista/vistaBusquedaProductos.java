@@ -57,12 +57,11 @@ public class vistaBusquedaProductos {
 	private JPanel panel_1;
 	private JLabel lblTitulo;
 	private JLabel lblSubtitulo;
-	private JLabel lbl_quitarDeCarrito;
 
 
 	private JButton btnQuitarProducto;
 	private JButton btnAtras;
-	private JButton btnPasarAElegir;
+	private JButton btnArmarVenta;
 	
 	private JSpinner spinnerCarrito;
 	private JSpinner spinnerProductos;
@@ -170,7 +169,7 @@ public class vistaBusquedaProductos {
 		
 		JLabel lblTotal = new JLabel("Total: ");
 		lblTotal.setFont(new Font("Dialog", Font.BOLD, 17));
-		lblTotal.setBounds(653, 370, 113, 39);
+		lblTotal.setBounds(711, 370, 55, 39);
 		panel.add(lblTotal);
 		
 		//Tabla carrito
@@ -190,20 +189,16 @@ public class vistaBusquedaProductos {
 		scrollPaneCarrito.setViewportView(tableCarrito);
 		
 		spinnerCarrito = new JSpinner();
-		spinnerCarrito.setBounds(779, 41, 47, 19);
+		spinnerCarrito.setBounds(632, 41, 47, 19);
 		panel.add(spinnerCarrito);
 		
 		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setBounds(711, 41, 55, 19);
+		lblCantidad.setBounds(588, 41, 55, 19);
 		panel.add(lblCantidad);
 		
-		btnQuitarProducto = new JButton("<-");
-		btnQuitarProducto.setBounds(614, 40, 55, 21);
+		btnQuitarProducto = new JButton("Quitar del carrito");
+		btnQuitarProducto.setBounds(776, 39, 133, 21);
 		panel.add(btnQuitarProducto);
-		
-		lbl_quitarDeCarrito = new JLabel("Quitar del carrito");
-		lbl_quitarDeCarrito.setBounds(614, 23, 113, 13);
-		panel.add(lbl_quitarDeCarrito);
 		
 		JLabel lblClienteSeleccionado = new JLabel("Cliente Seleccionado:");
 		lblClienteSeleccionado.setBounds(10, 0, 134, 13);
@@ -234,10 +229,10 @@ public class vistaBusquedaProductos {
 		btnAtras.setBounds(20, 534, 93, 28);
 		frame.getContentPane().add(btnAtras);
 		
-		btnPasarAElegir = new JButton("Pasar a elegir cliente");
-		btnPasarAElegir.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnPasarAElegir.setBounds(211, 527, 419, 63);
-		frame.getContentPane().add(btnPasarAElegir);
+		btnArmarVenta = new JButton("Armar Venta");
+		btnArmarVenta.setFont(new Font("Consolas", Font.PLAIN, 28));
+		btnArmarVenta.setBounds(211, 527, 419, 63);
+		frame.getContentPane().add(btnArmarVenta);
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(10, 10, 919, 41);
@@ -360,7 +355,7 @@ public class vistaBusquedaProductos {
 
 
 	public JButton getBtnPasarAElegir() {
-		return btnPasarAElegir;
+		return btnArmarVenta;
 	}
 
 	public JSpinner getSpinner() {

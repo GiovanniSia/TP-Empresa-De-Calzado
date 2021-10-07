@@ -6,10 +6,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -21,9 +25,10 @@ import dto.StockDTO;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
+import persistencia.conexion.Conexion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.vistaBusquedaProductos;
-
+import java.time.LocalDateTime;
 public class ControladorBusquedaProductos {
 	
 	private final int idSucursal=1;//esto esta hardcodeado
@@ -88,7 +93,7 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getBtnAniadirProd().addActionListener(a -> aniadirProductoAlCarrito(a));
 		this.vistaBusquedaProductos.getBtnQuitarProducto().addActionListener(a -> quitarProductoDelCarrito(a));
 		this.vistaBusquedaProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
-		this.vistaBusquedaProductos.getBtnPasarAElegir().addActionListener(a -> avanzarPantalla(a));
+		this.vistaBusquedaProductos.getBtnPasarAElegir().addActionListener(a -> armarVenta(a));
 		this.vistaBusquedaProductos.getTableCarrito().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -326,9 +331,16 @@ public class ControladorBusquedaProductos {
 		//se deberia abrir la pantalla anterior
 	}
 	
-	public void avanzarPantalla(ActionEvent a) {
-		this.vistaBusquedaProductos.cerrar();
-		//se deberia abrir la ventana de elegir cliente
+	public void armarVenta(ActionEvent a) {
+		int resp = JOptionPane.showConfirmDialog(null, "Está segura que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		//si selecciona que si devuelve un 0, no un 1, y la x un -1
+		if(resp==0) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
+					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
+			this.vistaBusquedaProductos.cerrar();
+		}
 	}
 	
 
