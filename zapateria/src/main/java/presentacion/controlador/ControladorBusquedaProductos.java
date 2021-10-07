@@ -18,11 +18,15 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dto.CarritoDTO;
 import dto.ClienteDTO;
+import dto.DetalleCarritoDTO;
 import dto.MaestroProductoDTO;
 import dto.ProductoEnCarritoDTO;
 import dto.StockDTO;
+import modelo.Carrito;
 import modelo.Cliente;
+import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
@@ -34,29 +38,32 @@ public class ControladorBusquedaProductos {
 	
 	private final int idSucursal=1;//esto esta hardcodeado
 //	private final List<MaestroProductoDTO> carrito;
+	int Preciototal;
 	
 	ControladorBusquedaCliente controladorBusquedaCliente;
-	
-	List<StockDTO> listaStock;
 	
 	Sucursal sucursal;
 	MaestroProducto maestroProducto;
 	Stock stock;
+	Carrito carrito;
+	DetalleCarrito detalleCarrito;
+	
+	List<StockDTO> listaStock;
+	List<MaestroProductoDTO> listaMaestroProducto;
+	List<MaestroProductoDTO> productosEnTabla;
+	List<ProductoEnCarritoDTO> productosEnCarrito;
+	List<CarritoDTO> listaCarrito;
 	
 	vistaBusquedaProductos vistaBusquedaProductos;
 	
-	List<MaestroProductoDTO> listaMaestroProducto;
-	
 	ClienteDTO clienteSeleccionado;
-	
-	List<MaestroProductoDTO> productosEnTabla;
-	
-	List<ProductoEnCarritoDTO> carrito; 
-	
+		
 	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+		this.sucursal = sucursal;
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
-		this.sucursal = sucursal;
+		this.carrito = new Carrito(new DAOSQLFactory());
+		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
 	}
 	
 	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {
@@ -73,14 +80,17 @@ public class ControladorBusquedaProductos {
 //	}
 	
 	public void inicializar() {
-		this.carrito=new ArrayList<ProductoEnCarritoDTO>();
-		productosEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.listaStock = this.stock.readAll();
+		this.listaMaestroProducto = this.maestroProducto.readAll();
+		//estos dos se guardan en la aplicacion no lo obtenemos de la bd
+		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.productosEnCarrito=new ArrayList<ProductoEnCarritoDTO>();
+		this.listaCarrito = carrito.readAll();
+		
 		this.vistaBusquedaProductos = new vistaBusquedaProductos();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		this.stock = new Stock(new DAOSQLFactory());
-				
-		this.listaMaestroProducto = this.maestroProducto.readAll();
-		this.listaStock = this.stock.readAll();
+
+
 //		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
@@ -105,7 +115,7 @@ public class ControladorBusquedaProductos {
 			public void mouseClicked(MouseEvent e) {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
 				//cuando se clickea en la tabla, se actualiza el spinner
-				vistaBusquedaProductos.getSpinner().setValue(carrito.get(filaSeleccionada).getCantidad()); 
+				vistaBusquedaProductos.getSpinner().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
 			}
 		});
 		
@@ -198,7 +208,7 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		//verificamos si existe este prod en el carrito
-		for(ProductoEnCarritoDTO c: this.carrito) {
+		for(ProductoEnCarritoDTO c: this.productosEnCarrito) {
 			if(productoSeleccionado.getIdMaestroProducto() == c.getProducto().getIdMaestroProducto()) {
 				modificarCantStock(productoSeleccionado,c.getStock().getIdStock(),-cantSeleccionada);
 				c.aniadirProducto(cantSeleccionada);
@@ -211,7 +221,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal) {
 				modificarCantStock(productoSeleccionado,s.getIdStock(),-cantSeleccionada);
-				this.carrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
+				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
 			}
 		}
 		actualzarTablaCarrito();
@@ -234,7 +244,7 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getModelTablaCarrito().setColumnCount(0);
 		this.vistaBusquedaProductos.getModelTablaCarrito().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnasCarrito());
 		
-		for(ProductoEnCarritoDTO m: this.carrito) {
+		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
 			String nombre=m.getProducto().getDescripcion();
 			double total;
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
@@ -254,15 +264,15 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void calcularPrecioTotal() {
-		int total=0;
-		for(ProductoEnCarritoDTO m: this.carrito) {
+		Preciototal=0;
+		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
-				total += m.getProducto().getPrecioMayorista() * m.getCantidad();
+				Preciototal += m.getProducto().getPrecioMayorista() * m.getCantidad();
 			}else {
-				total += m.getProducto().getPrecioMinorista() * m.getCantidad();
+				Preciototal += m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
 		}
-		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+total);
+		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+Preciototal);
 	}
 	
 	public void quitarProductoDelCarrito(ActionEvent a) {
@@ -271,8 +281,8 @@ public class ControladorBusquedaProductos {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para quitar");
 			return;
 		}
-		ProductoEnCarritoDTO productoSeleccionado = this.carrito.get(filaSeleccionada);
-		carrito.remove(productoSeleccionado);
+		ProductoEnCarritoDTO productoSeleccionado = this.productosEnCarrito.get(filaSeleccionada);
+		productosEnCarrito.remove(productoSeleccionado);
 		modificarCantStock(productoSeleccionado.getProducto(),productoSeleccionado.getStock().getIdStock(),productoSeleccionado.getCantidad());
 		actualzarTablaCarrito();
 		realizarBusqueda();
@@ -285,11 +295,11 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		
-		ProductoEnCarritoDTO productoEnCarrito = this.carrito.get(filaSeleccionada);
+		ProductoEnCarritoDTO productoEnCarrito = this.productosEnCarrito.get(filaSeleccionada);
 		
 		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
 		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinner().getValue(); 
-		if(valorDelSpinner == this.carrito.get(filaSeleccionada).getCantidad()) {
+		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
 			return;
 		}		
 		if(valorDelSpinner == 0) {
@@ -351,11 +361,50 @@ public class ControladorBusquedaProductos {
 			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
+			guardarVentaArmada();
+//			descontarDelStock();
 			this.vistaBusquedaProductos.cerrar();
 		}
 	}
 	
+	public void guardarVentaArmada() {
+		
+		int idCliente = this.clienteSeleccionado.getIdCliente();
+		int idSucursal = this.idSucursal;
+		CarritoDTO carrito = new CarritoDTO(0,idCliente,idSucursal,this.Preciototal);
+		this.carrito.insert(carrito);
+		//actualizamos la lista de carrito para ver el id del ultimo que se agrego
+		this.listaCarrito = this.carrito.readAll();
+		
+		int ultId = this.listaCarrito.get(this.listaCarrito.size()-1).getIdCarrito();
+		
+		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+			int idProducto = compra.getProducto().getIdMaestroProducto();
+			int idStock = compra.getStock().getIdStock();
+			int cant = compra.getCantidad();
+			double precio;
+			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+				precio = compra.getProducto().getPrecioMayorista() * compra.getCantidad();
+			}else {
+				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
+			}
+			
+			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultId,idProducto,idStock,cant,precio);
+			this.detalleCarrito.insert(detalleCarrito);
+		}
+		
+	}
 
+//	public void descontarDelStock() {
+//		for(StockDTO stock: this.listaStock) {
+//			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+//				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
+//					
+//				}
+//			}
+//		}
+//	}
+	
 	public void establecerClienteElegido(ClienteDTO cliente) {
 		this.clienteSeleccionado = cliente;
 	}

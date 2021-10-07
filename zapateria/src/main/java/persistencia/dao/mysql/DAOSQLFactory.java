@@ -3,12 +3,14 @@
  */
 package persistencia.dao.mysql;
 
+import persistencia.dao.interfaz.CarritoDAO;
 import persistencia.dao.interfaz.ClienteDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.EmpleadoDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
+import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
@@ -50,6 +52,16 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public OrdenFabricaDAO createOrdenFabricaDAO() {
 		return new OrdenFabricaDAOSQL();
+	}
+
+	@Override
+	public DetalleCarritoDAO createDetalleCarritoDAO() {
+		return new DetalleCarritoDAOSQL();
+	}
+
+	@Override
+	public CarritoDAO createCarritoDAO() {
+		return new CarritoDAOSQL();
 	}
 
 }
