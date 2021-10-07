@@ -38,11 +38,12 @@ CREATE TABLE `empleados`
 CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,
-  `IdMoneda` int(11) NOT NULL,
+  `IdMoneda` varchar(11) NOT NULL,
+  `Descripcion` varchar(11) NOT NULL,
   `IdEmpleado` int(11) NOT NULL,
-  `TasaAnterior` int(11) NOT NULL,
-  `NuevaTasa` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
+  `TasaConversionAntigua` double(45,2) NOT NULL,
+  `TasaConversionNueva` double(45,2) NOT NULL,
   PRIMARY KEY (`IdCambioMoneda`)
 );
 
@@ -273,13 +274,19 @@ CREATE TABLE `DetalleCarrito`
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `MedioPago`
+CREATE TABLE `medioPago`
 (					
   `IdMoneda` varchar(45) NOT NULL,
   `Descripcion` varchar(45) NOT NULL,
   `TasaConversion` double(45,2) NOT NULL,
   PRIMARY KEY (`IdMoneda`)
 );
+
+INSERT INTO medioPago values ("EFE","Efectivo",1);
+INSERT INTO medioPago values ("USD","Dolar",180);
+INSERT INTO medioPago values ("TCV","Tarjeta Credito VISA",1);
+INSERT INTO medioPago values ("MPA","Mercado Pago",1);
+INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
 
 INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,3 ,2,"M",200,"Activo",2200,100);
 INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",500,100);
