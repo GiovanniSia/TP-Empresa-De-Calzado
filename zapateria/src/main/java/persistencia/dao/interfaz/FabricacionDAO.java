@@ -36,7 +36,7 @@ public interface FabricacionDAO {
 	
 	public boolean pasarOrdenAStock(FabricacionesDTO fabri);
 	
-	
+	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock);
 	
 	
 

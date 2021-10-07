@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,6 +32,10 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 
 	public VentanaVerFabricacionesEnMarcha() {
 		initialize();
+	}
+	
+	public void ventanaErrorMaterialesNoSuficientes() {
+		JOptionPane.showMessageDialog(null, "No se cuenta con los materiales para avanzar");
 	}
 
 	private void initialize() {

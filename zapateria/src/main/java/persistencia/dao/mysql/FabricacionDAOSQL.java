@@ -482,5 +482,36 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		}
 		return isInsertExitoso;
 	}
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
+	private static final String actualizarCantidadDeUnStock = "UPDATE stock SET StockDisponible = ? WHERE IdStock = ?;";
+	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(actualizarCantidadDeUnStock);
+			statement.setInt(1, nuevoValor);
+			statement.setInt(2, idStock);
+			
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+
 
 }

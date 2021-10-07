@@ -260,24 +260,87 @@ public class ControladorOperario implements ActionListener {
 		}
 	}
 	
-	public void avanzarUnPaso(ActionEvent s) {
-		fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
+	public PasoDeRecetaDTO getPasoActual() {
 		DAOSQLFactory a = new DAOSQLFactory();
-		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
-		
-		if(fabricacionTrabajando.getNroPasoActual() > a.createFabricacionDAO().readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
-			/*
-			fabricacionTrabajando.completarOrden();
-			a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
-			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
-			
-			ventanaUnaTrabajo.cerrar();
-			*/
-			fabricacionTrabajando.completarOrden();
-			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
-			this.ventanaDiaDeLlegada.show();
+		List<PasoDeRecetaDTO> pasos = a.createFabricacionDAO().readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta());
+		PasoDeRecetaDTO pasoActual = pasos.get(0);
+		for(PasoDeRecetaDTO p: pasos) {
+			if(p.getNroOrden() == fabricacionTrabajando.getNroPasoActual()) {
+				pasoActual = p;
+			}
 		}
-		llenarTablaTrabajos();
+		return pasoActual;
+	}
+	
+	public OrdenFabricaDTO getOrdenDeFabricacionDelTrabajoActual() {
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<OrdenFabricaDTO> ordenes = a.createOrdenFabricaDAO().readAll();
+		OrdenFabricaDTO ordenTra = ordenes.get(0);
+		for(OrdenFabricaDTO of: ordenes) {
+			if(of.getIdOrdenFabrica() == fabricacionTrabajando.getIdOrdenFabrica()) {
+				ordenTra = of;
+			}
+		}
+		return ordenTra;
+	}
+	
+	public boolean hayMaterialesSuficientesParaDarPaso(PasoDeRecetaDTO pasoActual, OrdenFabricaDTO ordenTra) {
+		boolean tengoMateriales = true;
+		int cont = 0;
+		for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
+			tengoMateriales = tengoMateriales && this.hayStockSuficienteDeUnMaterial(mp.getIdMaestroProducto(), pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad());
+			cont++;
+		}
+		return tengoMateriales;
+	}
+	
+	public void avanzarUnPaso(ActionEvent s) {
+		DAOSQLFactory a = new DAOSQLFactory();
+		
+		PasoDeRecetaDTO pasoActual = getPasoActual();
+		OrdenFabricaDTO ordenTra = getOrdenDeFabricacionDelTrabajoActual();
+		boolean tengoMateriales = hayMaterialesSuficientesParaDarPaso(pasoActual, ordenTra);
+		
+		if(tengoMateriales) {
+			// Descontar los materiales que usara
+			int cont = 0;
+			int cantidadADescontar = 0;
+			int restante = 0;
+			for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
+				cantidadADescontar = pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad();
+				for(StockDTO ss: a.createStockDAO().readAll()) {
+					if(ss.getIdProducto() == mp.getIdMaestroProducto() && ss.getIdSucursal() == this.idFabrica) {
+						restante = ss.getStockDisponible() - cantidadADescontar;
+						if(restante < 0){
+							cantidadADescontar = -restante;
+							restante = 0;
+						}
+						a.createFabricacionDAO().actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
+					}
+				}
+				cont++;
+			}
+			//
+			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
+			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			if(fabricacionTrabajando.getNroPasoActual() > a.createFabricacionDAO().readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
+				/*
+				fabricacionTrabajando.completarOrden();
+				a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
+				a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+				
+				ventanaUnaTrabajo.cerrar();
+				*/
+				fabricacionTrabajando.completarOrden();
+				a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+				this.ventanaDiaDeLlegada.show();
+				this.ventanaUnaTrabajo.cerrar();
+			}
+			llenarTablaTrabajos();
+			
+		}else {
+			this.ventanaTrabajos.ventanaErrorMaterialesNoSuficientes();
+		}
 	}
 	
 	public void retrocederUnPaso(ActionEvent s) {
