@@ -108,34 +108,44 @@ public class ControladorModificarMProducto {
 
 	// Se actualizar la tabla maestroProducto y historialCambioMProducto
 	public void actualizarProducto(ActionEvent p) {
-		if (maestroProductoEstaSeleccionado()) {
-		
-			if (validarPrecios()) {
-			
-				if (todosLosValoresSonPositivos()) {
-					ingresarProductoATablaHistorialCambioMProducto();
-					actualizarTablaMaestroProducto();
-					limpiarCampos();
-					refrescarTabla();
-				} else {
-					JOptionPane.showMessageDialog(null, "No se pueden ingresar valores negativos");
-				}
-
-			} else {
-				JOptionPane.showMessageDialog(null, "Formato de precio incorrecto. Ej: 50.99");
-			}
-	
-		} else {
-			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+		if (validarCampos()) {
+			ingresarProductoATablaHistorialCambioMProducto();
+			actualizarTablaMaestroProducto();
+			limpiarCampos();
+			refrescarTabla();
 		}
 	}
 
-	public void limpiarCampos() {
-		this.ventanaModificarMProducto.limpiarCampos();
-	}
-	
-	// Valida si todos los valores son positivos
-	public boolean todosLosValoresSonPositivos() {
+	public boolean validarCampos() {
+		//Valido si selecciono un producto
+		
+		int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+			return false;
+		}			
+		
+		// Valido si ingreso letras en vez de numeros o no incluyo el .
+		
+		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
+		String precioMayoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText();
+		String precioMinoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText();
+		
+		if (!validarFormatoPrecio(precioCostoNuevo)) {
+			JOptionPane.showMessageDialog(null, "Precio Costo tiene formato invalido. Ej: 50.99");
+			return false;
+		}
+		if (!validarFormatoPrecio(precioMayoristaNuevo)) {
+			JOptionPane.showMessageDialog(null, "Precio Mayorista tiene formato invalido. Ej: 50.99");
+			return false;
+		}
+		if (!validarFormatoPrecio(precioMinoristaNuevo)) {
+			JOptionPane.showMessageDialog(null, "Precio Minorista tiene formato invalido. Ej: 50.99");
+			return false;
+		}
+		
+		//Valido si ingreso campos negativos
+		
 		double precioCosto = Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText());
 		double precioMayorista = Double
 				.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText());
@@ -144,12 +154,22 @@ public class ControladorModificarMProducto {
 		int puntoRepositorio = (int) this.ventanaModificarMProducto.getSpinnerPuntoRepositorio().getValue();
 		int cantidadAReponer = (int) this.ventanaModificarMProducto.getSpinnerCantidadAReponer().getValue();
 		int diasParaReponer = (int) this.ventanaModificarMProducto.getSpinnerDiasParaReponer().getValue();
-
-		if (precioCosto > -1 && precioMayorista > -1 && precioMinorista > -1 && puntoRepositorio > -1
-				&& cantidadAReponer > -1 && diasParaReponer > -1) {
-			return true;
+		
+		if (!(precioCosto > -1 && precioMayorista > -1 && precioMinorista > -1 && puntoRepositorio > -1
+				&& cantidadAReponer > -1 && diasParaReponer > -1)) {
+			JOptionPane.showMessageDialog(null, "Los valores negativos no estan permitidos");
+			return false;
 		}
-		return false;
+		
+		return true;
+	}
+
+	public boolean validarFormatoPrecio(String precio) {
+		boolean expresion = precio.matches("^-?\\d{1,11}\\.\\d{1,2}");
+		if (!expresion) {
+			return false;
+		}
+		return true;
 	}
 
 	public void actualizarTablaMaestroProducto() {
@@ -222,40 +242,11 @@ public class ControladorModificarMProducto {
 				diasParaReponer);
 	}
 
-	public boolean validarPrecios() {
-		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
-		String precioMayoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText();
-		String precioMinoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText();
-		if (!validarPrecio(precioCostoNuevo)) {
-			return false;
-		}
-		if (!validarPrecio(precioMayoristaNuevo)) {
-			return false;
-		}
-		if (!validarPrecio(precioMinoristaNuevo)) {
-			return false;
-		}
-
-		return true;
+	public void limpiarCampos() {
+		this.ventanaModificarMProducto.limpiarCampos();
 	}
 
-	public boolean validarPrecio(String precio) {
-		boolean expresion = precio.matches("\\d{1,11}\\.\\d{1,2}");
-		if (!expresion) {
-			return false;
-		}
-		return true;
-	}
-
-	public boolean maestroProductoEstaSeleccionado() {
-		int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
-		if (filaSeleccionada != -1) {
-			return true;
-		}
-		return false;
-	}
-
-	public MaestroProductoDTO maestroProductoSeleccionado() {
+	public MaestroProductoDTO obtenerMaestroProductoSeleccionado() {
 		int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
 
 		List<MaestroProductoDTO> maestroProducto = this.maestroProducto.readAll();
@@ -281,7 +272,6 @@ public class ControladorModificarMProducto {
 		this.llenarTabla(maestroProductoEnTabla);
 	}
 
-	
 	public void llenarTabla(List<MaestroProductoDTO> mProductoEnTabla) {
 		this.ventanaModificarMProducto.getModelProducto().setRowCount(0);
 		this.ventanaModificarMProducto.getModelProducto().setColumnCount(0);
