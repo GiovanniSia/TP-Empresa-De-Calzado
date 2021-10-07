@@ -8,10 +8,12 @@ import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.EmpleadoDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
+import persistencia.dao.interfaz.MedioPagoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
+import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
 
 public class DAOSQLFactory implements DAOAbstractFactory {
 
@@ -50,6 +52,14 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public OrdenFabricaDAO createOrdenFabricaDAO() {
 		return new OrdenFabricaDAOSQL();
+	}
+	
+	public MedioPagoDAO createMedioPagoDAO() {
+		return new MedioPagoDAOSQL();
+	}
+	
+	public HistorialCambioMonedaDAO createHistorialCambioMonedaDAO() {
+		return new HistorialCambioMonedaDAOSQL();
 	}
 
 }
