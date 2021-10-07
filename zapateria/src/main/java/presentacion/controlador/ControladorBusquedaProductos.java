@@ -362,7 +362,7 @@ public class ControladorBusquedaProductos {
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
 			guardarVentaArmada();
-//			descontarDelStock();
+			descontarDelStock();
 			this.vistaBusquedaProductos.cerrar();
 		}
 	}
@@ -395,15 +395,18 @@ public class ControladorBusquedaProductos {
 		
 	}
 
-//	public void descontarDelStock() {
-//		for(StockDTO stock: this.listaStock) {
-//			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
-//				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
-//					
-//				}
-//			}
-//		}
-//	}
+	public void descontarDelStock() {
+		for(StockDTO stock: this.listaStock) {
+			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
+					System.out.println("stock disp antes de descontar: "+stock.getStockDisponible()+"\nvalor a descontar: "+compra.getCantidad());
+					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
+					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
+					System.out.println("se pudo?: "+a);
+				}
+			}
+		}
+	}
 	
 	public void establecerClienteElegido(ClienteDTO cliente) {
 		this.clienteSeleccionado = cliente;
