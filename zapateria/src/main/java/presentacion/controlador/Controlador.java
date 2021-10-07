@@ -40,7 +40,9 @@ public class Controlador implements ActionListener {
 		this.vistaBusquedaProducto = new vistaBusquedaProductos();
 		
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(cliente);
-
+		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock, this.sucursal);
+		
+		
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
 		
