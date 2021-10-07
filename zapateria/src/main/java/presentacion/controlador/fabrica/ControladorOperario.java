@@ -14,6 +14,7 @@ import dto.StockDTO;
 import dto.SucursalDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
+import presentacion.vista.fabrica.VentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
@@ -37,6 +38,8 @@ public class ControladorOperario implements ActionListener {
 	VentanaTrabajarUnPedido ventanaUnaTrabajo;
 	
 	VentanaSeleccionarUnaReceta ventanaElegirReceta;
+	
+	VentanaIngresarFechaDeLlegada ventanaDiaDeLlegada;
 	
 	int idFabrica;
 	
@@ -63,6 +66,9 @@ public class ControladorOperario implements ActionListener {
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
 		ventanaUnaTrabajo.getBtnRetrocederUnPaso().addActionListener(r->retrocederUnPaso(r));
 		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		
+		ventanaDiaDeLlegada = new VentanaIngresarFechaDeLlegada();
+		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
 		
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<RecetaDTO> rec = a.createFabricacionDAO().readAllReceta();
@@ -241,6 +247,9 @@ public class ControladorOperario implements ActionListener {
 		if(fabricacionTrabajando.getEstado().equals("activo")) {
 			ventanaUnaTrabajo.show();
 		}
+		if(fabricacionTrabajando.getEstado().equals("completo")) {
+			this.ventanaDiaDeLlegada.show();
+		}
 	}
 	
 	public void avanzarUnPaso(ActionEvent s) {
@@ -249,13 +258,16 @@ public class ControladorOperario implements ActionListener {
 		a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 		
 		if(fabricacionTrabajando.getNroPasoActual() > a.createFabricacionDAO().readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
+			/*
 			fabricacionTrabajando.completarOrden();
 			a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
 			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
 			
 			ventanaUnaTrabajo.cerrar();
-			
-			//a.createFabricacionDAO().actualizarSiLlegoFechaDeEntrega(fabricacionTrabajando);
+			*/
+			fabricacionTrabajando.completarOrden();
+			a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			this.ventanaDiaDeLlegada.show();
 		}
 		llenarTablaTrabajos();
 	}
@@ -315,6 +327,19 @@ public class ControladorOperario implements ActionListener {
 			}
 		}
 		return cantidadTotalDisponible >= i;
+	}
+	
+	private void ingresarDias(ActionEvent s) {
+		int valorIngresado = (int) ventanaDiaDeLlegada.getSpinner().getValue();
+		if(valorIngresado < 0) {
+			return;
+		}
+		DAOSQLFactory a = new DAOSQLFactory();
+		a.createFabricacionDAO().completarOrden(fabricacionTrabajando, valorIngresado);
+		this.ventanaDiaDeLlegada.cerrar();
+		this.actualizarTabla();
+		this.reiniciarTablaTrabajos();
+		llenarTablaTrabajos();
 	}
 
 	@Override
