@@ -297,6 +297,21 @@ public class VentanaModificarMProducto extends JFrame {
 		this.frame.setVisible(true);
 	}
 
+	public void limpiarCampos() {
+		this.txtFiltroDescripcion.setText(null);
+		this.txtFiltroTalle.setText(null);
+		this.txtFiltroCodProducto.setText(null);
+
+		this.lblActualizarDescripcion.setText("Descripción");
+		this.txtActualizarPrecioCosto.setText(null);
+		this.txtActualizarPrecioMayorista.setText(null);
+		this.txtActualizarPrecioMinorista.setText(null);
+
+		this.spinnerCantidadAReponer.setValue(0);
+		this.spinnerDiasParaReponer.setValue(0);
+		this.spinnerPuntoRepositorio.setValue(0);
+	}
+	
 	public void cerrar() {
 		this.txtFiltroDescripcion.setText(null);
 		this.txtFiltroTalle.setText(null);

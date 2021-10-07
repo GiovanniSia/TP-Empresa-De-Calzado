@@ -82,14 +82,17 @@ public class ControladorHistorialCambioMProducto {
 			int codEmpleado = hcmp.getIdEmpleado();
 			int codProducto = hcmp.getIdMaestroProducto();
 			String fecha = hcmp.getFecha();
+			
 			double precioCostoAntiguo = hcmp.getPrecioCostoAntiguo();
 			double precioCostoNuevo = hcmp.getPrecioCostoNuevo();
+			
 			double precioMayoristaAntiguo = hcmp.getPrecioMayoristaAntiguo();
 			double precioMayoristaNuevo = hcmp.getPrecioMayoristaNuevo();
+			
 			double precioMinoristaAntiguo = hcmp.getPrecioMinoristaAntiguo();
 			double precioMinoristaNuevo = hcmp.getPrecioMinoristaNuevo();
 			
-			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo, precioMayoristaNuevo,precioMinoristaAntiguo,precioMinoristaNuevo};
+			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,precioMinoristaAntiguo,precioMinoristaNuevo};
 			this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().addRow(fila);	
 		}
 	}
