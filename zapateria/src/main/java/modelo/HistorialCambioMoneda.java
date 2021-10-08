@@ -29,7 +29,7 @@ public class HistorialCambioMoneda {
 		return this.historialCambioMoneda.readAll();
 	}
 
-	public List<HistorialCambioMonedaDTO> getMaestroProductoAproximado(String nombreColumna1, String txtAprox1,
+	public List<HistorialCambioMonedaDTO> getHistorialCambioMonedaAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2) {
 		return this.historialCambioMoneda.getHistorialCambioMonedaAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
 	}

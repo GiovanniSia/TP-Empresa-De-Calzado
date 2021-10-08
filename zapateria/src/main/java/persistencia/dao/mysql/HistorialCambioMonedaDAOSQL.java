@@ -143,7 +143,7 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 		int idEmpleado = resultSet.getInt("IdEmpleado");
 		String fecha = resultSet.getString("Fecha");
 		double tasaConversionAntigua = resultSet.getDouble("TasaConversionAntigua");
-		double tasaConversionNueva = resultSet.getDouble("TasaConversion");
+		double tasaConversionNueva = resultSet.getDouble("TasaConversionNueva");
 
 		return new HistorialCambioMonedaDTO(idCambioMoneda, idMoneda, descripcion, idEmpleado, fecha,
 				tasaConversionAntigua, tasaConversionNueva);
