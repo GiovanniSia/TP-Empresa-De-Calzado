@@ -18,45 +18,52 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dto.CarritoDTO;
 import dto.ClienteDTO;
+import dto.DetalleCarritoDTO;
 import dto.MaestroProductoDTO;
 import dto.ProductoEnCarritoDTO;
 import dto.StockDTO;
+import modelo.Carrito;
 import modelo.Cliente;
+import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
 import persistencia.conexion.Conexion;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.vista.vistaBusquedaProductos;
+import presentacion.vista.VentanaBusquedaProductos;
 import java.time.LocalDateTime;
 public class ControladorBusquedaProductos {
 	
 	private final int idSucursal=1;//esto esta hardcodeado
 //	private final List<MaestroProductoDTO> carrito;
+	int Preciototal;
 	
 	ControladorBusquedaCliente controladorBusquedaCliente;
-	
-	List<StockDTO> listaStock;
 	
 	Sucursal sucursal;
 	MaestroProducto maestroProducto;
 	Stock stock;
+	Carrito carrito;
+	DetalleCarrito detalleCarrito;
 	
-	vistaBusquedaProductos vistaBusquedaProductos;
-	
+	List<StockDTO> listaStock;
 	List<MaestroProductoDTO> listaMaestroProducto;
+	List<MaestroProductoDTO> productosEnTabla;
+	List<ProductoEnCarritoDTO> productosEnCarrito;
+	List<CarritoDTO> listaCarrito;
+	
+	VentanaBusquedaProductos vistaBusquedaProductos;
 	
 	ClienteDTO clienteSeleccionado;
-	
-	List<MaestroProductoDTO> productosEnTabla;
-	
-	List<ProductoEnCarritoDTO> carrito; 
-	
+		
 	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+		this.sucursal = sucursal;
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
-		this.sucursal = sucursal;
+		this.carrito = new Carrito(new DAOSQLFactory());
+		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
 	}
 	
 	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {
@@ -73,15 +80,15 @@ public class ControladorBusquedaProductos {
 //	}
 	
 	public void inicializar() {
-		this.carrito=new ArrayList<ProductoEnCarritoDTO>();
-		productosEnTabla = new ArrayList<MaestroProductoDTO>();
-		this.vistaBusquedaProductos = new vistaBusquedaProductos();
-		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		this.stock = new Stock(new DAOSQLFactory());
-				
-		this.listaMaestroProducto = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
-//		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
+		this.listaMaestroProducto = this.maestroProducto.readAll();
+		//estos dos se guardan en la aplicacion no lo obtenemos de la bd
+		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.productosEnCarrito=new ArrayList<ProductoEnCarritoDTO>();
+		this.listaCarrito = carrito.readAll();
+		
+		this.vistaBusquedaProductos = new VentanaBusquedaProductos();
+		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
 			@Override
@@ -105,11 +112,11 @@ public class ControladorBusquedaProductos {
 			public void mouseClicked(MouseEvent e) {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
 				//cuando se clickea en la tabla, se actualiza el spinner
-				vistaBusquedaProductos.getSpinner().setValue(carrito.get(filaSeleccionada).getCantidad()); 
+				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
 			}
 		});
 		
-		this.vistaBusquedaProductos.getSpinner().addChangeListener(new ChangeListener() {
+		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -198,7 +205,7 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		//verificamos si existe este prod en el carrito
-		for(ProductoEnCarritoDTO c: this.carrito) {
+		for(ProductoEnCarritoDTO c: this.productosEnCarrito) {
 			if(productoSeleccionado.getIdMaestroProducto() == c.getProducto().getIdMaestroProducto()) {
 				modificarCantStock(productoSeleccionado,c.getStock().getIdStock(),-cantSeleccionada);
 				c.aniadirProducto(cantSeleccionada);
@@ -211,7 +218,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal) {
 				modificarCantStock(productoSeleccionado,s.getIdStock(),-cantSeleccionada);
-				this.carrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
+				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
 			}
 		}
 		actualzarTablaCarrito();
@@ -234,7 +241,7 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getModelTablaCarrito().setColumnCount(0);
 		this.vistaBusquedaProductos.getModelTablaCarrito().setColumnIdentifiers(this.vistaBusquedaProductos.getNombreColumnasCarrito());
 		
-		for(ProductoEnCarritoDTO m: this.carrito) {
+		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
 			String nombre=m.getProducto().getDescripcion();
 			double total;
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
@@ -254,15 +261,15 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void calcularPrecioTotal() {
-		int total=0;
-		for(ProductoEnCarritoDTO m: this.carrito) {
+		Preciototal=0;
+		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
-				total += m.getProducto().getPrecioMayorista() * m.getCantidad();
+				Preciototal += m.getProducto().getPrecioMayorista() * m.getCantidad();
 			}else {
-				total += m.getProducto().getPrecioMinorista() * m.getCantidad();
+				Preciototal += m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
 		}
-		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+total);
+		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+Preciototal);
 	}
 	
 	public void quitarProductoDelCarrito(ActionEvent a) {
@@ -271,8 +278,8 @@ public class ControladorBusquedaProductos {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para quitar");
 			return;
 		}
-		ProductoEnCarritoDTO productoSeleccionado = this.carrito.get(filaSeleccionada);
-		carrito.remove(productoSeleccionado);
+		ProductoEnCarritoDTO productoSeleccionado = this.productosEnCarrito.get(filaSeleccionada);
+		productosEnCarrito.remove(productoSeleccionado);
 		modificarCantStock(productoSeleccionado.getProducto(),productoSeleccionado.getStock().getIdStock(),productoSeleccionado.getCantidad());
 		actualzarTablaCarrito();
 		realizarBusqueda();
@@ -285,11 +292,11 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		
-		ProductoEnCarritoDTO productoEnCarrito = this.carrito.get(filaSeleccionada);
+		ProductoEnCarritoDTO productoEnCarrito = this.productosEnCarrito.get(filaSeleccionada);
 		
 		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
-		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinner().getValue(); 
-		if(valorDelSpinner == this.carrito.get(filaSeleccionada).getCantidad()) {
+		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinnerCarrito().getValue(); 
+		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
 			return;
 		}		
 		if(valorDelSpinner == 0) {
@@ -318,7 +325,7 @@ public class ControladorBusquedaProductos {
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
 					int total = s.getStockDisponible()+ prod.getCantidad();
 					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
-						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner < total )  );
+						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
 				}else {
 					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
@@ -343,19 +350,97 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void armarVenta(ActionEvent a) {
-		int resp = JOptionPane.showConfirmDialog(null, "Está segura que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Está seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		System.out.println("cant prod en carrito: "+this.productosEnCarrito.size());
+		if(this.productosEnCarrito.size()==0) {
+			JOptionPane.showMessageDialog(null, "No ha agregado ningún producto en el carrito!");
+			return;
 		
+		}
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
-			this.vistaBusquedaProductos.cerrar();
+			if(hayStockDisponible()) {
+				guardarVentaArmada();
+				descontarDelStock();
+				this.vistaBusquedaProductos.cerrar();
+			}
+			
 		}
 	}
 	
+	public void guardarVentaArmada() {
+		guardarCarrito();//el carrito solo va a ser uno
+		guardarDetalleCarrito();		
+	}
 
+	public void guardarCarrito() {
+		int idSucursal = this.idSucursal;
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+		String hora = dtf.format(LocalDateTime.now());
+		
+		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.Preciototal,hora);
+		this.carrito.insert(carrito);
+		
+		this.listaCarrito = this.carrito.readAll();
+	}
+	
+	
+	public void guardarDetalleCarrito() {
+//		El id será el mismo para todos los sig prod
+		int ultIdCarrito = this.listaCarrito.get(this.listaCarrito.size()-1).getIdCarrito();
+		
+		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+			int idProducto = compra.getProducto().getIdMaestroProducto();
+			int idStock = compra.getStock().getIdStock();
+			int cant = compra.getCantidad();
+			double precio;
+			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+				precio = compra.getProducto().getPrecioMayorista() * compra.getCantidad();
+			}else {
+				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
+			}
+			int idCliente = this.clienteSeleccionado.getIdCliente();
+			System.out.println("idClienteseleccionado: "+idCliente);
+	
+			
+			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,idCliente,cant,precio);
+			this.detalleCarrito.insert(detalleCarrito);
+		}
+	}
+		
+	public boolean hayStockDisponible() {
+		boolean ret = true;
+		//actualizamos la lista de stockdisponible
+		this.listaStock = this.stock.readAll();
+		for(StockDTO s: this.listaStock) {
+			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+				if(s.getIdProducto()==compra.getProducto().getIdMaestroProducto() && s.getIdSucursal()== this.idSucursal) {
+					ret = ret && s.getStockDisponible()>0; 
+				}
+			}
+		}
+		return ret;
+	}	
+		
+		
+	public void descontarDelStock() {
+		for(StockDTO stock: this.listaStock) {
+			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
+					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
+					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
+					System.out.println("se pudo?: "+a);
+				}
+			}
+		}
+	}
+	
 	public void establecerClienteElegido(ClienteDTO cliente) {
 		this.clienteSeleccionado = cliente;
 	}
@@ -368,6 +453,9 @@ public class ControladorBusquedaProductos {
 		Object[] fila = { nombre,apellido,DNI, tipoCliente};
 		this.vistaBusquedaProductos.getModelTablaCliente().addRow(fila);			
 	}
+	
+	
+	
 	
 //	public static void main(String[] args) {
 //		new ControladorBusquedaProductos();

@@ -17,6 +17,8 @@ public class ClienteDAOSQL implements ClienteDAO {
 	private static final String update = "UPDATE clientes set Nombre=?, Apellido=?, CorreoElectronico=?, LimiteCredito=?, CreditoDisponible=?, TipoCliente=?, ImpuestoAFIP=?, Estado=?, Calle=?, Altura=?, Pais=?, Provincia=?, Localidad=?, CodPostal=? where IdCliente=?";
 	private static final String readall = "SELECT * FROM clientes";
 
+	private static final String select = "SELECT * FROM clientes WHERE IdCliente=?";
+	
 	@Override
 	public boolean insert(ClienteDTO cliente) {
 		PreparedStatement statement;
@@ -183,4 +185,24 @@ public class ClienteDAOSQL implements ClienteDAO {
 		return clientes;
 	}
 
+	@Override
+	public ClienteDTO selectCliente(int idCliente) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ClienteDTO cliente = null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(select);
+			statement.setInt(1,idCliente);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				cliente = getClienteDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cliente;
+	}
+	
+	
 }

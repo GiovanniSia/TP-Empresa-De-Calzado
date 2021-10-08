@@ -14,8 +14,7 @@ import dto.StockDTO;
 
 public class StockDAOSQL implements StockDAO {
 	private static final String readall = "SELECT * FROM stock";
-
-
+	private static final String updateStock = "UPDATE stock set StockDisponible=? WHERE IdStock=?";
 
 	public List<StockDTO> readAll() {
 		PreparedStatement statement;
@@ -43,5 +42,27 @@ public class StockDAOSQL implements StockDAO {
 		
 		return new StockDTO(idStock,idSucursal,idProducto,codigoLote,stockDisponible);
 	}
+	
+	@Override
+	public boolean actualizarStock(int idStock, int cant) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(updateStock);
+
+			statement.setInt(1,cant);
+			statement.setInt(2,idStock);
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
+	}
+	
 }
 

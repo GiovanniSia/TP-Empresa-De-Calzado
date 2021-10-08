@@ -262,9 +262,9 @@ CREATE TABLE `Detalle`
 CREATE TABLE `Carrito`
 (
   `idCarrito` int(11) NOT NULL AUTO_INCREMENT,
-  `IdCliente` int(11) NOT NULL,
   `idSucursal` int(11) NOT NULL,
   `Total` double(45,2) NOT NULL,
+  `Hora` varchar(20) NOT NULL,
   PRIMARY KEY (`idCarrito`)
 );
 
@@ -274,8 +274,8 @@ CREATE TABLE `DetalleCarrito`
   `idCarrito` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL,
   `idStock` int(11) NOT NULL,
-  `Cantidad` int(11) NOT NULL,
-  `precio` double(45,2) NOT NULL,
+  `IdCliente` int(45) NOT NULL,
+  `cantidad` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 );
 

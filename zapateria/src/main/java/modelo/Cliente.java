@@ -35,5 +35,8 @@ public class Cliente {
 		return this.cliente.getClienteAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2, nombreColumna3,  txtAprox3,  nombreColumna4,
 				 txtAprox4);
 	}
-
+	
+	public ClienteDTO selectCliente(int idCliente) {
+		return this.cliente.selectCliente(idCliente);
+	}
 }

@@ -26,4 +26,7 @@ public interface DAOAbstractFactory {
 	public IngresosDAO createIngresosDAO();
 	
 	public EgresosDAO createEgresosDAO();
+	public DetalleCarritoDAO createDetalleCarritoDAO();
+	
+	public CarritoDAO createCarritoDAO();
 }

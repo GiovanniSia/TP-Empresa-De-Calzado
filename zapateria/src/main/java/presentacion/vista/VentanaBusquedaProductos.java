@@ -26,7 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 
-public class vistaBusquedaProductos {
+public class VentanaBusquedaProductos {
 
 	private JFrame frame;
 	
@@ -75,7 +75,7 @@ public class vistaBusquedaProductos {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaBusquedaProductos window = new vistaBusquedaProductos();
+					VentanaBusquedaProductos window = new VentanaBusquedaProductos();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +89,7 @@ public class vistaBusquedaProductos {
 	/**
 	 * Create the application.
 	 */
-	public vistaBusquedaProductos() {
+	public VentanaBusquedaProductos() {
 		initialize();
 	}
 
@@ -118,7 +118,18 @@ public class vistaBusquedaProductos {
 		panel.setLayout(null);
 		
 		//Tabla productos filtrados
-		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados);
+		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 5) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneProductosFiltrados = new JScrollPane(this.tableProductosFiltrados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneProductosFiltrados.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
@@ -168,13 +179,24 @@ public class vistaBusquedaProductos {
 		panel.add(lblValorTotal);
 		
 		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setFont(new Font("Dialog", Font.BOLD, 17));
-		lblTotal.setBounds(711, 370, 55, 39);
+		lblTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+		lblTotal.setBounds(707, 370, 63, 39);
 		panel.add(lblTotal);
 		
 		//Tabla carrito
 
-		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito);
+		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 5) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
@@ -207,7 +229,18 @@ public class vistaBusquedaProductos {
 		
 		
 		//Tabla Cliente
-		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente);
+		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 4) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCliente.setBounds(10, 23, 548, 42);
@@ -230,7 +263,7 @@ public class vistaBusquedaProductos {
 		frame.getContentPane().add(btnAtras);
 		
 		btnArmarVenta = new JButton("Armar Venta");
-		btnArmarVenta.setFont(new Font("Consolas", Font.PLAIN, 28));
+		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 		btnArmarVenta.setBounds(211, 527, 419, 63);
 		frame.getContentPane().add(btnArmarVenta);
 		
@@ -240,13 +273,13 @@ public class vistaBusquedaProductos {
 		panel_1.setLayout(null);
 		
 		lblTitulo = new JLabel("Zapater\u00EDa");
-		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblTitulo.setBounds(10, 10, 195, 21);
+		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		lblTitulo.setBounds(10, 0, 195, 41);
 		panel_1.add(lblTitulo);
 		
 		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Arial", Font.BOLD, 27));
-		lblSubtitulo.setBounds(20, 61, 195, 21);
+		lblSubtitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblSubtitulo.setBounds(20, 54, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
 	}
 	
@@ -358,7 +391,7 @@ public class vistaBusquedaProductos {
 		return btnArmarVenta;
 	}
 
-	public JSpinner getSpinner() {
+	public JSpinner getSpinnerCarrito() {
 		return spinnerCarrito;
 	}
 	

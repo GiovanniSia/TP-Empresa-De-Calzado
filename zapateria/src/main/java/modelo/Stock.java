@@ -17,4 +17,9 @@ public class Stock {
 	public List<StockDTO> readAll(){
 		return this.stock.readAll();
 	}
+	
+	public boolean actualizarStock(int idStock,int cant) {
+		return this.stock.actualizarStock(idStock,cant);
+	}
+	
 }

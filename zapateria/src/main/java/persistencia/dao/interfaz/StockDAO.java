@@ -6,4 +6,6 @@ import dto.StockDTO;
 
 public interface StockDAO {
 	public List<StockDTO> readAll();
+	
+	public boolean actualizarStock(int idStock,int cant);
 }
