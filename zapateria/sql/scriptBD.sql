@@ -315,3 +315,52 @@ insert into clientes values(4, "Pedra", "Pula","223004","juanS@mgail.com",200,10
 insert into clientes values(5, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 insert into clientes values(6, "Delta", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 insert into clientes values(7, "Puda", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+
+insert into recetas values(1,1,'Receta eficiente');
+
+insert into paso values(1,"Cortado");
+insert into paso values(2,"Aparado");
+insert into paso values(3,"Preparación");
+insert into paso values(4,"Montado");
+insert into paso values(5,"Pegado");
+insert into paso values(6,"Terminado");
+
+INSERT INTO maestroProductos values(7,"Pegamento"  ,"PT","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
+INSERT INTO maestroProductos values(8,"Tijera"  ,"PT","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Adesivo"  ,"PT","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
+
+insert into pasosReceta values(1,1,1,1);
+insert into pasosReceta values(2,1,2,2);
+insert into pasosReceta values(3,1,3,3);
+insert into pasosReceta values(4,1,4,4);
+insert into pasosReceta values(5,1,5,5);
+insert into pasosReceta values(6,1,6,6);
+
+insert into materialesDePaso values(1,7,10,5);
+insert into materialesDePaso values(2,8,6,1);
+insert into materialesDePaso values(3,9,7,5);
+
+insert into recetas values(2,1,'Receta Dupli');
+insert into pasosReceta values(7,2,1,1);
+insert into pasosReceta values(8,2,2,4);
+insert into pasosReceta values(9,2,3,6);
+insert into materialesDePaso values(4,9,7,9);
+insert into stock values(7,1,9,'LOTECREADOAMANO',70);
+
+insert into recetas values(3,1,'Receta Auxiliar');
+insert into pasosReceta values(10,3,1,2);
+insert into pasosReceta values(11,3,2,5);
+
+insert into recetas values(4,2,'Receta sin material');
+insert into pasosReceta values(12,4,1,1);
+insert into pasosReceta values(13,4,2,2);
+
+insert into ordenfabrica values(1,1,'2021-03-20',15,'L123123',1);
+insert into ordenfabrica values(2,1,'2021-03-20',10,'L213132',1);
+insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',1);
+insert into ordenfabrica values(4,2,'2021-03-20',20,'L493132',1);
+insert into ordenfabrica values(5,1,'2021-03-20',20,'L493132',1);
+
+insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
+insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
+insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
