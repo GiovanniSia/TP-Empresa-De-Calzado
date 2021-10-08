@@ -31,10 +31,11 @@ public class VentanaVisualizarCarritos {
 	private JScrollPane scrollPaneTablaCarritos;
 	
 	private JButton btnElegirCarrito;
+	
 	private DefaultTableModel modelTablaDetalle;
-	private String[] nombreColumnasDetalle = {"Productos","Cantidad","P. Unitario",};	
+	private String[] nombreColumnasDetalle = {"Productos","Cantidad","P. Unitario"};	
 	private JTable tableDetalle;
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPaneDetalle;
 
 	/**
 	 * Launch the application.
@@ -122,19 +123,24 @@ public class VentanaVisualizarCarritos {
 		
 		//tabla detalle
 		modelTablaDetalle = new DefaultTableModel(null, this.nombreColumnasDetalle);
-		scrollPane = new JScrollPane(this.tableDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(598, 137, 320, 313);
+		scrollPaneDetalle = new JScrollPane(this.tableDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneDetalle.setBounds(598, 137, 320, 313);
 		
 		tableDetalle = new JTable(modelTablaDetalle);
 		tableDetalle.setBounds(598, 139, 320, 311);
 		this.tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableDetalle.getColumnModel().getColumn(0).setResizable(false);
 		
-		scrollPane.setViewportView(tableDetalle);
+		scrollPaneDetalle.setViewportView(tableDetalle);
 		
 		
 		
-		panel.add(scrollPane);
+		panel.add(scrollPaneDetalle);
+		
+		JLabel lblNewLabel_1 = new JLabel("Productos en el Carrito");
+		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 22));
+		lblNewLabel_1.setBounds(601, 102, 294, 21);
+		panel.add(lblNewLabel_1);
 		
 		
 		/*
@@ -208,5 +214,17 @@ public class VentanaVisualizarCarritos {
 
 	public JButton getBtnElegirCarrito() {
 		return btnElegirCarrito;
+	}
+	
+	public DefaultTableModel getModelTablaDetalle() {
+		return modelTablaDetalle;
+	}
+
+	public String[] getNombreColumnasDetalle() {
+		return nombreColumnasDetalle;
+	}
+
+	public JTable getTableDetalle() {
+		return tableDetalle;
 	}
 }

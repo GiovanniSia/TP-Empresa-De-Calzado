@@ -89,9 +89,6 @@ public class ControladorBusquedaProductos {
 		
 		this.vistaBusquedaProductos = new VentanaBusquedaProductos();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-
-
-//		this.vistaBusquedaProductos.getTxtNombreProducto().setText(this.clienteSeleccionado.getNombre());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
 			@Override
@@ -353,7 +350,7 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void armarVenta(ActionEvent a) {
-		int resp = JOptionPane.showConfirmDialog(null, "Está segura que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Está seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		System.out.println("cant prod en carrito: "+this.productosEnCarrito.size());
 		if(this.productosEnCarrito.size()==0) {
 			JOptionPane.showMessageDialog(null, "No ha agregado ningún producto en el carrito!");
