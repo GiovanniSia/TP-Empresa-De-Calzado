@@ -42,8 +42,9 @@ public class VentanaIngresarFechaDeLlegada extends JFrame {
 		spinner.setBounds(59, 93, 57, 20);
 		panel.add(spinner);
 		
-		JLabel lblNewLabel = new JLabel("En cuantos dias llegara a la fabrica");
-		lblNewLabel.setBounds(32, 41, 194, 14);
+		JLabel lblNewLabel = new JLabel("En cuantos dias llegara a la sucursal");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(10, 35, 356, 14);
 		panel.add(lblNewLabel);
 	}
 

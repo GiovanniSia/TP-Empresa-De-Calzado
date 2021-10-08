@@ -1,9 +1,17 @@
 package presentacion.controlador.fabrica;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 
 import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
@@ -56,6 +64,11 @@ public class ControladorOperario implements ActionListener {
 	Stock modeloStock;
 	
 	public ControladorOperario(SucursalDTO fabrica) {
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch(Exception e) {
+            System.out.println("Error setting native LAF: " + e);
+		}
 		
 		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
@@ -247,6 +260,25 @@ public class ControladorOperario implements ActionListener {
 					}
 					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado(), fechaCompletado, diasEnvio};
 					ventanaTrabajos.getModelOrdenes().addRow(agregar);
+					
+					ventanaTrabajos.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+					    @Override
+					    public Component getTableCellRendererComponent(JTable table,
+					            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+					        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+					        String status = (String)table.getModel().getValueAt(row, 6);
+					        if ("activo".equals(status)) {
+					            setBackground(Color.YELLOW);
+					            //setForeground(Color.WHITE);
+					        } else {
+					            setBackground(table.getBackground());
+					            setForeground(table.getForeground());
+					        }       
+					        return this;
+					    }   
+					});
 				}
 			}
 		}
@@ -362,7 +394,7 @@ public class ControladorOperario implements ActionListener {
 				}
 				cont++;
 			}
-			//
+			mostrarMensajeEmergente("Paso concretado");
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
 			modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 			if(fabricacionTrabajando.getNroPasoActual() > modeloFabricacion.readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
@@ -377,6 +409,7 @@ public class ControladorOperario implements ActionListener {
 				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 				this.ventanaDiaDeLlegada.show();
 				this.ventanaUnaTrabajo.cerrar();
+				mostrarMensajeEmergente("Se completo el ultimo paso de fabricacion.");
 			}
 			llenarTablaTrabajos();
 			
@@ -487,6 +520,11 @@ public class ControladorOperario implements ActionListener {
 		ventanaMostrarIngredientes.getModelOrdenes().setRowCount(0);
 		ventanaMostrarIngredientes.getModelOrdenes().setColumnCount(0);
 		ventanaMostrarIngredientes.getModelOrdenes().setColumnIdentifiers(ventanaMostrarIngredientes.getNombreColumnas());
+	}
+	
+	public void mostrarMensajeEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
+        return;
 	}
 
 	@Override

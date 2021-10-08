@@ -38,6 +38,10 @@ public class FabricacionesDTO {
 	
 	public void completarOrden() {
 		Estado = "completo";
+		java.util.Date fecha = new java.util.Date();
+		diaCompletado = fecha.getDate();
+		mesCompletado = fecha.getMonth() + 1;
+		anioCompletado = fecha.getYear() + 1900;
 	}
 	
 	public void sumarUnPaso() {
