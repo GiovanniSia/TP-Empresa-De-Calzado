@@ -276,6 +276,7 @@ CREATE TABLE `DetalleCarrito`
   `idStock` int(11) NOT NULL,
   `IdCliente` int(45) NOT NULL,
   `cantidad` int(11) NOT NULL,
+  `precio` double(45,2) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
