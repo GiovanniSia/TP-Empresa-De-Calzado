@@ -13,6 +13,6 @@ public interface HistorialCambioMProductoDAO {
 
 	public List<HistorialCambioMProductoDTO> readAll();
 
-	List<HistorialCambioMProductoDTO> getHistorialCambioMProductoAproximado(String nombreColumna1, String txtAprox1,
+	public List<HistorialCambioMProductoDTO> getHistorialCambioMProductoAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2);
 }
