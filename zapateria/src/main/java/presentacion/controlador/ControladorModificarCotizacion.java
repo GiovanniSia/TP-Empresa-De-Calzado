@@ -19,11 +19,13 @@ import presentacion.vista.VentanaModificarCotizacion;
 
 public class ControladorModificarCotizacion {
 
+	static final int idEmpleado = 1;
+
 	private VentanaModificarCotizacion ventanaModificarCotizacion;
 	private MedioPago medioPago;
 	private HistorialCambioMoneda historialCambioMoneda;
 	private List<MedioPagoDTO> medioPagoEnTabla;
-
+	
 	public ControladorModificarCotizacion(MedioPago medioPago) {
 		this.ventanaModificarCotizacion = new VentanaModificarCotizacion();
 		this.medioPago = medioPago;
@@ -136,9 +138,6 @@ public class ControladorModificarCotizacion {
 		String idMoneda = this.medioPagoEnTabla.get(filaSeleccionada).getIdMoneda();
 		String descripcion = this.medioPagoEnTabla.get(filaSeleccionada).getDescripcion();
 
-		// Empelado HARDCODEADO (hacerlo automatico cuando tengamos login)
-		int idEmpleado = 1;
-
 		// Fecha de hoy
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String fecha = dtf.format(LocalDateTime.now());
@@ -154,7 +153,6 @@ public class ControladorModificarCotizacion {
 	}
 
 	public MedioPagoDTO obtenerMedioPagoNuevo() {
-
 		int filaSeleccionada = this.ventanaModificarCotizacion.getTablaMedioPago().getSelectedRow();
 
 		String idMoneda = this.medioPagoEnTabla.get(filaSeleccionada).getIdMoneda();

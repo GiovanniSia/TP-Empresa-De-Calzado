@@ -19,7 +19,8 @@ import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaModificarMProducto;
 
 public class ControladorModificarMProducto {
-
+	static final int idEmpleado = 1;
+	
 	private VentanaModificarMProducto ventanaModificarMProducto;
 	private MaestroProducto maestroProducto;
 	private HistorialCambioMProducto historialCambioMProducto;
@@ -160,7 +161,6 @@ public class ControladorModificarMProducto {
 			JOptionPane.showMessageDialog(null, "Los valores negativos no estan permitidos");
 			return false;
 		}
-		
 		return true;
 	}
 
@@ -181,9 +181,6 @@ public class ControladorModificarMProducto {
 
 	public void ingresarProductoATablaHistorialCambioMProducto() {
 		int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
-
-		// Empelado HARDCODEADO (hacerlo automatico cuando tengamos login)
-		int idEmpleado = 1;
 
 		// CodProducto
 		int idMaestroProducto = this.maestroProductoEnTabla.get(filaSeleccionada).getIdMaestroProducto();
