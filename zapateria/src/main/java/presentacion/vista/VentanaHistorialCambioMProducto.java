@@ -57,7 +57,17 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		spHistorialCambiosMProducto.setBounds(10, 11, 879, 167);
 		panel.add(spHistorialCambiosMProducto);
 
-		modelhistorialCambioMProducto = new DefaultTableModel(null, nombreColumnas);
+		modelhistorialCambioMProducto = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if(columnas == 9) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+		};
 		tablaHistorialCambioMProducto = new JTable(modelhistorialCambioMProducto);
 
 		tablaHistorialCambioMProducto.getColumnModel().getColumn(0).setPreferredWidth(103);

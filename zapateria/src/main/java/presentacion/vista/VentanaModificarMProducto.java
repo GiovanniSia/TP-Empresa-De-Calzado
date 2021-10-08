@@ -74,7 +74,19 @@ public class VentanaModificarMProducto extends JFrame {
 		spProducto.setBounds(10, 11, 823, 145);
 		panel.add(spProducto);
 
-		modelProducto = new DefaultTableModel(null, nombreColumnas);
+		modelProducto =new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if(columnas == 9) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+		};
+		
+		
 		tablaProducto = new JTable(modelProducto);
 
 		tablaProducto.getColumnModel().getColumn(0).setPreferredWidth(103);

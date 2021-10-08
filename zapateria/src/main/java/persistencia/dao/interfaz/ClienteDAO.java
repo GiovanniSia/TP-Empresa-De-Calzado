@@ -1,7 +1,6 @@
 package persistencia.dao.interfaz;
 
 import java.util.List;
-
 import dto.ClienteDTO;
 
 public interface ClienteDAO {
@@ -14,11 +13,7 @@ public interface ClienteDAO {
 
 	public List<ClienteDTO> readAll();
 	
-	public List<ClienteDTO> filtrarPorCodCliente(String valor);
-	
-	public List<ClienteDTO> filtrarPorNombre(String valor);
-	
-	public List<ClienteDTO> filtrarPorApellido(String valor);
-	
-	public List<ClienteDTO> filtradoPorDNI(String valor);
+	public List<ClienteDTO> getClienteAproximado(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4);
 }

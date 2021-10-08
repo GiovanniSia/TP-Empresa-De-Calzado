@@ -68,9 +68,20 @@ public class VentanaModificarCotizacion extends JFrame {
 		spMedioPago.setBounds(10, 11, 481, 145);
 		panel.add(spMedioPago);
 
-		modelProducto = new DefaultTableModel(null, nombreColumnas);
+		
+		modelProducto = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if(columnas == 3) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+		};
 		tablaMedioPago = new JTable(modelProducto);
-
+		
 		tablaMedioPago.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaMedioPago.getColumnModel().getColumn(0).setResizable(false);
 		tablaMedioPago.getColumnModel().getColumn(1).setPreferredWidth(100);

@@ -57,7 +57,18 @@ public class VentanaBusquedaCliente extends JFrame {
 		spCliente.setBounds(10, 11, 776, 145);
 		panel.add(spCliente);
 
-		modelCliente = new DefaultTableModel(null, nombreColumnas);
+		modelCliente =	new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if(columnas == 5) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+		};
+		
 		tablaClientes = new JTable(modelCliente);
 		
 		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(103);

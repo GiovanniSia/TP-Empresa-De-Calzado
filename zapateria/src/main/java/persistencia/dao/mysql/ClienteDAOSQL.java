@@ -4,15 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-
-import javax.swing.table.DefaultTableModel;
-
 import dto.ClienteDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ClienteDAO;
-import presentacion.vista.VentanaBusquedaCliente;
 import java.util.List;
 
 public class ClienteDAOSQL implements ClienteDAO {
@@ -155,92 +150,37 @@ public class ClienteDAOSQL implements ClienteDAO {
 				impuestoAFIP, estado, calle, altura, pais, provincia, localidad, codPostal);
 	}
 
-	public List<ClienteDTO> filtrarPorCodCliente(String valor) {
+	public List<ClienteDTO> getClienteAproximado(String nombreColumna1, String txtAprox1, String nombreColumna2,
+			String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM clientes WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
-		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
-
-		String SQL = "select * from clientes where IdCliente like '" + valor + "%'";
-
-		try {
-			Connection conexion = Conexion.getConexion().getSQLConexion();
-
-			Statement st = conexion.createStatement();
-			ResultSet rs = st.executeQuery(SQL);
-
-			while (rs.next()) {
-				listaCliente.add(getClienteDTO(rs));
-			}
-
-		} catch (Exception e) {
-			System.out.println("Error al mostrar datos: " + e.getMessage());
+		if (nombreColumna2 != null && txtAprox2 != null ) {
+			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
 		}
-		return listaCliente;
-	}
-
-	public List<ClienteDTO> filtrarPorNombre(String valor) {
-
-		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
-
-		String SQL = "select * from clientes where Nombre like '" + valor + "%'";
-
-		try {
-			Connection conexion = Conexion.getConexion().getSQLConexion();
-
-			Statement st = conexion.createStatement();
-			ResultSet rs = st.executeQuery(SQL);
-
-			while (rs.next()) {
-				listaCliente.add(getClienteDTO(rs));
-			}
-
-		} catch (Exception e) {
-			System.out.println("Error al mostrar datos: " + e.getMessage());
+		
+		if (nombreColumna3 != null && txtAprox3 != null ) {
+			sel = sel + "AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'";
 		}
-		return listaCliente;
-	}
-
-	public List<ClienteDTO> filtrarPorApellido(String valor) {
-
-		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
-
-		String SQL = "select * from clientes where Apellido like '" + valor + "%'";
-
-		try {
-			Connection conexion = Conexion.getConexion().getSQLConexion();
-
-			Statement st = conexion.createStatement();
-			ResultSet rs = st.executeQuery(SQL);
-
-			while (rs.next()) {
-				listaCliente.add(getClienteDTO(rs));
-			}
-
-		} catch (Exception e) {
-			System.out.println("Error al mostrar datos: " + e.getMessage());
+		
+		if (nombreColumna4 != null && txtAprox4 != null ) {
+			sel = sel + "AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
 		}
-		return listaCliente;
-	}
 
-	public List<ClienteDTO> filtradoPorDNI(String valor) {
-
-		ArrayList<ClienteDTO> listaCliente = new ArrayList<ClienteDTO>();
-
-		String SQL = "select * from clientes where DNI like '" + valor + "%'";
-
+		ArrayList<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
+		Conexion conexion = Conexion.getConexion();
 		try {
-			Connection conexion = Conexion.getConexion().getSQLConexion();
-
-			Statement st = conexion.createStatement();
-			ResultSet rs = st.executeQuery(SQL);
-
-			while (rs.next()) {
-				listaCliente.add(getClienteDTO(rs));
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				clientes.add(getClienteDTO(resultSet));
 			}
-
-		} catch (Exception e) {
-			System.out.println("Error al mostrar datos: " + e.getMessage());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return listaCliente;
+		return clientes;
 	}
 
 }

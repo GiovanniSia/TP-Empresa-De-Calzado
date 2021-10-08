@@ -9,91 +9,97 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.vistaBusquedaProductos;
 
-
-public class ControladorBusquedaCliente {	
+public class ControladorBusquedaCliente {
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
 	private Cliente cliente;
 	private List<ClienteDTO> clienteEnTabla;
-	
+
 	ControladorBusquedaProductos controladorBusquedaProductos;
-	
+
 	private ClienteDTO clienteSeleccionado;
-	
+
 	public ControladorBusquedaCliente(Cliente cliente) {
-		
+
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		this.cliente = cliente;
 	}
-	
+
 	public void setControladorBusquedaProducto(ControladorBusquedaProductos c) {
-		this.controladorBusquedaProductos=c;
+		this.controladorBusquedaProductos = c;
 	}
-	
-	
-	
-	
+
 	public void inicializar() {
 		System.out.println("se ejecuta el contorlador de cliente");
-		
+
 		this.cliente = new Cliente(new DAOSQLFactory());
 
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
-		
-		
-		//Botones
+
+		// Botones
 		this.ventanaBusquedaCliente.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaBusquedaCliente.getBtnPasarAVenta().addActionListener(p -> pasarAVenta(p));
-		
-		//TextField
+
+		// TextField
 		this.ventanaBusquedaCliente.getTxtFieldCodCliente().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla = cliente.filtrarPorCodCliente(ventanaBusquedaCliente.getTxtFieldCodCliente().getText());
-				llenarTabla(clienteEnTabla);
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaBusquedaCliente.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla = cliente.filtrarPorNombre(ventanaBusquedaCliente.getTxtFieldNombre().getText());
-				llenarTabla(clienteEnTabla);
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaBusquedaCliente.getTxtFieldApellido().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla = cliente.filtrarPorApellido(ventanaBusquedaCliente.getTxtFieldApellido().getText());
-				llenarTabla(clienteEnTabla);
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaBusquedaCliente.getTxtFieldDNI().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				clienteEnTabla = cliente.filtrarPorDNI(ventanaBusquedaCliente.getTxtFieldDNI().getText());
-				llenarTabla(clienteEnTabla);
+				realizarBusqueda();
 			}
 		});
-		
+
 //		this.mostrarVentana();
 	}
-	
+
+	public void realizarBusqueda() {
+		this.ventanaBusquedaCliente.getModelCliente().setRowCount(0);// borrar datos de la tabla
+		this.ventanaBusquedaCliente.getModelCliente().setColumnCount(0);
+		this.ventanaBusquedaCliente.getModelCliente()
+				.setColumnIdentifiers(this.ventanaBusquedaCliente.getNombreColumnas());
+
+		String txtcodCliente = this.ventanaBusquedaCliente.getTxtFieldCodCliente().getText();
+		String txtNombre = this.ventanaBusquedaCliente.getTxtFieldNombre().getText();
+		String txtApellido = this.ventanaBusquedaCliente.getTxtFieldApellido().getText();
+		String txtDNI = this.ventanaBusquedaCliente.getTxtFieldDNI().getText();
+
+		List<ClienteDTO> clienteAproximados = this.cliente.getClienteAproximado("IdCliente", txtcodCliente, "Nombre",
+				txtNombre, "Apellido", txtApellido, "DNI", txtDNI);
+		llenarTabla(clienteAproximados);
+	}
+
 	public void atras(ActionEvent a) {
 		this.ventanaBusquedaCliente.cerrar();
 	}
 
 	public void pasarAVenta(ActionEvent p) {
-		if(clienteSeleccionado()) {
+		if (clienteSeleccionado()) {
 			this.ventanaBusquedaCliente.cerrar();
 			this.controladorBusquedaProductos.establecerClienteElegido(this.clienteSeleccionado);
-			
+
 			controladorBusquedaProductos.inicializar();
-			
-		}		
+
+		}
 	}
 
 	public boolean clienteSeleccionado() {
@@ -104,11 +110,11 @@ public class ControladorBusquedaCliente {
 		}
 
 		List<ClienteDTO> clientes = cliente.readAll();
-	
+
 		String codCliente = this.ventanaBusquedaCliente.getTablaClientes().getValueAt(filaSeleccionada, 0).toString();
-		for (ClienteDTO c : clientes) {			
-			//Obtengo el objeto cilente con todos sus valores
-			if (codCliente.equals(""+c.getIdCliente()+"")) {
+		for (ClienteDTO c : clientes) {
+			// Obtengo el objeto cilente con todos sus valores
+			if (codCliente.equals("" + c.getIdCliente() + "")) {
 //				int IdCliente = c.getIdCliente();
 //				String Nombre = c.getNombre();
 //				String Apellido = c.getApellido();
@@ -164,12 +170,9 @@ public class ControladorBusquedaCliente {
 	public ClienteDTO getClienteSeleccionado() {
 		return this.clienteSeleccionado;
 	}
-	
-	
-	
-	
+
 //	public static void main(String[] args) {
 //		new ControladorBusquedaCliente();
 //	}
-	
+
 }

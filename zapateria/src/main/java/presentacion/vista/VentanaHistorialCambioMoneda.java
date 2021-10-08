@@ -65,7 +65,18 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		spHistorialCambioMoneda.setBounds(10, 11, 729, 145);
 		panel.add(spHistorialCambioMoneda);
 
-		modelHistorialCambioMoneda = new DefaultTableModel(null, nombreColumnas);
+		modelHistorialCambioMoneda = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+                if(columnas == 6) {
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+		};
+		
 		tablaHistorialCambioMoneda = new JTable(modelHistorialCambioMoneda);
 
 		tablaHistorialCambioMoneda.getColumnModel().getColumn(0).setPreferredWidth(103);
