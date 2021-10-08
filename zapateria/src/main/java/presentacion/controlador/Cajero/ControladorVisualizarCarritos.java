@@ -61,7 +61,6 @@ public class ControladorVisualizarCarritos {
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
 		
-		
 		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 		
 		this.ventanaVisualizarCarritos.getTableCarritos().addMouseListener(new MouseAdapter() {
@@ -79,13 +78,11 @@ public class ControladorVisualizarCarritos {
 	
 	
 	public void llenarTabla() {
-
-		
-		//ahora hay dos tablas: una para el carrito y otra para ver el detalle
 		for(CarritoDTO carrito: this.listaCarritos) {
 			for(DetalleCarritoDTO detalle: this.listaDetalleCarrito) {
 				if(carrito.getIdCarrito()==detalle.getIdCarrito() && carrito.getIdSucursal()==this.idSucursal
 						&& !yaFueAgregado(carrito)) {
+					
 					ClienteDTO cliente = this.cliente.selectCliente(detalle.getIdCliente());
 					
 					int idCarrito=carrito.getIdCarrito();
