@@ -254,7 +254,6 @@ public class ControladorModificarMProducto {
 		String codProducto = this.ventanaModificarMProducto.getTablaProducto().getValueAt(filaSeleccionada, 0)
 				.toString();
 		for (MaestroProductoDTO mp : maestroProducto) {
-			// Obtengo el objeto cilente con todos sus valores
 			if (codProducto.equals("" + mp.getIdMaestroProducto() + "")) {
 				return mp;
 			}
