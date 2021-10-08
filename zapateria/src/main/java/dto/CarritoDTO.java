@@ -2,23 +2,20 @@ package dto;
 
 public class CarritoDTO {
 
-	int idCarrito, IdCliente, idSucursal;
+	int idCarrito, idSucursal;
 	double Total;
+	String hora;
 	
-	public CarritoDTO(int idCarrito, int idCliente, int idSucursal, double total) {
+	public CarritoDTO(int idCarrito, int idSucursal, double total,String hora) {
 		super();
 		this.idCarrito = idCarrito;
-		IdCliente = idCliente;
 		this.idSucursal = idSucursal;
 		Total = total;
+		this.hora = hora;
 	}
 	
 	public int getIdCarrito() {
 		return idCarrito;
-	}
-
-	public int getIdCliente() {
-		return IdCliente;
 	}
 
 	public int getIdSucursal() {
@@ -28,5 +25,7 @@ public class CarritoDTO {
 	public double getTotal() {
 		return Total;
 	}
-
+	public String getHora() {
+		return this.hora;
+	}
 }

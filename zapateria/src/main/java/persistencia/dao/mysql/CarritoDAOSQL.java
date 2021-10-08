@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.CarritoDTO;
+import dto.ClienteDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.CarritoDAO;
 
@@ -26,9 +27,9 @@ public class CarritoDAOSQL implements CarritoDAO{
 			statement = conexion.prepareStatement(insert);
 
 			statement.setInt(1, carrito.getIdCarrito());
-			statement.setInt(2, carrito.getIdCliente());
-			statement.setInt(3, carrito.getIdSucursal());
-			statement.setDouble(4, carrito.getTotal());
+			statement.setInt(2, carrito.getIdSucursal());
+			statement.setDouble(3, carrito.getTotal());
+			statement.setString(4, carrito.getHora());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -82,11 +83,10 @@ public class CarritoDAOSQL implements CarritoDAO{
 	}
 	private CarritoDTO getCarritoDTO(ResultSet resultSet) throws SQLException {
 		int idCarrito = resultSet.getInt("idCarrito");
-		int idCliente = resultSet.getInt("idCliente");
 		int idSucursal = resultSet.getInt("idSucursal");
 		double total = resultSet.getDouble("Total");
+		String hora = resultSet.getString("Hora");
 		
-		return new CarritoDTO(idCarrito,idCliente,idSucursal,total);
+		return new CarritoDTO(idCarrito,idSucursal,total,hora);
 	}
-	
 }

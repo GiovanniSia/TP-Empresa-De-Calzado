@@ -9,7 +9,7 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.vistaBusquedaProductos;
+import presentacion.vista.VentanaBusquedaProductos;
 
 
 public class ControladorBusquedaCliente {	

@@ -16,6 +16,8 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 	private static final String update = "UPDATE maestroProductos set Descripcion=?, Tipo=?, Fabricado=?, PrecioCosto=?, PrecioMayorista=?, PrecioMinorista=?, PuntoRepositorio=?, IdProveedor=?, Talle=?,UnidadMedida=?,Estado=?,CantidadAReponer=?,DiasParaReponer=? where IdMaestroProducto=?";
 	private static final String readall = "SELECT * FROM maestroProductos";
 
+	private static final String select = "SELECT * FROM maestroProductos WHERE IdMaestroProducto = ?"; 
+	
 	@Override
 	public boolean insert(MaestroProductoDTO maestroProductos) {
 		PreparedStatement statement;
@@ -168,4 +170,23 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		return maestroProducto;
 	}
 
+	
+	@Override
+	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		MaestroProductoDTO producto = null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(select);
+			statement.setInt(1,idMaestroProducto);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				producto = getMaestroProductoDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return producto;
+	}
 }

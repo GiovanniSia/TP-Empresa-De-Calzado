@@ -32,7 +32,7 @@ import modelo.Stock;
 import modelo.Sucursal;
 import persistencia.conexion.Conexion;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.vista.vistaBusquedaProductos;
+import presentacion.vista.VentanaBusquedaProductos;
 import java.time.LocalDateTime;
 public class ControladorBusquedaProductos {
 	
@@ -54,7 +54,7 @@ public class ControladorBusquedaProductos {
 	List<ProductoEnCarritoDTO> productosEnCarrito;
 	List<CarritoDTO> listaCarrito;
 	
-	vistaBusquedaProductos vistaBusquedaProductos;
+	VentanaBusquedaProductos vistaBusquedaProductos;
 	
 	ClienteDTO clienteSeleccionado;
 		
@@ -87,7 +87,7 @@ public class ControladorBusquedaProductos {
 		this.productosEnCarrito=new ArrayList<ProductoEnCarritoDTO>();
 		this.listaCarrito = carrito.readAll();
 		
-		this.vistaBusquedaProductos = new vistaBusquedaProductos();
+		this.vistaBusquedaProductos = new VentanaBusquedaProductos();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 
 
@@ -354,10 +354,16 @@ public class ControladorBusquedaProductos {
 	
 	public void armarVenta(ActionEvent a) {
 		int resp = JOptionPane.showConfirmDialog(null, "Está segura que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		System.out.println("cant prod en carrito: "+this.productosEnCarrito.size());
+		if(this.productosEnCarrito.size()==0) {
+			JOptionPane.showMessageDialog(null, "No ha agregado ningún producto en el carrito!");
+			return;
 		
+		}
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
@@ -368,15 +374,26 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void guardarVentaArmada() {
-		
-		int idCliente = this.clienteSeleccionado.getIdCliente();
+		guardarCarrito();//el carrito solo va a ser uno
+		guardarDetalleCarrito();		
+	}
+
+	public void guardarCarrito() {
 		int idSucursal = this.idSucursal;
-		CarritoDTO carrito = new CarritoDTO(0,idCliente,idSucursal,this.Preciototal);
-		this.carrito.insert(carrito);
-		//actualizamos la lista de carrito para ver el id del ultimo que se agrego
-		this.listaCarrito = this.carrito.readAll();
 		
-		int ultId = this.listaCarrito.get(this.listaCarrito.size()-1).getIdCarrito();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+		String hora = dtf.format(LocalDateTime.now());
+		
+		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.Preciototal,hora);
+		this.carrito.insert(carrito);
+		
+		this.listaCarrito = this.carrito.readAll();
+	}
+	
+	
+	public void guardarDetalleCarrito() {
+//		El id será el mismo para todos los sig prod
+		int ultIdCarrito = this.listaCarrito.get(this.listaCarrito.size()-1).getIdCarrito();
 		
 		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 			int idProducto = compra.getProducto().getIdMaestroProducto();
@@ -388,13 +405,17 @@ public class ControladorBusquedaProductos {
 			}else {
 				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
 			}
+			int idCliente = this.clienteSeleccionado.getIdCliente();
+	
 			
-			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultId,idProducto,idStock,cant,precio);
+			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,idCliente,cant,precio);
 			this.detalleCarrito.insert(detalleCarrito);
 		}
-		
 	}
-
+		
+		
+		
+		
 	public void descontarDelStock() {
 		for(StockDTO stock: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {

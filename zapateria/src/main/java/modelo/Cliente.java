@@ -46,4 +46,8 @@ public class Cliente {
 	public List<ClienteDTO> filtrarPorDNI(String valor){
 		return this.cliente.filtradoPorDNI(valor);
 	}
+	
+	public ClienteDTO selectCliente(int idCliente) {
+		return this.cliente.selectCliente(idCliente);
+	}
 }

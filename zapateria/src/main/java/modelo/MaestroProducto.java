@@ -35,4 +35,7 @@ public class MaestroProducto {
 		return this.maestroProducto.getMaestroProductoAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
 	}
 
+	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto) {
+		return this.maestroProducto.selectMaestroProducto(idMaestroProducto);
+	}
 }

@@ -26,7 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
 import javax.swing.JRadioButton;
 
-public class vistaBusquedaProductos {
+public class VentanaBusquedaProductos {
 
 	private JFrame frame;
 	
@@ -75,7 +75,7 @@ public class vistaBusquedaProductos {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaBusquedaProductos window = new vistaBusquedaProductos();
+					VentanaBusquedaProductos window = new VentanaBusquedaProductos();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -89,7 +89,7 @@ public class vistaBusquedaProductos {
 	/**
 	 * Create the application.
 	 */
-	public vistaBusquedaProductos() {
+	public VentanaBusquedaProductos() {
 		initialize();
 	}
 
@@ -118,7 +118,18 @@ public class vistaBusquedaProductos {
 		panel.setLayout(null);
 		
 		//Tabla productos filtrados
-		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados);
+		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 5) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneProductosFiltrados = new JScrollPane(this.tableProductosFiltrados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneProductosFiltrados.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
@@ -174,7 +185,18 @@ public class vistaBusquedaProductos {
 		
 		//Tabla carrito
 
-		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito);
+		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 5) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
@@ -207,7 +229,18 @@ public class vistaBusquedaProductos {
 		
 		
 		//Tabla Cliente
-		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente);
+		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 4) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		
 		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCliente.setBounds(10, 23, 548, 42);

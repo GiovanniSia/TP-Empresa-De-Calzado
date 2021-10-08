@@ -10,7 +10,7 @@ import modelo.Sucursal;
 import modelo.Zapateria;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.vistaBusquedaProductos;
+import presentacion.vista.VentanaBusquedaProductos;
 
 public class Controlador implements ActionListener {
 	
@@ -22,7 +22,7 @@ public class Controlador implements ActionListener {
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
 	
-	vistaBusquedaProductos vistaBusquedaProducto;
+	VentanaBusquedaProductos vistaBusquedaProducto;
 	VentanaBusquedaCliente ventanaBusquedaCliente;
 	
 	
@@ -37,7 +37,7 @@ public class Controlador implements ActionListener {
 		
 		
 		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
-		this.vistaBusquedaProducto = new vistaBusquedaProductos();
+		this.vistaBusquedaProducto = new VentanaBusquedaProductos();
 		
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(cliente);
 		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock, this.sucursal);
