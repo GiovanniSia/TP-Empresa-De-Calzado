@@ -187,16 +187,16 @@ insert into estadoMaterialFabricacion values(4,'desactualizado');
 CREATE TABLE `Ingresos`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `CodSuc` int(11) NOT NULL,
+  `IdSucursal` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
   `Tipo` varchar(45) NOT NULL,
-  `Cliente` int(11) NOT NULL,
-  `TipoFac` varchar(45) NOT NULL,
-  `NroFac` int(11) NOT NULL,
-  `Mp` varchar(45) NOT NULL,
+  `IdCliente` int(11) NOT NULL,
+  `TipoFactura` varchar(45) NOT NULL,
+  `NroFactura` varchar(45) NOT NULL,
+  `MedioPago` varchar(45) NOT NULL,
   `Cantidad` double(11,2) NOT NULL,
-  `Cotiz` double(11,2) NOT NULL,
+  `Cotizacion` double(11,2) NOT NULL,
   `Operacion` varchar(45) NOT NULL,
   `Total` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
@@ -205,7 +205,7 @@ CREATE TABLE `Ingresos`
 CREATE TABLE `Egresos`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `CodSuc` int(11) NOT NULL,
+  `IdSucursal` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
   `Tipo` varchar(45) NOT NULL,

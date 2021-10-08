@@ -5,6 +5,7 @@ package persistencia.dao.mysql;
 
 import persistencia.dao.interfaz.ClienteDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
+import persistencia.dao.interfaz.EgresosDAO;
 import persistencia.dao.interfaz.EmpleadoDAO;
 import persistencia.dao.interfaz.FabricacionDAO;
 import persistencia.dao.interfaz.SucursalDAO;
@@ -15,6 +16,7 @@ import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
+import persistencia.dao.interfaz.IngresosDAO;
 
 public class DAOSQLFactory implements DAOAbstractFactory {
 
@@ -65,6 +67,14 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	
 	public FabricacionDAO createFabricacionDAO() {
 		return new FabricacionDAOSQL();
+	}
+	
+	public IngresosDAO createIngresosDAO() {
+		return new IngresosDAOSQL();
+	}
+	
+	public EgresosDAO createEgresosDAO() {
+		return new EgresosDAOSQL();
 	}
 
 }
