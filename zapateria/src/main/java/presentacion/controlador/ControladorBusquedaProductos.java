@@ -364,9 +364,12 @@ public class ControladorBusquedaProductos {
 			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
-			guardarVentaArmada();
-			descontarDelStock();
-			this.vistaBusquedaProductos.cerrar();
+			if(hayStockDisponible()) {
+				guardarVentaArmada();
+				descontarDelStock();
+				this.vistaBusquedaProductos.cerrar();
+			}
+			
 		}
 	}
 	
@@ -410,7 +413,19 @@ public class ControladorBusquedaProductos {
 		}
 	}
 		
-		
+	public boolean hayStockDisponible() {
+		boolean ret = true;
+		//actualizamos la lista de stockdisponible
+		this.listaStock = this.stock.readAll();
+		for(StockDTO s: this.listaStock) {
+			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
+				if(s.getIdProducto()==compra.getProducto().getIdMaestroProducto() && s.getIdSucursal()== this.idSucursal) {
+					ret = ret && s.getStockDisponible()>0; 
+				}
+			}
+		}
+		return ret;
+	}	
 		
 		
 	public void descontarDelStock() {
@@ -438,6 +453,9 @@ public class ControladorBusquedaProductos {
 		Object[] fila = { nombre,apellido,DNI, tipoCliente};
 		this.vistaBusquedaProductos.getModelTablaCliente().addRow(fila);			
 	}
+	
+	
+	
 	
 //	public static void main(String[] args) {
 //		new ControladorBusquedaProductos();
