@@ -12,8 +12,9 @@ public class Main {
 		Controlador controlador = new Controlador(vista, modelo);
 		controlador.inicializar();
 		*/
-		ControladorOperario co = new ControladorOperario(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
-		co.inicializar();
+		//Para ejecutar la operativa del operario
+		//ControladorOperario co = new ControladorOperario(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
+		//co.inicializar();
 		
 	}
 }
