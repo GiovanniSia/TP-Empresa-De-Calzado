@@ -161,10 +161,15 @@ CREATE TABLE `ordenFabrica`
 
 CREATE TABLE `fabricacionesEnMarcha`
 (
-  `IdOrdenFabrica` int(11) NOT NULL AUTO_INCREMENT,
+  `IdFabricacionesEnMarcha` int(11) NOT NULL AUTO_INCREMENT, 
+  `IdOrdenFabrica` int(11) NOT NULL,
   `IdReceta` int(11) NOT NULL,
   `NroPasoActual` int(11) NOT NULL,
-  PRIMARY KEY (`IdOrdenFabrica`)
+  `Estado` varchar(45) NOT NULL,
+  
+  `FechaCompletado` DATE NOT NULL,
+  `DiaDisponible` int(11) NOT NULL,
+  PRIMARY KEY (`IdFabricacionesEnMarcha`)
 );
 
 CREATE TABLE `estadoMaterialFabricacion`

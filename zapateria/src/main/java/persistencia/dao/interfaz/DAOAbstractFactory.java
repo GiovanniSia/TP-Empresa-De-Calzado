@@ -21,4 +21,5 @@ public interface DAOAbstractFactory {
 	public MedioPagoDAO createMedioPagoDAO();
 	
 	public HistorialCambioMonedaDAO createHistorialCambioMonedaDAO();
+	public FabricacionDAO createFabricacionDAO();
 }

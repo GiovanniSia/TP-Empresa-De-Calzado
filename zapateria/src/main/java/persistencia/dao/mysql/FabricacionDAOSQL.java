@@ -7,17 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
+import dto.OrdenFabricaDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import persistencia.conexion.Conexion;
+import persistencia.dao.interfaz.FabricacionDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 
-public class FabricacionDAOSQL {
+public class FabricacionDAOSQL implements FabricacionDAO{
 	
+	private static final String estadoActivoDeUnMaterial = "Activo";
 	private static final String readAllReceta = "SELECT * FROM recetas";
-	
 	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso;";
 	private static final String readAllMaterialesFromOnePaso = "SELECT * FROM materialesDePaso mdp, maestroProductos mp WHERE mdp.IdPaso = ? AND mdp.IdMaterial = mp.IdMaestroProducto;";
 	private static final String readAllCantidadMaterialesFromOnePaso = "SELECT * FROM materialesDePaso WHERE IdPaso = ? AND IdMaterial = ?;";
@@ -47,7 +50,21 @@ public class FabricacionDAOSQL {
 		return new RecetaDTO(id, IdProducto, Descripcion);
 	}
 	
-	public static List<PasoDeRecetaDTO> readAllPasosFromOneReceta(int idReceta) {
+	public boolean isRecetaDisponible(RecetaDTO receta) {	
+		//Una receta se encuentra disponible si todos sus materiales estan activos
+		boolean ret = true;
+		List<PasoDeRecetaDTO> pasosDeLaReceta = this.readAllPasosFromOneReceta(receta.getIdReceta());
+		for(PasoDeRecetaDTO pdr: pasosDeLaReceta) {
+			MaestroProductoDTO mpAux;
+			for(int x = 0; x < pdr.getPasosDTO().getMateriales().size(); x++) {
+				mpAux = pdr.getPasosDTO().getMateriales().get(x);
+				ret = ret && mpAux.getEstado().equals(estadoActivoDeUnMaterial);
+			}
+		}
+		return ret;
+	}
+	
+	public List<PasoDeRecetaDTO> readAllPasosFromOneReceta(int idReceta) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<PasoDeRecetaDTO> pasos = new ArrayList<PasoDeRecetaDTO>();
@@ -65,18 +82,19 @@ public class FabricacionDAOSQL {
 		return pasos;
 	}
 	
-	private static PasoDeRecetaDTO getPasoDeRecetaDTO(ResultSet resultSet) throws SQLException {
+	private PasoDeRecetaDTO getPasoDeRecetaDTO(ResultSet resultSet) throws SQLException {
 		int IdPasoReceta = resultSet.getInt("IdPasoReceta");
 		int IdReceta = resultSet.getInt("IdReceta");
 		int NroOrden = resultSet.getInt("NroOrden");
 		int IdPaso = resultSet.getInt("IdPaso");
 		
 		List<MaestroProductoDTO> materiales = new ArrayList<MaestroProductoDTO>();
-		materiales = readAllMaterialesFromOnePaso(IdPaso);
+		materiales = readAllMaterialesFromOnePaso(IdPasoReceta);
 		List<Integer> cantidades = new ArrayList<Integer>();
 		if(materiales.size()>0) {
 			for(MaestroProductoDTO m : materiales) {
-				cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
+				//cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
+				cantidades.add(obtenerCantidadMaterial(IdPasoReceta,m.getIdMaestroProducto()));
 			}
 		}
 		String descr = obtenerDescrpcionPaso(IdPaso);
@@ -84,7 +102,7 @@ public class FabricacionDAOSQL {
 		return paso;
 	}
 	
-	public static List<MaestroProductoDTO> readAllMaterialesFromOnePaso(int idPaso) {
+	private List<MaestroProductoDTO> readAllMaterialesFromOnePaso(int idPaso) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<MaestroProductoDTO> material = new ArrayList<MaestroProductoDTO>();
@@ -102,7 +120,7 @@ public class FabricacionDAOSQL {
 		return material;
 	}
 	
-	private static MaestroProductoDTO getMaestroProductoDTO(ResultSet resultSet) throws SQLException {
+	private MaestroProductoDTO getMaestroProductoDTO(ResultSet resultSet) throws SQLException {
 		int idMaestroProducto = resultSet.getInt("mp.IdMaestroProducto");
 		String descripcion = resultSet.getString("mp.Descripcion");
 		String tipo = resultSet.getString("mp.Tipo");
@@ -120,7 +138,7 @@ public class FabricacionDAOSQL {
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioMayorista,precioMinorista,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 	
-	public static Integer obtenerCantidadMaterial(int idPaso, int idMaterial){
+	private Integer obtenerCantidadMaterial(int idPaso, int idMaterial){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		Integer lista = 0;
@@ -140,7 +158,7 @@ public class FabricacionDAOSQL {
 		
 	}
 	
-	public static String obtenerDescrpcionPaso(int idPaso){
+	private String obtenerDescrpcionPaso(int idPaso){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		String ret = "";
@@ -159,17 +177,341 @@ public class FabricacionDAOSQL {
 		
 	}
 	
-	public static void main(String[] args) {
-		List<PasoDeRecetaDTO> pasos = readAllPasosFromOneReceta(1);
-		for(PasoDeRecetaDTO p: pasos) {
-			System.out.println();
-			System.out.print(p.getIdPaso() + " " + p.getNroOrden() + " " + p.getPasosDTO().getDescripcion());
-			
-			
-			for(int x = 0; x < p.getPasosDTO().getMateriales().size(); x++) {
-				System.out.print("[" +p.getPasosDTO().getMateriales().get(x).getIdMaestroProducto() + " "+ p.getPasosDTO().getMateriales().get(x).getDescripcion()+ " CantidadUsada= " + p.getPasosDTO().getCantidadUsada().get(x) +"]");
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
+	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'activo' OR Estado = 'completo'";
+	
+	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllFabricacionesEnMarcha);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getFabricacionesEnMarcha(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
+	}
+	
+	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'));";
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<OrdenFabricaDTO> fabri = new ArrayList<OrdenFabricaDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllOrdenesSinTrabajar);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getOrdenFabricaDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
+	}
+	
+	private OrdenFabricaDTO getOrdenFabricaDTO(ResultSet resultSet) throws SQLException {
+		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+		int IdProd = resultSet.getInt("IdProd");
+		String FechaRequerido = resultSet.getString("FechaRequerido");
+		int Cantidad = resultSet.getInt("Cantidad");
+		String CodigoLote = resultSet.getString("CodigoLote");
+		int IdSucursal = resultSet.getInt("IdSucursal");
+		return new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
+	}
+	
+	private FabricacionesDTO getFabricacionesEnMarcha(ResultSet resultSet) throws SQLException {
+		int IdFabricacionesEnMarcha = resultSet.getInt("IdFabricacionesEnMarcha");
+		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+		int IdReceta = resultSet.getInt("IdReceta");
+		int NroPasoActual = resultSet.getInt("NroPasoActual");
+		String Estado = resultSet.getString("Estado");
+		
+		String fechaC = resultSet.getString("FechaCompletado");
+		String aux = fechaC.substring(8, 10);
+		int diaC = Integer.parseInt(aux);
+		aux = fechaC.substring(5, 7);
+		int mesC = Integer.parseInt(aux);
+		aux = fechaC.substring(0, 4);
+		int anioC = Integer.parseInt(aux);
+		FabricacionesDTO ret = new FabricacionesDTO(IdFabricacionesEnMarcha, IdOrdenFabrica, IdReceta, NroPasoActual, Estado);
+		ret.setDiaCompletado(diaC);
+		ret.setMesCompletado(mesC);
+		ret.setAnioCompletado(anioC);
+		int DiaDisponible = resultSet.getInt("DiaDisponible");
+		ret.setDiaDisponible(DiaDisponible);
+		return ret;
+	}
+	
+	private static final String insertFabricacionesEnMarcha = "INSERT INTO fabricacionesEnMarcha(IdOrdenFabrica, IdReceta, NroPasoActual, Estado, FechaCompletado, DiaDisponible) VALUES(?, ?, ?, ?, ?, ?);";
+	public boolean insertFabricacionEnMarcha(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insertFabricacionesEnMarcha);
+			statement.setInt(1, fabri.getIdOrdenFabrica());
+			statement.setInt(2, fabri.getIdReceta());
+			statement.setInt(3, fabri.getNroPasoActual());
+			statement.setString(4, fabri.getEstado());
+			String diaCompletado = fabri.getAnioCompletado()+"-"+fabri.getMesCompletado()+"-"+fabri.getDiaCompletado();
+			statement.setString(5, diaCompletado);//fechaCompletado
+			statement.setInt(6, fabri.getDiaDisponible());//dia disponible
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
 			}
 		}
+		return isInsertExitoso;
 	}
+	
+	private static final String actualizarFabricacionEnMarcha = "UPDATE fabricacionesEnMarcha SET NroPasoActual = ?, Estado = ?, FechaCompletado = ?, DiaDisponible = ? WHERE IdFabricacionesEnMarcha = ?;";
+	public boolean actualizarFabricacionEnMarcha(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(actualizarFabricacionEnMarcha);
+			statement.setInt(1, fabri.getNroPasoActual());
+			statement.setString(2, fabri.getEstado());
+			statement.setInt(5, fabri.getIdFabricacionesEnMarcha());
+			
+			String diaCompletado = fabri.getAnioCompletado()+"-"+fabri.getMesCompletado()+"-"+fabri.getDiaCompletado();
+			statement.setString(3, diaCompletado);//fechaCompletado
+			statement.setInt(4, fabri.getDiaDisponible());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
+	public FabricacionesDTO completarOrden(FabricacionesDTO fabri, int diaLlega) {
+		fabri.completarOrden();
+		java.util.Date fechaActual = new java.util.Date();
+		fechaActual.setDate(fechaActual.getDate());
+		int dia = fechaActual.getDate();
+		int mes = fechaActual.getMonth() + 1;
+		int anio = fechaActual.getYear() + 1900;
+		fabri.setAnioCompletado(anio);
+		fabri.setDiaCompletado(dia);
+		fabri.setMesCompletado(mes);
+		fabri.setDiaDisponible(diaLlega);
+		actualizarFabricacionEnMarcha(fabri);
+		return fabri;
+		//dar de alta stock cuando llegue el dia completado + dia disponible
+	}
+	
+	public boolean verificarSiOrdenCompleta(FabricacionesDTO fabri) {
+		int idReceta = fabri.getIdReceta();
+		int re = readCantPasosReceta(idReceta);
+		if(fabri.getNroPasoActual() > re) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static final String readOneReceta = "SELECT COUNT(*) FROM pasosReceta WHERE IdReceta = ?";
+	public int readCantPasosReceta(int idReceta) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		int ret = 0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readOneReceta);
+			statement.setInt(1, idReceta);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				ret = resultSet.getInt("COUNT(*)");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	public void actualizarSiLlegoFechaDeEntrega(FabricacionesDTO f) {
+		java.util.Date fechaActual = new java.util.Date();
+		fechaActual.setDate(fechaActual.getDate());
+		int anio = fechaActual.getYear();
+		int mes = fechaActual.getMonth();
+		int dia = fechaActual.getDate();
+		
+		java.util.Date fechaEntrega = new java.util.Date();
+		fechaEntrega.setYear(f.getAnioCompletado()-1900);
+		fechaEntrega.setMonth(f.getMesCompletado()-1);
+		fechaEntrega.setDate(f.getDiaCompletado()+f.getDiaDisponible());
+		boolean deboStockear = false;
+		if(fechaActual.getYear() >= fechaEntrega.getYear()) {
+			deboStockear = true;
+		}
+		
+		if(fechaActual.getMonth() >= fechaEntrega.getMonth()) {
+			deboStockear = true;
+		}
+		
+		if(fechaActual.getDate() >= fechaEntrega.getDate() && fechaActual.getMonth() == fechaEntrega.getMonth() 
+				&& fechaActual.getYear() == fechaEntrega.getYear()) {
+			deboStockear = true;
+		}
+		
+		if(deboStockear) {
+			f.entregadaLaOrden();
+			actualizarFabricacionEnMarcha(f);
+			pasarOrdenAStock(f);
+		}
+		
+	}
+	
+	private static final String readAllFabricacionesCompletas = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'completo'";
+	public List<FabricacionesDTO> readAllFabricacionesCompletas(){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllFabricacionesCompletas);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getFabricacionesEnMarcha(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
+	}
+	
+	private static final String readOneordenFabricacionAndFabricacionEnMarcha 
+	= "SELECT * FROM ordenFabrica WHERE IdOrdenFabrica = ?;";
+	public boolean pasarOrdenAStock(FabricacionesDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			ResultSet resultSet; // Guarda el resultado de la query
+			statement = conexion.prepareStatement(readOneordenFabricacionAndFabricacionEnMarcha);
+			statement.setInt(1, fabri.getIdOrdenFabrica());
+			resultSet = statement.executeQuery();
+			
+			//List<FabricacionesDTO> fabricacionesCompletas = readAllFabricacionesCompletas(); 
+			OrdenFabricaDTO a;
+			int IdOrdenFabrica;
+			int IdProd;
+			String FechaRequerido;
+			int Cantidad;
+			String CodigoLote;
+			int IdSucursal;
+			if (resultSet.next()) {
+				System.out.println("Entro");
+				IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
+				IdProd = resultSet.getInt("IdProd");
+				FechaRequerido = resultSet.getString("FechaRequerido");
+				Cantidad = resultSet.getInt("Cantidad");
+				CodigoLote = resultSet.getString("CodigoLote");
+				System.out.println(CodigoLote);
+				IdSucursal = resultSet.getInt("IdSucursal");
+				a =  new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
+				insertarStock(a);
+				
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
+	private static final String insertStock = "INSERT INTO stock(IdSucursal, IdProducto, CodigoLote, StockDisponible) VALUES(?, ?, ?, ?);";
+	private boolean insertarStock(OrdenFabricaDTO fabri) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insertStock);
+			statement.setInt(1, fabri.getIdSucursal());
+			statement.setInt(2, fabri.getIdProd());
+			statement.setString(3, fabri.getCodigoLote());
+			statement.setInt(4, fabri.getCantidad());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
+	private static final String actualizarCantidadDeUnStock = "UPDATE stock SET StockDisponible = ? WHERE IdStock = ?;";
+	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(actualizarCantidadDeUnStock);
+			statement.setInt(1, nuevoValor);
+			statement.setInt(2, idStock);
+			
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+
 
 }
