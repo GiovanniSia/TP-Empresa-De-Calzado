@@ -179,8 +179,8 @@ public class VentanaBusquedaProductos {
 		panel.add(lblValorTotal);
 		
 		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setFont(new Font("Dialog", Font.BOLD, 17));
-		lblTotal.setBounds(711, 370, 55, 39);
+		lblTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+		lblTotal.setBounds(707, 370, 63, 39);
 		panel.add(lblTotal);
 		
 		//Tabla carrito
@@ -263,7 +263,7 @@ public class VentanaBusquedaProductos {
 		frame.getContentPane().add(btnAtras);
 		
 		btnArmarVenta = new JButton("Armar Venta");
-		btnArmarVenta.setFont(new Font("Consolas", Font.PLAIN, 28));
+		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 		btnArmarVenta.setBounds(211, 527, 419, 63);
 		frame.getContentPane().add(btnArmarVenta);
 		
@@ -273,13 +273,13 @@ public class VentanaBusquedaProductos {
 		panel_1.setLayout(null);
 		
 		lblTitulo = new JLabel("Zapater\u00EDa");
-		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblTitulo.setBounds(10, 10, 195, 21);
+		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+		lblTitulo.setBounds(10, 0, 195, 41);
 		panel_1.add(lblTitulo);
 		
 		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Arial", Font.BOLD, 27));
-		lblSubtitulo.setBounds(20, 61, 195, 21);
+		lblSubtitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblSubtitulo.setBounds(20, 54, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
 	}
 	
@@ -391,7 +391,7 @@ public class VentanaBusquedaProductos {
 		return btnArmarVenta;
 	}
 
-	public JSpinner getSpinner() {
+	public JSpinner getSpinnerCarrito() {
 		return spinnerCarrito;
 	}
 	

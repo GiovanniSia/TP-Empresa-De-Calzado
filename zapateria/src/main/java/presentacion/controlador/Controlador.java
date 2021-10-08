@@ -34,8 +34,6 @@ public class Controlador implements ActionListener {
 	}
 	
 	public void inicializar() {
-		
-		
 		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
 		this.vistaBusquedaProducto = new VentanaBusquedaProductos();
 		

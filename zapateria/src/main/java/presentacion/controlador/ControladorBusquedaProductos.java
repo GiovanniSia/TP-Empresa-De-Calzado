@@ -112,11 +112,11 @@ public class ControladorBusquedaProductos {
 			public void mouseClicked(MouseEvent e) {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
 				//cuando se clickea en la tabla, se actualiza el spinner
-				vistaBusquedaProductos.getSpinner().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
 			}
 		});
 		
-		this.vistaBusquedaProductos.getSpinner().addChangeListener(new ChangeListener() {
+		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -295,7 +295,7 @@ public class ControladorBusquedaProductos {
 		ProductoEnCarritoDTO productoEnCarrito = this.productosEnCarrito.get(filaSeleccionada);
 		
 		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
-		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinner().getValue(); 
+		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinnerCarrito().getValue(); 
 		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
 			return;
 		}		
@@ -325,7 +325,7 @@ public class ControladorBusquedaProductos {
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
 					int total = s.getStockDisponible()+ prod.getCantidad();
 					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
-						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner < total )  );
+						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
 				}else {
 					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
@@ -406,6 +406,7 @@ public class ControladorBusquedaProductos {
 				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
 			}
 			int idCliente = this.clienteSeleccionado.getIdCliente();
+			System.out.println("idClienteseleccionado: "+idCliente);
 	
 			
 			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,idCliente,cant,precio);
@@ -432,7 +433,6 @@ public class ControladorBusquedaProductos {
 		for(StockDTO stock: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
-					System.out.println("stock disp antes de descontar: "+stock.getStockDisponible()+"\nvalor a descontar: "+compra.getCantidad());
 					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
 					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
 					System.out.println("se pudo?: "+a);

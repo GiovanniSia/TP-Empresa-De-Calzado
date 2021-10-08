@@ -96,7 +96,18 @@ public class VentanaVisualizarCarritos {
 		panel_1.add(lblTitulo);
 		
 		//tabla
-		modelTablaSucursales = new DefaultTableModel(null, this.nombreColumnasCarritos);
+		modelTablaSucursales = new DefaultTableModel(null, this.nombreColumnasCarritos){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 6) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		scrollPaneTablaCarritos = new JScrollPane(this.tableCarritos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneTablaCarritos.setBounds(10, 133, 515, 322);
 		
@@ -122,7 +133,18 @@ public class VentanaVisualizarCarritos {
 		
 		
 		//tabla detalle
-		modelTablaDetalle = new DefaultTableModel(null, this.nombreColumnasDetalle);
+		modelTablaDetalle = new DefaultTableModel(null, this.nombreColumnasDetalle){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 3) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
 		scrollPaneDetalle = new JScrollPane(this.tableDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneDetalle.setBounds(598, 137, 320, 313);
 		

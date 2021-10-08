@@ -90,7 +90,7 @@ public class ControladorVisualizarCarritos {
 					
 					int idCarrito=carrito.getIdCarrito();
 					String hora = carrito.getHora();
-					int idCliente=detalle.getIdCarrito();
+					int idCliente=detalle.getIdCliente();
 					String nombreCliente = cliente.getNombre()+" "+cliente.getApellido();
 					String tipoCliente = cliente.getTipoCliente();
 					double precioTotal = carrito.getTotal();		
@@ -101,14 +101,11 @@ public class ControladorVisualizarCarritos {
 					this.carritosEnTabla.add(carrito);
 				}
 			}
-			
-
 		}		
 	}
 	
 	public boolean yaFueAgregado(CarritoDTO carrito) {
 		for(CarritoDTO c: this.carritosEnTabla) {
-			System.out.println("carrito a ver: "+carrito.getIdCarrito()+" carritoEnTabla: "+c.getIdCarrito());
 			if(carrito.getIdCarrito()==c.getIdCarrito()) {
 				return true;
 			}
