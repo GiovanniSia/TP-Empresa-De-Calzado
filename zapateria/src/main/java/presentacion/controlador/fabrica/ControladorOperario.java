@@ -37,6 +37,10 @@ public class ControladorOperario implements ActionListener {
 	static final String error = "[HiperLink error]";
 	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
 	
+	static final String stringQuePreguntaCancelacionDeProduccion = "¿Estas seguro que lo quieres cancelar?";
+	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
+	static final String stringQueNoCancelaDeProduccion = "No se a cancelado";
+	
 	VentanaBuscarOrdenesPendientes ventana;
 	List<OrdenFabricaDTO> ordenesEnLista;
 	OrdenFabricaDTO ordenSeleccionado;
@@ -430,11 +434,22 @@ public class ControladorOperario implements ActionListener {
 	}
 	
 	public void cancelarOrden(ActionEvent s) {
-		fabricacionTrabajando.cancelarOrden();
-		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
-		llenarTablaTrabajos();
-		ventanaUnaTrabajo.cerrar();
-		reiniciarTablaIngredientesDeUnTrabajo();
+		int res = JOptionPane.showConfirmDialog(null, stringQuePreguntaCancelacionDeProduccion, "", JOptionPane.YES_NO_OPTION);
+        switch (res) {
+            case JOptionPane.YES_OPTION:
+            	fabricacionTrabajando.cancelarOrden();
+        		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+        		llenarTablaTrabajos();
+        		ventanaUnaTrabajo.cerrar();
+        		reiniciarTablaIngredientesDeUnTrabajo();
+        		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+        		break;
+            case JOptionPane.NO_OPTION:
+            	JOptionPane.showMessageDialog(null, stringQueNoCancelaDeProduccion);
+            	break;
+        }
+        
+		
 	}
 	
 	public void actualizarTodosLosTrabajosListosParaLosEnvios() {
