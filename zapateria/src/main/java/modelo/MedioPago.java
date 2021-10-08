@@ -29,7 +29,7 @@ public class MedioPago {
 		return this.medioPago.readAll();
 	}
 
-	public List<MedioPagoDTO> getMaestroProductoAproximado(String nombreColumna1, String txtAprox1,
+	public List<MedioPagoDTO> getMedioPagoAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2) {
 		return this.medioPago.getMedioPagoAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
 	}

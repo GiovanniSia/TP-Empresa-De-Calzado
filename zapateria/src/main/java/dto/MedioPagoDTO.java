@@ -7,7 +7,7 @@ CREATE TABLE `medioPago`
   `TasaConversion` double(45,2) NOT NULL,
   PRIMARY KEY (`IdMoneda`)
 );
- */
+*/
 
 public class MedioPagoDTO {
 	String idMoneda;
