@@ -297,7 +297,7 @@ public class ReControladorOperario implements ActionListener {
 
 					        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-					        String status = (String)table.getModel().getValueAt(row, 6);
+					        String status = (String)table.getModel().getValueAt(row, 5);
 					        if ("activo".equals(status)) {
 					            setBackground(Color.YELLOW);
 					            //setForeground(Color.WHITE);
