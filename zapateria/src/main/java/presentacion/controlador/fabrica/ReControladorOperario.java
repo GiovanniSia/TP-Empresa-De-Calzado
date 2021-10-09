@@ -25,7 +25,9 @@ import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
 import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.ReVentanaSeleccionarUnaReceta;
+import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
 import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
 import presentacion.vista.fabrica.VentanaIngresarFechaDeLlegada;
@@ -52,7 +54,9 @@ public class ReControladorOperario implements ActionListener {
 	RecetaDTO recetaSeleccionado;
 	FabricacionesDTO fabricacionTrabajando;
 	ReVentanaSeleccionarUnaReceta ventanaElegirReceta;
+	ReVentanaTrabajarUnPedido ventanaUnaTrabajo;
 	int idFabrica;
+	ReVentanaIngresarFechaDeLlegada ventanaDiaDeLlegada;
 	
 	Fabricacion modeloFabricacion;
 	MaestroProducto modeloProducto;
@@ -77,7 +81,14 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaElegirReceta = new ReVentanaSeleccionarUnaReceta();
 		ventanaElegirReceta.getComboBox().addActionListener(r->botonSeleccionarReceta(r));
+		ventanaElegirReceta.getBtnTrabajar().addActionListener(r->crearTrabajo(r));
 		
+		ventanaUnaTrabajo = new ReVentanaTrabajarUnPedido();
+		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
+		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		
+		ventanaDiaDeLlegada = new ReVentanaIngresarFechaDeLlegada();
+		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
 	}
 	
 	public void inicializar() {
@@ -110,10 +121,105 @@ public class ReControladorOperario implements ActionListener {
 			this.ventanaElegirReceta.show();
 		}else {
 			//SELECCIONO UNA ORDEN YA EN MARCHA
-			
+			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
+			if(fabricacionTrabajando.getEstado().equals("activo")) {
+				reiniciarTablaIngredientesDeUnTrabajo();
+				ventanaUnaTrabajo.show();
+			}
+			if(fabricacionTrabajando.getEstado().equals("completo")) {
+				reiniciarTablaIngredientesDeUnTrabajo();
+				this.ventanaDiaDeLlegada.show();
+			}
 			
 		}
 		
+	}
+	
+	public void crearTrabajo(ActionEvent s) {
+		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
+			return;
+		}
+		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
+		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenSeleccionado.getIdOrdenFabrica(), recetaSeleccionado.getIdReceta(), 1, "activo");
+		modeloFabricacion.insertFabricacionEnMarcha(fabricacion);
+		refrescarTabla();
+		this.ventanaElegirReceta.cerrar();
+	}
+	
+	public void avanzarUnPaso(ActionEvent s) {
+		PasoDeRecetaDTO pasoActual = getPasoActual();
+		OrdenFabricaDTO ordenTra = getOrdenDeFabricacionDelTrabajoActual();
+		boolean tengoMateriales = hayMaterialesSuficientesParaDarPaso(pasoActual, ordenTra);
+		
+		if(tengoMateriales) {
+			// Descontar los materiales que usara
+			int cont = 0;
+			int cantidadADescontar = 0;
+			int restante = 0;
+			for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
+				cantidadADescontar = pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad();
+				for(StockDTO ss: modeloStock.readAll()) {
+					if(ss.getIdProducto() == mp.getIdMaestroProducto() && ss.getIdSucursal() == this.idFabrica) {
+						restante = ss.getStockDisponible() - cantidadADescontar;
+						if(restante < 0){
+							cantidadADescontar = -restante;
+							restante = 0;
+						}
+						modeloFabricacion.actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
+					}
+				}
+				cont++;
+			}
+			mostrarMensajeEmergente("Paso concretado");
+			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
+			modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+			if(fabricacionTrabajando.getNroPasoActual() > modeloFabricacion.readCantPasosReceta(fabricacionTrabajando.getIdReceta())) {
+				/*
+				fabricacionTrabajando.completarOrden();
+				a.createFabricacionDAO().completarOrden(fabricacionTrabajando, 1);
+				a.createFabricacionDAO().actualizarFabricacionEnMarcha(fabricacionTrabajando);
+				
+				ventanaUnaTrabajo.cerrar();
+				*/
+				fabricacionTrabajando.completarOrden();
+				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+				this.ventanaDiaDeLlegada.show();
+				this.ventanaUnaTrabajo.cerrar();
+				mostrarMensajeEmergente("Se completo el ultimo paso de fabricacion.");
+			}
+			refrescarTabla();
+			
+		}else {
+			this.ventanaPrincipal.ventanaErrorMaterialesNoSuficientes();
+		}
+		reiniciarTablaIngredientesDeUnTrabajo();
+	}
+	
+	public void cancelarOrden(ActionEvent s) {
+		int res = JOptionPane.showConfirmDialog(null, stringQuePreguntaCancelacionDeProduccion, "", JOptionPane.YES_NO_OPTION);
+        switch (res) {
+            case JOptionPane.YES_OPTION:
+            	fabricacionTrabajando.cancelarOrden();
+        		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+        		this.refrescarTabla();
+        		ventanaUnaTrabajo.cerrar();
+        		reiniciarTablaIngredientesDeUnTrabajo();
+        		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+        		break;
+            case JOptionPane.NO_OPTION:
+            	JOptionPane.showMessageDialog(null, stringQueNoCancelaDeProduccion);
+            	break;
+        }
+	}
+	
+	private void ingresarDias(ActionEvent s) {
+		int valorIngresado = (int) ventanaDiaDeLlegada.getSpinner().getValue();
+		if(valorIngresado < 0) {
+			return;
+		}
+		modeloFabricacion.completarOrden(fabricacionTrabajando, valorIngresado);
+		this.ventanaDiaDeLlegada.cerrar();
+		this.refrescarTabla();
 	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -162,7 +268,7 @@ public class ReControladorOperario implements ActionListener {
 					}else {
 						descrPaso = modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
 					}
-					// "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado", "Fecha completada", "Dias envio"
+					// "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Estado", "Fecha completada", "Dias envio"
 					String fechaCompletado;
 					String diasEnvio = "";
 					if(f.getEstado().equals("completo")) {
@@ -172,7 +278,16 @@ public class ReControladorOperario implements ActionListener {
 						fechaCompletado = "";
 						diasEnvio = "No";
 					}
-					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), descrPaso, f.getNroPasoActual(), f.getEstado(), fechaCompletado, diasEnvio};
+					String pasoActualString = "";
+					if(f.getNroPasoActual() <= modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size()) {
+						pasoActualString = descrPaso + ": " + f.getNroPasoActual() + " de " + 
+								modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size();
+					}else {
+						pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
+					}
+						
+					
+					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
 					ventanaPrincipal.getModelOrdenes().addRow(agregar);
 					
 					ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
@@ -238,6 +353,9 @@ public class ReControladorOperario implements ActionListener {
 	}
 	
 	private void botonSeleccionarReceta(ActionEvent s) {
+		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
+			return;
+		}
 		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
 		String nombreProducto = "";
 		MaestroProductoDTO producto = buscarProducto(this.ordenSeleccionado.getIdProd());
@@ -295,6 +413,63 @@ public class ReControladorOperario implements ActionListener {
 			}
 		}
 		return cantidadTotalDisponible >= i;
+	}
+	
+	private void reiniciarTablaIngredientesDeUnTrabajo() {
+		ventanaUnaTrabajo.getModelOrdenes().setRowCount(0);
+		ventanaUnaTrabajo.getModelOrdenes().setColumnCount(0);
+		ventanaUnaTrabajo.getModelOrdenes().setColumnIdentifiers(ventanaUnaTrabajo.getNombreColumnas());
+		
+		OrdenFabricaDTO of = this.getOrdenManufactura(this.fabricacionTrabajando.getIdOrdenFabrica());
+		
+		PasoDeRecetaDTO p = this.getPasoActual();
+		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
+			Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
+			ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
+		}
+	}
+	
+	private OrdenFabricaDTO getOrdenManufactura(int idOrdenManufactura) {
+		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
+		OrdenFabricaDTO orden = null;
+		for(OrdenFabricaDTO of: todasLasOrdenes) {
+			if(of.getIdOrdenFabrica() == idOrdenManufactura) {
+				return of;
+			}
+		}
+		return orden;
+	}
+	
+	public PasoDeRecetaDTO getPasoActual() {
+		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta());
+		PasoDeRecetaDTO pasoActual = pasos.get(0);
+		for(PasoDeRecetaDTO p: pasos) {
+			if(p.getNroOrden() == fabricacionTrabajando.getNroPasoActual()) {
+				pasoActual = p;
+			}
+		}
+		return pasoActual;
+	}
+	
+	public OrdenFabricaDTO getOrdenDeFabricacionDelTrabajoActual() {
+		List<OrdenFabricaDTO> ordenes = modeloOrden.readAll();
+		OrdenFabricaDTO ordenTra = ordenes.get(0);
+		for(OrdenFabricaDTO of: ordenes) {
+			if(of.getIdOrdenFabrica() == fabricacionTrabajando.getIdOrdenFabrica()) {
+				ordenTra = of;
+			}
+		}
+		return ordenTra;
+	}
+	
+	public boolean hayMaterialesSuficientesParaDarPaso(PasoDeRecetaDTO pasoActual, OrdenFabricaDTO ordenTra) {
+		boolean tengoMateriales = true;
+		int cont = 0;
+		for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
+			tengoMateriales = tengoMateriales && this.hayStockSuficienteDeUnMaterial(mp.getIdMaestroProducto(), pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad());
+			cont++;
+		}
+		return tengoMateriales;
 	}
 
 	@Override
