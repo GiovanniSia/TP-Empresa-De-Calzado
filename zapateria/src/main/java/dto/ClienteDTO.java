@@ -5,7 +5,7 @@ public class ClienteDTO {
 	int IdCliente;
 	String Nombre;
 	String Apellido;
-	String DNI;
+	String CUIL;
 	String CorreoElectronico;
 	int LimiteCredito;
 	int CreditoDisponible;
@@ -20,14 +20,14 @@ public class ClienteDTO {
 	String CodPostal;
 
 
-	public ClienteDTO(int idCliente, String nombre, String apellido,String DNI, String correoElectronico, int limiteCredito,
+	public ClienteDTO(int idCliente, String nombre, String apellido,String CUIL, String correoElectronico, int limiteCredito,
 			int creditoDisponible, String tipoCliente, String impuestoAFIP, String estado, String calle, String altura,
 			String pais, String provincia, String localidad, String codPostal) {
 
 		this.IdCliente = idCliente;
 		this.Nombre = nombre;
 		this.Apellido = apellido;
-		this.DNI = DNI;
+		this.CUIL = CUIL;
 		this.CorreoElectronico = correoElectronico;
 		this.LimiteCredito = limiteCredito;
 		this.CreditoDisponible = creditoDisponible;
@@ -60,8 +60,8 @@ public class ClienteDTO {
 		return Apellido;
 	}
 	
-	public String getDNI() {
-		return DNI;
+	public String getCUIL() {
+		return CUIL;
 	}
 
 

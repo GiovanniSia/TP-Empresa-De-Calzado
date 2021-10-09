@@ -448,7 +448,7 @@ public class ControladorBusquedaProductos {
 	public void escribirTablaCliente() {
 		String nombre= this.clienteSeleccionado.getNombre();
 		String apellido = this.clienteSeleccionado.getApellido();
-		String DNI = this.clienteSeleccionado.getDNI();
+		String DNI = this.clienteSeleccionado.getCUIL();
 		String tipoCliente = this.clienteSeleccionado.getTipoCliente();
 		Object[] fila = { nombre,apellido,DNI, tipoCliente};
 		this.vistaBusquedaProductos.getModelTablaCliente().addRow(fila);			
