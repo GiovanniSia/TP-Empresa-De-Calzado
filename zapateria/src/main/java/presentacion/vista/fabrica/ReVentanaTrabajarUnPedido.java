@@ -28,6 +28,7 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
+	private JLabel lblOrden;
 
 	public ReVentanaTrabajarUnPedido() {
 		initialize();
@@ -60,6 +61,10 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
 		spCliente.setViewportView(tabla);
+		
+		lblOrden = new JLabel("Se pidio:");
+		lblOrden.setBounds(10, 11, 356, 23);
+		panel.add(lblOrden);
 	}
 
 	public void show() {
@@ -99,5 +104,9 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
+	}
+
+	public JLabel getLblOrden() {
+		return lblOrden;
 	}
 }

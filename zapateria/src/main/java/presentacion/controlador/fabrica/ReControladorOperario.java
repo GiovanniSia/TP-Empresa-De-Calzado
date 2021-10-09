@@ -124,6 +124,11 @@ public class ReControladorOperario implements ActionListener {
 			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
 			if(fabricacionTrabajando.getEstado().equals("activo")) {
 				reiniciarTablaIngredientesDeUnTrabajo();
+				OrdenFabricaDTO oM = this.getOrdenManufactura(fabricacionTrabajando.getIdOrdenFabrica());
+				String texto = "";
+				MaestroProductoDTO mp = this.buscarProducto(oM.getIdProd());
+				texto = "Pedido de la sucursal:" +  oM.getIdSucursal() + "; " + mp.getDescripcion() + " X " + oM.getCantidad();
+				ventanaUnaTrabajo.getLblOrden().setText(texto);
 				ventanaUnaTrabajo.show();
 			}
 			if(fabricacionTrabajando.getEstado().equals("completo")) {
@@ -240,7 +245,7 @@ public class ReControladorOperario implements ActionListener {
 			}else {
 				nombreProducto = producto.getDescripcion();
 			}
-			Object[] agregar = {o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad()};
+			Object[] agregar = {o.getIdOrdenFabrica(), o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad()};
 			ventanaPrincipal.getModelOrdenes().addRow(agregar);
 		}
 	}
@@ -287,7 +292,7 @@ public class ReControladorOperario implements ActionListener {
 					}
 						
 					
-					Object[] agregar = {orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
+					Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
 					ventanaPrincipal.getModelOrdenes().addRow(agregar);
 					
 					ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
@@ -297,7 +302,7 @@ public class ReControladorOperario implements ActionListener {
 
 					        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-					        String status = (String)table.getModel().getValueAt(row, 5);
+					        String status = (String)table.getModel().getValueAt(row, 6);
 					        if ("activo".equals(status)) {
 					            setBackground(Color.YELLOW);
 					            //setForeground(Color.WHITE);
