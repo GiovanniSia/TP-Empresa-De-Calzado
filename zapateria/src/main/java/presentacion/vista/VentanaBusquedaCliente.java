@@ -48,6 +48,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 191, 806, 203);

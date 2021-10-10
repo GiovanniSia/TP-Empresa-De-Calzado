@@ -39,6 +39,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	private JDateChooser fechaDesde; 
 	private JDateChooser fechaHasta;
 	private JButton btnFiltrarFechas;
+	private JButton btnReiniciarTabla;
 	
 	public static void main(String[] args) {
 		VentanaHistorialCambioMoneda v = new VentanaHistorialCambioMoneda();
@@ -61,7 +62,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 157, 749, 207);
 		frame.getContentPane().add(panel);
@@ -153,6 +154,10 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		btnFiltrarFechas = new JButton("Filtrar por Fechas");
 		btnFiltrarFechas.setBounds(545, 62, 117, 21);
 		panel_1.add(btnFiltrarFechas);
+		
+		btnReiniciarTabla = new JButton("Reiniciar tabla");
+		btnReiniciarTabla.setBounds(583, 9, 138, 23);
+		panel_1.add(btnReiniciarTabla);
 
 		lblHistorialCotizacion = new JLabel("Historial de Cambios de Cotizaci\u00F3n");
 		lblHistorialCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -170,6 +175,10 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	}
 	
 	
+	public JButton getBtnReiniciarTabla() {
+		return btnReiniciarTabla;
+	}
+
 	public JButton getBtnFiltrarFechas() {
 		return btnFiltrarFechas;
 	}

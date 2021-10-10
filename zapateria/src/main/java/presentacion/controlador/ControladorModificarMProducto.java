@@ -76,7 +76,6 @@ public class ControladorModificarMProducto {
 
 		this.ventanaModificarMProducto.getTxtFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
-//			String nombreColumna1, String txtAprox1,String nombreColumna2, String txtAprox2,String nombreColumna3,int precioDesde, int precioHasta
 			public void keyReleased(KeyEvent e) {
 				realizarBusqueda();
 			}

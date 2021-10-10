@@ -47,7 +47,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 166, 899, 239);
 		frame.getContentPane().add(panel);

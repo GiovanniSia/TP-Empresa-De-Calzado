@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaModificarMProducto extends JFrame {
 
@@ -65,7 +67,7 @@ public class VentanaModificarMProducto extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 166, 854, 291);
 		frame.getContentPane().add(panel);
@@ -135,15 +137,39 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.add(lblDiasParaReponer);
 
 		txtActualizarPrecioCosto = new JTextField();
+		txtActualizarPrecioCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtActualizarPrecioCosto.getText().length()>=15) {
+					e.consume();
+				}
+			}
+		});
 		txtActualizarPrecioCosto.setBounds(98, 226, 108, 20);
 		panel.add(txtActualizarPrecioCosto);
 
 		txtActualizarPrecioMayorista = new JTextField();
 		txtActualizarPrecioMayorista.setBounds(327, 195, 111, 20);
+		txtActualizarPrecioMayorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtActualizarPrecioMayorista.getText().length()>=15) {
+					e.consume();
+				}
+			}
+		});
 		panel.add(txtActualizarPrecioMayorista);
 
 		txtActualizarPrecioMinorista = new JTextField();
 		txtActualizarPrecioMinorista.setBounds(327, 222, 111, 20);
+		txtActualizarPrecioMinorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtActualizarPrecioMinorista.getText().length()>=15) {
+					e.consume();
+				}
+			}
+		});
 		panel.add(txtActualizarPrecioMinorista);
 
 		btnActualizarProducto = new JButton("Actualizar \r\nProducto");

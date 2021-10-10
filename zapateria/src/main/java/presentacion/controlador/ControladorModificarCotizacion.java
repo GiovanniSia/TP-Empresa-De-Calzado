@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -41,7 +42,6 @@ public class ControladorModificarCotizacion {
 		this.ventanaModificarCotizacion.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaModificarCotizacion.getBtnActualizarCotizacion().addActionListener(c -> actualizarMedioPago(c));
 		this.ventanaModificarCotizacion.getBtnVerHistorialDeCambios().addActionListener(v -> verHistorialDeCambios(v));
-
 		// Tabla
 		this.ventanaModificarCotizacion.getTablaMedioPago().addMouseListener(new MouseAdapter() {
 			@Override
@@ -169,7 +169,7 @@ public class ControladorModificarCotizacion {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String fecha = dtf.format(LocalDateTime.now());
 
-		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm");
 		String hora = dtf2.format(LocalDateTime.now());
 
 		double tasaConversionAntigua = this.medioPagoEnTabla.get(filaSeleccionada).getTasaConversion();
@@ -229,7 +229,8 @@ public class ControladorModificarCotizacion {
 		for (MedioPagoDTO m : monedaEnTabla) {
 			String idMoneda = m.getIdMoneda();
 			String descripcion = m.getDescripcion();
-			double tasaConversion = m.getTasaConversion();
+			double tasaConversio = m.getTasaConversion();
+			BigDecimal tasaConversion = new BigDecimal(tasaConversio);
 
 			Object[] fila = { idMoneda, descripcion, tasaConversion };
 			this.ventanaModificarCotizacion.getModelProducto().addRow(fila);
