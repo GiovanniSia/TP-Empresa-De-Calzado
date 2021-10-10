@@ -3,6 +3,7 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.List;
 
 import dto.HistorialCambioMProductoDTO;
@@ -82,15 +83,24 @@ public class ControladorHistorialCambioMProducto {
 			int codEmpleado = hcmp.getIdEmpleado();
 			int codProducto = hcmp.getIdMaestroProducto();
 			String fecha = hcmp.getFecha();
+		
+			double precioCostoAntigu = hcmp.getPrecioCostoAntiguo();
+			BigDecimal precioCostoAntiguo = new BigDecimal(precioCostoAntigu);
 			
-			double precioCostoAntiguo = hcmp.getPrecioCostoAntiguo();
-			double precioCostoNuevo = hcmp.getPrecioCostoNuevo();
+			double precioCostoNuev = hcmp.getPrecioCostoNuevo();
+			BigDecimal precioCostoNuevo = new BigDecimal(precioCostoNuev);
 			
-			double precioMayoristaAntiguo = hcmp.getPrecioMayoristaAntiguo();
-			double precioMayoristaNuevo = hcmp.getPrecioMayoristaNuevo();
+			double precioMayoristaAntigu = hcmp.getPrecioMayoristaAntiguo();
+			BigDecimal precioMayoristaAntiguo = new BigDecimal(precioMayoristaAntigu);
 			
-			double precioMinoristaAntiguo = hcmp.getPrecioMinoristaAntiguo();
-			double precioMinoristaNuevo = hcmp.getPrecioMinoristaNuevo();
+			double precioMayoristaNuev = hcmp.getPrecioMayoristaNuevo();
+			BigDecimal precioMayoristaNuevo = new BigDecimal(precioMayoristaNuev);
+			
+			double precioMinoristaAntigu = hcmp.getPrecioMinoristaAntiguo();
+			BigDecimal precioMinoristaAntiguo = new BigDecimal(precioMinoristaAntigu);
+			
+			double precioMinoristaNuev = hcmp.getPrecioMinoristaNuevo();
+			BigDecimal precioMinoristaNuevo = new BigDecimal(precioMinoristaNuev);
 			
 			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,precioMinoristaAntiguo,precioMinoristaNuevo};
 			this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().addRow(fila);	
