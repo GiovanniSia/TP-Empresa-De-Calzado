@@ -224,6 +224,13 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		this.fechaHasta.setDate(null);
 		frame.setVisible(false);
 	}
+	
+	public void limpiarCampos() {
+		this.textFiltroCodMoneda.setText(null);
+		this.textFiltroDescripcion.setText(null);
+		this.fechaDesde.setDate(null);
+		this.fechaHasta.setDate(null);
+	}
 
 	public void mostrarVentana() {
 		this.setVisible(true);

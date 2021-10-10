@@ -120,23 +120,18 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 			String nombreColumna2, String txtAprox2, String nombreColumna3, String fechaDesde, String fechaHasta) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
+
 		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
 				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
 
-		if (nombreColumna3 != null) {
-			System.out.print("Fecha desde: "+ fechaDesde);
-			sel = sel + " AND " + nombreColumna3 + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta+"'";
-			System.out.print(sel);
+		if (nombreColumna3 != null && fechaDesde != null && fechaHasta == null) {
+			sel = sel + "AND " + nombreColumna3 + " LIKE '%" + fechaDesde + "%'";
+		}
+
+		if (nombreColumna3 != null && fechaDesde != null && fechaHasta != null) {
+			sel = sel + " AND " + nombreColumna3 + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'";
 		}
 		
-//		if(!fechaDesde.equals("")) {
-//            comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido >= '"+fechaDesde+"'";
-//}
-//if(!Hasta.equals("")) {
-//            comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido <= '"+Hasta+"'";
-//}
-//		
-
 		ArrayList<HistorialCambioMonedaDTO> historialCambioMoneda = new ArrayList<HistorialCambioMonedaDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
