@@ -179,15 +179,31 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
-	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE Estado = 'activo' OR Estado = 'completo'";
+	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE (Estado = 'activo' OR Estado = 'completo')";
 	
-	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(){
+	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
-			statement = conexion.getSQLConexion().prepareStatement(readAllFabricacionesEnMarcha);
+			String comandoSql = readAllFabricacionesEnMarcha;
+			comandoSql = comandoSql + " AND EXISTS (SELECT * FROM maestroProductos, ordenFabrica as ordenF WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenF.IdOrdenFabrica AND maestroProductos.IdMaestroProducto = ordenF.IdProd AND maestroProductos.Descripcion LIKE '%"+descrProducto+"%')";
+			
+			if(!idSucursal.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfa WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfa.IdOrdenFabrica AND ordenfa.IdSucursal = "+idSucursal+")";
+			}
+			if(!idOrden.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.IdOrdenFabrica = "+idOrden+")";
+			}
+			if(!fechaDesde.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido >= '"+fechaDesde+"')";
+			}
+			if(!Hasta.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido <= '"+Hasta+"')";
+			}
+			
+			statement = conexion.getSQLConexion().prepareStatement(comandoSql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				fabri.add(getFabricacionesEnMarcha(resultSet));
@@ -198,14 +214,28 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		return fabri;
 	}
 	
-	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'));";
-	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(){
+	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'))";
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<OrdenFabricaDTO> fabri = new ArrayList<OrdenFabricaDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
-			statement = conexion.getSQLConexion().prepareStatement(readAllOrdenesSinTrabajar);
+			String comandoSql = readAllOrdenesSinTrabajar;
+			comandoSql = comandoSql + " AND EXISTS (SELECT * FROM maestroProductos WHERE maestroProductos.IdMaestroProducto = ordenFabrica.IdProd AND maestroProductos.Descripcion LIKE '%"+descrProducto+"%')";
+			if(!idSucursal.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.IdSucursal = " + idSucursal+"";
+			}
+			if(!idOrden.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.IdOrdenFabrica = " + idOrden+"";
+			}
+			if(!fechaDesde.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido >= '"+fechaDesde+"'";
+			}
+			if(!Hasta.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido <= '"+Hasta+"'";
+			}
+			statement = conexion.getSQLConexion().prepareStatement(comandoSql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				fabri.add(getOrdenFabricaDTO(resultSet));

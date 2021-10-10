@@ -15,56 +15,67 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
-public class VentanaTrabajarUnPedido extends JFrame {
+public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
+	JComboBox comboBox;
 	
-	JButton btnAvanzarUnPaso;
-	JButton btnRetrocederUnPaso;
-	JButton btnCancelar;
+	JButton btnTrabajar;
+	
+	JLabel lblSolicitado;
 	
 	private String[] nombreColumnas = { "Material", "Cantidad" };
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
+	private JLabel lblMensaje;
 
-	public VentanaTrabajarUnPedido() {
+	public ReVentanaSeleccionarUnaReceta() {
 		initialize();
 	}
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 409, 264);
+		frame.setBounds(100, 100, 409, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 376, 210);
+		panel.setBounds(10, 11, 376, 289);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		btnAvanzarUnPaso = new JButton("Avanzar un paso");
-		btnAvanzarUnPaso.setBounds(10, 11, 154, 23);
-		panel.add(btnAvanzarUnPaso);
+		comboBox = new JComboBox();
+		comboBox.setBounds(98, 11, 192, 22);
+		panel.add(comboBox);
 		
-		btnRetrocederUnPaso = new JButton("Volver un paso");
-		btnRetrocederUnPaso.setBounds(174, 11, 154, 23);
-		panel.add(btnRetrocederUnPaso);
-		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 45, 154, 23);
-		panel.add(btnCancelar);
+		lblSolicitado = new JLabel("New label");
+		lblSolicitado.setBounds(10, 45, 356, 38);
+		panel.add(lblSolicitado);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 79, 356, 120);
+		spCliente.setBounds(10, 87, 356, 112);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
 		spCliente.setViewportView(tabla);
+		
+		lblMensaje = new JLabel("New label");
+		lblMensaje.setBounds(10, 206, 356, 28);
+		panel.add(lblMensaje);
+		
+		btnTrabajar = new JButton("Pasar a produccion");
+		btnTrabajar.setBounds(10, 245, 154, 23);
+		panel.add(btnTrabajar);
+		
+		JLabel lblNewLabel = new JLabel("Receta");
+		lblNewLabel.setBounds(10, 15, 78, 14);
+		panel.add(lblNewLabel);
 	}
 
 	public void show() {
@@ -86,19 +97,19 @@ public class VentanaTrabajarUnPedido extends JFrame {
 		this.setVisible(true);
 	}
 
-	public JButton getBtnAvanzarUnPaso() {
-		return btnAvanzarUnPaso;
-	}
-
-	public JButton getBtnRetrocederUnPaso() {
-		return btnRetrocederUnPaso;
-	}
-
-	public JButton getBtnCancelar() {
-		return btnCancelar;
+	public JComboBox getComboBox() {
+		return comboBox;
 	}
 	
-	public JTable getTablaIngredientes() {
+	public JButton getBtnTrabajar() {
+		return btnTrabajar;
+	}
+
+	public JLabel getLblSolicitado() {
+		return lblSolicitado;
+	}
+	
+	public JTable getTablaOrdenesPendientes() {
 		return tabla;
 	}
 
@@ -108,5 +119,9 @@ public class VentanaTrabajarUnPedido extends JFrame {
 
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
+	}
+
+	public JLabel getLblMensaje() {
+		return lblMensaje;
 	}
 }

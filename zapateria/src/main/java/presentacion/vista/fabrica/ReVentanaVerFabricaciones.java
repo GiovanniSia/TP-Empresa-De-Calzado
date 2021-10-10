@@ -17,21 +17,30 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaVerFabricacionesEnMarcha extends JFrame {
+public class ReVentanaVerFabricaciones extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Nro Paso", "Estado", "Fecha completada", "Dias envio"};
+	private String[] nombreColumnas = { "Id pedido","Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Estado", "Fecha completada", "Dias envio"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JPanel panel_2;
 	private JScrollPane spCliente;
 
 	private JButton btnSeleccionarProceso;
-	private JButton btnVerOrdenesPendientes;
 	private JLabel lblNewLabel;
+	private JLabel lblId;
+	private JTextField textId;
+	private JLabel lblSucursal;
+	private JTextField textProducto;
+	private JLabel lblProducto;
+	JTextField textSucursal;
+	private JButton btnFechaDesde;
+	private JButton btnFechaHasta;
+	private JLabel lblFechaDesde;
+	private JLabel lblFechaHasta;
 
-	public VentanaVerFabricacionesEnMarcha() {
+	public ReVentanaVerFabricaciones() {
 		initialize();
 	}
 	
@@ -41,18 +50,18 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 428);
+		frame.setBounds(100, 100, 822, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 806, 314);
+		panel.setBounds(0, 64, 806, 386);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 11, 776, 258);
+		spCliente.setBounds(10, 69, 776, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -65,16 +74,51 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSeleccionarProceso.setBounds(10, 280, 177, 23);
+		btnSeleccionarProceso.setBounds(10, 352, 177, 23);
 		panel.add(btnSeleccionarProceso);
 		
-		btnVerOrdenesPendientes = new JButton("Ver ordenes de fabricacion");
-		btnVerOrdenesPendientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVerOrdenesPendientes.setBounds(549, 280, 237, 23);
-		panel.add(btnVerOrdenesPendientes);
+		lblId = new JLabel("Id");
+		lblId.setBounds(10, 11, 46, 14);
+		panel.add(lblId);
+		
+		textId = new JTextField();
+		textId.setBounds(10, 36, 75, 20);
+		panel.add(textId);
+		textId.setColumns(10);
+		
+		lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setBounds(95, 11, 46, 14);
+		panel.add(lblSucursal);
+		
+		textSucursal = new JTextField();
+		textSucursal.setColumns(10);
+		textSucursal.setBounds(95, 36, 75, 20);
+		panel.add(textSucursal);
+		
+		textProducto = new JTextField();
+		textProducto.setColumns(10);
+		textProducto.setBounds(180, 36, 75, 20);
+		panel.add(textProducto);
+		
+		lblProducto = new JLabel("Producto");
+		lblProducto.setBounds(180, 11, 46, 14);
+		panel.add(lblProducto);
+		
+		btnFechaDesde = new JButton("Desde");
+		btnFechaDesde.setBounds(265, 7, 89, 23);
+		panel.add(btnFechaDesde);
+		
+		btnFechaHasta = new JButton("Hasta");
+		btnFechaHasta.setBounds(265, 35, 89, 23);
+		panel.add(btnFechaHasta);
+		
+		lblFechaDesde = new JLabel("-");
+		lblFechaDesde.setBounds(364, 11, 75, 14);
+		panel.add(lblFechaDesde);
+		
+		lblFechaHasta = new JLabel("-");
+		lblFechaHasta.setBounds(364, 39, 75, 14);
+		panel.add(lblFechaHasta);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -121,8 +165,32 @@ public class VentanaVerFabricacionesEnMarcha extends JFrame {
 	public JButton getBtnTrabajarPedido() {
 		return btnSeleccionarProceso;
 	}
-	
-	public JButton getBtnVerFabricaciones() {
-		return btnVerOrdenesPendientes;
+
+	public JTextField getTextId() {
+		return textId;
+	}
+
+	public JTextField getTextProducto() {
+		return textProducto;
+	}
+
+	public JTextField getTextSucursal() {
+		return textSucursal;
+	}
+
+	public JButton getBtnFechaDesde() {
+		return btnFechaDesde;
+	}
+
+	public JButton getBtnFechaHasta() {
+		return btnFechaHasta;
+	}
+
+	public JLabel getLblFechaDesde() {
+		return lblFechaDesde;
+	}
+
+	public JLabel getLblFechaHasta() {
+		return lblFechaHasta;
 	}
 }

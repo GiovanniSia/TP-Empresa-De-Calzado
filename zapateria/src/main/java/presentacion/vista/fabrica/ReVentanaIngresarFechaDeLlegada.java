@@ -6,26 +6,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
+import javax.swing.JSpinner;
+import javax.swing.JLabel;
 
-public class VentanaSeleccionarUnaReceta extends JFrame {
+public class ReVentanaIngresarFechaDeLlegada extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	
-	JButton btnElegirReceta;
-	JComboBox comboBox;
+	JButton btnIngresarFecha;
+	JSpinner spinner;
 
-	public VentanaSeleccionarUnaReceta() {
+	public ReVentanaIngresarFechaDeLlegada() {
 		initialize();
 	}
 
@@ -41,13 +34,18 @@ public class VentanaSeleccionarUnaReceta extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		btnElegirReceta = new JButton("Seleccionar receta");
-		btnElegirReceta.setBounds(212, 11, 154, 23);
-		panel.add(btnElegirReceta);
+		btnIngresarFecha = new JButton("Completar");
+		btnIngresarFecha.setBounds(196, 92, 154, 23);
+		panel.add(btnIngresarFecha);
 		
-		comboBox = new JComboBox();
-		comboBox.setBounds(10, 11, 192, 22);
-		panel.add(comboBox);
+		spinner = new JSpinner();
+		spinner.setBounds(59, 93, 57, 20);
+		panel.add(spinner);
+		
+		JLabel lblNewLabel = new JLabel("En cuantos dias llegara a la sucursal");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(10, 35, 356, 14);
+		panel.add(lblNewLabel);
 	}
 
 	public void show() {
@@ -69,11 +67,13 @@ public class VentanaSeleccionarUnaReceta extends JFrame {
 		this.setVisible(true);
 	}
 
-	public JButton getBtnElegirReceta() {
-		return btnElegirReceta;
+	public JButton getBtnbtnIngresarFecha() {
+		return btnIngresarFecha;
 	}
 
-	public JComboBox getComboBox() {
-		return comboBox;
+	public JSpinner getSpinner() {
+		return spinner;
 	}
+	
+	
 }
