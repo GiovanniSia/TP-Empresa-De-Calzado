@@ -169,11 +169,11 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			}
 			if(precioDesde!=0 && precioHasta==0) {
 				System.out.println("El precioDesde es !=0 y el precioHasta==0 \nse busca todo lo que sea mayor a "+precioDesde);
-				sel = sel + " AND "+nombreColumna3 + " > "+precioDesde;
+				sel = sel + " AND "+nombreColumna3 + " >= "+precioDesde;
 			}
 			if(precioDesde==0 && precioHasta!=0) {
 				System.out.println("El precioDesde es ==0 y el precioHasta!=0 \nse busca todo lo que sea menor a "+precioHasta);
-				sel = sel +" AND "+nombreColumna3+" < "+precioHasta;
+				sel = sel +" AND "+nombreColumna3+" <= "+precioHasta;
 			}
 			if(precioDesde==0 && precioHasta==0) {
 			//no deberia hacer la busqueda de esto
@@ -245,5 +245,40 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			e.printStackTrace();
 		}
 		return producto;
+	}
+
+	@Override
+	public List<MaestroProductoDTO> getFiltroModificarMProdcto(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4) {
+		
+			PreparedStatement statement;
+			ResultSet resultSet; // Guarda el resultado de la query
+			String sel = "SELECT * FROM maestroProductos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+
+			if (nombreColumna2 != null && txtAprox2 != null) {
+				sel = sel + " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+			}
+			
+			if (nombreColumna3 != null && txtAprox3 != null) {
+				sel = sel + " AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'";
+			}
+			
+			if (nombreColumna4 != null && txtAprox4 != null) {
+				sel = sel + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
+			}
+
+			ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();
+			Conexion conexion = Conexion.getConexion();
+			try {
+				statement = conexion.getSQLConexion().prepareStatement(sel);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					maestroProducto.add(getMaestroProductoDTO(resultSet));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return maestroProducto;
 	}
 }

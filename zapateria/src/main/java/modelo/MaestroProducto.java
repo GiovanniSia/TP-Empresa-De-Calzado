@@ -34,7 +34,12 @@ public class MaestroProducto {
 			String nombreColumna2, String txtAprox2,String nombreColumna3,String txtAprox3,String nombreColumna4, String txtAprox4) {
 		return this.maestroProducto.getMaestroProductoAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2,nombreColumna3,txtAprox3,nombreColumna4,txtAprox4);
 	}
+	
 
+	public List<MaestroProductoDTO> getFiltroModificarMProdcto(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3,String nombreColumna4, String txtAprox4) {
+		return this.maestroProducto.getFiltroModificarMProdcto(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2,nombreColumna3, txtAprox3,nombreColumna4,txtAprox4);
+	}
 	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto) {
 		return this.maestroProducto.selectMaestroProducto(idMaestroProducto);
 	}

@@ -31,8 +31,8 @@ public class HistorialCambioMoneda {
 	}
 
 	public List<HistorialCambioMonedaDTO> getHistorialCambioMonedaAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3) {
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String fechaDesde, String fechaHasta) {
 		return this.historialCambioMoneda.getHistorialCambioMonedaAproximado(nombreColumna1, txtAprox1, nombreColumna2,
-				txtAprox2, nombreColumna3, txtAprox3);
+				txtAprox2, nombreColumna3, fechaDesde, fechaHasta);
 	}
 }

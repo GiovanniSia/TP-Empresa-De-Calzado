@@ -202,12 +202,13 @@ public class ControladorBusquedaProductos {
 	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
 		String nombre=m.getDescripcion();
 		String talle = m.getTalle();
-		double precio;
+		double preci;
 		if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
-			precio = m.getPrecioMayorista();
+			preci = m.getPrecioMayorista();
 		}else {
-			precio = m.getPrecioMinorista();
+			preci = m.getPrecioMinorista();
 		}
+		BigDecimal precio = new BigDecimal(preci);
 		int stockDisp = s.getStockDisponible();
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
@@ -231,7 +232,7 @@ public class ControladorBusquedaProductos {
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
 		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
 		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),null)) {
-			JOptionPane.showMessageDialog(null, "La cantidad elegida no es válida");
+			JOptionPane.showMessageDialog(null, "La cantidad elegida no es vï¿½lida");
 			return;
 		}
 		//verificamos si existe este prod en el carrito
@@ -334,7 +335,7 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto().getIdMaestroProducto(),productoEnCarrito)) {
-			JOptionPane.showMessageDialog(null, "La cantidad elegida no es válida");
+			JOptionPane.showMessageDialog(null, "La cantidad elegida no es vï¿½lida");
 			return;
 		}
 		
@@ -380,9 +381,9 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void armarVenta(ActionEvent a) {
-		int resp = JOptionPane.showConfirmDialog(null, "Está seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Estï¿½ seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(this.productosEnCarrito.size()==0) {
-			JOptionPane.showMessageDialog(null, "No ha agregado ningún producto en el carrito!");
+			JOptionPane.showMessageDialog(null, "No ha agregado ningï¿½n producto en el carrito!");
 			return;
 		
 		}
@@ -390,7 +391,7 @@ public class ControladorBusquedaProductos {
 		if(resp==0) {
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-			JOptionPane.showConfirmDialog(null, "Venta armada con éxito a las "+dtf.format(LocalDateTime.now())+".\n "
+			JOptionPane.showConfirmDialog(null, "Venta armada con ï¿½xito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
 			if(hayStockDisponible()) {
@@ -421,7 +422,7 @@ public class ControladorBusquedaProductos {
 	
 	
 	public void guardarDetalleCarrito() {
-//		El id será el mismo para todos los sig prod
+//		El id serï¿½ el mismo para todos los sig prod
 		int ultIdCarrito = this.listaCarrito.get(this.listaCarrito.size()-1).getIdCarrito();
 		
 		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {

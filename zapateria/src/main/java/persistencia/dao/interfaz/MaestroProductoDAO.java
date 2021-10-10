@@ -18,4 +18,7 @@ public interface MaestroProductoDAO {
 			String nombreColumna2, String txtAprox2,String nombreColumna3,String txtAprox3, String nombreColumna4, String txtAprox4);
 	
 	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto);
+
+	List<MaestroProductoDTO> getFiltroModificarMProdcto(String nombreColumna1, String txtAprox1, String nombreColumna2,
+			String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4, String txtAprox4);
 }

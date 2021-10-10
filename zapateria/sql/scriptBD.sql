@@ -78,12 +78,12 @@ CREATE TABLE `historialCambioMProducto`
   `IdEmpleado` int(11) NOT NULL,
   `IdMaestroProducto` int(11) NOT NULL,
   `Fecha` Date NOT NULL,
-  `PrecioCostoAntiguo` double(11,2) NOT NULL,
-  `PrecioCostoNuevo` double(11,2) NOT NULL,
-  `PrecioMayoristaAntiguo` double(11,2) NOT NULL,
-  `PrecioMayoristaNuevo` double(11,2) NOT NULL,
-  `PrecioMinoristaAntiguo` double(11,2) NOT NULL,
-  `PrecioMinoristaNuevo` double(11,2) NOT NULL,
+  `PrecioCostoAntiguo` double(45,2) NOT NULL,
+  `PrecioCostoNuevo` double(45,2) NOT NULL,
+  `PrecioMayoristaAntiguo` double(45,2) NOT NULL,
+  `PrecioMayoristaNuevo` double(45,2) NOT NULL,
+  `PrecioMinoristaAntiguo` double(45,2) NOT NULL,
+  `PrecioMinoristaNuevo` double(45,2) NOT NULL,
   PRIMARY KEY (`IdHistorialCambioMProducto`)
 );
 
@@ -93,9 +93,9 @@ CREATE TABLE `maestroProductos`
   `Descripcion` varchar(45) NOT NULL,
   `Tipo` varchar(45) NOT NULL,
   `Fabricado` varchar(45) NOT NULL,
-  `PrecioCosto` double(11,2) NOT NULL,
-  `PrecioMayorista` double(11,2) NOT NULL,
-  `PrecioMinorista` double(11,2) NOT NULL,
+  `PrecioCosto` double(45,2) NOT NULL,
+  `PrecioMayorista` double(45,2) NOT NULL,
+  `PrecioMinorista` double(45,2) NOT NULL,
   `PuntoRepositorio` int(11) NOT NULL,
   `IdProveedor` int(11) NOT NULL,
   `Talle` varchar(45) NOT NULL,
@@ -196,8 +196,8 @@ CREATE TABLE `Ingresos`
   `TipoFactura` varchar(45) NOT NULL,
   `NroFactura` varchar(45) NOT NULL,
   `MedioPago` varchar(45) NOT NULL,
-  `Cantidad` double(11,2) NOT NULL,
-  `Cotizacion` double(11,2) NOT NULL,
+  `Cantidad` double(45,2) NOT NULL,
+  `Cotizacion` double(45,2) NOT NULL,
   `Operacion` varchar(45) NOT NULL,
   `Total` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
@@ -329,6 +329,10 @@ insert into paso values(6,"Terminado");
 INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
 INSERT INTO maestroProductos values(8,"Tijera"  ,"MP","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
 INSERT INTO maestroProductos values(9,"Adesivo"  ,"MP","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
+
+insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
+insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
+insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
 
 insert into pasosReceta values(1,1,1,1);
 insert into pasosReceta values(2,1,2,2);

@@ -117,13 +117,21 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 
 	@Override
 	public List<HistorialCambioMonedaDTO> getHistorialCambioMonedaAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3) {
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String fechaDesde, String fechaHasta) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
-				+ "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + "AND " + nombreColumna3 + " LIKE '%"
-				+ txtAprox3 + "%'";
 
+		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+
+		if (nombreColumna3 != null && fechaDesde != null && fechaHasta == null) {
+			sel = sel + "AND " + nombreColumna3 + " LIKE '%" + fechaDesde + "%'";
+		}
+
+		if (nombreColumna3 != null && fechaDesde != null && fechaHasta != null) {
+			sel = sel + " AND " + nombreColumna3 + " BETWEEN '" + fechaDesde + "' AND '" + fechaHasta + "'";
+		}
+		
 		ArrayList<HistorialCambioMonedaDTO> historialCambioMoneda = new ArrayList<HistorialCambioMonedaDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
