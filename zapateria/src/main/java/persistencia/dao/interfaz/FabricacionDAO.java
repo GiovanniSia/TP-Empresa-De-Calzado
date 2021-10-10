@@ -16,9 +16,9 @@ public interface FabricacionDAO {
 	
 	public List<PasoDeRecetaDTO> readAllPasosFromOneReceta(int idReceta);
 	
-	public List<FabricacionesDTO> readAllFabricacionesEnMarcha();
+	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(String descrProducto, String idSucursal, String idOrden);
 	
-	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar();
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden);
 	
 	public boolean insertFabricacionEnMarcha(FabricacionesDTO fabri);
 	

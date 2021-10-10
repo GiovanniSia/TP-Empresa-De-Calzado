@@ -29,12 +29,12 @@ public class Fabricacion {
 		return fab.readAllPasosFromOneReceta(idReceta);
 	}
 	
-	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(){
-		return fab.readAllFabricacionesEnMarcha();
+	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(String descrProducto, String idSucursal, String idOrden){
+		return fab.readAllFabricacionesEnMarcha(descrProducto,idSucursal,idOrden);
 	}
 	
-	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(){
-		return fab.readAllOrdenesSinTrabajar();
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden){
+		return fab.readAllOrdenesSinTrabajar(descrProducto, idSucursal, idOrden);
 	}
 	
 	public boolean insertFabricacionEnMarcha(FabricacionesDTO fabri) {

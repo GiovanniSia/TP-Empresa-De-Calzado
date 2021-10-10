@@ -29,6 +29,12 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	private JButton btnSeleccionarProceso;
 	private JLabel lblNewLabel;
+	private JLabel lblId;
+	private JTextField textId;
+	private JLabel lblSucursal;
+	private JTextField textProducto;
+	private JLabel lblProducto;
+	JTextField textSucursal;
 
 	public ReVentanaVerFabricaciones() {
 		initialize();
@@ -40,18 +46,18 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 428);
+		frame.setBounds(100, 100, 822, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 806, 314);
+		panel.setBounds(0, 64, 806, 386);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 11, 776, 258);
+		spCliente.setBounds(10, 69, 776, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -64,8 +70,35 @@ public class ReVentanaVerFabricaciones extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSeleccionarProceso.setBounds(10, 280, 177, 23);
+		btnSeleccionarProceso.setBounds(10, 352, 177, 23);
 		panel.add(btnSeleccionarProceso);
+		
+		lblId = new JLabel("Id");
+		lblId.setBounds(10, 11, 46, 14);
+		panel.add(lblId);
+		
+		textId = new JTextField();
+		textId.setBounds(10, 36, 75, 20);
+		panel.add(textId);
+		textId.setColumns(10);
+		
+		lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setBounds(95, 11, 46, 14);
+		panel.add(lblSucursal);
+		
+		textSucursal = new JTextField();
+		textSucursal.setColumns(10);
+		textSucursal.setBounds(95, 36, 75, 20);
+		panel.add(textSucursal);
+		
+		textProducto = new JTextField();
+		textProducto.setColumns(10);
+		textProducto.setBounds(180, 36, 75, 20);
+		panel.add(textProducto);
+		
+		lblProducto = new JLabel("Producto");
+		lblProducto.setBounds(180, 11, 46, 14);
+		panel.add(lblProducto);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -111,5 +144,17 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JButton getBtnTrabajarPedido() {
 		return btnSeleccionarProceso;
+	}
+
+	public JTextField getTextId() {
+		return textId;
+	}
+
+	public JTextField getTextProducto() {
+		return textProducto;
+	}
+
+	public JTextField getTextSucursal() {
+		return textSucursal;
 	}
 }

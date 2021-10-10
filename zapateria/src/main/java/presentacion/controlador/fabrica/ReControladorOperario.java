@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -35,6 +38,7 @@ import presentacion.vista.fabrica.VentanaMostrarMaterialesDeUnaReceta;
 import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
+import presentacion.vista.fabrica.fecha;
 
 public class ReControladorOperario implements ActionListener {
 
@@ -63,6 +67,13 @@ public class ReControladorOperario implements ActionListener {
 	OrdenFabrica modeloOrden;
 	Stock modeloStock;
 	
+	fecha ventanaParaCumple;
+	String mesCumpleCreado;
+	String anioCumpleCreado;
+	String fechaDesde = "";
+	String fechaHasta = "";
+	String diaCumpleCreado = "";
+	
 	public ReControladorOperario(SucursalDTO fabrica) {
 		idFabrica = fabrica.getIdSucursal();
 		try {
@@ -78,6 +89,24 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
 		ventanaPrincipal.getBtnTrabajarPedido().addActionListener(r->trabajarSeleccionado(r));
+		ventanaPrincipal.getTextProducto().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getTextSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
 		
 		ventanaElegirReceta = new ReVentanaSeleccionarUnaReceta();
 		ventanaElegirReceta.getComboBox().addActionListener(r->botonSeleccionarReceta(r));
@@ -89,6 +118,8 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaDiaDeLlegada = new ReVentanaIngresarFechaDeLlegada();
 		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
+		
+		ventanaParaCumple = fecha.getInstance();
 	}
 	
 	public void inicializar() {
@@ -99,6 +130,10 @@ public class ReControladorOperario implements ActionListener {
 	public void mostrarMensajeEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
         return;
+	}
+	
+	private void refrescarTablaPorTecla() {
+		refrescarTabla();
 	}
 	
 	private void refrescarTabla() {
@@ -251,7 +286,10 @@ public class ReControladorOperario implements ActionListener {
 	}
 	
 	private void llenarTablaConTrabajos() {
-		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha();
+		String id = ventanaPrincipal.getTextId().getText();
+		String sucursal = ventanaPrincipal.getTextSucursal().getText();
+		String productoText = ventanaPrincipal.getTextProducto().getText();
+		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id);
 		
 		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		
@@ -320,7 +358,20 @@ public class ReControladorOperario implements ActionListener {
 	}
 	
 	private void recuperarListaDeOrdenesPendientes() {
-		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar();
+		String id = ventanaPrincipal.getTextId().getText();
+		String sucursal = ventanaPrincipal.getTextSucursal().getText();
+		String producto = ventanaPrincipal.getTextProducto().getText();
+		/*
+		ordenesEnLista = new ArrayList<OrdenFabricaDTO>();
+		for(OrdenFabricaDTO of: modeloFabricacion.readAllOrdenesSinTrabajar()) {
+			if((id.equals("") || id.equals(of.getIdOrdenFabrica()+"")) && 
+					(sucursal.equals("") || sucursal.equals(of.getIdsucursal()+"")) && 
+					()
+					) {
+				
+			}
+		}*/
+		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id);
 	}
 	
 	private MaestroProductoDTO buscarProducto(int idProducto) {
@@ -475,6 +526,148 @@ public class ReControladorOperario implements ActionListener {
 			cont++;
 		}
 		return tengoMateriales;
+	}
+	
+	// FECHAS
+	
+	private void seleccionarAnio(ActionEvent a) {
+		ventanaParaCumple.getLblFecha().setText("Seleccione año");
+		ventanaParaCumple.getComboBox().removeAllItems();
+		DefaultComboBoxModel valores = new DefaultComboBoxModel();
+		ArrayList<String> val = new ArrayList<String>();
+		for(int x = 0; x < 121; x++) {
+			val.add(Integer.toString(x + 1900));
+		}
+		valores.addAll(val);
+		ventanaParaCumple.getComboBox().setModel(valores);
+		ventanaParaCumple.getComboBox().setSelectedIndex(1);
+		
+		for(ActionListener i: ventanaParaCumple.getBtnElegir().getActionListeners()) {
+			ventanaParaCumple.getBtnElegir().removeActionListener(i);
+		}
+		
+		ventanaParaCumple.getBtnElegir().addActionListener(e->elegirAnio(e));
+		ventanaParaCumple.mostrarVentana();
+	}
+	
+	private void elegirAnio(ActionEvent a) {
+		anioCumpleCreado = ventanaParaCumple.getComboBox().getSelectedItem().toString();
+		System.out.println(anioCumpleCreado);
+		
+		seleccionarMes();
+	}
+	
+	private void seleccionarMes() {
+		ventanaParaCumple.getLblFecha().setText("Seleccione mes");
+		ventanaParaCumple.getComboBox().removeAllItems();
+		DefaultComboBoxModel valores = new DefaultComboBoxModel();
+		ventanaParaCumple.getComboBox().setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+		ventanaParaCumple.getComboBox().setSelectedIndex(0);
+		
+		for(ActionListener i: ventanaParaCumple.getBtnElegir().getActionListeners()) {
+			ventanaParaCumple.getBtnElegir().removeActionListener(i);
+		}
+		ventanaParaCumple.getBtnElegir().addActionListener(e->elegirMes(e));
+		
+		ventanaParaCumple.mostrarVentana();
+	}
+	
+	private void elegirMes(ActionEvent a) {
+		mesCumpleCreado = Integer.toString(ventanaParaCumple.getComboBox().getSelectedIndex()+1);
+		System.out.println(anioCumpleCreado);
+		seleccionarDia();
+	}
+	
+	private void seleccionarDia() {
+		ventanaParaCumple.getLblFecha().setText("Seleccione dia");
+		ventanaParaCumple.getComboBox().removeAllItems();
+		
+		int diaMaximo = 0;
+		switch(mesCumpleCreado) {
+			case("1"):
+				diaMaximo = 31;
+				break;
+			case("2"):
+				//28 o 29
+				if(anioBisiesto(Integer.parseInt(anioCumpleCreado))) {
+					diaMaximo = 29;
+				}else {
+					diaMaximo = 28;
+				}
+				break;
+			case("3"):
+				diaMaximo = 31;
+				break;
+			case("4"):
+				diaMaximo = 30;
+				break;
+			case("5"):
+				diaMaximo = 31;
+				break;
+			case("6"):
+				diaMaximo = 30;
+				break;
+			case("7"):
+				diaMaximo = 31;
+				break;
+			case("8"):
+				diaMaximo = 31;
+				break;
+			case("9"):
+				diaMaximo = 30;
+				break;
+			case("10"):
+				diaMaximo = 31;
+				break;
+			case("11"):
+				diaMaximo = 30;
+				break;
+			case("12"):
+				diaMaximo = 31;
+				break;
+		}
+		DefaultComboBoxModel valores = new DefaultComboBoxModel();
+		ArrayList<String> val = new ArrayList<String>();
+		for(int x = 1; x <= diaMaximo; x++) {
+			val.add(Integer.toString(x));
+		}
+		valores.addAll(val);
+		ventanaParaCumple.getComboBox().setModel(valores);
+		ventanaParaCumple.getComboBox().setSelectedIndex(0);
+		
+		for(ActionListener i: ventanaParaCumple.getBtnElegir().getActionListeners()) {
+			ventanaParaCumple.getBtnElegir().removeActionListener(i);
+		}
+		ventanaParaCumple.getBtnElegir().addActionListener(e->elegirDia(e));
+		
+		ventanaParaCumple.mostrarVentana();
+	}
+	
+	private void elegirDia(ActionEvent a) {
+		diaCumpleCreado = Integer.toString(ventanaParaCumple.getComboBox().getSelectedIndex()+1);
+		System.out.println(anioCumpleCreado + " " + mesCumpleCreado + " " + diaCumpleCreado);
+		ventanaParaCumple.cerrar();
+		formarFecha();
+	}
+	
+	private boolean anioBisiesto(int anio) {
+		if(anio % 4 == 0) {
+			if(anio % 100 == 0) {
+				if(anio % 400 == 0) {
+					return true;
+				}
+				return false;
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private String formarFecha() {
+		if(diaCumpleCreado.equals("")) {
+			return "1000-10-10";
+		}
+		return anioCumpleCreado+"-"+mesCumpleCreado+"-"+diaCumpleCreado;
 	}
 
 	@Override
