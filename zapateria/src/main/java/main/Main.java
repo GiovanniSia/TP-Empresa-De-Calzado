@@ -1,7 +1,6 @@
 package main;
 
 import dto.SucursalDTO;
-import presentacion.controlador.fabrica.ControladorOperario;
 import presentacion.controlador.fabrica.ReControladorOperario;
 
 public class Main {

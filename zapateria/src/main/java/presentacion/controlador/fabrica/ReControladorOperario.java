@@ -32,12 +32,6 @@ import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.ReVentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
-import presentacion.vista.fabrica.VentanaBuscarOrdenesPendientes;
-import presentacion.vista.fabrica.VentanaIngresarFechaDeLlegada;
-import presentacion.vista.fabrica.VentanaMostrarMaterialesDeUnaReceta;
-import presentacion.vista.fabrica.VentanaSeleccionarUnaReceta;
-import presentacion.vista.fabrica.VentanaTrabajarUnPedido;
-import presentacion.vista.fabrica.VentanaVerFabricacionesEnMarcha;
 import presentacion.vista.fabrica.fecha;
 
 public class ReControladorOperario implements ActionListener {
