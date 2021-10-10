@@ -13,9 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -27,12 +25,10 @@ import dto.MaestroProductoDTO;
 import dto.ProductoEnCarritoDTO;
 import dto.StockDTO;
 import modelo.Carrito;
-import modelo.Cliente;
 import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import modelo.Sucursal;
-import persistencia.conexion.Conexion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaProductos;
 import java.time.LocalDateTime;
@@ -144,10 +140,28 @@ public class ControladorBusquedaProductos {
 			}
 		});
 		
+		validarTeclado();
+		
 		escribirTablaCliente();
 		escribirTablaCompleta();
 		this.vistaBusquedaProductos.show();
 		}
+	
+	
+	
+	
+	public void validarTeclado() {
+		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+		this.vistaBusquedaProductos.getTxtTalle().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+	}
 	
 	
 	//Busca el producto dado el nombre y el idSucursal
@@ -170,7 +184,9 @@ public class ControladorBusquedaProductos {
 		}else {
 			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,"PrecioMinorista",precioHasta);
 			}
-		
+		if(Integer.parseInt(precioDesde)>Integer.parseInt(precioHasta)) {
+			JOptionPane.showMessageDialog(null, "El mínimo no debe ser mayor al máximo");
+		}
 //		System.out.println("cant de result"+productosAproximados.size());
 		escribirTabla(productosAproximados);
 	}
