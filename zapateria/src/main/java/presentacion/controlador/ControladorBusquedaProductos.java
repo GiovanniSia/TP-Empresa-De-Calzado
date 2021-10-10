@@ -159,19 +159,19 @@ public class ControladorBusquedaProductos {
 				
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
 		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
-		int precioDesde = (int) this.vistaBusquedaProductos.getSpinnerPrecioDesde().getValue();
-		int precioHasta = (int) this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
+		String precioDesde =  ""+this.vistaBusquedaProductos.getSpinnerPrecioDesde().getValue();
+		String precioHasta = ""+ this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
 		
 		List<MaestroProductoDTO> productosAproximados;
 
-		System.out.println("tipocliente: "+this.clienteSeleccionado.getTipoCliente());
+//		System.out.println("tipocliente: "+this.clienteSeleccionado.getTipoCliente());
 		if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
-			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,precioHasta);
+			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,"PrecioMayorista",precioHasta);
 		}else {
-			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,precioHasta);
+			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,"PrecioMinorista",precioHasta);
 			}
 		
-		System.out.println("cant de result"+productosAproximados.size());
+//		System.out.println("cant de result"+productosAproximados.size());
 		escribirTabla(productosAproximados);
 	}
 	

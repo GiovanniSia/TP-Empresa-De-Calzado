@@ -88,6 +88,8 @@ public class ControladorVisualizarCarritos {
 		String nombre = this.ventanaVisualizarCarritos.getTextNombre().getText();
 		String apellido = this.ventanaVisualizarCarritos.getTextApellido().getText();
 		String CUIL = this.ventanaVisualizarCarritos.getTextCUIL().getText();
+		
+		
 	}
 	
 	public void llenarTabla() {
