@@ -19,7 +19,7 @@ public class VentanaModificarMProducto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Codigo", "Descripción", "Talle", "PrecioCosto", "PrecioMayorista",
+	private String[] nombreColumnas = { "Codigo", "Descripción","Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
 			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaProducto;
@@ -53,6 +53,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private JSpinner spinnerPuntoRepositorio;
 
 	private JPanel panel_1;
+	private JTextField txtFiltroProveedor;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -194,11 +195,11 @@ public class VentanaModificarMProducto extends JFrame {
 
 		JLabel lblTalle = new JLabel("Talle");
 		lblTalle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTalle.setBounds(284, 36, 70, 20);
+		lblTalle.setBounds(387, 36, 70, 20);
 		panel_1.add(lblTalle);
 
 		txtFiltroTalle = new JTextField();
-		txtFiltroTalle.setBounds(283, 67, 70, 20);
+		txtFiltroTalle.setBounds(387, 67, 70, 20);
 		panel_1.add(txtFiltroTalle);
 
 		lblCodProducto = new JLabel("Cod Producto");
@@ -214,6 +215,15 @@ public class VentanaModificarMProducto extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
+		
+		txtFiltroProveedor = new JTextField();
+		txtFiltroProveedor.setBounds(273, 67, 94, 20);
+		panel_1.add(txtFiltroProveedor);
+		
+		JLabel lblProveedor = new JLabel("Proveedor");
+		lblProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblProveedor.setBounds(273, 41, 94, 20);
+		panel_1.add(lblProveedor);
 
 		lblModificarProducto = new JLabel("Modificar Producto");
 		lblModificarProducto.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -236,6 +246,10 @@ public class VentanaModificarMProducto extends JFrame {
 
 	public DefaultTableModel getModelProducto() {
 		return modelProducto;
+	}
+	
+	public JTextField getTxtFiltroProveedor() {
+		return txtFiltroProveedor;
 	}
 
 	public JTable getTablaProducto() {
@@ -344,5 +358,4 @@ public class VentanaModificarMProducto extends JFrame {
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
-
 }

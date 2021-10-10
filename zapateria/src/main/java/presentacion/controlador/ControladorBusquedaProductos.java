@@ -141,7 +141,7 @@ public class ControladorBusquedaProductos {
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
 		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
 		
-		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle);
+		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,null,null,null,null);
 		escribirTabla(productosAproximados);
 	}
 	

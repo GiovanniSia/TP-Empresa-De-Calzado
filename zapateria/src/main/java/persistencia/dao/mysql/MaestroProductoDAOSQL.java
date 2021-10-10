@@ -147,13 +147,21 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 
 	@Override
 	public List<MaestroProductoDTO> getMaestroProductoAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2) {
+			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3,String nombreColumna4, String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		String sel = "SELECT * FROM maestroProductos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
 		if (nombreColumna2 != null && txtAprox2 != null) {
-			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+			sel = sel + " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+		}
+		
+		if (nombreColumna3 != null && txtAprox3 != null) {
+			sel = sel + " AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'";
+		}
+		
+		if (nombreColumna4 != null && txtAprox4 != null) {
+			sel = sel + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
 		}
 
 		ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();
