@@ -19,7 +19,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Cod. Moneda","Descripcion","Empleado","Fecha","T.Conversion Antigua","T.Conversion Nueva" };
+	private String[] nombreColumnas = { "Cod. Moneda","Descripcion","Empleado","Fecha","Hora","T.Conversion Antigua","T.Conversion Nueva" };
 	private DefaultTableModel modelHistorialCambioMoneda;
 	private JTable tablaHistorialCambioMoneda;
 	private JPanel panel_2;
@@ -33,6 +33,8 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	private JPanel panel_1;
 	private JTextField textFiltroDescripcion;
 	private JTextField textFiltroFecha;
+	private JTextField textFiltroCodMoneda;
+	private JLabel lblCodMoneda;
 
 	public static void main(String[] args) {
 		VentanaHistorialCambioMoneda v = new VentanaHistorialCambioMoneda();
@@ -51,18 +53,18 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 765, 385);
+		frame.setBounds(100, 100, 765, 403);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 148, 749, 198);
+		panel.setBounds(0, 157, 749, 207);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spHistorialCambioMoneda = new JScrollPane();
-		spHistorialCambioMoneda.setBounds(10, 11, 729, 145);
+		spHistorialCambioMoneda.setBounds(10, 11, 729, 159);
 		panel.add(spHistorialCambioMoneda);
 
 		modelHistorialCambioMoneda = new DefaultTableModel(null, nombreColumnas) {
@@ -89,11 +91,11 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		btnVolverAModificarConversion = new JButton("Volver a Modificar Conversi\u00F3n");
 		btnVolverAModificarConversion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		btnVolverAModificarConversion.setBounds(268, 167, 244, 23);
+		btnVolverAModificarConversion.setBounds(268, 176, 244, 23);
 		panel.add(btnVolverAModificarConversion);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 69, 749, 81);
+		panel_1.setBounds(0, 69, 749, 93);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -102,27 +104,38 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
 		
-		JLabel lblCodMoneda = new JLabel("Descripci\u00F3n");
-		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCodMoneda.setBounds(195, 25, 153, 14);
-		panel_1.add(lblCodMoneda);
+		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDescripcion.setBounds(133, 37, 153, 14);
+		panel_1.add(lblDescripcion);
 		
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFecha.setBounds(402, 25, 151, 14);
+		lblFecha.setBounds(296, 37, 151, 14);
 		panel_1.add(lblFecha);
 		
 		textFiltroDescripcion = new JTextField();
-		textFiltroDescripcion.setBounds(195, 50, 153, 20);
+		textFiltroDescripcion.setBounds(133, 62, 153, 20);
 		panel_1.add(textFiltroDescripcion);
 		textFiltroDescripcion.setColumns(10);
 		
 		textFiltroFecha = new JTextField();
 		textFiltroFecha.setColumns(10);
-		textFiltroFecha.setBounds(400, 50, 153, 20);
+		textFiltroFecha.setBounds(296, 62, 153, 20);
 		panel_1.add(textFiltroFecha);
+		
+		textFiltroCodMoneda = new JTextField();
+		textFiltroCodMoneda.setColumns(10);
+		textFiltroCodMoneda.setBounds(20, 62, 103, 20);
+		panel_1.add(textFiltroCodMoneda);
+		
+		lblCodMoneda = new JLabel("Cod. Moneda");
+		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodMoneda.setBounds(20, 39, 103, 14);
+		panel_1.add(lblCodMoneda);
 
 		lblHistorialCotizacion = new JLabel("Historial de Cambios de Cotizaci\u00F3n");
 		lblHistorialCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -139,6 +152,10 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
 	}
 	
+	public JTextField getTextFiltroCodMoneda() {
+		return textFiltroCodMoneda;
+	}
+
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
 	}

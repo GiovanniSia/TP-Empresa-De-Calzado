@@ -39,9 +39,10 @@ CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,
   `IdMoneda` varchar(11) NOT NULL,
-  `Descripcion` varchar(11) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
   `IdEmpleado` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
+  `Hora` TIME NOT NULL,
   `TasaConversionAntigua` double(45,2) NOT NULL,
   `TasaConversionNueva` double(45,2) NOT NULL,
   PRIMARY KEY (`IdCambioMoneda`)

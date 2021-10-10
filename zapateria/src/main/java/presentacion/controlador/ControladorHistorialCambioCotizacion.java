@@ -29,23 +29,43 @@ public class ControladorHistorialCambioCotizacion {
 				.addActionListener(v -> volverAModificarConversion(v));
 
 		// TextFiltos
+		this.ventanaHistorialCambioMoneda.getTextFiltroCodMoneda().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+
+		// TextFiltos
 		this.ventanaHistorialCambioMoneda.getTextFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				historialCambioMonedaEnTabla = historialCambioMoneda.getHistorialCambioMonedaAproximado("Descripcion",
-						ventanaHistorialCambioMoneda.getTextFiltroDescripcion().getText(), null, null);
-				llenarTabla(historialCambioMonedaEnTabla);
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaHistorialCambioMoneda.getTextFiltroFecha().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				historialCambioMonedaEnTabla = historialCambioMoneda.getHistorialCambioMonedaAproximado("Fecha",
-						ventanaHistorialCambioMoneda.getTextFiltroFecha().getText(), null, null);
-				llenarTabla(historialCambioMonedaEnTabla);
+				realizarBusqueda();
 			}
 		});
+	}
+
+	public void realizarBusqueda() {
+		this.ventanaHistorialCambioMoneda.getModelHistorialCambioMoneda().setRowCount(0);// borrar datos de la tabla
+		this.ventanaHistorialCambioMoneda.getModelHistorialCambioMoneda().setColumnCount(0);
+		this.ventanaHistorialCambioMoneda.getModelHistorialCambioMoneda()
+				.setColumnIdentifiers(this.ventanaHistorialCambioMoneda.getNombreColumnas());
+
+		String txtcodMoneda = this.ventanaHistorialCambioMoneda.getTextFiltroCodMoneda().getText();
+		String txtDescripcion = this.ventanaHistorialCambioMoneda.getTextFiltroDescripcion().getText();
+		String txtFecha = this.ventanaHistorialCambioMoneda.getTextFiltroFecha().getText();
+
+		List<HistorialCambioMonedaDTO> HistorialCambioMonedaAproximados = this.historialCambioMoneda
+				.getHistorialCambioMonedaAproximado("IdMoneda", txtcodMoneda, "Descripcion", txtDescripcion, "Fecha",
+						txtFecha);
+		llenarTabla(HistorialCambioMonedaAproximados);
 	}
 
 	public void volverAModificarConversion(ActionEvent e) {
@@ -69,16 +89,17 @@ public class ControladorHistorialCambioCotizacion {
 				.setColumnIdentifiers(this.ventanaHistorialCambioMoneda.getNombreColumnas());
 
 		for (HistorialCambioMonedaDTO hcm : historialCambioMonedaEnTabla) {
-//			int idCambioMoneda = hcm.getIdCambioMoneda();
 			String idMoneda = hcm.getIdMoneda();
 			String descripcion = hcm.getDescripcion();
 			int idEmpleado = hcm.getIdEmpleado();
-			
+
 			String fecha = hcm.getFecha();
+			String hora = hcm.getHora();
+
 			double tasaConversionAntigua = hcm.getTasaConversionAntigua();
 			double tasaConversionNueva = hcm.getTasaConversionNueva();
 
-			Object[] fila = { idMoneda, descripcion, idEmpleado, fecha, tasaConversionAntigua,
+			Object[] fila = { idMoneda, descripcion, idEmpleado, fecha, hora, tasaConversionAntigua,
 					tasaConversionNueva };
 			this.ventanaHistorialCambioMoneda.getModelHistorialCambioMoneda().addRow(fila);
 		}

@@ -8,6 +8,7 @@ CREATE TABLE `historialCambioMoneda`
   `Descripcion` varchar(11) NOT NULL,
   `IdEmpleado` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
+  `Hora` TIME NOT NULL,
   `TasaConversionAntigua` double(45,2) NOT NULL,
   `TasaConversionNueva` double(45,2) NOT NULL,
   PRIMARY KEY (`IdCambioMoneda`));
@@ -19,17 +20,19 @@ public class HistorialCambioMonedaDTO {
 	String descripcion;
 	int idEmpleado;
 	String fecha;
+	String hora;
 	double tasaConversionAntigua;
 	double tasaConversionNueva;
 
 	public HistorialCambioMonedaDTO(int idCambioMoneda, String idMoneda, String descripcion, int idEmpleado,
-			String fecha, double tasaConversionAntigua, double tasaConversionNueva) {
+			String fecha, String hora, double tasaConversionAntigua, double tasaConversionNueva) {
 		super();
 		this.idCambioMoneda = idCambioMoneda;
 		this.idMoneda = idMoneda;
 		this.descripcion = descripcion;
 		this.idEmpleado = idEmpleado;
 		this.fecha = fecha;
+		this.hora = hora;
 		this.tasaConversionAntigua = tasaConversionAntigua;
 		this.tasaConversionNueva = tasaConversionNueva;
 	}
@@ -52,6 +55,10 @@ public class HistorialCambioMonedaDTO {
 
 	public String getFecha() {
 		return fecha;
+	}
+
+	public String getHora() {
+		return hora;
 	}
 
 	public double getTasaConversionAntigua() {
@@ -80,6 +87,10 @@ public class HistorialCambioMonedaDTO {
 
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
+	}
+
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 
 	public void setTasaConversionAntigua(double tasaConversionAntigua) {

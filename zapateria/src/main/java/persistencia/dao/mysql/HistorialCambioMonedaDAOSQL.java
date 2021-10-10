@@ -12,9 +12,9 @@ import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
 
 public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 
-	private static final String insert = "INSERT INTO historialCambioMoneda VALUES(?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO historialCambioMoneda VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM historialCambioMoneda WHERE IdMoneda = ?";
-	private static final String update = "UPDATE historialCambioMoneda set IdMoneda=?,Descripcion=?,IdEmpleado=?,Fecha=?,TasaConversionAntigua=?,TasaConversionNueva=? where IdCambioMoneda=?";
+	private static final String update = "UPDATE historialCambioMoneda set IdMoneda=?,Descripcion=?,IdEmpleado=?,Fecha=?,Hora=?,TasaConversionAntigua=?,TasaConversionNueva=? where IdCambioMoneda=?";
 	private static final String readall = "SELECT * FROM historialCambioMoneda";
 
 	@Override
@@ -30,8 +30,11 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 			statement.setString(3, historialCambioMoneda.getDescripcion());
 			statement.setInt(4, historialCambioMoneda.getIdEmpleado());
 			statement.setString(5, historialCambioMoneda.getFecha());
-			statement.setDouble(6, historialCambioMoneda.getTasaConversionAntigua());
-			statement.setDouble(7, historialCambioMoneda.getTasaConversionNueva());
+			statement.setString(6, historialCambioMoneda.getHora());
+			statement.setDouble(7, historialCambioMoneda.getTasaConversionAntigua());
+			statement.setDouble(8, historialCambioMoneda.getTasaConversionNueva());
+
+			System.out.println("No se " + historialCambioMoneda.getDescripcion());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -79,9 +82,10 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 			statement.setString(2, historialCambioMoneda_nuevo.getDescripcion());
 			statement.setInt(3, historialCambioMoneda_nuevo.getIdEmpleado());
 			statement.setString(4, historialCambioMoneda_nuevo.getFecha());
-			statement.setDouble(5, historialCambioMoneda_nuevo.getTasaConversionAntigua());
-			statement.setDouble(6, historialCambioMoneda_nuevo.getTasaConversionNueva());
-			statement.setInt(7, id_historialCambioMoneda_a_actualizar);
+			statement.setString(5, historialCambioMoneda_nuevo.getHora());
+			statement.setDouble(6, historialCambioMoneda_nuevo.getTasaConversionAntigua());
+			statement.setDouble(7, historialCambioMoneda_nuevo.getTasaConversionNueva());
+			statement.setInt(8, id_historialCambioMoneda_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -113,14 +117,12 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 
 	@Override
 	public List<HistorialCambioMonedaDTO> getHistorialCambioMonedaAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2) {
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
-
-		if (nombreColumna2 != null && txtAprox2 != null) {
-			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
-		}
+		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+				+ "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + "AND " + nombreColumna3 + " LIKE '%"
+				+ txtAprox3 + "%'";
 
 		ArrayList<HistorialCambioMonedaDTO> historialCambioMoneda = new ArrayList<HistorialCambioMonedaDTO>();
 		Conexion conexion = Conexion.getConexion();
@@ -142,10 +144,11 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 		String descripcion = resultSet.getString("Descripcion");
 		int idEmpleado = resultSet.getInt("IdEmpleado");
 		String fecha = resultSet.getString("Fecha");
+		String hora = resultSet.getString("Hora");
 		double tasaConversionAntigua = resultSet.getDouble("TasaConversionAntigua");
 		double tasaConversionNueva = resultSet.getDouble("TasaConversionNueva");
 
-		return new HistorialCambioMonedaDTO(idCambioMoneda, idMoneda, descripcion, idEmpleado, fecha,
+		return new HistorialCambioMonedaDTO(idCambioMoneda, idMoneda, descripcion, idEmpleado, fecha, hora,
 				tasaConversionAntigua, tasaConversionNueva);
 	}
 
