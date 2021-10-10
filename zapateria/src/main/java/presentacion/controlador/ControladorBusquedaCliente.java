@@ -9,7 +9,6 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.VentanaBusquedaProductos;
 
 public class ControladorBusquedaCliente {
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -62,14 +61,19 @@ public class ControladorBusquedaCliente {
 			}
 		});
 
-		this.ventanaBusquedaCliente.getTxtFieldDNI().addKeyListener(new KeyAdapter() {
+		this.ventanaBusquedaCliente.getTxtFieldCUIL().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				realizarBusqueda();
 			}
 		});
 
-//		this.mostrarVentana();
+		this.ventanaBusquedaCliente.getTxtFieldEstado().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
 	}
 
 	public void realizarBusqueda() {
@@ -81,10 +85,10 @@ public class ControladorBusquedaCliente {
 		String txtcodCliente = this.ventanaBusquedaCliente.getTxtFieldCodCliente().getText();
 		String txtNombre = this.ventanaBusquedaCliente.getTxtFieldNombre().getText();
 		String txtApellido = this.ventanaBusquedaCliente.getTxtFieldApellido().getText();
-		String txtDNI = this.ventanaBusquedaCliente.getTxtFieldDNI().getText();
-
+		String txtCUIL = this.ventanaBusquedaCliente.getTxtFieldCUIL().getText();
+		String txtEstado = this.ventanaBusquedaCliente.getTxtFieldEstado().getText();
 		List<ClienteDTO> clienteAproximados = this.cliente.getClienteAproximado("IdCliente", txtcodCliente, "Nombre",
-				txtNombre, "Apellido", txtApellido, "DNI", txtDNI);
+				txtNombre, "Apellido", txtApellido, "CUIL", txtCUIL, "Estado", txtEstado);
 		llenarTabla(clienteAproximados);
 	}
 
@@ -93,14 +97,13 @@ public class ControladorBusquedaCliente {
 	}
 
 	public void pasarAVenta(ActionEvent p) {
-		if (clienteSeleccionado()) {
+		if (clienteSeleccionado() && esClienteInactivo()) {
 			this.ventanaBusquedaCliente.cerrar();
 			this.controladorBusquedaProductos.establecerClienteElegido(this.clienteSeleccionado);
-
 			controladorBusquedaProductos.inicializar();
-
 		}
 	}
+	
 
 	public boolean clienteSeleccionado() {
 		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
@@ -115,28 +118,21 @@ public class ControladorBusquedaCliente {
 		for (ClienteDTO c : clientes) {
 			// Obtengo el objeto cilente con todos sus valores
 			if (codCliente.equals("" + c.getIdCliente() + "")) {
-//				int IdCliente = c.getIdCliente();
-//				String Nombre = c.getNombre();
-//				String Apellido = c.getApellido();
-//				String DNI = c.getDNI();
-//				String CorreoElectronico = c.getCorreo();
-//				int LimiteCredito = c.getLimiteCredito();
-//				int CreditoDisponible = c.getCreditoDisponible();
-//				String TipoCliente = c.getTipoCliente();
-//				String ImpuestoAFIP = c.getImpuestoAFIP();
-//				String Estado = c.getEstado();
-//				String Calle = c.getCalle();
-//				String Altura = c.getAltura();
-//				String Pais = c.getPais();
-//				String Provincia = c.getProvincia(); 
-//				String Localidad = c.getLocalidad();
-//				String CodPostal = c.getCodPostal();
-//				System.out.println("Cliente Seleccionado: "+ IdCliente+", "+Nombre+", "+Apellido+", "+DNI+", "+Calle+", "+TipoCliente+", etc.");
 				this.clienteSeleccionado = c;
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public boolean esClienteInactivo() {
+		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
+		String estado = this.clienteEnTabla.get(filaSeleccionada).getEstado();
+		if (estado.equals("Inactivo")) {
+			JOptionPane.showMessageDialog(null, "El cliente seleccionado se encuentra inactivo");
+			return false;
+		}
+		return true;
 	}
 
 	public void mostrarVentana() {
@@ -158,11 +154,13 @@ public class ControladorBusquedaCliente {
 			int codCliente = c.getIdCliente();
 			String nombre = c.getNombre();
 			String apellido = c.getApellido();
-			String DNI = c.getDNI();
+			String CUIL = c.getCUIL();
 			String correo = c.getCorreo();
+			int limiteCredito = c.getLimiteCredito();
+			int creditoDisponible = c.getCreditoDisponible();
 			String estado = c.getEstado();
 
-			Object[] fila = { codCliente, nombre, apellido, DNI, correo, estado };
+			Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible, estado };
 			this.ventanaBusquedaCliente.getModelCliente().addRow(fila);
 		}
 	}
@@ -171,8 +169,11 @@ public class ControladorBusquedaCliente {
 		return this.clienteSeleccionado;
 	}
 
-//	public static void main(String[] args) {
-//		new ControladorBusquedaCliente();
-//	}
+	public static void main(String[] args) {
+		Cliente c = new Cliente(new DAOSQLFactory());
+		ControladorBusquedaCliente controlador = new ControladorBusquedaCliente(c);
+		controlador.inicializar();
+		controlador.mostrarVentana();
+	}
 
 }

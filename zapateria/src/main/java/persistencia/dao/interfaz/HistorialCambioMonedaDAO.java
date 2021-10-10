@@ -15,5 +15,5 @@ public interface HistorialCambioMonedaDAO {
 	public List<HistorialCambioMonedaDTO> readAll();
 
 	public List<HistorialCambioMonedaDTO> getHistorialCambioMonedaAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2);
+			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3 );
 }

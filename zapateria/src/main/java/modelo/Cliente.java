@@ -30,12 +30,12 @@ public class Cliente {
 	}
 
 	public List<ClienteDTO> getClienteAproximado(String nombreColumna1, String txtAprox1, String nombreColumna2,
-			String txtAprox2,String nombreColumna3, String txtAprox3, String nombreColumna4,
-			String txtAprox4) {
-		return this.cliente.getClienteAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2, nombreColumna3,  txtAprox3,  nombreColumna4,
-				 txtAprox4);
+			String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4, String txtAprox4,
+			String nombreColumna5, String txtAprox5) {
+		return this.cliente.getClienteAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2, nombreColumna3,
+				txtAprox3, nombreColumna4, txtAprox4, nombreColumna5, txtAprox5);
 	}
-	
+
 	public ClienteDTO selectCliente(int idCliente) {
 		return this.cliente.selectCliente(idCliente);
 	}

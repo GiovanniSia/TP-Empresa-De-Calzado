@@ -20,7 +20,7 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JFrame frame;
 	private JButton btnPasarAVenta;
 	private JButton btnAtras;
-	private String[] nombreColumnas = { "Cod. Cliente", "Nombre", "Apellido", "DNI", "Correo Electronico",
+	private String[] nombreColumnas = { "Cod. Cliente", "Nombre", "Apellido", "CUIL", "Correo Electronico","Limite Credito", "Credito Disponible",
 			"Estado" };
 	private JLabel lblZapateria;
 	private JLabel lblNombre;
@@ -28,7 +28,7 @@ public class VentanaBusquedaCliente extends JFrame {
 	private DefaultTableModel modelCliente;
 	private JTable tablaClientes;
 	private JTextField txtFieldApellido;
-	private JTextField txtFieldDNI;
+	private JTextField txtFieldCUIL;
 	private JPanel panel_2;
 
 	private JLabel lblCodCliente;
@@ -36,6 +36,7 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JLabel lblFiltrarPor;
 	private JLabel lblElegirCliente;
 	private JScrollPane spCliente;
+	private JTextField textFieldEstado;
 
 	public VentanaBusquedaCliente() {
 		initialize();
@@ -109,18 +110,18 @@ public class VentanaBusquedaCliente extends JFrame {
 		lblApellido.setBounds(251, 36, 70, 20);
 		panel_1.add(lblApellido);
 
-		JLabel lblDNI = new JLabel("DNI");
-		lblDNI.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDNI.setBounds(409, 36, 41, 20);
-		panel_1.add(lblDNI);
+		JLabel lblCUIL = new JLabel("CUIL");
+		lblCUIL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCUIL.setBounds(409, 36, 41, 20);
+		panel_1.add(lblCUIL);
 
 		txtFieldApellido = new JTextField();
 		txtFieldApellido.setBounds(251, 67, 131, 20);
 		panel_1.add(txtFieldApellido);
 
-		txtFieldDNI = new JTextField();
-		txtFieldDNI.setBounds(409, 67, 116, 20);
-		panel_1.add(txtFieldDNI);
+		txtFieldCUIL = new JTextField();
+		txtFieldCUIL.setBounds(409, 67, 116, 20);
+		panel_1.add(txtFieldCUIL);
 
 		lblCodCliente = new JLabel("Cod. Cliente");
 		lblCodCliente.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -135,6 +136,16 @@ public class VentanaBusquedaCliente extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
+		
+		textFieldEstado = new JTextField();
+		textFieldEstado.setBounds(553, 67, 86, 20);
+		panel_1.add(textFieldEstado);
+		textFieldEstado.setColumns(10);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEstado.setBounds(553, 41, 86, 20);
+		panel_1.add(lblEstado);
 
 		lblZapateria = new JLabel("Zapater\u00EDa");
 		lblZapateria.setBounds(10, 11, 129, 30);
@@ -167,7 +178,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		this.txtFieldCodCliente.setText(null);
 		this.txtFieldNombre.setText(null);
 		this.txtFieldApellido.setText(null);
-		this.txtFieldDNI.setText(null);
+		this.txtFieldCUIL.setText(null);
 		frame.setVisible(false);
 	}
 	
@@ -175,6 +186,10 @@ public class VentanaBusquedaCliente extends JFrame {
 		this.setVisible(true);
 	}
 	
+	public JTextField getTxtFieldEstado() {
+		return textFieldEstado;
+	}
+
 	public JButton getBtnPasarAVenta() {
 		return btnPasarAVenta;
 	}
@@ -206,12 +221,11 @@ public class VentanaBusquedaCliente extends JFrame {
 		return txtFieldApellido;
 	}
 
-	public JTextField getTxtFieldDNI() {
-		return txtFieldDNI;
+	public JTextField getTxtFieldCUIL() {
+		return txtFieldCUIL;
 	}
 
 	public JTextField getTxtFieldCodCliente() {
 		return txtFieldCodCliente;
 	}
-	
 }
