@@ -210,6 +210,7 @@ CREATE TABLE `Egresos`
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
   `Tipo` varchar(45) NOT NULL,
+  `MedioPago` varchar(45) NOT NULL,
   `Detalle` varchar(45) NOT NULL,
   `Total` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
