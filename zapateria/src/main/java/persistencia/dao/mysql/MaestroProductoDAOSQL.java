@@ -147,6 +147,27 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 
 	@Override
 	public List<MaestroProductoDTO> getMaestroProductoAproximado(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM maestroProductos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+
+		ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				maestroProducto.add(getMaestroProductoDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maestroProducto;
+	}
+	
+	@Override
+	public List<MaestroProductoDTO> getFiltroModificarMProdcto(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2,String nombreColumna3, String txtAprox3,String nombreColumna4, String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query

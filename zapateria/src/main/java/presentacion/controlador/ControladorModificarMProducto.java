@@ -51,17 +51,17 @@ public class ControladorModificarMProducto {
 				ventanaModificarMProducto.getLblActualizarDescripcion()
 						.setText(tablaProducto.getValueAt(filaSeleccionada, 1).toString());
 				ventanaModificarMProducto.getTxtActualizarPrecioCosto()
-						.setText(tablaProducto.getValueAt(filaSeleccionada, 3).toString());
-				ventanaModificarMProducto.getTxtActualizarPrecioMayorista()
 						.setText(tablaProducto.getValueAt(filaSeleccionada, 4).toString());
-				ventanaModificarMProducto.getTxtActualizarPrecioMinorista()
+				ventanaModificarMProducto.getTxtActualizarPrecioMayorista()
 						.setText(tablaProducto.getValueAt(filaSeleccionada, 5).toString());
+				ventanaModificarMProducto.getTxtActualizarPrecioMinorista()
+						.setText(tablaProducto.getValueAt(filaSeleccionada, 6).toString());
 				ventanaModificarMProducto.getSpinnerPuntoRepositorio()
-						.setValue(tablaProducto.getValueAt(filaSeleccionada, 6));
-				ventanaModificarMProducto.getSpinnerCantidadAReponer()
 						.setValue(tablaProducto.getValueAt(filaSeleccionada, 7));
-				ventanaModificarMProducto.getSpinnerDiasParaReponer()
+				ventanaModificarMProducto.getSpinnerCantidadAReponer()
 						.setValue(tablaProducto.getValueAt(filaSeleccionada, 8));
+				ventanaModificarMProducto.getSpinnerDiasParaReponer()
+						.setValue(tablaProducto.getValueAt(filaSeleccionada, 9));
 			}
 		});
 
@@ -106,7 +106,7 @@ public class ControladorModificarMProducto {
 		String txtTalle = this.ventanaModificarMProducto.getTxtFiltroTalle().getText();
 		String txtProveedor = this.ventanaModificarMProducto.getTxtFiltroProveedor().getText();
 		
-		List<MaestroProductoDTO> ProductosAproximados = this.maestroProducto.getMaestroProductoAproximado("IdMaestroProducto", txtCodProducto,
+		List<MaestroProductoDTO> ProductosAproximados = this.maestroProducto.getFiltroModificarMProdcto("IdMaestroProducto", txtCodProducto,
 				"Descripcion", txtDescripcion,"Talle",txtTalle,"IdProveedor",txtProveedor);
 		llenarTabla(ProductosAproximados);
 	}
@@ -216,13 +216,12 @@ public class ControladorModificarMProducto {
 			JOptionPane.showMessageDialog(null, "No se guardara el cambio en el historial al no cambiar precios");
 			return false;
 		}
-		return false;
+		return true;
 
 	}
 
 	public void ingresarProductoATablaHistorialCambioMProducto() {
 		if (seModificaronPrecios()) {
-
 			int filaSeleccionada = this.ventanaModificarMProducto.getTablaProducto().getSelectedRow();
 
 			// CodProducto
