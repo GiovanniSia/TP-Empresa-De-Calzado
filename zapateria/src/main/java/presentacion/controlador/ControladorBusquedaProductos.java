@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -71,11 +73,12 @@ public class ControladorBusquedaProductos {
 	}
 	
 //	public ControladorBusquedaProductos() {
-//		carrito=new ArrayList<ProductoEnCarritoDTO>();
-//		productosEnTabla = new ArrayList<MaestroProductoDTO>();
-//		this.vistaBusquedaProductos = new vistaBusquedaProductos();
-//		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
+//		this.clienteSeleccionado=new ClienteDTO(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+//		this.sucursal = new Sucursal(new DAOSQLFactory());;
+//		this.maestroProducto =new MaestroProducto(new DAOSQLFactory());
 //		this.stock = new Stock(new DAOSQLFactory());
+//		this.carrito = new Carrito(new DAOSQLFactory());
+//		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
 //		inicializar();
 //	}
 	
@@ -125,6 +128,22 @@ public class ControladorBusquedaProductos {
 			}
 			
 		});
+		
+		this.vistaBusquedaProductos.getSpinnerPrecioHasta().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+//				modificarValorMaximoDeSpinnerDesde();
+				realizarBusqueda();
+			}
+		});
+		
+		this.vistaBusquedaProductos.getSpinnerPrecioDesde().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				realizarBusqueda();
+			}
+		});
+		
 		escribirTablaCliente();
 		escribirTablaCompleta();
 		this.vistaBusquedaProductos.show();
@@ -140,8 +159,20 @@ public class ControladorBusquedaProductos {
 				
 		String txtNombre = this.vistaBusquedaProductos.getTxtNombreProducto().getText();
 		String txtTalle = this.vistaBusquedaProductos.getTxtTalle().getText(); 
+		int precioDesde = (int) this.vistaBusquedaProductos.getSpinnerPrecioDesde().getValue();
+		int precioHasta = (int) this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
 		
-		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle);
+		List<MaestroProductoDTO> productosAproximados;
+		if(precioHasta>0) {
+			if(this.clienteSeleccionado.getTipoCliente()=="Mayorista") {
+				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,precioHasta);
+			}else {
+				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,precioHasta);
+			}
+		}else {
+			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,null,0,0);	
+		}
+	
 		escribirTabla(productosAproximados);
 	}
 	
@@ -150,7 +181,7 @@ public class ControladorBusquedaProductos {
 		productosEnTabla.removeAll(productosEnTabla);
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
-				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m)) {
+				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m) && m.getTipo().equals("PT")) {
 					agregarATabla(s,m);
 					productosEnTabla.add(m);
 				}
@@ -162,7 +193,7 @@ public class ControladorBusquedaProductos {
 		productosEnTabla.removeAll(productosEnTabla);
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: productosAproximados) {
-				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m)) {
+				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m) && m.getTipo().equals("PT")) {
 					agregarATabla(s,m);
 					productosEnTabla.add(m);
 				}
@@ -351,7 +382,6 @@ public class ControladorBusquedaProductos {
 	
 	public void armarVenta(ActionEvent a) {
 		int resp = JOptionPane.showConfirmDialog(null, "Está seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		System.out.println("cant prod en carrito: "+this.productosEnCarrito.size());
 		if(this.productosEnCarrito.size()==0) {
 			JOptionPane.showMessageDialog(null, "No ha agregado ningún producto en el carrito!");
 			return;
@@ -406,7 +436,6 @@ public class ControladorBusquedaProductos {
 				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
 			}
 			int idCliente = this.clienteSeleccionado.getIdCliente();
-			System.out.println("idClienteseleccionado: "+idCliente);
 	
 			
 			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,idCliente,cant,precio);
@@ -455,7 +484,17 @@ public class ControladorBusquedaProductos {
 	}
 	
 	
+//	public void modificarValorMinimoDeSpinnerHasta() {
+//		int valorMinimo = (int)this.vistaBusquedaProductos.getSpinnerPrecioDesde().getValue();
+//		this.vistaBusquedaProductos.getSpinnerModelHasta().setValue(new SpinnerNumberModel(valorMinimo, valorMinimo, Integer.MAX_VALUE, 1));
+//	}
 	
+	public void modificarValorMaximoDeSpinnerDesde() {
+		int valorMaximo = (int)this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
+		System.out.println("se deberia actualizar el valor maximo del desde, nuevo maxiom: "+valorMaximo);
+		this.vistaBusquedaProductos.setSpinnerModelDesde(new SpinnerNumberModel(0, 0, valorMaximo, 100));
+//		this.vistaBusquedaProductos.setSpinnerPrecioDesde(new JSpinner(new SpinnerNumberModel(0, 0, valorMaximo, 100)));
+	}
 	
 //	public static void main(String[] args) {
 //		new ControladorBusquedaProductos();

@@ -31,8 +31,8 @@ public class MaestroProducto {
 	}
 
 	public List<MaestroProductoDTO> getMaestroProductoAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2) {
-		return this.maestroProducto.getMaestroProductoAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
+			String nombreColumna2, String txtAprox2,String nombreColumna3,int precioDesde, int precioHasta) {
+		return this.maestroProducto.getMaestroProductoAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2,nombreColumna3,precioDesde,precioHasta);
 	}
 
 	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto) {

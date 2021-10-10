@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Color;
@@ -19,7 +20,10 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class VentanaVisualizarCarritos {
 
@@ -27,7 +31,7 @@ public class VentanaVisualizarCarritos {
 	
 	private JTable tableCarritos;
 	private DefaultTableModel modelTablaSucursales;
-	private String[] nombreColumnasCarritos = {"ID Carrito","Hora","Cod Cliente","Nombre Cliente","Tipo Cliente","P. Total Venta"};
+	private String[] nombreColumnasCarritos = {"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"};
 	private JScrollPane scrollPaneTablaCarritos;
 	
 	private JButton btnElegirCarrito;
@@ -36,6 +40,14 @@ public class VentanaVisualizarCarritos {
 	private String[] nombreColumnasDetalle = {"Productos","Cantidad","P. Unitario"};	
 	private JTable tableDetalle;
 	private JScrollPane scrollPaneDetalle;
+	private JLabel lblFiltrarPor;
+	private JLabel lblNombre;
+	private JLabel lblCUIL;
+	private JLabel lblApellido;
+	
+	private JTextField textNombre;
+	private JTextField textCUIL;
+	private JTextField textApellido;
 
 	/**
 	 * Launch the application.
@@ -74,14 +86,14 @@ public class VentanaVisualizarCarritos {
 		frame.setBackground(Color.WHITE);
 		frame.setForeground(Color.BLACK);
 		frame.getContentPane().setForeground(Color.WHITE);
-		frame.setBounds(100, 100, 934, 550);
+		frame.setBounds(100, 100, 934, 630);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapatería Argento - Realizar Venta");
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 928, 503);
+		panel.setBounds(0, 0, 928, 562);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -109,7 +121,7 @@ public class VentanaVisualizarCarritos {
 			}
 		};
 		scrollPaneTablaCarritos = new JScrollPane(this.tableCarritos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneTablaCarritos.setBounds(10, 133, 515, 322);
+		scrollPaneTablaCarritos.setBounds(10, 171, 515, 381);
 		
 		tableCarritos = new JTable(modelTablaSucursales);
 		tableCarritos.setBounds(10, 133, 908, 322);	
@@ -124,11 +136,12 @@ public class VentanaVisualizarCarritos {
 		
 		JLabel lblNewLabel = new JLabel("Elegir Carrito a vender");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 34));
-		lblNewLabel.setBounds(10, 79, 505, 44);
+		lblNewLabel.setBounds(10, 56, 505, 44);
 		panel.add(lblNewLabel);
 		
-		btnElegirCarrito = new JButton("Elegir Carrito");
-		btnElegirCarrito.setBounds(244, 465, 363, 28);
+		btnElegirCarrito = new JButton("");
+		btnElegirCarrito.setBounds(793, 495, 93, 57);
+		btnElegirCarrito.setIcon(setIcono("../imagenes/dollar-symbol.png", btnElegirCarrito));
 		panel.add(btnElegirCarrito);
 		
 		
@@ -146,7 +159,7 @@ public class VentanaVisualizarCarritos {
 			}
 		};
 		scrollPaneDetalle = new JScrollPane(this.tableDetalle, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneDetalle.setBounds(598, 137, 320, 313);
+		scrollPaneDetalle.setBounds(598, 103, 320, 347);
 		
 		tableDetalle = new JTable(modelTablaDetalle);
 		tableDetalle.setBounds(598, 139, 320, 311);
@@ -161,8 +174,48 @@ public class VentanaVisualizarCarritos {
 		
 		JLabel lblNewLabel_1 = new JLabel("Productos en el Carrito");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(601, 102, 294, 21);
+		lblNewLabel_1.setBounds(598, 72, 294, 21);
 		panel.add(lblNewLabel_1);
+		
+		JLabel lblCobrar = new JLabel("Cobrar");
+		lblCobrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 42));
+		lblCobrar.setBounds(649, 495, 134, 57);
+		panel.add(lblCobrar);
+		
+		lblFiltrarPor = new JLabel("Filtrar Por:");
+		lblFiltrarPor.setFont(new Font("Consolas", Font.PLAIN, 10));
+		lblFiltrarPor.setBounds(10, 102, 93, 13);
+		panel.add(lblFiltrarPor);
+		
+		lblNombre = new JLabel("Nombre");
+		lblNombre.setFont(new Font("Consolas", Font.PLAIN, 10));
+		lblNombre.setBounds(113, 122, 93, 13);
+		panel.add(lblNombre);
+		
+		lblCUIL = new JLabel("CUIL");
+		lblCUIL.setFont(new Font("Consolas", Font.PLAIN, 10));
+		lblCUIL.setBounds(10, 122, 93, 13);
+		panel.add(lblCUIL);
+		
+		textNombre = new JTextField();
+		textNombre.setBounds(113, 142, 96, 19);
+		panel.add(textNombre);
+		textNombre.setColumns(10);
+		
+		textCUIL = new JTextField();
+		textCUIL.setColumns(10);
+		textCUIL.setBounds(10, 142, 96, 19);
+		panel.add(textCUIL);
+		
+		lblApellido = new JLabel("Apellido");
+		lblApellido.setFont(new Font("Consolas", Font.PLAIN, 10));
+		lblApellido.setBounds(219, 120, 93, 13);
+		panel.add(lblApellido);
+		
+		textApellido = new JTextField();
+		textApellido.setColumns(10);
+		textApellido.setBounds(219, 142, 96, 19);
+		panel.add(textApellido);
 		
 		
 		/*
@@ -211,7 +264,14 @@ public class VentanaVisualizarCarritos {
 	}
 	
 	
-	
+	public Icon setIcono(String url,JButton boton) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(url));
+		int ancho = boton.getWidth();
+		int alto = boton.getHeight();
+		
+		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+		return icono;
+	}
 	
 	
 	public JFrame getFrame() {
@@ -249,4 +309,17 @@ public class VentanaVisualizarCarritos {
 	public JTable getTableDetalle() {
 		return tableDetalle;
 	}
+	
+	public JTextField getTextNombre() {
+		return textNombre;
+	}
+
+	public JTextField getTextCUIL() {
+		return textCUIL;
+	}
+
+	public JTextField getTextApellido() {
+		return textApellido;
+	}
+
 }

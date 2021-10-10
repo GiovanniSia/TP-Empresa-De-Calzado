@@ -7,10 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,6 +23,8 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
@@ -53,7 +58,6 @@ public class VentanaBusquedaProductos {
 	private JLabel lblNombre;
 	private JLabel lblTalle;
 	private JButton btnAniadirProd;
-	private JLabel lblAniadir;
 	private JPanel panel_1;
 	private JLabel lblTitulo;
 	private JLabel lblSubtitulo;
@@ -63,9 +67,19 @@ public class VentanaBusquedaProductos {
 	private JButton btnAtras;
 	private JButton btnArmarVenta;
 	
+
+	private JLabel lblCantidad_1;
+	private JLabel lblQuitarDelCarrito;
+	private JLabel lblPrecioDesde;
+	private JLabel lblPrecioHasta;
+
+	SpinnerModel spinnerModelDesde;
+	SpinnerModel spinnerModelHasta;
+	
 	private JSpinner spinnerCarrito;
 	private JSpinner spinnerProductos;
-
+	private JSpinner spinnerPrecioDesde;
+	private JSpinner spinnerPrecioHasta;
 	/**
 	 * Launch the application.
 	 */
@@ -97,12 +111,6 @@ public class VentanaBusquedaProductos {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 953, 654);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setTitle("Zapatería Argento - Realizar Venta");
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}catch (Exception e){
@@ -110,6 +118,12 @@ public class VentanaBusquedaProductos {
 		}
 		
 		
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBounds(100, 100, 953, 654);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.setTitle("Zapatería Argento - Realizar Venta");
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -164,13 +178,29 @@ public class VentanaBusquedaProductos {
 		lblFiltrarPor.setBounds(10, 100, 69, 13);
 		panel.add(lblFiltrarPor);
 		
-		btnAniadirProd = new JButton("->");
-		btnAniadirProd.setBounds(443, 136, 55, 21);
+		
+		//BOTONES
+		btnAniadirProd = new JButton();
+		btnAniadirProd.setBounds(511, 115, 47, 42);
+		btnAniadirProd.setIcon(setIcono("imagenes/cart.png",btnAniadirProd));
 		panel.add(btnAniadirProd);
 		
-		lblAniadir = new JLabel("A\u00F1adir");
-		lblAniadir.setBounds(443, 121, 39, 13);
-		panel.add(lblAniadir);
+		btnQuitarProducto = new JButton("");
+		btnQuitarProducto.setBounds(855, 23, 39, 37);
+		btnQuitarProducto.setIcon(setIcono("imagenes/trash.png",btnQuitarProducto));
+		panel.add(btnQuitarProducto);
+		
+		btnArmarVenta = new JButton("");
+		btnArmarVenta.setForeground(Color.WHITE);
+		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
+		btnArmarVenta.setBounds(508, 522, 93, 63);
+		btnArmarVenta.setIcon(setIcono("imagenes/dollar-symbol.png",btnArmarVenta));
+		frame.getContentPane().add(btnArmarVenta);
+		
+		btnAtras = new JButton("");
+		btnAtras.setBounds(20, 534, 51, 63);
+		btnAtras.setIcon(setIcono("imagenes/back.png",btnAtras));
+		frame.getContentPane().add(btnAtras);
 		
 		lblValorTotal = new JLabel("$0");
 		lblValorTotal.setForeground(new Color(0, 100, 0));
@@ -209,19 +239,12 @@ public class VentanaBusquedaProductos {
 		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
 		
 		scrollPaneCarrito.setViewportView(tableCarrito);
-		
-		spinnerCarrito = new JSpinner();
-		spinnerCarrito.setBounds(632, 41, 47, 19);
-		panel.add(spinnerCarrito);
-		
+				
 		JLabel lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setBounds(588, 41, 55, 19);
 		panel.add(lblCantidad);
 		
-		btnQuitarProducto = new JButton("Quitar del carrito");
-		btnQuitarProducto.setBounds(776, 39, 133, 21);
-		panel.add(btnQuitarProducto);
-		
+
 		JLabel lblClienteSeleccionado = new JLabel("Cliente Seleccionado:");
 		lblClienteSeleccionado.setBounds(10, 0, 134, 13);
 		panel.add(lblClienteSeleccionado);
@@ -252,21 +275,38 @@ public class VentanaBusquedaProductos {
 		
 		panel.add(scrollPaneCliente);
 		
-		spinnerProductos = new JSpinner();
-		spinnerProductos.setBounds(386, 138, 47, 19);
-		panel.add(spinnerProductos);
+		
+		
+		lblCantidad_1 = new JLabel("Cantidad");
+		lblCantidad_1.setBounds(308, 118, 55, 19);
+		panel.add(lblCantidad_1);
+		
+		lblQuitarDelCarrito = new JLabel("Quitar");
+		lblQuitarDelCarrito.setBounds(806, 40, 39, 20);
+		panel.add(lblQuitarDelCarrito);
+		
+		lblPrecioDesde = new JLabel("Precio desde");
+		lblPrecioDesde.setBounds(154, 121, 77, 13);
+		panel.add(lblPrecioDesde);
+		
+		lblPrecioHasta = new JLabel("Precio hasta");
+		lblPrecioHasta.setBounds(218, 121, 77, 13);
+		panel.add(lblPrecioHasta);
+		
+
+		
+		JLabel lblAgregar = new JLabel("Agregar");
+		lblAgregar.setBounds(462, 137, 39, 20);
+		panel.add(lblAgregar);
+		
+		JLabel lblCarrito = new JLabel("Carrito de compras");
+		lblCarrito.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblCarrito.setBounds(587, 0, 258, 31);
+		panel.add(lblCarrito);
 		
 		//
 		
-		btnAtras = new JButton("< Atr\u00E1s");
-		btnAtras.setBounds(20, 534, 93, 28);
-		frame.getContentPane().add(btnAtras);
-		
-		btnArmarVenta = new JButton("Armar Venta");
-		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
-		btnArmarVenta.setBounds(211, 527, 419, 63);
-		frame.getContentPane().add(btnArmarVenta);
-		
+
 		panel_1 = new JPanel();
 		panel_1.setBounds(10, 10, 919, 41);
 		frame.getContentPane().add(panel_1);
@@ -281,6 +321,32 @@ public class VentanaBusquedaProductos {
 		lblSubtitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblSubtitulo.setBounds(20, 54, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
+		
+		JLabel lblNewLabel = new JLabel("Confirmar pedido");
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 35));
+		lblNewLabel.setBounds(221, 525, 356, 50);
+		frame.getContentPane().add(lblNewLabel);
+		
+		//Spinners
+		spinnerCarrito = new JSpinner();
+		spinnerCarrito.setBounds(632, 41, 47, 19);
+		panel.add(spinnerCarrito);
+		
+		spinnerProductos = new JSpinner();
+		spinnerProductos.setBounds(316, 138, 47, 19);
+		panel.add(spinnerProductos);
+		
+		
+		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
+		spinnerPrecioDesde = new JSpinner(spinnerModelDesde);
+		spinnerPrecioDesde.setBounds(164, 138, 47, 19);
+		panel.add(spinnerPrecioDesde);
+		
+		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
+		spinnerPrecioHasta = new JSpinner(spinnerModelHasta);
+		spinnerPrecioHasta.setBounds(218, 138, 47, 19);
+		panel.add(spinnerPrecioHasta);
+		//
 	}
 	
 	
@@ -306,6 +372,16 @@ public class VentanaBusquedaProductos {
 
 	public void cerrar() {
 		frame.setVisible(false);
+	}
+	
+	
+	public Icon setIcono(String url,JButton boton) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(url));
+		int ancho = boton.getWidth();
+		int alto = boton.getHeight();
+		
+		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+		return icono;
 	}
 	
 	
@@ -421,5 +497,28 @@ public class VentanaBusquedaProductos {
 		return spinnerProductos;
 	}
 	
+	public JSpinner getSpinnerPrecioDesde() {
+		return spinnerPrecioDesde;
+	}
+
+	public JSpinner getSpinnerPrecioHasta() {
+		return spinnerPrecioHasta;
+	}
+
+	public SpinnerModel getSpinnerModelDesde() {
+		return spinnerModelDesde;
+	}
+	public SpinnerModel getSpinnerModelHasta() {
+		return spinnerModelHasta;
+	}
+	public void setSpinnerModelDesde(SpinnerModel spinnerModelDesde) {
+		this.spinnerModelDesde = spinnerModelDesde;
+	}
+	public void setSpinnerModelHasta(SpinnerModel spinnerModelHasta) {
+		this.spinnerModelHasta = spinnerModelHasta;
+	}
+	public void setSpinnerPrecioDesde(JSpinner spinnerPrecioDesde) {
+		this.spinnerPrecioDesde = spinnerPrecioDesde;
+	}
 }
 

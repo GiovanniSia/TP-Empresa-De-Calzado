@@ -1,24 +1,5 @@
 package dto;
 
-/*
-CREATE TABLE `Ingresos`
-(
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `IdSucursal` int(11) NOT NULL,
-  `Fecha` DATE NOT NULL,
-  `Hora` TIME NOT NULL,
-  `Tipo` varchar(45) NOT NULL,
-  `IdCliente` int(11) NOT NULL,
-  `TipoFactura` varchar(45) NOT NULL,
-  `NroFactura` int(11) NOT NULL,
-  `MedioPago` varchar(45) NOT NULL,
-  `Cantidad` double(11,2) NOT NULL,
-  `Cotizacion` double(11,2) NOT NULL,
-  `Operacion` varchar(45) NOT NULL,
-  `Total` double(45,2) NOT NULL,
-  PRIMARY KEY (`Id`)
-);
-*/
 public class IngresosDTO {
 	int id;
 	int idSucursal;

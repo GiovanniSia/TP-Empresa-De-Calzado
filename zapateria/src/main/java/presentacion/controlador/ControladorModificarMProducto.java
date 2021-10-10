@@ -71,16 +71,17 @@ public class ControladorModificarMProducto {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				maestroProductoEnTabla = maestroProducto.getMaestroProductoAproximado("IdMaestroProducto",
-						ventanaModificarMProducto.getTxtFiltroCodProducto().getText(), null, null);
+						ventanaModificarMProducto.getTxtFiltroCodProducto().getText(), null, null,null,0,0);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});
 
 		this.ventanaModificarMProducto.getTxtFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
+//			String nombreColumna1, String txtAprox1,String nombreColumna2, String txtAprox2,String nombreColumna3,int precioDesde, int precioHasta
 			public void keyReleased(KeyEvent e) {
 				maestroProductoEnTabla = maestroProducto.getMaestroProductoAproximado("Descripcion",
-						ventanaModificarMProducto.getTxtFiltroDescripcion().getText(), null, null);
+						ventanaModificarMProducto.getTxtFiltroDescripcion().getText(), null, null,null,0,0);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});
@@ -89,7 +90,7 @@ public class ControladorModificarMProducto {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				maestroProductoEnTabla = maestroProducto.getMaestroProductoAproximado("Talle",
-						ventanaModificarMProducto.getTxtFiltroTalle().getText(), null, null);
+						ventanaModificarMProducto.getTxtFiltroTalle().getText(), null, null,null,0,0);
 				llenarTabla(maestroProductoEnTabla);
 			}
 		});

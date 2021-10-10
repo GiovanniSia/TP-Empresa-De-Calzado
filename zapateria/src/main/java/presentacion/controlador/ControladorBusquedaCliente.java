@@ -31,7 +31,6 @@ public class ControladorBusquedaCliente {
 	}
 
 	public void inicializar() {
-		System.out.println("se ejecuta el contorlador de cliente");
 
 		this.cliente = new Cliente(new DAOSQLFactory());
 
