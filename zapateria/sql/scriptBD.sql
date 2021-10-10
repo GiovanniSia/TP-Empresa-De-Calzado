@@ -325,9 +325,9 @@ insert into paso values(4,"Montado");
 insert into paso values(5,"Pegado");
 insert into paso values(6,"Terminado");
 
-INSERT INTO maestroProductos values(7,"Pegamento"  ,"PT","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
-INSERT INTO maestroProductos values(8,"Tijera"  ,"PT","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
-INSERT INTO maestroProductos values(9,"Adesivo"  ,"PT","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
+INSERT INTO maestroProductos values(8,"Tijera"  ,"MP","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Adesivo"  ,"MP","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
 
 insert into pasosReceta values(1,1,1,1);
 insert into pasosReceta values(2,1,2,2);

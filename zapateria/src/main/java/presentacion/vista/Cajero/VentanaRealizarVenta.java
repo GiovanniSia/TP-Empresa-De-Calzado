@@ -41,7 +41,6 @@ public class VentanaRealizarVenta {
 	private JTextField textNumOperacion;
 	
 	private SpinnerModel spinnerModelCant;
-	private JSpinner spinnerCantidadPago;
 
 
 	private JButton btnAgregarMedioPago;
@@ -120,9 +119,9 @@ public class VentanaRealizarVenta {
 		lblMediosDePago.setBounds(10, 10, 158, 21);
 		panel_2.add(lblMediosDePago);
 		
-		JLabel lblDineroRestante = new JLabel("Dinero Restante");
+		JLabel lblDineroRestante = new JLabel("Pagando");
 		lblDineroRestante.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
-		lblDineroRestante.setBounds(0, 312, 158, 34);
+		lblDineroRestante.setBounds(542, 312, 158, 34);
 		panel_2.add(lblDineroRestante);
 		
 		JLabel lblMtodoDePago = new JLabel("Método de pago");
@@ -130,7 +129,7 @@ public class VentanaRealizarVenta {
 		lblMtodoDePago.setBounds(10, 41, 100, 21);
 		panel_2.add(lblMtodoDePago);
 		
-		JLabel lblltimosDgitos = new JLabel("numero de operacion");
+		JLabel lblltimosDgitos = new JLabel("N\u00FAmero de operacion");
 		lblltimosDgitos.setFont(new Font("Consolas", Font.PLAIN, 12));
 		lblltimosDgitos.setBounds(249, 41, 142, 21);
 		panel_2.add(lblltimosDgitos);
@@ -140,20 +139,20 @@ public class VentanaRealizarVenta {
 		textNumOperacion.setBounds(249, 64, 133, 20);
 		panel_2.add(textNumOperacion);
 		
-		btnAgregarMedioPago = new JButton("Agregar otro medio de pago");
+		btnAgregarMedioPago = new JButton("Agregar medio de pago");
 		btnAgregarMedioPago.setBounds(643, 10, 177, 27);
 		panel_2.add(btnAgregarMedioPago);
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
 		lblTotalAPagar.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
-		lblTotalAPagar.setBounds(531, 312, 158, 34);
+		lblTotalAPagar.setBounds(10, 312, 158, 34);
 		panel_2.add(lblTotalAPagar);
 		
 		lblTotalAPagarValor = new JLabel("$0");
 		lblTotalAPagarValor.setBackground(new Color(255, 255, 255));
-		lblTotalAPagarValor.setForeground(new Color(0, 128, 0));
+		lblTotalAPagarValor.setForeground(Color.BLACK);
 		lblTotalAPagarValor.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		lblTotalAPagarValor.setBounds(643, 312, 177, 34);
+		lblTotalAPagarValor.setBounds(126, 312, 177, 34);
 		panel_2.add(lblTotalAPagarValor);
 		
 		//TABLAS
@@ -193,34 +192,30 @@ public class VentanaRealizarVenta {
 		
 		//
 		//Spinner
-		spinnerModelCant = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
-		spinnerCantidadPago = new JSpinner(spinnerModelCant);
+		spinnerModelCant = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
 		
-		spinnerCantidadPago.setBounds(482, 64, 117, 20);
-		panel_2.add(spinnerCantidadPago);
-		
-		JLabel lblModificarCantidad = new JLabel("Modificar Cantidad");
+		JLabel lblModificarCantidad = new JLabel("Seleccionar cantidad");
 		lblModificarCantidad.setFont(new Font("Consolas", Font.PLAIN, 12));
 		lblModificarCantidad.setBounds(482, 10, 142, 21);
 		panel_2.add(lblModificarCantidad);
 		
 		lblPrecioVentaValor = new JLabel("$0");
-		lblPrecioVentaValor.setBounds(138, 312, 177, 34);
+		lblPrecioVentaValor.setBounds(617, 312, 177, 34);
 		panel_2.add(lblPrecioVentaValor);
 		lblPrecioVentaValor.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		lblPrecioVentaValor.setForeground(new Color(0, 0, 0));
+		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
 		
 		textCantidad = new JTextField();
 		textCantidad.setBounds(482, 40, 96, 19);
 		panel_2.add(textCantidad);
 		textCantidad.setColumns(10);
 		
-		btnCancelarVenta = new JButton("Cancelar Venta");
+		btnCancelarVenta = new JButton("Cancelar");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
 		btnCancelarVenta.setBounds(71, 466, 311, 41);
 		panel.add(btnCancelarVenta);
 		
-		btnFinalizarVenta = new JButton("Finalizar Venta");
+		btnFinalizarVenta = new JButton("Cobrar");
 		btnFinalizarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
 		btnFinalizarVenta.setBounds(445, 466, 311, 41);
 		panel.add(btnFinalizarVenta);
@@ -290,11 +285,7 @@ public class VentanaRealizarVenta {
 	public String[] getNombreColumnasMedioPago() {
 		return nombreColumnasMedioPago;
 	}
-	
-	public JSpinner getSpinnerCantidadPago() {
-		return spinnerCantidadPago;
-	}
-	
+
 	public JButton getBtnCancelarVenta() {
 		return btnCancelarVenta;
 	}

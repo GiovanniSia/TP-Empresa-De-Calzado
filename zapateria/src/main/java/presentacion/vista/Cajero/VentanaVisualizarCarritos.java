@@ -177,14 +177,14 @@ public class VentanaVisualizarCarritos {
 		lblNewLabel_1.setBounds(598, 72, 294, 21);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblCobrar = new JLabel("Cobrar");
-		lblCobrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 42));
-		lblCobrar.setBounds(649, 495, 134, 57);
+		JLabel lblCobrar = new JLabel("Elegir medio de pago");
+		lblCobrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 23));
+		lblCobrar.setBounds(560, 495, 223, 41);
 		panel.add(lblCobrar);
 		
 		lblFiltrarPor = new JLabel("Filtrar Por:");
 		lblFiltrarPor.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblFiltrarPor.setBounds(10, 102, 93, 13);
+		lblFiltrarPor.setBounds(10, 102, 93, 21);
 		panel.add(lblFiltrarPor);
 		
 		lblNombre = new JLabel("Nombre");
