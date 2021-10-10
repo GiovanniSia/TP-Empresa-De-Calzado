@@ -163,18 +163,15 @@ public class ControladorBusquedaProductos {
 		int precioHasta = (int) this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
 		
 		List<MaestroProductoDTO> productosAproximados;
-		if(precioHasta>0) {
-			
-			if(this.clienteSeleccionado.getTipoCliente()=="Mayorista") {
-				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,precioHasta);
-			}else {
-				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,precioHasta);
-			}
-			
+
+		System.out.println("tipocliente: "+this.clienteSeleccionado.getTipoCliente());
+		if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,precioHasta);
 		}else {
-			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,null,0,0);	
-		}
-	
+			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,precioHasta);
+			}
+		
+		System.out.println("cant de result"+productosAproximados.size());
 		escribirTabla(productosAproximados);
 	}
 	
