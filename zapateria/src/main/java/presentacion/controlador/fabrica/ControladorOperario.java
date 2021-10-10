@@ -137,7 +137,7 @@ public class ControladorOperario implements ActionListener {
 	}
 
 	private void recuperarListaDeOrdenesPendientes() {
-		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar("","","");
+		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar("","","","","");
 	}
 	
 	private void llenarTablaOrdenes() {
@@ -230,7 +230,7 @@ public class ControladorOperario implements ActionListener {
 	
 	private void llenarTablaTrabajos() {
 		reiniciarTablaTrabajos();
-		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha("","","");
+		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha("","","","","");
 		
 		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		

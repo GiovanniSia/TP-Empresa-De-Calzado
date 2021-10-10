@@ -355,11 +355,11 @@ insert into recetas values(4,2,'Receta sin material');
 insert into pasosReceta values(12,4,1,1);
 insert into pasosReceta values(13,4,2,2);
 
-insert into ordenfabrica values(1,1,'2021-03-20',15,'L123123',1);
-insert into ordenfabrica values(2,1,'2021-03-20',10,'L213132',1);
+insert into ordenfabrica values(1,1,'2020-03-20',15,'L123123',1);
+insert into ordenfabrica values(2,1,'2019-06-19',10,'L213132',1);
 insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',1);
-insert into ordenfabrica values(4,2,'2021-03-20',20,'L493132',1);
-insert into ordenfabrica values(5,1,'2021-03-20',20,'L493132',1);
+insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',1);
+insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',1);
 
 insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
 insert into stock values(9,1,8,'LOTECREADOAMANO3',400);

@@ -35,6 +35,10 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JTextField textProducto;
 	private JLabel lblProducto;
 	JTextField textSucursal;
+	private JButton btnFechaDesde;
+	private JButton btnFechaHasta;
+	private JLabel lblFechaDesde;
+	private JLabel lblFechaHasta;
 
 	public ReVentanaVerFabricaciones() {
 		initialize();
@@ -99,6 +103,22 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		lblProducto = new JLabel("Producto");
 		lblProducto.setBounds(180, 11, 46, 14);
 		panel.add(lblProducto);
+		
+		btnFechaDesde = new JButton("Desde");
+		btnFechaDesde.setBounds(265, 7, 89, 23);
+		panel.add(btnFechaDesde);
+		
+		btnFechaHasta = new JButton("Hasta");
+		btnFechaHasta.setBounds(265, 35, 89, 23);
+		panel.add(btnFechaHasta);
+		
+		lblFechaDesde = new JLabel("-");
+		lblFechaDesde.setBounds(364, 11, 75, 14);
+		panel.add(lblFechaDesde);
+		
+		lblFechaHasta = new JLabel("-");
+		lblFechaHasta.setBounds(364, 39, 75, 14);
+		panel.add(lblFechaHasta);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -156,5 +176,21 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JTextField getTextSucursal() {
 		return textSucursal;
+	}
+
+	public JButton getBtnFechaDesde() {
+		return btnFechaDesde;
+	}
+
+	public JButton getBtnFechaHasta() {
+		return btnFechaHasta;
+	}
+
+	public JLabel getLblFechaDesde() {
+		return lblFechaDesde;
+	}
+
+	public JLabel getLblFechaHasta() {
+		return lblFechaHasta;
 	}
 }

@@ -73,6 +73,7 @@ public class ReControladorOperario implements ActionListener {
 	String fechaDesde = "";
 	String fechaHasta = "";
 	String diaCumpleCreado = "";
+	boolean seleccionarDesde = true;
 	
 	public ReControladorOperario(SucursalDTO fabrica) {
 		idFabrica = fabrica.getIdSucursal();
@@ -107,6 +108,8 @@ public class ReControladorOperario implements ActionListener {
 				refrescarTablaPorTecla();
 			}
 		});
+		ventanaPrincipal.getBtnFechaDesde().addActionListener(r->this.seleccionarDesde(r));
+		ventanaPrincipal.getBtnFechaHasta().addActionListener(r->this.seleccionarHasta(r));
 		
 		ventanaElegirReceta = new ReVentanaSeleccionarUnaReceta();
 		ventanaElegirReceta.getComboBox().addActionListener(r->botonSeleccionarReceta(r));
@@ -289,7 +292,7 @@ public class ReControladorOperario implements ActionListener {
 		String id = ventanaPrincipal.getTextId().getText();
 		String sucursal = ventanaPrincipal.getTextSucursal().getText();
 		String productoText = ventanaPrincipal.getTextProducto().getText();
-		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id);
+		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id, fechaDesde, fechaHasta);
 		
 		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		
@@ -371,7 +374,7 @@ public class ReControladorOperario implements ActionListener {
 				
 			}
 		}*/
-		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id);
+		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
 	}
 	
 	private MaestroProductoDTO buscarProducto(int idProducto) {
@@ -530,13 +533,23 @@ public class ReControladorOperario implements ActionListener {
 	
 	// FECHAS
 	
-	private void seleccionarAnio(ActionEvent a) {
+	private void seleccionarDesde(ActionEvent a) {
+		seleccionarDesde = true;
+		seleccionarAnio();
+	}
+	
+	private void seleccionarHasta(ActionEvent a) {
+		seleccionarDesde = false;
+		seleccionarAnio();
+	}
+	
+	private void seleccionarAnio() {
 		ventanaParaCumple.getLblFecha().setText("Seleccione año");
 		ventanaParaCumple.getComboBox().removeAllItems();
 		DefaultComboBoxModel valores = new DefaultComboBoxModel();
 		ArrayList<String> val = new ArrayList<String>();
-		for(int x = 0; x < 121; x++) {
-			val.add(Integer.toString(x + 1900));
+		for(int x = 0; x < 122-100; x++) {
+			val.add(Integer.toString(x + 1900 + 100));
 		}
 		valores.addAll(val);
 		ventanaParaCumple.getComboBox().setModel(valores);
@@ -647,7 +660,14 @@ public class ReControladorOperario implements ActionListener {
 		diaCumpleCreado = Integer.toString(ventanaParaCumple.getComboBox().getSelectedIndex()+1);
 		System.out.println(anioCumpleCreado + " " + mesCumpleCreado + " " + diaCumpleCreado);
 		ventanaParaCumple.cerrar();
-		formarFecha();
+		if(this.seleccionarDesde) {
+			fechaDesde = formarFecha();
+			ventanaPrincipal.getLblFechaDesde().setText(fechaDesde);
+		}else {
+			fechaHasta = formarFecha();
+			ventanaPrincipal.getLblFechaHasta().setText(fechaHasta);
+		}
+		this.refrescarTabla();
 	}
 	
 	private boolean anioBisiesto(int anio) {

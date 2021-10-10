@@ -181,7 +181,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	// Puedo leer todas las recetas con sus datos, ahora tengo que leer todos las fabricaciones en marcha
 	private static final String readAllFabricacionesEnMarcha = "SELECT * FROM fabricacionesEnMarcha WHERE (Estado = 'activo' OR Estado = 'completo')";
 	
-	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(String descrProducto, String idSucursal, String idOrden){
+	public List<FabricacionesDTO> readAllFabricacionesEnMarcha(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
@@ -196,8 +196,13 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			if(!idOrden.equals("")) {
 				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.IdOrdenFabrica = "+idOrden+")";
 			}
+			if(!fechaDesde.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido >= '"+fechaDesde+"')";
+			}
+			if(!Hasta.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido <= '"+Hasta+"')";
+			}
 			
-			System.out.println(comandoSql);
 			statement = conexion.getSQLConexion().prepareStatement(comandoSql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -210,7 +215,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	}
 	
 	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'))";
-	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden){
+	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		ArrayList<OrdenFabricaDTO> fabri = new ArrayList<OrdenFabricaDTO>();
@@ -223,6 +228,12 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			}
 			if(!idOrden.equals("")) {
 				comandoSql = comandoSql + " AND ordenFabrica.IdOrdenFabrica = " + idOrden+"";
+			}
+			if(!fechaDesde.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido >= '"+fechaDesde+"'";
+			}
+			if(!Hasta.equals("")) {
+				comandoSql = comandoSql + " AND ordenFabrica.FechaRequerido <= '"+Hasta+"'";
 			}
 			statement = conexion.getSQLConexion().prepareStatement(comandoSql);
 			resultSet = statement.executeQuery();
