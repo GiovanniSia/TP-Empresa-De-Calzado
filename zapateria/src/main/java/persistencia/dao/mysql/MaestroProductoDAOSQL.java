@@ -156,8 +156,14 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 //		if (nombreColumna2 != null && txtAprox2 != null) {
 //			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
 //		}
-		if(nombreColumna3!=null && precioHasta!=0) {
+		if(nombreColumna3!=null && precioHasta!=0 && precioDesde<precioHasta) {
 			sel = sel + "AND "+nombreColumna3+" BETWEEN "+precioDesde+" AND "+precioHasta;
+		}else {
+			if(nombreColumna3!=null && precioDesde!=0 && precioHasta==0) {
+				sel = sel + "AND "+nombreColumna3 + " > "+precioDesde;
+			}else {
+				
+			}
 		}
 
 		ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();

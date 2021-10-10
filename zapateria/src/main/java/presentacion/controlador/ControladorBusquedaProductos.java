@@ -164,11 +164,13 @@ public class ControladorBusquedaProductos {
 		
 		List<MaestroProductoDTO> productosAproximados;
 		if(precioHasta>0) {
+			
 			if(this.clienteSeleccionado.getTipoCliente()=="Mayorista") {
 				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,precioHasta);
 			}else {
 				productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,precioHasta);
 			}
+			
 		}else {
 			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,null,0,0);	
 		}
