@@ -3,6 +3,9 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import dto.HistorialCambioMonedaDTO;
 import modelo.HistorialCambioMoneda;
@@ -43,13 +46,12 @@ public class ControladorHistorialCambioCotizacion {
 				realizarBusqueda();
 			}
 		});
-
-		this.ventanaHistorialCambioMoneda.getTextFiltroFecha().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				realizarBusqueda();
-			}
-		});
+		this.ventanaHistorialCambioMoneda.getBtnFiltrarFechas().addActionListener(a -> btnFiltrarFecha(a));
+		
+	}
+	
+	public void btnFiltrarFecha(ActionEvent f) {
+		realizarBusqueda(); 
 	}
 
 	public void realizarBusqueda() {
@@ -60,11 +62,20 @@ public class ControladorHistorialCambioCotizacion {
 
 		String txtcodMoneda = this.ventanaHistorialCambioMoneda.getTextFiltroCodMoneda().getText();
 		String txtDescripcion = this.ventanaHistorialCambioMoneda.getTextFiltroDescripcion().getText();
-		String txtFecha = this.ventanaHistorialCambioMoneda.getTextFiltroFecha().getText();
 
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date fechaDesde = this.ventanaHistorialCambioMoneda.getFechaDesde().getDate();
+		Date fechaHasta = this.ventanaHistorialCambioMoneda.getFechaHasta().getDate();
+				
+		String fechaDesdeFormato = dateFormat.format(fechaDesde);
+		String fechaHastaFormato = dateFormat.format(fechaHasta);
+		
+		System.out.println(fechaDesdeFormato + " y " + fechaHastaFormato);
+		
 		List<HistorialCambioMonedaDTO> HistorialCambioMonedaAproximados = this.historialCambioMoneda
 				.getHistorialCambioMonedaAproximado("IdMoneda", txtcodMoneda, "Descripcion", txtDescripcion, "Fecha",
-						txtFecha);
+						fechaDesdeFormato, fechaHastaFormato);
+
 		llenarTabla(HistorialCambioMonedaAproximados);
 	}
 
