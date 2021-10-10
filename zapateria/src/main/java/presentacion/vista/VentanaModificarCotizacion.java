@@ -36,6 +36,8 @@ public class VentanaModificarCotizacion extends JFrame {
 	private JButton btnVerHistorialDeCambios;
 	private JButton btnAtras;
 	private JPanel panel_1;
+	private JTextField textFiltroCodMoneda;
+	private JLabel lblCodMoneda;
 
 	public static void main(String[] args) {
 		VentanaModificarCotizacion v = new VentanaModificarCotizacion();
@@ -54,7 +56,7 @@ public class VentanaModificarCotizacion extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 517, 492);
+		frame.setBounds(100, 100, 517, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -132,28 +134,38 @@ public class VentanaModificarCotizacion extends JFrame {
 
 		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescripcion.setBounds(170, 21, 158, 20);
+		lblDescripcion.setBounds(139, 21, 158, 20);
 		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(lblDescripcion);
 
 		txtFiltroDescripcion = new JTextField();
 
-		txtFiltroDescripcion.setBounds(170, 52, 158, 20);
+		txtFiltroDescripcion.setBounds(139, 52, 158, 20);
 		panel_1.add(txtFiltroDescripcion);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
-		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFiltrarPor.setBounds(10, 11, 70, 14);
+		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblFiltrarPor.setBounds(10, 0, 70, 14);
 		panel_1.add(lblFiltrarPor);
+		 
+		textFiltroCodMoneda = new JTextField();
+		textFiltroCodMoneda.setBounds(10, 52, 119, 20);
+		panel_1.add(textFiltroCodMoneda);
+		
+		lblCodMoneda = new JLabel("Cod. Moneda");
+		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodMoneda.setBounds(10, 21, 119, 20);
+		panel_1.add(lblCodMoneda);
 
 		lblModificarCotizacion = new JLabel("Modificar Cotizaci\u00F3n");
 		lblModificarCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblModificarCotizacion.setBounds(10, 41, 198, 30);
+		lblModificarCotizacion.setBounds(10, 39, 198, 30);
 		frame.getContentPane().add(lblModificarCotizacion);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 501, 41);
+		panel_2.setBounds(0, 0, 501, 37);
 		frame.getContentPane().add(panel_2);
 
 		lblZapateria = new JLabel("Zapater\u00EDa");
@@ -162,6 +174,10 @@ public class VentanaModificarCotizacion extends JFrame {
 	}
 
 	
+	public JTextField getTxtFiltroCodMoneda() {
+		return textFiltroCodMoneda;
+	}
+
 	public JLabel getLblActualizarDescripcion() {
 		return lblActualizarDescripcion;
 	}

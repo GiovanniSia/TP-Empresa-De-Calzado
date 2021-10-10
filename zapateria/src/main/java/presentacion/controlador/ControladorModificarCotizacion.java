@@ -25,7 +25,7 @@ public class ControladorModificarCotizacion {
 	private MedioPago medioPago;
 	private HistorialCambioMoneda historialCambioMoneda;
 	private List<MedioPagoDTO> medioPagoEnTabla;
-	
+
 	public ControladorModificarCotizacion(MedioPago medioPago) {
 		this.ventanaModificarCotizacion = new VentanaModificarCotizacion();
 		this.medioPago = medioPago;
@@ -56,14 +56,34 @@ public class ControladorModificarCotizacion {
 		});
 
 		// TextFiltos
+		this.ventanaModificarCotizacion.getTxtFiltroCodMoneda().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		// TextFiltos
 		this.ventanaModificarCotizacion.getTxtFiltroDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				medioPagoEnTabla = medioPago.getMedioPagoAproximado("Descripcion",
-						ventanaModificarCotizacion.getTxtFiltroDescripcion().getText(), null, null);
-				llenarTabla(medioPagoEnTabla);
+				realizarBusqueda();
 			}
 		});
+
+	}
+
+	public void realizarBusqueda() {
+		this.ventanaModificarCotizacion.getModelProducto().setRowCount(0);// borrar datos de la tabla
+		this.ventanaModificarCotizacion.getModelProducto().setColumnCount(0);
+		this.ventanaModificarCotizacion.getModelProducto()
+				.setColumnIdentifiers(this.ventanaModificarCotizacion.getNombreColumnas());
+
+		String txtcodMoneda = this.ventanaModificarCotizacion.getTxtFiltroCodMoneda().getText();
+		String txtDescripcion = this.ventanaModificarCotizacion.getTxtFiltroDescripcion().getText();
+
+		List<MedioPagoDTO> MedioPagoAproximados = this.medioPago.getMedioPagoAproximado("IdMoneda", txtcodMoneda,
+				"Descripcion", txtDescripcion);
+		llenarTabla(MedioPagoAproximados);
 	}
 
 	public void atras(ActionEvent a) {
@@ -98,8 +118,8 @@ public class ControladorModificarCotizacion {
 		// Valido si ingreso letras en vez de numeros o no incluyo el .
 		String tasaConversionNueva = this.ventanaModificarCotizacion.getTxtActualizarTasaConvercion().getText();
 
-		if (!validarFormatoTasaConversion(tasaConversionNueva)) {
-			JOptionPane.showMessageDialog(null, "Formato invalido. Ej: 50.99");
+		if (!formatoTasaConversionEsValido(tasaConversionNueva)) {
+			JOptionPane.showMessageDialog(null, "Formato incorrecto. Ej: 50 o 50.99");
 			return false;
 		}
 
@@ -112,16 +132,23 @@ public class ControladorModificarCotizacion {
 			JOptionPane.showMessageDialog(null, "No se permiten negativos");
 			return false;
 		}
+		double tasaConversionAntigua = this.medioPagoEnTabla.get(filaSeleccionada).getTasaConversion();
+
+		// Validar si la tasa de conversion es igual a la actual
+		if (tasaConversion == tasaConversionAntigua) {
+			JOptionPane.showMessageDialog(null, "No se puede ingresar el mismo valor");
+			return false;
+		}
 
 		return true;
 	}
 
-	public boolean validarFormatoTasaConversion(String precio) {
-		boolean expresion = precio.matches("^-?\\d{1,11}\\.\\d{1,2}");
-		if (!expresion) {
-			return false;
+	public boolean formatoTasaConversionEsValido(String precio) {
+		boolean expresion = precio.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+		if (expresion) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public void actualizarTablaMaestroProducto() {
@@ -142,12 +169,15 @@ public class ControladorModificarCotizacion {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String fecha = dtf.format(LocalDateTime.now());
 
+		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("HH:mm:ss");
+		String hora = dtf2.format(LocalDateTime.now());
+
 		double tasaConversionAntigua = this.medioPagoEnTabla.get(filaSeleccionada).getTasaConversion();
 		double tasaConversionNueva = Double
 				.parseDouble(this.ventanaModificarCotizacion.getTxtActualizarTasaConvercion().getText());
 
 		HistorialCambioMonedaDTO nuevoHistorial = new HistorialCambioMonedaDTO(idCambioMoneda, idMoneda, descripcion,
-				idEmpleado, fecha, tasaConversionAntigua, tasaConversionNueva);
+				idEmpleado, fecha, hora, tasaConversionAntigua, tasaConversionNueva);
 
 		this.historialCambioMoneda.insert(nuevoHistorial);
 	}
