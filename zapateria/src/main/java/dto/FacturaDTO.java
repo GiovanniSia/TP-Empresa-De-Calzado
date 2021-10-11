@@ -3,125 +3,236 @@ package dto;
 import java.sql.Date;
 
 public class FacturaDTO {
+	
+	/*
+	   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `MontoPendiente` double(45,2) NOT NULL,
+  `IdCliente` int(11) NOT NULL,
+  `NombreCliente` varchar(45) NOT NULL,
+  `IdEmpleado` int(11) NOT NULL,
+  `NombreEmpleado` varchar(45) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `TipoFactura` varchar(45) NOT NULL,
+  `NroFacturaCompleta` varchar(45) NOT NULL,
+  `IdSucursal` int(11) NOT NULL,
+  `Descuento` double(45,2) NOT NULL,
+  `TotalBruto` double(45,2) NOT NULL,
+  `TotalFactura` double(45,2) NOT NULL,
+  `TipoVenta` varchar(45) NOT NULL,
+  `Calle` varchar(45) NOT NULL,
+  `Altura` varchar(45) NOT NULL,
+  `Pais` varchar(45) NOT NULL,
+  `Provincia` varchar(45) NOT NULL,
+  `Localidad` varchar(45) NOT NULL,
+  `CodPostal` varchar(45) NOT NULL,
+  `CUIL` varchar(45) NOT NULL,
+  `CorreoElectronico` varchar(45) NOT NULL,
+  `ImpuestoAFIP` varchar(45) NOT NULL,
+  `IVA` double(45,2) NOT NULL, 
+	 
+	 */
 	private int idFactura;
-	private int montoPendiente;
-	private String detalle;
+	private double montoPendiente;
 	private int idCliente;
+	private String nombreCliente;
 	private int idEmpleado;
-	private Date fecha;
+	private String nombreEmpleado;
+	private String fecha;
 	private String tipoFactura;
 	private String nroFacturaCompleta;
 	private int idSucursal;
-	private int terceraParte;
-	private int descuento;
-	private int totalFactura;
-	private int idMedioDePago;
-	private String tipoVenta;	
+	private double descuento;
+	private double totalBruto;
+	private double totalFactura;
+	private String tipoVenta;
+	private String calleCliente;
+	private String alturaCliente;
+	private String paisCliente;
+	private String provinciaCliente;
+	private String localidadCliente;
+	private String codPostalCliente;
+	private String cuilCliente;
+	private String correoElectronicoCliente;
+	private String impuestoAFIPCliente;
+	private double IVA;
 	
-	public FacturaDTO(int idFactura, int montoPendiente, String detalle, int idCliente, int idEmpleado, Date fecha,
-			String tipoFactura, String nroFacturaCompleta, int idSucursal,int terceraParte, int descuento, int totalFactura,
-			int idMedioDePago, String tipoVenta) {
+	
+
+	public FacturaDTO(int idFactura, double montoPendiente, int idCliente, String nombreCliente, int idEmpleado,
+			String nombreEmpleado, String fecha, String tipoFactura, String nroFacturaCompleta, int idSucursal,
+			double descuento, double totalBruto, double totalFactura, String tipoVenta, String calleCliente,
+			String alturaCliente, String paisCliente, String provinciaCliente, String localidadCliente,
+			String codPostalCliente, String cuilCliente, String correoElectronicoCliente, String impuestoAFIPCliente,
+			double iVA) {
 		super();
 		this.idFactura = idFactura;
 		this.montoPendiente = montoPendiente;
-		this.detalle = detalle;
 		this.idCliente = idCliente;
+		this.nombreCliente = nombreCliente;
 		this.idEmpleado = idEmpleado;
+		this.nombreEmpleado = nombreEmpleado;
 		this.fecha = fecha;
 		this.tipoFactura = tipoFactura;
 		this.nroFacturaCompleta = nroFacturaCompleta;
 		this.idSucursal = idSucursal;
-		this.terceraParte = terceraParte;
 		this.descuento = descuento;
+		this.totalBruto = totalBruto;
 		this.totalFactura = totalFactura;
-		this.idMedioDePago = idMedioDePago;
 		this.tipoVenta = tipoVenta;
+		this.calleCliente = calleCliente;
+		this.alturaCliente = alturaCliente;
+		this.paisCliente = paisCliente;
+		this.provinciaCliente = provinciaCliente;
+		this.localidadCliente = localidadCliente;
+		this.codPostalCliente = codPostalCliente;
+		this.cuilCliente = cuilCliente;
+		this.correoElectronicoCliente = correoElectronicoCliente;
+		this.impuestoAFIPCliente = impuestoAFIPCliente;
+		IVA = iVA;
 	}
+
+	
 	public int getIdFactura() {
 		return idFactura;
 	}
-	public void setIdFactura(int idFactura) {
-		this.idFactura = idFactura;
-	}
-	public int getMontoPendiente() {
+
+
+
+	public double getMontoPendiente() {
 		return montoPendiente;
 	}
-	public void setMontoPendiente(int montoPendiente) {
-		this.montoPendiente = montoPendiente;
-	}
-	public String getDetalle() {
-		return detalle;
-	}
-	public void setDetalle(String detalle) {
-		this.detalle = detalle;
-	}
+
+
+
 	public int getIdCliente() {
 		return idCliente;
 	}
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
+
+
+
+	public String getNombreCliente() {
+		return nombreCliente;
 	}
+
+
+
 	public int getIdEmpleado() {
 		return idEmpleado;
 	}
-	public void setIdEmpleado(int idEmpleado) {
-		this.idEmpleado = idEmpleado;
+
+
+
+	public String getNombreEmpleado() {
+		return nombreEmpleado;
 	}
-	public Date getFecha() {
+
+
+
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+
+
+
 	public String getTipoFactura() {
 		return tipoFactura;
 	}
-	public void setTipoFactura(String tipoFactura) {
-		this.tipoFactura = tipoFactura;
-	}
+
+
+
 	public String getNroFacturaCompleta() {
 		return nroFacturaCompleta;
 	}
-	public void setNroFacturaCompleta(String nroFacturaCompleta) {
-		this.nroFacturaCompleta = nroFacturaCompleta;
-	}
-	public int getIdScurusal() {
+
+
+
+	public int getIdSucursal() {
 		return idSucursal;
 	}
-	public void setIdScurusal(int idSucursal) {
-		this.idSucursal = idSucursal;
-	}
-	
-	public int getTerceraParte() {
-		return terceraParte;
-	}
-	public void setTerceraParte(int terceraParte) {
-		this.terceraParte = terceraParte;
-	}
-	
-	public int getDescuento() {
+
+
+
+	public double getDescuento() {
 		return descuento;
 	}
-	public void setDescuento(int descuento) {
-		this.descuento = descuento;
+
+
+
+	public double getTotalBruto() {
+		return totalBruto;
 	}
-	public int getTotalFactura() {
+
+
+
+	public double getTotalFactura() {
 		return totalFactura;
 	}
-	public void setTotalFactura(int totalFactura) {
-		this.totalFactura = totalFactura;
-	}
-	public int getIdMedioDePago() {
-		return idMedioDePago;
-	}
-	public void setIdMedioDePago(int idMedioDePago) {
-		this.idMedioDePago = idMedioDePago;
-	}
+
+
+
 	public String getTipoVenta() {
 		return tipoVenta;
 	}
-	public void setTipoVenta(String tipoVenta) {
-		this.tipoVenta = tipoVenta;
+
+
+
+	public String getCalleCliente() {
+		return calleCliente;
 	}
-	
+
+
+
+	public String getAlturaCliente() {
+		return alturaCliente;
+	}
+
+
+
+	public String getPaisCliente() {
+		return paisCliente;
+	}
+
+
+
+	public String getProvinciaCliente() {
+		return provinciaCliente;
+	}
+
+
+
+	public String getLocalidadCliente() {
+		return localidadCliente;
+	}
+
+
+
+	public String getCodPostalCliente() {
+		return codPostalCliente;
+	}
+
+
+
+	public String getCuilCliente() {
+		return cuilCliente;
+	}
+
+
+
+	public String getCorreoElectronicoCliente() {
+		return correoElectronicoCliente;
+	}
+
+
+
+	public String getImpuestoAFIPCliente() {
+		return impuestoAFIPCliente;
+	}
+
+
+
+	public double getIVA() {
+		return IVA;
+	}
+
+		
 }

@@ -30,4 +30,8 @@ public class Empleado {
 	public List<EmpleadoDTO> readAll(){
 		return this.empleado.readAll();
 	}
+	
+	public EmpleadoDTO selectEmpleado(int idEmpleado) {
+		return this.empleado.selectEmpleado(idEmpleado);
+	}
 }

@@ -230,20 +230,31 @@ CREATE TABLE `Caja`
 );
 
 CREATE TABLE `Factura`
-(								
+(
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `MontoPendiente` double(45,2) NOT NULL,
   `IdCliente` int(11) NOT NULL,
   `NombreCliente` varchar(45) NOT NULL,
   `IdEmpleado` int(11) NOT NULL,
   `NombreEmpleado` varchar(45) NOT NULL,
-  `Fecha` DATE NOT NULL,
+  `Fecha` varchar(45) NOT NULL,
   `TipoFactura` varchar(45) NOT NULL,
   `NroFacturaCompleta` varchar(45) NOT NULL,
   `IdSucursal` int(11) NOT NULL,
   `Descuento` double(45,2) NOT NULL,
+  `TotalBruto` double(45,2) NOT NULL,
   `TotalFactura` double(45,2) NOT NULL,
   `TipoVenta` varchar(45) NOT NULL,
+  `Calle` varchar(45) NOT NULL,
+  `Altura` varchar(45) NOT NULL,
+  `Pais` varchar(45) NOT NULL,
+  `Provincia` varchar(45) NOT NULL,
+  `Localidad` varchar(45) NOT NULL,
+  `CodPostal` varchar(45) NOT NULL,
+  `CUIL` varchar(45) NOT NULL,
+  `CorreoElectronico` varchar(45) NOT NULL,
+  `ImpuestoAFIP` varchar(45) NOT NULL,
+  `IVA` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 
@@ -257,6 +268,7 @@ CREATE TABLE `Detalle`
   `PrecioVenta` double(45,2) NOT NULL,
   `Monto` double(45,2) NOT NULL,
   `idFactura` int(11) NOT NULL,
+  `UnidadMedida` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 
@@ -264,6 +276,7 @@ CREATE TABLE `Carrito`
 (
   `idCarrito` int(11) NOT NULL AUTO_INCREMENT,
   `idSucursal` int(11) NOT NULL,
+  `IdCliente` int(45) NOT NULL,
   `Total` double(45,2) NOT NULL,
   `Hora` varchar(20) NOT NULL,
   PRIMARY KEY (`idCarrito`)
@@ -275,8 +288,7 @@ CREATE TABLE `DetalleCarrito`
   `idCarrito` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL,
   `idStock` int(11) NOT NULL,
-  `IdCliente` int(45) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidad` int(20) NOT NULL,
   `precio` double(45,2) NOT NULL,
   PRIMARY KEY (`id`)
 );

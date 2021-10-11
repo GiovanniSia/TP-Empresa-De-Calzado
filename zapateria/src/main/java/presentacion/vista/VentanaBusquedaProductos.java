@@ -313,7 +313,7 @@ public class VentanaBusquedaProductos {
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		
-		lblTitulo = new JLabel("Zapater\u00EDa");
+		lblTitulo = new JLabel("Zapateria");
 		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
 		lblTitulo.setBounds(10, 0, 195, 41);
 		panel_1.add(lblTitulo);

@@ -54,7 +54,7 @@ public class ControladorVisualizarCarritos {
 		this.listaClientes = new ArrayList<ClienteDTO>();
 		this.carritosEnTabla = new ArrayList<CarritoDTO>();
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
-		this.controladorRealizarVenta = new ControladorRealizarVenta();
+//		this.controladorRealizarVenta = new ControladorRealizarVenta();
 	}
 
 	
@@ -98,10 +98,12 @@ public class ControladorVisualizarCarritos {
 		
 		
 		llenarTablaCompleta();
-		this.ventanaVisualizarCarritos.show();
+		
 	}
 	
-	
+	public void mostrarVentana() {
+		this.ventanaVisualizarCarritos.show();
+	}
 	
 	public void realizarBusqueda() {
 		String nombre = this.ventanaVisualizarCarritos.getTextNombre().getText();
@@ -233,6 +235,7 @@ public class ControladorVisualizarCarritos {
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
+			this.controladorRealizarVenta = new ControladorRealizarVenta();
 			controladorRealizarVenta.establecerCarritoACobrar(carrito, detalleCarrito);
 			controladorRealizarVenta.inicializar();
 		}
@@ -247,6 +250,7 @@ public class ControladorVisualizarCarritos {
 		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos(carrito,detalleCarrito,cliente,maestroProducto);
 		c.inicializar();
+		c.mostrarVentana();
 	}
 	
 }

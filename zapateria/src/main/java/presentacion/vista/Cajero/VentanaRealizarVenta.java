@@ -43,12 +43,14 @@ public class VentanaRealizarVenta {
 	private JButton btnAgregarMedioPago;
 	private JButton btnCancelarVenta;
 	private JButton btnFinalizarVenta;
-	
+	private JButton btnQuitarMedioPago;
+
 	private JLabel lblTotalAPagarValor;
 	private JLabel lblPrecioVentaValor;
 	private JTextField textCantidad;
+	private JTextField textDescuento;
 	
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -129,17 +131,15 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblltimosDgitos = new JLabel("N\u00FAmero de operacion");
 		lblltimosDgitos.setFont(new Font("Consolas", Font.PLAIN, 12));
-		lblltimosDgitos.setBounds(249, 41, 142, 21);
+		lblltimosDgitos.setBounds(218, 10, 138, 21);
 		panel_2.add(lblltimosDgitos);
 		
 		textNumOperacion = new JTextField();
 		textNumOperacion.setColumns(10);
-		textNumOperacion.setBounds(249, 64, 133, 20);
+		textNumOperacion.setBounds(362, 9, 133, 20);
 		panel_2.add(textNumOperacion);
 		
-		btnAgregarMedioPago = new JButton("Agregar medio de pago");
-		btnAgregarMedioPago.setBounds(643, 10, 177, 27);
-		panel_2.add(btnAgregarMedioPago);
+
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
 		lblTotalAPagar.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
@@ -194,7 +194,7 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblModificarCantidad = new JLabel("Seleccionar cantidad");
 		lblModificarCantidad.setFont(new Font("Consolas", Font.PLAIN, 12));
-		lblModificarCantidad.setBounds(482, 10, 142, 21);
+		lblModificarCantidad.setBounds(214, 41, 142, 21);
 		panel_2.add(lblModificarCantidad);
 		
 		lblPrecioVentaValor = new JLabel("$0");
@@ -204,9 +204,29 @@ public class VentanaRealizarVenta {
 		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
 		
 		textCantidad = new JTextField();
-		textCantidad.setBounds(482, 40, 96, 19);
+		textCantidad.setBounds(362, 40, 133, 19);
 		panel_2.add(textCantidad);
 		textCantidad.setColumns(10);
+		
+		btnAgregarMedioPago = new JButton("");
+		btnAgregarMedioPago.setBounds(668, 32, 55, 52);
+		btnAgregarMedioPago.setIcon(setIcono("../imagenes/pay.png",btnAgregarMedioPago));
+		panel_2.add(btnAgregarMedioPago);
+		
+		btnQuitarMedioPago = new JButton("");
+		btnQuitarMedioPago.setBounds(755, 32, 46, 52);
+		btnQuitarMedioPago.setIcon(setIcono("../imagenes/trash.png",btnQuitarMedioPago));
+		panel_2.add(btnQuitarMedioPago);
+		
+		JLabel lblAadirDescuento = new JLabel("A\u00F1adir descuento");
+		lblAadirDescuento.setFont(new Font("Consolas", Font.PLAIN, 12));
+		lblAadirDescuento.setBounds(240, 65, 116, 21);
+		panel_2.add(lblAadirDescuento);
+		
+		textDescuento = new JTextField();
+		textDescuento.setColumns(10);
+		textDescuento.setBounds(362, 64, 133, 19);
+		panel_2.add(textDescuento);
 		
 		btnCancelarVenta = new JButton("");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
@@ -318,5 +338,13 @@ public class VentanaRealizarVenta {
 	}
 	public JTextField getTextCantidad() {
 		return textCantidad;
+	}
+	
+	public JButton getBtnQuitarMedioPago() {
+		return btnQuitarMedioPago;
+	}
+	
+	public JTextField getTextDescuento() {
+		return textDescuento;
 	}
 }

@@ -414,6 +414,8 @@ public class ControladorBusquedaProductos {
 				guardarVentaArmada();
 				descontarDelStock();
 				this.vistaBusquedaProductos.cerrar();
+				this.controladorBusquedaCliente.inicializar();
+				this.controladorBusquedaCliente.mostrarVentana();
 			}
 			
 		}

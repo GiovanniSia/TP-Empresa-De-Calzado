@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.EmpleadoDTO;
+import dto.MaestroProductoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.EmpleadoDAO;
 
@@ -17,6 +18,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
 	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
 	private static final String readall = "SELECT * FROM empleados";
+	private static final String select = "SELEC * FROM empleados WHERE IdEmpleado=?";
 	
 	@Override
 	public boolean insert(EmpleadoDTO empleado) {
@@ -120,6 +122,26 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		String tipoEmpleado = resultSet.getString("TipoEmpleado");
 		String contrasenia = resultSet.getString("Contra");
 		return new EmpleadoDTO(idEmpleado, CUIL, nombre, apellido, correo, tipoEmpleado, contrasenia);
+	}
+	
+	
+	@Override
+	public EmpleadoDTO selectEmpleado(int idEmpleado) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		EmpleadoDTO empleado = null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(select);
+			statement.setInt(1,idEmpleado);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				empleado = getEmpleadoDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return empleado;
 	}
 
 }
