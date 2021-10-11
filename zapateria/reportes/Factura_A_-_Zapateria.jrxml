@@ -541,7 +541,7 @@
 		</band>
 	</columnFooter>
 	<summary>
-		<band height="265" splitType="Stretch">
+		<band height="354" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<frame>
 				<reportElement x="1" y="33" width="560" height="100" uuid="5faa541c-6d77-43e5-b426-c061f9ccfdcc"/>
@@ -587,53 +587,6 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="-1" y="165" width="554" height="44" uuid="8844fd3e-7061-41b5-9009-d57060a4e084"/>
-				<frame>
-					<reportElement mode="Opaque" x="5" y="0" width="548" height="16" backcolor="#BABABA" uuid="6cb8d995-14b6-44f2-ba1f-c15b65000b84"/>
-					<staticText>
-						<reportElement mode="Transparent" x="10" y="0" width="80" height="16" forecolor="#030303" backcolor="#030303" uuid="f678f0c2-a140-4d6d-91b5-0846fd3f8ec2"/>
-						<text><![CDATA[Medio de Pago]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="120" y="0" width="80" height="16" forecolor="#030303" backcolor="#030303" uuid="a18f2494-7fd2-40ee-a93d-4ee412710556"/>
-						<text><![CDATA[Monto]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="220" y="0" width="86" height="16" forecolor="#030303" backcolor="#030303" uuid="d78d2122-3819-4919-9d27-d70e2f46e54f"/>
-						<text><![CDATA[Cotización en AR$]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="340" y="0" width="86" height="16" forecolor="#030303" backcolor="#030303" uuid="d8927302-40d5-4c7d-83c7-428da0add78f"/>
-						<text><![CDATA[Código Operación]]></text>
-					</staticText>
-					<staticText>
-						<reportElement mode="Transparent" x="477" y="0" width="70" height="16" forecolor="#030303" backcolor="#030303" uuid="c5ba1fbf-4e9a-4ffb-86a5-929d1a9c7e23"/>
-						<text><![CDATA[Monto en AR$]]></text>
-					</staticText>
-				</frame>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="15" y="20" width="74" height="14" uuid="58626006-a6ca-4dda-9276-f25af8c87bb2"/>
-					<textFieldExpression><![CDATA[$F{MedioPago}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="467" y="18" width="86" height="18" uuid="7f5ee583-cdb7-4eaf-9e66-a0858eed334a"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Total})]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="110" y="20" width="74" height="14" uuid="424621eb-3a9c-4705-a205-4e088e2ef8e5"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Cantidad})]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="227" y="20" width="80" height="14" uuid="c5cc4d7b-2fea-4dbe-bc9e-326dc699727b"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion})]]></textFieldExpression>
-				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
-					<reportElement x="346" y="19" width="82" height="14" uuid="9188b287-a2fe-42f1-8735-0f5c43e69076"/>
-					<textFieldExpression><![CDATA[$F{Operacion}]]></textFieldExpression>
-				</textField>
-			</frame>
-			<frame>
 				<reportElement mode="Opaque" x="4" y="10" width="548" height="16" backcolor="#4F4F4F" uuid="317b2f72-bc32-462d-a658-f1cbdca0a94a"/>
 				<staticText>
 					<reportElement mode="Transparent" x="10" y="0" width="140" height="16" forecolor="#FFFFFF" uuid="a5a0c26e-01c2-4d01-ac63-cea41ba5919c"/>
@@ -641,24 +594,15 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="5" y="140" width="548" height="16" backcolor="#4F4F4F" uuid="be6e42bf-7bdc-4820-ae14-0fa02d1c501a"/>
-				<staticText>
-					<reportElement mode="Transparent" x="10" y="0" width="140" height="16" forecolor="#FFFFFF" uuid="a720d149-40c6-4645-b269-7c19649a481c"/>
-					<text><![CDATA[Pago]]></text>
-				</staticText>
-			</frame>
-			<frame>
-				<reportElement x="0" y="220" width="554" height="20" uuid="c8aa9321-99c5-4c7d-af70-853d3211e745"/>
-				<textField>
-					<reportElement x="466" y="1" width="88" height="18" uuid="28cd6997-59db-4290-89fb-5e8e45588d38"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura})]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="346" y="3" width="100" height="16" uuid="435a4ead-2474-4e85-a686-a9b02e867f3d"/>
-					<textElement textAlignment="Right"/>
-					<text><![CDATA[TOTAL DE PAGO]]></text>
-				</staticText>
+				<reportElement x="-20" y="150" width="593" height="200" uuid="0376442c-5e52-4d6d-bcce-6fcd02e61747"/>
+				<subreport>
+					<reportElement x="0" y="0" width="581" height="200" uuid="c67ac883-6ed6-49e1-a7b7-ec931dd898b3"/>
+					<subreportParameter name="NroFactura">
+						<subreportParameterExpression><![CDATA[$P{NroFactura}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["Pagos.jasper"]]></subreportExpression>
+				</subreport>
 			</frame>
 		</band>
 	</summary>

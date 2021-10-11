@@ -1,16 +1,306 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pagos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4fc7233c-40b8-4604-bc99-733cf796e393">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="NroFactura" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT * FROM zapateria.factura AS fac, zapateria.ingresos AS ing WHERE fac.NroFacturaCompleta = ing.NroFactura AND '$P!{NroFactura}' = fac.NroFacturaCompleta]]>
 	</queryString>
+	<field name="Id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Id"/>
+		<property name="com.jaspersoft.studio.field.label" value="Id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MontoPendiente" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="MontoPendiente"/>
+		<property name="com.jaspersoft.studio.field.label" value="MontoPendiente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdCliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdCliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreCliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreCliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdEmpleado" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdEmpleado"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdEmpleado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreEmpleado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreEmpleado"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreEmpleado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoFactura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoFactura"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoFactura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NroFacturaCompleta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NroFacturaCompleta"/>
+		<property name="com.jaspersoft.studio.field.label" value="NroFacturaCompleta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdSucursal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descuento" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Descuento"/>
+		<property name="com.jaspersoft.studio.field.label" value="Descuento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalBruto" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalBruto"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalBruto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TotalFactura" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="TotalFactura"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalFactura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TipoVenta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoVenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoVenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Calle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Calle"/>
+		<property name="com.jaspersoft.studio.field.label" value="Calle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Altura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Altura"/>
+		<property name="com.jaspersoft.studio.field.label" value="Altura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Pais" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Pais"/>
+		<property name="com.jaspersoft.studio.field.label" value="Pais"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Provincia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Provincia"/>
+		<property name="com.jaspersoft.studio.field.label" value="Provincia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Localidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Localidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="Localidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CodPostal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CodPostal"/>
+		<property name="com.jaspersoft.studio.field.label" value="CodPostal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CUIL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUIL"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUIL"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CorreoElectronico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CorreoElectronico"/>
+		<property name="com.jaspersoft.studio.field.label" value="CorreoElectronico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ImpuestoAFIP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ImpuestoAFIP"/>
+		<property name="com.jaspersoft.studio.field.label" value="ImpuestoAFIP"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IVA" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="IVA"/>
+		<property name="com.jaspersoft.studio.field.label" value="IVA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_25" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Id"/>
+		<property name="com.jaspersoft.studio.field.label" value="Id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+	</field>
+	<field name="COLUMN_26" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+	</field>
+	<field name="COLUMN_27" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+	</field>
+	<field name="Hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="Hora"/>
+		<property name="com.jaspersoft.studio.field.label" value="Hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_30" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdCliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+	</field>
+	<field name="COLUMN_31" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoFactura"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoFactura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+	</field>
+	<field name="NroFactura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NroFactura"/>
+		<property name="com.jaspersoft.studio.field.label" value="NroFactura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MedioPago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.label" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cantidad" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Cotizacion" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Cotizacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Cotizacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Operacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Operacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Operacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Total"/>
+		<property name="com.jaspersoft.studio.field.label" value="Total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="5" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="4" y="-11" width="548" height="16" backcolor="#4F4F4F" uuid="615967df-160a-44c4-af1d-4a833ee7d43e"/>
+				<staticText>
+					<reportElement mode="Transparent" x="10" y="0" width="140" height="16" forecolor="#FFFFFF" uuid="e7125fbd-fa7f-4881-a1ec-b22eef73ad68"/>
+					<text><![CDATA[Pago]]></text>
+				</staticText>
+			</frame>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="49" splitType="Stretch">
+			<frame>
+				<reportElement x="-1" y="15" width="554" height="33" uuid="c356f2f6-38ac-44b8-b84e-b6bc5840994b"/>
+				<frame>
+					<reportElement mode="Opaque" x="5" y="-10" width="548" height="16" backcolor="#BABABA" uuid="42045c4e-8fbb-45f4-9e97-3ac65dcc13f7"/>
+					<staticText>
+						<reportElement mode="Transparent" x="10" y="0" width="80" height="16" forecolor="#030303" backcolor="#030303" uuid="6ce58b12-558b-4c34-9eb6-ee5020bde1c6"/>
+						<text><![CDATA[Medio de Pago]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="120" y="0" width="80" height="16" forecolor="#030303" backcolor="#030303" uuid="40fc496d-d430-4c1a-8b39-669a64777c29"/>
+						<text><![CDATA[Monto]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="220" y="0" width="86" height="16" forecolor="#030303" backcolor="#030303" uuid="d12bfe7c-bd92-4bf7-9eba-89c2ad70d4f5"/>
+						<text><![CDATA[Cotización en AR$]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="340" y="0" width="86" height="16" forecolor="#030303" backcolor="#030303" uuid="cb7ec57c-bce1-4212-a39a-2102af06766d"/>
+						<text><![CDATA[Código Operación]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="477" y="0" width="70" height="16" forecolor="#030303" backcolor="#030303" uuid="c2d71466-26b5-42c4-84bd-2b7cf835d0b1"/>
+						<text><![CDATA[Monto en AR$]]></text>
+					</staticText>
+				</frame>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="15" y="20" width="74" height="14" uuid="512b16e9-9637-4e00-9f50-890615ba7b5c"/>
+					<textFieldExpression><![CDATA[$F{MedioPago}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="467" y="18" width="86" height="18" uuid="75f8381d-1733-425a-be70-553439e5276b"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[String.valueOf($F{Total})]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="110" y="20" width="74" height="14" uuid="11321a48-bd55-479a-80b9-c2178bfc3ca7"/>
+					<textFieldExpression><![CDATA[String.valueOf($F{Cantidad})]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="227" y="20" width="80" height="14" uuid="db7db1b7-f7d5-4105-8fcf-db9963595eee"/>
+					<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion})]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="346" y="19" width="82" height="14" uuid="98e37cfd-a22d-47f5-a713-88ef1ec8aa15"/>
+					<textFieldExpression><![CDATA[$F{Operacion}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
+	<summary>
+		<band height="23">
+			<frame>
+				<reportElement x="1" y="2" width="554" height="20" uuid="bdc787d1-e81c-4ca1-be2b-ea6b90996f99"/>
+				<textField>
+					<reportElement x="457" y="0" width="88" height="18" uuid="e2af435b-c417-4c7e-92e6-34794f2fe9b6"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="337" y="2" width="100" height="16" uuid="4f17497e-d070-4412-9173-bcf58f7e1e5c"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[TOTAL DE PAGO]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</summary>
 </jasperReport>
