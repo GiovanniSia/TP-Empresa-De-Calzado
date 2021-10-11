@@ -493,7 +493,7 @@
 						<subreportParameterExpression><![CDATA[$P{NroFactura}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["Productos.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["reportes/Productos.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 			<line>
@@ -588,7 +588,7 @@
 						<subreportParameterExpression><![CDATA[$P{NroFactura}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["Pagos.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["reportes/Pagos.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 		</band>
