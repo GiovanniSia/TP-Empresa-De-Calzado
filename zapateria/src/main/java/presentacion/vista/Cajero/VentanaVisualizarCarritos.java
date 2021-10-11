@@ -30,7 +30,7 @@ public class VentanaVisualizarCarritos {
 	private JFrame frame;
 	
 	private JTable tableCarritos;
-	private DefaultTableModel modelTablaSucursales;
+	private DefaultTableModel modelTablaCarritos;
 	private String[] nombreColumnasCarritos = {"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"};
 	private JScrollPane scrollPaneTablaCarritos;
 	
@@ -90,6 +90,7 @@ public class VentanaVisualizarCarritos {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapatería Argento - Realizar Venta");
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -108,7 +109,7 @@ public class VentanaVisualizarCarritos {
 		panel_1.add(lblTitulo);
 		
 		//tabla
-		modelTablaSucursales = new DefaultTableModel(null, this.nombreColumnasCarritos){
+		modelTablaCarritos = new DefaultTableModel(null, this.nombreColumnasCarritos){
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -123,7 +124,7 @@ public class VentanaVisualizarCarritos {
 		scrollPaneTablaCarritos = new JScrollPane(this.tableCarritos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneTablaCarritos.setBounds(10, 171, 515, 381);
 		
-		tableCarritos = new JTable(modelTablaSucursales);
+		tableCarritos = new JTable(modelTablaCarritos);
 		tableCarritos.setBounds(10, 133, 908, 322);	
 		this.tableCarritos.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCarritos.getColumnModel().getColumn(0).setResizable(false);
@@ -140,8 +141,8 @@ public class VentanaVisualizarCarritos {
 		panel.add(lblNewLabel);
 		
 		btnElegirCarrito = new JButton("");
-		btnElegirCarrito.setBounds(793, 495, 93, 57);
-		btnElegirCarrito.setIcon(setIcono("../imagenes/dollar-symbol.png", btnElegirCarrito));
+		btnElegirCarrito.setBounds(793, 485, 83, 67);
+		btnElegirCarrito.setIcon(setIcono("../imagenes/cashier.png", btnElegirCarrito));
 		panel.add(btnElegirCarrito);
 		
 		
@@ -282,8 +283,8 @@ public class VentanaVisualizarCarritos {
 		return tableCarritos;
 	}
 
-	public DefaultTableModel getModelTablaSucursales() {
-		return modelTablaSucursales;
+	public DefaultTableModel getModelTablaCarritos() {
+		return modelTablaCarritos;
 	}
 
 	public String[] getNombreColumnasCarritos() {

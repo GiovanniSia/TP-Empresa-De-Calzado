@@ -23,4 +23,7 @@ public class Carrito {
 		return this.carrito.readAll();
 	}
 
+	public List<CarritoDTO> getCarritoFiltrado(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3){
+		return this.carrito.getCarritoFiltrado(nombreColumna1, txt1, nombreColumna2, txt2, nombreColumna3, txt3);
+	}
 }

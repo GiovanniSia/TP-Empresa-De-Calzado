@@ -7,25 +7,22 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-
 import persistencia.conexion.Conexion;
-
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JSpinner;
 
 public class VentanaRealizarVenta {
 
@@ -93,6 +90,7 @@ public class VentanaRealizarVenta {
 		panel.setBounds(0, 0, 840, 517);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
+		frame.setResizable(false);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
@@ -210,17 +208,31 @@ public class VentanaRealizarVenta {
 		panel_2.add(textCantidad);
 		textCantidad.setColumns(10);
 		
-		btnCancelarVenta = new JButton("Cancelar");
+		btnCancelarVenta = new JButton("");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnCancelarVenta.setBounds(71, 466, 311, 41);
+		btnCancelarVenta.setBounds(127, 460, 61, 47);
+		btnCancelarVenta.setBackground(null);
+		btnCancelarVenta.setIcon(setIcono("../imagenes/cancel.png", btnCancelarVenta));
 		panel.add(btnCancelarVenta);
 		
-		btnFinalizarVenta = new JButton("Cobrar");
+		btnFinalizarVenta = new JButton("");
 		btnFinalizarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnFinalizarVenta.setBounds(445, 466, 311, 41);
+		btnFinalizarVenta.setBounds(689, 460, 67, 47);
+//		btnFinalizarVenta.setBorder(null);
+//		btnFinalizarVenta.setBackground(null);
+
+		btnFinalizarVenta.setIcon(setIcono("../imagenes/dollar-symbol.png", btnFinalizarVenta));
 		panel.add(btnFinalizarVenta);
 
-
+		JLabel lblCancelar = new JLabel("Cancelar");
+		lblCancelar.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblCancelar.setBounds(34, 452, 114, 55);
+		panel.add(lblCancelar);
+		
+		JLabel lblRealizarCobro = new JLabel("Realizar cobro");
+		lblRealizarCobro.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblRealizarCobro.setBounds(536, 452, 188, 55);
+		panel.add(lblRealizarCobro);
 	}
 	
 	
@@ -243,6 +255,17 @@ public class VentanaRealizarVenta {
 		this.frame.setVisible(true);
 	}
 
+	
+	
+	public Icon setIcono(String url,JButton boton) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(url));
+		int ancho = boton.getWidth();
+		int alto = boton.getHeight();
+		
+		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+		return icono;
+	}
+	
 	public void cerrar() {
 		frame.setVisible(false);
 	}
@@ -296,5 +319,4 @@ public class VentanaRealizarVenta {
 	public JTextField getTextCantidad() {
 		return textCantidad;
 	}
-
 }

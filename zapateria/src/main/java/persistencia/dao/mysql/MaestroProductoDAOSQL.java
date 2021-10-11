@@ -150,29 +150,31 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			String nombreColumna2, String txtAprox2,String nombreColumna3,String txtAprox3, String nombreColumna4, String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM maestroProductos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+		String sel = "SELECT * FROM maestroProductos";
+		
+		if(nombreColumna1!=null && txtAprox2!=null) {
+			sel = sel +" WHERE "+nombreColumna1 + " LIKE '%"+txtAprox1 +"%'";
+		}
 		
 		if (nombreColumna2 != null && txtAprox2 != null) {
 			sel = sel + " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
 		}
-		
-//		txtAprox3=desde, txtAprox4=hasta
-		
+
 		if(nombreColumna3.equals("PrecioMayorista") || nombreColumna3.equals("PrecioMinorista")){
-			System.out.println("la columna fue: "+nombreColumna3);
+//			System.out.println("la columna fue: "+nombreColumna3);
 			int precioDesde = Integer.parseInt(txtAprox3);
 			int precioHasta = Integer.parseInt(txtAprox4);
 			
 			if(precioHasta!=0 && precioDesde<precioHasta) {
-				System.out.println("se realiza una busqueda entre "+precioDesde+" hasta "+precioHasta);
+//				System.out.println("se realiza una busqueda entre "+precioDesde+" hasta "+precioHasta);
 				sel = sel + " AND "+nombreColumna3+" BETWEEN "+precioDesde+" AND "+precioHasta;
 			}
 			if(precioDesde!=0 && precioHasta==0) {
-				System.out.println("El precioDesde es !=0 y el precioHasta==0 \nse busca todo lo que sea mayor a "+precioDesde);
+//				System.out.println("El precioDesde es !=0 y el precioHasta==0 \nse busca todo lo que sea mayor a "+precioDesde);
 				sel = sel + " AND "+nombreColumna3 + " >= "+precioDesde;
 			}
 			if(precioDesde==0 && precioHasta!=0) {
-				System.out.println("El precioDesde es ==0 y el precioHasta!=0 \nse busca todo lo que sea menor a "+precioHasta);
+//				System.out.println("El precioDesde es ==0 y el precioHasta!=0 \nse busca todo lo que sea menor a "+precioHasta);
 				sel = sel +" AND "+nombreColumna3+" <= "+precioHasta;
 			}
 			if(precioDesde==0 && precioHasta==0) {
@@ -188,31 +190,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			}
 		}
 
-		
-		/*
-		//chequear que cuando se realiza una busqueda y desde>
-		if(nombreColumna3!=null && precioHasta!=0 && precioDesde<precioHasta) {
-//			System.out.println("se realiza una busqueda entre "+precioDesde+" hasta "+precioHasta);
-			sel = sel + " AND "+nombreColumna3+" BETWEEN "+precioDesde+" AND "+precioHasta;
-		}
-		if(nombreColumna3!=null && precioDesde!=0 && precioHasta==0) {
-//			System.out.println("El precioDesde es !=0 y el precioHasta==0 \nse busca todo lo que sea mayor a "+precioDesde);
-			sel = sel + " AND "+nombreColumna3 + " > "+precioDesde;
-		}
-		if(nombreColumna3!=null && precioDesde==0 && precioHasta!=0) {
-//			System.out.println("El precioDesde es ==0 y el precioHasta!=0 \nse busca todo lo que sea menor a "+precioHasta);
-			sel = sel +" AND "+nombreColumna3+" < "+precioHasta;
-		}
-		if(nombreColumna3!=null && precioDesde==0 && precioHasta==0) {
-			//no deberia hacer la busqueda de esto
-		}
-		*/
-		
-		
-		
-		
-		
-		System.out.println(sel);
+//		System.out.println(sel);
 		ArrayList<MaestroProductoDTO> maestroProducto = new ArrayList<MaestroProductoDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {

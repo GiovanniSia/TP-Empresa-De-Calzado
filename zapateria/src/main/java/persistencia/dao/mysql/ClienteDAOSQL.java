@@ -157,10 +157,32 @@ public class ClienteDAOSQL implements ClienteDAO {
 			String nombreColumna5, String txtAprox5) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		
-		String sel = "SELECT * FROM clientes WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'" + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" +  "AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'" +
-				"AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'"+ "AND " + nombreColumna5 + " LIKE '%" + txtAprox5 + "%'";
+		/*
+		String sel = "SELECT * FROM clientes WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'" + " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" +  " AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'" +
+				" AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'"+ " AND " + nombreColumna5 + " LIKE '%" + txtAprox5 + "%'";
 
+		*/
+		String sel = "SELECT * FROM Clientes";
+
+		if (nombreColumna1 != null && txtAprox1 != null) {
+			sel = sel + " WHERE " + nombreColumna1 + " LIKE '%" + txtAprox1 + "%'";
+		}
+		if (nombreColumna2 != null && txtAprox2 != null) {
+			sel = sel + " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+		}
+		if (nombreColumna3 != null && txtAprox3 != null) {
+			sel = sel + " AND " + nombreColumna3 + " LIKE '%" + txtAprox3 + "%'";
+		}
+		if (nombreColumna4 != null && txtAprox4 != null) {
+			sel = sel + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
+		}
+		if (nombreColumna5 != null && txtAprox5 != null) {
+			sel = sel + " AND " + nombreColumna5 + " LIKE '%" + txtAprox5 + "%'";
+		}
+		
+		
+		System.out.println(sel);
+		
 		ArrayList<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {

@@ -1,6 +1,8 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -72,47 +74,75 @@ public class ControladorVisualizarCarritos {
 			}
 		});
 		
-		this.ventanaVisualizarCarritos.getTextNombre().addActionListener(a -> realizarBusqueda(a));
-		this.ventanaVisualizarCarritos.getTextCUIL().addActionListener(a -> realizarBusqueda(a));
-		this.ventanaVisualizarCarritos.getTextApellido().addActionListener(a -> realizarBusqueda(a));
+		this.ventanaVisualizarCarritos.getTextCUIL().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaVisualizarCarritos.getTextNombre().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaVisualizarCarritos.getTextApellido().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
 		
 		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
 		
-		llenarTabla();
+		
+		
+		llenarTablaCompleta();
 		this.ventanaVisualizarCarritos.show();
 	}
 	
 	
 	
-	public void realizarBusqueda(ActionEvent a) {
+	public void realizarBusqueda() {
 		String nombre = this.ventanaVisualizarCarritos.getTextNombre().getText();
 		String apellido = this.ventanaVisualizarCarritos.getTextApellido().getText();
 		String CUIL = this.ventanaVisualizarCarritos.getTextCUIL().getText();
 		
-		
+		ArrayList<ClienteDTO> clientesConCarrito = (ArrayList<ClienteDTO>) this.cliente.getClienteAproximado("Nombre", nombre, "Apellido", apellido, "CUIL", CUIL,null, null, null, null);
+		escribirTablaFiltrada(clientesConCarrito);
 	}
 	
-	public void llenarTabla() {
+	
+	public void escribirTablaFiltrada(ArrayList<ClienteDTO> clientesConCarrito) {
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setRowCount(0);//borrar datos de la tabla
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
+		this.carritosEnTabla.removeAll(this.carritosEnTabla);
+		
 		for(CarritoDTO carrito: this.listaCarritos) {
-			for(DetalleCarritoDTO detalle: this.listaDetalleCarrito) {
-				if(carrito.getIdCarrito()==detalle.getIdCarrito() && carrito.getIdSucursal()==this.idSucursal
-						&& !yaFueAgregado(carrito)) {
-					
-					ClienteDTO cliente = this.cliente.selectCliente(detalle.getIdCliente());
-					
-					int idCarrito=carrito.getIdCarrito();
-					String hora = carrito.getHora();
-					int idCliente=detalle.getIdCliente();
-					String nombreCliente = cliente.getNombre()+" "+cliente.getApellido();
-					String tipoCliente = cliente.getTipoCliente();
-					double precioTotal = carrito.getTotal();		
-					
-					Object[] fila = {idCarrito,hora,idCliente,nombreCliente,tipoCliente,precioTotal};
-					this.ventanaVisualizarCarritos.getModelTablaSucursales().addRow(fila);
-					
-					this.carritosEnTabla.add(carrito);
+			for(ClienteDTO cliente: clientesConCarrito) {
+				System.out.println("cliente agreagdo: "+cliente.getNombre());
+				if(carrito.getIdCliente()==cliente.getIdCliente() && carrito.getIdSucursal()==this.idSucursal) {
+					agregarATabla(cliente, carrito);
 				}
 			}
+		}
+	}
+	
+	public void llenarTablaCompleta() {
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setRowCount(0);//borrar datos de la tabla
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
+		
+//		this.carritosEnTabla.removeAll(carritosEnTabla);
+		
+		for(CarritoDTO carrito: this.listaCarritos) {
+			if(carrito.getIdSucursal()==this.idSucursal	&& !yaFueAgregado(carrito)) {
+		
+				ClienteDTO cliente = this.cliente.selectCliente(carrito.getIdCliente());
+				agregarATabla(cliente,carrito);
+			}
+			//"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"}
 		}		
 	}
 	
@@ -125,11 +155,29 @@ public class ControladorVisualizarCarritos {
 		return false;
 	}
 	
+	
+	public void agregarATabla(ClienteDTO cliente, CarritoDTO carrito) {
+		String CUIL = cliente.getCUIL();
+		String nombreCliente = cliente.getNombre()+" "+cliente.getApellido();
+		String hora = carrito.getHora();
+		String TipoCliente = cliente.getTipoCliente();
+
+		double precioTota = carrito.getTotal();
+		BigDecimal precioTotal = new BigDecimal(precioTota);
+		
+		Object[] fila = {CUIL,nombreCliente,hora,TipoCliente,precioTotal};
+		this.ventanaVisualizarCarritos.getModelTablaCarritos().addRow(fila);
+			
+		this.carritosEnTabla.add(carrito);
+	}
+	
+	
 	public void mostrarDetalle() {
 		this.detalleCarritoEnTabla.removeAll(detalleCarritoEnTabla);
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasDetalle());
+		this.detalleCarritoEnTabla.removeAll(this.detalleCarritoEnTabla);
 		
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
 		if(filaSeleccionada==-1) {
@@ -139,6 +187,7 @@ public class ControladorVisualizarCarritos {
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
 		DetalleCarritoDTO detalleCarrito = getDetalle(carritoSeleccionado);	
+		System.out.println("el total del carrito seleccionado es :"+carritoSeleccionado.getTotal()+"\nEL id del carrito es :"+carritoSeleccionado.getIdCarrito()+" el id del detalle: "+detalleCarrito.getIdCarrito());
 		
 		MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCarrito.getIdProducto());
 		String nombreProd = prod.getDescripcion();

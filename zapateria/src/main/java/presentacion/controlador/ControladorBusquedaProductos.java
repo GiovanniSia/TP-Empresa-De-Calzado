@@ -351,7 +351,7 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto().getIdMaestroProducto(),productoEnCarrito)) {
-			JOptionPane.showMessageDialog(null, "La cantidad elegida no es v�lida");
+			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
 			return;
 		}
 		
@@ -397,7 +397,7 @@ public class ControladorBusquedaProductos {
 	}
 	
 	public void armarVenta(ActionEvent a) {
-		int resp = JOptionPane.showConfirmDialog(null, "Est� seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Estas seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(this.productosEnCarrito.size()==0) {
 			JOptionPane.showMessageDialog(null, "No ha agregado ning�n producto en el carrito!");
 			return;
@@ -407,7 +407,7 @@ public class ControladorBusquedaProductos {
 		if(resp==0) {
 
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-			JOptionPane.showConfirmDialog(null, "Venta armada con �xito a las "+dtf.format(LocalDateTime.now())+".\n "
+			JOptionPane.showConfirmDialog(null, "Venta armada con exito a las "+dtf.format(LocalDateTime.now())+".\n "
 					+ "En espera de ser efectuada por un cajero", "Armar venta", JOptionPane.CLOSED_OPTION, JOptionPane.QUESTION_MESSAGE);
 			//se deberia guardar en la bd el carrito con el productoACobrar
 			if(hayStockDisponible()) {
@@ -430,7 +430,7 @@ public class ControladorBusquedaProductos {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss"); 
 		String hora = dtf.format(LocalDateTime.now());
 		
-		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.Preciototal,hora);
+		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.clienteSeleccionado.getIdCliente(),this.Preciototal,hora);
 		this.carrito.insert(carrito);
 		
 		this.listaCarrito = this.carrito.readAll();
@@ -454,7 +454,7 @@ public class ControladorBusquedaProductos {
 			int idCliente = this.clienteSeleccionado.getIdCliente();
 	
 			
-			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,idCliente,cant,precio);
+			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,cant,precio);
 			this.detalleCarrito.insert(detalleCarrito);
 		}
 	}

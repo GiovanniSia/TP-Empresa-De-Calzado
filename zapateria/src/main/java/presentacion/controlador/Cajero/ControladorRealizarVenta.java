@@ -87,7 +87,7 @@ public class ControladorRealizarVenta {
 				String fecha = f.format(LocalDateTime.now());
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 		        String hora = dtf.format(LocalDateTime.now());
-				int idCliente = this.detalleCarritoACobrar.getIdCliente();
+				int idCliente = this.carritoACobrar.getIdCliente();
 				valorConversion=m.getTasaConversion();
 				double totalArg = cantidad *valorConversion;
 
@@ -132,7 +132,7 @@ public class ControladorRealizarVenta {
 
 	public void registrarPago(ActionEvent a) {
 		if(this.totalPagado<=this.carritoACobrar.getTotal()) {
-			ClienteDTO cliente = this.cliente.selectCliente(this.detalleCarritoACobrar.getIdCliente());
+			ClienteDTO cliente = this.cliente.selectCliente(this.carritoACobrar.getIdCliente());
 			if(cliente.getIdCliente()!=1) {//si el cliente está registrado
 				int resp = JOptionPane.showConfirmDialog(null, "Todavía no se han pagado todos los productos!. Desea adeudarlo con su CC (Cuenta corriente)?", "Realizar Pago", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				

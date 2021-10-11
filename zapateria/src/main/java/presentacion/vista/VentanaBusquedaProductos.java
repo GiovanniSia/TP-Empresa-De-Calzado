@@ -124,6 +124,7 @@ public class VentanaBusquedaProductos {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapatería Argento - Realizar Venta");
+		frame.setResizable(false);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));

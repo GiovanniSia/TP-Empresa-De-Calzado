@@ -15,7 +15,7 @@ import persistencia.dao.interfaz.DetalleCarritoDAO;
 
 public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 
-	private static final String insert = "INSERT INTO DetalleCarrito VALUES (?,?,?,?,?,?,?)";
+	private static final String insert = "INSERT INTO DetalleCarrito VALUES (?,?,?,?,?,?)";
 	private static final String delete = "DELETE FROM DetalleCarrito WHERE id = ?";
 	private static final String readAll = "SELECT * FROM DetalleCarrito";
 	
@@ -32,9 +32,8 @@ public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 			statement.setInt(2, detalle.getIdCarrito());
 			statement.setInt(3, detalle.getIdProducto());
 			statement.setInt(4, detalle.getIdStock());
-			statement.setInt(5, detalle.getIdCliente());
-			statement.setInt(6, detalle.getCantidad());
-			statement.setDouble(7, detalle.getPrecio());	
+			statement.setInt(5, detalle.getCantidad());
+			statement.setDouble(6, detalle.getPrecio());	
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -92,11 +91,10 @@ public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 		int idCarrito = resultSet.getInt("idCarrito");
 		int idProducto = resultSet.getInt("idProducto");
 		int idStock = resultSet.getInt("idStock");
-		int idCliente = resultSet.getInt("IdCliente");
 		int cant = resultSet.getInt("cantidad");
 		double precio = resultSet.getInt("precio");
 		
-		return new DetalleCarritoDTO(id,idCarrito,idProducto,idStock,idCliente,cant, precio);
+		return new DetalleCarritoDTO(id,idCarrito,idProducto,idStock,cant, precio);
 	}
 
 }
