@@ -29,6 +29,12 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JLabel lblOrden;
+	
+	JLabel lblMensaje;
+	JLabel lblSucursal;
+	JLabel lblFechaRequerida;
+	JLabel lblIdPedido;
+	private JLabel lblPasos;
 
 	public ReVentanaTrabajarUnPedido() {
 		initialize();
@@ -36,26 +42,26 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 676, 264);
+		frame.setBounds(100, 100, 676, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 640, 210);
+		panel.setBounds(10, 11, 640, 325);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		btnAvanzarUnPaso = new JButton("Avanzar un paso");
-		btnAvanzarUnPaso.setBounds(10, 45, 154, 23);
+		btnAvanzarUnPaso.setBounds(10, 160, 154, 23);
 		panel.add(btnAvanzarUnPaso);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(212, 45, 154, 23);
+		btnCancelar.setBounds(174, 160, 154, 23);
 		panel.add(btnCancelar);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 79, 620, 120);
+		spCliente.setBounds(10, 194, 620, 120);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -65,6 +71,26 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		lblOrden = new JLabel("Se pidio:");
 		lblOrden.setBounds(10, 11, 356, 23);
 		panel.add(lblOrden);
+		
+		lblIdPedido = new JLabel("New label");
+		lblIdPedido.setBounds(10, 45, 356, 14);
+		panel.add(lblIdPedido);
+		
+		lblFechaRequerida = new JLabel("New label");
+		lblFechaRequerida.setBounds(10, 70, 356, 14);
+		panel.add(lblFechaRequerida);
+
+		lblSucursal = new JLabel("New label");
+		lblSucursal.setBounds(10, 95, 356, 14);
+		panel.add(lblSucursal);
+		
+		lblMensaje = new JLabel("New label");
+		lblMensaje.setBounds(338, 164, 292, 14);
+		panel.add(lblMensaje);
+		
+		lblPasos = new JLabel("New label");
+		lblPasos.setBounds(10, 120, 356, 14);
+		panel.add(lblPasos);
 	}
 
 	public void show() {
@@ -108,5 +134,25 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	public JLabel getLblOrden() {
 		return lblOrden;
+	}
+
+	public JLabel getLblMensaje() {
+		return lblMensaje;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblFechaRequerida() {
+		return lblFechaRequerida;
+	}
+
+	public JLabel getLblIdPedido() {
+		return lblIdPedido;
+	}
+
+	public JLabel getLblPasos() {
+		return lblPasos;
 	}
 }

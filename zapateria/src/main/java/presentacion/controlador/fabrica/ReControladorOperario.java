@@ -43,6 +43,9 @@ public class ReControladorOperario implements ActionListener {
 	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
 	static final String stringQueNoCancelaDeProduccion = "No se a cancelado";
 	
+	static final String mensajeHayMateriales = "Hay materiales suficientes para el paso.";
+	static final String mensajeNoHayMateriales = "No hay materiales suficientes para el paso.";
+	
 	private ReVentanaVerFabricaciones ventanaPrincipal;
 	List<OrdenFabricaDTO> ordenesEnLista;
 	List<FabricacionesDTO> trabajosEnLista;
@@ -159,7 +162,8 @@ public class ReControladorOperario implements ActionListener {
 				OrdenFabricaDTO oM = this.getOrdenManufactura(fabricacionTrabajando.getIdOrdenFabrica());
 				String texto = "";
 				MaestroProductoDTO mp = this.buscarProducto(oM.getIdProd());
-				texto = "Pedido de la sucursal:" +  oM.getIdSucursal() + "; " + mp.getDescripcion() + " X " + oM.getCantidad();
+				//texto = "Pedido de la sucursal:" +  oM.getIdSucursal() + "; " + mp.getDescripcion() + " X " + oM.getCantidad();
+				texto = mp.getDescripcion() + ": X " + oM.getCantidad()+" unidades";
 				ventanaUnaTrabajo.getLblOrden().setText(texto);
 				ventanaUnaTrabajo.show();
 			}
@@ -484,8 +488,14 @@ public class ReControladorOperario implements ActionListener {
 		ventanaUnaTrabajo.getModelOrdenes().setColumnIdentifiers(ventanaUnaTrabajo.getNombreColumnas());
 		
 		OrdenFabricaDTO of = this.getOrdenManufactura(this.fabricacionTrabajando.getIdOrdenFabrica());
-		
 		PasoDeRecetaDTO p = this.getPasoActual();
+		
+		ventanaUnaTrabajo.getLblIdPedido().setText("Id orden: "+of.getIdOrdenFabrica());
+		ventanaUnaTrabajo.getLblSucursal().setText("Id sucursal: "+of.getIdSucursal());
+		ventanaUnaTrabajo.getLblFechaRequerida().setText("Fecha requerida: "+of.getFechaRequerido());
+		String pasoActual = "" + p.getPasosDTO().getDescripcion()+" ("+this.fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readCantPasosReceta(this.fabricacionTrabajando.getIdReceta())+")";
+		ventanaUnaTrabajo.getLblPasos().setText(pasoActual);
+		boolean hayMateriales = true;
 		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
 			//{ "Material", "Cantidad a usar", "Cantidad en stock", "Unidad medida"};
 			String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
@@ -498,6 +508,34 @@ public class ReControladorOperario implements ActionListener {
 			ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
 			//Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
 			//ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
+			hayMateriales = hayMateriales && cantUsar <= cantDisponible;
+			ventanaUnaTrabajo.getTablaIngredientes().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+                @Override
+                public Component getTableCellRendererComponent(JTable table,
+                        Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                    super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                    String status = (String)table.getModel().getValueAt(row, 1);
+                    int usar = Integer.valueOf(status);
+                    status = (String)table.getModel().getValueAt(row, 2);
+                    int tengo = Integer.valueOf(status);
+                    if (tengo<usar) {
+                        setBackground(Color.pink);
+                        //setForeground(Color.WHITE);
+                    } else {
+                        setBackground(table.getBackground());
+                        setForeground(table.getForeground());
+                    }
+                    return this;
+                }
+            });
+			
+		}
+		if(!hayMateriales) {
+			ventanaUnaTrabajo.getLblMensaje().setText(mensajeNoHayMateriales);
+		}else {
+			ventanaUnaTrabajo.getLblMensaje().setText(mensajeHayMateriales);
 		}
 	}
 	
