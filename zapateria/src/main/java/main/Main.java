@@ -14,12 +14,14 @@ public class Main {
 		controlador.inicializar();
 		*/
 		//Para ejecutar la operativa del operario
-		/*
+		
 		ReControladorOperario co = new ReControladorOperario(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
 		co.inicializar();
-		*/
+		
+		/*
 		ReporteFactura reporte = new ReporteFactura("1A1");
 		reporte.mostrar();
+		*/
 		
 	}
 }

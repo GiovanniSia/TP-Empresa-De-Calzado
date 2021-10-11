@@ -417,15 +417,25 @@ public class ReControladorOperario implements ActionListener {
 		}else {
 			nombreProducto = producto.getDescripcion();
 		}
-		ventanaElegirReceta.getLblSolicitado().setText(nombreProducto + ", cantidad ordenada: " + this.ordenSeleccionado.getCantidad() + ".");
-		
+		ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
+		ventanaElegirReceta.getLblSucursal().setText("sucursal: "+ordenSeleccionado.getIdSucursal());
+		ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());
+		ventanaElegirReceta.getLblFecha().setText("Fecha requerido: "+ordenSeleccionado.getFechaRequerido());
 		//String texto = "";
 		reiniciarTablaIngredientes();
 		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionado.getIdReceta());
 		for(PasoDeRecetaDTO p: pasos) {
 			for(int x = 0; x < p.getPasosDTO().getMateriales().size(); x++) {
 				//texto = texto + "" + p.getPasosDTO().getMateriales().get(x).getDescripcion() + " Cantidad usada: "+ (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad());
-				Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())};
+				
+				String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
+				//String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad() + " "+p.getPasosDTO().getMateriales().get(x).getUnidadMedida());
+				String cantUsarXunidad = p.getPasosDTO().getCantidadUsada().get(x)+" ";
+				String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())+"";
+				String cantActual = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))+"";
+				String unidadMedida = p.getPasosDTO().getMateriales().get(x).getUnidadMedida();
+				//
+				Object[] agregar = {desc, cantUsarXunidad, cantUsada, cantActual, unidadMedida};
 				ventanaElegirReceta.getModelOrdenes().addRow(agregar);
 			}
 		}
@@ -477,8 +487,17 @@ public class ReControladorOperario implements ActionListener {
 		
 		PasoDeRecetaDTO p = this.getPasoActual();
 		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
-			Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
+			//{ "Material", "Cantidad a usar", "Cantidad en stock", "Unidad medida"};
+			String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
+			int cantUsar = (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad());
+			String cantUsada = cantUsar+"";
+			int cantDisponible = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x));
+			String cantActual = cantDisponible+"";
+			String unidadMedida = p.getPasosDTO().getMateriales().get(x).getUnidadMedida();
+			Object[] agregar = {desc, cantUsada, cantActual, unidadMedida};
 			ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
+			//Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
+			//ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
 		}
 	}
 	
@@ -682,6 +701,17 @@ public class ReControladorOperario implements ActionListener {
 			return "1000-10-10";
 		}
 		return anioCumpleCreado+"-"+mesCumpleCreado+"-"+diaCumpleCreado;
+	}
+	
+	private int cantidadEnStock(MaestroProductoDTO producto) {
+		List<StockDTO> todoElStock = modeloStock.readAll();
+		int cantidadTotalDisponible = 0;
+		for(StockDTO s: todoElStock) {
+			if(s.getIdProducto() == producto.getIdMaestroProducto() && s.getIdSucursal() == this.idFabrica) {
+				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();
+			}
+		}
+		return cantidadTotalDisponible;
 	}
 
 	@Override

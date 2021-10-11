@@ -24,7 +24,7 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 	JButton btnAvanzarUnPaso;
 	JButton btnCancelar;
 	
-	private String[] nombreColumnas = { "Material", "Cantidad" };
+	private String[] nombreColumnas = { "Material", "Cantidad a usar", "Cantidad en stock", "Unidad medida"};
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
@@ -36,13 +36,13 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 409, 264);
+		frame.setBounds(100, 100, 676, 264);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 376, 210);
+		panel.setBounds(10, 11, 640, 210);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -55,7 +55,7 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		panel.add(btnCancelar);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 79, 356, 120);
+		spCliente.setBounds(10, 79, 620, 120);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
