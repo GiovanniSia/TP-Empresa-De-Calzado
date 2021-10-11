@@ -517,19 +517,6 @@
 			</line>
 		</band>
 	</title>
-	<columnHeader>
-		<band height="36">
-			<line>
-				<reportElement x="0" y="0" width="556" height="1" uuid="185ea10f-0993-45d9-8d4a-8fdee03c2d93">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-			</line>
-		</band>
-	</columnHeader>
-	<detail>
-		<band height="37"/>
-	</detail>
 	<columnFooter>
 		<band height="13">
 			<line>
