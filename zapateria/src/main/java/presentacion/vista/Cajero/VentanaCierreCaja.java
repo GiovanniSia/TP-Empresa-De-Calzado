@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -14,7 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-public class VentanaCierreCajaEclipse extends JFrame {
+public class VentanaCierreCaja extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -45,8 +44,8 @@ public class VentanaCierreCajaEclipse extends JFrame {
 	private JLabel lblActualizarBalanceCaja;
 
 	private JTable tablaIngresos;
-	private String[] nombreColumnasIngresos = { "Hora", "Tipo", "Cliente", "T.Factura", "M.Pago", "Monto","Cotizacion",
-			"Nro.Operacion", "Total"};
+	private String[] nombreColumnasIngresos = { "Hora", "Tipo", "Cliente", "T.Factura", "M.Pago", "Monto", "Cotizacion",
+			"Nro.Operacion", "Total" };
 	private DefaultTableModel modelIngresos;
 
 	private JTable tablaEgresos;
@@ -54,20 +53,20 @@ public class VentanaCierreCajaEclipse extends JFrame {
 	private DefaultTableModel modelEgresos;
 
 	private JTable tablaMedioPagoIngresos;
-	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
+	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total" };
 	private DefaultTableModel modelMedioPagoIngresos;
 
 	private JTable tablaMedioPagoEgresos;
-	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total", "Validar" };
+	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total" };
 	private DefaultTableModel modelMedioPagoEgresos;
 
-	public VentanaCierreCajaEclipse() {
+	public VentanaCierreCaja() {
 		initialize();
 	}
 
 	public void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 926, 578);
+		frame.setBounds(100, 100, 926, 613);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -94,12 +93,12 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		contentPane.add(lblCajaDiariaDeSucursal);
 
 		panelIngresosEgresos = new JPanel();
-		panelIngresosEgresos.setBounds(0, 108, 613, 431);
+		panelIngresosEgresos.setBounds(0, 108, 613, 466);
 		contentPane.add(panelIngresosEgresos);
 		panelIngresosEgresos.setLayout(null);
 
 		spIngresos = new JScrollPane();
-		spIngresos.setBounds(10, 32, 591, 159);
+		spIngresos.setBounds(10, 35, 591, 191);
 		panelIngresosEgresos.add(spIngresos);
 
 		modelIngresos = new DefaultTableModel(null, nombreColumnasIngresos) {
@@ -124,7 +123,7 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		spIngresos.setViewportView(tablaIngresos);
 
 		spEgresos = new JScrollPane();
-		spEgresos.setBounds(10, 226, 591, 159);
+		spEgresos.setBounds(10, 261, 591, 159);
 		panelIngresosEgresos.add(spEgresos);
 
 		modelEgresos = new DefaultTableModel(null, nombreColumnasEgresos) {
@@ -152,7 +151,7 @@ public class VentanaCierreCajaEclipse extends JFrame {
 
 		lblEgresos = new JLabel("Egresos");
 		lblEgresos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblEgresos.setBounds(10, 202, 141, 21);
+		lblEgresos.setBounds(10, 237, 141, 21);
 		panelIngresosEgresos.add(lblEgresos);
 
 		lblIngresos = new JLabel("Ingresos");
@@ -161,7 +160,7 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		panelIngresosEgresos.add(lblIngresos);
 
 		btnAtras = new JButton("Atras");
-		btnAtras.setBounds(20, 396, 103, 24);
+		btnAtras.setBounds(20, 431, 103, 24);
 		panelIngresosEgresos.add(btnAtras);
 
 		lblFechaHoy = new JLabel("Dia XX de XX de XXXX");
@@ -170,12 +169,12 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		contentPane.add(lblFechaHoy);
 
 		panelMedioPagoTotales = new JPanel();
-		panelMedioPagoTotales.setBounds(612, 108, 298, 431);
+		panelMedioPagoTotales.setBounds(612, 94, 298, 480);
 		contentPane.add(panelMedioPagoTotales);
 		panelMedioPagoTotales.setLayout(null);
 
 		spMedioPagoIngresos = new JScrollPane();
-		spMedioPagoIngresos.setBounds(10, 32, 278, 159);
+		spMedioPagoIngresos.setBounds(10, 46, 278, 159);
 		panelMedioPagoTotales.add(spMedioPagoIngresos);
 
 		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos) {
@@ -199,18 +198,14 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setResizable(false);
 
 		spMedioPagoIngresos.setViewportView(tablaMedioPagoIngresos);
-		
-		
-		agregarCheckBox(3,tablaMedioPagoIngresos);
-		
-		
+
 		lblCierreCaja = new JLabel("Cierre Caja");
 		lblCierreCaja.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblCierreCaja.setBounds(10, 11, 141, 21);
 		panelMedioPagoTotales.add(lblCierreCaja);
 
 		spMedioPagoEgresos = new JScrollPane();
-		spMedioPagoEgresos.setBounds(10, 229, 278, 58);
+		spMedioPagoEgresos.setBounds(10, 277, 278, 70);
 		panelMedioPagoTotales.add(spMedioPagoEgresos);
 
 		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos) {
@@ -234,39 +229,37 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		tablaMedioPagoEgresos.getColumnModel().getColumn(1).setResizable(false);
 
 		spMedioPagoEgresos.setViewportView(tablaMedioPagoEgresos);
-		
-		agregarCheckBox(3,tablaMedioPagoEgresos);
-		
+
 		lblTotalIngresos = new JLabel("Total Ingresos (AR$)");
 		lblTotalIngresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTotalIngresos.setBounds(10, 195, 171, 29);
+		lblTotalIngresos.setBounds(10, 209, 171, 29);
 		panelMedioPagoTotales.add(lblTotalIngresos);
 
-		lblActualizarTotalIngresos = new JLabel("Valor");
-		lblActualizarTotalIngresos.setBounds(158, 202, 130, 14);
+		lblActualizarTotalIngresos = new JLabel("$0000000.00");
+		lblActualizarTotalIngresos.setBounds(158, 216, 130, 14);
 		panelMedioPagoTotales.add(lblActualizarTotalIngresos);
 
 		lblTotalEgresos = new JLabel("Total Egresos(AR$)");
 		lblTotalEgresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTotalEgresos.setBounds(10, 296, 171, 29);
+		lblTotalEgresos.setBounds(10, 356, 171, 29);
 		panelMedioPagoTotales.add(lblTotalEgresos);
 
 		btnCerrarCajaDeSucursal = new JButton("Cerrar Caja de Sucursal");
 		btnCerrarCajaDeSucursal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCerrarCajaDeSucursal.setBounds(27, 391, 250, 29);
+		btnCerrarCajaDeSucursal.setBounds(38, 440, 250, 29);
 		panelMedioPagoTotales.add(btnCerrarCajaDeSucursal);
 
 		lblBalanceCaja = new JLabel("Balance Caja");
 		lblBalanceCaja.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblBalanceCaja.setBounds(46, 340, 110, 29);
+		lblBalanceCaja.setBounds(46, 400, 110, 29);
 		panelMedioPagoTotales.add(lblBalanceCaja);
 
-		lblActualizarTotalEgresos = new JLabel("Valor");
-		lblActualizarTotalEgresos.setBounds(158, 305, 130, 14);
+		lblActualizarTotalEgresos = new JLabel("$00000000000.00");
+		lblActualizarTotalEgresos.setBounds(158, 365, 130, 14);
 		panelMedioPagoTotales.add(lblActualizarTotalEgresos);
 
 		panel_3 = new JPanel();
-		panel_3.setBounds(147, 195, 141, 29);
+		panel_3.setBounds(147, 209, 141, 29);
 		panelMedioPagoTotales.add(panel_3);
 		panel_3.setLayout(null);
 		panel_3.setForeground(Color.GRAY);
@@ -276,36 +269,29 @@ public class VentanaCierreCajaEclipse extends JFrame {
 		panel_3_1.setLayout(null);
 		panel_3_1.setForeground(Color.GRAY);
 		panel_3_1.setBackground(Color.GRAY);
-		panel_3_1.setBounds(147, 296, 141, 29);
+		panel_3_1.setBounds(147, 356, 141, 29);
 		panelMedioPagoTotales.add(panel_3_1);
 
 		panel_3_2 = new JPanel();
 		panel_3_2.setLayout(null);
 		panel_3_2.setForeground(Color.GRAY);
 		panel_3_2.setBackground(Color.GRAY);
-		panel_3_2.setBounds(147, 340, 141, 29);
+		panel_3_2.setBounds(147, 400, 141, 29);
 		panelMedioPagoTotales.add(panel_3_2);
 
-		lblActualizarBalanceCaja = new JLabel("Valor");
+		lblActualizarBalanceCaja = new JLabel("$000000000.00");
 		lblActualizarBalanceCaja.setBounds(10, 11, 131, 14);
 		panel_3_2.add(lblActualizarBalanceCaja);
-	}
-	
-	public void agregarCheckBox(int columna, JTable table) {
-		TableColumn tc = table.getColumnModel().getColumn(columna);
-		tc.setCellEditor(table.getDefaultEditor(Boolean.class));
-		tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+		
+		JButton btnValidarMPagoEgreso = new JButton("Validar");
+		btnValidarMPagoEgreso.setBounds(199, 249, 89, 23);
+		panelMedioPagoTotales.add(btnValidarMPagoEgreso);
+		
+		JButton btnValidarMPagoIngreso = new JButton("Validar");
+		btnValidarMPagoIngreso.setBounds(199, 11, 89, 24);
+		panelMedioPagoTotales.add(btnValidarMPagoIngreso);
 	}
 
-	//Fila: donde esta el checkbox
-	//Columna: donde esta el checkbox
-	//tabla: donde esta el checkbox
-	
-	public boolean estaSeleccionado(int fila, int columna, JTable tabla) {
-		
-		return tabla.getValueAt(fila,columna) != null;
-	}
-	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.frame.addWindowListener(new WindowAdapter() {
@@ -403,8 +389,7 @@ public class VentanaCierreCajaEclipse extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		VentanaCierreCajaEclipse a = new VentanaCierreCajaEclipse();
+		VentanaCierreCaja a = new VentanaCierreCaja();
 		a.show();
 	}
-
 }
