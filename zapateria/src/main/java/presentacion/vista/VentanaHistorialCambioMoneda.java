@@ -155,7 +155,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		btnFiltrarFechas.setBounds(545, 62, 117, 21);
 		panel_1.add(btnFiltrarFechas);
 		
-		btnReiniciarTabla = new JButton("Reiniciar tabla");
+		btnReiniciarTabla = new JButton("Quitar filtro");
 		btnReiniciarTabla.setBounds(583, 9, 138, 23);
 		panel_1.add(btnReiniciarTabla);
 

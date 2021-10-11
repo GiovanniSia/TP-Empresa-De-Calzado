@@ -1,9 +1,10 @@
-package presentacion.vista;
+package presentacion.vista.Cajero;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -13,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
 
-public class VentanaCierreCaja extends JFrame {
+public class VentanaCierreCajaEclipse extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -44,8 +45,8 @@ public class VentanaCierreCaja extends JFrame {
 	private JLabel lblActualizarBalanceCaja;
 
 	private JTable tablaIngresos;
-	private String[] nombreColumnasIngresos = { "Hora", "Tipo", "Cliente", "T.Factura", "M.Pago", "Monto",
-			"Nro.Operacion", "Total" };
+	private String[] nombreColumnasIngresos = { "Hora", "Tipo", "Cliente", "T.Factura", "M.Pago", "Monto","Cotizacion",
+			"Nro.Operacion", "Total"};
 	private DefaultTableModel modelIngresos;
 
 	private JTable tablaEgresos;
@@ -53,14 +54,14 @@ public class VentanaCierreCaja extends JFrame {
 	private DefaultTableModel modelEgresos;
 
 	private JTable tablaMedioPagoIngresos;
-	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total" };
+	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
 	private DefaultTableModel modelMedioPagoIngresos;
 
 	private JTable tablaMedioPagoEgresos;
-	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total" };
+	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total", "Validar" };
 	private DefaultTableModel modelMedioPagoEgresos;
 
-	public VentanaCierreCaja() {
+	public VentanaCierreCajaEclipse() {
 		initialize();
 	}
 
@@ -198,7 +199,11 @@ public class VentanaCierreCaja extends JFrame {
 		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setResizable(false);
 
 		spMedioPagoIngresos.setViewportView(tablaMedioPagoIngresos);
-
+		
+		
+		agregarCheckBox(3,tablaMedioPagoIngresos);
+		
+		
 		lblCierreCaja = new JLabel("Cierre Caja");
 		lblCierreCaja.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblCierreCaja.setBounds(10, 11, 141, 21);
@@ -223,13 +228,15 @@ public class VentanaCierreCaja extends JFrame {
 
 		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos);
 
-		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setPreferredWidth(50);
-		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setResizable(false);
-		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setResizable(false);
+		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setResizable(false);
+		tablaMedioPagoEgresos.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tablaMedioPagoEgresos.getColumnModel().getColumn(1).setResizable(false);
 
 		spMedioPagoEgresos.setViewportView(tablaMedioPagoEgresos);
-
+		
+		agregarCheckBox(3,tablaMedioPagoEgresos);
+		
 		lblTotalIngresos = new JLabel("Total Ingresos (AR$)");
 		lblTotalIngresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTotalIngresos.setBounds(10, 195, 171, 29);
@@ -283,7 +290,22 @@ public class VentanaCierreCaja extends JFrame {
 		lblActualizarBalanceCaja.setBounds(10, 11, 131, 14);
 		panel_3_2.add(lblActualizarBalanceCaja);
 	}
+	
+	public void agregarCheckBox(int columna, JTable table) {
+		TableColumn tc = table.getColumnModel().getColumn(columna);
+		tc.setCellEditor(table.getDefaultEditor(Boolean.class));
+		tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+	}
 
+	//Fila: donde esta el checkbox
+	//Columna: donde esta el checkbox
+	//tabla: donde esta el checkbox
+	
+	public boolean estaSeleccionado(int fila, int columna, JTable tabla) {
+		
+		return tabla.getValueAt(fila,columna) != null;
+	}
+	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.frame.addWindowListener(new WindowAdapter() {
@@ -381,7 +403,7 @@ public class VentanaCierreCaja extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		VentanaCierreCaja a = new VentanaCierreCaja();
+		VentanaCierreCajaEclipse a = new VentanaCierreCajaEclipse();
 		a.show();
 	}
 
