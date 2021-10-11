@@ -116,7 +116,7 @@ public class EgresosDAOSQL implements EgresosDAO {
 			String txtAprox2) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM medioPago WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+		String sel = "SELECT * FROM Egresos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
 		if (nombreColumna2 != null && txtAprox2 != null) {
 			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
