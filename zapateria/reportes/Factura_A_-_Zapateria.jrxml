@@ -418,19 +418,6 @@
 				<text><![CDATA[Datos de Domicilio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="270" y="-15" width="40" height="34" uuid="3a823e87-70bb-4a4d-a21e-74ed0565d1b9">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<box padding="0">
-					<pen lineWidth="1.0" lineStyle="Solid"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font size="26" isBold="true"/>
-				</textElement>
-				<text><![CDATA[A]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="95" y="70" width="205" height="15" uuid="de9f3b3c-f03a-4df0-9ed4-dff5195f9664"/>
 				<text><![CDATA[E-mail: example@example.com]]></text>
 			</staticText>
@@ -515,6 +502,19 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
+			<textField>
+				<reportElement x="280" y="-10" width="40" height="28" uuid="151b953b-3120-49a5-8034-14deba3b8a1d"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TipoFactura}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnFooter>
@@ -583,7 +583,7 @@
 			<frame>
 				<reportElement x="-20" y="150" width="593" height="200" uuid="0376442c-5e52-4d6d-bcce-6fcd02e61747"/>
 				<subreport>
-					<reportElement x="0" y="0" width="581" height="200" uuid="c67ac883-6ed6-49e1-a7b7-ec931dd898b3"/>
+					<reportElement x="0" y="0" width="592" height="200" uuid="f54c7a7c-5359-4fa0-8215-1913b41dfb04"/>
 					<subreportParameter name="NroFactura">
 						<subreportParameterExpression><![CDATA[$P{NroFactura}]]></subreportParameterExpression>
 					</subreportParameter>
