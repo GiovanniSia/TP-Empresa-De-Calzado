@@ -242,8 +242,19 @@ CREATE TABLE `Factura`
   `NroFacturaCompleta` varchar(45) NOT NULL,
   `IdSucursal` int(11) NOT NULL,
   `Descuento` double(45,2) NOT NULL,
+  `TotalBruto` double(45,2) NOT NULL,
   `TotalFactura` double(45,2) NOT NULL,
   `TipoVenta` varchar(45) NOT NULL,
+  `Calle` varchar(45) NOT NULL,
+  `Altura` varchar(45) NOT NULL,
+  `Pais` varchar(45) NOT NULL,
+  `Provincia` varchar(45) NOT NULL,
+  `Localidad` varchar(45) NOT NULL,
+  `CodPostal` varchar(45) NOT NULL,
+  `CUIL` varchar(45) NOT NULL,
+  `CorreoElectronico` varchar(45) NOT NULL,
+  `ImpuestoAFIP` varchar(45) NOT NULL,
+  `IVA` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 
