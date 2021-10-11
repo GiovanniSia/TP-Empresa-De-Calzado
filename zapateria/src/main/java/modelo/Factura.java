@@ -13,6 +13,10 @@ public class Factura {
 	public Factura(DAOAbstractFactory metodo_persistencia) {
 		this.factura = metodo_persistencia.createFacturaDAO();
 	}
+	
+	public boolean insert(FacturaDTO factura) {
+		return this.factura.insert(factura);
+	}
 
 	public List<FacturaDTO> readAll(){
 		return this.factura.readAll();

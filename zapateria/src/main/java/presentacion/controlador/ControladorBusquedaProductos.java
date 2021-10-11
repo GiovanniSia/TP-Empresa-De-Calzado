@@ -453,8 +453,6 @@ public class ControladorBusquedaProductos {
 			}else {
 				precio = compra.getProducto().getPrecioMinorista() * compra.getCantidad();
 			}
-			int idCliente = this.clienteSeleccionado.getIdCliente();
-	
 			
 			DetalleCarritoDTO detalleCarrito = new DetalleCarritoDTO(0,ultIdCarrito,idProducto,idStock,cant,precio);
 			this.detalleCarrito.insert(detalleCarrito);

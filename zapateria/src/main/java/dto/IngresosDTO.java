@@ -138,4 +138,8 @@ public class IngresosDTO {
 		this.total = total;
 	}
 
+	public void establecerNroFactura(String nroFactura) {
+		this.nroFactura=nroFactura;
+	}
+	
 }

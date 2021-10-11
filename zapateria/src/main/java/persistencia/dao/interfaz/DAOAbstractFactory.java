@@ -16,6 +16,8 @@ public interface DAOAbstractFactory {
 
 	public FacturaDAO createFacturaDAO();
 
+	public DetalleFacturaDAO createDetalleFacturaDAO();
+	
 	public OrdenFabricaDAO createOrdenFabricaDAO();
 	
 	public MedioPagoDAO createMedioPagoDAO();

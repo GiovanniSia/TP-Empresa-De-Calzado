@@ -83,6 +83,7 @@ public class VentanaVisualizarCarritos {
       }
 		
 		frame = new JFrame();
+		
 		frame.setBackground(Color.WHITE);
 		frame.setForeground(Color.BLACK);
 		frame.getContentPane().setForeground(Color.WHITE);

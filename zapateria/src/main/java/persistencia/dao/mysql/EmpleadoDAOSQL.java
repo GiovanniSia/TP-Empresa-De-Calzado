@@ -18,7 +18,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
 	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
 	private static final String readall = "SELECT * FROM empleados";
-	private static final String select = "SELEC * FROM empleados WHERE IdEmpleado=?";
+	private static final String select = "SELECT * FROM empleados WHERE IdEmpleado=?";
 	
 	@Override
 	public boolean insert(EmpleadoDTO empleado) {
@@ -118,7 +118,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		String CUIL = resultSet.getString("CUIL");
 		String nombre = resultSet.getString("Nombre");
 		String apellido = resultSet.getString("Apellido");
-		String correo = resultSet.getString("Correo");
+		String correo = resultSet.getString("CorreoElectronico");
 		String tipoEmpleado = resultSet.getString("TipoEmpleado");
 		String contrasenia = resultSet.getString("Contra");
 		return new EmpleadoDTO(idEmpleado, CUIL, nombre, apellido, correo, tipoEmpleado, contrasenia);

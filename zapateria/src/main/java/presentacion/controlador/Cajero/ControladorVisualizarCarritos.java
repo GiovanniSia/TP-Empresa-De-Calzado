@@ -43,12 +43,18 @@ public class ControladorVisualizarCarritos {
 	VentanaVisualizarCarritos ventanaVisualizarCarritos;
 	ControladorRealizarVenta controladorRealizarVenta;
 	
-	public ControladorVisualizarCarritos(Carrito carrito, DetalleCarrito detalleCarrito,Cliente cliente, MaestroProducto maestroProducto) {
-		this.carrito = carrito;
-		this.detalleCarrito = detalleCarrito;
-		this.cliente = cliente;
-		this.maestroProducto = maestroProducto;
+//	public ControladorVisualizarCarritos(Carrito carrito, DetalleCarrito detalleCarrito,Cliente cliente, MaestroProducto maestroProducto) {
+//		this.carrito = carrito;
+//		this.detalleCarrito = detalleCarrito;
+//		this.cliente = cliente;
+//		this.maestroProducto = maestroProducto;
 		
+	public ControladorVisualizarCarritos() {
+		this.carrito = new Carrito(new DAOSQLFactory());
+		this.detalleCarrito =new DetalleCarrito(new DAOSQLFactory());
+		this.cliente = new Cliente(new DAOSQLFactory());
+		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
+	
 		this.listaCarritos = new ArrayList<CarritoDTO>();
 		this.listaDetalleCarrito = new ArrayList<DetalleCarritoDTO>();
 		this.listaClientes = new ArrayList<ClienteDTO>();
@@ -104,6 +110,9 @@ public class ControladorVisualizarCarritos {
 	public void mostrarVentana() {
 		this.ventanaVisualizarCarritos.show();
 	}
+	public void cerrar() {
+		this.ventanaVisualizarCarritos.cerrar();
+	}
 	
 	public void realizarBusqueda() {
 		String nombre = this.ventanaVisualizarCarritos.getTextNombre().getText();
@@ -123,7 +132,7 @@ public class ControladorVisualizarCarritos {
 		
 		for(CarritoDTO carrito: this.listaCarritos) {
 			for(ClienteDTO cliente: clientesConCarrito) {
-				System.out.println("cliente agreagdo: "+cliente.getNombre());
+//				System.out.println("cliente agreagdo: "+cliente.getNombre());
 				if(carrito.getIdCliente()==cliente.getIdCliente() && carrito.getIdSucursal()==this.idSucursal) {
 					agregarATabla(cliente, carrito);
 				}
@@ -132,6 +141,7 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void llenarTablaCompleta() {
+		System.out.println("se llena la tabla carrito completa");
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
@@ -188,19 +198,22 @@ public class ControladorVisualizarCarritos {
 		}
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
-		DetalleCarritoDTO detalleCarrito = getDetalle(carritoSeleccionado);	
-		System.out.println("el total del carrito seleccionado es :"+carritoSeleccionado.getTotal()+"\nEL id del carrito es :"+carritoSeleccionado.getIdCarrito()+" el id del detalle: "+detalleCarrito.getIdCarrito());
+		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {
+			if(detalleCar.getIdCarrito()==carritoSeleccionado.getIdCarrito()) {
+				MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCar.getIdProducto());
+				String nombreProd = prod.getDescripcion();
+				int cant = detalleCar.getCantidad();
+				double p = detalleCar.getPrecio()*cant;
+				BigDecimal precio = new BigDecimal(p);
+						
+				Object[] fila = {nombreProd,cant,precio};
+				this.ventanaVisualizarCarritos.getModelTablaDetalle().addRow(fila);
+				this.detalleCarritoEnTabla.add(detalleCar);
+			}
+		}
 		
-		MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCarrito.getIdProducto());
-		String nombreProd = prod.getDescripcion();
-		int cant = detalleCarrito.getCantidad();
-		double p = detalleCarrito.getPrecio()*cant;
-		BigDecimal precio = new BigDecimal(p);
-				
-		Object[] fila = {nombreProd,cant,precio};
-		this.ventanaVisualizarCarritos.getModelTablaDetalle().addRow(fila);
-		this.detalleCarritoEnTabla.add(detalleCarrito);
-			
+//		DetalleCarritoDTO detalleCarrito = getDetalle(carritoSeleccionado);	
+//		System.out.println("el total del carrito seleccionado es :"+carritoSeleccionado.getTotal()+"\nEL id del carrito es :"+carritoSeleccionado.getIdCarrito()+" el id del detalle: "+detalleCarrito.getIdCarrito());		
 		
 	
 		//"Productos","Cantidad","P. Unitario"
@@ -224,6 +237,10 @@ public class ControladorVisualizarCarritos {
 		
 		}
 		int resp = JOptionPane.showConfirmDialog(null, "Pasar a cobrar producto?", "Cobrar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(resp==1) {
+			return;
+		}
+		
 		if(this.carritosEnTabla.size()==0) {
 			JOptionPane.showMessageDialog(null, "No hay ningún carrito para cobrar!");
 			return;
@@ -231,12 +248,13 @@ public class ControladorVisualizarCarritos {
 		}
 
 		CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
-		DetalleCarritoDTO detalleCarrito = getDetalle(carrito);
+		System.out.println("el carrito que se le pasa: "+carrito.getIdCarrito());
+//		DetalleCarritoDTO detalleCarrito = getDetalle(carrito);
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
-			this.controladorRealizarVenta = new ControladorRealizarVenta();
-			controladorRealizarVenta.establecerCarritoACobrar(carrito, detalleCarrito);
+			this.controladorRealizarVenta = new ControladorRealizarVenta(this);
+			controladorRealizarVenta.establecerCarritoACobrar(carrito, this.detalleCarritoEnTabla);
 			controladorRealizarVenta.inicializar();
 		}
 		
@@ -244,13 +262,17 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public static void main(String[] args) {
-		Carrito carrito = new Carrito(new DAOSQLFactory());
-		DetalleCarrito detalleCarrito= new DetalleCarrito(new DAOSQLFactory());
-		Cliente cliente = new Cliente(new DAOSQLFactory());
-		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos(carrito,detalleCarrito,cliente,maestroProducto);
+//		Carrito carrito = new Carrito(new DAOSQLFactory());
+//		DetalleCarrito detalleCarrito= new DetalleCarrito(new DAOSQLFactory());
+//		Cliente cliente = new Cliente(new DAOSQLFactory());
+//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
+//		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos(carrito,detalleCarrito,cliente,maestroProducto);
+//		c.inicializar();
+//		c.mostrarVentana();
+		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
 		c.inicializar();
 		c.mostrarVentana();
+		
 	}
 	
 }

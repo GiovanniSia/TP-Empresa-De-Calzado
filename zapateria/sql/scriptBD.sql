@@ -381,3 +381,6 @@ insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
 insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
 insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
+
+INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");
+
