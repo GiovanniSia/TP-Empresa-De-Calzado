@@ -99,7 +99,7 @@ CREATE TABLE `maestroProductos`
   `PuntoRepositorio` int(11) NOT NULL,
   `IdProveedor` int(11) NOT NULL,
   `Talle` varchar(45) NOT NULL,
-  `UnidadMedida` int(11) NOT NULL,
+  `UnidadMedida` varchar(45) NOT NULL,
   `Estado` varchar(45) NOT NULL,
   `CantidadAReponer` int(11) NOT NULL,
   `DiasParaReponer` int(11) NOT NULL,
@@ -268,6 +268,7 @@ CREATE TABLE `Detalle`
   `PrecioVenta` double(45,2) NOT NULL,
   `Monto` double(45,2) NOT NULL,
   `idFactura` int(11) NOT NULL,
+  `UnidadMedida` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 

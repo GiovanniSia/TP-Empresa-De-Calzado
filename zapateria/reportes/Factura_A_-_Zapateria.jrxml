@@ -501,7 +501,7 @@
 			<frame>
 				<reportElement x="-20" y="217" width="594" height="120" uuid="bbb659df-0f45-4deb-b160-d3db575c6776"/>
 				<subreport>
-					<reportElement x="0" y="-3" width="555" height="120" uuid="9bb3fd67-b266-4b31-be66-542db2948a3e"/>
+					<reportElement x="0" y="0" width="574" height="130" uuid="1fda3024-3ed3-4f18-ba81-146667e4a714"/>
 					<subreportParameter name="NroFactura">
 						<subreportParameterExpression><![CDATA[$P{NroFactura}]]></subreportParameterExpression>
 					</subreportParameter>
