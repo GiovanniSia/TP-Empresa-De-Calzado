@@ -180,6 +180,7 @@ public class ControladorRealizarVenta {
 		this.ventanaRealizarVenta.getModelTablaMedioPago().setColumnCount(0);
 		this.ventanaRealizarVenta.getModelTablaMedioPago().setColumnIdentifiers(this.ventanaRealizarVenta.getNombreColumnasMedioPago());
 		
+		this.cantidadUsadaCC=0;
 		this.totalPagado=0;
 		this.totalAPagar= this.carritoACobrar.getTotal();
 		this.totalAPagarAux = this.carritoACobrar.getTotal();
