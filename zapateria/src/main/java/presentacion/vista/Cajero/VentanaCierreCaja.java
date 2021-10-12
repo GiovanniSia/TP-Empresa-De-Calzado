@@ -53,13 +53,13 @@ public class VentanaCierreCaja extends JFrame {
 	private DefaultTableModel modelEgresos;
 
 	private JTable tablaMedioPagoIngresos;
-	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
+	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total", "Validar" };
 	private DefaultTableModel modelMedioPagoIngresos;
 
 	private JTable tablaMedioPagoEgresos;
 	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total", "Validar" };
 	private DefaultTableModel modelMedioPagoEgresos;
-	
+
 	public VentanaCierreCaja() {
 		initialize();
 	}
@@ -177,16 +177,9 @@ public class VentanaCierreCaja extends JFrame {
 		spMedioPagoIngresos.setBounds(10, 46, 278, 159);
 		panelMedioPagoTotales.add(spMedioPagoIngresos);
 
-		
-		
-//		private JTable tablaMedioPagoIngresos;
-//		private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
-//		private DefaultTableModel modelMedioPagoIngresos;
-		
-//		Object[] columnNames = {  "M.Pago", "Descripcion", "Total", "Validar" };
-//		Object[][] data = { { "Buy", "IBM", 123 , false }};
 		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos);
 		tablaMedioPagoIngresos = new JTable(modelMedioPagoIngresos) {
+			
 			private static final long serialVersionUID = 1L;
 
 			public Class<?> getColumnClass(int column) {
@@ -203,25 +196,7 @@ public class VentanaCierreCaja extends JFrame {
 			}
 		};
 		tablaMedioPagoIngresos.setPreferredScrollableViewportSize(tablaMedioPagoIngresos.getPreferredSize());
-//		JScrollPane scrollPane = new JScrollPane(tablaMedioPagoIngresos);
-//		getContentPane().add(scrollPane);
-		
-//		
-//		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos) {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public boolean isCellEditable(int filas, int columnas) {
-//				if (columnas == 9) {
-//					return true;
-//				} else {
-//					return false;
-//				}
-//			}
-//		};
-//
-//		tablaMedioPagoIngresos = new JTable(modelMedioPagoIngresos);
-//
+
 		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setResizable(false);
 		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -238,10 +213,6 @@ public class VentanaCierreCaja extends JFrame {
 		spMedioPagoEgresos.setBounds(10, 277, 278, 70);
 		panelMedioPagoTotales.add(spMedioPagoEgresos);
 
-		
-		
-		
-		
 		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos);
 		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos) {
 			private static final long serialVersionUID = 1L;
@@ -260,24 +231,7 @@ public class VentanaCierreCaja extends JFrame {
 			}
 		};
 		tablaMedioPagoEgresos.setPreferredScrollableViewportSize(tablaMedioPagoEgresos.getPreferredSize());
-		
-		
-		
-//		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos) {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public boolean isCellEditable(int filas, int columnas) {
-//				if (columnas == 9) {
-//					return true;
-//				} else {
-//					return false;
-//				}
-//			}
-//		};
-//
-//		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos);
-//
+
 		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setResizable(false);
 		tablaMedioPagoEgresos.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -285,12 +239,6 @@ public class VentanaCierreCaja extends JFrame {
 
 		spMedioPagoEgresos.setViewportView(tablaMedioPagoEgresos);
 
-		
-		
-		
-		
-		
-		
 		lblTotalIngresos = new JLabel("Total Ingresos (AR$)");
 		lblTotalIngresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTotalIngresos.setBounds(10, 209, 171, 29);
@@ -343,7 +291,7 @@ public class VentanaCierreCaja extends JFrame {
 		lblActualizarBalanceCaja = new JLabel("$0000.00");
 		lblActualizarBalanceCaja.setBounds(10, 11, 131, 14);
 		panel_3_2.add(lblActualizarBalanceCaja);
-		
+
 	}
 
 	public void show() {
