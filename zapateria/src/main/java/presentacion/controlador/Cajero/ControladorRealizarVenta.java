@@ -38,8 +38,11 @@ public class ControladorRealizarVenta {
 	public final int idSucursal=1;
 	public double totalPagado=0;
 	public double totalAPagar;
+	public double totalAPagarAux;
 	public double descuento=0;
 	public double totalAPagarSinDescuento;
+	
+	boolean seAplicoDesc=false;
 	
 	public final int idEmpleado=1;
 	
@@ -49,6 +52,7 @@ public class ControladorRealizarVenta {
 	
 	CarritoDTO carritoACobrar;
 	List<DetalleCarritoDTO> detalleCarritoACobrar;
+	ClienteDTO clienteCarrito;
 	
 	MedioPago medioPago;
 	Cliente cliente;
@@ -88,15 +92,16 @@ public class ControladorRealizarVenta {
 //		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 	}
 	
-	public void establecerCarritoACobrar(CarritoDTO carrito,List<DetalleCarritoDTO> detalles) {
+	public void establecerCarritoACobrar(CarritoDTO carrito,List<DetalleCarritoDTO> detalles,ClienteDTO cliente) {
 		this.carritoACobrar=carrito;
 		this.detalleCarritoACobrar=detalles;
+		this.clienteCarrito = cliente;
 	}
 	
 	
 	public void inicializar() {
+		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
 		this.ventanaRealizarVenta = new VentanaRealizarVenta();
-		
 		
 		this.ventanaRealizarVenta.getBtnAgregarMedioPago().addActionListener(a -> agregarMedioDePago(a));
 		this.ventanaRealizarVenta.getBtnQuitarMedioPago().addActionListener(a -> quitarMedioPago(a));
@@ -105,7 +110,7 @@ public class ControladorRealizarVenta {
 		this.ventanaRealizarVenta.getTextDescuento().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				actualizarTotalAPagar();
+				actualizarTablaMedioPago();
 			}
 		});
 		
@@ -137,36 +142,36 @@ public class ControladorRealizarVenta {
 		}
 		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
-		String metodoPago =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
+		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
-		if(nroOperacion.equals("") && metodoPago.charAt(0)=='T') {
-		JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago");
-		return;
+		if(nroOperacion.equals("") && metodoPagoCb.charAt(0)=='T') {
+			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago con tarjeta!");
+			return;
 		}
 		
 		double valorConversion;
 		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
 		for(MedioPagoDTO m: this.listamediosDePago) {
-			if(m.getDescripcion().equals(metodoPago)) {
+			if(m.getDescripcion().equals(metodoPagoCb)) {
 		        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				String fecha = f.format(LocalDateTime.now());
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 		        String hora = dtf.format(LocalDateTime.now());
 				int idCliente = this.carritoACobrar.getIdCliente();
-				ClienteDTO cliente = this.cliente.selectCliente(idCliente);
-				String tipoFactura = determinarCategoriaFactura(cliente);
+				
+				String tipoFactura = determinarCategoriaFactura(this.clienteCarrito);
 				valorConversion=m.getTasaConversion();
 				double totalArg = cantidad *valorConversion;
-
+				String mp = m.getIdMoneda();
 				
 				//EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
-				IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,fecha,hora,"VT",idCliente,tipoFactura,"0",metodoPago,cantidad,valorConversion,nroOperacion,totalArg);
+				IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,fecha,hora,"VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
 				this.listaDeIngresosARegistrar.add(ingreso);
 				//{"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
 				}
 		}
 		actualizarTablaMedioPago();
-		actualizarTotalAPagar();
+//		actualizarTotalAPagar();
 //		System.out.println("Cantidad de ingresos por ingresar: "+this.listaDeIngresosARegistrar.size());
 	}
 	
@@ -177,39 +182,71 @@ public class ControladorRealizarVenta {
 		
 		this.totalPagado=0;
 		this.totalAPagar= this.carritoACobrar.getTotal();
+		this.totalAPagarAux = this.carritoACobrar.getTotal();
+		
 		for(IngresosDTO i: this.listaDeIngresosARegistrar) {
 			for(MedioPagoDTO medioPago: this.listamediosDePago) {
-				if(i.getMedioPago().equals(medioPago.getDescripcion())) {
-					String metodoPago=i.getMedioPago();
+				if(i.getMedioPago().equals(medioPago.getIdMoneda())) {
+					String metodoPago=medioPago.getDescripcion();
 					double valorConversion = medioPago.getTasaConversion();
 					String moneda = valorConversion==1 ? "AR$"  : medioPago.getIdMoneda()+"$";
 					String nombreTarjeta = medioPago.getIdMoneda().charAt(0)=='T' ? medioPago.getDescripcion() : "-";
-					
-//					System.out.println("el id moneda fue: "+nombreTarjeta+" \nla primer letra del id moneda fue: "+medioPago.getIdMoneda().charAt(0));
+
 					double cantidad = i.getCantidad();
 					double totalArg = cantidad *valorConversion;
 					
-					if(medioPago.getIdMoneda().equals("CC")) {
-						this.cantidadUsadaCC +=totalArg;
-					}
-					
-					this.totalPagado += totalArg;
-					this.totalAPagar -= totalArg;
-					
 					Object[] fila = {metodoPago,moneda,nombreTarjeta,cantidad,totalArg};
 					this.ventanaRealizarVenta.getModelTablaMedioPago().addRow(fila);
+					actualizarTotalAPagar(i,medioPago);
 				}
 				
 			}
 		}
+		descontarDescuento();
+		
+//		descontarDescuento();
+		this.totalAPagar -=this.descuento;
 		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+this.totalPagado);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagar);
 		
 //		System.out.println("valor de total pagado: "+this.totalPagado+"\nCantidad de medios de pago por registrar: "+this.listaDeIngresosARegistrar.size());
 	}
 
+	
+	public void actualizarTotalAPagar(IngresosDTO ingreso, MedioPagoDTO medioPago) {
+		double pagadoArg = ingreso.getCantidad() * medioPago.getTasaConversion();
+		
+		if(medioPago.getIdMoneda().equals("CC")) {
+			this.cantidadUsadaCC +=pagadoArg;
+			System.out.println("cantidad de credito cc usado: "+this.cantidadUsadaCC);
+		}
+		
+		this.totalPagado += pagadoArg;
+		this.totalAPagar -= pagadoArg;
+		this.totalAPagarAux = this.totalAPagar;
+//		this.totalAPagar = this.totalAPagar-this.descuento;
+	}
+	
+	public void descontarDescuento() {
+
+		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
+			System.out.println("toalApAGAR viejo: "+this.totalAPagar);
+			this.totalAPagarAux = this.totalAPagar;
+			this.descuento=0;
+			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
+			return;
+		}
+		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {
+			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
+			this.totalAPagarAux = this.totalAPagar - this.descuento;
+			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
+		}
+	}
+
+	
 	public void registrarPago(ActionEvent a) {
-		if(this.totalPagado>=this.carritoACobrar.getTotal()) {
+		System.out.println("el total: "+this.totalPagado);
+		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
 			
 //			ClienteDTO cliente = this.cliente.selectCliente(this.carritoACobrar.getIdCliente());
 	
@@ -220,7 +257,7 @@ public class ControladorRealizarVenta {
 
 			
 			this.ventanaRealizarVenta.cerrar();
-			this.controladorVisualizarCarritos.cerrar();
+			this.controladorVisualizarCarritos.cerrarVentana();
 			ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
 			c.inicializar();
 			c.mostrarVentana();
@@ -236,7 +273,7 @@ public class ControladorRealizarVenta {
 	
 	public void cancelarPago(ActionEvent a) {
 		this.ventanaRealizarVenta.cerrar();
-		this.controladorVisualizarCarritos.cerrar();
+		this.controladorVisualizarCarritos.cerrarVentana();
 		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
 		c.inicializar();
 		c.mostrarVentana();
@@ -248,27 +285,15 @@ public class ControladorRealizarVenta {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun medio de pago");
 			return;
 		}
+		IngresosDTO ingreso = this.listaDeIngresosARegistrar.get(filaSeleccionada);
+		if(ingreso.getMedioPago().equals("CTE")) {
+			this.cantidadUsadaCC=0;
+		}
+		
 		this.listaDeIngresosARegistrar.remove(filaSeleccionada);
 		actualizarTablaMedioPago();
 //		System.out.println("cantidad de medios de pago a registrar: "+this.listaDeIngresosARegistrar.size());
 	}
-	
-	
-	public void actualizarTotalAPagar() {
-		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
-
-			return;
-		}
-		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {
-			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
-			this.totalAPagar = this.carritoACobrar.getTotal();
-			this.totalAPagar -= this.descuento;
-			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagar);	
-		}		
-	}
-	
-	
-	
 	
 	
 //	tipo factura Ri: Responsable inscripto A / M:Monotributista B / CF: Consumidor Final B / E: Exento E
@@ -297,8 +322,12 @@ public class ControladorRealizarVenta {
 		int idSucursal = this.carritoACobrar.getIdSucursal();
 		double descuento = this.descuento;
 		
-		double totalBruto = this.carritoACobrar.getTotal(); 
-		double totalFactura = calcularTotal(client);//Habria que chequearlo mejor por el impuesto afip
+//		double totalBruto = this.carritoACobrar.getTotal(); 
+//		double totalFactura = calcularTotal(client);//Habria que chequearlo mejor por el impuesto afip
+		
+		double totalBruto = calcularTotalBruto(client);
+		double totalFactura = this.carritoACobrar.getTotal() - this.descuento;
+		
 		String tipoVenta = client.getTipoCliente();//mayorista/minorista
 		
 		String calle = client.getCalle();
@@ -395,10 +424,11 @@ public class ControladorRealizarVenta {
 		return false;
 	}
 	
-	public double calcularTotal(ClienteDTO cliente) {
-		double total = this.carritoACobrar.getTotal()-this.descuento;
+	public double calcularTotalBruto(ClienteDTO cliente) {
+		double total= this.carritoACobrar.getTotal();
+//		System.out.println("se le debe calcular iva: "+calcularIVA(cliente));
 		if(calcularIVA(cliente)) {
-			total = ((21/100) * total) - total;
+			total = total- ((21/100) * total);
 		}
 		return total;
 	}

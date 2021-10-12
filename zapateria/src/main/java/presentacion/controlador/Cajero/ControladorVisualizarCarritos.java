@@ -38,6 +38,8 @@ public class ControladorVisualizarCarritos {
 	List<DetalleCarritoDTO> listaDetalleCarrito;
 	List<ClienteDTO> listaClientes;
 	
+	List<MaestroProductoDTO> todosLosProductos;
+	
 	List<CarritoDTO> carritosEnTabla;
 	List<DetalleCarritoDTO> detalleCarritoEnTabla;
 	
@@ -61,6 +63,9 @@ public class ControladorVisualizarCarritos {
 		this.listaClientes = new ArrayList<ClienteDTO>();
 		this.carritosEnTabla = new ArrayList<CarritoDTO>();
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
+		
+		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
+		
 //		this.controladorRealizarVenta = new ControladorRealizarVenta();
 	}
 
@@ -71,6 +76,8 @@ public class ControladorVisualizarCarritos {
 		this.listaCarritos = this.carrito.readAll();
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
+		
+		this.todosLosProductos = this.maestroProducto.readAll();
 		
 		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 		
@@ -111,7 +118,7 @@ public class ControladorVisualizarCarritos {
 	public void mostrarVentana() {
 		this.ventanaVisualizarCarritos.show();
 	}
-	public void cerrar() {
+	public void cerrarVentana() {
 		this.ventanaVisualizarCarritos.cerrar();
 	}
 	
@@ -185,7 +192,6 @@ public class ControladorVisualizarCarritos {
 	
 	
 	public void mostrarDetalle() {
-		this.detalleCarritoEnTabla.removeAll(detalleCarritoEnTabla);
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasDetalle());
@@ -199,8 +205,9 @@ public class ControladorVisualizarCarritos {
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
 		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {
-			if(detalleCar.getIdCarrito()==carritoSeleccionado.getIdCarrito()) {
-				MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCar.getIdProducto());
+			if(detalleCar.getIdCarrito()==carritoSeleccionado.getIdCarrito() && carritoSeleccionado.getIdSucursal()==this.idSucursal) {
+//				MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCar.getIdProducto());
+				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
 				int cant = detalleCar.getCantidad();
 				double p = detalleCar.getPrecio()*cant;
@@ -228,6 +235,15 @@ public class ControladorVisualizarCarritos {
 		return null;
 	}
 	
+	public MaestroProductoDTO getProducto(int idProducto) {
+		for(MaestroProductoDTO m: this.todosLosProductos) {
+			if(m.getIdMaestroProducto()==idProducto) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
 	public void pasarVentana(ActionEvent a) {
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
 		
@@ -247,13 +263,14 @@ public class ControladorVisualizarCarritos {
 		
 		}
 
-		CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
 //		DetalleCarritoDTO detalleCarrito = getDetalle(carrito);
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
+			CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
+			ClienteDTO client = this.cliente.selectCliente(carrito.getIdCliente());
 			this.controladorRealizarVenta = new ControladorRealizarVenta(this);
-			controladorRealizarVenta.establecerCarritoACobrar(carrito, this.detalleCarritoEnTabla);
+			controladorRealizarVenta.establecerCarritoACobrar(carrito, this.detalleCarritoEnTabla,client);
 			controladorRealizarVenta.inicializar();
 		}
 
