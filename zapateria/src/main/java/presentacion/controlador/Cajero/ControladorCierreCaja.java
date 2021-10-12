@@ -10,17 +10,17 @@ import javax.swing.JOptionPane;
 import dto.EgresosDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoDTO;
+import dto.MedioPagoEgresoDTO;
 import modelo.Egresos;
 import modelo.HistorialCambioMoneda;
 import modelo.Ingresos;
 import modelo.MedioPago;
+import modelo.MedioPagoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
-
-	private final String[] tipoMedioPagoEgreso = { "EFE", "NC" };
 
 	private VentanaCierreCaja ventanaCierreCaja;
 
@@ -45,7 +45,7 @@ public class ControladorCierreCaja {
 		// Botones
 		this.ventanaCierreCaja.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaCierreCaja.getBtnCerrarCajaDeSucursal().addActionListener(c -> cerrarCajaDeSucursal(c));
-		
+
 		mostrarFechaHoy();
 		llenarTablaIngresos();
 		llenarTablaEgresos();
@@ -58,31 +58,31 @@ public class ControladorCierreCaja {
 		mostrarBalanceCaja();
 
 	}
-	
+
 	public void cerrarCajaDeSucursal(ActionEvent a) {
 		int cantidadFilasIngresos = this.ventanaCierreCaja.getTablaMedioPagoIngresos().getRowCount();
-		Boolean todosLosMediosDePagoValidos=false;
+		Boolean todosLosMediosDePagoValidos = false;
 		for (int i = 0; i < cantidadFilasIngresos; i++) {
-			 todosLosMediosDePagoValidos = (Boolean) this.ventanaCierreCaja.getTablaMedioPagoIngresos().getValueAt(i, 3);
-			 if(todosLosMediosDePagoValidos==false) {
-				 JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
-				 return;
-			 }
+			todosLosMediosDePagoValidos = (Boolean) this.ventanaCierreCaja.getTablaMedioPagoIngresos().getValueAt(i, 3);
+			if (todosLosMediosDePagoValidos == false) {
+				JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
+				return;
+			}
 		}
 		int cantidadFilasEgresos = this.ventanaCierreCaja.getTablaMedioPagoEgresos().getRowCount();
 		for (int i = 0; i < cantidadFilasEgresos; i++) {
 			todosLosMediosDePagoValidos = (Boolean) this.ventanaCierreCaja.getTablaMedioPagoEgresos().getValueAt(i, 3);
-			if(todosLosMediosDePagoValidos==false) {
-				 JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
-				 return;
-			 }
+			if (todosLosMediosDePagoValidos == false) {
+				JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
+				return;
+			}
 		}
-		
-		if(todosLosMediosDePagoValidos) {
+
+		if (todosLosMediosDePagoValidos) {
 			JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");
 		}
 	}
-	
+
 	public BigDecimal ObtenerTotalIngreso() {
 		int cantidadFilas = this.ventanaCierreCaja.getTablaMedioPagoIngresos().getRowCount();
 		BigDecimal suma = new BigDecimal("0.00");
@@ -106,18 +106,18 @@ public class ControladorCierreCaja {
 	}
 
 	public void mostrarTotalIngreso() {
-		this.ventanaCierreCaja.getLblActualizarTotalIngresos().setText("$"+ObtenerTotalIngreso()+"");
+		this.ventanaCierreCaja.getLblActualizarTotalIngresos().setText("$" + ObtenerTotalIngreso() + "");
 	}
 
 	public void mostrarTotalEgreso() {
-		this.ventanaCierreCaja.getLblActualizarTotalEgresos().setText("$"+obtenerTotalEgreso()+"");
+		this.ventanaCierreCaja.getLblActualizarTotalEgresos().setText("$" + obtenerTotalEgreso() + "");
 	}
 
 	public void mostrarBalanceCaja() {
 		BigDecimal totalIngresos = ObtenerTotalIngreso();
 		BigDecimal totalEgresos = obtenerTotalEgreso();
-		BigDecimal balanceCaja= new BigDecimal(""+totalIngresos.subtract(totalEgresos)+"");
-		this.ventanaCierreCaja.getLblActualizarBalanceCaja().setText("$"+balanceCaja+"");
+		BigDecimal balanceCaja = new BigDecimal("" + totalIngresos.subtract(totalEgresos) + "");
+		this.ventanaCierreCaja.getLblActualizarBalanceCaja().setText("$" + balanceCaja + "");
 	}
 
 	public void mostrarFechaHoy() {
@@ -226,35 +226,26 @@ public class ControladorCierreCaja {
 		}
 	}
 
-	public String obtenerDescripcionMedioPago(String medioPagoID) {
-		String descripcion = "";
-		if (medioPagoID == "EFE") {
-			descripcion = "Efectivo";
-		}
-		if (medioPagoID == "NC") {
-			descripcion = "Nota Credito";
-		}
-		return descripcion;
-	}
-
-	public BigDecimal obtenerTotalEgresosMedioPago(String medioPago) {
-		BigDecimal totalMedioPago = new BigDecimal(0);
+	public BigDecimal obtenerTotalEgresoMedioPago(String medioPagoEgreso) {
+		BigDecimal totalMedioPagoEgreso = new BigDecimal(0);
 		for (EgresosDTO e : this.egresosEnTabla) {
-			if (e.getMedioPago().equals(medioPago)) {
+			if (e.getMedioPago().equals(medioPagoEgreso)) {
 				BigDecimal total = new BigDecimal("" + e.getTotal() + "");
-				totalMedioPago = totalMedioPago.add(total);
+				totalMedioPagoEgreso = totalMedioPagoEgreso.add(total);
 			}
 		}
-		return totalMedioPago;
+		return totalMedioPagoEgreso;
 	}
 
 	public void llenarTablaMedioPagoEgresos() {
-		for (String mpe : tipoMedioPagoEgreso) {
-			String medioPago = mpe;
-			String descripcion = obtenerDescripcionMedioPago(mpe);
-			BigDecimal total = obtenerTotalEgresosMedioPago(mpe);
+		MedioPagoEgreso medioPagoEgreso = new MedioPagoEgreso(new DAOSQLFactory());
+		List<MedioPagoEgresoDTO> medioPagoEgresoLista = medioPagoEgreso.readAll();
+		for (MedioPagoEgresoDTO mpe : medioPagoEgresoLista) {
+			String medioPagoID = mpe.getIdMoneda();
+			String descripcion = mpe.getDescripcion();
+			BigDecimal total = obtenerTotalEgresoMedioPago(medioPagoID);
 			if (!(total.compareTo(new BigDecimal("0.00")) == 0)) {
-				Object[] fila = { medioPago, descripcion, total, false };
+				Object[] fila = { medioPagoID, descripcion, total, false };
 				this.ventanaCierreCaja.getModelMedioPagoEgresos().addRow(fila);
 			}
 		}
