@@ -53,13 +53,13 @@ public class VentanaCierreCaja extends JFrame {
 	private DefaultTableModel modelEgresos;
 
 	private JTable tablaMedioPagoIngresos;
-	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total" };
+	private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
 	private DefaultTableModel modelMedioPagoIngresos;
 
 	private JTable tablaMedioPagoEgresos;
-	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total" };
+	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total", "Validar" };
 	private DefaultTableModel modelMedioPagoEgresos;
-
+	
 	public VentanaCierreCaja() {
 		initialize();
 	}
@@ -177,21 +177,51 @@ public class VentanaCierreCaja extends JFrame {
 		spMedioPagoIngresos.setBounds(10, 46, 278, 159);
 		panelMedioPagoTotales.add(spMedioPagoIngresos);
 
-		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos) {
+		
+		
+//		private JTable tablaMedioPagoIngresos;
+//		private String[] nombreColumnasMedioPagoIngresos = { "M.Pago", "Descripcion", "Total","Validar" };
+//		private DefaultTableModel modelMedioPagoIngresos;
+		
+//		Object[] columnNames = {  "M.Pago", "Descripcion", "Total", "Validar" };
+//		Object[][] data = { { "Buy", "IBM", 123 , false }};
+		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos);
+		tablaMedioPagoIngresos = new JTable(modelMedioPagoIngresos) {
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			public boolean isCellEditable(int filas, int columnas) {
-				if (columnas == 9) {
-					return true;
-				} else {
-					return false;
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return Double.class;
+				default:
+					return Boolean.class;
 				}
 			}
 		};
-
-		tablaMedioPagoIngresos = new JTable(modelMedioPagoIngresos);
-
+		tablaMedioPagoIngresos.setPreferredScrollableViewportSize(tablaMedioPagoIngresos.getPreferredSize());
+//		JScrollPane scrollPane = new JScrollPane(tablaMedioPagoIngresos);
+//		getContentPane().add(scrollPane);
+		
+//		
+//		modelMedioPagoIngresos = new DefaultTableModel(null, nombreColumnasMedioPagoIngresos) {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public boolean isCellEditable(int filas, int columnas) {
+//				if (columnas == 9) {
+//					return true;
+//				} else {
+//					return false;
+//				}
+//			}
+//		};
+//
+//		tablaMedioPagoIngresos = new JTable(modelMedioPagoIngresos);
+//
 		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tablaMedioPagoIngresos.getColumnModel().getColumn(0).setResizable(false);
 		tablaMedioPagoIngresos.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -208,21 +238,46 @@ public class VentanaCierreCaja extends JFrame {
 		spMedioPagoEgresos.setBounds(10, 277, 278, 70);
 		panelMedioPagoTotales.add(spMedioPagoEgresos);
 
-		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos) {
+		
+		
+		
+		
+		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos);
+		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos) {
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			public boolean isCellEditable(int filas, int columnas) {
-				if (columnas == 9) {
-					return true;
-				} else {
-					return false;
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return Double.class;
+				default:
+					return Boolean.class;
 				}
 			}
 		};
-
-		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos);
-
+		tablaMedioPagoEgresos.setPreferredScrollableViewportSize(tablaMedioPagoEgresos.getPreferredSize());
+		
+		
+		
+//		modelMedioPagoEgresos = new DefaultTableModel(null, nombreColumnasMedioPagoEgresos) {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public boolean isCellEditable(int filas, int columnas) {
+//				if (columnas == 9) {
+//					return true;
+//				} else {
+//					return false;
+//				}
+//			}
+//		};
+//
+//		tablaMedioPagoEgresos = new JTable(modelMedioPagoEgresos);
+//
 		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tablaMedioPagoEgresos.getColumnModel().getColumn(0).setResizable(false);
 		tablaMedioPagoEgresos.getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -230,12 +285,18 @@ public class VentanaCierreCaja extends JFrame {
 
 		spMedioPagoEgresos.setViewportView(tablaMedioPagoEgresos);
 
+		
+		
+		
+		
+		
+		
 		lblTotalIngresos = new JLabel("Total Ingresos (AR$)");
 		lblTotalIngresos.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTotalIngresos.setBounds(10, 209, 171, 29);
 		panelMedioPagoTotales.add(lblTotalIngresos);
 
-		lblActualizarTotalIngresos = new JLabel("$0000000.00");
+		lblActualizarTotalIngresos = new JLabel("$0000.00");
 		lblActualizarTotalIngresos.setBounds(158, 216, 130, 14);
 		panelMedioPagoTotales.add(lblActualizarTotalIngresos);
 
@@ -254,7 +315,7 @@ public class VentanaCierreCaja extends JFrame {
 		lblBalanceCaja.setBounds(46, 400, 110, 29);
 		panelMedioPagoTotales.add(lblBalanceCaja);
 
-		lblActualizarTotalEgresos = new JLabel("$00000000000.00");
+		lblActualizarTotalEgresos = new JLabel("$0000.00");
 		lblActualizarTotalEgresos.setBounds(158, 365, 130, 14);
 		panelMedioPagoTotales.add(lblActualizarTotalEgresos);
 
@@ -279,17 +340,10 @@ public class VentanaCierreCaja extends JFrame {
 		panel_3_2.setBounds(147, 400, 141, 29);
 		panelMedioPagoTotales.add(panel_3_2);
 
-		lblActualizarBalanceCaja = new JLabel("$000000000.00");
+		lblActualizarBalanceCaja = new JLabel("$0000.00");
 		lblActualizarBalanceCaja.setBounds(10, 11, 131, 14);
 		panel_3_2.add(lblActualizarBalanceCaja);
 		
-		JButton btnValidarMPagoEgreso = new JButton("Validar");
-		btnValidarMPagoEgreso.setBounds(199, 249, 89, 23);
-		panelMedioPagoTotales.add(btnValidarMPagoEgreso);
-		
-		JButton btnValidarMPagoIngreso = new JButton("Validar");
-		btnValidarMPagoIngreso.setBounds(199, 11, 89, 24);
-		panelMedioPagoTotales.add(btnValidarMPagoIngreso);
 	}
 
 	public void show() {
