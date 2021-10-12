@@ -22,6 +22,7 @@ import modelo.Cliente;
 import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
 public class ControladorVisualizarCarritos {
@@ -102,7 +103,7 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
 		
 		
-		
+		validarTeclado();
 		llenarTablaCompleta();
 		
 	}
@@ -141,7 +142,6 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void llenarTablaCompleta() {
-		System.out.println("se llena la tabla carrito completa");
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
@@ -155,7 +155,7 @@ public class ControladorVisualizarCarritos {
 				agregarATabla(cliente,carrito);
 			}
 			//"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"}
-		}		
+		}
 	}
 	
 	public boolean yaFueAgregado(CarritoDTO carrito) {
@@ -192,10 +192,10 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla.removeAll(this.detalleCarritoEnTabla);
 		
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
-		if(filaSeleccionada==-1) {
-			JOptionPane.showMessageDialog(null, "wtf esto no deberia aparecer xd");
-			return;
-		}
+//		if(filaSeleccionada==-1) {
+//			JOptionPane.showMessageDialog(null, "wtf esto no deberia aparecer xd");
+//			return;
+//		}
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
 		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {
@@ -248,7 +248,6 @@ public class ControladorVisualizarCarritos {
 		}
 
 		CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
-		System.out.println("el carrito que se le pasa: "+carrito.getIdCarrito());
 //		DetalleCarritoDTO detalleCarrito = getDetalle(carrito);
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
@@ -257,8 +256,26 @@ public class ControladorVisualizarCarritos {
 			controladorRealizarVenta.establecerCarritoACobrar(carrito, this.detalleCarritoEnTabla);
 			controladorRealizarVenta.inicializar();
 		}
-		
-		
+
+	}
+	
+	
+	public void validarTeclado() {
+		this.ventanaVisualizarCarritos.getTextNombre().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+		this.ventanaVisualizarCarritos.getTextApellido().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+		this.ventanaVisualizarCarritos.getTextCUIL().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		});
 	}
 	
 	public static void main(String[] args) {

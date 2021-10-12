@@ -233,6 +233,8 @@ public class FacturaDTO {
 	public double getIVA() {
 		return IVA;
 	}
-
-		
+	
+	public void setIdFactura(int idFactura) {
+		this.idFactura = idFactura;
+	}
 }

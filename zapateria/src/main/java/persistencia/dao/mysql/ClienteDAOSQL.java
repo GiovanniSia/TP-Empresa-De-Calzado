@@ -179,10 +179,7 @@ public class ClienteDAOSQL implements ClienteDAO {
 		if (nombreColumna5 != null && txtAprox5 != null) {
 			sel = sel + " AND " + nombreColumna5 + " LIKE '%" + txtAprox5 + "%'";
 		}
-		
-		
-		System.out.println(sel);
-		
+			
 		ArrayList<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
