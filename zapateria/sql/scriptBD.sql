@@ -216,7 +216,7 @@ CREATE TABLE `Egresos`
 );
 
 CREATE TABLE `Caja`
-(					
+(
   `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
@@ -226,7 +226,7 @@ CREATE TABLE `Caja`
   `CierreNombre` varchar(45) NOT NULL,
   `AuditApertura` TIME NOT NULL,
   `AuditCierre` TIME NOT NULL,
-  PRIMARY KEY (`IdSucursal`)
+  PRIMARY KEY (`IdSucursal`,`Fecha`)
 );
 
 CREATE TABLE `Factura`
