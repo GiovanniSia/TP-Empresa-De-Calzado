@@ -345,10 +345,12 @@ public class ReControladorOperario implements ActionListener {
 					        if ("activo".equals(status)) {
 					            setBackground(Color.YELLOW);
 					            //setForeground(Color.WHITE);
+					        } else if ("completo".equals(status)){
+					        	setBackground(Color.green);
 					        } else {
-					            setBackground(table.getBackground());
+					        	setBackground(table.getBackground());
 					            setForeground(table.getForeground());
-					        }       
+					        }
 					        return this;
 					    }   
 					});
@@ -449,6 +451,28 @@ public class ReControladorOperario implements ActionListener {
 		}else {
 			this.ventanaElegirReceta.getLblMensaje().setText("No hay materiales suficientes");
 		}
+		
+		ventanaElegirReceta.getTablaOrdenesPendientes().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                String status = (String)table.getModel().getValueAt(row, 2);
+                int usar = Integer.valueOf(status);
+                status = (String)table.getModel().getValueAt(row, 3);
+                int tengo = Integer.valueOf(status);
+                if (tengo<usar) {
+                    setBackground(Color.pink);
+                    //setForeground(Color.WHITE);
+                } else {
+                    setBackground(table.getBackground());
+                    setForeground(table.getForeground());
+                }
+                return this;
+            }
+        });
 	}
 	
 	private void reiniciarTablaIngredientes() {
