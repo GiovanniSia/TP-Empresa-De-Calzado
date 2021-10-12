@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 
 public class VentanaCierreCaja extends JFrame {
@@ -65,6 +66,12 @@ public class VentanaCierreCaja extends JFrame {
 	}
 
 	public void initialize() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 926, 613);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

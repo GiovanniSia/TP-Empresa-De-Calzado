@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -62,6 +64,11 @@ public class VentanaModificarMProducto extends JFrame {
 	}
 
 	private void initialize() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setBounds(100, 100, 880, 507);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

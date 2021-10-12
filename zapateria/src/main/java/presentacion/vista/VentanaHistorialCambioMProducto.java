@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -42,6 +43,11 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 	}
 
 	private void initialize() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setBounds(100, 100, 935, 431);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
