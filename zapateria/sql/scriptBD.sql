@@ -290,6 +290,17 @@ CREATE TABLE `medioPago`
   PRIMARY KEY (`IdMoneda`)
 );
 
+CREATE TABLE `medioPagoEgreso`
+(					
+  `IdMoneda` varchar(45) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
+  `TasaConversion` double(45,2) NOT NULL,
+  PRIMARY KEY (`IdMoneda`)
+);
+
+INSERT INTO medioPagoEgreso values ("EFE", "Efectivo",1);
+INSERT INTO medioPagoEgreso values ("NC", "Nota Credito",1);
+
 INSERT INTO medioPago values ("EFE","Efectivo",1);
 INSERT INTO medioPago values ("USD","Dolar",180);
 INSERT INTO medioPago values ("TCV","Tarjeta Credito VISA",1);
