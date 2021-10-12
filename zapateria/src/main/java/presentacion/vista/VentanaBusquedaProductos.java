@@ -73,6 +73,8 @@ public class VentanaBusquedaProductos {
 	private JLabel lblPrecioDesde;
 	private JLabel lblPrecioHasta;
 
+	SpinnerModel spinnerModelProductos;
+	SpinnerModel spinnerModelCarrito;
 	SpinnerModel spinnerModelDesde;
 	SpinnerModel spinnerModelHasta;
 	
@@ -329,11 +331,13 @@ public class VentanaBusquedaProductos {
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
-		spinnerCarrito = new JSpinner();
+		spinnerModelCarrito = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
+		spinnerCarrito = new JSpinner(spinnerModelCarrito);
 		spinnerCarrito.setBounds(632, 41, 47, 19);
 		panel.add(spinnerCarrito);
 		
-		spinnerProductos = new JSpinner();
+		spinnerModelProductos = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
+		spinnerProductos = new JSpinner(spinnerModelProductos);
 		spinnerProductos.setBounds(316, 138, 47, 19);
 		panel.add(spinnerProductos);
 		

@@ -140,7 +140,7 @@ public class ControladorRealizarVenta {
 			JOptionPane.showMessageDialog(null, "No ha agregado ningun valor");
 			return;
 		}
-		
+				
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
 		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
@@ -153,6 +153,15 @@ public class ControladorRealizarVenta {
 		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			if(m.getDescripcion().equals(metodoPagoCb)) {
+				System.out.println("metodoPago: "+metodoPagoCb);
+				if( metodoPagoCb.equals("Cuenta Corriente")) {
+					if(!poseeSaldoSuficiente(this.clienteCarrito,cantidad)) {
+						JOptionPane.showMessageDialog(null, "El cliente no posee saldo suficiente!");
+						return;
+					}
+					
+				}
+				
 		        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				String fecha = f.format(LocalDateTime.now());
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -244,6 +253,10 @@ public class ControladorRealizarVenta {
 		}
 	}
 
+	
+	public boolean poseeSaldoSuficiente(ClienteDTO cliente,double cantidad) {
+		return cliente.getCreditoDisponible() >= cantidad;
+	}
 	
 	public void registrarPago(ActionEvent a) {
 		System.out.println("el total: "+this.totalPagado);

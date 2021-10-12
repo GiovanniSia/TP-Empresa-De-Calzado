@@ -184,9 +184,9 @@ public class ControladorBusquedaProductos {
 		}else {
 			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,"PrecioMinorista",precioHasta);
 			}
-		if(Integer.parseInt(precioDesde)>Integer.parseInt(precioHasta)) {
-			JOptionPane.showMessageDialog(null, "El mínimo no debe ser mayor al máximo");
-		}
+//		if(Integer.parseInt(precioDesde)>Integer.parseInt(precioHasta)) {
+//			JOptionPane.showMessageDialog(null, "El mínimo no debe ser mayor al máximo");
+//		}
 //		System.out.println("cant de result"+productosAproximados.size());
 		escribirTabla(productosAproximados);
 	}
