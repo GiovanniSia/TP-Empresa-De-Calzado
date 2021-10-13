@@ -10,6 +10,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import dto.SucursalDTO;
+import modelo.Sucursal;
+import modelo.Zapateria;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -19,19 +21,37 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import persistencia.conexion.Conexion;
+import persistencia.dao.mysql.DAOSQLFactory;
 
 public class ReporteFactura {
 	private JasperReport reporte;
 	private JasperViewer reporteViewer;
 	private JasperPrint reporteLleno;
 	private Logger log = Logger.getLogger(ReporteProducto.class);
+	
+	private static final String dataMissing = "-";//"[Hiperlink error]"
 
 	// Recibe la lista de personas para armar el reporte
-	public ReporteFactura(String nroFacturaCompleto, SucursalDTO sucursal) {
+	public ReporteFactura(String nroFacturaCompleto, int idSucursal) {
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
 		parametersMap.put("NroFactura", nroFacturaCompleto);
-		parametersMap.put("NroFactura", nroFacturaCompleto);
-		parametersMap.put("NroFactura", nroFacturaCompleto);
+		
+		String direccionSucursal = "";
+		Sucursal daosql = new Sucursal(new DAOSQLFactory());
+		List<SucursalDTO> sucursales = daosql.readAll();
+		for(SucursalDTO suc: sucursales) {
+			if(suc.getIdSucursal() == idSucursal) {
+				direccionSucursal = suc.getCalle() + suc.getAltura();
+			}
+		}
+		if(direccionSucursal.equals("") || direccionSucursal == "") {
+			direccionSucursal = dataMissing;
+		}
+		parametersMap.put("Direccion",direccionSucursal);
+		Zapateria zapa = new Zapateria(); 
+		parametersMap.put("Categoria", zapa.getCategoriaAFIP());
+		parametersMap.put("Cuit", zapa.getCUIT());
+		parametersMap.put("Correo", zapa.getCorreoElectronico());
 		try {
 			/*
 			 * File n = new File(""); String dir =

@@ -27,6 +27,10 @@
 		</queryString>
 	</subDataset>
 	<parameter name="NroFactura" class="java.lang.String"/>
+	<parameter name="Direccion" class="java.lang.String"/>
+	<parameter name="Categoria" class="java.lang.String"/>
+	<parameter name="Cuit" class="java.lang.String"/>
+	<parameter name="Correo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *, deta.Cantidad as cant FROM zapateria.factura AS fac, zapateria.ingresos AS ing, zapateria.detalle as deta WHERE fac.NroFacturaCompleta = ing.NroFactura AND deta.idFactura = fac.Id AND '$P!{NroFactura}' = fac.NroFacturaCompleta]]>
 	</queryString>
@@ -372,16 +376,16 @@
 				<text><![CDATA[Zapatería Argento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="95" y="55" width="205" height="15" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
-				<text><![CDATA[CUIT: XX-XXXXXXXX-X]]></text>
+				<reportElement x="95" y="55" width="77" height="15" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
+				<text><![CDATA[CUIT:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="95" y="25" width="205" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
-				<text><![CDATA[Dirección: """" XXXX]]></text>
+				<reportElement x="95" y="25" width="77" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
+				<text><![CDATA[Dirección:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="95" y="40" width="205" height="15" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
-				<text><![CDATA[Categoría AFIP: Responsable Inscripto]]></text>
+				<reportElement x="95" y="40" width="77" height="15" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
+				<text><![CDATA[Categoría AFIP:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="285" y="115" width="55" height="15" uuid="01027093-a358-487e-9d8f-10b8d802c3c3"/>
@@ -418,8 +422,8 @@
 				<text><![CDATA[Datos de Domicilio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="95" y="70" width="205" height="15" uuid="de9f3b3c-f03a-4df0-9ed4-dff5195f9664"/>
-				<text><![CDATA[E-mail: example@example.com]]></text>
+				<reportElement x="95" y="70" width="77" height="15" uuid="de9f3b3c-f03a-4df0-9ed4-dff5195f9664"/>
+				<text><![CDATA[E-mail:]]></text>
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="88" y="115" width="84" height="14" uuid="fa0f5f97-f6c5-4c76-be62-904c74422616"/>
@@ -514,6 +518,22 @@
 					<font fontName="Arial" size="24"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TipoFactura}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="172" y="25" width="134" height="15" uuid="5d057ba7-4ae3-4b5a-90d5-88b46627bfbe"/>
+				<textFieldExpression><![CDATA[$P{Direccion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="172" y="40" width="134" height="15" uuid="ce6845f1-f2ae-4016-9287-144aea3bd4ee"/>
+				<textFieldExpression><![CDATA[$P{Categoria}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="172" y="55" width="134" height="15" uuid="de8a81b4-7987-4bbf-8998-6976b13fa158"/>
+				<textFieldExpression><![CDATA[$P{Cuit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="172" y="70" width="134" height="15" uuid="a0a7fe60-ad04-4d85-9b23-62a35a1e673a"/>
+				<textFieldExpression><![CDATA[$P{Correo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
