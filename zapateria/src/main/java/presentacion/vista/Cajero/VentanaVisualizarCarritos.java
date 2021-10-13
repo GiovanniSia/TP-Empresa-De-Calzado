@@ -24,6 +24,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaVisualizarCarritos {
 
@@ -199,25 +201,56 @@ public class VentanaVisualizarCarritos {
 		lblCUIL.setBounds(10, 122, 93, 13);
 		panel.add(lblCUIL);
 		
+		
+		//TXT
+		
 		textNombre = new JTextField();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textNombre.getText().length()>=15) {
+                    e.consume();
+                }
+			}
+		});
 		textNombre.setBounds(113, 142, 96, 19);
 		panel.add(textNombre);
 		textNombre.setColumns(10);
 		
 		textCUIL = new JTextField();
+		textCUIL.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textCUIL.getText().length()>=15) {
+                    e.consume();
+                }
+			}
+		});
 		textCUIL.setColumns(10);
 		textCUIL.setBounds(10, 142, 96, 19);
 		panel.add(textCUIL);
+		
+		textApellido = new JTextField();
+		textApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textApellido.getText().length()>=15) {
+                    e.consume();
+                }
+			}
+		});
+		textApellido.setColumns(10);
+		textApellido.setBounds(219, 142, 96, 19);
+		panel.add(textApellido);
+		
+		//
 		
 		lblApellido = new JLabel("Apellido");
 		lblApellido.setFont(new Font("Consolas", Font.PLAIN, 10));
 		lblApellido.setBounds(219, 120, 93, 13);
 		panel.add(lblApellido);
 		
-		textApellido = new JTextField();
-		textApellido.setColumns(10);
-		textApellido.setBounds(219, 142, 96, 19);
-		panel.add(textApellido);
+
 		
 		
 		/*

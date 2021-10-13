@@ -65,7 +65,7 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
-		
+		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 //		this.controladorRealizarVenta = new ControladorRealizarVenta();
 	}
 
@@ -79,7 +79,7 @@ public class ControladorVisualizarCarritos {
 		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		
-		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+
 		
 		this.ventanaVisualizarCarritos.getTableCarritos().addMouseListener(new MouseAdapter() {
 			@Override
@@ -106,7 +106,7 @@ public class ControladorVisualizarCarritos {
 				realizarBusqueda();
 			}
 		});
-		
+					
 		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
 		
 		
@@ -279,6 +279,7 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	
+
 	public void validarTeclado() {
 		this.ventanaVisualizarCarritos.getTextNombre().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {

@@ -23,6 +23,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaRealizarVenta {
 
@@ -135,12 +137,6 @@ public class VentanaRealizarVenta {
 		lblltimosDgitos.setFont(new Font("Consolas", Font.PLAIN, 12));
 		lblltimosDgitos.setBounds(218, 10, 138, 21);
 		panel_2.add(lblltimosDgitos);
-		
-		textNumOperacion = new JTextField();
-		textNumOperacion.setColumns(10);
-		textNumOperacion.setBounds(362, 9, 133, 20);
-		panel_2.add(textNumOperacion);
-		
 
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
@@ -205,10 +201,48 @@ public class VentanaRealizarVenta {
 		lblPrecioVentaValor.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
 		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
 		
+		//TXT
 		textCantidad = new JTextField();
+		textCantidad.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCantidad.getText().length()>=15) {
+                    e.consume();
+                }
+            }
+        });
 		textCantidad.setBounds(362, 40, 133, 19);
 		panel_2.add(textCantidad);
 		textCantidad.setColumns(10);
+		
+		textDescuento = new JTextField();
+		textDescuento.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textDescuento.getText().length()>=15) {
+                    e.consume();
+                }
+            }
+        });
+		textDescuento.setColumns(10);
+		textDescuento.setBounds(362, 64, 133, 19);
+		panel_2.add(textDescuento);
+		
+		
+		textNumOperacion = new JTextField();
+		textNumOperacion.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textNumOperacion.getText().length()>=15) {
+                    e.consume();
+                }
+            }
+        });
+		textNumOperacion.setColumns(10);
+		textNumOperacion.setBounds(362, 9, 133, 20);
+		panel_2.add(textNumOperacion);
+		
+		//
 		
 		btnAgregarMedioPago = new JButton("");
 		btnAgregarMedioPago.setBounds(668, 32, 55, 52);
@@ -225,10 +259,7 @@ public class VentanaRealizarVenta {
 		lblAadirDescuento.setBounds(240, 65, 116, 21);
 		panel_2.add(lblAadirDescuento);
 		
-		textDescuento = new JTextField();
-		textDescuento.setColumns(10);
-		textDescuento.setBounds(362, 64, 133, 19);
-		panel_2.add(textDescuento);
+
 		
 		JLabel lblDescuento = new JLabel("Descuento:");
 		lblDescuento.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));

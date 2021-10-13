@@ -3,6 +3,7 @@ package presentacion.controlador.Cajero;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -93,6 +94,9 @@ public class ControladorRealizarVenta {
 		
 		this.controladorVisualizarCarritos=controladorVisualizarCarritos;
 //		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+		
+//		BigDecimal b = new BigDecimal();
+		
 	}
 	
 	public void establecerCarritoACobrar(CarritoDTO carrito,List<DetalleCarritoDTO> detalles,ClienteDTO cliente) {
@@ -123,7 +127,8 @@ public class ControladorRealizarVenta {
 		llenarCbMedioPago();
 //		actualizarTablaMedioPago();
 		this.totalAPagar=carritoACobrar.getTotal();
-		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+carritoACobrar.getTotal());
+		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
+		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+tpgr);
 		validarTeclado();
 		this.ventanaRealizarVenta.show();
 	}
@@ -143,7 +148,10 @@ public class ControladorRealizarVenta {
 			JOptionPane.showMessageDialog(null, "No ha agregado ningun valor");
 			return;
 		}
-				
+//		if(!todosLosCamposSonValidos()) {
+//			return;
+//		}
+		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
 		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
@@ -156,6 +164,8 @@ public class ControladorRealizarVenta {
 			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago!");
 			return;
 		}
+		
+
 		
 		double valorConversion;
         
@@ -228,9 +238,14 @@ public class ControladorRealizarVenta {
 		descontarDescuento();
 		
 //		descontarDescuento();
+		
 		this.totalAPagar -=this.descuento;
-		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+this.totalPagado);
-		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagar);
+		
+		BigDecimal totalPgd = new BigDecimal(this.totalPagado);
+		BigDecimal totalPgr = new BigDecimal(this.totalAPagar);
+		
+		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+totalPgd);
+		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+totalPgr);
 		
 //		System.out.println("valor de total pagado: "+this.totalPagado+"\nCantidad de medios de pago por registrar: "+this.listaDeIngresosARegistrar.size());
 	}
@@ -250,26 +265,43 @@ public class ControladorRealizarVenta {
 //		this.totalAPagar = this.totalAPagar-this.descuento;
 	}
 	
-	public void descontarDescuento() {
-
+	public void descontarDescuento() {		
 		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
 			this.totalAPagarAux = this.totalAPagar;
 			this.descuento=0;
-			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+this.descuento);
-			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
+			
+			BigDecimal desc = new BigDecimal(this.descuento);
+			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux); 
+			
+			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+desc);
+			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+pgraux);
 			return;
 		}
 		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {			
 			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
-			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+this.descuento);
+			BigDecimal desc = new BigDecimal(this.descuento);
+			
+			
+			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+desc);
 			if(descuento>this.totalAPagar) {
 				JOptionPane.showMessageDialog(null, "Esta cantidad de descuento supera el total a pagar!");
+				
+				this.totalAPagarAux = this.totalAPagar;
+				this.descuento=0;
+				
+				BigDecimal desc1 = new BigDecimal(this.descuento);
+				BigDecimal pgraux = new BigDecimal(this.totalAPagarAux); 
+				
+				this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+desc1);
+				this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+pgraux);
 				this.ventanaRealizarVenta.getTextDescuento().setText("");
+				
 				return;
 			}
 			
 			this.totalAPagarAux = this.totalAPagar - this.descuento;
-			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
+			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux); 
+			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+pgraux);
 		}
 	}
 
@@ -512,7 +544,29 @@ public class ControladorRealizarVenta {
 	
 	
 	
+
+	public boolean todosLosCamposSonValidos() {
+		String monto = this.ventanaRealizarVenta.getTextCantidad().getText();
+		boolean m = monto.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+
+        if (!monto.equals("") && !m ) {
+        	JOptionPane.showMessageDialog(null, "El campo monto no es correcto");
+            return false;
+        }
+        
+        String desc = this.ventanaRealizarVenta.getTextDescuento().getText();
+        boolean d = desc.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+        if(!desc.equals("") && !d) {
+        	JOptionPane.showMessageDialog(null, "El campo descuento no es correcto");
+        	return false;
+        }
+        return true;
+        
+	}
+	
+	
 	public void validarTeclado() {
+
 		this.ventanaRealizarVenta.getTextNumOperacion().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);

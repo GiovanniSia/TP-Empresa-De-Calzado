@@ -248,7 +248,7 @@ public class ControladorBusquedaProductos {
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
 		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
 		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),null)) {
-			JOptionPane.showMessageDialog(null, "La cantidad elegida no es v�lida");
+			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
 			return;
 		}
 		//verificamos si existe este prod en el carrito
