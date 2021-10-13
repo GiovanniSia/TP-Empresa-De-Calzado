@@ -167,7 +167,7 @@ public class ControladorCierreCaja {
 
 			BigDecimal cotizacion = new BigDecimal("" + i.getCotizacion() + "");
 
-			BigDecimal nroOperacion = new BigDecimal(i.getOperacion());
+			String nroOperacion = i.getOperacion();
 			BigDecimal total = new BigDecimal("" + i.getTotal() + "");
 
 			Object[] fila = { hora, tipo, idCliente, tipoFactura, medioPago, monto, cotizacion, nroOperacion, total };
