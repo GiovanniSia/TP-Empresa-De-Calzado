@@ -378,7 +378,7 @@ public class ControladorRealizarVenta {
 		EmpleadoDTO empleado = this.empleado.selectEmpleado(this.idEmpleado);
 		String nombreEmpleado = empleado.getApellido()+" "+empleado.getNombre();
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); 
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
 		
 		String tipoFactura = determinarCategoriaFactura(client);
