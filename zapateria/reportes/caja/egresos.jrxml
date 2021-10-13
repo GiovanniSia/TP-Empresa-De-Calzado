@@ -136,7 +136,7 @@
 					<textElement textAlignment="Right">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{Total}.intValue()]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

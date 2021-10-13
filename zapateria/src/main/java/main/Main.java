@@ -20,7 +20,7 @@ public class Main {
 		co.inicializar();
 		
 		/*
-		ReporteFactura reporte = new ReporteFactura("1A1");
+		ReporteFactura reporte = new ReporteFactura("1A1", new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
 		reporte.mostrar();
 		*/
 		/*

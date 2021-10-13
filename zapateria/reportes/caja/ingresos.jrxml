@@ -383,7 +383,7 @@
 						<textElement textAlignment="Center">
 							<font size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion})]]></textFieldExpression>
+						<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion}.intValue())]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="444" y="2" width="54" height="13" uuid="bd9fe8f3-e4c0-40e4-a984-f5551eea8db6"/>
@@ -397,14 +397,14 @@
 						<textElement textAlignment="Right">
 							<font size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[String.valueOf($F{Total})]]></textFieldExpression>
+						<textFieldExpression><![CDATA[String.valueOf($F{Total}.intValue())]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="352" y="2" width="60" height="13" uuid="343bbf07-84ab-4946-82b0-db2cc19c572b"/>
 						<textElement textAlignment="Center">
 							<font size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[String.valueOf($F{Cantidad})]]></textFieldExpression>
+						<textFieldExpression><![CDATA[String.valueOf($F{Cantidad}.intValue())]]></textFieldExpression>
 					</textField>
 				</frame>
 			</frame>

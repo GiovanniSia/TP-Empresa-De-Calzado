@@ -93,8 +93,8 @@
 				</reportElement>
 			</line>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="465" y="0" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<reportElement x="434" y="0" width="135" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="95" y="0" width="164" height="25" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
@@ -123,10 +123,10 @@
 				<textFieldExpression><![CDATA[$F{AperturaNombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="341" y="0" width="124" height="20" uuid="71547351-bb6d-4bc7-975e-55284ba84f81"/>
+				<reportElement x="310" y="0" width="124" height="20" uuid="71547351-bb6d-4bc7-975e-55284ba84f81"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[Fecha y hora de emisión:]]></text>
+				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="94" y="37" width="144" height="30" uuid="6ea026ee-6b81-4cfb-bc46-9194d927d424"/>
