@@ -23,7 +23,7 @@ public class VentanaModificarMProducto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Codigo", "Descripción","Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
+	private String[] nombreColumnas = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
 			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaProducto;
@@ -66,7 +66,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
@@ -84,19 +84,19 @@ public class VentanaModificarMProducto extends JFrame {
 		spProducto.setBounds(10, 11, 823, 145);
 		panel.add(spProducto);
 
-		modelProducto =new DefaultTableModel(null, nombreColumnas) {
+		modelProducto = new DefaultTableModel(null, nombreColumnas) {
 			private static final long serialVersionUID = 1L;
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if(columnas == 9) {
-                    return true;
-                }else {
-                    return false;
-                }
-            }
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 9) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		};
-		
-		
+
 		tablaProducto = new JTable(modelProducto);
 
 		tablaProducto.getColumnModel().getColumn(0).setPreferredWidth(103);
@@ -147,7 +147,10 @@ public class VentanaModificarMProducto extends JFrame {
 		txtActualizarPrecioCosto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtActualizarPrecioCosto.getText().length()>=15) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+				if (txtActualizarPrecioCosto.getText().length() >= 15 || !numeros) {
 					e.consume();
 				}
 			}
@@ -160,7 +163,11 @@ public class VentanaModificarMProducto extends JFrame {
 		txtActualizarPrecioMayorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtActualizarPrecioMayorista.getText().length()>=15) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+
+				if (txtActualizarPrecioMayorista.getText().length() >= 15 || !numeros) {
 					e.consume();
 				}
 			}
@@ -172,7 +179,11 @@ public class VentanaModificarMProducto extends JFrame {
 		txtActualizarPrecioMinorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtActualizarPrecioMinorista.getText().length()>=15) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+				
+				if (txtActualizarPrecioMinorista.getText().length() >= 15 || !numeros) {
 					e.consume();
 				}
 			}
@@ -248,11 +259,11 @@ public class VentanaModificarMProducto extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
-		
+
 		txtFiltroProveedor = new JTextField();
 		txtFiltroProveedor.setBounds(273, 67, 94, 20);
 		panel_1.add(txtFiltroProveedor);
-		
+
 		JLabel lblProveedor = new JLabel("Proveedor");
 		lblProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblProveedor.setBounds(273, 41, 94, 20);
@@ -280,7 +291,7 @@ public class VentanaModificarMProducto extends JFrame {
 	public DefaultTableModel getModelProducto() {
 		return modelProducto;
 	}
-	
+
 	public JTextField getTxtFiltroProveedor() {
 		return txtFiltroProveedor;
 	}
@@ -370,7 +381,7 @@ public class VentanaModificarMProducto extends JFrame {
 		this.spinnerDiasParaReponer.setValue(0);
 		this.spinnerPuntoRepositorio.setValue(0);
 	}
-	
+
 	public void cerrar() {
 		this.txtFiltroDescripcion.setText(null);
 		this.txtFiltroTalle.setText(null);
