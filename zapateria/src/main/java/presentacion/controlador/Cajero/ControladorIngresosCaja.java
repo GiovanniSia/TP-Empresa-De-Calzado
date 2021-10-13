@@ -81,7 +81,7 @@ public class ControladorIngresosCaja {
 		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
 		String hora = dtfhora.format(LocalDateTime.now());
 		
-		CajaDTO cajaNueva = new CajaDTO(0,IdSucursal,fecha,hora,apertura,0,nombre,"",hora,"");
+		CajaDTO cajaNueva = new CajaDTO(0,IdSucursal,fecha,hora,apertura,0,nombre,"",hora,"00:00:00");
 		
 		int cantidadIngresada = Integer.parseInt(this.ventanaIngresosCaja.getTxtFieldIngresoSaldoInicial().getText());
 		
