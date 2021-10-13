@@ -258,9 +258,9 @@ public class VentanaModificarMProducto extends JFrame {
 		lblProveedor.setBounds(273, 41, 94, 20);
 		panel_1.add(lblProveedor);
 
-		lblModificarProducto = new JLabel("Modificar Producto");
+		lblModificarProducto = new JLabel("Modificar Producto Unitariamente");
 		lblModificarProducto.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblModificarProducto.setBounds(10, 41, 198, 30);
+		lblModificarProducto.setBounds(10, 41, 382, 30);
 		frame.getContentPane().add(lblModificarProducto);
 
 		panel_2 = new JPanel();
