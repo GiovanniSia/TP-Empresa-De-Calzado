@@ -35,7 +35,10 @@ import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
 public class ControladorRealizarVenta {
 	
-	public final int idSucursal=1;
+	//hardcodeado
+	private static final int idEmpleado=1;
+	private static final int idSucursal=1;
+	
 	public double totalPagado=0;
 	public double totalAPagar;
 	public double totalAPagarAux;
@@ -44,7 +47,7 @@ public class ControladorRealizarVenta {
 	
 	boolean seAplicoDesc=false;
 	
-	public final int idEmpleado=1;
+	
 	
 	double cantidadUsadaCC;
 	
@@ -144,8 +147,13 @@ public class ControladorRealizarVenta {
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
 		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
-		if(nroOperacion.equals("") && metodoPagoCb.charAt(0)=='T') {
-			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago con tarjeta!");
+		if(cantidad > this.totalAPagar) {
+			JOptionPane.showMessageDialog(null, "Esta cantidad supera el total a pagar!");
+			return;
+		}
+		
+		if(nroOperacion.equals("") && (metodoPagoCb.charAt(0)=='T' || metodoPagoCb.equals("Mercado Pago"))) {
+			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago!");
 			return;
 		}
 		
@@ -153,8 +161,12 @@ public class ControladorRealizarVenta {
 		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			if(m.getDescripcion().equals(metodoPagoCb)) {
-				System.out.println("metodoPago: "+metodoPagoCb);
 				if( metodoPagoCb.equals("Cuenta Corriente")) {
+					if(this.clienteCarrito.getEstado().equals("Moroso")) {
+						JOptionPane.showMessageDialog(null, "El cliente es Moroso, no puede usar la cuenta corriente!");
+						return;
+					}
+					
 					if(!poseeSaldoSuficiente(this.clienteCarrito,cantidad)) {
 						JOptionPane.showMessageDialog(null, "El cliente no posee saldo suficiente!");
 						return;
@@ -180,8 +192,9 @@ public class ControladorRealizarVenta {
 				}
 		}
 		actualizarTablaMedioPago();
-//		actualizarTotalAPagar();
-//		System.out.println("Cantidad de ingresos por ingresar: "+this.listaDeIngresosARegistrar.size());
+		this.ventanaRealizarVenta.getTextCantidad().setText("");
+		this.ventanaRealizarVenta.getTextDescuento().setText("");
+		this.ventanaRealizarVenta.getTextNumOperacion().setText("");
 	}
 	
 	public void actualizarTablaMedioPago() {
@@ -200,12 +213,14 @@ public class ControladorRealizarVenta {
 					String metodoPago=medioPago.getDescripcion();
 					double valorConversion = medioPago.getTasaConversion();
 					String moneda = valorConversion==1 ? "AR$"  : medioPago.getIdMoneda()+"$";
-					String nombreTarjeta = medioPago.getIdMoneda().charAt(0)=='T' ? medioPago.getDescripcion() : "-";
-
+//					String nombreTarjeta = medioPago.getIdMoneda().charAt(0)=='T' ? medioPago.getDescripcion() : "-";
+					String numOperacionAux = this.ventanaRealizarVenta.getTextNumOperacion().getText();
+					String numOperacion = numOperacionAux.equals("") ? "-" : numOperacionAux;
+					
 					double cantidad = i.getCantidad();
 					double totalArg = cantidad *valorConversion;
 					
-					Object[] fila = {metodoPago,moneda,nombreTarjeta,cantidad,totalArg};
+					Object[] fila = {metodoPago,moneda,numOperacion,cantidad,totalArg};
 					this.ventanaRealizarVenta.getModelTablaMedioPago().addRow(fila);
 					actualizarTotalAPagar(i,medioPago);
 				}
@@ -240,14 +255,20 @@ public class ControladorRealizarVenta {
 	public void descontarDescuento() {
 
 		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
-			System.out.println("toalApAGAR viejo: "+this.totalAPagar);
 			this.totalAPagarAux = this.totalAPagar;
 			this.descuento=0;
 			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
 			return;
 		}
-		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {
+		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {			
 			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
+			
+			if(descuento>this.totalAPagar) {
+				JOptionPane.showMessageDialog(null, "Esta cantidad de descuento supera el total a pagar!");
+				this.ventanaRealizarVenta.getTextDescuento().setText("");
+				return;
+			}
+			
 			this.totalAPagarAux = this.totalAPagar - this.descuento;
 			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
 		}

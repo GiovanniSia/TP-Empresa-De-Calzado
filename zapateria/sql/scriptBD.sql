@@ -321,13 +321,14 @@ INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
 INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
 INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
 
-insert into clientes values(1, "Default", "Default","00000000","",0,0,"Minorista","Excento","Activo","0","0","","","","0");
-insert into clientes values(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(3, "Adriana", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(4, "Pedra", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(5, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(6, "Delta", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(7, "Puda", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(1, "Default", "Default","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
+insert into clientes values(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","E","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(3, "Adriana", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(4, "Pedra", "Pula","223004","juanS@mgail.com",200,100,"Minorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(5, "Lua", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(6, "Delta", "Aula","523004","juanS@mgail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(7, "Puda", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(8, "Vicentino", "Reboredo","223004","pepeptS@mgail.com",200,100,"Mayorista","RI","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 
 insert into recetas values(1,1,'Receta eficiente');
 

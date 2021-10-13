@@ -31,7 +31,7 @@ public class VentanaRealizarVenta {
 	
 	private JTable tableMedioPago;
 	private DefaultTableModel modelTablaMedioPago;
-	private String[] nombreColumnasMedioPago = {"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
+	private String[] nombreColumnasMedioPago = {"Método","Moneda","Num. Operación","Cantidad","Cant. (en AR$)"};
 	private JScrollPane scrollPaneMedioPago;
 	
 	private JComboBox comboBoxMetodoPago;
@@ -192,9 +192,9 @@ public class VentanaRealizarVenta {
 		//Spinner
 		spinnerModelCant = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
 		
-		JLabel lblModificarCantidad = new JLabel("Seleccionar cantidad");
+		JLabel lblModificarCantidad = new JLabel("Monto");
 		lblModificarCantidad.setFont(new Font("Consolas", Font.PLAIN, 12));
-		lblModificarCantidad.setBounds(214, 41, 142, 21);
+		lblModificarCantidad.setBounds(318, 41, 38, 21);
 		panel_2.add(lblModificarCantidad);
 		
 		lblPrecioVentaValor = new JLabel("$0");

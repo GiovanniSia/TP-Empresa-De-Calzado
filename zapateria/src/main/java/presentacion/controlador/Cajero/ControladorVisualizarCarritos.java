@@ -252,7 +252,7 @@ public class ControladorVisualizarCarritos {
 			return;
 		
 		}
-		int resp = JOptionPane.showConfirmDialog(null, "Pasar a cobrar producto?", "Cobrar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Pasar a cobrar el carrito?", "Cobrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(resp==1) {
 			return;
 		}
