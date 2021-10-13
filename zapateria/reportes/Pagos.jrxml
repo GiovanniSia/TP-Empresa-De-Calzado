@@ -269,15 +269,15 @@
 				<textField>
 					<reportElement x="467" y="18" width="86" height="18" uuid="75f8381d-1733-425a-be70-553439e5276b"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Total})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{Total}.intValue())]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="110" y="20" width="74" height="14" uuid="11321a48-bd55-479a-80b9-c2178bfc3ca7"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Cantidad})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{Cantidad}.intValue())]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="227" y="20" width="80" height="14" uuid="db7db1b7-f7d5-4105-8fcf-db9963595eee"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{Cotizacion}.intValue())]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="346" y="19" width="82" height="14" uuid="98e37cfd-a22d-47f5-a713-88ef1ec8aa15"/>
@@ -301,7 +301,7 @@
 					<textElement textAlignment="Right">
 						<font size="18"/>
 					</textElement>
-					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura}.intValue())]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="4" y="1" width="196" height="26" uuid="4f17497e-d070-4412-9173-bcf58f7e1e5c"/>
