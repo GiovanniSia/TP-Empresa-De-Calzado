@@ -22,7 +22,9 @@ import modelo.Cliente;
 import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
+import presentacion.vista.VentanaMenuSistemaDeVentas;
 import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
 public class ControladorVisualizarCarritos {
@@ -46,13 +48,17 @@ public class ControladorVisualizarCarritos {
 	VentanaVisualizarCarritos ventanaVisualizarCarritos;
 	ControladorRealizarVenta controladorRealizarVenta;
 	
+	Controlador controlador;
+//	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
+	
+	
 //	public ControladorVisualizarCarritos(Carrito carrito, DetalleCarrito detalleCarrito,Cliente cliente, MaestroProducto maestroProducto) {
 //		this.carrito = carrito;
 //		this.detalleCarrito = detalleCarrito;
 //		this.cliente = cliente;
 //		this.maestroProducto = maestroProducto;
 		
-	public ControladorVisualizarCarritos() {
+	public ControladorVisualizarCarritos(Controlador controlador) {
 		this.carrito = new Carrito(new DAOSQLFactory());
 		this.detalleCarrito =new DetalleCarrito(new DAOSQLFactory());
 		this.cliente = new Cliente(new DAOSQLFactory());
@@ -66,6 +72,9 @@ public class ControladorVisualizarCarritos {
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+		
+		this.controlador = controlador;
+//		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
 //		this.controladorRealizarVenta = new ControladorRealizarVenta();
 	}
 
@@ -108,7 +117,7 @@ public class ControladorVisualizarCarritos {
 		});
 					
 		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
-		
+		this.ventanaVisualizarCarritos.getBtnRegresar().addActionListener(a -> salir(a));
 		
 		validarTeclado();
 		llenarTablaCompleta();
@@ -298,6 +307,12 @@ public class ControladorVisualizarCarritos {
 		});
 	}
 	
+	public void salir(ActionEvent a) {
+		this.ventanaVisualizarCarritos.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
+	}
+	
 	public static void main(String[] args) {
 //		Carrito carrito = new Carrito(new DAOSQLFactory());
 //		DetalleCarrito detalleCarrito= new DetalleCarrito(new DAOSQLFactory());
@@ -306,9 +321,11 @@ public class ControladorVisualizarCarritos {
 //		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos(carrito,detalleCarrito,cliente,maestroProducto);
 //		c.inicializar();
 //		c.mostrarVentana();
-		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
-		c.inicializar();
-		c.mostrarVentana();
+		
+		
+//		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
+//		c.inicializar();
+//		c.mostrarVentana();
 		
 	}
 	

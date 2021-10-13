@@ -50,6 +50,9 @@ public class VentanaVisualizarCarritos {
 	private JTextField textNombre;
 	private JTextField textCUIL;
 	private JTextField textApellido;
+	private JButton btnRegresar;
+
+	private JLabel lblSalir;
 
 	/**
 	 * Launch the application.
@@ -97,7 +100,7 @@ public class VentanaVisualizarCarritos {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 928, 562);
+		panel.setBounds(0, 0, 928, 592);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -125,7 +128,7 @@ public class VentanaVisualizarCarritos {
 			}
 		};
 		scrollPaneTablaCarritos = new JScrollPane(this.tableCarritos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneTablaCarritos.setBounds(10, 171, 515, 381);
+		scrollPaneTablaCarritos.setBounds(10, 171, 515, 365);
 		
 		tableCarritos = new JTable(modelTablaCarritos);
 		tableCarritos.setBounds(10, 133, 908, 322);	
@@ -250,6 +253,16 @@ public class VentanaVisualizarCarritos {
 		lblApellido.setBounds(219, 120, 93, 13);
 		panel.add(lblApellido);
 		
+		btnRegresar = new JButton("");
+		btnRegresar.setBounds(20, 546, 35, 36);
+		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+		panel.add(btnRegresar);
+		
+		lblSalir = new JLabel("Salir");
+		lblSalir.setFont(new Font("Consolas", Font.PLAIN, 14));
+		lblSalir.setBounds(65, 561, 52, 21);
+		panel.add(lblSalir);
+		
 
 		
 		
@@ -355,6 +368,9 @@ public class VentanaVisualizarCarritos {
 
 	public JTextField getTextApellido() {
 		return textApellido;
+	}
+	public JButton getBtnRegresar() {
+		return btnRegresar;
 	}
 
 }

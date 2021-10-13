@@ -9,6 +9,7 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
+import presentacion.vista.VentanaMenuSistemaDeVentas;
 
 public class ControladorBusquedaCliente {
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -16,11 +17,15 @@ public class ControladorBusquedaCliente {
 	private List<ClienteDTO> clienteEnTabla;
 
 	ControladorBusquedaProductos controladorBusquedaProductos;
-
+	
+	Controlador controlador;
+//	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
+	
 	private ClienteDTO clienteSeleccionado;
 
-	public ControladorBusquedaCliente(Cliente cliente) {
-
+	public ControladorBusquedaCliente(Controlador controlador, Cliente cliente) {
+		this.controlador = controlador;
+//		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas(); 
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		this.cliente = cliente;
 	}
@@ -87,6 +92,9 @@ public class ControladorBusquedaCliente {
 
 	public void atras(ActionEvent a) {
 		this.ventanaBusquedaCliente.cerrar();
+		
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void pasarAVenta(ActionEvent p) {
@@ -164,10 +172,10 @@ public class ControladorBusquedaCliente {
 	}
 
 	public static void main(String[] args) {
-		Cliente c = new Cliente(new DAOSQLFactory());
-		ControladorBusquedaCliente controlador = new ControladorBusquedaCliente(c);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		Cliente c = new Cliente(new DAOSQLFactory());
+//		ControladorBusquedaCliente controlador = new ControladorBusquedaCliente(c);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 
 }

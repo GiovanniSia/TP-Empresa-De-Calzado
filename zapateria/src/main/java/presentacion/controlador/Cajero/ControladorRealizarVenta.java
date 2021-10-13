@@ -368,9 +368,9 @@ public class ControladorRealizarVenta {
 			
 			this.ventanaRealizarVenta.cerrar();
 			this.controladorVisualizarCarritos.cerrarVentana();
-			ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
-			c.inicializar();
-			c.mostrarVentana();
+//			ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
+			this.controladorVisualizarCarritos.inicializar();
+			this.controladorVisualizarCarritos.mostrarVentana();
 			
 			return;
 			
@@ -384,9 +384,9 @@ public class ControladorRealizarVenta {
 	public void cancelarPago(ActionEvent a) {
 		this.ventanaRealizarVenta.cerrar();
 		this.controladorVisualizarCarritos.cerrarVentana();
-		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
-		c.inicializar();
-		c.mostrarVentana();
+//		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
+		this.controladorVisualizarCarritos.inicializar();
+		this.controladorVisualizarCarritos.mostrarVentana();
 		
 	}
 	public void quitarMedioPago(ActionEvent a) {
