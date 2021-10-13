@@ -131,7 +131,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int puntoRepositorio = resultSet.getInt("mp.PuntoRepositorio");
 		int idProveedor = resultSet.getInt("mp.IdProveedor");
 		String talle = resultSet.getString("mp.Talle");
-		int unidadMedida = resultSet.getInt("mp.UnidadMedida");
+		String unidadMedida = resultSet.getString("mp.UnidadMedida");
 		String estado = resultSet.getString("mp.Estado");
 		int CantidadAReponer = resultSet.getInt("mp.CantidadAReponer");
 		int DiasParaReponer = resultSet.getInt("mp.DiasParaReponer");

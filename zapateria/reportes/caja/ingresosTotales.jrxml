@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ingresosTotales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6a76a4dc-2075-4cfc-a82b-222fd366205f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="IdSucursal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT ingr.MedioPago,mep.Descripcion ,SUM(ingr.cantidad),(SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos)) FROM zapateria.ingresos as ingr, zapateria.MedioPago as mep WHERE IdSucursal = '$P!{IdSucursal}' AND ingr.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos) AND mep.IdMoneda = ingr.MedioPago GROUP BY ingr.MedioPago]]>
+	</queryString>
+	<field name="MedioPago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.label" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ingresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mediopago"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SUM(ingr.cantidad)" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="SUM(ingr.cantidad)"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUM(ingr.cantidad)"/>
+	</field>
+	<field name="(SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = &apos;1&apos; AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name">
+			<![CDATA[(SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '1' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))]]>
+		</property>
+		<property name="com.jaspersoft.studio.field.label">
+			<![CDATA[(SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '1' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))]]>
+		</property>
+	</field>
+	<variable name="Contador" class="java.lang.Double" incrementType="Column" calculation="Sum"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<frame>
+				<reportElement x="-10" y="10" width="580" height="40" uuid="ec2c4240-0c64-41a4-b22f-1fa33cfa487d"/>
+				<frame>
+					<reportElement mode="Opaque" x="10" y="2" width="276" height="16" backcolor="#A6A6A6" uuid="21d75ce7-e3aa-482a-9db8-2c75c22d3d7b"/>
+					<staticText>
+						<reportElement x="7" y="0" width="120" height="16" forecolor="#FFFFFF" uuid="fa78a5e6-227d-4f84-9034-a467028921a9"/>
+						<text><![CDATA[Monto por Medio de Pago]]></text>
+					</staticText>
+				</frame>
+				<staticText>
+					<reportElement x="10" y="18" width="40" height="20" uuid="c59d781c-e871-41ec-98c6-29a2b28f3aec"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[M.Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="50" y="18" width="147" height="20" uuid="0862a81f-8c5e-4686-ab70-9163af23127e"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Medio de Pago]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="197" y="18" width="88" height="20" uuid="98e70f36-5414-4e46-bcbf-edfcfe344296"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[TOTAL]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement x="-10" y="0" width="286" height="20" uuid="72139615-5594-48d0-85ed-4a6180fb385f"/>
+				<frame>
+					<reportElement mode="Opaque" x="10" y="2" width="275" height="16" backcolor="#E8E8E8" uuid="23e1f5fc-b7e5-44e3-821f-5497c877bf31"/>
+					<textField>
+						<reportElement x="1" y="2" width="41" height="13" uuid="1e9341a8-c0f2-4212-8940-a3141b8fbfd7"/>
+						<textElement textAlignment="Center">
+							<font size="8"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{MedioPago}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="50" y="2" width="130" height="13" uuid="64e852bc-0167-4cfa-bc0f-ba64c742173f"/>
+						<textElement textAlignment="Center">
+							<font size="8"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+					</textField>
+					<textField>
+						<reportElement x="187" y="2" width="88" height="13" uuid="012c3a6f-e498-4b30-a3e1-6873e7fcedbd"/>
+						<textElement textAlignment="Right">
+							<font size="8"/>
+						</textElement>
+						<textFieldExpression><![CDATA[String.valueOf($F{SUM(ingr.cantidad)}.intValue())]]></textFieldExpression>
+					</textField>
+				</frame>
+			</frame>
+		</band>
+	</detail>
+	<summary>
+		<band height="67" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="280" y="26" width="216" height="34" forecolor="#A3A3A3" backcolor="#F2F2F2" uuid="86776e45-1897-451e-9d98-0238e29852e7"/>
+				<textField>
+					<reportElement x="17" y="4" width="196" height="25" uuid="3d80f047-6a63-4b6a-b9d5-9574cc290b6a"/>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[String.valueOf($F{(SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '1' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))}.intValue())]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="280" y="10" width="134" height="14" uuid="9167ecd1-b314-4ea7-b1e1-7fa68cde456b"/>
+				<text><![CDATA[TOTAL INGRESOS (en AR$)]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

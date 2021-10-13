@@ -99,7 +99,7 @@ CREATE TABLE `maestroProductos`
   `PuntoRepositorio` int(11) NOT NULL,
   `IdProveedor` int(11) NOT NULL,
   `Talle` varchar(45) NOT NULL,
-  `UnidadMedida` int(11) NOT NULL,
+  `UnidadMedida` varchar(45) NOT NULL,
   `Estado` varchar(45) NOT NULL,
   `CantidadAReponer` int(11) NOT NULL,
   `DiasParaReponer` int(11) NOT NULL,
@@ -352,9 +352,9 @@ insert into paso values(4,"Montado");
 insert into paso values(5,"Pegado");
 insert into paso values(6,"Terminado");
 
-INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
-INSERT INTO maestroProductos values(8,"Tijera"  ,"MP","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
-INSERT INTO maestroProductos values(9,"Adesivo"  ,"MP","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","S",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
+INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","S",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","S",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
 
 insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
 insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
@@ -386,7 +386,7 @@ insert into recetas values(4,2,'Receta sin material');
 insert into pasosReceta values(12,4,1,1);
 insert into pasosReceta values(13,4,2,2);
 
-insert into ordenfabrica values(1,1,'2020-03-20',15,'L123123',1);
+insert into ordenfabrica values(1,1,'2020-03-20',36,'L123123',1);
 insert into ordenfabrica values(2,1,'2019-06-19',10,'L213132',2);
 insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
 insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);

@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
 
 public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
@@ -27,11 +28,16 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 	
 	JLabel lblSolicitado;
 	
-	private String[] nombreColumnas = { "Material", "Cantidad" };
+	private String[] nombreColumnas = { "Material", "Cantidad usada x unidad", "Cantidad a usar en total", "En stock actualmente", "Unidad medida"};
 	private JScrollPane spCliente;
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JLabel lblMensaje;
+	private JLabel lblIdPedido;
+	
+	private JLabel lblSucursal;
+	private JLabel lblNewLabel;
+	private JLabel lblFecha;
 
 	public ReVentanaSeleccionarUnaReceta() {
 		initialize();
@@ -39,13 +45,13 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 409, 350);
+		frame.setBounds(100, 100, 700, 469);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 376, 289);
+		panel.setBounds(10, 11, 664, 408);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -54,11 +60,11 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		panel.add(comboBox);
 		
 		lblSolicitado = new JLabel("New label");
-		lblSolicitado.setBounds(10, 45, 356, 38);
+		lblSolicitado.setBounds(10, 45, 356, 28);
 		panel.add(lblSolicitado);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 87, 356, 112);
+		spCliente.setBounds(10, 212, 644, 112);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -66,16 +72,28 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		spCliente.setViewportView(tabla);
 		
 		lblMensaje = new JLabel("New label");
-		lblMensaje.setBounds(10, 206, 356, 28);
+		lblMensaje.setBounds(10, 335, 356, 28);
 		panel.add(lblMensaje);
 		
 		btnTrabajar = new JButton("Pasar a produccion");
-		btnTrabajar.setBounds(10, 245, 154, 23);
+		btnTrabajar.setBounds(10, 374, 154, 23);
 		panel.add(btnTrabajar);
 		
-		JLabel lblNewLabel = new JLabel("Receta");
+		lblNewLabel = new JLabel("Receta");
 		lblNewLabel.setBounds(10, 15, 78, 14);
 		panel.add(lblNewLabel);
+		
+		lblSucursal = new JLabel("New label");
+		lblSucursal.setBounds(10, 123, 356, 28);
+		panel.add(lblSucursal);
+		
+		lblIdPedido = new JLabel("New label");
+		lblIdPedido.setBounds(10, 84, 356, 28);
+		panel.add(lblIdPedido);
+		
+		lblFecha = new JLabel("New label");
+		lblFecha.setBounds(10, 162, 356, 28);
+		panel.add(lblFecha);
 	}
 
 	public void show() {
@@ -123,5 +141,17 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	public JLabel getLblMensaje() {
 		return lblMensaje;
+	}
+
+	public JLabel getLblIdPedido() {
+		return lblIdPedido;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblFecha() {
+		return lblFecha;
 	}
 }

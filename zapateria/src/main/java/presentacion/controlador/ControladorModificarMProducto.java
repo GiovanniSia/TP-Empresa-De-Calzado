@@ -275,7 +275,7 @@ public class ControladorModificarMProducto {
 
 		int idProveedor = this.maestroProductoEnTabla.get(filaSeleccionada).getIdProveedor();
 		String talle = this.maestroProductoEnTabla.get(filaSeleccionada).getTalle();
-		int unidadMedida = this.maestroProductoEnTabla.get(filaSeleccionada).getUnidadMedida();
+		String unidadMedida = this.maestroProductoEnTabla.get(filaSeleccionada).getUnidadMedida();
 		String estado = this.maestroProductoEnTabla.get(filaSeleccionada).getEstado();
 
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo, fabricado, precioCosto, precioMayorista,

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="egresos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="23274086-750e-4831-8502-9b9b11dfe965">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="IdSucursal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
+(SELECT MAX(Fecha) FROM zapateria.egresos)]]>
+	</queryString>
+	<field name="Id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Id"/>
+		<property name="com.jaspersoft.studio.field.label" value="Id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdSucursal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Hora" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="Hora"/>
+		<property name="com.jaspersoft.studio.field.label" value="Hora"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Detalle"/>
+		<property name="com.jaspersoft.studio.field.label" value="Detalle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Total"/>
+		<property name="com.jaspersoft.studio.field.label" value="Total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="2" width="548" height="16" backcolor="#4F4F4F" uuid="addeb0f7-88eb-4de2-a188-4039e3fb66e4"/>
+				<staticText>
+					<reportElement x="9" y="0" width="52" height="16" forecolor="#FFFFFF" uuid="41967511-13a4-4b09-a393-9a5c91f30718"/>
+					<text><![CDATA[Egresos]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="18" width="40" height="20" uuid="42497227-b3c1-47e7-82e0-71033f003b87"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="18" width="117" height="20" uuid="174c53b8-31c8-4afa-a81f-c0fc72e40e4e"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="18" width="271" height="20" uuid="a5b07fc7-e792-4b40-bc8b-29b032908efa"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="18" width="40" height="20" uuid="86e5b465-8041-42ce-ac87-7688f3baf768"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[M. Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="18" width="79" height="20" uuid="36b56d85-6b64-4203-bf94-04343f390910"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="548" height="16" backcolor="#E8E8E8" uuid="ffad4723-6b38-42e1-93d5-c9cb74e47d0a"/>
+				<textField>
+					<reportElement x="-3" y="2" width="44" height="13" uuid="ed57caba-93b1-46e5-aa39-a9cb97a1af5a"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Hora}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="40" y="2" width="117" height="13" uuid="5b83d46a-a4ec-449f-89fb-4a3532d85fc2"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="157" y="2" width="270" height="13" uuid="68c98238-78e3-4f9b-9f6e-32651c69ebfc"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Detalle}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="427" y="2" width="41" height="13" uuid="30ba014c-15f6-4fa8-808e-f7763e0b6f1a"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="468" y="2" width="79" height="13" uuid="0a06fe4a-3b8e-4b5a-a183-40c7daeda2f9"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Total}.intValue()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

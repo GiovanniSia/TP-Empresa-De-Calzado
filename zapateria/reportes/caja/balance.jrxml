@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="balance" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8f09b0f-7ec2-469e-9992-42548aea5c57">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="IdSucursal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))-(SELECT SUM(egre.Total) FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
+(SELECT MAX(Fecha) FROM zapateria.egresos)) as totalBalance from zapateria.ingresos]]>
+	</queryString>
+	<field name="totalBalance" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="totalBalance"/>
+		<property name="com.jaspersoft.studio.field.label" value="totalBalance"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="2" width="554" height="84" uuid="3db42a4f-28aa-439d-909c-b91bb816713c"/>
+				<frame>
+					<reportElement mode="Opaque" x="3" y="4" width="548" height="16" backcolor="#4F4F4F" uuid="6f17721b-87d4-492a-8d87-ebceb61a96c9"/>
+					<staticText>
+						<reportElement x="3" y="0" width="100" height="16" forecolor="#FFFFFF" backcolor="#FFFFFF" uuid="6a9db446-fb0b-4220-a6ae-b4ed0052baee"/>
+						<text><![CDATA[Balance de Caja]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement mode="Opaque" x="327" y="40" width="216" height="34" forecolor="#A3A3A3" backcolor="#F2F2F2" uuid="cae3647f-6a37-4949-bcf4-6eb4a448c6c0"/>
+					<textField>
+						<reportElement x="17" y="4" width="196" height="25" uuid="ebd2d91c-b4cf-416e-86bd-35be2f901f17"/>
+						<textElement textAlignment="Right">
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{totalBalance}.intValue()]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement x="327" y="26" width="134" height="14" uuid="2c666cb6-a789-4ff7-b457-38f86e63f0e4"/>
+					<text><![CDATA[TOTAL BALANCE (en AR$)]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+</jasperReport>

@@ -36,7 +36,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			statement.setDouble(8, maestroProductos.getPuntoRepositorio());
 			statement.setInt(9, maestroProductos.getIdProveedor());
 			statement.setString(10, maestroProductos.getTalle());
-			statement.setInt(11, maestroProductos.getUnidadMedida());
+			statement.setString(11, maestroProductos.getUnidadMedida());
 			statement.setString(12, maestroProductos.getEstado());
 			statement.setInt(13, maestroProductos.getCantidadAReponer());
 			statement.setInt(14, maestroProductos.getDiasParaReponer());
@@ -91,7 +91,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 			statement.setDouble(7, maestroProductos_nuevo.getPuntoRepositorio());
 			statement.setInt(8, maestroProductos_nuevo.getIdProveedor());
 			statement.setString(9, maestroProductos_nuevo.getTalle());
-			statement.setInt(10, maestroProductos_nuevo.getUnidadMedida());
+			statement.setString(10, maestroProductos_nuevo.getUnidadMedida());
 			statement.setString(11, maestroProductos_nuevo.getEstado());
 			statement.setInt(12, maestroProductos_nuevo.getCantidadAReponer());
 			statement.setInt(13, maestroProductos_nuevo.getDiasParaReponer());
@@ -135,7 +135,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		int puntoRepositorio = resultSet.getInt("PuntoRepositorio");
 		int idProveedor = resultSet.getInt("IdProveedor");
 		String talle = resultSet.getString("Talle");
-		int unidadMedida = resultSet.getInt("UnidadMedida");
+		String unidadMedida = resultSet.getString("UnidadMedida");
 		String estado = resultSet.getString("Estado");
 
 		int CantidadAReponer = resultSet.getInt("CantidadAReponer");
