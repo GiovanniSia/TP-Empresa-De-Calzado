@@ -1,5 +1,8 @@
 package dto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class IngresosDTO {
 	int id;
 	int idSucursal;
@@ -138,8 +141,10 @@ public class IngresosDTO {
 		this.total = total;
 	}
 
-	public void establecerNroFactura(String nroFactura) {
+	public void establecerDatosFaltantes(String nroFactura, String fecha, String hora) {
 		this.nroFactura=nroFactura;
+		this.fecha=fecha;
+		this.hora=hora;
 	}
 	
 }

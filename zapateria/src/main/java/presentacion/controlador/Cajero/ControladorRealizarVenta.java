@@ -158,11 +158,6 @@ public class ControladorRealizarVenta {
 		}
 		
 		double valorConversion;
-		
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		String fecha = f.format(LocalDateTime.now());
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String hora = dtf.format(LocalDateTime.now());
         
 		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
 		for(MedioPagoDTO m: this.listamediosDePago) {
@@ -190,7 +185,7 @@ public class ControladorRealizarVenta {
 				String mp = m.getIdMoneda();
 				
 				//EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
-				IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,fecha,hora,"VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
+				IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,"","","VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
 				this.listaDeIngresosARegistrar.add(ingreso);
 				//{"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
 				}
@@ -420,8 +415,13 @@ public class ControladorRealizarVenta {
 		
 	
 	public void registrarIngreso(ClienteDTO cliente, FacturaDTO factura) {
+	    DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	    String fecha = f.format(LocalDateTime.now());
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+	    String hora = dtf.format(LocalDateTime.now());
+	    
 		for(IngresosDTO ingreso: this.listaDeIngresosARegistrar) {
-			ingreso.establecerNroFactura(factura.getNroFacturaCompleta());
+			ingreso.establecerDatosFaltantes(factura.getNroFacturaCompleta(),fecha,hora);
 			this.ingresos.insert(ingreso);
 			
 		}
