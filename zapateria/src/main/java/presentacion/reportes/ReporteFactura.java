@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import dto.SucursalDTO;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -26,7 +27,7 @@ public class ReporteFactura {
 	private Logger log = Logger.getLogger(ReporteProducto.class);
 
 	// Recibe la lista de personas para armar el reporte
-	public ReporteFactura(String nroFacturaCompleto) {
+	public ReporteFactura(String nroFacturaCompleto, SucursalDTO sucursal) {
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
 		parametersMap.put("NroFactura", nroFacturaCompleto);
 		parametersMap.put("NroFactura", nroFacturaCompleto);
