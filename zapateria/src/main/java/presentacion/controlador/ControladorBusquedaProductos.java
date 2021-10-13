@@ -35,6 +35,7 @@ import java.time.LocalDateTime;
 public class ControladorBusquedaProductos {
 	
 	private final int idSucursal=1;//esto esta hardcodeado
+	private final int idVendedor = 1;
 //	private final List<MaestroProductoDTO> carrito;
 	int Preciototal;
 	
@@ -432,7 +433,7 @@ public class ControladorBusquedaProductos {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss"); 
 		String hora = dtf.format(LocalDateTime.now());
 		
-		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.clienteSeleccionado.getIdCliente(),this.Preciototal,hora);
+		CarritoDTO carrito = new CarritoDTO(0,idSucursal,this.clienteSeleccionado.getIdCliente(),this.idVendedor,this.Preciototal,hora);
 		this.carrito.insert(carrito);
 		
 		this.listaCarrito = this.carrito.readAll();

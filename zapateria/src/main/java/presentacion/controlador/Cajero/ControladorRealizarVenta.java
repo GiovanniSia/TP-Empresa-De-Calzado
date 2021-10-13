@@ -60,7 +60,7 @@ public class ControladorRealizarVenta {
 	
 	MedioPago medioPago;
 	Cliente cliente;
-	Empleado empleado;
+	Empleado cajero;
 	
 	Carrito carrito;
 	DetalleCarrito detalleCarrito;
@@ -79,7 +79,7 @@ public class ControladorRealizarVenta {
 	public ControladorRealizarVenta(ControladorVisualizarCarritos controladorVisualizarCarritos) {
 		this.medioPago=new MedioPago(new DAOSQLFactory());;
 		this.cliente = new Cliente(new DAOSQLFactory());
-		this.empleado = new Empleado(new DAOSQLFactory());
+		this.cajero = new Empleado(new DAOSQLFactory());
 		this.carrito = new Carrito(new DAOSQLFactory());
 		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
@@ -418,9 +418,14 @@ public class ControladorRealizarVenta {
 		int idCliente = client.getIdCliente();
 		String nombreCliente =client.getApellido()+" "+ client.getNombre();
 		
-		int idEmpleado= this.idEmpleado;
-		EmpleadoDTO empleado = this.empleado.selectEmpleado(this.idEmpleado);
-		String nombreEmpleado = empleado.getApellido()+" "+empleado.getNombre();
+		int idCajero= this.idEmpleado;
+		int idVendedor = this.carritoACobrar.getIdVendedor();
+		EmpleadoDTO cajero = this.cajero.selectEmpleado(idCajero);
+		String nombreCajero = cajero.getApellido()+" "+cajero.getNombre();
+		EmpleadoDTO vendedor = this.cajero.selectEmpleado(idVendedor);
+		
+		String nombreVendedor = vendedor.getApellido()+" "+vendedor.getNombre();
+		
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -452,7 +457,7 @@ public class ControladorRealizarVenta {
 		
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = calcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
-		FacturaDTO factura = new FacturaDTO(id,montoPendiente,idCliente,nombreCliente,idEmpleado,nombreEmpleado,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
+		FacturaDTO factura = new FacturaDTO(id,montoPendiente,idCliente,nombreCliente,idCajero,nombreCajero,idVendedor,nombreVendedor,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
 		
 		//registramos la factura en la bd
 		boolean insertFactura = this.factura.insert(factura);

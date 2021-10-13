@@ -15,7 +15,7 @@ import persistencia.dao.interfaz.CarritoDAO;
 
 public class CarritoDAOSQL implements CarritoDAO{
 
-	private static final String insert = "INSERT INTO Carrito VALUES (?,?,?,?,?)";
+	private static final String insert = "INSERT INTO Carrito VALUES (?,?,?,?,?,?)";
 	private static final String delete = "DELETE FROM Carrito WHERE idCarrito=?";
 	private static final String readAll = "SELECT * FROM Carrito";
 	
@@ -30,8 +30,9 @@ public class CarritoDAOSQL implements CarritoDAO{
 			statement.setInt(1, carrito.getIdCarrito());
 			statement.setInt(2, carrito.getIdSucursal());
 			statement.setInt(3, carrito.getIdCliente());
-			statement.setDouble(4, carrito.getTotal());
-			statement.setString(5, carrito.getHora());
+			statement.setInt(4, carrito.getIdVendedor());
+			statement.setDouble(5, carrito.getTotal());
+			statement.setString(6, carrito.getHora());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -87,10 +88,11 @@ public class CarritoDAOSQL implements CarritoDAO{
 		int idCarrito = resultSet.getInt("idCarrito");
 		int idSucursal = resultSet.getInt("idSucursal");
 		int idCliente = resultSet.getInt("idCliente");
+		int idVendedor = resultSet.getInt("idVendedor");
 		double total = resultSet.getDouble("Total");
 		String hora = resultSet.getString("Hora");
 		
-		return new CarritoDTO(idCarrito,idSucursal,idCliente,total,hora);
+		return new CarritoDTO(idCarrito,idSucursal,idCliente,idVendedor,total,hora);
 	}
 	
 	@Override
