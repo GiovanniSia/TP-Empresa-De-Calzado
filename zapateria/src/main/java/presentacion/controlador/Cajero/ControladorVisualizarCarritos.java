@@ -181,10 +181,12 @@ public class ControladorVisualizarCarritos {
 		String hora = carrito.getHora();
 		String TipoCliente = cliente.getTipoCliente();
 
+		String estado = cliente.getEstado();
+		
 		double precioTota = carrito.getTotal();
 		BigDecimal precioTotal = new BigDecimal(precioTota);
 		
-		Object[] fila = {CUIL,nombreCliente,hora,TipoCliente,precioTotal};
+		Object[] fila = {CUIL,nombreCliente,hora,TipoCliente,estado,precioTotal};
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().addRow(fila);
 			
 		this.carritosEnTabla.add(carrito);

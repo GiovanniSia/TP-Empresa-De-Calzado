@@ -47,6 +47,8 @@ public class VentanaRealizarVenta {
 
 	private JLabel lblTotalAPagarValor;
 	private JLabel lblPrecioVentaValor;
+	private JLabel lblDescuentoDescontado;
+
 	private JTextField textCantidad;
 	private JTextField textDescuento;
 	
@@ -228,6 +230,18 @@ public class VentanaRealizarVenta {
 		textDescuento.setBounds(362, 64, 133, 19);
 		panel_2.add(textDescuento);
 		
+		JLabel lblDescuento = new JLabel("Descuento:");
+		lblDescuento.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
+		lblDescuento.setBounds(256, 312, 158, 34);
+		panel_2.add(lblDescuento);
+		
+		lblDescuentoDescontado = new JLabel("$0");
+		lblDescuentoDescontado.setForeground(Color.BLACK);
+		lblDescuentoDescontado.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblDescuentoDescontado.setBackground(Color.WHITE);
+		lblDescuentoDescontado.setBounds(355, 312, 177, 34);
+		panel_2.add(lblDescuentoDescontado);
+		
 		btnCancelarVenta = new JButton("");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
 		btnCancelarVenta.setBounds(127, 460, 61, 47);
@@ -346,5 +360,9 @@ public class VentanaRealizarVenta {
 	
 	public JTextField getTextDescuento() {
 		return textDescuento;
+	}
+	
+	public JLabel getLblDescuentoDescontado() {
+		return lblDescuentoDescontado;
 	}
 }

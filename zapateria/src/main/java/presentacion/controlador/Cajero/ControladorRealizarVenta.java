@@ -158,6 +158,12 @@ public class ControladorRealizarVenta {
 		}
 		
 		double valorConversion;
+		
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String fecha = f.format(LocalDateTime.now());
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String hora = dtf.format(LocalDateTime.now());
+        
 		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			if(m.getDescripcion().equals(metodoPagoCb)) {
@@ -174,10 +180,8 @@ public class ControladorRealizarVenta {
 					
 				}
 				
-		        DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-				String fecha = f.format(LocalDateTime.now());
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		        String hora = dtf.format(LocalDateTime.now());
+
+
 				int idCliente = this.carritoACobrar.getIdCliente();
 				
 				String tipoFactura = determinarCategoriaFactura(this.clienteCarrito);
@@ -193,8 +197,7 @@ public class ControladorRealizarVenta {
 		}
 		actualizarTablaMedioPago();
 		this.ventanaRealizarVenta.getTextCantidad().setText("");
-		this.ventanaRealizarVenta.getTextDescuento().setText("");
-		this.ventanaRealizarVenta.getTextNumOperacion().setText("");
+		this.ventanaRealizarVenta.getTextNumOperacion().setText("");		
 	}
 	
 	public void actualizarTablaMedioPago() {
@@ -214,7 +217,7 @@ public class ControladorRealizarVenta {
 					double valorConversion = medioPago.getTasaConversion();
 					String moneda = valorConversion==1 ? "AR$"  : medioPago.getIdMoneda()+"$";
 //					String nombreTarjeta = medioPago.getIdMoneda().charAt(0)=='T' ? medioPago.getDescripcion() : "-";
-					String numOperacionAux = this.ventanaRealizarVenta.getTextNumOperacion().getText();
+					String numOperacionAux = i.getOperacion();
 					String numOperacion = numOperacionAux.equals("") ? "-" : numOperacionAux;
 					
 					double cantidad = i.getCantidad();
@@ -257,12 +260,13 @@ public class ControladorRealizarVenta {
 		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
 			this.totalAPagarAux = this.totalAPagar;
 			this.descuento=0;
+			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+this.descuento);
 			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+this.totalAPagarAux);
 			return;
 		}
 		if(this.ventanaRealizarVenta.getTextDescuento().getText() != null) {			
 			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
-			
+			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+this.descuento);
 			if(descuento>this.totalAPagar) {
 				JOptionPane.showMessageDialog(null, "Esta cantidad de descuento supera el total a pagar!");
 				this.ventanaRealizarVenta.getTextDescuento().setText("");
@@ -377,7 +381,6 @@ public class ControladorRealizarVenta {
 		
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = calcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
-		System.out.println("hay que calcularle el iva: "+calcularIVA(client)+"\nse calculó: "+IVA+"\ntotalBruto: "+totalBruto);
 		FacturaDTO factura = new FacturaDTO(id,montoPendiente,idCliente,nombreCliente,idEmpleado,nombreEmpleado,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
 		
 		//registramos la factura en la bd

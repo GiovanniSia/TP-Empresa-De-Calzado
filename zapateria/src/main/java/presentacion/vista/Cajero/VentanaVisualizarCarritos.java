@@ -31,7 +31,7 @@ public class VentanaVisualizarCarritos {
 	
 	private JTable tableCarritos;
 	private DefaultTableModel modelTablaCarritos;
-	private String[] nombreColumnasCarritos = {"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"};
+	private String[] nombreColumnasCarritos = {"CUIL","Nombre","Hora","Tipo Cliente","Estado","P. Total Venta"};
 	private JScrollPane scrollPaneTablaCarritos;
 	
 	private JButton btnElegirCarrito;
