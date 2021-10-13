@@ -5,7 +5,11 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *, ingr.Hora as horita FROM zapateria.ingresos as ingr, zapateria.factura as factu WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND ingr.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos) AND ingr.nroFactura = factu.NroFacturaCompleta]]>
+		<![CDATA[SELECT *, ingr.Hora as horita FROM zapateria.ingresos as ingr, zapateria.factura as factu 
+WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND ingr.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
+AND ingr.nroFactura = factu.NroFacturaCompleta
+]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
@@ -119,7 +123,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COLUMN_20" class="java.sql.Date">
+	<field name="COLUMN_20" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>

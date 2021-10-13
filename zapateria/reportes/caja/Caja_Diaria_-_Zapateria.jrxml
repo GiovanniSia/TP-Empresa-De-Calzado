@@ -28,8 +28,14 @@
 	</subDataset>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM zapateria.caja as caji WHERE caji.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja) AND caji.IdSucursal = '$P!{IdSucursal}']]>
+		<![CDATA[SELECT * FROM zapateria.caja as caji WHERE caji.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal =  '$P!{IdSucursal}') AND caji.IdSucursal =  '$P!{IdSucursal}']]>
 	</queryString>
+	<field name="IdCaja" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdCaja"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdCaja"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="IdSucursal" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
 		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>

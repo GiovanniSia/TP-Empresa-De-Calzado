@@ -5,19 +5,25 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT SUM(egre.Total), egre.Tipo, (SELECT SUM(egre.Total) FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
-(SELECT MAX(Fecha) FROM zapateria.egresos)) as total 
-FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
-(SELECT MAX(Fecha) FROM zapateria.egresos) GROUP BY egre.Tipo]]>
+		<![CDATA[SELECT SUM(egre.Total), egre.MedioPago, medpa.Descripcion, (SELECT SUM(egre.Total) FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')) as total 
+FROM zapateria.egresos as egre, zapateria.mediopagoegreso as medpa WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja3 WHERE caja3.IdSucursal = '$P!{IdSucursal}') AND medpa.IdMoneda = egre.MedioPago GROUP BY egre.MedioPago]]>
 	</queryString>
 	<field name="SUM(egre.Total)" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="SUM(egre.Total)"/>
 		<property name="com.jaspersoft.studio.field.label" value="SUM(egre.Total)"/>
 	</field>
-	<field name="Tipo" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="Tipo"/>
-		<property name="com.jaspersoft.studio.field.label" value="Tipo"/>
+	<field name="MedioPago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.label" value="MedioPago"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="mediopagoegreso"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="total" class="java.lang.Double">
@@ -68,14 +74,14 @@ FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egr
 					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{MedioPago}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="50" y="2" width="130" height="13" uuid="cb70bb9f-e94a-46e0-aa5a-be99b12af2e8"/>
 					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[String.valueOf(101)]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="187" y="2" width="88" height="13" uuid="db32ecf3-ca48-4149-9614-16ff941c2d4c"/>
@@ -90,7 +96,7 @@ FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egr
 	<summary>
 		<band height="57" splitType="Stretch">
 			<staticText>
-				<reportElement x="330" y="4" width="134" height="14" uuid="b883f730-a0bd-4e6a-b5aa-a17da7952dbb"/>
+				<reportElement x="330" y="4" width="150" height="14" uuid="b883f730-a0bd-4e6a-b5aa-a17da7952dbb"/>
 				<text><![CDATA[TOTAL EGRESOS (en AR$)]]></text>
 			</staticText>
 			<frame>

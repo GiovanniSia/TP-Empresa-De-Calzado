@@ -5,8 +5,10 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT (SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.ingresos))-(SELECT SUM(egre.Total) FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
-(SELECT MAX(Fecha) FROM zapateria.egresos)) as totalBalance from zapateria.ingresos]]>
+		<![CDATA[SELECT (SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' 
+AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}'))-(SELECT SUM(egre.Total) 
+FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')) as totalBalance from zapateria.ingresos]]>
 	</queryString>
 	<field name="totalBalance" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="totalBalance"/>
