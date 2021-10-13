@@ -11,6 +11,8 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaIngresosCaja extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,7 @@ public class VentanaIngresosCaja extends JFrame {
 	private JLabel lblIngresoSaldoInicial;
 	private JLabel lblRegarcaSaldo;
 	private JButton btnRealizarIngreso;
+	private JButton btnAtras;
 	
 	public static void main(String[] args) {
 		VentanaIngresosCaja n = new VentanaIngresosCaja();
@@ -81,6 +84,14 @@ public class VentanaIngresosCaja extends JFrame {
 		panel_2.add(lblIngresoSaldoInicial);
 		
 		txtFieldIngresoSaldoInicial = new JTextField();
+		txtFieldIngresoSaldoInicial.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtFieldIngresoSaldoInicial.getText().length()>=10) {
+					e.consume();
+				}
+			}
+		});
 		txtFieldIngresoSaldoInicial.setBounds(240, 15, 136, 28);
 		panel_2.add(txtFieldIngresoSaldoInicial);
 		txtFieldIngresoSaldoInicial.setColumns(10);
@@ -91,14 +102,27 @@ public class VentanaIngresosCaja extends JFrame {
 		panel_2.add(lblRegarcaSaldo);
 		
 		txtFieldRegarcaSaldo = new JTextField();
+		txtFieldRegarcaSaldo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtFieldRegarcaSaldo.getText().length()>=10) {
+					e.consume();
+				}
+			}
+		});
 		txtFieldRegarcaSaldo.setColumns(10);
 		txtFieldRegarcaSaldo.setBounds(240, 58, 136, 28);
 		panel_2.add(txtFieldRegarcaSaldo);
 		
 		btnRealizarIngreso = new JButton("Realizar Ingreso");
 		btnRealizarIngreso.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnRealizarIngreso.setBounds(149, 114, 158, 32);
+		btnRealizarIngreso.setBounds(229, 114, 158, 32);
 		panel_2.add(btnRealizarIngreso);
+		
+		btnAtras = new JButton("Atras");
+		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAtras.setBounds(10, 114, 98, 32);
+		panel_2.add(btnAtras);
 	}
 
 	public void show() {
@@ -124,6 +148,10 @@ public class VentanaIngresosCaja extends JFrame {
 
 	public void mostrarVentana() {
 		this.setVisible(true);
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
 	}
 
 	public void mostrarIngresarSaldoInicial() {
