@@ -15,4 +15,6 @@ public interface CajaDAO {
 	
 	public List<CajaDTO> getCajaAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2);
+
+	CajaDTO getCajaDeHoy(String nombreColumna1, String txtAprox1, String nombreColumna2, String txtAprox2);
 }

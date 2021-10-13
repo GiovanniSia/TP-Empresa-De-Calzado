@@ -140,6 +140,32 @@ public class CajaDAOSQL implements CajaDAO {
 		}
 		return caja;
 	}
+	
+	@Override
+	public CajaDTO getCajaDeHoy(String nombreColumna1, String txtAprox1, String nombreColumna2,
+			String txtAprox2) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM Caja WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+
+		if (nombreColumna2 != null && txtAprox2 != null) {
+			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+		}
+
+		CajaDTO caja =null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				caja = this.getCajaDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return caja;
+	}
+
 
 	private CajaDTO getCajaDTO(ResultSet resultSet) throws SQLException {
 		int idCaja = resultSet.getInt("IdCaja");

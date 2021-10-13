@@ -33,4 +33,10 @@ public class Caja {
 			String nombreColumna2, String txtAprox2) {
 		return this.caja.getCajaAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
 	}
+	
+	public CajaDTO getCajaDeHoy(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2) {
+		return this.caja.getCajaDeHoy(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
+	}
+	
 }
