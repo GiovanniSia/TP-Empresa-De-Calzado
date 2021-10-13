@@ -37,7 +37,6 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JLabel lblFiltrarPor;
 	private JLabel lblElegirCliente;
 	private JScrollPane spCliente;
-	private JTextField textFieldEstado;
 
 	public VentanaBusquedaCliente() {
 		initialize();
@@ -143,16 +142,6 @@ public class VentanaBusquedaCliente extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
-		
-		textFieldEstado = new JTextField();
-		textFieldEstado.setBounds(553, 67, 86, 20);
-		panel_1.add(textFieldEstado);
-		textFieldEstado.setColumns(10);
-		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblEstado.setBounds(553, 41, 86, 20);
-		panel_1.add(lblEstado);
 
 		lblZapateria = new JLabel("Zapater\u00EDa");
 		lblZapateria.setBounds(10, 11, 129, 30);
@@ -191,10 +180,6 @@ public class VentanaBusquedaCliente extends JFrame {
 	
 	public void mostrarVentana() {
 		this.setVisible(true);
-	}
-	
-	public JTextField getTxtFieldEstado() {
-		return textFieldEstado;
 	}
 
 	public JButton getBtnPasarAVenta() {

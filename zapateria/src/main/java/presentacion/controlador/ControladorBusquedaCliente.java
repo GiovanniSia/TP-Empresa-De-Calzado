@@ -68,12 +68,6 @@ public class ControladorBusquedaCliente {
 			}
 		});
 
-		this.ventanaBusquedaCliente.getTxtFieldEstado().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				realizarBusqueda();
-			}
-		});
 	}
 
 	public void realizarBusqueda() {
@@ -86,9 +80,8 @@ public class ControladorBusquedaCliente {
 		String txtNombre = this.ventanaBusquedaCliente.getTxtFieldNombre().getText();
 		String txtApellido = this.ventanaBusquedaCliente.getTxtFieldApellido().getText();
 		String txtCUIL = this.ventanaBusquedaCliente.getTxtFieldCUIL().getText();
-		String txtEstado = this.ventanaBusquedaCliente.getTxtFieldEstado().getText();
 		List<ClienteDTO> clienteAproximados = this.cliente.getClienteAproximado("IdCliente", txtcodCliente, "Nombre",
-				txtNombre, "Apellido", txtApellido, "CUIL", txtCUIL, "Estado", txtEstado);
+				txtNombre, "Apellido", txtApellido, "CUIL", txtCUIL, null, null);
 		llenarTabla(clienteAproximados);
 	}
 
@@ -103,7 +96,6 @@ public class ControladorBusquedaCliente {
 			controladorBusquedaProductos.inicializar();
 		}
 	}
-	
 
 	public boolean clienteSeleccionado() {
 		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
@@ -159,9 +151,11 @@ public class ControladorBusquedaCliente {
 			int limiteCredito = c.getLimiteCredito();
 			int creditoDisponible = c.getCreditoDisponible();
 			String estado = c.getEstado();
-
-			Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible, estado };
-			this.ventanaBusquedaCliente.getModelCliente().addRow(fila);
+			if (!estado.equals("Inactivo")) {
+				Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,
+						estado };
+				this.ventanaBusquedaCliente.getModelCliente().addRow(fila);
+			}
 		}
 	}
 
