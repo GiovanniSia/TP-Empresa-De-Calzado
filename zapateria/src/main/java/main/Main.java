@@ -25,8 +25,8 @@ public class Main {
 		reporte.mostrar();
 		*/
 		
-		ReporteCajaDiaria ca = new ReporteCajaDiaria(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
-		ca.mostrar();
+		ReporteCajaDiaria ca = new ReporteCajaDiaria(1);
+		ca.mostrarUltimoReporte();
 		
 	}
 }

@@ -27,9 +27,9 @@ public class ReporteCajaDiaria {
 	private Logger log = Logger.getLogger(ReporteProducto.class);
 
 	// Recibe la lista de personas para armar el reporte
-	public ReporteCajaDiaria(SucursalDTO sucursal) {
+	public ReporteCajaDiaria(int idSucursal) {
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
-		parametersMap.put("IdSucursal", sucursal.getIdSucursal()+"");
+		parametersMap.put("IdSucursal", idSucursal+"");
 		try {
 			/*
 			 * File n = new File(""); String dir =
@@ -47,7 +47,7 @@ public class ReporteCajaDiaria {
 		}
 	}
 
-	public void mostrar() {
+	public void mostrarUltimoReporte() {
 		this.reporteViewer = new JasperViewer(this.reporteLleno, false);
 		this.reporteViewer.setVisible(true);
 	}
