@@ -4,24 +4,33 @@ import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import dto.CajaDTO;
 import dto.EgresosDTO;
+import dto.EmpleadoDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoDTO;
 import dto.MedioPagoEgresoDTO;
+import modelo.Caja;
 import modelo.Egresos;
+import modelo.Empleado;
 import modelo.HistorialCambioMoneda;
 import modelo.Ingresos;
 import modelo.MedioPago;
 import modelo.MedioPagoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
 
+	private static final int idEmpleado=1;
+	
 	private VentanaCierreCaja ventanaCierreCaja;
 
 	private Ingresos ingresos;
@@ -30,10 +39,17 @@ public class ControladorCierreCaja {
 	private Egresos egresos;
 	private List<EgresosDTO> egresosEnTabla;
 
-	public ControladorCierreCaja(Ingresos ingresos, Egresos egresos) {
+	Empleado empleado;
+	Caja caja;
+	Controlador controlador;
+	
+	public ControladorCierreCaja(Controlador controlador,Caja caja,Ingresos ingresos, Egresos egresos,Empleado empleado) {
 		this.ventanaCierreCaja = new VentanaCierreCaja();
+		this.caja = caja;
 		this.ingresos = ingresos;
 		this.egresos = egresos;
+		this.empleado = empleado;
+		this.controlador = controlador;
 	}
 
 	public void inicializar() {
@@ -65,7 +81,7 @@ public class ControladorCierreCaja {
 		for (int i = 0; i < cantidadFilasIngresos; i++) {
 			todosLosMediosDePagoValidos = (Boolean) this.ventanaCierreCaja.getTablaMedioPagoIngresos().getValueAt(i, 3);
 			if (todosLosMediosDePagoValidos == false) {
-				JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
+				JOptionPane.showMessageDialog(null, "Debe validar todos los medios de pago");
 				return;
 			}
 		}
@@ -73,14 +89,34 @@ public class ControladorCierreCaja {
 		for (int i = 0; i < cantidadFilasEgresos; i++) {
 			todosLosMediosDePagoValidos = (Boolean) this.ventanaCierreCaja.getTablaMedioPagoEgresos().getValueAt(i, 3);
 			if (todosLosMediosDePagoValidos == false) {
-				JOptionPane.showMessageDialog(null, "Validar todos los medios de pago");
+				JOptionPane.showMessageDialog(null, "Debe validar todos los medios de pago");
 				return;
 			}
 		}
-
-		if (todosLosMediosDePagoValidos) {
-			JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");
+		if (!todosLosMediosDePagoValidos) {
+			JOptionPane.showMessageDialog(null, "No se han validado todos los medios de pago");
+			return;
 		}
+		
+		EmpleadoDTO empleado = this.empleado.selectEmpleado(this.idEmpleado);
+		ArrayList<CajaDTO> cajas = (ArrayList<CajaDTO>) this.caja.readAll();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		for(CajaDTO c: cajas) {
+			if(c.getFecha().equals(fecha)) {
+				//se modifica en la bd, pero no en este arraylist
+				boolean cierreCaja = this.caja.cerrarCaja(empleado,c.getIdCaja());
+				
+				if(!cierreCaja) {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cerrar la caja");
+				}else {
+					JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");		
+				}
+				return;
+			}
+		}
+		
+		
 	}
 
 	public BigDecimal ObtenerTotalIngreso() {
@@ -128,10 +164,14 @@ public class ControladorCierreCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaCierreCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void cerrarCaja(ActionEvent a) {
 		this.ventanaCierreCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
@@ -252,11 +292,11 @@ public class ControladorCierreCaja {
 	}
 
 	public static void main(String[] args) {
-		Ingresos ingresos = new Ingresos(new DAOSQLFactory());
-		Egresos egresos = new Egresos(new DAOSQLFactory());
-		ControladorCierreCaja controlador = new ControladorCierreCaja(ingresos, egresos);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		Ingresos ingresos = new Ingresos(new DAOSQLFactory());
+//		Egresos egresos = new Egresos(new DAOSQLFactory());
+//		ControladorCierreCaja controlador = new ControladorCierreCaja(ingresos, egresos);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 
 }

@@ -3,6 +3,7 @@ package persistencia.dao.interfaz;
 import java.util.List;
 
 import dto.CajaDTO;
+import dto.EmpleadoDTO;
 
 public interface CajaDAO {
 	public boolean insert(CajaDTO caja);
@@ -17,4 +18,6 @@ public interface CajaDAO {
 			String nombreColumna2, String txtAprox2);
 
 	CajaDTO getCajaDeHoy(String nombreColumna1, String txtAprox1, String nombreColumna2, String txtAprox2);
+	
+	public boolean cerrarCaja(EmpleadoDTO empleado,int idCaja);
 }

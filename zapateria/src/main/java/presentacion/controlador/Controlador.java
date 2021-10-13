@@ -7,6 +7,9 @@ import javax.swing.JOptionPane;
 
 import modelo.Caja;
 import modelo.Cliente;
+import modelo.Egresos;
+import modelo.Empleado;
+import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
 import modelo.Stock;
@@ -35,6 +38,10 @@ public class Controlador implements ActionListener {
 	
 	MedioPago medioPago;
 	Caja caja;
+	
+	Ingresos ingresos;
+	Egresos egresos;
+	Empleado empleado;
 	
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
@@ -84,6 +91,10 @@ public class Controlador implements ActionListener {
 		
 		this.medioPago = new MedioPago(new DAOSQLFactory());
 		this.caja = new Caja(new DAOSQLFactory());
+		
+		this.ingresos = new Ingresos(new DAOSQLFactory());
+		this.egresos = new Egresos(new DAOSQLFactory());
+		this.empleado = new Empleado(new DAOSQLFactory());
 	}
 	
 	
@@ -111,7 +122,10 @@ public class Controlador implements ActionListener {
 		//Ingreso Caja
 		this.controladorIngresosCaja = new ControladorIngresosCaja(this,caja); 
 		
+		//Egreso Caja
 		
+		//Cierre Caja
+		this.controladorCierreCaja = new ControladorCierreCaja(this,caja,ingresos,egresos,empleado); 
 		
 		//Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
@@ -133,6 +147,11 @@ public class Controlador implements ActionListener {
 		
 		//Ingreso caja
 		this.ventanaMenuSistemaDeVentas.getBtnIngresoCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
+		
+		//Egreso
+		
+		//Cierre de caja
+		this.ventanaMenuSistemaDeVentas.getBtnCierreCaja().addActionListener(a -> pasarACierreDeCaja(a));
 		
 //		this.ventanaMenu.show();
 		
@@ -219,7 +238,12 @@ public class Controlador implements ActionListener {
 	
 	//Egreso 
 	
-	//Ingreso
+	//Cierre de caja
+	public void pasarACierreDeCaja(ActionEvent a ) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorCierreCaja.inicializar();
+		this.controladorCierreCaja.mostrarVentana();
+	}
 	
 	
 	

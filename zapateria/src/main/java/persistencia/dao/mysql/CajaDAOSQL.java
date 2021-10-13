@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.CajaDTO;
+import dto.EmpleadoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.CajaDAO;
 
@@ -17,6 +18,8 @@ public class CajaDAOSQL implements CajaDAO {
 	private static final String update = "UPDATE Caja set IdSucursal=?,Fecha=?,Hora=?,Apertura=?,Cierre=?,AperturaNombre=?,CierreNombre=?,AuditApertura=?,AuditCierre=? where IdCaja=?";
 	private static final String readall = "SELECT * FROM Caja";
 
+	private static final String cerrarCaja = "UPDATE Caja SET Cierre=?, CierreNombre=? WHERE IdCaja=?";
+	
 	@Override
 	public boolean insert(CajaDTO caja) {
 		PreparedStatement statement;
@@ -181,6 +184,29 @@ public class CajaDAOSQL implements CajaDAO {
 
 		return new CajaDTO(idCaja, idSucursal, fecha, hora, apertura, cierre, aperturaNombre, cierreNombre,
 				auditApertura, auditCierre);
+	}
+
+	@Override
+	public boolean cerrarCaja(EmpleadoDTO empleado,int idCaja) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(cerrarCaja);
+
+			statement.setInt(1, empleado.getIdEmpleado());
+			statement.setString(2, empleado.getNombre()+" "+empleado.getApellido());
+			statement.setInt(3, idCaja);
+
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
 	}
 
 }

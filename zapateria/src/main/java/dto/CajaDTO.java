@@ -129,5 +129,6 @@ public class CajaDTO {
 	public void setAuditCierre(String auditCierre) {
 		this.auditCierre = auditCierre;
 	}
-
+	
+	
 }

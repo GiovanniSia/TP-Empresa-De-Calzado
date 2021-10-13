@@ -3,6 +3,7 @@ package modelo;
 import java.util.List;
 
 import dto.CajaDTO;
+import dto.EmpleadoDTO;
 import persistencia.dao.interfaz.CajaDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 
@@ -37,6 +38,10 @@ public class Caja {
 	public CajaDTO getCajaDeHoy(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2) {
 		return this.caja.getCajaDeHoy(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
+	}
+	
+	public boolean cerrarCaja(EmpleadoDTO empleado, int idCaja) {
+		return this.caja.cerrarCaja(empleado,idCaja);
 	}
 	
 }
