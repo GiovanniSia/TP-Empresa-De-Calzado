@@ -33,4 +33,6 @@ public interface DAOAbstractFactory {
 	public DetalleCarritoDAO createDetalleCarritoDAO();
 
 	public CarritoDAO createCarritoDAO();
+
+	public CajaDAO createCajaDAO();
 }

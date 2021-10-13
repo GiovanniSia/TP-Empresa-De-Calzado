@@ -3,6 +3,7 @@
  */
 package persistencia.dao.mysql;
 
+import persistencia.dao.interfaz.CajaDAO;
 import persistencia.dao.interfaz.CarritoDAO;
 import persistencia.dao.interfaz.ClienteDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
@@ -92,6 +93,10 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public CarritoDAO createCarritoDAO() {
 		return new CarritoDAOSQL();
+	}
+	
+	public CajaDAO createCajaDAO() {
+		return new CajaDAOSQL();
 	}
 
 }
