@@ -29,7 +29,7 @@ public class Ingresos {
 		return this.ingresos.readAll();
 	}
 
-	public List<IngresosDTO> getEgresosAproximado(String nombreColumna1, String txtAprox1,
+	public List<IngresosDTO> getIngresosAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2) {
 		return this.ingresos.getIngresosAproximado(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2);
 	}

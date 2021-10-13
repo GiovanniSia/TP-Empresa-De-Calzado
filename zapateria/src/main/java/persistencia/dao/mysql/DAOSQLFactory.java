@@ -3,6 +3,7 @@
  */
 package persistencia.dao.mysql;
 
+import persistencia.dao.interfaz.CajaDAO;
 import persistencia.dao.interfaz.CarritoDAO;
 import persistencia.dao.interfaz.ClienteDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
@@ -12,6 +13,7 @@ import persistencia.dao.interfaz.FabricacionDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.MedioPagoDAO;
+import persistencia.dao.interfaz.MedioPagoEgresoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
@@ -27,15 +29,15 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	public HistorialCambioMProductoDAO createHistorialCambioMProductoDAO() {
 		return new HistorialCambioMProductoDAOSQL();
 	}
-	
+
 	public MaestroProductoDAO createMaestroProductoDAO() {
 		return new MaestroProductoDAOSQL();
 	}
-	
+
 	public StockDAO createStockDAO() {
 		return new StockDAOSQL();
 	}
-	
+
 	public FacturaDAO createFacturaDAO() {
 		return new FacturaDAOSQL();
 	}
@@ -64,23 +66,27 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	public OrdenFabricaDAO createOrdenFabricaDAO() {
 		return new OrdenFabricaDAOSQL();
 	}
-	
+
 	public MedioPagoDAO createMedioPagoDAO() {
 		return new MedioPagoDAOSQL();
 	}
-	
+
+	public MedioPagoEgresoDAO createMedioPagoEgresoDAO() {
+		return new MedioPagoEgresoDAOSQL();
+	}
+
 	public HistorialCambioMonedaDAO createHistorialCambioMonedaDAO() {
 		return new HistorialCambioMonedaDAOSQL();
 	}
-	
+
 	public FabricacionDAO createFabricacionDAO() {
 		return new FabricacionDAOSQL();
 	}
-	
+
 	public IngresosDAO createIngresosDAO() {
 		return new IngresosDAOSQL();
 	}
-	
+
 	public EgresosDAO createEgresosDAO() {
 		return new EgresosDAOSQL();
 	}
@@ -93,6 +99,10 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public CarritoDAO createCarritoDAO() {
 		return new CarritoDAOSQL();
+	}
+	
+	public CajaDAO createCajaDAO() {
+		return new CajaDAOSQL();
 	}
 
 }

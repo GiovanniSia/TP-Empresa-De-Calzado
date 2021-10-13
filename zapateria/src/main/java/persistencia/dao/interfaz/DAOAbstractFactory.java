@@ -19,16 +19,22 @@ public interface DAOAbstractFactory {
 	public DetalleFacturaDAO createDetalleFacturaDAO();
 	
 	public OrdenFabricaDAO createOrdenFabricaDAO();
-	
+
 	public MedioPagoDAO createMedioPagoDAO();
-	
+
+	public MedioPagoEgresoDAO createMedioPagoEgresoDAO();
+
 	public HistorialCambioMonedaDAO createHistorialCambioMonedaDAO();
+
 	public FabricacionDAO createFabricacionDAO();
-	
+
 	public IngresosDAO createIngresosDAO();
-	
+
 	public EgresosDAO createEgresosDAO();
+
 	public DetalleCarritoDAO createDetalleCarritoDAO();
-	
+
 	public CarritoDAO createCarritoDAO();
+
+	public CajaDAO createCajaDAO();
 }

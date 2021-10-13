@@ -3,6 +3,7 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +35,7 @@ public class ControladorHistorialCambioCotizacion {
 		this.ventanaHistorialCambioMoneda.getBtnVolverAModificarConversion()
 				.addActionListener(v -> volverAModificarConversion(v));
 
+		this.ventanaHistorialCambioMoneda.getBtnReiniciarTabla().addActionListener(r -> reiniciarTabla(r));
 		// TextFiltos
 		this.ventanaHistorialCambioMoneda.getTextFiltroCodMoneda().addKeyListener(new KeyAdapter() {
 			@Override
@@ -56,6 +58,11 @@ public class ControladorHistorialCambioCotizacion {
 	public void btnFiltrarFecha(ActionEvent f) {
 		realizarBusqueda();
 		this.ventanaHistorialCambioMoneda.limpiarCampos();
+	}
+	
+	private void reiniciarTabla(ActionEvent r) {
+		this.ventanaHistorialCambioMoneda.limpiarCampos();
+		refrescarDatosTabla();
 	}
 
 	public void realizarBusqueda() {
@@ -140,8 +147,10 @@ public class ControladorHistorialCambioCotizacion {
 			int idEmpleado = hcm.getIdEmpleado();
 			String fecha = hcm.getFecha();
 			String hora = hcm.getHora();
-			double tasaConversionAntigua = hcm.getTasaConversionAntigua();
-			double tasaConversionNueva = hcm.getTasaConversionNueva();
+			double tasaConversionAntigu = hcm.getTasaConversionAntigua();
+			BigDecimal tasaConversionAntigua = new BigDecimal(tasaConversionAntigu);
+			double tasaConversionNuev = hcm.getTasaConversionNueva();
+			BigDecimal tasaConversionNueva = new BigDecimal(tasaConversionNuev);
 
 			Object[] fila = { idMoneda, descripcion, idEmpleado, fecha, hora, tasaConversionAntigua,
 					tasaConversionNueva };

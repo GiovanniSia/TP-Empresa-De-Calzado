@@ -11,10 +11,10 @@ import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.EgresosDAO;
 
 public class EgresosDAOSQL implements EgresosDAO {
-	
-	private static final String insert = "INSERT INTO Egresos VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+	private static final String insert = "INSERT INTO Egresos VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM Egresos WHERE Id = ?";
-	private static final String update = "UPDATE Egresos set IdSucursal=?,Fecha=?,Hora=?,Tipo=?,Detalle=?,Total=? where Id=?";
+	private static final String update = "UPDATE Egresos set IdSucursal=?,Fecha=?,Hora=?,Tipo=?,MedioPago=?,Detalle=?,Total=? where Id=?";
 	private static final String readall = "SELECT * FROM Egresos";
 
 	@Override
@@ -24,15 +24,16 @@ public class EgresosDAOSQL implements EgresosDAO {
 		boolean isInsertExitoso = false;
 		try {
 			statement = conexion.prepareStatement(insert);
-			
+
 			statement.setInt(1, egresos.getId());
 			statement.setInt(2, egresos.getIdSucursal());
 			statement.setString(3, egresos.getFecha());
 			statement.setString(4, egresos.getHora());
 			statement.setString(5, egresos.getTipo());
-			statement.setString(6, egresos.getDetalle());
-			statement.setDouble(7, egresos.getTotal());
-			
+			statement.setString(6, egresos.getMedioPago());
+			statement.setString(7, egresos.getDetalle());
+			statement.setDouble(8, egresos.getTotal());
+
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
@@ -65,7 +66,7 @@ public class EgresosDAOSQL implements EgresosDAO {
 		}
 		return isdeleteExitoso;
 	}
-	
+
 	@Override
 	public boolean update(int id_egresos_a_actualizar, EgresosDTO egresos_nuevo) {
 		PreparedStatement statement;
@@ -78,9 +79,10 @@ public class EgresosDAOSQL implements EgresosDAO {
 			statement.setString(2, egresos_nuevo.getFecha());
 			statement.setString(3, egresos_nuevo.getHora());
 			statement.setString(4, egresos_nuevo.getTipo());
-			statement.setString(5, egresos_nuevo.getDetalle());
-			statement.setDouble(6, egresos_nuevo.getTotal());
-			statement.setInt(7, id_egresos_a_actualizar);
+			statement.setString(5, egresos_nuevo.getMedioPago());
+			statement.setString(6, egresos_nuevo.getDetalle());
+			statement.setDouble(7, egresos_nuevo.getTotal());
+			statement.setInt(8, id_egresos_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -91,7 +93,7 @@ public class EgresosDAOSQL implements EgresosDAO {
 		}
 		return isUpdateExitoso;
 	}
-	
+
 	@Override
 	public List<EgresosDTO> readAll() {
 		PreparedStatement statement;
@@ -114,7 +116,7 @@ public class EgresosDAOSQL implements EgresosDAO {
 			String txtAprox2) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM medioPago WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
+		String sel = "SELECT * FROM Egresos WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
 		if (nombreColumna2 != null && txtAprox2 != null) {
 			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
@@ -133,16 +135,17 @@ public class EgresosDAOSQL implements EgresosDAO {
 		}
 		return egresos;
 	}
-	
+
 	private EgresosDTO getEgresosDTO(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("Id");
 		int idSucursal = resultSet.getInt("IdSucursal");
 		String fecha = resultSet.getString("Fecha");
 		String hora = resultSet.getString("Hora");
 		String tipo = resultSet.getString("Tipo");
+		String medioPago = resultSet.getString("MedioPago");
 		String detalle = resultSet.getString("Detalle");
 		double total = resultSet.getDouble("Total");
 
-		return new EgresosDTO(id,idSucursal,fecha,hora,tipo,detalle,total);
+		return new EgresosDTO(id, idSucursal, fecha, hora, tipo, medioPago, detalle, total);
 	}
 }

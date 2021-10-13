@@ -14,12 +14,16 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaModificarMProducto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Codigo", "Descripción","Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
+	private String[] nombreColumnas = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
 			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaProducto;
@@ -60,12 +64,17 @@ public class VentanaModificarMProducto extends JFrame {
 	}
 
 	private void initialize() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setBounds(100, 100, 880, 507);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 166, 854, 291);
 		frame.getContentPane().add(panel);
@@ -75,19 +84,19 @@ public class VentanaModificarMProducto extends JFrame {
 		spProducto.setBounds(10, 11, 823, 145);
 		panel.add(spProducto);
 
-		modelProducto =new DefaultTableModel(null, nombreColumnas) {
+		modelProducto = new DefaultTableModel(null, nombreColumnas) {
 			private static final long serialVersionUID = 1L;
-            @Override
-            public boolean isCellEditable(int filas, int columnas) {
-                if(columnas == 9) {
-                    return true;
-                }else {
-                    return false;
-                }
-            }
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 9) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		};
-		
-		
+
 		tablaProducto = new JTable(modelProducto);
 
 		tablaProducto.getColumnModel().getColumn(0).setPreferredWidth(103);
@@ -135,15 +144,50 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.add(lblDiasParaReponer);
 
 		txtActualizarPrecioCosto = new JTextField();
+		txtActualizarPrecioCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+				if (txtActualizarPrecioCosto.getText().length() >= 15 || !numeros) {
+					e.consume();
+				}
+			}
+		});
 		txtActualizarPrecioCosto.setBounds(98, 226, 108, 20);
 		panel.add(txtActualizarPrecioCosto);
 
 		txtActualizarPrecioMayorista = new JTextField();
 		txtActualizarPrecioMayorista.setBounds(327, 195, 111, 20);
+		txtActualizarPrecioMayorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+
+				if (txtActualizarPrecioMayorista.getText().length() >= 15 || !numeros) {
+					e.consume();
+				}
+			}
+		});
 		panel.add(txtActualizarPrecioMayorista);
 
 		txtActualizarPrecioMinorista = new JTextField();
 		txtActualizarPrecioMinorista.setBounds(327, 222, 111, 20);
+		txtActualizarPrecioMinorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int key = e.getKeyChar();
+
+				boolean numeros = key >= 48 && key <= 57;
+				
+				if (txtActualizarPrecioMinorista.getText().length() >= 15 || !numeros) {
+					e.consume();
+				}
+			}
+		});
 		panel.add(txtActualizarPrecioMinorista);
 
 		btnActualizarProducto = new JButton("Actualizar \r\nProducto");
@@ -215,19 +259,19 @@ public class VentanaModificarMProducto extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
-		
+
 		txtFiltroProveedor = new JTextField();
 		txtFiltroProveedor.setBounds(273, 67, 94, 20);
 		panel_1.add(txtFiltroProveedor);
-		
+
 		JLabel lblProveedor = new JLabel("Proveedor");
 		lblProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblProveedor.setBounds(273, 41, 94, 20);
 		panel_1.add(lblProveedor);
 
-		lblModificarProducto = new JLabel("Modificar Producto");
+		lblModificarProducto = new JLabel("Modificar Producto Unitariamente");
 		lblModificarProducto.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblModificarProducto.setBounds(10, 41, 198, 30);
+		lblModificarProducto.setBounds(10, 41, 382, 30);
 		frame.getContentPane().add(lblModificarProducto);
 
 		panel_2 = new JPanel();
@@ -247,7 +291,7 @@ public class VentanaModificarMProducto extends JFrame {
 	public DefaultTableModel getModelProducto() {
 		return modelProducto;
 	}
-	
+
 	public JTextField getTxtFiltroProveedor() {
 		return txtFiltroProveedor;
 	}
@@ -337,7 +381,7 @@ public class VentanaModificarMProducto extends JFrame {
 		this.spinnerDiasParaReponer.setValue(0);
 		this.spinnerPuntoRepositorio.setValue(0);
 	}
-	
+
 	public void cerrar() {
 		this.txtFiltroDescripcion.setText(null);
 		this.txtFiltroTalle.setText(null);

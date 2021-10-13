@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaModificarCotizacion extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -60,7 +62,7 @@ public class VentanaModificarCotizacion extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 148, 501, 320);
 		frame.getContentPane().add(panel);
@@ -109,6 +111,14 @@ public class VentanaModificarCotizacion extends JFrame {
 		panel.add(lblTasaConvercion);
 
 		txtActualizarTasaConvercion = new JTextField();
+		txtActualizarTasaConvercion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtActualizarTasaConvercion.getText().length()>=15) {
+					e.consume();
+				}
+			}
+		});
 		txtActualizarTasaConvercion.setBounds(171, 217, 151, 20);
 		panel.add(txtActualizarTasaConvercion);
 
