@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.JOptionPane;
+
 import dto.CajaDTO;
 import dto.IngresosDTO;
 import modelo.Caja;
@@ -60,10 +62,12 @@ public class ControladorIngresosCaja {
 
 	public void realizarPrimerIngreso(ActionEvent p) {
 		ingresarPrimerIngreso();
+		this.ventanaIngresosCaja.cerrar();
 	}
 
 	public void realizarRecarga(ActionEvent p) {
 		ingresarRecarga();
+		this.ventanaIngresosCaja.cerrar();
 	}
 
 	public void atras(ActionEvent a) {
@@ -86,6 +90,7 @@ public class ControladorIngresosCaja {
 		
 		this.caja.insert(cajaNueva);
 		this.ingresos.insert(primerIngreso);
+		JOptionPane.showMessageDialog(null, "Primer ingreso realizado con exito, caja Abierta");
 	}
 
 	public void ingresarRecarga() {
@@ -99,6 +104,7 @@ public class ControladorIngresosCaja {
 		IngresosDTO primerIngreso = new IngresosDTO(0,IdSucursal,fecha,hora,"R",0,"","00000000","EFE",cantidadIngresada,1,"00000000",cantidadIngresada);
 		
 		this.ingresos.insert(primerIngreso);
+		JOptionPane.showMessageDialog(null, "Recarga realizada con exito");
 		
 	}
 

@@ -87,7 +87,10 @@ public class VentanaIngresosCaja extends JFrame {
 		txtFieldIngresoSaldoInicial.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtFieldIngresoSaldoInicial.getText().length()>=10) {
+				int key = e.getKeyChar();
+				
+				boolean numeros = key >=48 && key<=57;
+				if(txtFieldIngresoSaldoInicial.getText().length()>=10 || !numeros) {
 					e.consume();
 				}
 			}
@@ -105,7 +108,10 @@ public class VentanaIngresosCaja extends JFrame {
 		txtFieldRegarcaSaldo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtFieldRegarcaSaldo.getText().length()>=10) {
+				int key = e.getKeyChar();
+				
+				boolean numeros = key >=48 && key<=57;
+				if(txtFieldRegarcaSaldo.getText().length()>=10 || !numeros) {
 					e.consume();
 				}
 			}
