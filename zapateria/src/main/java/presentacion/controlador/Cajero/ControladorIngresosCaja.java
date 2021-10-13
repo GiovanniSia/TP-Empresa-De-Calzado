@@ -11,6 +11,7 @@ import dto.IngresosDTO;
 import modelo.Caja;
 import modelo.Ingresos;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.Cajero.VentanaIngresosCaja;
 
 public class ControladorIngresosCaja {
@@ -22,10 +23,13 @@ public class ControladorIngresosCaja {
 	private Caja caja;
 	private CajaDTO cajaDeHoy;
 	private Ingresos ingresos;
+	
+	Controlador controlador;
 
-	public ControladorIngresosCaja(Caja caja) {
+	public ControladorIngresosCaja(Controlador controlador, Caja caja) {
 		this.ventanaIngresosCaja = new VentanaIngresosCaja();
 		this.caja = caja;
+		this.controlador = controlador;
 	}
 
 	public void inicializar() {
@@ -37,7 +41,7 @@ public class ControladorIngresosCaja {
 		// Botones
 		this.ventanaIngresosCaja.getBtnAtras().addActionListener(a -> atras(a));
 
-		if (estaCajaAbierta()) {
+		if (!estaCajaAbierta()) {
 			this.ventanaIngresosCaja.getBtnRealizarIngreso().addActionListener(c -> realizarPrimerIngreso(c));
 			this.ventanaIngresosCaja.mostrarIngresarSaldoInicial();
 		} else {
@@ -47,31 +51,37 @@ public class ControladorIngresosCaja {
 	}
 
 	public boolean estaCajaAbierta() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String fecha = dtf.format(LocalDateTime.now());
-		if (caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"") != null) {
-			this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
-			if (cajaDeHoy.getApertura() == 0) {
-				return true;
-			}
-		}else {
-			return true;
-		}
-		return false;
-	}
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fecha = dtf.format(LocalDateTime.now());
+        if (caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"") == null) {
+            return false;
+        }
+        this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
+        System.out.println("apertura caja es valor: "+cajaDeHoy.getApertura());
+        if (cajaDeHoy.getApertura() == 0) {
+            return false;
+        }
+        return true;
+    }
 
 	public void realizarPrimerIngreso(ActionEvent p) {
 		ingresarPrimerIngreso();
 		this.ventanaIngresosCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void realizarRecarga(ActionEvent p) {
 		ingresarRecarga();
 		this.ventanaIngresosCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void atras(ActionEvent a) {
 		this.ventanaIngresosCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void ingresarPrimerIngreso() {
@@ -117,9 +127,9 @@ public class ControladorIngresosCaja {
 	}
 
 	public static void main(String[] args) {
-		Caja modelo = new Caja(new DAOSQLFactory());
-		ControladorIngresosCaja controlador = new ControladorIngresosCaja(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		Caja modelo = new Caja(new DAOSQLFactory());
+//		ControladorIngresosCaja controlador = new ControladorIngresosCaja(modelo);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 }

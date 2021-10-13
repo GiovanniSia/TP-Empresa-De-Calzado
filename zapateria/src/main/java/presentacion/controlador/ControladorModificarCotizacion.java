@@ -27,9 +27,12 @@ public class ControladorModificarCotizacion {
 	private HistorialCambioMoneda historialCambioMoneda;
 	private List<MedioPagoDTO> medioPagoEnTabla;
 
-	public ControladorModificarCotizacion(MedioPago medioPago) {
+	Controlador controlador;
+	
+	public ControladorModificarCotizacion(Controlador controlador,MedioPago medioPago) {
 		this.ventanaModificarCotizacion = new VentanaModificarCotizacion();
 		this.medioPago = medioPago;
+		this.controlador=controlador;
 	}
 
 	public void inicializar() {
@@ -88,6 +91,8 @@ public class ControladorModificarCotizacion {
 
 	public void atras(ActionEvent a) {
 		this.ventanaModificarCotizacion.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
@@ -238,10 +243,10 @@ public class ControladorModificarCotizacion {
 	}
 
 	public static void main(String[] args) {
-		MedioPago modelo = new MedioPago(new DAOSQLFactory());
-		ControladorModificarCotizacion controlador = new ControladorModificarCotizacion(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		MedioPago modelo = new MedioPago(new DAOSQLFactory());
+//		ControladorModificarCotizacion controlador = new ControladorModificarCotizacion(modelo);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 
 }

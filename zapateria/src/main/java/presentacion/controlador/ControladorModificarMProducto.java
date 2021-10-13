@@ -26,10 +26,13 @@ public class ControladorModificarMProducto {
 	private MaestroProducto maestroProducto;
 	private HistorialCambioMProducto historialCambioMProducto;
 	private List<MaestroProductoDTO> maestroProductoEnTabla;
-
-	public ControladorModificarMProducto(MaestroProducto producto) {
+	
+	Controlador controlador;
+	
+	public ControladorModificarMProducto(Controlador controlador,MaestroProducto producto) {
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		this.maestroProducto = producto;
+		this.controlador = controlador;
 	}
 
 	public void inicializar() {
@@ -115,6 +118,8 @@ public class ControladorModificarMProducto {
 
 	public void atras(ActionEvent a) {
 		this.ventanaModificarMProducto.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	// Abrir ventana para ver la tabla historialCambioMProducto
@@ -344,10 +349,10 @@ public class ControladorModificarMProducto {
 	}
 
 	public static void main(String[] args) {
-		MaestroProducto modelo = new MaestroProducto(new DAOSQLFactory());
-		ControladorModificarMProducto controlador = new ControladorModificarMProducto(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		MaestroProducto modelo = new MaestroProducto(new DAOSQLFactory());
+//		ControladorModificarMProducto controlador = new ControladorModificarMProducto(modelo);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 
 }

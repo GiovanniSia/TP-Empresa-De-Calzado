@@ -5,8 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import modelo.Caja;
 import modelo.Cliente;
 import modelo.MaestroProducto;
+import modelo.MedioPago;
 import modelo.Stock;
 import modelo.Sucursal;
 import modelo.Zapateria;
@@ -30,6 +32,9 @@ public class Controlador implements ActionListener {
 	Stock stock;
 	Sucursal sucursal;
 	Cliente cliente;
+	
+	MedioPago medioPago;
+	Caja caja;
 	
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
@@ -76,6 +81,9 @@ public class Controlador implements ActionListener {
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.stock = new Stock(new DAOSQLFactory());
 		this.sucursal = new Sucursal(new DAOSQLFactory());
+		
+		this.medioPago = new MedioPago(new DAOSQLFactory());
+		this.caja = new Caja(new DAOSQLFactory());
 	}
 	
 	
@@ -94,6 +102,17 @@ public class Controlador implements ActionListener {
 		
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this);
 		
+		//cotizacion
+		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
+		
+		//mod precio unitario
+		this.controladorModificarMProducto = new ControladorModificarMProducto(this,this.maestroProducto); 
+		
+		//Ingreso Caja
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this,caja); 
+		
+		
+		
 		//Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
@@ -105,7 +124,15 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
 		
+		//cotizacion
+		this.ventanaMenuSistemaDeVentas.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
 		
+		//mod precioUnitario
+		this.ventanaMenuSistemaDeVentas.getBtnModPrecioUnitario().addActionListener(a -> pasarAModificarPrecioUnitario(a));
+		
+		
+		//Ingreso caja
+		this.ventanaMenuSistemaDeVentas.getBtnIngresoCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
 		
 //		this.ventanaMenu.show();
 		
@@ -143,16 +170,57 @@ public class Controlador implements ActionListener {
 	
 	
 	public void pasarAArmarVenta(ActionEvent a) {
+		boolean aa = this.controladorIngresosCaja.estaCajaAbierta();
+		System.out.println("la caja esta abierta: "+aa);
+		if(!aa) {
+			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
+			return;
+		}
+		
+		
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		controladorBusquedaCliente.inicializar();		
 		this.controladorBusquedaCliente.mostrarVentana();
 	}
 	
 	public void pasarACobrarVenta(ActionEvent a) {
+		if(!this.controladorIngresosCaja.estaCajaAbierta()) {
+			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
+			return;
+		}
+		
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorVisualizarCarritos.inicializar();
 		this.controladorVisualizarCarritos.mostrarVentana();
 	}
+	
+	
+	//Cotizacion
+	public void pasarACotizaciones(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorModificarCotizacion.inicializar();
+		this.controladorModificarCotizacion.mostrarVentana();
+	}
+	
+	//Mod precio unitario
+	public void pasarAModificarPrecioUnitario(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorModificarMProducto.inicializar();
+		this.controladorModificarMProducto.mostrarVentana();
+	}
+	
+	//Ingreso de caja
+	public void pasarAIngresoDeCaja(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorIngresosCaja.inicializar();
+		this.controladorIngresosCaja.mostrarVentana();
+	}
+	
+	
+	//Egreso 
+	
+	//Ingreso
+	
 	
 	
 	@Override
