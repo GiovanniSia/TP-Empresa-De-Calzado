@@ -151,59 +151,96 @@ public class ControladorRealizarVenta {
 //		if(!todosLosCamposSonValidos()) {
 //			return;
 //		}
+		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
+		MedioPagoDTO medioPago = obtenerMedioPago(metodoPagoCb);
 		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
-		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
-		if(cantidad > this.totalAPagar) {
+		if( ( cantidad *medioPago.getTasaConversion())> this.totalAPagar) {
 			JOptionPane.showMessageDialog(null, "Esta cantidad supera el total a pagar!");
 			return;
 		}
 		
-		if(nroOperacion.equals("") && (metodoPagoCb.charAt(0)=='T' || metodoPagoCb.equals("Mercado Pago"))) {
+		if(nroOperacion.equals("") && esUnPagoConTarjeta(medioPago)) {
 			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago!");
 			return;
-		}
-		
+		}		
 
-		
-		double valorConversion;
         
-		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura
-		for(MedioPagoDTO m: this.listamediosDePago) {
-			if(m.getDescripcion().equals(metodoPagoCb)) {
-				if( metodoPagoCb.equals("Cuenta Corriente")) {
-					if(this.clienteCarrito.getEstado().equals("Moroso")) {
-						JOptionPane.showMessageDialog(null, "El cliente es Moroso, no puede usar la cuenta corriente!");
-						return;
-					}
-					
-					if(!poseeSaldoSuficiente(this.clienteCarrito,cantidad)) {
-						JOptionPane.showMessageDialog(null, "El cliente no posee saldo suficiente!");
-						return;
-					}
-					
-				}
-				
-
-
-				int idCliente = this.carritoACobrar.getIdCliente();
-				
-				String tipoFactura = determinarCategoriaFactura(this.clienteCarrito);
-				valorConversion=m.getTasaConversion();
-				double totalArg = cantidad *valorConversion;
-				String mp = m.getIdMoneda();
-				
-				//EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
-				IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,"","","VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
-				this.listaDeIngresosARegistrar.add(ingreso);
-				//{"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
-				}
+		//cuando se registra un pago se guarda un ingreso para registrar cuando se tenga la factura		
+		
+		if( medioPago.getDescripcion().equals("Cuenta Corriente")) {
+			if(this.clienteCarrito.getEstado().equals("Moroso")) {
+				JOptionPane.showMessageDialog(null, "El cliente es Moroso, no puede usar la cuenta corriente!");
+				return;
+			}
+			if(!poseeSaldoSuficiente(this.clienteCarrito,cantidad)) {
+				JOptionPane.showMessageDialog(null, "El cliente no posee saldo suficiente!");
+				return;
+			}	
 		}
+	
+		//verificamos si el pago ya esta en la tabla 
+		if(!esUnPagoConTarjeta(medioPago) && pagoYaFueRegistrado(medioPago)) {
+			for(IngresosDTO i: this.listaDeIngresosARegistrar) {
+				System.out.println("fue un pago sin tarjeta y ya fue registrado");
+				if(i.getMedioPago().equals(medioPago.getIdMoneda())) {
+					double cantNuevo = i.getCantidad() + cantidad;
+					double totalNuevo = i.getTotal() + (cantidad*medioPago.getTasaConversion());
+					i.setCantidad(cantNuevo);
+					i.setTotal(totalNuevo);
+					
+					actualizarTablaMedioPago();
+					System.out.println("Se actualizo la tabla");
+					this.ventanaRealizarVenta.getTextCantidad().setText("");
+					this.ventanaRealizarVenta.getTextNumOperacion().setText("");
+					
+					return;
+				}
+			}
+		}
+		
+		
+		int idCliente = this.carritoACobrar.getIdCliente();
+			
+		String tipoFactura = determinarCategoriaFactura(this.clienteCarrito);
+		double valorConversion = medioPago.getTasaConversion();
+		double totalArg = cantidad *valorConversion;
+		String mp = medioPago.getIdMoneda();
+				
+		//EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
+		IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,"","","VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
+		this.listaDeIngresosARegistrar.add(ingreso);
+		//{"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
+				
 		actualizarTablaMedioPago();
 		this.ventanaRealizarVenta.getTextCantidad().setText("");
 		this.ventanaRealizarVenta.getTextNumOperacion().setText("");		
 	}
+	
+	
+	public MedioPagoDTO obtenerMedioPago(String nombre) {
+		for(MedioPagoDTO m: this.listamediosDePago) {
+			if(m.getDescripcion().equals(nombre)) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	
+	public boolean esUnPagoConTarjeta(MedioPagoDTO medioPago) {
+		return medioPago.getDescripcion().charAt(0)=='T' || medioPago.getDescripcion().equals("Mercado Pago");
+	}
+	
+	public boolean pagoYaFueRegistrado(MedioPagoDTO medioPago) {
+		for(IngresosDTO i: this.listaDeIngresosARegistrar) {
+			if(i.getMedioPago().equals(medioPago.getIdMoneda())) {
+				return true;
+			}
+		}return false;
+	}
+	
 	
 	public void actualizarTablaMedioPago() {
 		this.ventanaRealizarVenta.getModelTablaMedioPago().setRowCount(0);//borrar datos de la tabla
@@ -225,8 +262,12 @@ public class ControladorRealizarVenta {
 					String numOperacionAux = i.getOperacion();
 					String numOperacion = numOperacionAux.equals("") ? "-" : numOperacionAux;
 					
-					double cantidad = i.getCantidad();
-					double totalArg = cantidad *valorConversion;
+					double cantida = i.getCantidad();
+					BigDecimal cantidad = new BigDecimal(cantida);
+					double totalAr = cantida *valorConversion;
+					BigDecimal totalArg = new BigDecimal(totalAr); 
+					
+					System.out.println("la cantidad que se escribe: "+cantidad);
 					
 					Object[] fila = {metodoPago,moneda,numOperacion,cantidad,totalArg};
 					this.ventanaRealizarVenta.getModelTablaMedioPago().addRow(fila);
@@ -258,6 +299,9 @@ public class ControladorRealizarVenta {
 			this.cantidadUsadaCC +=pagadoArg;
 			System.out.println("cantidad de credito cc usado: "+this.cantidadUsadaCC);
 		}
+		
+		
+		
 		
 		this.totalPagado += pagadoArg;
 		this.totalAPagar -= pagadoArg;

@@ -269,7 +269,7 @@ public class VentanaBusquedaProductos {
 		};
 		
 		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneCliente.setBounds(10, 23, 548, 42);
+		scrollPaneCliente.setBounds(10, 23, 548, 48);
 		
 		tableCliente = new JTable(modelTablaCliente);
 		this.tableCliente.getColumnModel().getColumn(0).setPreferredWidth(103);
