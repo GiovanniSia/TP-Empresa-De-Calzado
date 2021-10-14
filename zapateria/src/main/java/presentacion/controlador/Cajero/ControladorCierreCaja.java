@@ -27,11 +27,13 @@ import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
 import presentacion.reportes.ReporteCajaDiaria;
+import presentacion.reportes.ReporteFactura;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
 
 	private static final int idEmpleado=1;
+	private static final int idSucursal=1;
 	
 	private VentanaCierreCaja ventanaCierreCaja;
 
@@ -78,9 +80,8 @@ public class ControladorCierreCaja {
 	}
 	
 	public void mostrarReporte() {
-		
-//		ReporteCajaDiaria ca = new ReporteCajaDiaria(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
-//		ca.mostrar();
+		ReporteCajaDiaria ca = new ReporteCajaDiaria(this.idSucursal);
+		ca.mostrarUltimoReporte();
 		
 	}
 
@@ -123,11 +124,18 @@ public class ControladorCierreCaja {
 				if(!cierreCaja) {
 					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cerrar la caja");
 				}else {
-					JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");		
+					JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");
+					int resp = JOptionPane.showConfirmDialog(null, "Quiere ver el reporte?", "Ver Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if(resp==0) {
+						mostrarReporte();
+					}
 				}
 				return;
 			}
 		}
+		
+
+		
 		
 		
 	}
