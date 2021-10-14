@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
@@ -104,6 +105,54 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public List<MaestroProductoDTO> leerProductos(String id, String descr, String talle){
+		String ordenSql = "SELECT * FROM maestroProductos WHERE IdMaestroProducto = IdMaestroProducto ";
+		if(!id.equals("")) {
+			ordenSql = ordenSql+"AND IdMaestroProducto = '"+id+"' ";
+		}
+		if(!descr.equals("")) {
+			ordenSql = ordenSql+"AND Descripcion LIKE '%"+descr+"%' ";
+		}
+		if(!talle.equals("")) {
+			ordenSql = ordenSql+"AND Talle LIKE '%"+talle+"%' ";
+		}
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<MaestroProductoDTO> productos = new ArrayList<MaestroProductoDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(ordenSql);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				productos.add(getMaestroProductoDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return productos;
+	}
+	
+	private MaestroProductoDTO getMaestroProductoDTO(ResultSet resultSet) throws SQLException {
+		int idMaestroProducto = resultSet.getInt("IdMaestroProducto");
+		String descripcion = resultSet.getString("Descripcion");
+		String tipo = resultSet.getString("Tipo");
+		String fabricado = resultSet.getString("Fabricado");
+		double precioCosto = resultSet.getDouble("PrecioCosto");
+		double precioMayorista = resultSet.getDouble("PrecioMayorista");
+		double precioMinorista = resultSet.getDouble("PrecioMinorista");
+		int puntoRepositorio = resultSet.getInt("PuntoRepositorio");
+		int idProveedor = resultSet.getInt("IdProveedor");
+		String talle = resultSet.getString("Talle");
+		String unidadMedida = resultSet.getString("UnidadMedida");
+		String estado = resultSet.getString("Estado");
+
+		int CantidadAReponer = resultSet.getInt("CantidadAReponer");
+		int DiasParaReponer = resultSet.getInt("DiasParaReponer");
+		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo, fabricado, precioCosto, precioMayorista,
+				precioMinorista, puntoRepositorio, idProveedor, talle, unidadMedida, estado, CantidadAReponer,
+				DiasParaReponer);
 	}
 
 }
