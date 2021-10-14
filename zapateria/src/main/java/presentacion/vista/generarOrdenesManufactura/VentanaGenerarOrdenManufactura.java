@@ -68,8 +68,21 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 		spCliente.setBounds(10, 69, 776, 272);
 		panel.add(spCliente);
 
-		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
-		tabla = new JTable(modelOrdenes);
+		modelOrdenes = new DefaultTableModel(null, this.nombreColumnas){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+            	/*
+                if(columnas == 3) {
+                    return true;
+                }else {
+                    return false;
+                }*/
+            	return false;
+            }
+        };
+        tabla = new JTable(modelOrdenes);
 
 		spCliente.setViewportView(tabla);
 
@@ -91,21 +104,21 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 		textId.setColumns(10);
 		
 		lblSucursal = new JLabel("Talle");
-		lblSucursal.setBounds(95, 11, 46, 14);
+		lblSucursal.setBounds(180, 11, 46, 14);
 		panel.add(lblSucursal);
 		
 		textTalle = new JTextField();
 		textTalle.setColumns(10);
-		textTalle.setBounds(95, 36, 75, 20);
+		textTalle.setBounds(180, 38, 75, 20);
 		panel.add(textTalle);
 		
 		textProducto = new JTextField();
 		textProducto.setColumns(10);
-		textProducto.setBounds(180, 36, 75, 20);
+		textProducto.setBounds(95, 38, 75, 20);
 		panel.add(textProducto);
 		
 		lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(180, 11, 46, 14);
+		lblProducto.setBounds(95, 11, 46, 14);
 		panel.add(lblProducto);
 		
 		btnSalir = new JButton("");
