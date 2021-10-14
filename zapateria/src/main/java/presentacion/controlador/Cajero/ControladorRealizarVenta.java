@@ -142,6 +142,11 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void agregarMedioDePago(ActionEvent a) {
+		if(!todosLosCamposSonValidos()) {
+			JOptionPane.showMessageDialog(null, "El campo de monto no es correcto");
+			return;
+		}
+		
 		String nroOperacion = this.ventanaRealizarVenta.getTextNumOperacion().getText();
 		
 		if(ventanaRealizarVenta.getTextCantidad().getText().equals("")) {
@@ -152,6 +157,12 @@ public class ControladorRealizarVenta {
 //			return;
 //		}
 		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
+		
+		if(metodoPagoCb.equals("Sin seleccionar")) {
+			JOptionPane.showMessageDialog(null, "No ha agregado ningun medio de pago");
+			return;
+		}
+		
 		MedioPagoDTO medioPago = obtenerMedioPago(metodoPagoCb);
 		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
@@ -310,6 +321,12 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void descontarDescuento() {		
+		if(!todosLosCamposSonValidos()) {
+			return;
+		}
+		
+		
+		//si el campo es vacio se reincia a 0
 		if(this.ventanaRealizarVenta.getTextDescuento().getText().equals("")) {
 			this.totalAPagarAux = this.totalAPagar;
 			this.descuento=0;
@@ -327,6 +344,7 @@ public class ControladorRealizarVenta {
 			
 			
 			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText(""+desc);
+			//si el desc escrito es mayor al total a pagar, se reinicia
 			if(descuento>this.totalAPagar) {
 				JOptionPane.showMessageDialog(null, "Esta cantidad de descuento supera el total a pagar!");
 				
@@ -599,14 +617,14 @@ public class ControladorRealizarVenta {
 		boolean m = monto.matches("^[0-9]+(\\.[0-9]{1,2})?$");
 
         if (!monto.equals("") && !m ) {
-        	JOptionPane.showMessageDialog(null, "El campo monto no es correcto");
+//        	JOptionPane.showMessageDialog(null, "El campo monto no es correcto");
             return false;
         }
         
         String desc = this.ventanaRealizarVenta.getTextDescuento().getText();
         boolean d = desc.matches("^[0-9]+(\\.[0-9]{1,2})?$");
         if(!desc.equals("") && !d) {
-        	JOptionPane.showMessageDialog(null, "El campo descuento no es correcto");
+//        	JOptionPane.showMessageDialog(null, "El campo descuento no es correcto");
         	return false;
         }
         return true;
@@ -623,12 +641,12 @@ public class ControladorRealizarVenta {
 		}));
 		this.ventanaRealizarVenta.getTextCantidad().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
+				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
 			}
 		}));
 		this.ventanaRealizarVenta.getTextDescuento().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
+				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
 			}
 		});
 	}

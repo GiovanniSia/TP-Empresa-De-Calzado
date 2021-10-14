@@ -103,7 +103,7 @@ public class VentanaRealizarVenta {
 		panel_1.setBounds(10, 10, 827, 41);
 		panel.add(panel_1);
 		
-		JLabel lblTitulo = new JLabel("Zapater\u00EDa");
+		JLabel lblTitulo = new JLabel("Zapateria");
 		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 38));
 		lblTitulo.setBounds(10, 0, 310, 41);
 		panel_1.add(lblTitulo);
@@ -133,7 +133,7 @@ public class VentanaRealizarVenta {
 		lblMtodoDePago.setBounds(10, 41, 100, 21);
 		panel_2.add(lblMtodoDePago);
 		
-		JLabel lblltimosDgitos = new JLabel("N\u00FAmero de operacion");
+		JLabel lblltimosDgitos = new JLabel("Numero de operacion");
 		lblltimosDgitos.setFont(new Font("Consolas", Font.PLAIN, 12));
 		lblltimosDgitos.setBounds(218, 10, 138, 21);
 		panel_2.add(lblltimosDgitos);
