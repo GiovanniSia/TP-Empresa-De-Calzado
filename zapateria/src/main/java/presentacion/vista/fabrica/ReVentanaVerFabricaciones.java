@@ -1,9 +1,12 @@
 package presentacion.vista.fabrica;
 
 import java.awt.Font;
-
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,6 +43,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JLabel lblFechaDesde;
 	private JLabel lblFechaHasta;
 
+	private JButton btnSalir;
+	
+
 	public ReVentanaVerFabricaciones() {
 		initialize();
 	}
@@ -56,7 +62,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 806, 386);
+		panel.setBounds(0, 64, 806, 399);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -119,6 +125,11 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		lblFechaHasta = new JLabel("-");
 		lblFechaHasta.setBounds(364, 39, 75, 14);
 		panel.add(lblFechaHasta);
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(740, 351, 46, 38);
+		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+		panel.add(btnSalir);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -150,6 +161,16 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		this.setVisible(true);
 	}
 
+	public Icon setIcono(String url,JButton boton) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(url));
+		int ancho = boton.getWidth();
+		int alto = boton.getHeight();
+		
+		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+		return icono;
+	}
+	
+	
 	public JTable getTablaFabricacionesEnMarcha() {
 		return tabla;
 	}
@@ -192,5 +213,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JLabel getLblFechaHasta() {
 		return lblFechaHasta;
+	}
+	
+	public JButton getBtnSalir() {
+		return btnSalir;
 	}
 }

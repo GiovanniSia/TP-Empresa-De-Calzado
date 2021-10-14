@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import dto.SucursalDTO;
 import modelo.Caja;
+import modelo.Carrito;
 import modelo.Cliente;
+import modelo.DetalleCarrito;
 import modelo.Egresos;
 import modelo.Empleado;
 import modelo.Ingresos;
@@ -20,6 +23,7 @@ import presentacion.controlador.Cajero.ControladorCierreCaja;
 import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
+import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
 import presentacion.vista.VentanaHistorialCambioMProducto;
@@ -30,6 +34,10 @@ import presentacion.vista.VentanaModificarCotizacion;
 import presentacion.vista.VentanaModificarMProducto;
 
 public class Controlador implements ActionListener {
+	
+	private final int idSucursal=1;
+	
+	SucursalDTO sucursalObj;
 	
 	MaestroProducto maestroProducto;
 	Stock stock;
@@ -43,6 +51,9 @@ public class Controlador implements ActionListener {
 	Egresos egresos;
 	Empleado empleado;
 	
+	Carrito carrito;
+	DetalleCarrito detalleCarrito;
+	
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
@@ -53,6 +64,8 @@ public class Controlador implements ActionListener {
 	ControladorModificarCotizacion controladorModificarCotizacion;
 	ControladorModificarMProducto controladorModificarMProducto;
 	
+	ReControladorOperario reControladorOperario;
+		
 	//Controlador cajero
 	ControladorCierreCaja controladorCierreCaja;
 	ControladorIngresosCaja controladorIngresosCaja;
@@ -92,9 +105,14 @@ public class Controlador implements ActionListener {
 		this.medioPago = new MedioPago(new DAOSQLFactory());
 		this.caja = new Caja(new DAOSQLFactory());
 		
+		this.carrito = new Carrito(new DAOSQLFactory());
+		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
+		
 		this.ingresos = new Ingresos(new DAOSQLFactory());
 		this.egresos = new Egresos(new DAOSQLFactory());
 		this.empleado = new Empleado(new DAOSQLFactory());
+		
+		this.sucursalObj = this.sucursal.select(this.idSucursal);
 	}
 	
 	
@@ -104,14 +122,16 @@ public class Controlador implements ActionListener {
 		
 //		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
 //		this.vistaBusquedaProducto = new VentanaBusquedaProductos();
+
+		this.reControladorOperario = new ReControladorOperario(this,this.sucursalObj);
 		
 		//armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this,cliente);
-		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock, this.sucursal);
+		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock, this.sucursal,this.carrito,this.detalleCarrito);
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
 		
-		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this);
+		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this,carrito, detalleCarrito, cliente,maestroProducto);
 		
 		//cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
@@ -152,12 +172,7 @@ public class Controlador implements ActionListener {
 		
 		//Cierre de caja
 		this.ventanaMenuSistemaDeVentas.getBtnCierreCaja().addActionListener(a -> pasarACierreDeCaja(a));
-		
-//		this.ventanaMenu.show();
-		
-		//por ahora cuando se inicia se inicia la ventana de cliente
-//		controladorBusquedaCliente.inicializar();		
-//		this.controladorBusquedaCliente.mostrarVentana();
+
 	}
 	
 	public void mostrarVentanaMenu() {
@@ -175,7 +190,10 @@ public class Controlador implements ActionListener {
 	
 	
 	public void iniciarSistemaOperatoriaFabrica(ActionEvent a) {
-		JOptionPane.showMessageDialog(null, "Aun no se implemento xd");
+		this.ventanaMenu.cerrar();
+		this.reControladorOperario.inicializar();
+		this.reControladorOperario.mostrarVentana();
+		
 	}
 	
 	
@@ -189,14 +207,10 @@ public class Controlador implements ActionListener {
 	
 	
 	public void pasarAArmarVenta(ActionEvent a) {
-		boolean aa = this.controladorIngresosCaja.estaCajaAbierta();
-		System.out.println("la caja esta abierta: "+aa);
-		if(!aa) {
+		if(!this.controladorIngresosCaja.estaCajaAbierta()) {
 			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
 			return;
 		}
-		
-		
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		controladorBusquedaCliente.inicializar();		
 		this.controladorBusquedaCliente.mostrarVentana();

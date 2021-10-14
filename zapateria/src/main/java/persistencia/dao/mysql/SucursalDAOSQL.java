@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.MaestroProductoDTO;
 import dto.SucursalDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.SucursalDAO;
@@ -17,6 +18,8 @@ public class SucursalDAOSQL implements SucursalDAO{
 	private static final String delete = "DELETE FROM sucursales WHERE IdSucursal = ?";
 	private static final String update = "UPDATE sucursales set Telefono=?, Calle=?, Altura=?, Provincia=?, Localidad=?, Pais=?, CodigoPostal, Nombre=? where IdSucursal=?";
 	private static final String readall = "SELECT * FROM sucursales";
+	
+	private static final String select = "SELECT * FROM sucursales WHERE IdSucursal=?";
 	
 	@Override
 	public boolean insert(SucursalDTO sucursal) {
@@ -129,6 +132,25 @@ public class SucursalDAOSQL implements SucursalDAO{
 		String codPostal = resultSet.getString("CodigoPostal");
 		String nombre = resultSet.getString("Nombre");
 		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
+	}
+
+	@Override
+	public SucursalDTO select(int idSucursal) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		SucursalDTO sucursal = null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(select);
+			statement.setInt(1,idSucursal);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				sucursal = getSucursalDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sucursal;
 	}
 	
 }

@@ -31,4 +31,8 @@ public class Sucursal {
 	public List<SucursalDTO> readAll(){
 		return this.sucursal.readAll();
 	}
+	
+	public SucursalDTO select(int idSucursal) {
+		return this.sucursal.select(idSucursal);
+	}
 }

@@ -58,11 +58,11 @@ public class ControladorVisualizarCarritos {
 //		this.cliente = cliente;
 //		this.maestroProducto = maestroProducto;
 		
-	public ControladorVisualizarCarritos(Controlador controlador) {
-		this.carrito = new Carrito(new DAOSQLFactory());
-		this.detalleCarrito =new DetalleCarrito(new DAOSQLFactory());
-		this.cliente = new Cliente(new DAOSQLFactory());
-		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
+	public ControladorVisualizarCarritos(Controlador controlador,Carrito carrito, DetalleCarrito detalleCarrito, Cliente cliente, MaestroProducto maestroProducto) {
+		this.carrito = carrito;
+		this.detalleCarrito = detalleCarrito;
+		this.cliente = cliente;
+		this.maestroProducto = maestroProducto;
 	
 		this.listaCarritos = new ArrayList<CarritoDTO>();
 		this.listaDetalleCarrito = new ArrayList<DetalleCarritoDTO>();
@@ -221,7 +221,7 @@ public class ControladorVisualizarCarritos {
 				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
 				int cant = detalleCar.getCantidad();
-				double p = detalleCar.getPrecio()*cant;
+				double p = detalleCar.getPrecio();
 				BigDecimal precio = new BigDecimal(p);
 						
 				Object[] fila = {nombreProd,cant,precio};

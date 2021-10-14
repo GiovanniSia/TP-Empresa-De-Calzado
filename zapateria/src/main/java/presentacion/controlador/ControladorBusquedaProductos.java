@@ -57,12 +57,12 @@ public class ControladorBusquedaProductos {
 	
 	ClienteDTO clienteSeleccionado;
 		
-	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal) {
+	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal,Carrito carrito,DetalleCarrito detalleCarrito) {
 		this.sucursal = sucursal;
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
-		this.carrito = new Carrito(new DAOSQLFactory());
-		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
+		this.carrito = carrito;
+		this.detalleCarrito = detalleCarrito;
 	}
 	
 	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {

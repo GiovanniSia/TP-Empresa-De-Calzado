@@ -28,6 +28,7 @@ import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
 import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.ReVentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
@@ -72,7 +73,9 @@ public class ReControladorOperario implements ActionListener {
 	String diaCumpleCreado = "";
 	boolean seleccionarDesde = true;
 	
-	public ReControladorOperario(SucursalDTO fabrica) {
+	Controlador controlador;
+	
+	public ReControladorOperario(Controlador controlador,SucursalDTO fabrica) {
 		idFabrica = fabrica.getIdSucursal();
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -80,12 +83,18 @@ public class ReControladorOperario implements ActionListener {
             System.out.println("Error setting native LAF: " + e);
 		}
 		
+		this.controlador = controlador;
+		
 		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
 		modeloOrden = new OrdenFabrica(new DAOSQLFactory());
 		modeloStock = new Stock(new DAOSQLFactory());
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
+
+	}
+	
+	public void inicializar() {
 		ventanaPrincipal.getBtnTrabajarPedido().addActionListener(r->trabajarSeleccionado(r));
 		ventanaPrincipal.getTextProducto().addKeyListener(new KeyAdapter() {
 			@Override
@@ -120,12 +129,30 @@ public class ReControladorOperario implements ActionListener {
 		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
 		
 		ventanaParaCumple = fecha.getInstance();
+		
+		this.ventanaPrincipal.getBtnSalir().addActionListener(a -> salir(a));
+		
+		
+		
+		
+		refrescarTabla();
+		
 	}
 	
-	public void inicializar() {
-		refrescarTabla();
-		ventanaPrincipal.show();
+	public void mostrarVentana() {
+		this.ventanaPrincipal.show();
 	}
+	
+	public void cerrarVentana() {
+		this.ventanaPrincipal.cerrar();
+	}
+	
+	public void salir(ActionEvent a) {
+		this.ventanaPrincipal.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenu();
+	}
+	
 	
 	public void mostrarMensajeEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);

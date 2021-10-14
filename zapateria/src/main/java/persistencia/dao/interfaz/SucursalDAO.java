@@ -14,4 +14,6 @@ public interface SucursalDAO {
 	public boolean update(int id_sucursal_a_actualizar, SucursalDTO sucursal_nueva);
 
 	public List<SucursalDTO> readAll();
+	
+	public SucursalDTO select(int idSucursal);
 }
