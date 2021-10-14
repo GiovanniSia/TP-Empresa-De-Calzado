@@ -13,6 +13,7 @@ import modelo.Egresos;
 import modelo.MedioPagoEgreso;
 import modelo.TipoEgresos;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.Cajero.VentanaEgresoCaja;
 
 public class ControladorEgresosCaja {
@@ -27,9 +28,14 @@ public class ControladorEgresosCaja {
 	private List<MedioPagoEgresoDTO> listaMedioPagoEgreso;
 	private MedioPagoEgreso medioPagoEgreso;
 
-	public ControladorEgresosCaja(Egresos egresos) {
+	Controlador controlador;
+	
+	public ControladorEgresosCaja(Controlador controlador,Egresos egresos) {
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 		this.egresos = egresos;
+		
+		this.controlador = controlador;
+		
 	}
 
 	public void inicializar() {
@@ -178,6 +184,8 @@ public class ControladorEgresosCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaEgresoCaja.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void ingresarEgreso(String detalle) {
@@ -224,9 +232,9 @@ public class ControladorEgresosCaja {
 	}
 
 	public static void main(String[] args) {
-		Egresos modelo = new Egresos(new DAOSQLFactory());
-		ControladorEgresosCaja controlador = new ControladorEgresosCaja(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+//		Egresos modelo = new Egresos(new DAOSQLFactory());
+//		ControladorEgresosCaja controlador = new ControladorEgresosCaja(modelo);
+//		controlador.inicializar();
+//		controlador.mostrarVentana();
 	}
 }

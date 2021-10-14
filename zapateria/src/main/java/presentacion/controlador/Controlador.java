@@ -20,6 +20,7 @@ import modelo.Sucursal;
 import modelo.Zapateria;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Cajero.ControladorCierreCaja;
+import presentacion.controlador.Cajero.ControladorEgresosCaja;
 import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
@@ -63,6 +64,9 @@ public class Controlador implements ActionListener {
 	
 	ControladorModificarCotizacion controladorModificarCotizacion;
 	ControladorModificarMProducto controladorModificarMProducto;
+	
+	
+	ControladorEgresosCaja controladorEgresosCaja; 
 	
 	ReControladorOperario reControladorOperario;
 		
@@ -143,6 +147,7 @@ public class Controlador implements ActionListener {
 		this.controladorIngresosCaja = new ControladorIngresosCaja(this,caja); 
 		
 		//Egreso Caja
+		this.controladorEgresosCaja = new ControladorEgresosCaja(this,egresos);
 		
 		//Cierre Caja
 		this.controladorCierreCaja = new ControladorCierreCaja(this,caja,ingresos,egresos,empleado); 
@@ -169,6 +174,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnIngresoCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
 		
 		//Egreso
+		this.ventanaMenuSistemaDeVentas.getBtnEgresoCaja().addActionListener(a -> pasarAEgresosCaja(a));
 		
 		//Cierre de caja
 		this.ventanaMenuSistemaDeVentas.getBtnCierreCaja().addActionListener(a -> pasarACierreDeCaja(a));
@@ -256,6 +262,17 @@ public class Controlador implements ActionListener {
 	
 	
 	//Egreso 
+	public void pasarAEgresosCaja(ActionEvent a ) {
+		if(!this.controladorIngresosCaja.estaCajaAbierta()) {
+			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
+			return;
+		}
+		
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorEgresosCaja.inicializar();
+		this.controladorEgresosCaja.mostrarVentana();
+	}
+	
 	
 	//Cierre de caja
 	public void pasarACierreDeCaja(ActionEvent a ) {
