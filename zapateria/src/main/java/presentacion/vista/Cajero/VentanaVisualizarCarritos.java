@@ -271,7 +271,8 @@ public class VentanaVisualizarCarritos {
 		panel.add(btnBorrarCarrito);
 		
 		JLabel lblCancelarCompra = new JLabel("Cancelar compra");
-		lblCancelarCompra.setBounds(371, 546, 106, 13);
+		lblCancelarCompra.setFont(new Font("Consolas", Font.PLAIN, 14));
+		lblCancelarCompra.setBounds(357, 546, 120, 36);
 		panel.add(lblCancelarCompra);
 		
 
