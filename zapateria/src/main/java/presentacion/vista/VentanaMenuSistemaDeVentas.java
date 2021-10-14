@@ -191,7 +191,7 @@ public class VentanaMenuSistemaDeVentas {
 		btnGenerarOrdenDe.setBounds(473, 307, 282, 41);
 		panel.add(btnGenerarOrdenDe);
 		
-		lblNewLabel_8 = new JLabel("(Supervisor)");
+		lblNewLabel_8 = new JLabel("(Gerente)");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_8.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		lblNewLabel_8.setBounds(530, 358, 184, 20);
