@@ -6,9 +6,12 @@
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT *, ingr.Hora as horita FROM zapateria.ingresos as ingr, zapateria.factura as factu 
-WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND ingr.Fecha = 
+WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND (ingr.Fecha = 
 (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
-AND ingr.nroFactura = factu.NroFacturaCompleta]]>
+AND (ingr.nroFactura = factu.NroFacturaCompleta))
+OR (ingr.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
+AND (ingr.Tipo = 'SI'))]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
@@ -370,7 +373,7 @@ AND ingr.nroFactura = factu.NroFacturaCompleta]]>
 						<textElement textAlignment="Center">
 							<font size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{NombreCliente}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[($F{IdCliente} == 0)? "" : $F{NombreCliente}]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="211" y="2" width="49" height="13" uuid="0f724191-cabb-41ff-a9d7-9c46e47c04aa"/>

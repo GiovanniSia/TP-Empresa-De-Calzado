@@ -24,9 +24,9 @@ public class Main {
 		ReporteFactura reporte = new ReporteFactura("A000011", 1);
 		reporte.mostrar();
 		*/
-		/*
+		
 		ReporteCajaDiaria ca = new ReporteCajaDiaria(1);
 		ca.mostrarUltimoReporte();
-		*/
+		
 	}
 }

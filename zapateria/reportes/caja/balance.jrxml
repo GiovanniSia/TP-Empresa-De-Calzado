@@ -8,11 +8,16 @@
 		<![CDATA[SELECT (SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' 
 AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}'))-(SELECT SUM(egre.Total) 
 FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha = 
-(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')) as totalBalance from zapateria.ingresos]]>
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')) as totalBalance, (SELECT SUM(ing.Total) FROM zapateria.ingresos as ing WHERE ing.IdSucursal = '$P!{IdSucursal}' 
+AND ing.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')) as balanceSecundario from zapateria.ingresos]]>
 	</queryString>
 	<field name="totalBalance" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="totalBalance"/>
 		<property name="com.jaspersoft.studio.field.label" value="totalBalance"/>
+	</field>
+	<field name="balanceSecundario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="balanceSecundario"/>
+		<property name="com.jaspersoft.studio.field.label" value="balanceSecundario"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -35,7 +40,7 @@ FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egr
 						<textElement textAlignment="Right">
 							<font size="14"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{totalBalance}.intValue()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[($F{totalBalance} == null)? $F{balanceSecundario}.intValue() : $F{totalBalance}.intValue()]]></textFieldExpression>
 					</textField>
 				</frame>
 				<staticText>
