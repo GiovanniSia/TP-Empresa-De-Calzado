@@ -44,6 +44,8 @@ public class VentanaEgresoCaja extends JFrame {
 	// NC
 	private JLabel lblNC;
 	private JTextField txtFieldNC;
+	
+	private JLabel lblActualizarTotalBalanceCaja;
 
 	public VentanaEgresoCaja() {
 		try {
@@ -122,7 +124,7 @@ public class VentanaEgresoCaja extends JFrame {
 		lblNewLabel_3.setBounds(272, 297, 160, 29);
 		contentPane.add(lblNewLabel_3);
 
-		JLabel lblActualizarTotalBalanceCaja = new JLabel("$0");
+		lblActualizarTotalBalanceCaja = new JLabel("$0");
 		lblActualizarTotalBalanceCaja.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarTotalBalanceCaja.setBounds(287, 322, 133, 22);
 		contentPane.add(lblActualizarTotalBalanceCaja);
@@ -380,6 +382,10 @@ public class VentanaEgresoCaja extends JFrame {
 
 	public JTextField getTxtFieldNC() {
 		return txtFieldNC;
+	}
+
+	public JLabel getLblActualizarTotalBalanceCaja() {
+		return lblActualizarTotalBalanceCaja;
 	}
 
 	public static void main(String[] args) {

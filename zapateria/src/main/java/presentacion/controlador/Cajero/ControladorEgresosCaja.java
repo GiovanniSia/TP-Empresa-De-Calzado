@@ -1,15 +1,18 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import dto.EgresosDTO;
+import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
 import dto.TipoEgresosDTO;
 import modelo.Egresos;
+import modelo.Ingresos;
 import modelo.MedioPagoEgreso;
 import modelo.TipoEgresos;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -30,6 +33,18 @@ public class ControladorEgresosCaja {
 
 	Controlador controlador;
 	
+	private Ingresos ingresos;
+	private List<IngresosDTO> ingresosEnTabla;
+
+	private List<EgresosDTO> egresosEnTabla;
+	
+//	public ControladorEgresosCaja() {
+//		this.ventanaEgresoCaja = new VentanaEgresoCaja();
+//		this.egresos = new Egresos(new DAOSQLFactory());
+//	
+//	}
+	
+	
 	public ControladorEgresosCaja(Controlador controlador,Egresos egresos) {
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 		this.egresos = egresos;
@@ -42,7 +57,8 @@ public class ControladorEgresosCaja {
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 
 		this.egresos = new Egresos(new DAOSQLFactory());
-
+		this.ingresos = new Ingresos (new DAOSQLFactory());
+		
 		// ComboBox TipoEgresos
 		this.tipoEgresos = new TipoEgresos(new DAOSQLFactory());
 		this.listaTipoEgresos = this.tipoEgresos.readAll();
@@ -55,31 +71,78 @@ public class ControladorEgresosCaja {
 
 		// Botones
 		this.ventanaEgresoCaja.getBtnAtras().addActionListener(a -> atras(a));
-		/*
-		 * // AS private JLabel lblAS; private JTextField txtFieldAS;
-		 * 
-		 * // FA private JLabel lblFA; private JLabel lblActualizarFechaFA;
-		 * 
-		 * // PP private JLabel lblPP1; private JTextField txtFieldPPNroProveedor;
-		 * private JLabel lblNroOrdenDe; private JTextField txtFieldPPNroOrdenCompra;
-		 * 
-		 * // NC private JLabel lblNC; private JTextField txtFieldNC;
-		 * 
-		 * Adelanto de sueldo Faltante Nota Credito Pago proveedor
-		 * 
-		 */
+		this.ventanaEgresoCaja.getBtnConfirmarEgreso().addActionListener(c -> confirmarEgreso());
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 		this.ventanaEgresoCaja.getLblActualizarFechaFA().setText(fecha);
 
+		actualizarLblBalance();
+		
 		// Cambia el estado de combobox
 		this.ventanaEgresoCaja.getCbTipoEgreso().addActionListener(a -> tipoEgresoSeleccionado());
 
-		this.ventanaEgresoCaja.getBtnConfirmarEgreso().addActionListener(c -> confirmarEgreso());
 
 	}
+	
+	
+	public void actualizarLblBalance(){
+		this.ventanaEgresoCaja.getLblActualizarTotalBalanceCaja().setText("$"+new BigInteger(""+obtenerValorBalance()+""));
+	}
+	
+	public int obtenerValorBalance() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		
+		int totalIngresos = 0;
+		int totalEgresos = 0;
+		if(ingresos.getIngresosAproximado("Fecha", fecha, null, null).size() != 0) {
+			totalIngresos = ObtenerTotalIngreso(); // 3000
+			System.out.println(totalIngresos);
+		}
 
+		if(egresos.getEgresosAproximado("Fecha", fecha, null, null).size() != 0) {
+			totalEgresos = obtenerTotalEgreso();
+		}
+		
+		int balanceCaja = totalIngresos-totalEgresos;
+		return balanceCaja;
+	}
+	
+	private List<IngresosDTO> obtenerIngresosDeHoy() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		return ingresos.getIngresosAproximado("Fecha", fecha, null, null);
+	}
+	
+	public int  ObtenerTotalIngreso() {
+		this.ingresosEnTabla = obtenerIngresosDeHoy();
+		int total = 0;
+		for (IngresosDTO i : ingresosEnTabla) {
+			total += i.getTotal();
+		}
+		return total;
+	}
+	
+	public int obtenerTotalEgreso() {
+		this.egresosEnTabla = obtenerEgresosDeHoy();
+		int total = 0 ;
+		for (EgresosDTO e : egresosEnTabla) {
+			total += e.getTotal();
+		}
+		return total;
+	}
+	
+	public List<EgresosDTO> obtenerEgresosDeHoy() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		return egresos.getEgresosAproximado("Fecha", fecha, null, null);
+	}
+
+	
+	
 	public void confirmarEgreso() {
+		
 		if (validarCampos()) {
 
 			String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
@@ -102,6 +165,7 @@ public class ControladorEgresosCaja {
 				ingresarEgreso(detalle);
 			}
 		}
+		actualizarLblBalance();
 	}
 
 	public boolean validarCampos() {
@@ -130,11 +194,6 @@ public class ControladorEgresosCaja {
 			return false;
 		}
 		
-		if(tipoEgresoSeleccionado.equals("Pago proveedor") && nc.equals("")){
-			JOptionPane.showMessageDialog(null, "El campo de tipo de egreso no puede estar vacio");
-			return false;
-		}
-		
 		if(tipoEgresoSeleccionado.equals("Pago proveedor") && (ppNroProveedor.equals("") || ppNroOrdenCompra.equals("")) ){
 			JOptionPane.showMessageDialog(null, "El campo de tipo de egreso no puede estar vacio");
 			return false;
@@ -149,6 +208,12 @@ public class ControladorEgresosCaja {
 			JOptionPane.showMessageDialog(null, "Valor de monto invalido");
 			return false;
 		}
+		
+		if(Integer.parseInt(this.ventanaEgresoCaja.getTxtFieldMonto().getText()) > obtenerValorBalance()) {
+			JOptionPane.showMessageDialog(null, "El monto supera lo disponible");
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -232,8 +297,8 @@ public class ControladorEgresosCaja {
 	}
 
 	public static void main(String[] args) {
-//		Egresos modelo = new Egresos(new DAOSQLFactory());
-//		ControladorEgresosCaja controlador = new ControladorEgresosCaja(modelo);
+////		Egresos modelo = new Egresos(new DAOSQLFactory());
+//		ControladorEgresosCaja controlador = new ControladorEgresosCaja();
 //		controlador.inicializar();
 //		controlador.mostrarVentana();
 	}
