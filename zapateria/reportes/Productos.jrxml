@@ -31,19 +31,31 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="IdEmpleado" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="IdEmpleado"/>
-		<property name="com.jaspersoft.studio.field.label" value="IdEmpleado"/>
+	<field name="IdCajero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdCajero"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdCajero"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="NombreEmpleado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NombreEmpleado"/>
-		<property name="com.jaspersoft.studio.field.label" value="NombreEmpleado"/>
+	<field name="NombreCajero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreCajero"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreCajero"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Fecha" class="java.sql.Date">
+	<field name="IdVendedor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreVendedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
@@ -151,7 +163,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COLUMN_25" class="java.lang.Integer">
+	<field name="COLUMN_27" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
 		<property name="com.jaspersoft.studio.field.label" value="Id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
