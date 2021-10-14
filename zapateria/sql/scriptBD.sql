@@ -237,8 +237,10 @@ CREATE TABLE `Factura`
   `MontoPendiente` double(45,2) NOT NULL,
   `IdCliente` int(11) NOT NULL,
   `NombreCliente` varchar(45) NOT NULL,
-  `IdEmpleado` int(11) NOT NULL,
-  `NombreEmpleado` varchar(45) NOT NULL,
+  `IdCajero` int(11) NOT NULL,
+  `NombreCajero` varchar(45) NOT NULL,
+  `IdVendedor` int(11) NOT NULL,
+  `NombreVendedor` varchar(45) NOT NULL,
   `Fecha` varchar(45) NOT NULL,
   `TipoFactura` varchar(45) NOT NULL,
   `NroFacturaCompleta` varchar(45) NOT NULL,
@@ -279,6 +281,7 @@ CREATE TABLE `Carrito`
   `idCarrito` int(11) NOT NULL AUTO_INCREMENT,
   `idSucursal` int(11) NOT NULL,
   `IdCliente` int(45) NOT NULL,
+  `IdVendedor` int(45) NOT NULL,
   `Total` double(45,2) NOT NULL,
   `Hora` varchar(20) NOT NULL,
   PRIMARY KEY (`idCarrito`)
@@ -397,4 +400,4 @@ insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
 insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
 
 INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");
-
+INSERT INTO sucursales VALUES(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU");
