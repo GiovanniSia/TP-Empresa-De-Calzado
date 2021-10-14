@@ -21,7 +21,7 @@ public class Main {
 		co.inicializar();
 		*/
 		/*
-		ReporteFactura reporte = new ReporteFactura("B000011", 1);
+		ReporteFactura reporte = new ReporteFactura("A000011", 1);
 		reporte.mostrar();
 		*/
 		/*

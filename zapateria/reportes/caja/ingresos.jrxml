@@ -8,8 +8,7 @@
 		<![CDATA[SELECT *, ingr.Hora as horita FROM zapateria.ingresos as ingr, zapateria.factura as factu 
 WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND ingr.Fecha = 
 (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
-AND ingr.nroFactura = factu.NroFacturaCompleta
-]]>
+AND ingr.nroFactura = factu.NroFacturaCompleta]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
@@ -111,24 +110,36 @@ AND ingr.nroFactura = factu.NroFacturaCompleta
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="IdEmpleado" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="IdEmpleado"/>
-		<property name="com.jaspersoft.studio.field.label" value="IdEmpleado"/>
+	<field name="IdCajero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdCajero"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdCajero"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="NombreEmpleado" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NombreEmpleado"/>
-		<property name="com.jaspersoft.studio.field.label" value="NombreEmpleado"/>
+	<field name="NombreCajero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreCajero"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreCajero"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COLUMN_20" class="java.lang.String">
+	<field name="IdVendedor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NombreVendedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_22" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
-	<field name="COLUMN_21" class="java.lang.String">
+	<field name="COLUMN_23" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="TipoFactura"/>
 		<property name="com.jaspersoft.studio.field.label" value="TipoFactura"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
@@ -139,7 +150,7 @@ AND ingr.nroFactura = factu.NroFacturaCompleta
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COLUMN_23" class="java.lang.Integer">
+	<field name="COLUMN_25" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
 		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
