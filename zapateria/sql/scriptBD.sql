@@ -367,9 +367,9 @@ insert into paso values(4,"Montado");
 insert into paso values(5,"Pegado");
 insert into paso values(6,"Terminado");
 
-INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","S",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
-INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","S",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
-INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","S",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
+INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","N",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
+INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","N",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","N",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
 
 insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
 insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
