@@ -13,6 +13,7 @@ import dto.MaestroProductoDTO;
 import dto.StockDTO;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.generarOrdenesManufactura.VentanaGenerarOrdenManufactura;
 
 public class ControladorGenerarOrdenesManufactura implements ActionListener {
@@ -24,7 +25,10 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	private VentanaGenerarOrdenManufactura ventana;
 	
-	public ControladorGenerarOrdenesManufactura() {
+	Controlador controlador;
+	
+	public ControladorGenerarOrdenesManufactura(Controlador controlador) {
+		
 		ventana = new VentanaGenerarOrdenManufactura();
 		productosEnLista = new ArrayList<MaestroProductoDTO>();
 		
@@ -50,6 +54,9 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
         });
 		
 		ventana.getBtnGenerarPedido().addActionListener(r->botonGenerarPedido(r));
+		
+		this.controlador = controlador;
+		this.ventana.getBtnSalir().addActionListener(a -> salir(a));
 	}
 	
 	
@@ -57,6 +64,12 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 		refrescarTabla();
 		ventana.mostrarVentana();
 		
+	}
+	
+	public void salir(ActionEvent a) {
+		this.ventana.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenu();
 	}
 	
 	public void refrescarTabla() {
@@ -133,11 +146,6 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	}
-	
-	public static void main(String[] args) {
-		ControladorGenerarOrdenesManufactura ab = new ControladorGenerarOrdenesManufactura();
-		ab.inicializar();
 	}
 
 }
