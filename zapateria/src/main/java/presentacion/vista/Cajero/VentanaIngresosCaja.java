@@ -186,7 +186,7 @@ public class VentanaIngresosCaja extends JFrame {
 		return txtFieldIngresoSaldoInicial;
 	}
 
-	public JTextField getTxtFieldRegarcaSaldo() {
+	public JTextField getTxtFieldRecargaSaldo() {
 		return txtFieldRegarcaSaldo;
 	}
 

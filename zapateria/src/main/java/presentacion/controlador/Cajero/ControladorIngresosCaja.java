@@ -3,6 +3,7 @@ package presentacion.controlador.Cajero;
 import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -53,9 +54,15 @@ public class ControladorIngresosCaja {
 	public boolean estaCajaAbierta() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String fecha = dtf.format(LocalDateTime.now());
+        
+//        ArrayList<CajaDTO> cajas = (ArrayList<CajaDTO>) this.caja.readAll();
+        
         if (caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"") == null) {
             return false;
         }
+
+        
+
         this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
         if (cajaDeHoy.getApertura() == 0 || cajaDeHoy.getCierre()!=0) {
             return false;
@@ -63,7 +70,33 @@ public class ControladorIngresosCaja {
         return true;
     }
 
+	public boolean cajaYaFueCerrada() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fecha = dtf.format(LocalDateTime.now());
+        
+//		Verificamos que exista una caja con la fecha de hoy
+		ArrayList<CajaDTO> cajas = (ArrayList<CajaDTO>) this.caja.readAll();
+		for(CajaDTO c: cajas) {
+			if(c.getFecha().equals(fecha) && c.getCierre()!=0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public void realizarPrimerIngreso(ActionEvent p) {
+		if(this.ventanaIngresosCaja.getTxtFieldIngresoSaldoInicial().getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "El campo no puede ser vacio");
+			return;
+		}
+		if(Integer.parseInt(this.ventanaIngresosCaja.getTxtFieldIngresoSaldoInicial().getText())==0) {
+			JOptionPane.showMessageDialog(null, "El campo no puede ser cero");
+			return;
+		}
+		
+		
 		ingresarPrimerIngreso();
 		this.ventanaIngresosCaja.cerrar();
 		this.controlador.inicializar();
@@ -71,6 +104,15 @@ public class ControladorIngresosCaja {
 	}
 
 	public void realizarRecarga(ActionEvent p) {
+		if(this.ventanaIngresosCaja.getTxtFieldRecargaSaldo().getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "El campo no puede ser vacio");
+			return;
+		}
+		if(Integer.parseInt(this.ventanaIngresosCaja.getTxtFieldRecargaSaldo().getText())==0) {
+			JOptionPane.showMessageDialog(null, "El campo no puede ser cero");
+			return;
+		}
+		
 		ingresarRecarga();
 		this.ventanaIngresosCaja.cerrar();
 		this.controlador.inicializar();
@@ -84,6 +126,7 @@ public class ControladorIngresosCaja {
 	}
 
 	public void ingresarPrimerIngreso() {
+
 //		insert into caja values(0,1,"2021-10-13","10:10:00",2,0,"Juan","Carlos","10:10:00","20:21:00");
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
@@ -103,12 +146,14 @@ public class ControladorIngresosCaja {
 	}
 
 	public void ingresarRecarga() {
+
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
 		String hora = dtfhora.format(LocalDateTime.now());
 		
-		int cantidadIngresada = Integer.parseInt(this.ventanaIngresosCaja.getTxtFieldRegarcaSaldo().getText());
+		int cantidadIngresada = Integer.parseInt(this.ventanaIngresosCaja.getTxtFieldRecargaSaldo().getText());
 		
 		IngresosDTO primerIngreso = new IngresosDTO(0,IdSucursal,fecha,hora,"R",0,"","00000000","EFE",cantidadIngresada,1,"00000000",cantidadIngresada);
 		

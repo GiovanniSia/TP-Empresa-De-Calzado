@@ -104,6 +104,10 @@ public class ControladorCierreCaja {
 		String fecha = dtf.format(LocalDateTime.now());
 		for(CajaDTO c: cajas) {
 			if(c.getFecha().equals(fecha)) {
+				if(c.getCierre()!=0) {
+					JOptionPane.showMessageDialog(null, "La caja ya ha sido cerrada el día de hoy");
+				}
+				
 				//se modifica en la bd, pero no en este arraylist
 				boolean cierreCaja = this.caja.cerrarCaja(empleado,c.getIdCaja());
 				

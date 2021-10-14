@@ -244,6 +244,11 @@ public class Controlador implements ActionListener {
 	
 	//Ingreso de caja
 	public void pasarAIngresoDeCaja(ActionEvent a) {
+		if(this.controladorIngresosCaja.cajaYaFueCerrada()) {
+			JOptionPane.showMessageDialog(null, "La caja ya fue cerrada");
+			return;
+		}
+		
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorIngresosCaja.inicializar();
 		this.controladorIngresosCaja.mostrarVentana();
@@ -254,6 +259,16 @@ public class Controlador implements ActionListener {
 	
 	//Cierre de caja
 	public void pasarACierreDeCaja(ActionEvent a ) {
+		if(!this.controladorIngresosCaja.estaCajaAbierta()) {
+			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
+			return;
+		}
+		
+		if(this.controladorIngresosCaja.cajaYaFueCerrada()) {
+			JOptionPane.showMessageDialog(null, "La caja ya fue cerrada");
+			return;
+		}
+		
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorCierreCaja.inicializar();
 		this.controladorCierreCaja.mostrarVentana();
