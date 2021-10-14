@@ -49,15 +49,14 @@ public class ControladorIngresosCaja {
 	public boolean estaCajaAbierta() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
-		if (caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"") != null) {
-			this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
-			if (cajaDeHoy.getApertura() == 0) {
-				return true;
-			}
-		}else {
-			return true;
+		if (caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"") == null) {
+			return false;
 		}
-		return false;
+		this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
+		if (cajaDeHoy.getApertura() == 0) {
+			return false;
+		}
+		return true;
 	}
 
 	public void realizarPrimerIngreso(ActionEvent p) {

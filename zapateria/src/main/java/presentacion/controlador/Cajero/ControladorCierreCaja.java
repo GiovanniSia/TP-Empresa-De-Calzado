@@ -11,6 +11,7 @@ import dto.EgresosDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoDTO;
 import dto.MedioPagoEgresoDTO;
+import dto.SucursalDTO;
 import modelo.Egresos;
 import modelo.HistorialCambioMoneda;
 import modelo.Ingresos;
@@ -18,6 +19,7 @@ import modelo.MedioPago;
 import modelo.MedioPagoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
+import presentacion.reportes.ReporteCajaDiaria;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
@@ -57,6 +59,13 @@ public class ControladorCierreCaja {
 		mostrarTotalEgreso();
 		mostrarBalanceCaja();
 
+	}
+	
+	public void mostrarReporte() {
+		
+//		ReporteCajaDiaria ca = new ReporteCajaDiaria(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
+//		ca.mostrar();
+		
 	}
 
 	public void cerrarCajaDeSucursal(ActionEvent a) {

@@ -90,7 +90,7 @@ public class VentanaIngresosCaja extends JFrame {
 				int key = e.getKeyChar();
 				
 				boolean numeros = key >=48 && key<=57;
-				if(txtFieldIngresoSaldoInicial.getText().length()>=10 || !numeros) {
+				if(txtFieldIngresoSaldoInicial.getText().length()>=9 || !numeros) {
 					e.consume();
 				}
 			}
@@ -111,7 +111,7 @@ public class VentanaIngresosCaja extends JFrame {
 				int key = e.getKeyChar();
 				
 				boolean numeros = key >=48 && key<=57;
-				if(txtFieldRegarcaSaldo.getText().length()>=10 || !numeros) {
+				if(txtFieldRegarcaSaldo.getText().length()>=9 || !numeros) {
 					e.consume();
 				}
 			}
