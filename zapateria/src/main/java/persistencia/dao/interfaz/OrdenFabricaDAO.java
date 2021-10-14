@@ -9,4 +9,6 @@ public interface OrdenFabricaDAO {
 	public boolean insert(OrdenFabricaDTO sucursal);
 
 	public List<OrdenFabricaDTO> readAll();
+	
+	public boolean hayOrdenPendiente(int idProducto, int idSucursal);
 }
