@@ -52,6 +52,8 @@ public class VentanaVisualizarCarritos {
 	private JTextField textApellido;
 	private JButton btnRegresar;
 
+	private JButton btnBorrarCarrito;
+	
 	private JLabel lblSalir;
 
 	/**
@@ -263,6 +265,15 @@ public class VentanaVisualizarCarritos {
 		lblSalir.setBounds(65, 561, 52, 21);
 		panel.add(lblSalir);
 		
+		btnBorrarCarrito = new JButton("");
+		btnBorrarCarrito.setBounds(480, 546, 35, 36);
+		btnBorrarCarrito.setIcon(setIcono("../imagenes/trash.png",btnBorrarCarrito));
+		panel.add(btnBorrarCarrito);
+		
+		JLabel lblCancelarCompra = new JLabel("Cancelar compra");
+		lblCancelarCompra.setBounds(371, 546, 106, 13);
+		panel.add(lblCancelarCompra);
+		
 
 		
 		
@@ -373,4 +384,8 @@ public class VentanaVisualizarCarritos {
 		return btnRegresar;
 	}
 
+	public JButton getBtnBorrarCarrito() {
+		return btnBorrarCarrito;
+	}	
+	
 }

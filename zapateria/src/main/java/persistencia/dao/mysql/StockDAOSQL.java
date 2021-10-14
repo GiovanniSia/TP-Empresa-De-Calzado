@@ -15,7 +15,7 @@ import dto.StockDTO;
 public class StockDAOSQL implements StockDAO {
 	private static final String readall = "SELECT * FROM stock";
 	private static final String updateStock = "UPDATE stock set StockDisponible=? WHERE IdStock=?";
-
+	
 	public List<StockDTO> readAll() {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query

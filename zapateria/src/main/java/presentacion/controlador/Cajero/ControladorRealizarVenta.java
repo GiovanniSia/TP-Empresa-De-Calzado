@@ -383,19 +383,14 @@ public class ControladorRealizarVenta {
 		System.out.println("el total: "+this.totalPagado);
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
 			
-//			ClienteDTO cliente = this.cliente.selectCliente(this.carritoACobrar.getIdCliente());
-	
-			generarFactura();
-			borrarCarritoConDetalle();
-			
-//			JOptionPane.showMessageDialog(null, "Pago efectuado con exito!");
-
-			
 			this.ventanaRealizarVenta.cerrar();
 			this.controladorVisualizarCarritos.cerrarVentana();
-//			ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
 			this.controladorVisualizarCarritos.inicializar();
-			this.controladorVisualizarCarritos.mostrarVentana();			
+			this.controladorVisualizarCarritos.mostrarDetalle();
+			this.controladorVisualizarCarritos.mostrarVentana();
+			
+			generarFactura();
+			borrarCarritoConDetalle();		
 			
 			return;
 			
