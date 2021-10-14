@@ -7,8 +7,8 @@ CREATE TABLE `Caja`
   `IdSucursal` int(11) NOT NULL,
   `Fecha` DATE NOT NULL,
   `Hora` TIME NOT NULL,
-  `Apertura` int(11) NOT NULL,
-  `Cierre` int(11) NOT NULL,	
+  `Apertura` int(11) NOT NULL, (idEmpleado)
+  `Cierre` int(11) NOT NULL,   (idEmpleado)
   `AperturaNombre` varchar(45) NOT NULL,
   `CierreNombre` varchar(45) NOT NULL,
   `AuditApertura` TIME NOT NULL,

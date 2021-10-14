@@ -81,7 +81,11 @@ public class ControladorIngresosCaja {
 				return true;
 			}
 		}
-		return false;
+		this.cajaDeHoy = caja.getCajaDeHoy("Fecha", fecha , "IdSucursal", ""+IdSucursal+"");
+		if (cajaDeHoy.getApertura() == 0) {
+			return false;
+		}
+		return true;
 	}
 	
 	

@@ -314,6 +314,18 @@ CREATE TABLE `medioPagoEgreso`
   PRIMARY KEY (`IdMoneda`)
 );
 
+CREATE TABLE `tipoEgreso`
+(					
+  `IdTipoEgreso` varchar(45) NOT NULL,
+  `Descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdTipoEgreso`)
+);
+
+insert into tipoEgreso values("AS","Adelanto de sueldo");
+insert into tipoEgreso values("FA","Faltante");
+insert into tipoEgreso values("PP","Pago proveedor");
+insert into tipoEgreso values("NC","Nota Credito");
+
 INSERT INTO medioPagoEgreso values ("EFE", "Efectivo",1);
 INSERT INTO medioPagoEgreso values ("NC", "Nota Credito",1);
 

@@ -16,6 +16,7 @@ import dto.IngresosDTO;
 import dto.MedioPagoDTO;
 import dto.MedioPagoEgresoDTO;
 import modelo.Caja;
+import dto.SucursalDTO;
 import modelo.Egresos;
 import modelo.Empleado;
 import modelo.HistorialCambioMoneda;
@@ -25,6 +26,7 @@ import modelo.MedioPagoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
+import presentacion.reportes.ReporteCajaDiaria;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
@@ -74,6 +76,13 @@ public class ControladorCierreCaja {
 		mostrarBalanceCaja();
 
 	}
+	
+	public void mostrarReporte() {
+		
+//		ReporteCajaDiaria ca = new ReporteCajaDiaria(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
+//		ca.mostrar();
+		
+	}
 
 	public void cerrarCajaDeSucursal(ActionEvent a) {
 		int cantidadFilasIngresos = this.ventanaCierreCaja.getTablaMedioPagoIngresos().getRowCount();
@@ -105,7 +114,7 @@ public class ControladorCierreCaja {
 		for(CajaDTO c: cajas) {
 			if(c.getFecha().equals(fecha)) {
 				if(c.getCierre()!=0) {
-					JOptionPane.showMessageDialog(null, "La caja ya ha sido cerrada el día de hoy");
+					JOptionPane.showMessageDialog(null, "La caja ya ha sido cerrada el dï¿½a de hoy");
 				}
 				
 				//se modifica en la bd, pero no en este arraylist
