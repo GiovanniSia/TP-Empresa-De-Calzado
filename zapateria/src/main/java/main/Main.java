@@ -20,13 +20,13 @@ public class Main {
 		ReControladorOperario co = new ReControladorOperario(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
 		co.inicializar();
 		*/
-		/*
-		ReporteFactura reporte = new ReporteFactura("A000014", 1);
-		reporte.mostrar();
-		*/
 		
+		ReporteFactura reporte = new ReporteFactura("A000011", 1);
+		reporte.mostrar();
+		
+		/*
 		ReporteCajaDiaria ca = new ReporteCajaDiaria(1);
 		ca.mostrarUltimoReporte();
-		
+		*/
 	}
 }

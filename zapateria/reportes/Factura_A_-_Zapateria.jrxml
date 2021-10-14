@@ -427,7 +427,7 @@
 			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="88" y="115" width="84" height="14" uuid="fa0f5f97-f6c5-4c76-be62-904c74422616"/>
-				<textFieldExpression><![CDATA[$F{IdCliente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[String.valueOf($F{IdCliente})]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="88" y="130" width="182" height="14" uuid="2187d36e-1a36-4462-ada7-d055a3046627"/>
@@ -575,22 +575,22 @@
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="3" width="84" height="20" uuid="393736cc-22f4-4c65-9a2a-f8cc0693398f"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf( $F{TotalBruto} )]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf( $F{TotalBruto}.intValue() )]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="19" width="84" height="20" uuid="d18a81e4-13db-421c-8496-bc22400deb49"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{IVA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{IVA}.intValue())]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="81" width="84" height="20" uuid="f9711b12-8c0c-4e33-a895-1413e40a6740"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura}.intValue())]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="40" width="84" height="20" uuid="fa9dd0fb-54ee-4257-8215-caa67e808974"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Descuento})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{Descuento}.intValue())]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

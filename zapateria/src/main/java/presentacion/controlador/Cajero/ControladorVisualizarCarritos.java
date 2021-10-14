@@ -212,7 +212,7 @@ public class ControladorVisualizarCarritos {
 				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
 				int cant = detalleCar.getCantidad();
-				double p = detalleCar.getPrecio()*cant;
+				double p = detalleCar.getPrecio();
 				BigDecimal precio = new BigDecimal(p);
 						
 				Object[] fila = {nombreProd,cant,precio};
