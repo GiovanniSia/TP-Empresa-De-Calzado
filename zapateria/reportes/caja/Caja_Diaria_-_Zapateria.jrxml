@@ -28,7 +28,10 @@
 	</subDataset>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM zapateria.caja as caji WHERE caji.Fecha = (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal =  '$P!{IdSucursal}') AND caji.IdSucursal =  '$P!{IdSucursal}']]>
+		<![CDATA[SELECT * FROM zapateria.caja as caji
+ WHERE caji.Fecha = 
+ (SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
+ AND caji.IdSucursal =  '$P!{IdSucursal}']]>
 	</queryString>
 	<field name="IdCaja" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IdCaja"/>
@@ -151,89 +154,86 @@
 			</textField>
 		</band>
 	</title>
+	<detail>
+		<band height="44">
+			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
+				<reportElement x="-20" y="10" width="595" height="30" uuid="c1375562-b107-4642-a198-70d1f9b0cd6b"/>
+				<subreportParameter name="IdSucursal">
+					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/caja/ingresos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="35">
+			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
+				<reportElement x="-21" y="0" width="580" height="30" uuid="de3a8018-6378-4dfe-8319-f5359b355c73"/>
+				<subreportParameter name="IdSucursal">
+					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/caja/ingresosTotales.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="57">
+			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
+				<reportElement x="-19" y="0" width="589" height="50" uuid="899df423-a684-4188-b32e-01430a0b88b9"/>
+				<subreportParameter name="IdSucursal">
+					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/caja/egresos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="67">
+			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
+				<reportElement x="-20" y="0" width="579" height="59" uuid="9e42e739-43dd-4c6f-b2b8-07714447c5de"/>
+				<subreportParameter name="IdSucursal">
+					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/caja/egresosTotales.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="51">
+			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
+				<reportElement x="-20" y="0" width="579" height="40" uuid="a8e8c666-22d2-4b10-bf0a-b65cf47a15ed"/>
+				<subreportParameter name="IdSucursal">
+					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/caja/balance.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
 	<summary>
-		<band height="504" splitType="Stretch">
+		<band height="159" splitType="Stretch">
 			<property name="local_mesure_unitheight" value="pixel"/>
 			<frame>
-				<reportElement x="0" y="357" width="554" height="110" uuid="c8aa9321-99c5-4c7d-af70-853d3211e745"/>
+				<reportElement x="0" y="20" width="554" height="110" uuid="2424e48e-20b7-48e4-953f-bb4b3794e3d3"/>
 				<line>
-					<reportElement x="85" y="70" width="106" height="1" uuid="6ca52c4c-01dc-465a-b94d-bb2b97983c9d"/>
+					<reportElement x="85" y="70" width="106" height="1" uuid="7b907ef2-062b-4cbf-8bee-31a64e5414d4"/>
 				</line>
 				<line>
-					<reportElement x="370" y="70" width="106" height="1" uuid="d3897351-3267-47a5-ae85-2cec03c4347a"/>
+					<reportElement x="370" y="70" width="106" height="1" uuid="9558b3e5-2324-48e3-80cd-eb71ab16d022"/>
 				</line>
 				<staticText>
-					<reportElement x="368" y="80" width="111" height="21" uuid="2b8f7d42-c9a3-45b4-9ca8-94ca1cd5c7cb"/>
+					<reportElement x="368" y="80" width="111" height="21" uuid="71199548-213d-488d-b94d-868894641243"/>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[Firma de Conformidad]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="82" y="80" width="111" height="21" uuid="9443a0c1-aa92-42d2-8ea1-f044f2192b07"/>
+					<reportElement x="82" y="80" width="111" height="21" uuid="985041f9-6c39-4fe3-9cb7-a869a04682be"/>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[Sello de Conformidad]]></text>
 				</staticText>
 			</frame>
 			<break>
-				<reportElement x="0" y="352" width="551" height="1" uuid="fe64afbd-280d-4b0a-a292-fd2ab37af564"/>
+				<reportElement x="0" y="15" width="547" height="1" uuid="1f870de6-610d-4351-be03-c806f554beac"/>
 			</break>
 			<break>
-				<reportElement x="0" y="477" width="549" height="1" uuid="557ce6ad-6926-45bb-a658-24b11e2d1f37"/>
+				<reportElement x="0" y="140" width="545" height="1" uuid="4cdc05ce-849c-477b-bdf7-b64bc9b9ed81"/>
 			</break>
-			<frame>
-				<reportElement x="-18" y="9" width="590" height="63" uuid="61b153c2-358b-4bb2-97e1-38024d6cb959"/>
-				<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-					<reportElement x="0" y="0" width="590" height="59" uuid="bccdcb83-9ffc-4eb0-a1b8-0b60a571dfb5"/>
-					<subreportParameter name="IdSucursal">
-						<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reportes/caja/ingresos.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-			<frame>
-				<reportElement x="-20" y="73" width="590" height="56" uuid="749e2190-f104-4ea3-b079-781a5c180fff"/>
-				<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-					<reportElement x="0" y="0" width="580" height="56" uuid="0aae18ad-1fb5-4313-b047-5e46de072aff"/>
-					<subreportParameter name="IdSucursal">
-						<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reportes/caja/ingresosTotales.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-			<frame>
-				<reportElement x="-20" y="129" width="594" height="50" uuid="f57d15c9-e141-48ba-acbe-dbf6ada629c6"/>
-				<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-					<reportElement x="0" y="0" width="589" height="50" uuid="9d966615-9520-400c-a9b2-96cb48ea8da5"/>
-					<subreportParameter name="IdSucursal">
-						<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reportes/caja/egresos.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-			<frame>
-				<reportElement x="-20" y="179" width="595" height="80" uuid="19f737ad-4c00-4577-929f-8a71a0b1656d"/>
-				<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-					<reportElement x="1" y="0" width="579" height="59" uuid="a8f156cd-f6df-43a2-8530-fd6b02a95b02"/>
-					<subreportParameter name="IdSucursal">
-						<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reportes/caja/egresosTotales.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-			<frame>
-				<reportElement x="-20" y="259" width="594" height="80" uuid="92de7684-d4b4-4bf1-a71d-067e726997eb"/>
-				<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-					<reportElement x="6" y="5" width="579" height="70" uuid="a1be7a9b-7804-4669-8681-a07263a69d1d"/>
-					<subreportParameter name="IdSucursal">
-						<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reportes/caja/balance.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
 		</band>
 	</summary>
 </jasperReport>
