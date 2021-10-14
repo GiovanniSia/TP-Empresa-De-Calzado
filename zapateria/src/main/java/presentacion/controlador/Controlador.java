@@ -313,21 +313,4 @@ public class Controlador implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public static void main(String[] args) {
-		
-//		Cliente cliente = new Cliente(new DAOSQLFactory());
-//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-//		Stock stock = new Stock(new DAOSQLFactory());
-//		Sucursal sucursal = new Sucursal(new DAOSQLFactory());
-//		
-//		Controlador controlador = new Controlador(maestroProducto,stock, sucursal, cliente);
-		Controlador controlador = new Controlador();
-		controlador.inicializar();
-		controlador.mostrarVentanaMenu();
-	}
-
-
-
-	
 }
