@@ -31,6 +31,7 @@ import modelo.MaestroProducto;
 import modelo.MedioPago;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
+import presentacion.reportes.ReporteFactura;
 import presentacion.vista.Cajero.VentanaRealizarVenta;
 import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
@@ -167,7 +168,7 @@ public class ControladorRealizarVenta {
 		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
 		
-		if(!esUnPagoConTarjeta(medioPago) && nroOperacion!=null) {
+		if(!esUnPagoConTarjeta(medioPago) && !nroOperacion.equals("")) {
 			JOptionPane.showMessageDialog(null, "No se puede agregar un nro de operacion");
 			return;
 		}
@@ -394,7 +395,7 @@ public class ControladorRealizarVenta {
 			this.controladorVisualizarCarritos.cerrarVentana();
 //			ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
 			this.controladorVisualizarCarritos.inicializar();
-			this.controladorVisualizarCarritos.mostrarVentana();
+			this.controladorVisualizarCarritos.mostrarVentana();			
 			
 			return;
 			
@@ -493,6 +494,21 @@ public class ControladorRealizarVenta {
 		factura.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
 		registrarDetallesFactura(factura);
 		registrarIngreso(client,factura);
+		
+		
+		
+		
+		
+		//Consultamos si quiere ver la factura 
+		//si selecciona que si devuelve un 0, no un 1, y la x un -1
+		int resp = JOptionPane.showConfirmDialog(null, "Desea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(resp==0) {
+			ReporteFactura reporte = new ReporteFactura(nroFacturaCompleto, this.idSucursal);
+			reporte.mostrar();
+		}
+		
+		
+		
 	}
 	
 	
