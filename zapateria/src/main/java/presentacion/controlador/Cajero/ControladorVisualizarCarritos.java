@@ -320,6 +320,13 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void borrarCarrito(ActionEvent a) {
+		//si selecciona que si devuelve un 0, no un 1, y la x un -1
+		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea borrar el carrito?", "Borrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(resp==1) {
+			return;			
+		}
+		
+		
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
 		if(filaSeleccionada == -1) {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para borrar");
