@@ -105,7 +105,7 @@ public class VentanaModificarCotizacion extends JFrame {
 		lblActualizarDescripcion.setBounds(110, 186, 273, 21);
 		panel.add(lblActualizarDescripcion);
 
-		lblTasaConvercion = new JLabel("Tasa Convercion");
+		lblTasaConvercion = new JLabel("Tasa Conversion");
 		lblTasaConvercion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTasaConvercion.setBounds(51, 218, 120, 14);
 		panel.add(lblTasaConvercion);
