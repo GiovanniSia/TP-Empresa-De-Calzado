@@ -201,7 +201,6 @@ public class ControladorRealizarVenta {
 		//verificamos si el pago ya esta en la tabla 
 		if(!esUnPagoConTarjeta(medioPago) && pagoYaFueRegistrado(medioPago)) {
 			for(IngresosDTO i: this.listaDeIngresosARegistrar) {
-				System.out.println("fue un pago sin tarjeta y ya fue registrado");
 				if(i.getMedioPago().equals(medioPago.getIdMoneda())) {
 					double cantNuevo = i.getCantidad() + cantidad;
 					double totalNuevo = i.getTotal() + (cantidad*medioPago.getTasaConversion());
@@ -209,7 +208,6 @@ public class ControladorRealizarVenta {
 					i.setTotal(totalNuevo);
 					
 					actualizarTablaMedioPago();
-					System.out.println("Se actualizo la tabla");
 					this.ventanaRealizarVenta.getTextCantidad().setText("");
 					this.ventanaRealizarVenta.getTextNumOperacion().setText("");
 					
@@ -285,7 +283,6 @@ public class ControladorRealizarVenta {
 					double totalAr = cantida *valorConversion;
 					BigDecimal totalArg = new BigDecimal(totalAr); 
 					
-					System.out.println("la cantidad que se escribe: "+cantidad);
 					
 					Object[] fila = {metodoPago,moneda,numOperacion,cantidad,totalArg};
 					this.ventanaRealizarVenta.getModelTablaMedioPago().addRow(fila);
@@ -315,7 +312,6 @@ public class ControladorRealizarVenta {
 		
 		if(medioPago.getIdMoneda().equals("CC")) {
 			this.cantidadUsadaCC +=pagadoArg;
-			System.out.println("cantidad de credito cc usado: "+this.cantidadUsadaCC);
 		}
 		
 		
