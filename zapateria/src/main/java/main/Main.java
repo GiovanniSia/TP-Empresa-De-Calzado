@@ -21,12 +21,12 @@ public class Main {
 		co.inicializar();
 		*/
 		/*
-		ReporteFactura reporte = new ReporteFactura("B000013", new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
+		ReporteFactura reporte = new ReporteFactura("B000011", 1);
 		reporte.mostrar();
 		*/
 		/*
-		ReporteCajaDiaria ca = new ReporteCajaDiaria(new SucursalDTO(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU"));
-		ca.mostrar();
+		ReporteCajaDiaria ca = new ReporteCajaDiaria(1);
+		ca.mostrarUltimoReporte();
 		*/
 	}
 }

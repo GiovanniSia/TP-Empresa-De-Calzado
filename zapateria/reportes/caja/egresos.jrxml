@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT * FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha >= 
-(SELECT MAX(Fecha) FROM zapateria.egresos)]]>
+		<![CDATA[SELECT * FROM zapateria.egresos as egre WHERE egre.IdSucursal = '$P!{IdSucursal}' AND egre.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal =  '$P!{IdSucursal}')]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
@@ -35,6 +35,12 @@
 	<field name="Tipo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="Tipo"/>
 		<property name="com.jaspersoft.studio.field.label" value="Tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MedioPago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="MedioPago"/>
+		<property name="com.jaspersoft.studio.field.label" value="MedioPago"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="egresos"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -129,7 +135,7 @@
 					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{Tipo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{MedioPago}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="468" y="2" width="79" height="13" uuid="0a06fe4a-3b8e-4b5a-a183-40c7daeda2f9"/>

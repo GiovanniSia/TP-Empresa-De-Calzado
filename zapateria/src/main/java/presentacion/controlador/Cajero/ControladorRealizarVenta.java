@@ -505,7 +505,7 @@ public class ControladorRealizarVenta {
 			MaestroProductoDTO producto = this.maestroProducto.selectMaestroProducto(idProd);
 			String descr = producto.getDescripcion();
 			double precioCosto = producto.getPrecioCosto();
-			double precioVenta = detalleCarrito.getPrecio();
+			double precioVenta = detalleCarrito.getPrecio()/detalleCarrito.getCantidad();
 			double monto = precioVenta * cant;
 			int idFactura = factura.getIdFactura();
 			String unidadMedida =""+producto.getUnidadMedida();//CHEQUEAR

@@ -25,7 +25,7 @@ public class generarOrdenesFabricacion {
 		}*/
 	}
 	
-	public static int contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
+	private static int contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<StockDTO> todosLosStocks = a.createStockDAO().readAll();
 		int cantidadContador = 0;
@@ -53,17 +53,17 @@ public class generarOrdenesFabricacion {
 		insertarOrdenFabricacion(orden);
 	}
 	
-	public static OrdenFabricaDTO fabricarOrdenFabricacion(int idProducto, String fechaRequerido, int getCantidadAReponer, String codLote, int idSucursal) {
+	private static OrdenFabricaDTO fabricarOrdenFabricacion(int idProducto, String fechaRequerido, int getCantidadAReponer, String codLote, int idSucursal) {
 		OrdenFabricaDTO orden = new OrdenFabricaDTO(0,idProducto, fechaRequerido, getCantidadAReponer, codLote, idSucursal);
 		return orden;
 	}
 	
-	public static void insertarOrdenFabricacion(OrdenFabricaDTO orden) {
+	private static void insertarOrdenFabricacion(OrdenFabricaDTO orden) {
 		DAOSQLFactory a = new DAOSQLFactory();
 		a.createOrdenFabricaDAO().insert(orden);
 	}
 	
-	public static String crearCodigoLote(MaestroProductoDTO producto) {
+	private static String crearCodigoLote(MaestroProductoDTO producto) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate());
 		int dias = fechaActual.getDate();
@@ -77,7 +77,7 @@ public class generarOrdenesFabricacion {
 		return codLote;
 	}
 	
-	public static String crearFechaRequerido(MaestroProductoDTO producto) {
+	private static String crearFechaRequerido(MaestroProductoDTO producto) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate()+producto.getDiasParaReponer());
 		int dias = fechaActual.getDate();
@@ -87,28 +87,44 @@ public class generarOrdenesFabricacion {
 		return fechaRequerido;
 	}
 	
-	//CODIGO PARA VERLO ANDAR
-/*
-	  	insert into maestroProductos values(1,'Zapa Mc Quenn','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",35,5);
-		insert into maestroProductos values(2,'Zapa Shrek','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",60,35);
-	DAOSQLFactory a = new DAOSQLFactory();
-	List<MaestroProductoDTO> productos = a.createMaestroProductoDAO().readAll();
-	System.out.print("Momento de la verdad");
-	if(modelo.generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(1,productos.get(0)) && modelo.generarOrdenesFabricacion.sePuedeCrearProducto(productos.get(0))) {
-		modelo.generarOrdenesFabricacion.crearOrdenFabricacion(1, productos.get(0));
+	public static void main(String[] args) {
+		//insert into maestroProductos values(1,'Zapa Mc Quenn','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",35,5);
+		//insert into maestroProductos values(2,'Zapa Shrek','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",60,35);
+		DAOSQLFactory a = new DAOSQLFactory();
+		List<MaestroProductoDTO> productos = a.createMaestroProductoDAO().readAll();
+		for(MaestroProductoDTO mp: productos) {
+			verificarYGenerarOrden(10,mp);
+		}
+		
+		List<OrdenFabricaDTO> qwer = a.createOrdenFabricaDAO().readAll();
+		for(OrdenFabricaDTO orden: qwer) {
+			System.out.print(orden.getIdOrdenFabrica()+ " ");
+			System.out.print(orden.getFechaRequerido()+ " ");
+			System.out.print(orden.getCantidad()+ " ");
+			System.out.print(orden.getIdProd()+ " ");
+			System.out.println(" ");
+		}
+	}
+	public static boolean hayOrdenYaGenerada(int idSucursal, MaestroProductoDTO producto) {
+		boolean ret = false;
+		DAOSQLFactory a = new DAOSQLFactory();
+		ret = a.createOrdenFabricaDAO().hayOrdenPendiente(idSucursal, producto.getIdMaestroProducto());
+		return ret;
 	}
 	
-	if(modelo.generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(2,productos.get(1)) && modelo.generarOrdenesFabricacion.sePuedeCrearProducto(productos.get(1))) {
-		modelo.generarOrdenesFabricacion.crearOrdenFabricacion(2, productos.get(1));
+	public static boolean verificarYGenerarOrden(int idSucursal, MaestroProductoDTO producto) {
+		boolean ret = false;
+		//DEVUELVE FALSE SI NO HABIA FALTA CREAR ORDEN DE MANUFACTURA O EL PRODUCTO NO ERA MANUFACTURABLE
+		if(faltaStockDeUnProductoEnUnaSucursal(idSucursal, producto)) {
+			if(sePuedeCrearProducto(producto)) {
+				if(!hayOrdenYaGenerada(idSucursal, producto)) {
+					crearOrdenFabricacion(idSucursal, producto);
+					ret = true;	//DEVUELVE TRUE SI GENERA ORDEN
+					System.out.println("HIZO LA CREACION");
+				}
+			}
+		}
+		return ret;
 	}
 	
-	List<OrdenFabricaDTO> qwer = a.createOrdenFabricaDAO().readAll();
-	for(OrdenFabricaDTO orden: qwer) {
-		System.out.print(orden.getIdOrdenFabrica()+ " ");
-		System.out.print(orden.getFechaRequerido()+ " ");
-		System.out.print(orden.getCantidad()+ " ");
-		System.out.print(orden.getIdProd()+ " ");
-		System.out.println(" ");
-	}
-	*/
 }
