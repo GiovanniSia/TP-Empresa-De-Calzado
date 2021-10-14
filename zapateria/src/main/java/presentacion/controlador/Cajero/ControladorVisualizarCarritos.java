@@ -17,10 +17,12 @@ import dto.CarritoDTO;
 import dto.ClienteDTO;
 import dto.DetalleCarritoDTO;
 import dto.MaestroProductoDTO;
+import dto.StockDTO;
 import modelo.Carrito;
 import modelo.Cliente;
 import modelo.DetalleCarrito;
 import modelo.MaestroProducto;
+import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
@@ -35,6 +37,8 @@ public class ControladorVisualizarCarritos {
 	DetalleCarrito detalleCarrito;
 	Cliente cliente;
 	MaestroProducto maestroProducto;
+	
+	Stock stock;
 	
 	List<CarritoDTO> listaCarritos;
 	List<DetalleCarritoDTO> listaDetalleCarrito;
@@ -58,12 +62,13 @@ public class ControladorVisualizarCarritos {
 //		this.cliente = cliente;
 //		this.maestroProducto = maestroProducto;
 		
-	public ControladorVisualizarCarritos(Controlador controlador,Carrito carrito, DetalleCarrito detalleCarrito, Cliente cliente, MaestroProducto maestroProducto) {
+	public ControladorVisualizarCarritos(Controlador controlador,Carrito carrito, DetalleCarrito detalleCarrito, Cliente cliente, MaestroProducto maestroProducto, Stock stock) {
 		this.carrito = carrito;
 		this.detalleCarrito = detalleCarrito;
 		this.cliente = cliente;
 		this.maestroProducto = maestroProducto;
-	
+		this.stock = stock;
+		
 		this.listaCarritos = new ArrayList<CarritoDTO>();
 		this.listaDetalleCarrito = new ArrayList<DetalleCarritoDTO>();
 		this.listaClientes = new ArrayList<ClienteDTO>();
@@ -118,6 +123,7 @@ public class ControladorVisualizarCarritos {
 					
 		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
 		this.ventanaVisualizarCarritos.getBtnRegresar().addActionListener(a -> salir(a));
+		this.ventanaVisualizarCarritos.getBtnBorrarCarrito().addActionListener(a -> borrarCarrito(a));
 		
 		validarTeclado();
 		llenarTablaCompleta();
@@ -209,10 +215,10 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla.removeAll(this.detalleCarritoEnTabla);
 		
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
-//		if(filaSeleccionada==-1) {
+		if(filaSeleccionada==-1) {
 //			JOptionPane.showMessageDialog(null, "wtf esto no deberia aparecer xd");
-//			return;
-//		}
+			return;
+		}
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
 		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {
@@ -311,6 +317,74 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
+	}
+	
+	public void borrarCarrito(ActionEvent a) {
+		//si selecciona que si devuelve un 0, no un 1, y la x un -1
+		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea borrar el carrito?", "Borrar Carrito", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if(resp==1) {
+			return;			
+		}
+		
+		
+		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
+		if(filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para borrar");
+			return;
+		}
+		CarritoDTO carritoSel = this.carritosEnTabla.get(filaSeleccionada);
+		ArrayList<DetalleCarritoDTO> detalleCarritosABorrar = new ArrayList<DetalleCarritoDTO>();
+		for(DetalleCarritoDTO detalle: this.listaDetalleCarrito) {
+			if(detalle.getIdCarrito()==carritoSel.getIdCarrito()) {
+				detalleCarritosABorrar.add(detalle);
+				boolean b = this.detalleCarrito.delete(detalle);//Borramos detalle de la bd
+				if(b==false) {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error borrando uno de los detalles del carrito en la BD");
+				}
+			}
+		}
+		
+		reintegrarStock(carritoSel,detalleCarritosABorrar);
+		
+		this.listaDetalleCarrito.removeAll(detalleCarritosABorrar);
+		this.listaCarritos.remove(carritoSel);
+		boolean c = this.carrito.delete(carritoSel);
+		if(c==false) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error borrando el carrito en la BD");
+		}else {
+			JOptionPane.showMessageDialog(null, "Carrito borrado satisfactoriamente");
+		}
+		
+		actualizarTablas();
+	}
+	
+	public void actualizarTablas() {
+		this.listaCarritos = this.carrito.readAll();
+		this.listaDetalleCarrito = this.detalleCarrito.readAll();
+		this.listaClientes = this.cliente.readAll();
+		
+		this.todosLosProductos = this.maestroProducto.readAll();
+		
+		this.ventanaVisualizarCarritos.getModelTablaDetalle().setRowCount(0);//borrar datos de la tabla
+		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnCount(0);
+		this.ventanaVisualizarCarritos.getModelTablaDetalle().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasDetalle());
+		this.detalleCarritoEnTabla.removeAll(this.detalleCarritoEnTabla);
+		
+		realizarBusqueda();
+		
+	}
+	
+	
+	public void reintegrarStock(CarritoDTO carrito, ArrayList<DetalleCarritoDTO> detalleCarrito) {
+		List<StockDTO> todosLosStock = this.stock.readAll();
+		for(DetalleCarritoDTO d: detalleCarrito) {
+			for(StockDTO s: todosLosStock) {
+				if(d.getIdCarrito()==carrito.getIdCarrito() && s.getIdStock() == d.getIdStock() && s.getIdProducto() == d.getIdProducto()) {
+					this.stock.actualizarStock(d.getIdStock(), d.getCantidad());
+				}
+			}
+				
+		}
 	}
 	
 	public static void main(String[] args) {

@@ -135,7 +135,7 @@ public class Controlador implements ActionListener {
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
 		
-		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this,carrito, detalleCarrito, cliente,maestroProducto);
+		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this,carrito, detalleCarrito, cliente,maestroProducto,stock);
 		
 		//cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
