@@ -370,13 +370,14 @@ public class ReControladorOperario implements ActionListener {
 
 					        String status = (String)table.getModel().getValueAt(row, 6);
 					        if ("activo".equals(status)) {
-					            setBackground(Color.YELLOW);
-					            //setForeground(Color.WHITE);
+					           setBackground(Color.ORANGE);
+					           setForeground(Color.BLACK);
 					        } else if ("completo".equals(status)){
 					        	setBackground(Color.green);
+					        	setForeground(Color.BLACK);
 					        } else {
 					        	setBackground(table.getBackground());
-					            setForeground(table.getForeground());
+					        	setForeground(Color.BLACK);
 					        }
 					        return this;
 					    }   

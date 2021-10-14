@@ -70,7 +70,19 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		spCliente.setBounds(10, 69, 776, 272);
 		panel.add(spCliente);
 
-		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
+		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+            	/*
+                if(columnas == 3) {
+                    return true;
+                }else {*/
+                    return false;
+                //}
+            }
+        };
 		tabla = new JTable(modelOrdenes);
 
 		spCliente.setViewportView(tabla);
