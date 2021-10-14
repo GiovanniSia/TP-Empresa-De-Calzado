@@ -352,7 +352,7 @@ AND (ingr.Tipo = 'SI'))]]>
 						<textElement textAlignment="Center">
 							<font size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$F{horita}]]></textFieldExpression>
+						<textFieldExpression><![CDATA[new SimpleDateFormat("HH:mm").format($F{horita})]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="40" y="2" width="38" height="13" uuid="59c6e319-4655-4f76-bfcc-1dfe11a60a2d"/>

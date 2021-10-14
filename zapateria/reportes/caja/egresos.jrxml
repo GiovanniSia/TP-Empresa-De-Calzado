@@ -114,7 +114,7 @@
 					<textElement textAlignment="Center">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{Hora}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("HH:mm").format($F{Hora})]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="40" y="2" width="117" height="13" uuid="5b83d46a-a4ec-449f-89fb-4a3532d85fc2"/>

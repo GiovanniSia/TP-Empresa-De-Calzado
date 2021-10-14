@@ -157,7 +157,7 @@
 	<detail>
 		<band height="44">
 			<subreport isUsingCache="true" runToBottom="true" overflowType="Stretch">
-				<reportElement x="-20" y="10" width="595" height="30" uuid="c1375562-b107-4642-a198-70d1f9b0cd6b"/>
+				<reportElement x="-19" y="10" width="595" height="30" uuid="c1375562-b107-4642-a198-70d1f9b0cd6b"/>
 				<subreportParameter name="IdSucursal">
 					<subreportParameterExpression><![CDATA[$P{IdSucursal}]]></subreportParameterExpression>
 				</subreportParameter>
