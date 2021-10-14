@@ -169,6 +169,7 @@ public class ControladorModificarMProducto {
 			JOptionPane.showMessageDialog(null, "Precio Minorista tiene formato invalido. Ej: 50 o 50.99");
 			return false;
 		}
+		
 
 		// Valido si ingreso campos negativos
 
@@ -186,6 +187,12 @@ public class ControladorModificarMProducto {
 			JOptionPane.showMessageDialog(null, "Los valores negativos no estan permitidos");
 			return false;
 		}
+		
+		if ((precioCosto == 0 || precioMayorista == 0 || precioMinorista == 0)) {
+			JOptionPane.showMessageDialog(null, "Los precios no pueden tener valor cero");
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -251,6 +258,8 @@ public class ControladorModificarMProducto {
 			double precioMinoristaNuevo = Double
 					.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText());
 
+			System.out.println("PrecioCostoNuevo: " + precioCostoNuevo);
+			
 			HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idEmpleado,
 					idMaestroProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo,
 					precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo);
@@ -329,13 +338,13 @@ public class ControladorModificarMProducto {
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
 			double precioCost = mp.getPrecioCosto();
-			BigDecimal precioCosto= new BigDecimal(precioCost);
+			BigDecimal precioCosto= new BigDecimal(""+precioCost+"");
 			
 			double precioMayorist = mp.getPrecioMayorista();
-			BigDecimal precioMayorista = new BigDecimal(precioMayorist);
+			BigDecimal precioMayorista = new BigDecimal(""+precioMayorist+"");
 			
 			double precioMinorist = mp.getPrecioMinorista();
-			BigDecimal precioMinorista = new BigDecimal(precioMinorist);
+			BigDecimal precioMinorista = new BigDecimal(""+precioMinorist+"");
 			
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();

@@ -235,7 +235,7 @@ public class ControladorModificarCotizacion {
 			String idMoneda = m.getIdMoneda();
 			String descripcion = m.getDescripcion();
 			double tasaConversio = m.getTasaConversion();
-			BigDecimal tasaConversion = new BigDecimal(tasaConversio);
+			BigDecimal tasaConversion = new BigDecimal(""+tasaConversio+"");
 
 			Object[] fila = { idMoneda, descripcion, tasaConversion };
 			this.ventanaModificarCotizacion.getModelProducto().addRow(fila);

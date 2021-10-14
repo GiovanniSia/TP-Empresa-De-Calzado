@@ -149,7 +149,7 @@ public class VentanaModificarMProducto extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 
-				boolean numeros = key >= 48 && key <= 57;
+				boolean numeros = key >= 48 && key <= 57 || key == 46;
 				if (txtActualizarPrecioCosto.getText().length() >= 15 || !numeros) {
 					e.consume();
 				}
@@ -165,7 +165,7 @@ public class VentanaModificarMProducto extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 
-				boolean numeros = key >= 48 && key <= 57;
+				boolean numeros = key >= 48 && key <= 57 || key == 46;
 
 				if (txtActualizarPrecioMayorista.getText().length() >= 15 || !numeros) {
 					e.consume();
@@ -181,7 +181,7 @@ public class VentanaModificarMProducto extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 
-				boolean numeros = key >= 48 && key <= 57;
+				boolean numeros = key >= 48 && key <= 57 || key == 46;
 				
 				if (txtActualizarPrecioMinorista.getText().length() >= 15 || !numeros) {
 					e.consume();

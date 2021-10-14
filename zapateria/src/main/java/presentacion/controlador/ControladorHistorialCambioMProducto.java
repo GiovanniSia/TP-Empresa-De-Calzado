@@ -77,33 +77,35 @@ public class ControladorHistorialCambioMProducto {
 	public void llenarTabla(List<HistorialCambioMProductoDTO> historialCambioMproductoEnTabla) {
 		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().setRowCount(0);
 		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().setColumnCount(0);
-		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().setColumnIdentifiers(this.ventanaHistorialCambioProducto.getNombreColumnas());
+		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto()
+				.setColumnIdentifiers(this.ventanaHistorialCambioProducto.getNombreColumnas());
 
 		for (HistorialCambioMProductoDTO hcmp : historialCambioMproductoEnTabla) {
 			int codEmpleado = hcmp.getIdEmpleado();
 			int codProducto = hcmp.getIdMaestroProducto();
 			String fecha = hcmp.getFecha();
-		
+
 			double precioCostoAntigu = hcmp.getPrecioCostoAntiguo();
-			BigDecimal precioCostoAntiguo = new BigDecimal(precioCostoAntigu);
-			
+			BigDecimal precioCostoAntiguo = new BigDecimal("" + precioCostoAntigu + "");
+
 			double precioCostoNuev = hcmp.getPrecioCostoNuevo();
-			BigDecimal precioCostoNuevo = new BigDecimal(precioCostoNuev);
-			
+			BigDecimal precioCostoNuevo = new BigDecimal("" + precioCostoNuev + "");
+
 			double precioMayoristaAntigu = hcmp.getPrecioMayoristaAntiguo();
-			BigDecimal precioMayoristaAntiguo = new BigDecimal(precioMayoristaAntigu);
-			
+			BigDecimal precioMayoristaAntiguo = new BigDecimal("" + precioMayoristaAntigu + "");
+
 			double precioMayoristaNuev = hcmp.getPrecioMayoristaNuevo();
-			BigDecimal precioMayoristaNuevo = new BigDecimal(precioMayoristaNuev);
-			
+			BigDecimal precioMayoristaNuevo = new BigDecimal("" + precioMayoristaNuev + "");
+
 			double precioMinoristaAntigu = hcmp.getPrecioMinoristaAntiguo();
-			BigDecimal precioMinoristaAntiguo = new BigDecimal(precioMinoristaAntigu);
-			
+			BigDecimal precioMinoristaAntiguo = new BigDecimal("" + precioMinoristaAntigu + "");
+
 			double precioMinoristaNuev = hcmp.getPrecioMinoristaNuevo();
-			BigDecimal precioMinoristaNuevo = new BigDecimal(precioMinoristaNuev);
-			
-			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,precioMinoristaAntiguo,precioMinoristaNuevo};
-			this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().addRow(fila);	
+			BigDecimal precioMinoristaNuevo = new BigDecimal("" + precioMinoristaNuev + "");
+
+			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo,
+					precioMayoristaAntiguo, precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo };
+			this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().addRow(fila);
 		}
 	}
 
