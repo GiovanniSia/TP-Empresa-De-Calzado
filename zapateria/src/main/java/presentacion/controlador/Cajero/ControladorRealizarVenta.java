@@ -388,7 +388,7 @@ public class ControladorRealizarVenta {
 			generarFactura();
 			borrarCarritoConDetalle();
 			
-			JOptionPane.showMessageDialog(null, "Pago efectuado con exito!");
+//			JOptionPane.showMessageDialog(null, "Pago efectuado con exito!");
 
 			
 			this.ventanaRealizarVenta.cerrar();
@@ -501,7 +501,7 @@ public class ControladorRealizarVenta {
 		
 		//Consultamos si quiere ver la factura 
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
-		int resp = JOptionPane.showConfirmDialog(null, "Desea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(resp==0) {
 			ReporteFactura reporte = new ReporteFactura(nroFacturaCompleto, this.idSucursal);
 			reporte.mostrar();
