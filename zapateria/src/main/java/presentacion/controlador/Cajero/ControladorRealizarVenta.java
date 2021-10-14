@@ -383,14 +383,14 @@ public class ControladorRealizarVenta {
 		System.out.println("el total: "+this.totalPagado);
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
 			
+			generarFactura();
+			borrarCarritoConDetalle();		
+			
 			this.ventanaRealizarVenta.cerrar();
 			this.controladorVisualizarCarritos.cerrarVentana();
 			this.controladorVisualizarCarritos.inicializar();
 			this.controladorVisualizarCarritos.mostrarDetalle();
 			this.controladorVisualizarCarritos.mostrarVentana();
-			
-			generarFactura();
-			borrarCarritoConDetalle();		
 			
 			return;
 			
