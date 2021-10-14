@@ -31,7 +31,11 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 		
 		ventana = new VentanaGenerarOrdenManufactura();
 		productosEnLista = new ArrayList<MaestroProductoDTO>();
-		
+		this.controlador = controlador;
+	}
+	
+	
+	public void inicializar() {
 		ventana.getTextId().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -55,21 +59,26 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 		
 		ventana.getBtnGenerarPedido().addActionListener(r->botonGenerarPedido(r));
 		
-		this.controlador = controlador;
+
 		this.ventana.getBtnSalir().addActionListener(a -> salir(a));
+		
+		
+		
+		
+		
+		refrescarTabla();
+		
+		
 	}
 	
-	
-	public void inicializar() {
-		refrescarTabla();
+	public void mostrarVentana() {
 		ventana.mostrarVentana();
-		
 	}
 	
 	public void salir(ActionEvent a) {
 		this.ventana.cerrar();
 		this.controlador.inicializar();
-		this.controlador.mostrarVentanaMenu();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
 	public void refrescarTabla() {

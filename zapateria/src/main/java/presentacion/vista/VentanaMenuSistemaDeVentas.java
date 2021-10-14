@@ -44,6 +44,9 @@ public class VentanaMenuSistemaDeVentas {
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	private JLabel lblNewLabel_7;
+	private JButton btnGenerarOrdenDe;
+
+	private JLabel lblNewLabel_8;
 
 
 	/**
@@ -179,9 +182,20 @@ public class VentanaMenuSistemaDeVentas {
 		panel.add(lblNewLabel_7);
 		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(707, 328, 48, 50);
+		btnRegresar.setBounds(760, 331, 48, 50);
 		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
 		panel.add(btnRegresar);
+		
+		btnGenerarOrdenDe = new JButton("Generar orden de manufactura");
+		btnGenerarOrdenDe.setFont(new Font("Consolas", Font.PLAIN, 13));
+		btnGenerarOrdenDe.setBounds(473, 307, 282, 41);
+		panel.add(btnGenerarOrdenDe);
+		
+		lblNewLabel_8 = new JLabel("(Supervisor)");
+		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		lblNewLabel_8.setBounds(530, 358, 184, 20);
+		panel.add(lblNewLabel_8);
 	}
 	
 	
@@ -254,4 +268,8 @@ public class VentanaMenuSistemaDeVentas {
 		return btnRegresar;
 	}
 	
+	public JButton getBtnGenerarOrdenDe() {
+		return btnGenerarOrdenDe;
+	}
+
 }

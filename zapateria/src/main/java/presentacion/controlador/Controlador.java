@@ -25,6 +25,7 @@ import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.fabrica.ReControladorOperario;
+import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
 import presentacion.vista.VentanaHistorialCambioMProducto;
@@ -70,6 +71,9 @@ public class Controlador implements ActionListener {
 	
 	ReControladorOperario reControladorOperario;
 		
+	ControladorGenerarOrdenesManufactura controladorGenerarOrdenesManufactura;
+	
+	
 	//Controlador cajero
 	ControladorCierreCaja controladorCierreCaja;
 	ControladorIngresosCaja controladorIngresosCaja;
@@ -152,6 +156,9 @@ public class Controlador implements ActionListener {
 		//Cierre Caja
 		this.controladorCierreCaja = new ControladorCierreCaja(this,caja,ingresos,egresos,empleado); 
 		
+		//Generar ordenes de manufac
+		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
+		
 		//Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
@@ -179,6 +186,9 @@ public class Controlador implements ActionListener {
 		//Cierre de caja
 		this.ventanaMenuSistemaDeVentas.getBtnCierreCaja().addActionListener(a -> pasarACierreDeCaja(a));
 
+		//Generar ordenes de manufac
+		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
+		
 	}
 	
 	public void mostrarVentanaMenu() {
@@ -291,12 +301,18 @@ public class Controlador implements ActionListener {
 		this.controladorCierreCaja.mostrarVentana();
 	}
 	
-	
+	//Generar ord de manuf
+	public void pasarAGenerarOrdenManufac(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorGenerarOrdenesManufactura.inicializar();
+		this.controladorGenerarOrdenesManufactura.mostrarVentana();
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
-	
 	
 	public static void main(String[] args) {
 		
@@ -310,5 +326,8 @@ public class Controlador implements ActionListener {
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
 	}
+
+
+
 	
 }
