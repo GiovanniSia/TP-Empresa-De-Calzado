@@ -44,6 +44,8 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JLabel lblFechaHasta;
 
 	private JButton btnSalir;
+	private JTextField textPasoActual;
+	private JTextField textEstado;
 	
 
 	public ReVentanaVerFabricaciones() {
@@ -56,18 +58,18 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 500);
+		frame.setBounds(100, 100, 910, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 806, 399);
+		panel.setBounds(0, 64, 884, 399);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 69, 776, 272);
+		spCliente.setBounds(10, 69, 864, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
@@ -142,6 +144,24 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		btnSalir.setBounds(740, 351, 46, 38);
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
+		
+		textPasoActual = new JTextField();
+		textPasoActual.setColumns(10);
+		textPasoActual.setBounds(503, 38, 75, 20);
+		panel.add(textPasoActual);
+		
+		textEstado = new JTextField();
+		textEstado.setColumns(10);
+		textEstado.setBounds(598, 38, 75, 20);
+		panel.add(textEstado);
+		
+		JLabel lblPaso = new JLabel("Paso");
+		lblPaso.setBounds(503, 11, 46, 14);
+		panel.add(lblPaso);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setBounds(598, 11, 46, 14);
+		panel.add(lblEstado);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -229,5 +249,13 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	
 	public JButton getBtnSalir() {
 		return btnSalir;
+	}
+
+	public JTextField getTextPasoActual() {
+		return textPasoActual;
+	}
+
+	public JTextField getTextEstado() {
+		return textEstado;
 	}
 }

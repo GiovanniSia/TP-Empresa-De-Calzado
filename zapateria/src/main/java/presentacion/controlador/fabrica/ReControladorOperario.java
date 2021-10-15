@@ -40,6 +40,9 @@ public class ReControladorOperario implements ActionListener {
 	static final String error = "[HiperLink error]";
 	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
 	
+	static final String stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar = "Sin empezar";
+	static final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Inactivo/Pendiente";
+	
 	static final String stringQuePreguntaCancelacionDeProduccion = "¿Estas seguro que lo quieres cancelar?";
 	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
 	static final String stringQueNoCancelaDeProduccion = "No se a cancelado";
@@ -109,6 +112,18 @@ public class ReControladorOperario implements ActionListener {
 			}
 		});
 		ventanaPrincipal.getTextSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getTextEstado().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getTextPasoActual().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				refrescarTablaPorTecla();
@@ -308,7 +323,14 @@ public class ReControladorOperario implements ActionListener {
 			}else {
 				nombreProducto = producto.getDescripcion();
 			}
-			Object[] agregar = {o.getIdOrdenFabrica(), o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad()};
+			/*
+			static final String stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar = "Sin empezar";
+			sstatic final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Sin empezar";
+			*/
+			String paso = stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar;
+			String estado = stringQueDescribeElEstadoDeLasOrdenesSinEmpezar;
+			Object[] agregar = 
+				{o.getIdOrdenFabrica(), o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad(), paso, estado};
 			ventanaPrincipal.getModelOrdenes().addRow(agregar);
 		}
 	}
@@ -317,12 +339,16 @@ public class ReControladorOperario implements ActionListener {
 		String id = ventanaPrincipal.getTextId().getText();
 		String sucursal = ventanaPrincipal.getTextSucursal().getText();
 		String productoText = ventanaPrincipal.getTextProducto().getText();
-		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id, fechaDesde, fechaHasta);
 		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
+		
+		List<FabricacionesDTO> trabajos = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id, fechaDesde, fechaHasta);
+		trabajosEnLista = new ArrayList<FabricacionesDTO>();
 		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		
 		OrdenFabricaDTO orden = null;
-		for(FabricacionesDTO f: trabajosEnLista) {
+		for(FabricacionesDTO f: trabajos) {
 			String nombreProducto = null;
 			for(OrdenFabricaDTO of: todasLasOrdenes) {
 				if(of.getIdOrdenFabrica() == f.getIdOrdenFabrica()) {
@@ -356,32 +382,35 @@ public class ReControladorOperario implements ActionListener {
 					}else {
 						pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
 					}
+					
+					if(f.getEstado().toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*") && pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")) {
+						trabajosEnLista.add(f);
+						Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
+						ventanaPrincipal.getModelOrdenes().addRow(agregar);
 						
-					
-					Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
-					ventanaPrincipal.getModelOrdenes().addRow(agregar);
-					
-					ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-					    @Override
-					    public Component getTableCellRendererComponent(JTable table,
-					            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+						ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+						    @Override
+						    public Component getTableCellRendererComponent(JTable table,
+						            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
-					        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+						        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-					        String status = (String)table.getModel().getValueAt(row, 6);
-					        if ("activo".equals(status)) {
-					           setBackground(Color.ORANGE);
-					           setForeground(Color.BLACK);
-					        } else if ("completo".equals(status)){
-					        	setBackground(Color.green);
-					        	setForeground(Color.BLACK);
-					        } else {
-					        	setBackground(table.getBackground());
-					        	setForeground(Color.BLACK);
-					        }
-					        return this;
-					    }   
-					});
+						        String status = (String)table.getModel().getValueAt(row, 6);
+						        if ("activo".equals(status)) {
+						           setBackground(Color.ORANGE);
+						           setForeground(Color.BLACK);
+						        } else if ("completo".equals(status)){
+						        	setBackground(Color.green);
+						        	setForeground(Color.BLACK);
+						        } else {
+						        	setBackground(table.getBackground());
+						        	setForeground(Color.BLACK);
+						        }
+						        return this;
+						    }   
+						});
+					}
+					
 				}
 			}
 		}
@@ -392,6 +421,9 @@ public class ReControladorOperario implements ActionListener {
 		String id = ventanaPrincipal.getTextId().getText();
 		String sucursal = ventanaPrincipal.getTextSucursal().getText();
 		String producto = ventanaPrincipal.getTextProducto().getText();
+		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
 		/*
 		ordenesEnLista = new ArrayList<OrdenFabricaDTO>();
 		for(OrdenFabricaDTO of: modeloFabricacion.readAllOrdenesSinTrabajar()) {
@@ -402,7 +434,12 @@ public class ReControladorOperario implements ActionListener {
 				
 			}
 		}*/
-		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
+		ordenesEnLista  = new ArrayList<OrdenFabricaDTO>();
+		List<OrdenFabricaDTO> listaAux = new ArrayList<OrdenFabricaDTO>();
+		if(stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*") && stringQueDescribeElEstadoDeLasOrdenesSinEmpezar.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
+			ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
+			System.out.println(ordenesEnLista.size());
+		}
 	}
 	
 	private MaestroProductoDTO buscarProducto(int idProducto) {
@@ -437,13 +474,10 @@ public class ReControladorOperario implements ActionListener {
 				}
 			}
 		}
+		this.ventanaElegirReceta.getComboBox().setSelectedIndex(-1);
 	}
 	
 	private void botonSeleccionarReceta(ActionEvent s) {
-		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
-			return;
-		}
-		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
 		String nombreProducto = "";
 		MaestroProductoDTO producto = buscarProducto(this.ordenSeleccionado.getIdProd());
 		if(producto == null) {
@@ -451,6 +485,18 @@ public class ReControladorOperario implements ActionListener {
 		}else {
 			nombreProducto = producto.getDescripcion();
 		}
+		System.out.println(this.ventanaElegirReceta.getComboBox().getSelectedIndex() + " El combo box");
+		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
+			
+			ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
+			ventanaElegirReceta.getLblSucursal().setText("sucursal: "+ordenSeleccionado.getIdSucursal());
+			ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());
+			ventanaElegirReceta.getLblFecha().setText("Fecha requerido: "+ordenSeleccionado.getFechaRequerido());
+			this.ventanaElegirReceta.getLblMensaje().setText("No es posible trabajar, no hay receta");
+			return;
+		}
+		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
+		
 		ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
 		ventanaElegirReceta.getLblSucursal().setText("sucursal: "+ordenSeleccionado.getIdSucursal());
 		ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());
