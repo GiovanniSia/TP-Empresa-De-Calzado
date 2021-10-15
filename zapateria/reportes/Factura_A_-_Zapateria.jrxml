@@ -601,7 +601,7 @@
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="3" width="84" height="20" uuid="393736cc-22f4-4c65-9a2a-f8cc0693398f"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf( $F{TotalBruto}.intValue() )]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf( $F{TotalBruto}.intValue()-$F{IVA}.intValue() )]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="469" y="19" width="84" height="20" uuid="d18a81e4-13db-421c-8496-bc22400deb49"/>
