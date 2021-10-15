@@ -335,8 +335,8 @@ INSERT INTO medioPago values ("TCV","Tarjeta Credito VISA",1);
 INSERT INTO medioPago values ("MPA","Mercado Pago",1);
 INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
 
-INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,3 ,2,"M",200,"Activo",2200,100);
-INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",500,100);
+INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,1500 ,2,"M",200,"Activo",36,100);
+INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",10,100);
 INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
 INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
 INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
@@ -400,13 +400,14 @@ insert into pasosReceta values(11,3,2,5);
 insert into recetas values(4,2,'Receta sin material');
 insert into pasosReceta values(12,4,1,1);
 insert into pasosReceta values(13,4,2,2);
-
+insert into ordenfabrica values(1,1,'2011-02-5',20,'L493132',3);
+/*
 insert into ordenfabrica values(1,1,'2020-03-20',36,'L123123',1);
 insert into ordenfabrica values(2,1,'2019-06-19',10,'L213132',2);
 insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
 insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
-
+*/
 insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
 insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
 insert into stock values(10,1,9,'LOTECREADOAMANO4',500);

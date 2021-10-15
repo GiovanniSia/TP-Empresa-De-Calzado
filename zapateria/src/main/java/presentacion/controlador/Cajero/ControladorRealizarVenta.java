@@ -29,6 +29,7 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
+import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.reportes.ReporteFactura;
@@ -377,6 +378,19 @@ public class ControladorRealizarVenta {
 	
 	public void registrarPago(ActionEvent a) {
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
+			for(DetalleCarritoDTO det: detalleCarritoACobrar) {
+				det.getIdProducto();
+				List<MaestroProductoDTO> productos = maestroProducto.readAll();
+				for(MaestroProductoDTO mp: productos) {
+					if(mp.getIdMaestroProducto() == det.getIdProducto()) {
+						if(generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp)) {
+							System.out.println("HABIA POCO STOCK");
+						}else {
+							System.out.println("NO HABIA POCO STOCK");
+						}
+					}
+				}
+			}
 			
 			generarFactura();
 			borrarCarritoConDetalle();		
