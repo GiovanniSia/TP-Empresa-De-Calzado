@@ -401,6 +401,22 @@ insert into recetas values(4,2,'Receta sin material');
 insert into pasosReceta values(12,4,1,1);
 insert into pasosReceta values(13,4,2,2);
 insert into ordenfabrica values(1,1,'2011-02-5',20,'L493132',3);
+
+insert into recetas values(5,3,'Receta sin material');
+insert into pasosReceta values(14,5,1,1);
+insert into pasosReceta values(15,5,2,2);
+
+insert into recetas values(6,4,'Receta sin material');
+insert into pasosReceta values(16,6,1,1);
+insert into pasosReceta values(17,6,2,2);
+
+insert into recetas values(7,5,'Receta sin material');
+insert into pasosReceta values(18,7,1,1);
+insert into pasosReceta values(19,7,2,2);
+
+insert into recetas values(8,6,'Receta sin material');
+insert into pasosReceta values(20,8,1,1);
+insert into pasosReceta values(21,8,2,2);
 /*
 insert into ordenfabrica values(1,1,'2020-03-20',36,'L123123',1);
 insert into ordenfabrica values(2,1,'2019-06-19',10,'L213132',2);
