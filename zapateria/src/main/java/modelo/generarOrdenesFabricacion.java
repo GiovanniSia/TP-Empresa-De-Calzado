@@ -86,7 +86,7 @@ public class generarOrdenesFabricacion {
 		String fechaRequerido = anio+"-"+mes+"-"+dias;
 		return fechaRequerido;
 	}
-	/*
+	
 	public static void main(String[] args) {
 		//insert into maestroProductos values(1,'Zapa Mc Quenn','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",35,5);
 		//insert into maestroProductos values(2,'Zapa Shrek','Zapatilla','S',50,100,10,1,"talle 1",2,"activo",60,35);
@@ -104,12 +104,11 @@ public class generarOrdenesFabricacion {
 			System.out.print(orden.getIdProd()+ " ");
 			System.out.println(" ");
 		}
-	}*/
+	}
+	
 	public static boolean hayOrdenYaGenerada(int idSucursal, MaestroProductoDTO producto) {
-		boolean ret = false;
 		DAOSQLFactory a = new DAOSQLFactory();
-		ret = a.createOrdenFabricaDAO().hayOrdenPendiente(idSucursal, producto.getIdMaestroProducto());
-		return ret;
+		return a.createOrdenFabricaDAO().hayOrdenPendiente(producto.getIdMaestroProducto(), idSucursal);
 	}
 	
 	public static boolean verificarYGenerarOrden(int idSucursal, MaestroProductoDTO producto) {

@@ -85,17 +85,50 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	
-	private static final String readAllOrdenesPendientesDeUnProductoEnUnaSucursal = "SELECT * FROM ordenFabrica as orden WHERE (orden.IdOrdenFabrica IN (SELECT orden2.IdOrdenFabrica FROM ordenFabrica as orden2, fabricacionesEnMarcha as fabri WHERE (fabri.Estado = 'activo' OR fabri.Estado = 'completo')) OR orden.IdOrdenFabrica IN (SELECT ord3.IdOrdenFabrica FROM ordenFabrica as ord3 WHERE ord3.IdOrdenFabrica NOT IN (SELECT fabri2.IdOrdenFabrica FROM fabricacionesEnMarcha as fabri2))) AND orden.IdProd = ? AND orden.IdSucursal = ?;";
+	//private static final String readAllOrdenesPendientesDeUnProductoEnUnaSucursal = "SELECT * FROM ordenFabrica as orden WHERE (orden.IdOrdenFabrica IN (SELECT orden2.IdOrdenFabrica FROM ordenFabrica as orden2, fabricacionesEnMarcha as fabri WHERE (fabri.Estado = 'activo' OR fabri.Estado = 'completo')) OR orden.IdOrdenFabrica IN (SELECT ord3.IdOrdenFabrica FROM ordenFabrica as ord3 WHERE ord3.IdOrdenFabrica NOT IN (SELECT fabri2.IdOrdenFabrica FROM fabricacionesEnMarcha as fabri2))) AND orden.IdProd = ? AND orden.IdSucursal = ?;";
 	
 	public boolean hayOrdenPendiente(int idProducto, int idSucursal) {
+		/*
+		String comandoSQL =  "SELECT * FROM ordenFabrica as orden WHERE (orden.IdOrdenFabrica IN (SELECT orden2.IdOrdenFabrica FROM ordenFabrica as orden2, fabricacionesEnMarcha as fabri WHERE (fabri.Estado = 'activo' OR fabri.Estado = 'completo')) OR orden.IdOrdenFabrica IN (SELECT ord3.IdOrdenFabrica FROM ordenFabrica as ord3 WHERE ord3.IdOrdenFabrica NOT IN (SELECT fabri2.IdOrdenFabrica FROM fabricacionesEnMarcha as fabri2)))";
+		comandoSQL = comandoSQL +" AND orden.IdProd = "+idProducto+" AND orden.IdSucursal = "+idSucursal;
+			*/
+		return hayOrdenSinAtender(idProducto,idSucursal) || hayOrdenSiendoAtendida(idProducto,idSucursal);
+	}
+	
+	private boolean hayOrdenSinAtender(int idProducto, int idSucursal) {
 		boolean ret = false;
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		Conexion conexion = Conexion.getConexion();
 		try {
-			statement = conexion.getSQLConexion().prepareStatement(readAllOrdenesPendientesDeUnProductoEnUnaSucursal);
-			statement.setInt(1, idProducto);
-			statement.setInt(2, idSucursal);
+			String comandoSQL =  "SELECT * FROM ordenFabrica as orden WHERE orden.IdOrdenFabrica IN (SELECT ord3.IdOrdenFabrica FROM ordenFabrica as ord3 WHERE ord3.IdOrdenFabrica NOT IN (SELECT fabri2.IdOrdenFabrica FROM fabricacionesEnMarcha as fabri2))";
+			comandoSQL = comandoSQL +" AND orden.IdProd = "+idProducto+" AND orden.IdSucursal = "+idSucursal;
+			statement = conexion.getSQLConexion().prepareStatement(comandoSQL);
+			//statement.setInt(1, idProducto);
+			//statement.setInt(2, idSucursal);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				System.out.println("Encontro, no hay que generar");
+				ret = true;		//ENCONTRO UNA ORDEN AUN ACTIVA, COMPLETA O CANCELADA
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private boolean hayOrdenSiendoAtendida(int idProducto, int idSucursal) {
+		boolean ret = false;
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		Conexion conexion = Conexion.getConexion();
+		try {
+			String comandoSQL =  "SELECT * FROM ordenFabrica as orden WHERE (orden.IdOrdenFabrica IN (SELECT orden2.IdOrdenFabrica FROM ordenFabrica as orden2, fabricacionesEnMarcha as fabri WHERE (fabri.Estado = 'activo' OR fabri.Estado = 'completo')))";
+			comandoSQL = comandoSQL +" AND orden.IdProd = "+idProducto+" AND orden.IdSucursal = "+idSucursal;
+			System.out.println(comandoSQL);
+			statement = conexion.getSQLConexion().prepareStatement(comandoSQL);
+			//statement.setInt(1, idProducto);
+			//statement.setInt(2, idSucursal);
 			resultSet = statement.executeQuery();
 			while(resultSet.next()) {
 				System.out.println("Encontro, no hay que generar");
