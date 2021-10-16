@@ -37,6 +37,8 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnCierreCaja;
 	private JButton btnModPrecioUnitario;
 	private JButton btnRegresar;
+	private JButton btnRegistrarUnCliente;
+	
 
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
@@ -82,7 +84,7 @@ public class VentanaMenuSistemaDeVentas {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 428);
+		frame.setBounds(100, 100, 822, 558);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Sistema de Ventas");
 		frame.getContentPane().setLayout(null);
@@ -90,7 +92,7 @@ public class VentanaMenuSistemaDeVentas {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 818, 391);
+		panel.setBounds(0, 0, 818, 492);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -196,6 +198,17 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_8.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		lblNewLabel_8.setBounds(530, 358, 184, 20);
 		panel.add(lblNewLabel_8);
+		
+		btnRegistrarUnCliente = new JButton("Registrar un Cliente");
+		btnRegistrarUnCliente.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnRegistrarUnCliente.setBounds(65, 405, 282, 35);
+		panel.add(btnRegistrarUnCliente);
+		
+		JLabel lblNewLabel_7_1 = new JLabel("(Gerente)");
+		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		lblNewLabel_7_1.setBounds(113, 449, 184, 20);
+		panel.add(lblNewLabel_7_1);
 	}
 	
 	
@@ -271,5 +284,8 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnGenerarOrdenDe() {
 		return btnGenerarOrdenDe;
 	}
-
+	
+	public JButton getBtnRegistrarUnCliente() {
+		return btnRegistrarUnCliente;
+	}
 }

@@ -216,6 +216,9 @@ public class Controlador implements ActionListener {
 		//Generar ordenes de manufac
 		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
 		
+		
+		//Alta cliente
+		this.ventanaMenuSistemaDeVentas.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
 	}
 	
 	public void mostrarVentanaMenu() {
@@ -333,6 +336,13 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorGenerarOrdenesManufactura.inicializar();
 		this.controladorGenerarOrdenesManufactura.mostrarVentana();
+	}
+	
+	
+	public void pasarARegistrarUnCliente(ActionEvent a ) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorAltaCliente.inicializar();
+		this.controladorAltaCliente.mostrarVentana();
 	}
 	
 	@Override

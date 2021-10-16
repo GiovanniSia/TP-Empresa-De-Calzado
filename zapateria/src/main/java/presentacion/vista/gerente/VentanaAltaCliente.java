@@ -11,12 +11,15 @@ import javax.swing.UIManager;
 import persistencia.conexion.Conexion;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class VentanaAltaCliente {
@@ -74,9 +77,10 @@ public class VentanaAltaCliente {
 		}
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 427, 712);
+		frame.setBounds(500, 100, 427, 712);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle("Zapateria Argento - Registrar un cliente");
 		frame.setResizable(false);
 		
 		JLabel lblNewLabel = new JLabel("Registrar Cliente");
@@ -215,8 +219,9 @@ public class VentanaAltaCliente {
 		btnRegistrar.setBounds(128, 592, 179, 35);
 		frame.getContentPane().add(btnRegistrar);
 		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 642, 75, 30);
+		btnCancelar = new JButton("");
+		btnCancelar.setBounds(10, 628, 40, 44);
+		btnCancelar.setIcon(setIcono("../imagenes/back.png",btnCancelar));
 		frame.getContentPane().add(btnCancelar);
 		
 		comboBoxImpuestoAFIP = new JComboBox();
@@ -252,6 +257,16 @@ public class VentanaAltaCliente {
 	public void cerrar() {
 		frame.setVisible(false);
 	}
+	
+	public Icon setIcono(String url,JButton boton) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(url));
+		int ancho = boton.getWidth();
+		int alto = boton.getHeight();
+		
+		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+		return icono;
+	}
+	
 	
 	public JFrame getFrame() {
 		return frame;
