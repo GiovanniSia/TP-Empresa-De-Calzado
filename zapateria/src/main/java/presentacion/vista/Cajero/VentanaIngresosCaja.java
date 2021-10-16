@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 
 public class VentanaIngresosCaja extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -24,6 +25,8 @@ public class VentanaIngresosCaja extends JFrame {
 	private JLabel lblRegarcaSaldo;
 	private JButton btnRealizarIngreso;
 	private JButton btnAtras;
+	private JLabel lblActualizarEstadoCaja;
+	
 	
 	public static void main(String[] args) {
 		VentanaIngresosCaja n = new VentanaIngresosCaja();
@@ -69,9 +72,21 @@ public class VentanaIngresosCaja extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ingresos de Caja");
-		lblNewLabel_1.setBounds(10, 5, 377, 36);
+		lblNewLabel_1.setBounds(10, 5, 301, 36);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_1.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Estado de la Caja:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(281, 5, 142, 14);
+		panel_1.add(lblNewLabel_2);
+		
+		lblActualizarEstadoCaja = new JLabel("Sin estado");
+		lblActualizarEstadoCaja.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblActualizarEstadoCaja.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActualizarEstadoCaja.setBounds(281, 27, 142, 14);
+		panel_1.add(lblActualizarEstadoCaja);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 125, 476, 157);
@@ -160,6 +175,10 @@ public class VentanaIngresosCaja extends JFrame {
 		return btnAtras;
 	}
 
+	public JLabel getLblActualizarEstadoCaja() {
+		return lblActualizarEstadoCaja;
+	}
+
 	public void mostrarIngresarSaldoInicial() {
 		lblIngresoSaldoInicial.setVisible(true);
 		txtFieldIngresoSaldoInicial.setVisible(true);
@@ -201,5 +220,4 @@ public class VentanaIngresosCaja extends JFrame {
 	public JButton getBtnRealizarIngreso() {
 		return btnRealizarIngreso;
 	}
-	
 }
