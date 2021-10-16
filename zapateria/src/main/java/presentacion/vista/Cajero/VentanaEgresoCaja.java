@@ -332,8 +332,12 @@ public class VentanaEgresoCaja extends JFrame {
 	}
 
 	public void limpiarCampos() {
-		this.cbTipoEgreso.setSelectedIndex(-1);
-		this.cbTipoMedioPago.setSelectedIndex(-1);
+		this.cbTipoEgreso.setSelectedIndex(0);
+		this.cbTipoMedioPago.setSelectedIndex(0);
+		this.txtFieldAS.setText(null);
+		this.txtFieldMonto.setText(null);
+		this.txtFieldPPNroOrdenCompra.setText(null);
+		this.txtFieldPPNroProveedor.setText(null);
 	}
 
 	public void cerrar() {

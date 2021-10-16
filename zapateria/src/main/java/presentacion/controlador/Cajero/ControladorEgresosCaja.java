@@ -81,8 +81,6 @@ public class ControladorEgresosCaja {
 		
 		// Cambia el estado de combobox
 		this.ventanaEgresoCaja.getCbTipoEgreso().addActionListener(a -> tipoEgresoSeleccionado());
-
-
 	}
 	
 	
@@ -97,8 +95,7 @@ public class ControladorEgresosCaja {
 		int totalIngresos = 0;
 		int totalEgresos = 0;
 		if(ingresos.getIngresosAproximado("Fecha", fecha, null, null).size() != 0) {
-			totalIngresos = ObtenerTotalIngreso(); // 3000
-			System.out.println(totalIngresos);
+			totalIngresos = ObtenerTotalIngreso(); 
 		}
 
 		if(egresos.getEgresosAproximado("Fecha", fecha, null, null).size() != 0) {
@@ -166,6 +163,7 @@ public class ControladorEgresosCaja {
 			}
 		}
 		actualizarLblBalance();
+		this.ventanaEgresoCaja.limpiarCampos();
 	}
 
 	public boolean validarCampos() {
