@@ -32,6 +32,7 @@ import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
+import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
 import presentacion.vista.VentanaHistorialCambioMProducto;
@@ -87,6 +88,11 @@ public class Controlador implements ActionListener {
 	ControladorIngresosCaja controladorIngresosCaja;
 	ControladorVisualizarCarritos controladorVisualizarCarritos;
 	ControladorRealizarVenta controladorRealizarVenta;
+	
+	//Controlador gerente
+	ControladorAltaCliente controladorAltaCliente;
+	
+	
 	//Ventanas
 	/*
 	VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -173,6 +179,12 @@ public class Controlador implements ActionListener {
 		
 		//Generar ordenes de manufac
 		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
+		
+		
+		//Alta cliente
+		this.controladorAltaCliente = new ControladorAltaCliente(this,this.cliente); 
+		
+		
 		
 		//Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));

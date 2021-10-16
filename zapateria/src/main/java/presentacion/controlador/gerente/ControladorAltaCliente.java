@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaAltaCliente;
 
@@ -22,9 +23,12 @@ public class ControladorAltaCliente {
 	Cliente cliente;
 	ArrayList<ClienteDTO> listaClientes;
 	
-	public ControladorAltaCliente(Cliente cliente) {
+	Controlador controlador;
+	
+	public ControladorAltaCliente(Controlador controlador,Cliente cliente) {
 		this.cliente=cliente;
 		this.listaClientes = new ArrayList<ClienteDTO>();
+		this.controlador= controlador;
 	}
 	
 	public void inicializar() {
@@ -47,10 +51,13 @@ public class ControladorAltaCliente {
 	
 	public void salir(ActionEvent a) {
 		this.ventanaAltaCliente.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void registrarCliente(ActionEvent a) {
-		if(!todosLosCamposSonValidos() && !clienteYaExiste()) {
+		
+		if(todosLosCamposSonValidos()) {
 			
 			String nombre = this.ventanaAltaCliente.getTextNombre().getText();
 			String apellido = this.ventanaAltaCliente.getTextApellido().getText();
@@ -59,7 +66,7 @@ public class ControladorAltaCliente {
 			int limiteCredito =(int) this.limiteCreditoPorDefecto;
 			int creditoDisp = (int)this.limiteCreditoPorDefecto;
 			String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
-			String impuestoAFIP = (String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem();
+			String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
 			String estado = "Activo";
 			String calle = this.ventanaAltaCliente.getTextFieldCalle().getText();
 			String altura = this.ventanaAltaCliente.getTextFieldAltura().getText();
@@ -69,9 +76,16 @@ public class ControladorAltaCliente {
 			String codPostal = this.ventanaAltaCliente.getTextFieldCodPostal().getText();
 			
 			ClienteDTO cliente = new ClienteDTO(0,nombre,apellido,CUIL,mail,limiteCredito,creditoDisp,tipoCliente,impuestoAFIP,estado,calle,altura,pais,prov,localida,codPostal);
+			 if(clienteYaExiste()){
+				 JOptionPane.showMessageDialog(null, "El cliente ya existe en el sistema");
+				 return;
+			 }
 			
 			this.cliente.insert(cliente);
 			JOptionPane.showMessageDialog(null, "Se agrego el nuevo cliente al sistema");
+			
+			borrarDatosDeLosText();
+			
 		}
 	}	
 	
@@ -221,11 +235,37 @@ public class ControladorAltaCliente {
 	}
 
 	
-	public static void main(String[] args) {
-		Cliente cliente = new Cliente(new DAOSQLFactory());
-		ControladorAltaCliente c = new ControladorAltaCliente(cliente);
-		c.inicializar();
-		c.mostrarVentana();
+	
+	public String getIdItemImpuestoAFIP(String descr) {
+		if(descr.equals("Responsable Inscripto")) {
+			return "RI";
+		}
+		if(descr.equals("Monotributista")) {
+			return "M";
+		}
+		if(descr.equals("Exento")) {
+			return "E";
+		}
+		return "";
+	}
+	
+	
+	public void borrarDatosDeLosText() {
+		this.ventanaAltaCliente.getTextNombre().setText("");
+		this.ventanaAltaCliente.getTextApellido().setText("");
+		this.ventanaAltaCliente.getTextCUIL().setText("");
+		this.ventanaAltaCliente.getTextCorreo().setText("");
+		
+		
+		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedItem(this.ventanaAltaCliente.getComboBoxTipoCliente().getItemAt(0));
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getItemAt(0));
+		
+		this.ventanaAltaCliente.getTextFieldCalle().setText("");
+		this.ventanaAltaCliente.getTextFieldAltura().setText("");
+		this.ventanaAltaCliente.getTextFieldPais().setText("");
+		this.ventanaAltaCliente.getTextFieldProvincia().setText("");
+		this.ventanaAltaCliente.getTextFieldLocalidad().setText("");
+		this.ventanaAltaCliente.getTextFieldCodPostal().setText("");
 	}
 	
 }
