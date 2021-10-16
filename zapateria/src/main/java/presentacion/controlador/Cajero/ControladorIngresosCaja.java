@@ -51,15 +51,28 @@ public class ControladorIngresosCaja {
 		} else {
 			this.ventanaIngresosCaja.getBtnRealizarIngreso().addActionListener(c -> realizarRecarga(c));
 			this.ventanaIngresosCaja.mostrarIngresarRecargaSaldo();
+			actualizarSaldoActual(obtenerSaldoActual());
 		}
+		
+	}
+	
+	public String obtenerSaldoActual() {
+		ControladorEgresosCaja a = new ControladorEgresosCaja();		
+		return ""+ a.obtenerValorBalance()+"";
+	}
+	
+	public void actualizarSaldoActual(String Saldo) {
+		this.ventanaIngresosCaja.getLblActualizarSaldoActual().setText(Saldo);
 	}
 
 	public void estadoDeLaCaja() {
 		
 		if(estaCajaAbierta()) {
 			this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("Abierta");
+			this.ventanaIngresosCaja.mostrarSaldoActual();
 		}else {
 			this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("Cerrada");
+			this.ventanaIngresosCaja.ocultarSaldoActual();
 		}
 //		this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("No hay caja");
 	}

@@ -26,6 +26,8 @@ public class VentanaIngresosCaja extends JFrame {
 	private JButton btnRealizarIngreso;
 	private JButton btnAtras;
 	private JLabel lblActualizarEstadoCaja;
+	private JLabel lblSaldoActual;
+	private JLabel lblActualizarSaldoActual;
 	
 	
 	public static void main(String[] args) {
@@ -72,21 +74,33 @@ public class VentanaIngresosCaja extends JFrame {
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ingresos de Caja");
-		lblNewLabel_1.setBounds(10, 5, 301, 36);
+		lblNewLabel_1.setBounds(10, 5, 208, 36);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estado de la Caja:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(281, 5, 142, 14);
+		lblNewLabel_2.setBounds(202, 5, 142, 14);
 		panel_1.add(lblNewLabel_2);
 		
 		lblActualizarEstadoCaja = new JLabel("Sin estado");
 		lblActualizarEstadoCaja.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblActualizarEstadoCaja.setHorizontalAlignment(SwingConstants.CENTER);
-		lblActualizarEstadoCaja.setBounds(281, 27, 142, 14);
+		lblActualizarEstadoCaja.setBounds(202, 30, 142, 14);
 		panel_1.add(lblActualizarEstadoCaja);
+		
+		lblSaldoActual = new JLabel("Saldo actual:");
+		lblSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSaldoActual.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblSaldoActual.setBounds(339, 5, 142, 14);
+		panel_1.add(lblSaldoActual);
+		
+		lblActualizarSaldoActual = new JLabel("$0");
+		lblActualizarSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActualizarSaldoActual.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblActualizarSaldoActual.setBounds(339, 30, 142, 14);
+		panel_1.add(lblActualizarSaldoActual);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 125, 476, 157);
@@ -165,6 +179,19 @@ public class VentanaIngresosCaja extends JFrame {
 	public void cerrar() {
 		limpiarCampos();
 		frame.setVisible(false);
+	}
+
+	public void mostrarSaldoActual() {
+		this.lblSaldoActual.setVisible(true);
+		this.lblActualizarSaldoActual.setVisible(true);
+	}
+	public void ocultarSaldoActual() {
+		this.lblSaldoActual.setVisible(false);
+		this.lblActualizarSaldoActual.setVisible(false);
+	}
+	
+	public JLabel getLblActualizarSaldoActual() {
+		return lblActualizarSaldoActual;
 	}
 
 	public void mostrarVentana() {
