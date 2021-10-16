@@ -220,7 +220,7 @@ public class ControladorBusquedaProductos {
 
 	
 	public boolean esAptoParaVender(StockDTO s, MaestroProductoDTO m) {
-		return m.getEstado().equals("Activo") && m.getTipo().equals("PT") && m.getFabricado().equals("S");
+		return m.getEstado().equals("Activo") && m.getTipo().equals("PT");
 	}
 	
 	
@@ -486,21 +486,12 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getModelTablaCliente().addRow(fila);			
 	}
 	
-	
-//	public void modificarValorMinimoDeSpinnerHasta() {
-//		int valorMinimo = (int)this.vistaBusquedaProductos.getSpinnerPrecioDesde().getValue();
-//		this.vistaBusquedaProductos.getSpinnerModelHasta().setValue(new SpinnerNumberModel(valorMinimo, valorMinimo, Integer.MAX_VALUE, 1));
-//	}
-	
 	public void modificarValorMaximoDeSpinnerDesde() {
 		int valorMaximo = (int)this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
 		System.out.println("se deberia actualizar el valor maximo del desde, nuevo maxiom: "+valorMaximo);
 		this.vistaBusquedaProductos.setSpinnerModelDesde(new SpinnerNumberModel(0, 0, valorMaximo, 100));
-//		this.vistaBusquedaProductos.setSpinnerPrecioDesde(new JSpinner(new SpinnerNumberModel(0, 0, valorMaximo, 100)));
 	}
 	
-//	public static void main(String[] args) {
-//		new ControladorBusquedaProductos();
-//	}
+
 	
 }
