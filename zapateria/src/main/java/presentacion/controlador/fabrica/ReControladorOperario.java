@@ -43,6 +43,8 @@ public class ReControladorOperario implements ActionListener {
 	static final String stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar = "Sin empezar";
 	static final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Inactivo/Pendiente";
 	
+	static final String stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas = "Activo/En proceso";
+	
 	static final String stringQuePreguntaCancelacionDeProduccion = "¿Estas seguro que lo quieres cancelar?";
 	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
 	static final String stringQueNoCancelaDeProduccion = "No se a cancelado";
@@ -383,9 +385,14 @@ public class ReControladorOperario implements ActionListener {
 						pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
 					}
 					
-					if(f.getEstado().toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*") && pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")) {
+					String estadoEnTabla = f.getEstado();
+					if(f.getEstado().equals("activo")) {
+						estadoEnTabla = stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas;
+					}
+					
+					if(estadoEnTabla.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*") && pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")) {
 						trabajosEnLista.add(f);
-						Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
+						Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , estadoEnTabla, fechaCompletado, diasEnvio};
 						ventanaPrincipal.getModelOrdenes().addRow(agregar);
 						
 						ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
@@ -396,7 +403,7 @@ public class ReControladorOperario implements ActionListener {
 						        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
 						        String status = (String)table.getModel().getValueAt(row, 6);
-						        if ("activo".equals(status)) {
+						        if (stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas.equals(status)) {
 						           setBackground(Color.ORANGE);
 						           setForeground(Color.BLACK);
 						        } else if ("completo".equals(status)){
