@@ -2,16 +2,22 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import dto.CarritoDTO;
+import dto.ClienteDTO;
+import dto.DetalleCarritoDTO;
 import dto.SucursalDTO;
 import modelo.Caja;
 import modelo.Carrito;
 import modelo.Cliente;
 import modelo.DetalleCarrito;
+import modelo.DetalleFactura;
 import modelo.Egresos;
 import modelo.Empleado;
+import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
@@ -56,6 +62,8 @@ public class Controlador implements ActionListener {
 	Carrito carrito;
 	DetalleCarrito detalleCarrito;
 	
+	Factura factura;
+	DetalleFactura detalleFactura;
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
@@ -77,9 +85,8 @@ public class Controlador implements ActionListener {
 	//Controlador cajero
 	ControladorCierreCaja controladorCierreCaja;
 	ControladorIngresosCaja controladorIngresosCaja;
-//	ControladorRealizarVenta controladorRealizarVenta;
 	ControladorVisualizarCarritos controladorVisualizarCarritos;
-	
+	ControladorRealizarVenta controladorRealizarVenta;
 	//Ventanas
 	/*
 	VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -120,6 +127,9 @@ public class Controlador implements ActionListener {
 		this.egresos = new Egresos(new DAOSQLFactory());
 		this.empleado = new Empleado(new DAOSQLFactory());
 		
+		this.factura = new Factura(new DAOSQLFactory());
+		this.detalleFactura = new DetalleFactura(new DAOSQLFactory());
+		
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 	}
 	
@@ -139,7 +149,12 @@ public class Controlador implements ActionListener {
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
 		
+		//Registrar Venta
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this,carrito, detalleCarrito, cliente,maestroProducto,stock);
+		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago,this.cliente,this.empleado,this.carrito,this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura, this.ingresos); 
+		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
+		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+		
 		
 		//cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
@@ -242,7 +257,7 @@ public class Controlador implements ActionListener {
 		this.controladorVisualizarCarritos.inicializar();
 		this.controladorVisualizarCarritos.mostrarVentana();
 	}
-	
+
 	
 	//Cotizacion
 	public void pasarACotizaciones(ActionEvent a) {
@@ -313,4 +328,5 @@ public class Controlador implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

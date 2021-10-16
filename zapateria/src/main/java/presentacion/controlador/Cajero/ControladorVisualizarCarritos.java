@@ -1,6 +1,7 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -21,7 +22,12 @@ import dto.StockDTO;
 import modelo.Carrito;
 import modelo.Cliente;
 import modelo.DetalleCarrito;
+import modelo.DetalleFactura;
+import modelo.Empleado;
+import modelo.Factura;
+import modelo.Ingresos;
 import modelo.MaestroProducto;
+import modelo.MedioPago;
 import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
@@ -53,15 +59,8 @@ public class ControladorVisualizarCarritos {
 	ControladorRealizarVenta controladorRealizarVenta;
 	
 	Controlador controlador;
-//	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
+
 	
-	
-//	public ControladorVisualizarCarritos(Carrito carrito, DetalleCarrito detalleCarrito,Cliente cliente, MaestroProducto maestroProducto) {
-//		this.carrito = carrito;
-//		this.detalleCarrito = detalleCarrito;
-//		this.cliente = cliente;
-//		this.maestroProducto = maestroProducto;
-		
 	public ControladorVisualizarCarritos(Controlador controlador,Carrito carrito, DetalleCarrito detalleCarrito, Cliente cliente, MaestroProducto maestroProducto, Stock stock) {
 		this.carrito = carrito;
 		this.detalleCarrito = detalleCarrito;
@@ -76,24 +75,27 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
-		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+
 		
 		this.controlador = controlador;
-//		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
-//		this.controladorRealizarVenta = new ControladorRealizarVenta();
 	}
 
-	
+	public void setControladorRealizarVenta(ControladorRealizarVenta controladorRealizarVenta) {
+		this.controladorRealizarVenta = controladorRealizarVenta;
+	}
 	
 	public void inicializar() {
-		
+		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 		this.listaCarritos = this.carrito.readAll();
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
 		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		
-
+		
+		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
+		this.ventanaVisualizarCarritos.getBtnRegresar().addActionListener(a -> salir(a));
+		this.ventanaVisualizarCarritos.getBtnBorrarCarrito().addActionListener(a -> borrarCarrito(a));
 		
 		this.ventanaVisualizarCarritos.getTableCarritos().addMouseListener(new MouseAdapter() {
 			@Override
@@ -121,14 +123,14 @@ public class ControladorVisualizarCarritos {
 			}
 		});
 					
-		this.ventanaVisualizarCarritos.getBtnElegirCarrito().addActionListener(a -> pasarVentana(a));
-		this.ventanaVisualizarCarritos.getBtnRegresar().addActionListener(a -> salir(a));
-		this.ventanaVisualizarCarritos.getBtnBorrarCarrito().addActionListener(a -> borrarCarrito(a));
+
 		
 		validarTeclado();
 		llenarTablaCompleta();
 		
+		
 	}
+	
 	
 	public void mostrarVentana() {
 		this.ventanaVisualizarCarritos.show();
@@ -155,7 +157,6 @@ public class ControladorVisualizarCarritos {
 		
 		for(CarritoDTO carrito: this.listaCarritos) {
 			for(ClienteDTO cliente: clientesConCarrito) {
-//				System.out.println("cliente agreagdo: "+cliente.getNombre());
 				if(carrito.getIdCliente()==cliente.getIdCliente() && carrito.getIdSucursal()==this.idSucursal) {
 					agregarATabla(cliente, carrito);
 				}
@@ -167,16 +168,13 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
-		
-//		this.carritosEnTabla.removeAll(carritosEnTabla);
-		
+
 		for(CarritoDTO carrito: this.listaCarritos) {
 			if(carrito.getIdSucursal()==this.idSucursal	&& !yaFueAgregado(carrito)) {
 		
 				ClienteDTO cliente = this.cliente.selectCliente(carrito.getIdCliente());
 				agregarATabla(cliente,carrito);
 			}
-			//"CUIL","Nombre","Hora","Tipo Cliente","P. Total Venta"}
 		}
 	}
 	
@@ -223,7 +221,6 @@ public class ControladorVisualizarCarritos {
 		
 		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {
 			if(detalleCar.getIdCarrito()==carritoSeleccionado.getIdCarrito() && carritoSeleccionado.getIdSucursal()==this.idSucursal) {
-//				MaestroProductoDTO prod = this.maestroProducto.selectMaestroProducto(detalleCar.getIdProducto());
 				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
 				int cant = detalleCar.getCantidad();
@@ -235,12 +232,7 @@ public class ControladorVisualizarCarritos {
 				this.detalleCarritoEnTabla.add(detalleCar);
 			}
 		}
-		
-//		DetalleCarritoDTO detalleCarrito = getDetalle(carritoSeleccionado);	
-//		System.out.println("el total del carrito seleccionado es :"+carritoSeleccionado.getTotal()+"\nEL id del carrito es :"+carritoSeleccionado.getIdCarrito()+" el id del detalle: "+detalleCarrito.getIdCarrito());		
-		
-	
-		//"Productos","Cantidad","P. Unitario"
+
 	}
 	
 	public DetalleCarritoDTO getDetalle(CarritoDTO carrito) {
@@ -262,6 +254,7 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void pasarVentana(ActionEvent a) {
+
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
 		
 		if(filaSeleccionada==-1) {
@@ -280,15 +273,17 @@ public class ControladorVisualizarCarritos {
 		
 		}
 
-//		DetalleCarritoDTO detalleCarrito = getDetalle(carrito);
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
 			CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
 			ClienteDTO client = this.cliente.selectCliente(carrito.getIdCliente());
-			this.controladorRealizarVenta = new ControladorRealizarVenta(this);
-			controladorRealizarVenta.establecerCarritoACobrar(carrito, this.detalleCarritoEnTabla,client);
-			controladorRealizarVenta.inicializar();
+
+			this.ventanaVisualizarCarritos.cerrar();
+			this.controladorRealizarVenta.establecerCarritoACobrar(carrito,this.listaDetalleCarrito,client);
+			this.controladorRealizarVenta.inicializar();
+			this.controladorRealizarVenta.mostrarVentana();
+
 		}
 
 	}
@@ -386,21 +381,5 @@ public class ControladorVisualizarCarritos {
 				
 		}
 	}
-	
-	public static void main(String[] args) {
-//		Carrito carrito = new Carrito(new DAOSQLFactory());
-//		DetalleCarrito detalleCarrito= new DetalleCarrito(new DAOSQLFactory());
-//		Cliente cliente = new Cliente(new DAOSQLFactory());
-//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-//		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos(carrito,detalleCarrito,cliente,maestroProducto);
-//		c.inicializar();
-//		c.mostrarVentana();
-		
-		
-//		ControladorVisualizarCarritos c = new ControladorVisualizarCarritos();
-//		c.inicializar();
-//		c.mostrarVentana();
-		
-	}
-	
+
 }

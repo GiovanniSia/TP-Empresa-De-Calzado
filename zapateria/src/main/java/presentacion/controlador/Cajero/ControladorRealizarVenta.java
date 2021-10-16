@@ -50,8 +50,6 @@ public class ControladorRealizarVenta {
 	
 	boolean seAplicoDesc=false;
 	
-	
-	
 	double cantidadUsadaCC;
 	
 	VentanaRealizarVenta ventanaRealizarVenta;
@@ -75,30 +73,27 @@ public class ControladorRealizarVenta {
 	
 	List<IngresosDTO> listaDeIngresosARegistrar;//representa tambien el pago que este en la tabla (por indice)
 	
-	ControladorVisualizarCarritos controladorVisualizarCarritos; 
-//	VentanaVisualizarCarritos ventanaVisualizarCarritos;
+	ControladorVisualizarCarritos controladorVisualizarCarritos;
 	
-	public ControladorRealizarVenta(ControladorVisualizarCarritos controladorVisualizarCarritos) {
-		this.medioPago=new MedioPago(new DAOSQLFactory());;
-		this.cliente = new Cliente(new DAOSQLFactory());
-		this.cajero = new Empleado(new DAOSQLFactory());
-		this.carrito = new Carrito(new DAOSQLFactory());
-		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
-		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		this.factura = new Factura(new DAOSQLFactory());
-		this.detalleFactura = new DetalleFactura(new DAOSQLFactory());
+	public ControladorRealizarVenta(MedioPago medioPago, Cliente cliente, Empleado cajero, Carrito carrito, DetalleCarrito detalleCarrito, MaestroProducto maestroProducto, Factura factura, DetalleFactura detalleFactura, Ingresos ingresos) {
+		this.medioPago = medioPago;
+		this.cliente = cliente;
+		this.cajero = cajero;
+		this.carrito = carrito;
+		this.detalleCarrito = detalleCarrito;
+		this.maestroProducto = maestroProducto;
+		this.factura = factura;
+		this.detalleFactura = detalleFactura;
+		this.ingresos = ingresos;
 		
-		this.ingresos = new Ingresos(new DAOSQLFactory());
-		
+
 		this.listamediosDePago = new ArrayList<MedioPagoDTO>();
 		this.listaDeIngresosARegistrar = new ArrayList<IngresosDTO>();
-//		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(carrito, detalleCarrito, cliente, maestroProducto);
-		
-		this.controladorVisualizarCarritos=controladorVisualizarCarritos;
-//		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
-		
-//		BigDecimal b = new BigDecimal();
-		
+
+	}
+	
+	public void setControladorVisualizarCarritos(ControladorVisualizarCarritos controladorVisualizarCarritos) {
+		this.controladorVisualizarCarritos = controladorVisualizarCarritos;
 	}
 	
 	public void establecerCarritoACobrar(CarritoDTO carrito,List<DetalleCarritoDTO> detalles,ClienteDTO cliente) {
@@ -109,9 +104,9 @@ public class ControladorRealizarVenta {
 	
 	
 	public void inicializar() {
+		this.listamediosDePago = this.medioPago.readAll();
 		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
 		this.ventanaRealizarVenta = new VentanaRealizarVenta();
-		
 		this.ventanaRealizarVenta.getBtnAgregarMedioPago().addActionListener(a -> agregarMedioDePago(a));
 		this.ventanaRealizarVenta.getBtnQuitarMedioPago().addActionListener(a -> quitarMedioPago(a));
 		this.ventanaRealizarVenta.getBtnFinalizarVenta().addActionListener(a -> registrarPago(a));
@@ -123,20 +118,21 @@ public class ControladorRealizarVenta {
 			}
 		});
 		
-		
-		this.listamediosDePago = this.medioPago.readAll();
-		
-		llenarCbMedioPago();
-//		actualizarTablaMedioPago();
 		this.totalAPagar=carritoACobrar.getTotal();
 		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+tpgr);
+
 		validarTeclado();
+		llenarCbMedioPago();
+
+		
+	}
+	
+	public void mostrarVentana() {
 		this.ventanaRealizarVenta.show();
 	}
 	
-	
-	
+	@SuppressWarnings("unchecked")
 	public void llenarCbMedioPago() {
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
@@ -155,9 +151,7 @@ public class ControladorRealizarVenta {
 			JOptionPane.showMessageDialog(null, "No ha agregado ningun valor");
 			return;
 		}
-//		if(!todosLosCamposSonValidos()) {
-//			return;
-//		}
+
 		String metodoPagoCb =(String) this.ventanaRealizarVenta.getComboBoxMetodoPago().getSelectedItem();
 		
 		if(metodoPagoCb.equals("Sin seleccionar")) {
@@ -304,7 +298,6 @@ public class ControladorRealizarVenta {
 		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+totalPgd);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+totalPgr);
 		
-//		System.out.println("valor de total pagado: "+this.totalPagado+"\nCantidad de medios de pago por registrar: "+this.listaDeIngresosARegistrar.size());
 	}
 
 	
@@ -384,37 +377,31 @@ public class ControladorRealizarVenta {
 				for(MaestroProductoDTO mp: productos) {
 					if(mp.getIdMaestroProducto() == det.getIdProducto()) {
 						if(generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp)) {
-							System.out.println("HABIA POCO STOCK");
 						}else {
-							System.out.println("NO HABIA POCO STOCK");
 						}
 					}
 				}
 			}
 			
+			this.ventanaRealizarVenta.cerrar();
+			this.controladorVisualizarCarritos.inicializar();
+			this.controladorVisualizarCarritos.realizarBusqueda();
+			this.controladorVisualizarCarritos.mostrarDetalle();
+			this.controladorVisualizarCarritos.mostrarVentana();	
+			
 			generarFactura();
 			borrarCarritoConDetalle();		
 			
-			this.ventanaRealizarVenta.cerrar();
-			this.controladorVisualizarCarritos.cerrarVentana();
-			this.controladorVisualizarCarritos.inicializar();
-			this.controladorVisualizarCarritos.mostrarDetalle();
-			this.controladorVisualizarCarritos.mostrarVentana();
-			
-			return;
-			
-			
 		}else {
 			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
-			return;
 		}
 	}
 	
 	public void cancelarPago(ActionEvent a) {
 		this.ventanaRealizarVenta.cerrar();
-//		this.controladorVisualizarCarritos.cerrarVentana();
-//		this.controladorVisualizarCarritos.inicializar();
-//		this.controladorVisualizarCarritos.mostrarVentana();
+		this.controladorVisualizarCarritos.inicializar();
+		this.controladorVisualizarCarritos.realizarBusqueda();
+		this.controladorVisualizarCarritos.mostrarVentana();
 		
 	}
 	public void quitarMedioPago(ActionEvent a) {
@@ -430,7 +417,6 @@ public class ControladorRealizarVenta {
 		
 		this.listaDeIngresosARegistrar.remove(filaSeleccionada);
 		actualizarTablaMedioPago();
-//		System.out.println("cantidad de medios de pago a registrar: "+this.listaDeIngresosARegistrar.size());
 	}
 	
 	
@@ -557,7 +543,6 @@ public class ControladorRealizarVenta {
 		while(nroSucFactura.length() < 5) {
 			nroSucFactura = "0" + nroSucFactura;
 		}
-//		System.out.println("NROSUC generado: "+nroSucFactura+" length: "+nroSucFactura.length());
 		return nroSucFactura;
 	}
 
@@ -588,7 +573,6 @@ public class ControladorRealizarVenta {
 	
 	public double calcularTotalBruto(ClienteDTO cliente) {
 		double total= this.carritoACobrar.getTotal();
-//		System.out.println("se le debe calcular iva: "+calcularIVA(cliente));
 		if(calcularIVA(cliente)) {
 			total = total- ((21/100) * total);
 		}
@@ -675,10 +659,5 @@ public class ControladorRealizarVenta {
 			}
 		});
 	}
-	
-	
-	public static void main(String[] args) {
-//		new ControladorRealizarVenta(new MedioPago(new DAOSQLFactory()));
-	}
-	
+
 }

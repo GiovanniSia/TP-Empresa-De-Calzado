@@ -68,17 +68,7 @@ public class ControladorBusquedaProductos {
 	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {
 		this.controladorBusquedaCliente = c;
 	}
-	
-//	public ControladorBusquedaProductos() {
-//		this.clienteSeleccionado=new ClienteDTO(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","Excento","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-//		this.sucursal = new Sucursal(new DAOSQLFactory());;
-//		this.maestroProducto =new MaestroProducto(new DAOSQLFactory());
-//		this.stock = new Stock(new DAOSQLFactory());
-//		this.carrito = new Carrito(new DAOSQLFactory());
-//		this.detalleCarrito = new DetalleCarrito(new DAOSQLFactory());
-//		inicializar();
-//	}
-	
+
 	public void inicializar() {
 		this.listaStock = this.stock.readAll();
 		this.listaMaestroProducto = this.maestroProducto.readAll();
@@ -179,16 +169,12 @@ public class ControladorBusquedaProductos {
 		
 		List<MaestroProductoDTO> productosAproximados;
 
-//		System.out.println("tipocliente: "+this.clienteSeleccionado.getTipoCliente());
 		if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
 			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMayorista",precioDesde,"PrecioMayorista",precioHasta);
 		}else {
 			productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle,"PrecioMinorista",precioDesde,"PrecioMinorista",precioHasta);
 			}
-//		if(Integer.parseInt(precioDesde)>Integer.parseInt(precioHasta)) {
-//			JOptionPane.showMessageDialog(null, "El mínimo no debe ser mayor al máximo");
-//		}
-//		System.out.println("cant de result"+productosAproximados.size());
+
 		escribirTabla(productosAproximados);
 	}
 	
