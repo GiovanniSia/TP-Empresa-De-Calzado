@@ -493,6 +493,7 @@ public class ReControladorOperario implements ActionListener {
 			ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());
 			ventanaElegirReceta.getLblFecha().setText("Fecha requerido: "+ordenSeleccionado.getFechaRequerido());
 			this.ventanaElegirReceta.getLblMensaje().setText("No es posible trabajar, no hay receta");
+			reiniciarTablaIngredientes();
 			return;
 		}
 		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
