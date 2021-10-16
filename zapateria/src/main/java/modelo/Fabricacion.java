@@ -72,5 +72,9 @@ public class Fabricacion {
 	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock) {
 		return fab.actuaizarCantidadStockDeUnProductoEnUnaSucursal(nuevoValor, idStock);
 	}
+	
+	public List<FabricacionesDTO> readAllFabricacionesCanceladas(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
+		return fab.readAllFabricacionesCanceladas(descrProducto, idSucursal, idOrden, fechaDesde, Hasta);
+	}
 
 }

@@ -214,7 +214,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		return fabri;
 	}
 	
-	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo'))";
+	private static final String readAllOrdenesSinTrabajar = "SELECT * FROM ordenFabrica WHERE NOT EXISTS (SELECT * FROM fabricacionesEnMarcha WHERE ordenFabrica.IdOrdenFabrica = fabricacionesEnMarcha.IdOrdenFabrica AND (fabricacionesEnMarcha.Estado = 'completo' OR fabricacionesEnMarcha.Estado = 'entregado' OR fabricacionesEnMarcha.Estado = 'activo' OR fabricacionesEnMarcha.Estado = 'cancelado'))";
 	public List<OrdenFabricaDTO> readAllOrdenesSinTrabajar(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
@@ -541,6 +541,40 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			}
 		}
 		return isInsertExitoso;
+	}
+	
+	private static final String readAllFabricacionesCanceladas = "SELECT * FROM fabricacionesEnMarcha WHERE (Estado = 'cancelado')";
+	public List<FabricacionesDTO> readAllFabricacionesCanceladas(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<FabricacionesDTO> fabri = new ArrayList<FabricacionesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			String comandoSql = readAllFabricacionesCanceladas;
+			comandoSql = comandoSql + " AND EXISTS (SELECT * FROM maestroProductos, ordenFabrica as ordenF WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenF.IdOrdenFabrica AND maestroProductos.IdMaestroProducto = ordenF.IdProd AND maestroProductos.Descripcion LIKE '%"+descrProducto+"%')";
+			
+			if(!idSucursal.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfa WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfa.IdOrdenFabrica AND ordenfa.IdSucursal = "+idSucursal+")";
+			}
+			if(!idOrden.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.IdOrdenFabrica = "+idOrden+")";
+			}
+			if(!fechaDesde.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido >= '"+fechaDesde+"')";
+			}
+			if(!Hasta.equals("")) {
+				comandoSql = comandoSql + " AND EXISTS (SELECT * FROM ordenFabrica as ordenfab WHERE fabricacionesEnMarcha.IdOrdenFabrica = ordenfab.IdOrdenFabrica AND ordenfab.FechaRequerido <= '"+Hasta+"')";
+			}
+			
+			statement = conexion.getSQLConexion().prepareStatement(comandoSql);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				fabri.add(getFabricacionesEnMarcha(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fabri;
 	}
 
 

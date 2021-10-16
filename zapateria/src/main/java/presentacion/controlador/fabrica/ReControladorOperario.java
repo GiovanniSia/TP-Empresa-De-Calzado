@@ -44,6 +44,7 @@ public class ReControladorOperario implements ActionListener {
 	static final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Inactivo/Pendiente";
 	
 	static final String stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas = "Activo/En proceso";
+	static final String stringQueDescribeElEstadoDeLasOrdenesCanceladas = "Cancelada/Cancelado";
 	
 	static final String stringQuePreguntaCancelacionDeProduccion = "¿Estas seguro que lo quieres cancelar?";
 	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
@@ -56,6 +57,9 @@ public class ReControladorOperario implements ActionListener {
 	List<OrdenFabricaDTO> ordenesEnLista;
 	List<FabricacionesDTO> trabajosEnLista;
 	List<RecetaDTO> recetasEnLista;
+	
+	List<FabricacionesDTO> trabajosCanceladosEnLista;
+	
 	
 	OrdenFabricaDTO ordenSeleccionado;
 	RecetaDTO recetaSeleccionado;
@@ -185,6 +189,7 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaTrabajos();
 		llenarTablaConOrdenesSinEmpezarATrabajar();
 		llenarTablaConTrabajos();
+		llenarTablaConTrabajosCancelados();
 	}
 	
 	public void trabajarSeleccionado(ActionEvent s) {
@@ -198,7 +203,7 @@ public class ReControladorOperario implements ActionListener {
 			ordenSeleccionado = ordenATrabajar;
 			inicializarComboBoxRecetas(filasSeleccionadas[0]);
 			this.ventanaElegirReceta.show();
-		}else {
+		}else if(ordenesEnLista.size() + this.trabajosEnLista.size() > filasSeleccionadas[0]){
 			//SELECCIONO UNA ORDEN YA EN MARCHA
 			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
 			if(fabricacionTrabajando.getEstado().equals("activo")) {
@@ -216,6 +221,8 @@ public class ReControladorOperario implements ActionListener {
 				this.ventanaDiaDeLlegada.show();
 			}
 			
+		}else {
+			System.out.println("Se elegio un pedido cancelado");
 		}
 		
 	}
@@ -409,7 +416,10 @@ public class ReControladorOperario implements ActionListener {
 						        } else if ("completo".equals(status)){
 						        	setBackground(Color.green);
 						        	setForeground(Color.BLACK);
-						        } else {
+						        } else if (stringQueDescribeElEstadoDeLasOrdenesCanceladas.equals(status) ){
+						        	setBackground(Color.red);
+						        	setForeground(Color.WHITE);
+						        }else {
 						        	setBackground(table.getBackground());
 						        	setForeground(Color.BLACK);
 						        }
@@ -421,6 +431,52 @@ public class ReControladorOperario implements ActionListener {
 				}
 			}
 		}
+		
+	}
+	
+	private void llenarTablaConTrabajosCancelados() {
+		String id = ventanaPrincipal.getTextId().getText();
+		String sucursal = ventanaPrincipal.getTextSucursal().getText();
+		String productoText = ventanaPrincipal.getTextProducto().getText();
+		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
+		List<FabricacionesDTO> tabajosCancelados = modeloFabricacion.readAllFabricacionesCanceladas(productoText, sucursal, id, fechaDesde, fechaHasta);
+		trabajosCanceladosEnLista = new ArrayList<FabricacionesDTO>();
+		String estadoEnTabla = stringQueDescribeElEstadoDeLasOrdenesCanceladas;
+		
+		if(estadoEnTabla.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
+			for(FabricacionesDTO f: tabajosCancelados) {
+				String pasoActualString = modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
+				if(pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")){
+					trabajosCanceladosEnLista.add(f);
+					List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
+					for(OrdenFabricaDTO of: todasLasOrdenes) {
+						if(of.getIdOrdenFabrica() == f.getIdOrdenFabrica()) {
+							OrdenFabricaDTO orden = of;
+							MaestroProductoDTO producto = buscarProducto(orden.getIdProd());
+							String nombreProducto = "";
+							if(producto == null) {
+								nombreProducto = error;
+							}else {
+								nombreProducto = producto.getDescripcion();
+							}
+							Object[] agregar = {f.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , estadoEnTabla, "", ""};
+							ventanaPrincipal.getModelOrdenes().addRow(agregar);
+						}
+					}
+				}
+			}
+		}
+		
+		/*
+		if(f.getNroPasoActual() <= modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size()) {
+			pasoActualString = descrPaso + ": " + f.getNroPasoActual() + " de " + 
+					modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size();
+		}else {
+			pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
+		}&& pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")
+		*/
 		
 	}
 	
