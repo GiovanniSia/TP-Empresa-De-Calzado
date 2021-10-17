@@ -24,7 +24,7 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Id pedido","Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso Completo", "Estado", "Fecha completada", "Dias envio"};
+	private String[] nombreColumnas = { "Nro orden","Sucursal", "Producto", "Cantidad", "Accion", "Detalle", "Fecha y hora","Empleado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JPanel panel_2;
@@ -58,18 +58,18 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 910, 500);
+		frame.setBounds(100, 100, 1000, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 884, 399);
+		panel.setBounds(0, 64, 974, 399);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 69, 864, 272);
+		spCliente.setBounds(10, 69, 954, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
