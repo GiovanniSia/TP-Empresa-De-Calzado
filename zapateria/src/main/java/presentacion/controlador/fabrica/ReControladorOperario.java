@@ -36,6 +36,7 @@ import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.ReVentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
+import presentacion.vista.fabrica.VentanaIngresarMotivoCancelacion;
 import presentacion.vista.fabrica.fecha;
 
 public class ReControladorOperario implements ActionListener {
@@ -72,6 +73,8 @@ public class ReControladorOperario implements ActionListener {
 	FabricacionesDTO fabricacionTrabajando;
 	ReVentanaSeleccionarUnaReceta ventanaElegirReceta;
 	ReVentanaTrabajarUnPedido ventanaUnaTrabajo;
+	
+	VentanaIngresarMotivoCancelacion ventanaParaCancelacion;
 	int idFabrica;
 	ReVentanaIngresarFechaDeLlegada ventanaDiaDeLlegada;
 	
@@ -154,7 +157,7 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaUnaTrabajo = new ReVentanaTrabajarUnPedido();
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
-		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->abrirVentanaParaPreguntarCancelarOrden(r));
 		ventanaUnaTrabajo.getBtnSalirVentana().addActionListener(r->cerrarVentanaUnTrabajo(r));
 		
 		ventanaDiaDeLlegada = new ReVentanaIngresarFechaDeLlegada();
@@ -164,8 +167,9 @@ public class ReControladorOperario implements ActionListener {
 		
 		this.ventanaPrincipal.getBtnSalir().addActionListener(a -> salir(a));
 		
-		
-		
+		ventanaParaCancelacion = new VentanaIngresarMotivoCancelacion();
+		ventanaParaCancelacion.getBtnCancelar().addActionListener(a -> cancelarOrden(a));
+		ventanaParaCancelacion.getBtnNoCancelar().addActionListener(a -> noCancelarOrden(a));
 		
 		refrescarTabla();
 		
@@ -328,29 +332,46 @@ public class ReControladorOperario implements ActionListener {
 		this.historialPaso.insert(pasoHecho);
 	}
 	
-	public void cancelarOrden(ActionEvent s) {
+	public void abrirVentanaParaPreguntarCancelarOrden(ActionEvent s) {
 		int res = JOptionPane.showConfirmDialog(null, stringQuePreguntaCancelacionDeProduccion, "", JOptionPane.YES_NO_OPTION);
         switch (res) {
             case JOptionPane.YES_OPTION:
-            	fabricacionTrabajando.cancelarOrden();
-        		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
-        		this.refrescarTabla();
-        		ventanaUnaTrabajo.cerrar();
-        		reiniciarTablaIngredientesDeUnTrabajo();
-        		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
-        		
-        		PasoDeRecetaDTO pasoActual = getPasoActual();
-        		
-        		insertarEnElHistorial(fabricacionTrabajando.getIdOrdenFabrica(), this.empleado.getIdEmpleado(), 
-        				empleado.getApellido()+", "+empleado.getNombre(), 
-        				"Cancelacion: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size()
-        				,"");//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
+            	this.ventanaParaCancelacion.getTextPane().setText("");
+            	this.ventanaParaCancelacion.mostrarVentana();
         		
         		break;
             case JOptionPane.NO_OPTION:
             	JOptionPane.showMessageDialog(null, stringQueNoCancelaDeProduccion);
             	break;
         }
+	}
+	
+	private void cancelarOrden(ActionEvent s) {
+		String explicacion = this.ventanaParaCancelacion.getTextPane().getText();
+		if(explicacion.length() < 10) {
+			this.mostrarMensajeEmergente("Ingrese al menos 10 letras.");
+			return;
+		}
+		fabricacionTrabajando.cancelarOrden();
+		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		this.refrescarTabla();
+		ventanaUnaTrabajo.cerrar();
+		reiniciarTablaIngredientesDeUnTrabajo();
+		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+		
+		PasoDeRecetaDTO pasoActual = getPasoActual();
+		
+		
+		insertarEnElHistorial(fabricacionTrabajando.getIdOrdenFabrica(), this.empleado.getIdEmpleado(), 
+				empleado.getApellido()+", "+empleado.getNombre(), 
+				"Cancelacion: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size()
+				,explicacion);//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
+		
+		this.ventanaParaCancelacion.cerrar();
+	}
+	
+	private void noCancelarOrden(ActionEvent s) {
+		this.ventanaParaCancelacion.cerrar();
 	}
 	
 	private void ingresarDias(ActionEvent s) {

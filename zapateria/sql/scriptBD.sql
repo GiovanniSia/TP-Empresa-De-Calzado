@@ -330,7 +330,7 @@ CREATE TABLE `HistorialPasos`
   `IdEmpleado` int(11) NOT NULL,
   `NombreCompleto` varchar(45) NOT NULL,
   `DescrPasoCompletado` varchar(45) NOT NULL,
-  `Descr` varchar(60) NOT NULL,
+  `Descr` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 );
 

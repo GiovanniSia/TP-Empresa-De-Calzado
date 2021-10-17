@@ -24,13 +24,13 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Nro orden","Sucursal", "Producto", "Cantidad", "Accion", "Detalle", "Fecha y hora","Empleado"};
+	private String[] nombreColumnas = { "Nro orden","Sucursal", "Producto", "Cantidad", "Accion", "Fecha y hora","Empleado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JPanel panel_2;
 	private JScrollPane spCliente;
 
-	private JButton btnSeleccionarProceso;
+	private JButton btnVerDescripcion;
 	private JLabel lblNewLabel;
 	private JLabel lblId;
 	private JTextField textId;
@@ -89,13 +89,13 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 		spCliente.setViewportView(tabla);
 
-		btnSeleccionarProceso = new JButton("Ver descripcion");
-		btnSeleccionarProceso.addActionListener(new ActionListener() {
+		btnVerDescripcion = new JButton("Ver descripcion");
+		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSeleccionarProceso.setBounds(10, 352, 177, 23);
-		panel.add(btnSeleccionarProceso);
+		btnVerDescripcion.setBounds(10, 352, 177, 23);
+		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
 		lblId.setBounds(10, 11, 46, 14);
@@ -215,8 +215,8 @@ public class VentanaVerHistorialPasos extends JFrame {
 		return nombreColumnas;
 	}
 
-	public JButton getBtnTrabajarPedido() {
-		return btnSeleccionarProceso;
+	public JButton getBtnVerDescripcion() {
+		return btnVerDescripcion;
 	}
 
 	public JTextField getTextId() {
