@@ -16,7 +16,6 @@ public class HistorialPasoDTO {
 
 	public HistorialPasoDTO(int id, String hora, String fecha, int idOrden, int idEmpleado, String nombreCompleto,
 			String descrPasoCompletado, String descr) {
-		super();
 		this.id = id;
 		this.hora = hora;
 		Fecha = fecha;
@@ -29,7 +28,6 @@ public class HistorialPasoDTO {
 
 	public HistorialPasoDTO(int id, int idOrden, int idEmpleado, String nombreCompleto, String descrPasoCompletado,
 			String descr) {
-		super();
 		this.id = id;
 		IdOrden = idOrden;
 		IdEmpleado = idEmpleado;
