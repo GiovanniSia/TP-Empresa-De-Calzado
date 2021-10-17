@@ -10,8 +10,9 @@ import java.util.List;
 import dto.CarritoDTO;
 import dto.HistorialPasoDTO;
 import persistencia.conexion.Conexion;
+import persistencia.dao.interfaz.HistorialPasoDAO;
 
-public class HistorialPasoDAOSQL {
+public class HistorialPasoDAOSQL implements HistorialPasoDAO{
 
 	private static final String readall = "SELECT * FROM HistorialPasos";
 
@@ -46,7 +47,7 @@ public class HistorialPasoDAOSQL {
 
 	private static final String insert = "INSERT INTO stock(Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr) VALUES(?,?,?,?,?,?,?);";
 
-	public boolean insert(HistorialPasoDTO pasoHistorial) {
+	public boolean insert(HistorialPasoDTO pasoHistorial){
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
