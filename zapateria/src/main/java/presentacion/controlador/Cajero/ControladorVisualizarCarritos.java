@@ -280,7 +280,7 @@ public class ControladorVisualizarCarritos {
 			ClienteDTO client = this.cliente.selectCliente(carrito.getIdCliente());
 
 			this.ventanaVisualizarCarritos.cerrar();
-			this.controladorRealizarVenta.establecerCarritoACobrar(carrito,this.listaDetalleCarrito,client);
+			this.controladorRealizarVenta.establecerCarritoACobrar(carrito,this.detalleCarritoEnTabla,client);
 			this.controladorRealizarVenta.inicializar();
 			this.controladorRealizarVenta.mostrarVentana();
 

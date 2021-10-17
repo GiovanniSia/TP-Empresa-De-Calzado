@@ -92,7 +92,7 @@ public class VentanaMenuSistemaDeVentas {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 818, 492);
+		panel.setBounds(0, 0, 818, 520);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -184,7 +184,7 @@ public class VentanaMenuSistemaDeVentas {
 		panel.add(lblNewLabel_7);
 		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(760, 331, 48, 50);
+		btnRegresar.setBounds(760, 460, 48, 50);
 		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
 		panel.add(btnRegresar);
 		

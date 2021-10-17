@@ -73,7 +73,12 @@ public class ControladorRealizarVenta {
 	
 	List<IngresosDTO> listaDeIngresosARegistrar;//representa tambien el pago que este en la tabla (por indice)
 	
+	List<MaestroProductoDTO> todosLosProductos;
+	
 	ControladorVisualizarCarritos controladorVisualizarCarritos;
+	
+	FacturaDTO facturaGenerada;
+	
 	
 	public ControladorRealizarVenta(MedioPago medioPago, Cliente cliente, Empleado cajero, Carrito carrito, DetalleCarrito detalleCarrito, MaestroProducto maestroProducto, Factura factura, DetalleFactura detalleFactura, Ingresos ingresos) {
 		this.medioPago = medioPago;
@@ -89,7 +94,7 @@ public class ControladorRealizarVenta {
 
 		this.listamediosDePago = new ArrayList<MedioPagoDTO>();
 		this.listaDeIngresosARegistrar = new ArrayList<IngresosDTO>();
-
+		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 	}
 	
 	public void setControladorVisualizarCarritos(ControladorVisualizarCarritos controladorVisualizarCarritos) {
@@ -104,6 +109,9 @@ public class ControladorRealizarVenta {
 	
 	
 	public void inicializar() {
+		System.out.println("cantidad de ingresos por registrar: "+this.listaDeIngresosARegistrar.size());
+		
+		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listamediosDePago = this.medioPago.readAll();
 		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
 		this.ventanaRealizarVenta = new VentanaRealizarVenta();
@@ -370,11 +378,15 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void registrarPago(ActionEvent a) {
+		
+		System.out.println("cantidad total pagado: "+this.totalPagado);
+		System.out.println("cantidad total pagado + desc: "+this.totalPagado+this.descuento);
+		
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
+			
 			for(DetalleCarritoDTO det: detalleCarritoACobrar) {
-				det.getIdProducto();
-				List<MaestroProductoDTO> productos = maestroProducto.readAll();
-				for(MaestroProductoDTO mp: productos) {
+				
+				for(MaestroProductoDTO mp: this.todosLosProductos) {
 					if(mp.getIdMaestroProducto() == det.getIdProducto()) {
 						if(generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp)) {
 						}else {
@@ -382,15 +394,30 @@ public class ControladorRealizarVenta {
 					}
 				}
 			}
+						
+			generarFactura();
+			borrarCarritoConDetalle();	
+
+			this.carritoACobrar=null;
+			this.detalleCarritoACobrar=null;
+			this.clienteCarrito=null;
+			this.totalAPagar=0;
+			this.totalAPagarAux=0;
+			this.totalAPagarSinDescuento=0;
+			this.totalPagado=0;
 			
+			//Consultamos si quiere ver la factura 
+			//si selecciona que si devuelve un 0, no un 1, y la x un -1
+			int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if(resp==0) {
+				ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), this.idSucursal);
+				reporte.mostrar();
+			}
 			this.ventanaRealizarVenta.cerrar();
 			this.controladorVisualizarCarritos.inicializar();
 			this.controladorVisualizarCarritos.realizarBusqueda();
 			this.controladorVisualizarCarritos.mostrarDetalle();
-			this.controladorVisualizarCarritos.mostrarVentana();	
-			
-			generarFactura();
-			borrarCarritoConDetalle();		
+			this.controladorVisualizarCarritos.mostrarVentana();
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
@@ -471,33 +498,18 @@ public class ControladorRealizarVenta {
 		
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = calcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
-		FacturaDTO factura = new FacturaDTO(id,montoPendiente,idCliente,nombreCliente,idCajero,nombreCajero,idVendedor,nombreVendedor,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
+		this.facturaGenerada = new FacturaDTO(id,montoPendiente,idCliente,nombreCliente,idCajero,nombreCajero,idVendedor,nombreVendedor,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
 		
 		//registramos la factura en la bd
-		boolean insertFactura = this.factura.insert(factura);
+		boolean insertFactura = this.factura.insert(this.facturaGenerada);
 		if(insertFactura==false) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 			return;
 		}
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
-		factura.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
-		registrarDetallesFactura(factura);
-		registrarIngreso(client,factura);
-		
-		
-		
-		
-		
-		//Consultamos si quiere ver la factura 
-		//si selecciona que si devuelve un 0, no un 1, y la x un -1
-		int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		if(resp==0) {
-			ReporteFactura reporte = new ReporteFactura(nroFacturaCompleto, this.idSucursal);
-			reporte.mostrar();
-		}
-		
-		
-		
+		this.facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
+		registrarDetallesFactura(this.facturaGenerada);
+		registrarIngreso(client,this.facturaGenerada);		
 	}
 	
 	
@@ -535,6 +547,7 @@ public class ControladorRealizarVenta {
 			this.ingresos.insert(ingreso);
 			
 		}
+		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);
 	}
 		
 	public String generarNroSucursal() {

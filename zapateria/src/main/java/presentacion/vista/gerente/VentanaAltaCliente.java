@@ -12,6 +12,8 @@ import persistencia.conexion.Conexion;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -30,12 +32,12 @@ public class VentanaAltaCliente {
 	private JTextField textApellido;
 	private JTextField textCUIL;
 	private JTextField textCorreo;
-	private JTextField textFieldPais;
-	private JTextField textFieldProvincia;
-	private JTextField textFieldLocalidad;
-	private JTextField textFieldCalle;
-	private JTextField textFieldAltura;
-	private JTextField textFieldCodPostal;
+	private JTextField textPais;
+	private JTextField textProvincia;
+	private JTextField textLocalidad;
+	private JTextField textCalle;
+	private JTextField textAltura;
+	private JTextField textCodPostal;
 
 	
 	private JButton btnRegistrar;
@@ -43,6 +45,8 @@ public class VentanaAltaCliente {
 
 	private JComboBox comboBoxImpuestoAFIP;
 	private JComboBox comboBoxTipoCliente;
+	private JTextField textSaldoInicial;
+
 	/**
 	 * Launch the application.
 	 */
@@ -83,17 +87,17 @@ public class VentanaAltaCliente {
 		frame.setTitle("Zapateria Argento - Registrar un cliente");
 		frame.setResizable(false);
 		
-		JLabel lblNewLabel = new JLabel("Registrar Cliente");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 10, 393, 50);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblRegistrarCliente = new JLabel("Registrar Cliente");
+		lblRegistrarCliente.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
+		lblRegistrarCliente.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistrarCliente.setBounds(10, 10, 393, 50);
+		frame.getContentPane().add(lblRegistrarCliente);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nombre");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(10, 114, 94, 18);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblNombre = new JLabel("Nombre");
+		lblNombre.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNombre.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblNombre.setBounds(10, 114, 94, 18);
+		frame.getContentPane().add(lblNombre);
 		
 		textNombre = new JTextField();
 		textNombre.setBounds(128, 113, 275, 19);
@@ -106,114 +110,130 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(textApellido);
 		
 		textCUIL = new JTextField();
+		textCUIL.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCUIL.getText().length()>=12) {
+                    e.consume();
+                }
+            }
+        });
 		textCUIL.setColumns(10);
 		textCUIL.setBounds(128, 171, 275, 19);
 		frame.getContentPane().add(textCUIL);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Apellido");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_1.setBounds(10, 142, 94, 19);
-		frame.getContentPane().add(lblNewLabel_1_1);
+		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblApellido.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblApellido.setBounds(10, 142, 94, 19);
+		frame.getContentPane().add(lblApellido);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Cuil");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_2.setBounds(10, 169, 94, 24);
-		frame.getContentPane().add(lblNewLabel_1_2);
+		JLabel lblCUIL = new JLabel("Cuil");
+		lblCUIL.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCUIL.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblCUIL.setBounds(10, 169, 94, 24);
+		frame.getContentPane().add(lblCUIL);
 		
 		textCorreo = new JTextField();
 		textCorreo.setColumns(10);
 		textCorreo.setBounds(128, 206, 275, 19);
 		frame.getContentPane().add(textCorreo);
 		
-		JLabel lblNewLabel_1_2_1 = new JLabel("Correo");
-		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_2_1.setBounds(10, 203, 94, 24);
-		frame.getContentPane().add(lblNewLabel_1_2_1);
+		JLabel lblCorreo = new JLabel("Correo");
+		lblCorreo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCorreo.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblCorreo.setBounds(10, 203, 94, 24);
+		frame.getContentPane().add(lblCorreo);
 		
-		JLabel lblNewLabel_1_2_1_1 = new JLabel("Tipo de Cliente");
-		lblNewLabel_1_2_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_2_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_2_1_1.setBounds(10, 247, 137, 24);
-		frame.getContentPane().add(lblNewLabel_1_2_1_1);
+		JLabel lblTipoCliente = new JLabel("Tipo de Cliente");
+		lblTipoCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTipoCliente.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblTipoCliente.setBounds(-1, 247, 127, 24);
+		frame.getContentPane().add(lblTipoCliente);
 		
 		
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Impuesto AFIP");
-		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_1_1.setBounds(10, 281, 137, 18);
-		frame.getContentPane().add(lblNewLabel_1_1_1);
+		JLabel lblImpuestoAFIP = new JLabel("Impuesto AFIP");
+		lblImpuestoAFIP.setHorizontalAlignment(SwingConstants.LEFT);
+		lblImpuestoAFIP.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblImpuestoAFIP.setBounds(10, 281, 116, 18);
+		frame.getContentPane().add(lblImpuestoAFIP);
 		
 
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Pais");
-		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3.setBounds(10, 359, 94, 24);
-		frame.getContentPane().add(lblNewLabel_1_3);
+		JLabel lblPais = new JLabel("Pais");
+		lblPais.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPais.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblPais.setBounds(10, 359, 94, 24);
+		frame.getContentPane().add(lblPais);
 		
-		JLabel lblNewLabel_1_3_1 = new JLabel("Provincia");
-		lblNewLabel_1_3_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3_1.setBounds(10, 398, 116, 24);
-		frame.getContentPane().add(lblNewLabel_1_3_1);
+		JLabel lblProv = new JLabel("Provincia");
+		lblProv.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblProv.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblProv.setBounds(10, 398, 116, 24);
+		frame.getContentPane().add(lblProv);
 		
-		JLabel lblNewLabel_1_3_1_1 = new JLabel("Localidad");
-		lblNewLabel_1_3_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3_1_1.setBounds(10, 432, 116, 24);
-		frame.getContentPane().add(lblNewLabel_1_3_1_1);
+		JLabel lblLocalidad = new JLabel("Localidad");
+		lblLocalidad.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLocalidad.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblLocalidad.setBounds(10, 432, 116, 24);
+		frame.getContentPane().add(lblLocalidad);
 		
-		JLabel lblNewLabel_1_3_1_1_1 = new JLabel("Calle");
-		lblNewLabel_1_3_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3_1_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3_1_1_1.setBounds(10, 466, 116, 24);
-		frame.getContentPane().add(lblNewLabel_1_3_1_1_1);
+		JLabel lblCalle = new JLabel("Calle");
+		lblCalle.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCalle.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblCalle.setBounds(10, 466, 116, 24);
+		frame.getContentPane().add(lblCalle);
 		
-		JLabel lblNewLabel_1_3_1_1_1_1 = new JLabel("Altura");
-		lblNewLabel_1_3_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3_1_1_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3_1_1_1_1.setBounds(10, 500, 116, 24);
-		frame.getContentPane().add(lblNewLabel_1_3_1_1_1_1);
+		JLabel lblAltura = new JLabel("Altura");
+		lblAltura.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblAltura.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblAltura.setBounds(10, 500, 116, 24);
+		frame.getContentPane().add(lblAltura);
 		
-		JLabel lblNewLabel_1_3_1_1_1_1_1 = new JLabel("Cod Postal");
-		lblNewLabel_1_3_1_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1_3_1_1_1_1_1.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblNewLabel_1_3_1_1_1_1_1.setBounds(10, 533, 116, 24);
-		frame.getContentPane().add(lblNewLabel_1_3_1_1_1_1_1);
+		JLabel lblCodPostal = new JLabel("Cod Postal");
+		lblCodPostal.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCodPostal.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblCodPostal.setBounds(10, 533, 116, 24);
+		frame.getContentPane().add(lblCodPostal);
 		
-		textFieldPais = new JTextField();
-		textFieldPais.setColumns(10);
-		textFieldPais.setBounds(128, 361, 275, 19);
-		frame.getContentPane().add(textFieldPais);
+		textPais = new JTextField();
+		textPais.setColumns(10);
+		textPais.setBounds(128, 361, 275, 19);
+		frame.getContentPane().add(textPais);
 		
-		textFieldProvincia = new JTextField();
-		textFieldProvincia.setColumns(10);
-		textFieldProvincia.setBounds(128, 400, 275, 19);
-		frame.getContentPane().add(textFieldProvincia);
+		textProvincia = new JTextField();
+		textProvincia.setColumns(10);
+		textProvincia.setBounds(128, 400, 275, 19);
+		frame.getContentPane().add(textProvincia);
 		
-		textFieldLocalidad = new JTextField();
-		textFieldLocalidad.setColumns(10);
-		textFieldLocalidad.setBounds(128, 434, 275, 19);
-		frame.getContentPane().add(textFieldLocalidad);
+		textLocalidad = new JTextField();
+		textLocalidad.setColumns(10);
+		textLocalidad.setBounds(128, 434, 275, 19);
+		frame.getContentPane().add(textLocalidad);
 		
-		textFieldCalle = new JTextField();
-		textFieldCalle.setColumns(10);
-		textFieldCalle.setBounds(128, 468, 275, 19);
-		frame.getContentPane().add(textFieldCalle);
+		textCalle = new JTextField();
+		textCalle.setColumns(10);
+		textCalle.setBounds(128, 468, 275, 19);
+		frame.getContentPane().add(textCalle);
 		
-		textFieldAltura = new JTextField();
-		textFieldAltura.setColumns(10);
-		textFieldAltura.setBounds(128, 500, 137, 19);
-		frame.getContentPane().add(textFieldAltura);
+		textAltura = new JTextField();
+		textAltura.setColumns(10);
+		textAltura.setBounds(128, 500, 137, 19);
+		frame.getContentPane().add(textAltura);
 		
-		textFieldCodPostal = new JTextField();
-		textFieldCodPostal.setColumns(10);
-		textFieldCodPostal.setBounds(128, 535, 137, 19);
-		frame.getContentPane().add(textFieldCodPostal);
+		textCodPostal = new JTextField();
+		textCodPostal.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCodPostal.getText().length()>=6) {
+                    e.consume();
+                }
+            }
+        });
+		textCodPostal.setColumns(10);
+		textCodPostal.setBounds(128, 535, 137, 19);
+		frame.getContentPane().add(textCodPostal);
 		
 		btnRegistrar = new JButton("Registrar");
 		btnRegistrar.setBounds(128, 592, 179, 35);
@@ -225,14 +245,25 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(btnCancelar);
 		
 		comboBoxImpuestoAFIP = new JComboBox();
-		comboBoxImpuestoAFIP.setBounds(157, 280, 131, 23);
+		comboBoxImpuestoAFIP.setBounds(128, 278, 198, 23);
 		this.comboBoxImpuestoAFIP.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxImpuestoAFIP);
 		
 		comboBoxTipoCliente = new JComboBox();
-		comboBoxTipoCliente.setBounds(157, 247, 131, 23);
+		comboBoxTipoCliente.setBounds(128, 247, 198, 23);
 		this.comboBoxTipoCliente.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipoCliente);
+		
+		textSaldoInicial = new JTextField();
+		textSaldoInicial.setColumns(10);
+		textSaldoInicial.setBounds(128, 324, 275, 19);
+		frame.getContentPane().add(textSaldoInicial);
+		
+		JLabel lblSaldoInicial = new JLabel("Saldo inicial");
+		lblSaldoInicial.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSaldoInicial.setFont(new Font("Consolas", Font.BOLD, 15));
+		lblSaldoInicial.setBounds(10, 325, 116, 24);
+		frame.getContentPane().add(lblSaldoInicial);
 	}
 	
 	public void show() {
@@ -288,28 +319,28 @@ public class VentanaAltaCliente {
 		return textCorreo;
 	}
 
-	public JTextField getTextFieldPais() {
-		return textFieldPais;
+	public JTextField getTextPais() {
+		return textPais;
 	}
 
-	public JTextField getTextFieldProvincia() {
-		return textFieldProvincia;
+	public JTextField getTextProvincia() {
+		return textProvincia;
 	}
 
-	public JTextField getTextFieldLocalidad() {
-		return textFieldLocalidad;
+	public JTextField getTextLocalidad() {
+		return textLocalidad;
 	}
 
-	public JTextField getTextFieldCalle() {
-		return textFieldCalle;
+	public JTextField getTextCalle() {
+		return textCalle;
 	}
 
-	public JTextField getTextFieldAltura() {
-		return textFieldAltura;
+	public JTextField getTextAltura() {
+		return textAltura;
 	}
 
-	public JTextField getTextFieldCodPostal() {
-		return textFieldCodPostal;
+	public JTextField getTextCodPostal() {
+		return textCodPostal;
 	}
 
 	public JButton getBtnRegistrar() {
@@ -326,6 +357,9 @@ public class VentanaAltaCliente {
 
 	public JComboBox getComboBoxTipoCliente() {
 		return comboBoxTipoCliente;
+	}
+	public JTextField getTextSaldoInicial() {
+		return textSaldoInicial;
 	}
 
 }

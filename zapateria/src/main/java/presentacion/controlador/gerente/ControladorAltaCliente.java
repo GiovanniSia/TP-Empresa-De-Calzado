@@ -15,8 +15,6 @@ import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaAltaCliente;
 
 public class ControladorAltaCliente {
-
-	double limiteCreditoPorDefecto=1300;
 	
 	VentanaAltaCliente ventanaAltaCliente;
 	
@@ -63,17 +61,17 @@ public class ControladorAltaCliente {
 			String apellido = this.ventanaAltaCliente.getTextApellido().getText();
 			String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
 			String mail = this.ventanaAltaCliente.getTextCorreo().getText();
-			int limiteCredito =(int) this.limiteCreditoPorDefecto;
-			int creditoDisp = (int)this.limiteCreditoPorDefecto;
+			int limiteCredito = Integer.parseInt(this.ventanaAltaCliente.getTextSaldoInicial().getText());
+			int creditoDisp = limiteCredito;
 			String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
 			String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
 			String estado = "Activo";
-			String calle = this.ventanaAltaCliente.getTextFieldCalle().getText();
-			String altura = this.ventanaAltaCliente.getTextFieldAltura().getText();
-			String pais = this.ventanaAltaCliente.getTextFieldPais().getText();
-			String prov = this.ventanaAltaCliente.getTextFieldProvincia().getText();
-			String localida = this.ventanaAltaCliente.getTextFieldLocalidad().getText();
-			String codPostal = this.ventanaAltaCliente.getTextFieldCodPostal().getText();
+			String calle = this.ventanaAltaCliente.getTextCalle().getText();
+			String altura = this.ventanaAltaCliente.getTextAltura().getText();
+			String pais = this.ventanaAltaCliente.getTextPais().getText();
+			String prov = this.ventanaAltaCliente.getTextProvincia().getText();
+			String localida = this.ventanaAltaCliente.getTextLocalidad().getText();
+			String codPostal = this.ventanaAltaCliente.getTextCodPostal().getText();
 			
 			ClienteDTO cliente = new ClienteDTO(0,nombre,apellido,CUIL,mail,limiteCredito,creditoDisp,tipoCliente,impuestoAFIP,estado,calle,altura,pais,prov,localida,codPostal);
 			 if(clienteYaExiste()){
@@ -130,32 +128,37 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de cliente");
 			return false;
 		}
-		String pais = this.ventanaAltaCliente.getTextFieldPais().getText();
+		String saldoInicial = this.ventanaAltaCliente.getTextSaldoInicial().getText();
+		if(saldoInicial.equals("")) {
+			JOptionPane.showMessageDialog(null, "El saldo inicial no debe estar vacio");
+			return false;
+		}
+		String pais = this.ventanaAltaCliente.getTextPais().getText();
 		if(pais.equals("")) {
 			JOptionPane.showMessageDialog(null, "El pais no puede ser vacio");
 			return false;
 		}
-		String prov = this.ventanaAltaCliente.getTextFieldProvincia().getText();
+		String prov = this.ventanaAltaCliente.getTextProvincia().getText();
 		if(prov.equals("")) {
 			JOptionPane.showMessageDialog(null, "La provincia no puede ser vacia");
 			return false;
 		}
-		String localida = this.ventanaAltaCliente.getTextFieldLocalidad().getText();
+		String localida = this.ventanaAltaCliente.getTextLocalidad().getText();
 		if(localida.equals("")) {
 			JOptionPane.showMessageDialog(null, "La localidad no puede ser vacia");
 			return false;
 		}
-		String calle = this.ventanaAltaCliente.getTextFieldCalle().getText();
+		String calle = this.ventanaAltaCliente.getTextCalle().getText();
 		if(calle.equals("")) {
 			JOptionPane.showMessageDialog(null, "La calle no puede ser vacia");
 			return false;
 		}
-		String altura = this.ventanaAltaCliente.getTextFieldAltura().getText();
+		String altura = this.ventanaAltaCliente.getTextAltura().getText();
 		if(altura.equals("")) {
 			JOptionPane.showMessageDialog(null, "La altura no puede ser vacia");
 			return false;
 		}
-		String codPostal = this.ventanaAltaCliente.getTextFieldCodPostal().getText();
+		String codPostal = this.ventanaAltaCliente.getTextCodPostal().getText();
 		if(codPostal.equals("")) {
 			JOptionPane.showMessageDialog(null, "El cod postal no puede ser vacio");
 			return false;
@@ -188,33 +191,40 @@ public class ControladorAltaCliente {
 				ValidadorTeclado.aceptarMinusculaDigitoPuntoArrobaYGuiones(e);
 			}
 		});
-		//pais,prov,localidd,calle,altura,codpostal
-		this.ventanaAltaCliente.getTextFieldPais().addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
-			}
-		});
-		this.ventanaAltaCliente.getTextFieldProvincia().addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
-			}
-		});
-		this.ventanaAltaCliente.getTextFieldLocalidad().addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
-			}
-		});
-		this.ventanaAltaCliente.getTextFieldCalle().addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
-			}
-		});
-		this.ventanaAltaCliente.getTextFieldAltura().addKeyListener(new KeyAdapter() {
+		
+		this.ventanaAltaCliente.getTextSaldoInicial().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
 		});
-		this.ventanaAltaCliente.getTextFieldCodPostal().addKeyListener(new KeyAdapter() {
+		
+		//pais,prov,localidd,calle,altura,codpostal
+		this.ventanaAltaCliente.getTextPais().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		});
+		this.ventanaAltaCliente.getTextProvincia().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		});
+		this.ventanaAltaCliente.getTextLocalidad().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		});
+		this.ventanaAltaCliente.getTextCalle().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		});
+		this.ventanaAltaCliente.getTextAltura().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		});
+		this.ventanaAltaCliente.getTextCodPostal().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
@@ -260,12 +270,13 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedItem(this.ventanaAltaCliente.getComboBoxTipoCliente().getItemAt(0));
 		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getItemAt(0));
 		
-		this.ventanaAltaCliente.getTextFieldCalle().setText("");
-		this.ventanaAltaCliente.getTextFieldAltura().setText("");
-		this.ventanaAltaCliente.getTextFieldPais().setText("");
-		this.ventanaAltaCliente.getTextFieldProvincia().setText("");
-		this.ventanaAltaCliente.getTextFieldLocalidad().setText("");
-		this.ventanaAltaCliente.getTextFieldCodPostal().setText("");
+		this.ventanaAltaCliente.getTextSaldoInicial().setText("");
+		this.ventanaAltaCliente.getTextCalle().setText("");
+		this.ventanaAltaCliente.getTextAltura().setText("");
+		this.ventanaAltaCliente.getTextPais().setText("");
+		this.ventanaAltaCliente.getTextProvincia().setText("");
+		this.ventanaAltaCliente.getTextLocalidad().setText("");
+		this.ventanaAltaCliente.getTextCodPostal().setText("");
 	}
 	
 }
