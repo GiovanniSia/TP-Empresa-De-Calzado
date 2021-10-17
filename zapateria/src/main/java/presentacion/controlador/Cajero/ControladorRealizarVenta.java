@@ -171,6 +171,11 @@ public class ControladorRealizarVenta {
 		
 		double cantidad =(double) Double.parseDouble(ventanaRealizarVenta.getTextCantidad().getText());
 		
+		if(cantidad==0) {
+			JOptionPane.showMessageDialog(null, "No se puede agregar esta cantidad");
+			return;
+		}
+		
 		if(!esUnPagoConTarjeta(medioPago) && !nroOperacion.equals("")) {
 			JOptionPane.showMessageDialog(null, "No se puede agregar un nro de operacion");
 			return;
