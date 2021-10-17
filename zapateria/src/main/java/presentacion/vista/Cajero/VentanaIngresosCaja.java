@@ -28,6 +28,7 @@ public class VentanaIngresosCaja extends JFrame {
 	private JLabel lblActualizarEstadoCaja;
 	private JLabel lblSaldoActual;
 	private JLabel lblActualizarSaldoActual;
+	private JLabel lblActualizarFechaHoy;
 	
 	
 	public static void main(String[] args) {
@@ -69,47 +70,53 @@ public class VentanaIngresosCaja extends JFrame {
 		panel.add(lblNewLabel);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 62, 610, 52);
+		panel_1.setBounds(0, 62, 496, 86);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Ingresos de Caja");
-		lblNewLabel_1.setBounds(10, 5, 208, 36);
+		lblNewLabel_1.setBounds(10, 5, 208, 70);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estado de la Caja:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(202, 5, 142, 14);
+		lblNewLabel_2.setBounds(207, 36, 142, 14);
 		panel_1.add(lblNewLabel_2);
 		
 		lblActualizarEstadoCaja = new JLabel("Sin estado");
 		lblActualizarEstadoCaja.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblActualizarEstadoCaja.setHorizontalAlignment(SwingConstants.CENTER);
-		lblActualizarEstadoCaja.setBounds(202, 30, 142, 14);
+		lblActualizarEstadoCaja.setBounds(207, 61, 142, 14);
 		panel_1.add(lblActualizarEstadoCaja);
 		
 		lblSaldoActual = new JLabel("Saldo actual:");
 		lblSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSaldoActual.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblSaldoActual.setBounds(339, 5, 142, 14);
+		lblSaldoActual.setBounds(344, 36, 142, 14);
 		panel_1.add(lblSaldoActual);
 		
 		lblActualizarSaldoActual = new JLabel("$0");
 		lblActualizarSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarSaldoActual.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblActualizarSaldoActual.setBounds(339, 30, 142, 14);
+		lblActualizarSaldoActual.setBounds(344, 61, 142, 14);
 		panel_1.add(lblActualizarSaldoActual);
 		
+		lblActualizarFechaHoy = new JLabel("");
+		lblActualizarFechaHoy.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblActualizarFechaHoy.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActualizarFechaHoy.setBounds(287, 5, 125, 14);
+		panel_1.add(lblActualizarFechaHoy);
+		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 125, 476, 157);
+		panel_2.setBounds(0, 148, 496, 145);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
 		lblIngresoSaldoInicial = new JLabel("Ingresar saldo inicial:");
 		lblIngresoSaldoInicial.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblIngresoSaldoInicial.setBounds(59, 11, 205, 32);
+		lblIngresoSaldoInicial.setBounds(70, 11, 205, 32);
 		panel_2.add(lblIngresoSaldoInicial);
 		
 		txtFieldIngresoSaldoInicial = new JTextField();
@@ -124,13 +131,13 @@ public class VentanaIngresosCaja extends JFrame {
 				}
 			}
 		});
-		txtFieldIngresoSaldoInicial.setBounds(240, 15, 136, 28);
+		txtFieldIngresoSaldoInicial.setBounds(251, 15, 136, 28);
 		panel_2.add(txtFieldIngresoSaldoInicial);
 		txtFieldIngresoSaldoInicial.setColumns(10);
 		
 		lblRegarcaSaldo = new JLabel("Ingresar recarga de saldo:");
 		lblRegarcaSaldo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblRegarcaSaldo.setBounds(25, 54, 205, 32);
+		lblRegarcaSaldo.setBounds(36, 54, 205, 32);
 		panel_2.add(lblRegarcaSaldo);
 		
 		txtFieldRegarcaSaldo = new JTextField();
@@ -146,17 +153,17 @@ public class VentanaIngresosCaja extends JFrame {
 			}
 		});
 		txtFieldRegarcaSaldo.setColumns(10);
-		txtFieldRegarcaSaldo.setBounds(240, 58, 136, 28);
+		txtFieldRegarcaSaldo.setBounds(251, 58, 136, 28);
 		panel_2.add(txtFieldRegarcaSaldo);
 		
 		btnRealizarIngreso = new JButton("Realizar Ingreso");
 		btnRealizarIngreso.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnRealizarIngreso.setBounds(229, 114, 158, 32);
+		btnRealizarIngreso.setBounds(229, 97, 158, 32);
 		panel_2.add(btnRealizarIngreso);
 		
 		btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAtras.setBounds(10, 114, 98, 32);
+		btnAtras.setBounds(10, 97, 98, 32);
 		panel_2.add(btnAtras);
 	}
 
@@ -196,6 +203,18 @@ public class VentanaIngresosCaja extends JFrame {
 
 	public void mostrarVentana() {
 		this.setVisible(true);
+	}
+
+	public JLabel getLblActualizarFechaHoy() {
+		return lblActualizarFechaHoy;
+	}
+	
+	public void mostrarHoraHoy() {
+		this.lblActualizarFechaHoy.setVisible(true);
+	}
+	
+	public void ocultarHoraHoy() {
+		this.lblActualizarFechaHoy.setVisible(false);
 	}
 
 	public JButton getBtnAtras() {

@@ -43,7 +43,7 @@ public class ControladorIngresosCaja {
 		this.ventanaIngresosCaja.getBtnAtras().addActionListener(a -> atras(a));
 
 		estadoDeLaCaja();
-		
+		actualizarFechaHoy();
 		
 		if (!estaCajaAbierta()) {
 			this.ventanaIngresosCaja.getBtnRealizarIngreso().addActionListener(c -> realizarPrimerIngreso(c));
@@ -54,6 +54,12 @@ public class ControladorIngresosCaja {
 			actualizarSaldoActual(obtenerSaldoActual());
 		}
 		
+	}
+	
+	public void actualizarFechaHoy() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fecha = dtf.format(LocalDateTime.now());
+        this.ventanaIngresosCaja.getLblActualizarFechaHoy().setText(fecha);
 	}
 	
 	public String obtenerSaldoActual() {
@@ -70,9 +76,11 @@ public class ControladorIngresosCaja {
 		if(estaCajaAbierta()) {
 			this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("Abierta");
 			this.ventanaIngresosCaja.mostrarSaldoActual();
+			this.ventanaIngresosCaja.mostrarHoraHoy();
 		}else {
 			this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("Cerrada");
 			this.ventanaIngresosCaja.ocultarSaldoActual();
+			this.ventanaIngresosCaja.ocultarHoraHoy();
 		}
 //		this.ventanaIngresosCaja.getLblActualizarEstadoCaja().setText("No hay caja");
 	}
