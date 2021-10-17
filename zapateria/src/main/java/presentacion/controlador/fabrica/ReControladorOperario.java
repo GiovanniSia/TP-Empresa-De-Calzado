@@ -155,6 +155,7 @@ public class ReControladorOperario implements ActionListener {
 		ventanaUnaTrabajo = new ReVentanaTrabajarUnPedido();
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
 		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		ventanaUnaTrabajo.getBtnSalirVentana().addActionListener(r->cerrarVentanaUnTrabajo(r));
 		
 		ventanaDiaDeLlegada = new ReVentanaIngresarFechaDeLlegada();
 		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
@@ -184,6 +185,9 @@ public class ReControladorOperario implements ActionListener {
 		this.controlador.mostrarVentanaMenu();
 	}
 	
+	private void cerrarVentanaUnTrabajo(ActionEvent a) {
+		this.ventanaUnaTrabajo.cerrar();
+	}
 	
 	public void mostrarMensajeEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
