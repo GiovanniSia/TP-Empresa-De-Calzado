@@ -414,6 +414,9 @@ public class VentanaModificarMProducto extends JFrame {
 		lblZapateria = new JLabel("Zapater\u00EDa");
 		panel_2.add(lblZapateria);
 		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		
+//		ocultarModificacionMasiva();
+//		ocultarModificacionUnitaria();
 	}
 
 	public void mostrarModificacionUnitaria() {
