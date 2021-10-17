@@ -1,6 +1,8 @@
 package presentacion.controlador.fabrica;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +64,36 @@ public class ControladorHistorialPasos {
 		modelosHistorialPaso = new HistorialPaso(new DAOSQLFactory());
 		ventana = new VentanaVerHistorialPasos();
 		ventana.getBtnVerDescripcion().addActionListener(r -> verDescripcion(r));
+		ventana.getTextProducto().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventana.getTextId().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventana.getTextSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventana.getTextAccion().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventana.getTextEmpleado().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
 		
 		ventanaExplicacion = new VentanaVerDetalle();
 		ventanaExplicacion.getBtnSalir().addActionListener(r -> cerrarDescripcion(r));
@@ -168,7 +200,41 @@ public class ControladorHistorialPasos {
 
 	private List<HistorialPasoDTO> recuperarTodoElHistorial() {
 		List<HistorialPasoDTO> historial = modelosHistorialPaso.readAll();
-		return historial;
+		List<HistorialPasoDTO> historialRet = new ArrayList<HistorialPasoDTO>();
+		
+		String idOrdenParametro = ventana.getTextId().getText();
+		String productoParametro = ventana.getTextProducto().getText();
+		String sucursalParametro = ventana.getTextSucursal().getText();
+		String accionParametro = ventana.getTextAccion().getText();
+		String empleadoParametro = ventana.getTextEmpleado().getText();
+		
+		for(HistorialPasoDTO hp: historial) {
+			int nroOrden = hp.getIdOrden();
+			OrdenFabricaDTO ordenTrabajandoLocal = getOrdenFabricacion(nroOrden);
+			MaestroProductoDTO productoTrabajandoLocal = getMaestroProducto(ordenTrabajandoLocal.getIdProd());
+			String producto = productoTrabajandoLocal.getIdMaestroProducto() + ", "
+					+ productoTrabajandoLocal.getDescripcion() + ", " + productoTrabajandoLocal.getTalle();
+			
+			String idOrden = hp.getIdOrden()+"";
+			if(idOrden.matches(".*"+idOrdenParametro+".*")) {
+				if(producto.toLowerCase().matches(".*"+productoParametro.toLowerCase()+".*")) {
+					String idSucursalLocal = ordenTrabajandoLocal.getIdSucursal()+"";
+					if(idSucursalLocal.toLowerCase().matches(".*"+sucursalParametro.toLowerCase()+".*")) {
+						if(hp.getDescrPasoCompletado().toLowerCase().matches(".*"+accionParametro+".*")) {
+							String idEmpleado = hp.getIdEmpleado() + "";
+							String nombreEmpleado = hp.getNombreCompleto();
+							String nombreEnTabla = idEmpleado + ", " + nombreEmpleado;
+							if(nombreEnTabla.toLowerCase().matches(".*"+empleadoParametro+".*")) {
+								historialRet.add(hp);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+		return historialRet;
 	}
 
 	private void mostrarVentana() {
@@ -188,6 +254,10 @@ public class ControladorHistorialPasos {
 		ControladorHistorialPasos con = new ControladorHistorialPasos(suc);
 		con.inicializar();
 
+	}
+	
+	private void refrescarTablaPorTecla() {
+		refrescarTabla();
 	}
 
 	private String[] palabrasPorPalabras(String sentence) {

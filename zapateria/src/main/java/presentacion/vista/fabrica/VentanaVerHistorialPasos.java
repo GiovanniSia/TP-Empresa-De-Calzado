@@ -44,8 +44,8 @@ public class VentanaVerHistorialPasos extends JFrame {
 	private JLabel lblFechaHasta;
 
 	private JButton btnSalir;
-	private JTextField textPasoActual;
-	private JTextField textEstado;
+	private JTextField textAccion;
+	private JTextField textEmpleado;
 	
 
 	public VentanaVerHistorialPasos() {
@@ -145,23 +145,23 @@ public class VentanaVerHistorialPasos extends JFrame {
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
-		textPasoActual = new JTextField();
-		textPasoActual.setColumns(10);
-		textPasoActual.setBounds(503, 38, 75, 20);
-		panel.add(textPasoActual);
+		textAccion = new JTextField();
+		textAccion.setColumns(10);
+		textAccion.setBounds(553, 38, 136, 20);
+		panel.add(textAccion);
 		
-		textEstado = new JTextField();
-		textEstado.setColumns(10);
-		textEstado.setBounds(598, 38, 75, 20);
-		panel.add(textEstado);
-		
-		JLabel lblPaso = new JLabel("Paso");
-		lblPaso.setBounds(503, 11, 46, 14);
+		JLabel lblPaso = new JLabel("Accion");
+		lblPaso.setBounds(553, 11, 46, 14);
 		panel.add(lblPaso);
 		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(598, 11, 46, 14);
-		panel.add(lblEstado);
+		textEmpleado = new JTextField();
+		textEmpleado.setColumns(10);
+		textEmpleado.setBounds(828, 38, 136, 20);
+		panel.add(textEmpleado);
+		
+		JLabel lblEmpleado = new JLabel("Empleado");
+		lblEmpleado.setBounds(828, 11, 75, 14);
+		panel.add(lblEmpleado);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -251,11 +251,11 @@ public class VentanaVerHistorialPasos extends JFrame {
 		return btnSalir;
 	}
 
-	public JTextField getTextPasoActual() {
-		return textPasoActual;
+	public JTextField getTextAccion() {
+		return textAccion;
 	}
 
-	public JTextField getTextEstado() {
-		return textEstado;
+	public JTextField getTextEmpleado() {
+		return textEmpleado;
 	}
 }
