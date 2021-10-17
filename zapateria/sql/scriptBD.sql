@@ -321,6 +321,19 @@ CREATE TABLE `tipoEgreso`
   PRIMARY KEY (`IdTipoEgreso`)
 );
 
+CREATE TABLE `HistorialPasos`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Hora` varchar(20) NOT NULL,
+  `Fecha` Date NOT NULL,
+  `IdOrden` int(11) NOT NULL,
+  `IdEmpleado` int(11) NOT NULL,
+  `NombreCompleto` varchar(45) NOT NULL,
+  `DescrPasoCompletado` varchar(45) NOT NULL,
+  `Descr` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 insert into tipoEgreso values("AS","Adelanto de sueldo");
 insert into tipoEgreso values("FA","Faltante");
 insert into tipoEgreso values("PP","Pago proveedor");
