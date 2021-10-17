@@ -38,4 +38,12 @@ public class ValidadorTeclado {
 			e.consume();
 		}
 	}
+	
+	public static void aceptarSoloLetras(KeyEvent e) {
+		char caracter = e.getKeyChar();
+		if (!Character.isLetter(caracter)) {
+			e.consume();
+		}
+	}
+	
 }

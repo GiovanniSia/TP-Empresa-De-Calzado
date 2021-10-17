@@ -39,4 +39,7 @@ public interface DAOAbstractFactory {
 	public CajaDAO createCajaDAO();
 	
 	public TipoEgresosDAO createTipoEgresosDAO();
+	
+	public ProveedorDAO createProveedorDAO();
+	
 }
