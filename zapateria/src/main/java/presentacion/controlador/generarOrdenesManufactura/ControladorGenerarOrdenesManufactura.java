@@ -118,7 +118,7 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 					cantidadEnStock = cantidadEnStock + s.getStockDisponible();
 				}
 			}
-			Object[] agregar = {mp.getIdMaestroProducto(), mp.getDescripcion(), mp.getTalle(), cantidadEnStock};
+			Object[] agregar = {mp.getIdMaestroProducto(), mp.getTalle(), mp.getDescripcion(), cantidadEnStock};
 			ventana.getModelOrdenes().addRow(agregar);
 		}
 	}
