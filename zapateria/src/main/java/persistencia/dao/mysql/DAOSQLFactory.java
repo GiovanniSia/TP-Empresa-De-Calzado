@@ -16,6 +16,7 @@ import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.MedioPagoDAO;
 import persistencia.dao.interfaz.MedioPagoEgresoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
+import persistencia.dao.interfaz.ProductoDeProveedorDAO;
 import persistencia.dao.interfaz.ProveedorDAO;
 import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
@@ -114,6 +115,11 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public ProveedorDAO createProveedorDAO() {
 		return new	ProveedorDAOSQL();
+	}
+
+	@Override
+	public ProductoDeProveedorDAO createProductoDeProveedorDAO() {
+		return new ProductoDeProveedorDAOSQL();
 	}
 
 }

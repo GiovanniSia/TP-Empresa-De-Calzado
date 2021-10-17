@@ -42,4 +42,6 @@ public interface DAOAbstractFactory {
 	
 	public ProveedorDAO createProveedorDAO();
 	
+	public ProductoDeProveedorDAO createProductoDeProveedorDAO();
+	
 }

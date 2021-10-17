@@ -119,9 +119,20 @@ CREATE TABLE `proveedor`
   `Idproveedor` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(45) NOT NULL,
   `CorreoElectronico` varchar(45) NOT NULL,
-  `LimiteCredito` int(11) NOT NULL,
-  `CreditoDisponible` int(11) NOT NULL,
+  `LimiteCredito` double(45,2) NOT NULL,
+  `CreditoDisponible` double(45,2) NOT NULL,
   PRIMARY KEY (`Idproveedor`)
+);
+
+CREATE TABLE `productosDeProveedor`
+(
+	`Id` int(11) NOT NULL AUTO_INCREMENT,
+    `IdProveedor` int(11) NOT NULL,
+    `IdMaestroProducto` int(11) NOT NULL,
+    `NombreProducto` varchar(45) NOT NULL,
+    `PrecioVenta` double(45,2) NOT NULL,
+    `CantidadPorLote` int(11) NOT NULL,
+    PRIMARY KEY (`Id`)
 );
 
 CREATE TABLE `pasosReceta`

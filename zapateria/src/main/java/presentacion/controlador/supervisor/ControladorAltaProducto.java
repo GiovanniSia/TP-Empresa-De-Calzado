@@ -7,6 +7,7 @@ import java.util.List;
 
 import dto.MaestroProductoDTO;
 import modelo.MaestroProducto;
+import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaAltaProducto;
@@ -20,7 +21,7 @@ public class ControladorAltaProducto {
 	VentanaAltaProducto ventanaAltaProducto;
 	
 	Proveedor proveedor;
-	
+	ProductoDeProveedor productoDeProveedor;
 	
 	public ControladorAltaProducto(MaestroProducto maestroProducto) {
 		this.maestroProducto=maestroProducto;
