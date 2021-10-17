@@ -267,8 +267,8 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getTextCorreo().setText("");
 		
 		
-		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedItem(this.ventanaAltaCliente.getComboBoxTipoCliente().getItemAt(0));
-		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getItemAt(0));
+		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedIndex(0);
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedIndex(0);
 		
 		this.ventanaAltaCliente.getTextSaldoInicial().setText("");
 		this.ventanaAltaCliente.getTextCalle().setText("");

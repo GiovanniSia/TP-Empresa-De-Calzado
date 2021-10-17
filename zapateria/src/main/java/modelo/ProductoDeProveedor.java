@@ -1,5 +1,7 @@
 package modelo;
 
+import java.util.List;
+
 import dto.ProductoDeProveedorDTO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.ProductoDeProveedorDAO;
@@ -16,4 +18,7 @@ public class ProductoDeProveedor {
 		return this.productoDeProveedor.insert(proveedor);
 	}
 	
+	public List<ProductoDeProveedorDTO> readAll(){
+		return this.productoDeProveedor.readAll();
+	}
 }
