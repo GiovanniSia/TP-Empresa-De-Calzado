@@ -16,7 +16,9 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
+import dto.EmpleadoDTO;
 import dto.FabricacionesDTO;
+import dto.HistorialPasoDTO;
 import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
 import dto.PasoDeRecetaDTO;
@@ -24,6 +26,7 @@ import dto.RecetaDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Fabricacion;
+import modelo.HistorialPaso;
 import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
 import modelo.Stock;
@@ -36,6 +39,9 @@ import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
 import presentacion.vista.fabrica.fecha;
 
 public class ReControladorOperario implements ActionListener {
+	
+	static final EmpleadoDTO empleadoDeMuestra = new EmpleadoDTO(1, "13138413", "Gabriel", "Perez", "Fulanito@gmail.com",
+			"Operario", "360123");
 
 	static final String error = "[HiperLink error]";
 	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
@@ -73,6 +79,7 @@ public class ReControladorOperario implements ActionListener {
 	MaestroProducto modeloProducto;
 	OrdenFabrica modeloOrden;
 	Stock modeloStock;
+	HistorialPaso historialPaso;
 	
 	fecha ventanaParaCumple;
 	String mesCumpleCreado;
@@ -83,8 +90,10 @@ public class ReControladorOperario implements ActionListener {
 	boolean seleccionarDesde = true;
 	
 	Controlador controlador;
-	
+	EmpleadoDTO empleado;
+	//public ReControladorOperario(Controlador controlador,SucursalDTO fabrica, EmpleadoDTO empleado) {
 	public ReControladorOperario(Controlador controlador,SucursalDTO fabrica) {
+		this.empleado = empleadoDeMuestra;
 		idFabrica = fabrica.getIdSucursal();
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -98,6 +107,7 @@ public class ReControladorOperario implements ActionListener {
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
 		modeloOrden = new OrdenFabrica(new DAOSQLFactory());
 		modeloStock = new Stock(new DAOSQLFactory());
+		historialPaso = new HistorialPaso(new DAOSQLFactory());
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
 
@@ -262,6 +272,14 @@ public class ReControladorOperario implements ActionListener {
 				}
 				cont++;
 			}
+			HistorialPasoDTO pasoHecho = new HistorialPasoDTO(0, 
+					ordenTra.getIdOrdenFabrica(), 
+					this.empleado.getIdEmpleado(),
+					this.empleado.getApellido()+", "+this.empleado.getNombre(),
+					pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size(),
+							"");
+			this.historialPaso.insert(pasoHecho);
+			
 			mostrarMensajeEmergente("Paso concretado");
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
 			modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);

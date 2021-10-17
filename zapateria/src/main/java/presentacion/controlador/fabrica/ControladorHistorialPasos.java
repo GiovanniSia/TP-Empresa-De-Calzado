@@ -54,7 +54,7 @@ public class ControladorHistorialPasos {
 	
 	private void refrescarTabla() {
 		vaciarTabla();
-		recuperarTodoElHistorial();
+		historialEnLista = recuperarTodoElHistorial();
 		llenarTablaConElHistorial();
 	}
 

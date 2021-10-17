@@ -45,7 +45,7 @@ public class HistorialPasoDAOSQL implements HistorialPasoDAO{
 		return new HistorialPasoDTO(Id, Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr);
 	}
 
-	private static final String insert = "INSERT INTO stock(Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr) VALUES(?,?,?,?,?,?,?);";
+	private static final String insert = "INSERT INTO HistorialPasos(Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr) VALUES(?,?,?,?,?,?,?);";
 
 	public boolean insert(HistorialPasoDTO pasoHistorial){
 		PreparedStatement statement;
@@ -54,7 +54,7 @@ public class HistorialPasoDAOSQL implements HistorialPasoDAO{
 		try {
 			statement = conexion.prepareStatement(insert);
 			statement.setString(1, pasoHistorial.getHora());
-			statement.setString(2, pasoHistorial.getHora());
+			statement.setString(2, pasoHistorial.getFecha());
 			statement.setInt(3, pasoHistorial.getIdOrden());
 			statement.setInt(4, pasoHistorial.getIdEmpleado());
 			statement.setString(5, pasoHistorial.getNombreCompleto());
