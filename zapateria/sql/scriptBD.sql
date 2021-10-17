@@ -324,7 +324,7 @@ CREATE TABLE `tipoEgreso`
 CREATE TABLE `HistorialPasos`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Hora` varchar(20) NOT NULL,
+  `Hora` Time NOT NULL,
   `Fecha` Date NOT NULL,
   `IdOrden` int(11) NOT NULL,
   `IdEmpleado` int(11) NOT NULL,

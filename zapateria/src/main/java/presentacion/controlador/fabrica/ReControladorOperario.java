@@ -244,6 +244,11 @@ public class ReControladorOperario implements ActionListener {
 		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
 		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenSeleccionado.getIdOrdenFabrica(), recetaSeleccionado.getIdReceta(), 1, "activo");
 		modeloFabricacion.insertFabricacionEnMarcha(fabricacion);
+		insertarEnElHistorial(ordenSeleccionado.getIdOrdenFabrica(), 
+				empleado.getIdEmpleado(),
+				empleado.getApellido()+", "+empleado.getNombre(),
+				"Pasado a produccion",
+				"Receta nro: "+recetaSeleccionado.getIdReceta()+", "+recetaSeleccionado.getDescripcion());
 		refrescarTabla();
 		this.ventanaElegirReceta.cerrar();
 	}
@@ -272,13 +277,11 @@ public class ReControladorOperario implements ActionListener {
 				}
 				cont++;
 			}
-			HistorialPasoDTO pasoHecho = new HistorialPasoDTO(0, 
-					ordenTra.getIdOrdenFabrica(), 
+			this.insertarEnElHistorial(ordenTra.getIdOrdenFabrica(), 
 					this.empleado.getIdEmpleado(),
 					this.empleado.getApellido()+", "+this.empleado.getNombre(),
-					pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size(),
+					"Paso completado: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size(),
 							"");
-			this.historialPaso.insert(pasoHecho);
 			
 			mostrarMensajeEmergente("Paso concretado");
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
@@ -291,6 +294,12 @@ public class ReControladorOperario implements ActionListener {
 				
 				ventanaUnaTrabajo.cerrar();
 				*/
+				this.insertarEnElHistorial(ordenTra.getIdOrdenFabrica(), 
+						this.empleado.getIdEmpleado(),
+						this.empleado.getApellido()+", "+this.empleado.getNombre(),
+						"Se completo la orden",
+								"");
+				
 				fabricacionTrabajando.completarOrden();
 				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 				this.ventanaDiaDeLlegada.show();
@@ -305,6 +314,16 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
+	private void insertarEnElHistorial(int idOrdenFabrica, int idEmpleado, String apellidoNombre, String pasoCompletado, String descripcion) {
+		HistorialPasoDTO pasoHecho = new HistorialPasoDTO(0,
+				idOrdenFabrica,
+				idEmpleado,
+				apellidoNombre,
+				pasoCompletado,
+				descripcion);
+		this.historialPaso.insert(pasoHecho);
+	}
+	
 	public void cancelarOrden(ActionEvent s) {
 		int res = JOptionPane.showConfirmDialog(null, stringQuePreguntaCancelacionDeProduccion, "", JOptionPane.YES_NO_OPTION);
         switch (res) {
@@ -315,6 +334,14 @@ public class ReControladorOperario implements ActionListener {
         		ventanaUnaTrabajo.cerrar();
         		reiniciarTablaIngredientesDeUnTrabajo();
         		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+        		
+        		PasoDeRecetaDTO pasoActual = getPasoActual();
+        		
+        		insertarEnElHistorial(fabricacionTrabajando.getIdOrdenFabrica(), this.empleado.getIdEmpleado(), 
+        				empleado.getApellido()+", "+empleado.getNombre(), 
+        				"Cancelacion: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size()
+        				,"");//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
+        		
         		break;
             case JOptionPane.NO_OPTION:
             	JOptionPane.showMessageDialog(null, stringQueNoCancelaDeProduccion);
@@ -327,6 +354,12 @@ public class ReControladorOperario implements ActionListener {
 		if(valorIngresado < 0) {
 			return;
 		}
+		this.insertarEnElHistorial(this.getOrdenDeFabricacionDelTrabajoActual().getIdOrdenFabrica(), 
+				this.empleado.getIdEmpleado(),
+				this.empleado.getApellido()+", "+this.empleado.getNombre(),
+				"Se ingreso una fecha de llegada a la orden: ",
+						"Dias para la que llegara a la sucursal: "+valorIngresado);
+		
 		modeloFabricacion.completarOrden(fabricacionTrabajando, valorIngresado);
 		this.ventanaDiaDeLlegada.cerrar();
 		this.refrescarTabla();
