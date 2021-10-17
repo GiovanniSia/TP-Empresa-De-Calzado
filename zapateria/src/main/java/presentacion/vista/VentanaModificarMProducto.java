@@ -63,6 +63,15 @@ public class VentanaModificarMProducto extends JFrame {
 	private JTextField txtActualizarDisminuir;
 	private JLabel lblAumentar;
 	private JLabel lblDisminuir;
+	
+	private String[] nombreColumnas2 = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
+			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
+	private DefaultTableModel modelProducto2;
+	private JTable tablaProductosModificar;
+	private JButton btnAgregarProductosEnTabla;
+	private JButton btnAgregarProductoSeleccionado;
+	private JButton btnLimpiarTabla;
+	private JButton btnQuitarProductoSeleccionado;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -75,18 +84,18 @@ public class VentanaModificarMProducto extends JFrame {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 880, 526);
+		frame.setBounds(100, 100, 880, 644);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 163, 864, 324);
+		panel.setBounds(0, 147, 864, 459);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spProducto = new JScrollPane();
-		spProducto.setBounds(10, 11, 834, 145);
+		spProducto.setBounds(10, 11, 844, 117);
 		panel.add(spProducto);
 
 		modelProducto = new DefaultTableModel(null, nombreColumnas) {
@@ -114,38 +123,38 @@ public class VentanaModificarMProducto extends JFrame {
 		btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		btnAtras.setBounds(10, 290, 108, 23);
+		btnAtras.setBounds(10, 425, 108, 23);
 		panel.add(btnAtras);
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
 		lblActualizarDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblActualizarDescripcion.setBounds(10, 196, 198, 21);
+		lblActualizarDescripcion.setBounds(20, 315, 198, 21);
 		panel.add(lblActualizarDescripcion);
 
 		lblMUPrecioCosto = new JLabel("Precio Costo");
 		lblMUPrecioCosto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUPrecioCosto.setBounds(10, 228, 86, 14);
+		lblMUPrecioCosto.setBounds(20, 347, 86, 14);
 		panel.add(lblMUPrecioCosto);
 
 		lblMUPrecioMayorista = new JLabel("Precio Mayorista");
 		lblMUPrecioMayorista.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUPrecioMayorista.setBounds(218, 196, 99, 14);
+		lblMUPrecioMayorista.setBounds(228, 315, 99, 14);
 		panel.add(lblMUPrecioMayorista);
 
 		lblMUPrecioMinorista = new JLabel("Precio Minorista");
 		lblMUPrecioMinorista.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUPrecioMinorista.setBounds(218, 228, 99, 14);
+		lblMUPrecioMinorista.setBounds(228, 347, 99, 14);
 		panel.add(lblMUPrecioMinorista);
 
 		lblMUCantidadAReponer = new JLabel("Cantidad a Reponer");
 		lblMUCantidadAReponer.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUCantidadAReponer.setBounds(448, 228, 128, 14);
+		lblMUCantidadAReponer.setBounds(458, 347, 128, 14);
 		panel.add(lblMUCantidadAReponer);
 
 		lblMUDiasParaReponer = new JLabel("Dias para Reponer");
 		lblMUDiasParaReponer.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUDiasParaReponer.setBounds(654, 200, 128, 14);
+		lblMUDiasParaReponer.setBounds(664, 319, 128, 14);
 		panel.add(lblMUDiasParaReponer);
 
 		txtActualizarPrecioCosto = new JTextField();
@@ -159,11 +168,11 @@ public class VentanaModificarMProducto extends JFrame {
 				}
 			}
 		});
-		txtActualizarPrecioCosto.setBounds(98, 226, 108, 20);
+		txtActualizarPrecioCosto.setBounds(108, 345, 108, 20);
 		panel.add(txtActualizarPrecioCosto);
 
 		txtActualizarPrecioMayorista = new JTextField();
-		txtActualizarPrecioMayorista.setBounds(327, 195, 111, 20);
+		txtActualizarPrecioMayorista.setBounds(337, 314, 111, 20);
 		txtActualizarPrecioMayorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -177,7 +186,7 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.add(txtActualizarPrecioMayorista);
 
 		txtActualizarPrecioMinorista = new JTextField();
-		txtActualizarPrecioMinorista.setBounds(327, 222, 111, 20);
+		txtActualizarPrecioMinorista.setBounds(337, 341, 111, 20);
 		txtActualizarPrecioMinorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -191,23 +200,23 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.add(txtActualizarPrecioMinorista);
 
 		btnActualizarProducto = new JButton("Actualizar \r\nProducto");
-		btnActualizarProducto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnActualizarProducto.setBounds(670, 256, 174, 23);
+		btnActualizarProducto.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnActualizarProducto.setBounds(458, 415, 184, 33);
 		panel.add(btnActualizarProducto);
 
 		lblModificacionUnitaria = new JLabel("Modificacion Unitaria");
 		lblModificacionUnitaria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblModificacionUnitaria.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblModificacionUnitaria.setBounds(20, 158, 824, 23);
+		lblModificacionUnitaria.setBounds(30, 277, 432, 23);
 		panel.add(lblModificacionUnitaria);
 
 		lblMUPuntoRepositorio = new JLabel("Punto Repositorio");
 		lblMUPuntoRepositorio.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblMUPuntoRepositorio.setBounds(448, 196, 117, 14);
+		lblMUPuntoRepositorio.setBounds(458, 315, 117, 14);
 		panel.add(lblMUPuntoRepositorio);
 
 		btnVerHistorialDeCambios = new JButton("Ver Historial de Cambios");
-		btnVerHistorialDeCambios.setBounds(643, 290, 201, 23);
+		btnVerHistorialDeCambios.setBounds(653, 425, 201, 23);
 		panel.add(btnVerHistorialDeCambios);
 		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
@@ -222,7 +231,7 @@ public class VentanaModificarMProducto extends JFrame {
 				}
 			}
 		});
-		txtActualizarPuntoRepositorio.setBounds(575, 196, 69, 20);
+		txtActualizarPuntoRepositorio.setBounds(585, 315, 69, 20);
 		panel.add(txtActualizarPuntoRepositorio);
 		txtActualizarPuntoRepositorio.setColumns(10);
 
@@ -238,7 +247,7 @@ public class VentanaModificarMProducto extends JFrame {
 			}
 		});
 		txtActualizarCantidadAReponer.setColumns(10);
-		txtActualizarCantidadAReponer.setBounds(575, 227, 69, 20);
+		txtActualizarCantidadAReponer.setBounds(585, 346, 69, 20);
 		panel.add(txtActualizarCantidadAReponer);
 
 		txtActualizarDiasParaResponder = new JTextField();
@@ -253,20 +262,21 @@ public class VentanaModificarMProducto extends JFrame {
 			}
 		});
 		txtActualizarDiasParaResponder.setColumns(10);
-		txtActualizarDiasParaResponder.setBounds(775, 199, 69, 20);
+		txtActualizarDiasParaResponder.setBounds(785, 318, 69, 20);
 		panel.add(txtActualizarDiasParaResponder);
 
-		lblModificacionMasiva = new JLabel("Modificacion Masiva de Precios en %");
+		lblModificacionMasiva = new JLabel("Modificacion Masiva de Precios");
+		lblModificacionMasiva.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblModificacionMasiva.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificacionMasiva.setBounds(259, 253, 273, 14);
+		lblModificacionMasiva.setBounds(99, 372, 296, 21);
 		panel.add(lblModificacionMasiva);
 
 		lblAumentar = new JLabel("Aumentar");
-		lblAumentar.setBounds(231, 285, 92, 14);
+		lblAumentar.setBounds(172, 407, 58, 14);
 		panel.add(lblAumentar);
 
 		lblDisminuir = new JLabel("Disminuir");
-		lblDisminuir.setBounds(391, 285, 69, 14);
+		lblDisminuir.setBounds(332, 407, 47, 14);
 		panel.add(lblDisminuir);
 
 		txtActualizarAumentar = new JTextField();
@@ -280,7 +290,7 @@ public class VentanaModificarMProducto extends JFrame {
 				}
 			}
 		});
-		txtActualizarAumentar.setBounds(288, 282, 58, 20);
+		txtActualizarAumentar.setBounds(229, 404, 58, 20);
 		panel.add(txtActualizarAumentar);
 		txtActualizarAumentar.setColumns(10);
 
@@ -297,40 +307,84 @@ public class VentanaModificarMProducto extends JFrame {
 		});
 
 		txtActualizarDisminuir.setColumns(10);
-		txtActualizarDisminuir.setBounds(443, 282, 58, 20);
+		txtActualizarDisminuir.setBounds(384, 404, 58, 20);
 		panel.add(txtActualizarDisminuir);
+		
+		JScrollPane spProducto_1 = new JScrollPane();
+		spProducto_1.setBounds(10, 168, 844, 102);
+		panel.add(spProducto_1);
+		
+		modelProducto2 = new DefaultTableModel(null, nombreColumnas2) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 9) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+		tablaProductosModificar = new JTable(modelProducto2);
+		spProducto_1.setViewportView(tablaProductosModificar);
+		
+		btnAgregarProductosEnTabla = new JButton("Agregar Los productos en Tabla");
+		btnAgregarProductosEnTabla.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAgregarProductosEnTabla.setBounds(605, 134, 249, 23);
+		panel.add(btnAgregarProductosEnTabla);
+		
+		btnAgregarProductoSeleccionado = new JButton("Agregar Producto Seleccionado");
+		btnAgregarProductoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAgregarProductoSeleccionado.setBounds(353, 134, 249, 23);
+		panel.add(btnAgregarProductoSeleccionado);
+		
+		JLabel lblNewLabel = new JLabel("Productos a Modificar");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(10, 143, 184, 14);
+		panel.add(lblNewLabel);
+		
+		btnLimpiarTabla = new JButton("Limpiar Tabla");
+		btnLimpiarTabla.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnLimpiarTabla.setBounds(719, 279, 135, 23);
+		panel.add(btnLimpiarTabla);
+		
+		btnQuitarProductoSeleccionado = new JButton("Quitar Producto Seleccionado");
+		btnQuitarProductoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnQuitarProductoSeleccionado.setBounds(480, 279, 229, 23);
+		panel.add(btnQuitarProductoSeleccionado);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 69, 864, 100);
+		panel_1.setBounds(0, 69, 864, 81);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblDescripcion = new JLabel("Descripci\u00F3n");
-		lblDescripcion.setBounds(137, 36, 70, 20);
+		lblDescripcion.setBounds(137, 24, 70, 20);
 		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(lblDescripcion);
 
 		txtFiltroDescripcion = new JTextField();
 
-		txtFiltroDescripcion.setBounds(135, 67, 116, 20);
+		txtFiltroDescripcion.setBounds(135, 55, 116, 20);
 		panel_1.add(txtFiltroDescripcion);
 
 		JLabel lblTalle = new JLabel("Talle");
 		lblTalle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTalle.setBounds(387, 36, 70, 20);
+		lblTalle.setBounds(387, 24, 70, 20);
 		panel_1.add(lblTalle);
 
 		txtFiltroTalle = new JTextField();
-		txtFiltroTalle.setBounds(387, 67, 70, 20);
+		txtFiltroTalle.setBounds(387, 55, 70, 20);
 		panel_1.add(txtFiltroTalle);
 
 		lblCodProducto = new JLabel("Cod Producto");
 		lblCodProducto.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCodProducto.setBounds(10, 36, 86, 20);
+		lblCodProducto.setBounds(10, 24, 86, 20);
 		panel_1.add(lblCodProducto);
 
 		txtFiltroCodProducto = new JTextField();
-		txtFiltroCodProducto.setBounds(10, 67, 86, 20);
+		txtFiltroCodProducto.setBounds(10, 55, 86, 20);
 		panel_1.add(txtFiltroCodProducto);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
@@ -339,12 +393,12 @@ public class VentanaModificarMProducto extends JFrame {
 		panel_1.add(lblFiltrarPor);
 
 		txtFiltroProveedor = new JTextField();
-		txtFiltroProveedor.setBounds(273, 67, 94, 20);
+		txtFiltroProveedor.setBounds(273, 55, 94, 20);
 		panel_1.add(txtFiltroProveedor);
 
 		JLabel lblProveedor = new JLabel("Proveedor");
 		lblProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblProveedor.setBounds(273, 41, 94, 20);
+		lblProveedor.setBounds(273, 29, 94, 20);
 		panel_1.add(lblProveedor);
 
 		lblModificarProducto = new JLabel("Modificar Producto");
@@ -496,6 +550,34 @@ public class VentanaModificarMProducto extends JFrame {
 
 	public JButton getBtnAtras() {
 		return btnAtras;
+	}
+	
+	public String[] getNombreColumnas2() {
+		return nombreColumnas2;
+	}
+
+	public DefaultTableModel getModelProducto2() {
+		return modelProducto2;
+	}
+
+	public JTable getTablaProductosModificar() {
+		return tablaProductosModificar;
+	}
+
+	public JButton getBtnAgregarProductosEnTabla() {
+		return btnAgregarProductosEnTabla;
+	}
+
+	public JButton getBtnAgregarProductoSeleccionado() {
+		return btnAgregarProductoSeleccionado;
+	}
+
+	public JButton getBtnLimpiarTabla() {
+		return btnLimpiarTabla;
+	}
+
+	public JButton getBtnQuitarProductoSeleccionado() {
+		return btnQuitarProductoSeleccionado;
 	}
 
 	public void show() {
