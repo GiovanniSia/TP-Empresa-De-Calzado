@@ -62,20 +62,16 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(c -> actualizarProducto(c));
 		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(v -> verHistorialDeCambios(v));
 		this.ventanaModificarMProducto.getBtnAgregarProductoSeleccionado().addActionListener(a -> agregarProductoSeleccionado(a));
-
-		// Tabla Producto
-		this.ventanaModificarMProducto.getTablaProducto().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				rellenarCamposDeModificacionUnitaria();
-			}
-		});
+		this.ventanaModificarMProducto.getBtnAgregarProductosEnTabla().addActionListener(a -> agregarProductosEnTablaModificar(a));
+			
+		this.ventanaModificarMProducto.getBtnQuitarProductoSeleccionado().addActionListener(a -> quitarProductoSeleccionado(a));
+		this.ventanaModificarMProducto.getBtnLimpiarTabla().addActionListener(a -> limpiarTabla(a));
 
 		// Tabla Productos Modificar
 		this.ventanaModificarMProducto.getTablaProductosModificar().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				rellenarCamposDeModificacionUnitaria();
 			}
 		});
 
@@ -108,6 +104,31 @@ public class ControladorModificarMProducto {
 			}
 		});
 	}
+	
+	public void agregarProductosEnTablaModificar(ActionEvent a) {
+		System.out.println(this.maestroProductoEnTablaProducto);
+		for (MaestroProductoDTO  m: maestroProductoEnTablaProducto) {
+			this.maestroProductoEnTablaProductosModificar.add(m);
+		}
+		refrescarTablaProductosModificar();
+	}
+	
+	public void quitarProductoSeleccionado(ActionEvent a) {
+		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
+		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada);
+		this.maestroProductoEnTablaProductosModificar.remove(productoSeleccionado);
+		this.refrescarTablaProductosModificar();
+		limpiarCampos();
+	}
+	
+	public void limpiarTabla(ActionEvent a) {
+		this.ventanaModificarMProducto.getModelProducto2().setRowCount(0);
+		this.ventanaModificarMProducto.getModelProducto2().setColumnCount(0);
+		this.ventanaModificarMProducto.getModelProducto2()
+				.setColumnIdentifiers(this.ventanaModificarMProducto.getNombreColumnas2());
+		this.maestroProductoEnTablaProductosModificar.clear();
+		limpiarCampos();
+	}
 
 	public void agregarProductoSeleccionado(ActionEvent a) {
 		int filaSeleccionada = this.filaSeleccionadaTablaProducto();
@@ -138,22 +159,22 @@ public class ControladorModificarMProducto {
 	}
 
 	public void rellenarCamposDeModificacionUnitaria() {
-		int filaSeleccionada = filaSeleccionadaTablaProducto();
-		JTable tablaProducto = ventanaModificarMProducto.getTablaProducto();
+		int filaSeleccionada = filaSeleccionadaTablaProductosModificar();
+		JTable tablaProductosModificar = ventanaModificarMProducto.getTablaProductosModificar();
 		ventanaModificarMProducto.getLblActualizarDescripcion()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 1).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 1).toString());
 		ventanaModificarMProducto.getTxtActualizarPrecioCosto()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 4).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 4).toString());
 		ventanaModificarMProducto.getTxtActualizarPrecioMayorista()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 5).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 5).toString());
 		ventanaModificarMProducto.getTxtActualizarPrecioMinorista()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 6).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 6).toString());
 		ventanaModificarMProducto.getTxtActualizarPuntoRepositorio()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 7).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 7).toString());
 		ventanaModificarMProducto.getTxtActualizarCantidadAReponer()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 8).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 8).toString());
 		ventanaModificarMProducto.getTxtActualizarDiasParaResponder()
-				.setText(tablaProducto.getValueAt(filaSeleccionada, 9).toString());
+				.setText(tablaProductosModificar.getValueAt(filaSeleccionada, 9).toString());
 	}
 
 	public void realizarBusqueda() {
@@ -171,6 +192,7 @@ public class ControladorModificarMProducto {
 				"IdMaestroProducto", txtCodProducto, "Descripcion", txtDescripcion, "Talle", txtTalle, "IdProveedor",
 				txtProveedor);
 		llenarTablaProducto(ProductosAproximados);
+		this.maestroProductoEnTablaProducto = ProductosAproximados;
 	}
 
 	public void atras(ActionEvent a) {
@@ -198,7 +220,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public boolean validarCamposModificacionUnitaria() {
-		// Valido si selecciono un producto
+		// Valido si selecciono un producto|
 
 		int filaSeleccionada = this.filaSeleccionadaTablaProducto();
 		if (filaSeleccionada == -1) {
@@ -417,7 +439,6 @@ public class ControladorModificarMProducto {
 			Object[] fila = { codigo, descripcion, idProveedor, talle, precioCosto, precioMayorista, precioMinorista,
 					puntoRepositorio, cantidadAReponer, diasParaReponer };
 			this.ventanaModificarMProducto.getModelProducto().addRow(fila);
-
 		}
 	}
 	

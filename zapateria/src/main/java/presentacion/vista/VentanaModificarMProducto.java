@@ -33,7 +33,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private JTextField txtFiltroDescripcion;
 	private JTextField txtFiltroTalle;
 	private JTextField txtFiltroCodProducto;
-	private JButton btnActualizarProducto;
+	private JButton btnActualizarProductoUnitario;
 	private JButton btnVerHistorialDeCambios;
 	private JButton btnAtras;
 	private JLabel lblZapateria;
@@ -72,6 +72,9 @@ public class VentanaModificarMProducto extends JFrame {
 	private JButton btnAgregarProductoSeleccionado;
 	private JButton btnLimpiarTabla;
 	private JButton btnQuitarProductoSeleccionado;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JButton btnActualizarProductos;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -123,7 +126,7 @@ public class VentanaModificarMProducto extends JFrame {
 		btnAtras = new JButton("Atras");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		btnAtras.setBounds(10, 425, 108, 23);
+		btnAtras.setBounds(10, 425, 86, 23);
 		panel.add(btnAtras);
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
@@ -199,10 +202,10 @@ public class VentanaModificarMProducto extends JFrame {
 		});
 		panel.add(txtActualizarPrecioMinorista);
 
-		btnActualizarProducto = new JButton("Actualizar \r\nProducto");
-		btnActualizarProducto.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnActualizarProducto.setBounds(458, 415, 184, 33);
-		panel.add(btnActualizarProducto);
+		btnActualizarProductoUnitario = new JButton("Actualizar \r\nProducto Unitario");
+		btnActualizarProductoUnitario.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnActualizarProductoUnitario.setBounds(664, 344, 198, 23);
+		panel.add(btnActualizarProductoUnitario);
 
 		lblModificacionUnitaria = new JLabel("Modificacion Unitaria");
 		lblModificacionUnitaria.setHorizontalAlignment(SwingConstants.CENTER);
@@ -268,15 +271,15 @@ public class VentanaModificarMProducto extends JFrame {
 		lblModificacionMasiva = new JLabel("Modificacion Masiva de Precios");
 		lblModificacionMasiva.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblModificacionMasiva.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModificacionMasiva.setBounds(99, 372, 296, 21);
+		lblModificacionMasiva.setBounds(279, 372, 296, 21);
 		panel.add(lblModificacionMasiva);
 
 		lblAumentar = new JLabel("Aumentar");
-		lblAumentar.setBounds(172, 407, 58, 14);
+		lblAumentar.setBounds(289, 404, 58, 14);
 		panel.add(lblAumentar);
 
 		lblDisminuir = new JLabel("Disminuir");
-		lblDisminuir.setBounds(332, 407, 47, 14);
+		lblDisminuir.setBounds(431, 404, 47, 14);
 		panel.add(lblDisminuir);
 
 		txtActualizarAumentar = new JTextField();
@@ -290,7 +293,7 @@ public class VentanaModificarMProducto extends JFrame {
 				}
 			}
 		});
-		txtActualizarAumentar.setBounds(229, 404, 58, 20);
+		txtActualizarAumentar.setBounds(346, 401, 58, 20);
 		panel.add(txtActualizarAumentar);
 		txtActualizarAumentar.setColumns(10);
 
@@ -307,7 +310,7 @@ public class VentanaModificarMProducto extends JFrame {
 		});
 
 		txtActualizarDisminuir.setColumns(10);
-		txtActualizarDisminuir.setBounds(384, 404, 58, 20);
+		txtActualizarDisminuir.setBounds(483, 401, 58, 20);
 		panel.add(txtActualizarDisminuir);
 		
 		JScrollPane spProducto_1 = new JScrollPane();
@@ -353,6 +356,19 @@ public class VentanaModificarMProducto extends JFrame {
 		btnQuitarProductoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnQuitarProductoSeleccionado.setBounds(480, 279, 229, 23);
 		panel.add(btnQuitarProductoSeleccionado);
+		
+		lblNewLabel_1 = new JLabel("%");
+		lblNewLabel_1.setBounds(409, 404, 30, 14);
+		panel.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("%");
+		lblNewLabel_2.setBounds(545, 404, 30, 14);
+		panel.add(lblNewLabel_2);
+		
+		btnActualizarProductos = new JButton("Actualizar Productos");
+		btnActualizarProductos.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnActualizarProductos.setBounds(356, 426, 149, 23);
+		panel.add(btnActualizarProductos);
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 69, 864, 81);
@@ -544,7 +560,7 @@ public class VentanaModificarMProducto extends JFrame {
 	}
 
 	public JButton getBtnActualizarProducto() {
-		return btnActualizarProducto;
+		return btnActualizarProductoUnitario;
 	}
 
 	public JButton getBtnVerHistorialDeCambios() {
