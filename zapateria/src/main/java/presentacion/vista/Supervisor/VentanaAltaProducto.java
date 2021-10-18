@@ -207,42 +207,106 @@ public class VentanaAltaProducto {
 		textDescripcion.setColumns(10);
 		
 		textCosto = new JTextField();
+		textCosto.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textCosto.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textCosto.setColumns(10);
 		textCosto.setBounds(178, 171, 178, 19);
 		frame.getContentPane().add(textCosto);
 		
 		textPrecioMayorista = new JTextField();
+		textPrecioMayorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textPrecioMayorista.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textPrecioMayorista.setColumns(10);
 		textPrecioMayorista.setBounds(178, 212, 178, 19);
 		frame.getContentPane().add(textPrecioMayorista);
 		
 		textPrecioMinorista = new JTextField();
+		textPrecioMinorista.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textPrecioMinorista.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textPrecioMinorista.setColumns(10);
 		textPrecioMinorista.setBounds(178, 254, 178, 19);
 		frame.getContentPane().add(textPrecioMinorista);
 		
 		textPuntoRepMinimo = new JTextField();
+		textPuntoRepMinimo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textPuntoRepMinimo.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textPuntoRepMinimo.setColumns(10);
 		textPuntoRepMinimo.setBounds(235, 293, 178, 19);
 		frame.getContentPane().add(textPuntoRepMinimo);
 		
 		textTalle = new JTextField();
+		textTalle.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textTalle.getText().length()>=10) {
+                    e.consume();
+                }
+			}
+		});
 		textTalle.setColumns(10);
 		textTalle.setBounds(178, 406, 178, 19);
 		frame.getContentPane().add(textTalle);
 		
 		textCantidadAReponer = new JTextField();
+		textCantidadAReponer.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textCantidadAReponer.getText().length()>=20) {
+                    e.consume();
+                }
+			}
+		});
 		textCantidadAReponer.setColumns(10);
 		textCantidadAReponer.setBounds(178, 493, 178, 19);
 		frame.getContentPane().add(textCantidadAReponer);
 		
 		
 		textDiasParaReponer = new JTextField();
+		textDiasParaReponer.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textDiasParaReponer.getText().length()>=20) {
+                    e.consume();
+                }
+			}
+		});
 		textDiasParaReponer.setColumns(10);
 		textDiasParaReponer.setBounds(178, 522, 178, 19);
 		frame.getContentPane().add(textDiasParaReponer);
 		
 		textUnidadMedida = new JTextField();
+		textUnidadMedida.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textUnidadMedida.getText().length()>=20) {
+                    e.consume();
+                }
+			}
+		});
 		textUnidadMedida.setColumns(10);
 		textUnidadMedida.setBounds(178, 435, 178, 19);
 		frame.getContentPane().add(textUnidadMedida);

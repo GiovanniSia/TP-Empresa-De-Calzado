@@ -98,11 +98,7 @@ public class VentanaConsultarProveedores {
 
 			@Override
 			public boolean isCellEditable(int filas, int columnas) {	
-				if(columnas == 3) {
-				return true;
-				}else {
-					return false;
-				}
+				return false;
 			}
 		};
 		scrollPane = new JScrollPane(this.table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
