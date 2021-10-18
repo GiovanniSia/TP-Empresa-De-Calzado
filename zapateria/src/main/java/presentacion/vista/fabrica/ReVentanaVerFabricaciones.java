@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
 
 public class ReVentanaVerFabricaciones extends JFrame {
 
@@ -46,6 +47,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JButton btnSalir;
 	private JTextField textPasoActual;
 	private JTextField textEstado;
+	private JCheckBox chckbxCancelados;
 	
 
 	public ReVentanaVerFabricaciones() {
@@ -162,6 +164,10 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setBounds(598, 11, 46, 14);
 		panel.add(lblEstado);
+		
+		chckbxCancelados = new JCheckBox("Ver cancelados");
+		chckbxCancelados.setBounds(679, 35, 97, 23);
+		panel.add(chckbxCancelados);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -257,5 +263,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JTextField getTextEstado() {
 		return textEstado;
+	}
+	
+	public JCheckBox getChckbxCancelados() {
+		return chckbxCancelados;
 	}
 }

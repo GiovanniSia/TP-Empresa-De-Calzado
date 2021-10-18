@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +150,38 @@ public class ReControladorOperario implements ActionListener {
 				refrescarTablaPorTecla();
 			}
 		});
+		ventanaPrincipal.getChckbxCancelados().addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				refrescarTablaPorTecla();
+			}
+		});
 		ventanaPrincipal.getBtnFechaDesde().addActionListener(r->this.seleccionarDesde(r));
 		ventanaPrincipal.getBtnFechaHasta().addActionListener(r->this.seleccionarHasta(r));
 		
@@ -207,7 +241,9 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaTrabajos();
 		llenarTablaConOrdenesSinEmpezarATrabajar();
 		llenarTablaConTrabajos();
-		llenarTablaConTrabajosCancelados();
+		if(ventanaPrincipal.getChckbxCancelados().isSelected()) {
+			llenarTablaConTrabajosCancelados();
+		}
 	}
 	
 	public void trabajarSeleccionado(ActionEvent s) {
@@ -539,6 +575,31 @@ public class ReControladorOperario implements ActionListener {
 							}
 							Object[] agregar = {f.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , estadoEnTabla, "", ""};
 							ventanaPrincipal.getModelOrdenes().addRow(agregar);
+							
+							ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+							    @Override
+							    public Component getTableCellRendererComponent(JTable table,
+							            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+							        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+							        String status = (String)table.getModel().getValueAt(row, 6);
+							        if (stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas.equals(status)) {
+							           setBackground(Color.ORANGE);
+							           setForeground(Color.BLACK);
+							        } else if ("completo".equals(status)){
+							        	setBackground(Color.green);
+							        	setForeground(Color.BLACK);
+							        } else if (stringQueDescribeElEstadoDeLasOrdenesCanceladas.equals(status) ){
+							        	setBackground(Color.red);
+							        	setForeground(Color.WHITE);
+							        }else {
+							        	setBackground(table.getBackground());
+							        	setForeground(Color.BLACK);
+							        }
+							        return this;
+							    }   
+							});
 						}
 					}
 				}
