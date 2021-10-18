@@ -113,9 +113,49 @@ public class ControladorModificarMProducto {
 	public void actualizarMasivamente(ActionEvent a) {
 		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
 		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
-		
-		System.out.println(aumentar +" , "+ disminuir);
+
+		for (MaestroProductoDTO m : maestroProductoEnTablaProductosModificar) {
+				
+			Double precioCosto = m.getPrecioCosto();
+			Double precioMayorista = m.getPrecioMayorista();
+			Double precioMinorista = m.getPrecioMinorista();
+
+			Double precioCostoAumentado = aumentar * precioCosto / 100;
+			Double precioMayoristaAumentado = aumentar * precioMayorista / 100;
+			Double precioMinoristaAumentado = aumentar * precioMinorista / 100;
+
+			Double precioCostoDisminuido = disminuir * precioCosto / 100;
+			Double precioMayoristaDisminuido = disminuir * precioMayorista / 100;
+			Double precioMinoristaDiminuido = disminuir * precioMinorista / 100;
+
+			Double precioCostoFinal = precioCosto + precioCostoAumentado - precioCostoDisminuido;
+			Double precioMayoristaFinal = precioMayorista + precioMayoristaAumentado - precioMayoristaDisminuido;
+			Double precioMinoristaFinal = precioMinorista + precioMinoristaAumentado - precioMinoristaDiminuido;
+			
+			if (precioCostoFinal <= 0 || precioMayoristaFinal <= 0 || precioMinoristaFinal <= 0) {
+				JOptionPane.showMessageDialog(null, "Actualizacion fallida, algunos precios dan negativos");
+				return;
+			}
+			
+			
+			
+			
+			
+		}
 	}
+
+	
+//	public void actualizarProducto(ActionEvent p) {
+//		if (validarCamposModificacionUnitaria()) {
+//			this.ingresarProductoATablaHistorialCambioMProducto();
+//			this.actualizarTablaMaestroProducto();
+//			this.actualizarTablaMaestroProductosModificar();
+//			this.refrescarTablaProducto();
+//			this.refrescarTablaProductosModificar();
+//			this.limpiarCampos();
+//		}
+//	}
+	
 
 	public void agregarProductosEnTablaModificar(ActionEvent a) {
 		for (MaestroProductoDTO m : maestroProductoEnTablaProducto) {
@@ -224,7 +264,7 @@ public class ControladorModificarMProducto {
 		controlador.mostrarVentana();
 	}
 
-	// Se actualizar la tabla maestroProducto y historialCambioMProducto
+
 	public void actualizarProducto(ActionEvent p) {
 		if (validarCamposModificacionUnitaria()) {
 			this.ingresarProductoATablaHistorialCambioMProducto();
