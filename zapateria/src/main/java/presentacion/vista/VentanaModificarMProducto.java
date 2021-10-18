@@ -41,7 +41,6 @@ public class VentanaModificarMProducto extends JFrame {
 	private JLabel lblCodProducto;
 	private JLabel lblDescripcion;
 	private JLabel lblModificarProducto;
-
 	private JLabel lblModificacionUnitaria;
 	private JLabel lblActualizarDescripcion;
 	private JLabel lblMUPrecioCosto;
@@ -74,7 +73,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private JButton btnQuitarProductoSeleccionado;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
-	private JButton btnActualizarProductos;
+	private JButton btnActualizarMasivamente;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -131,8 +130,8 @@ public class VentanaModificarMProducto extends JFrame {
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
 		lblActualizarDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblActualizarDescripcion.setBounds(20, 315, 198, 21);
+		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblActualizarDescripcion.setBounds(10, 315, 208, 21);
 		panel.add(lblActualizarDescripcion);
 
 		lblMUPrecioCosto = new JLabel("Precio Costo");
@@ -210,7 +209,7 @@ public class VentanaModificarMProducto extends JFrame {
 		lblModificacionUnitaria = new JLabel("Modificacion Unitaria");
 		lblModificacionUnitaria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblModificacionUnitaria.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblModificacionUnitaria.setBounds(30, 277, 432, 23);
+		lblModificacionUnitaria.setBounds(10, 277, 452, 23);
 		panel.add(lblModificacionUnitaria);
 
 		lblMUPuntoRepositorio = new JLabel("Punto Repositorio");
@@ -283,6 +282,7 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.add(lblDisminuir);
 
 		txtActualizarAumentar = new JTextField();
+		txtActualizarAumentar.setText("0");
 		txtActualizarAumentar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -298,6 +298,7 @@ public class VentanaModificarMProducto extends JFrame {
 		txtActualizarAumentar.setColumns(10);
 
 		txtActualizarDisminuir = new JTextField();
+		txtActualizarDisminuir.setText("0");
 		txtActualizarDisminuir.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -332,7 +333,7 @@ public class VentanaModificarMProducto extends JFrame {
 		tablaProductosModificar = new JTable(modelProducto2);
 		spProducto_1.setViewportView(tablaProductosModificar);
 		
-		btnAgregarProductosEnTabla = new JButton("Agregar Los productos en Tabla");
+		btnAgregarProductosEnTabla = new JButton("Agregar Productos en Tabla");
 		btnAgregarProductosEnTabla.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnAgregarProductosEnTabla.setBounds(605, 134, 249, 23);
 		panel.add(btnAgregarProductosEnTabla);
@@ -365,10 +366,10 @@ public class VentanaModificarMProducto extends JFrame {
 		lblNewLabel_2.setBounds(545, 404, 30, 14);
 		panel.add(lblNewLabel_2);
 		
-		btnActualizarProductos = new JButton("Actualizar Productos");
-		btnActualizarProductos.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnActualizarProductos.setBounds(356, 426, 149, 23);
-		panel.add(btnActualizarProductos);
+		btnActualizarMasivamente = new JButton("Actualizar Masivamente");
+		btnActualizarMasivamente.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnActualizarMasivamente.setBounds(337, 426, 184, 23);
+		panel.add(btnActualizarMasivamente);
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 69, 864, 81);
@@ -489,6 +490,10 @@ public class VentanaModificarMProducto extends JFrame {
 		txtActualizarDisminuir.setVisible(false);
 		lblAumentar.setVisible(false);
 		lblDisminuir.setVisible(false);
+	}
+	
+	public JButton getBtnActualizarMasivamente() {
+		return btnActualizarMasivamente;
 	}
 
 	public String[] getNombreColumnas() {
@@ -622,8 +627,9 @@ public class VentanaModificarMProducto extends JFrame {
 		this.txtActualizarPuntoRepositorio.setText(null);
 		this.txtActualizarCantidadAReponer.setText(null);
 		this.txtActualizarDiasParaResponder.setText(null);
-		this.txtActualizarDisminuir.setText(null);
-		this.txtActualizarAumentar.setText(null);
+		
+		this.txtActualizarDisminuir.setText("0");
+		this.txtActualizarAumentar.setText("0");
 	}
 
 	public void cerrar() {

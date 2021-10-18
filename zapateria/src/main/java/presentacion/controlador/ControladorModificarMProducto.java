@@ -60,12 +60,17 @@ public class ControladorModificarMProducto {
 		this.ventanaModificarMProducto.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(c -> actualizarProducto(c));
 		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(v -> verHistorialDeCambios(v));
-		
-		this.ventanaModificarMProducto.getBtnAgregarProductoSeleccionado().addActionListener(a -> agregarProductoSeleccionado(a));
-		this.ventanaModificarMProducto.getBtnAgregarProductosEnTabla().addActionListener(a -> agregarProductosEnTablaModificar(a));
-		
-		this.ventanaModificarMProducto.getBtnQuitarProductoSeleccionado().addActionListener(a -> quitarProductoSeleccionado(a));
+
+		this.ventanaModificarMProducto.getBtnAgregarProductoSeleccionado()
+				.addActionListener(a -> agregarProductoSeleccionado(a));
+		this.ventanaModificarMProducto.getBtnAgregarProductosEnTabla()
+				.addActionListener(a -> agregarProductosEnTablaModificar(a));
+
+		this.ventanaModificarMProducto.getBtnQuitarProductoSeleccionado()
+				.addActionListener(a -> quitarProductoSeleccionado(a));
 		this.ventanaModificarMProducto.getBtnLimpiarTabla().addActionListener(a -> limpiarTabla(a));
+
+		this.ventanaModificarMProducto.getBtnActualizarMasivamente().addActionListener(a -> actualizarMasivamente(a));
 
 		// Tabla Productos Modificar
 		this.ventanaModificarMProducto.getTablaProductosModificar().addMouseListener(new MouseAdapter() {
@@ -105,9 +110,16 @@ public class ControladorModificarMProducto {
 		});
 	}
 
+	public void actualizarMasivamente(ActionEvent a) {
+		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
+		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
+		
+		System.out.println(aumentar +" , "+ disminuir);
+	}
+
 	public void agregarProductosEnTablaModificar(ActionEvent a) {
 		for (MaestroProductoDTO m : maestroProductoEnTablaProducto) {
-			if(!productoSeleccionadoEstaEnTablaProductosModificar(m)) {				
+			if (!productoSeleccionadoEstaEnTablaProductosModificar(m)) {
 				this.maestroProductoEnTablaProductosModificar.add(m);
 			}
 		}
@@ -161,6 +173,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public void rellenarCamposDeModificacionUnitaria() {
+		this.limpiarCampos();
 		int filaSeleccionada = filaSeleccionadaTablaProductosModificar();
 		JTable tablaProductosModificar = ventanaModificarMProducto.getTablaProductosModificar();
 		ventanaModificarMProducto.getLblActualizarDescripcion()
@@ -284,12 +297,12 @@ public class ControladorModificarMProducto {
 		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
 		maestroProducto.update(idModificar, productoNuevo);
 	}
-	
+
 	public void actualizarTablaMaestroProductosModificar() {
 		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
 		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
 		for (MaestroProductoDTO m : maestroProductoEnTablaProductosModificar) {
-			if(m.getIdMaestroProducto() == productoNuevo.getIdMaestroProducto()) {
+			if (m.getIdMaestroProducto() == productoNuevo.getIdMaestroProducto()) {
 				maestroProductoEnTablaProductosModificar.set(filaSeleccionada, productoNuevo);
 			}
 		}
@@ -299,7 +312,8 @@ public class ControladorModificarMProducto {
 
 		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
 
-		String precioCostoAntiguo = "" + this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
+		String precioCostoAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
 		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
 
 		String precioMayoristaAntiguo = ""
@@ -345,7 +359,8 @@ public class ControladorModificarMProducto {
 				+ this.maestroProductoEnTablaProducto.get(filaSeleccionada).getIdMaestroProducto();
 		String fecha = obtenerFechaDeHoy();
 
-		String precioCostoAntiguo = "" + this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
+		String precioCostoAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
 		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
 
 		String precioMayoristaAntiguo = ""
@@ -381,7 +396,8 @@ public class ControladorModificarMProducto {
 
 		int filaSeleccionada = filaSeleccionadaTablaProductosModificar();
 
-		int idMaestroProducto = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getIdMaestroProducto();
+		int idMaestroProducto = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada)
+				.getIdMaestroProducto();
 		String descripcion = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDescripcion();
 		String tipo = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getTipo();
 		String fabricado = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getFabricado();
@@ -413,7 +429,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public MaestroProductoDTO obtenerMaestroProductoSeleccionado() {
-		int filaSeleccionada =filaSeleccionadaTablaProductosModificar();
+		int filaSeleccionada = filaSeleccionadaTablaProductosModificar();
 		List<MaestroProductoDTO> maestroProducto = this.maestroProducto.readAll();
 		String codProducto = this.ventanaModificarMProducto.getTablaProducto().getValueAt(filaSeleccionada, 0)
 				.toString();
