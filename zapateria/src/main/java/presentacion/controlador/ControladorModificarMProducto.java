@@ -113,12 +113,11 @@ public class ControladorModificarMProducto {
 	public void actualizarMasivamente(ActionEvent a) {
 		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
 		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
-
-		for (MaestroProductoDTO m : maestroProductoEnTablaProductosModificar) {
-				
-			Double precioCosto = m.getPrecioCosto();
-			Double precioMayorista = m.getPrecioMayorista();
-			Double precioMinorista = m.getPrecioMinorista();
+		List<MaestroProductoDTO> maestroProductosModificados = new ArrayList<MaestroProductoDTO>();
+		for (MaestroProductoDTO productoTablaModificar : maestroProductoEnTablaProductosModificar) {
+			Double precioCosto = productoTablaModificar.getPrecioCosto();
+			Double precioMayorista = productoTablaModificar.getPrecioMayorista();
+			Double precioMinorista = productoTablaModificar.getPrecioMinorista();
 
 			Double precioCostoAumentado = aumentar * precioCosto / 100;
 			Double precioMayoristaAumentado = aumentar * precioMayorista / 100;
@@ -131,31 +130,94 @@ public class ControladorModificarMProducto {
 			Double precioCostoFinal = precioCosto + precioCostoAumentado - precioCostoDisminuido;
 			Double precioMayoristaFinal = precioMayorista + precioMayoristaAumentado - precioMayoristaDisminuido;
 			Double precioMinoristaFinal = precioMinorista + precioMinoristaAumentado - precioMinoristaDiminuido;
-			
+
 			if (precioCostoFinal <= 0 || precioMayoristaFinal <= 0 || precioMinoristaFinal <= 0) {
 				JOptionPane.showMessageDialog(null, "Actualizacion fallida, algunos precios dan negativos");
 				return;
 			}
-			
-			
-			
-			
-			
-		}
-	}
 
-	
-//	public void actualizarProducto(ActionEvent p) {
-//		if (validarCamposModificacionUnitaria()) {
-//			this.ingresarProductoATablaHistorialCambioMProducto();
-//			this.actualizarTablaMaestroProducto();
-//			this.actualizarTablaMaestroProductosModificar();
+			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar,precioCostoFinal, precioMayoristaFinal,
+					precioMinoristaFinal);
+			this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar,productoNuevo);
+
+			
+//			this.actualizacionMasivoTablaMaestroProducto();
+//			this.actualizacionMasivoTablaMaestroProductosModificar();
 //			this.refrescarTablaProducto();
 //			this.refrescarTablaProductosModificar();
-//			this.limpiarCampos();
-//		}
-//	}
+
+		}
+		this.limpiarCampos();
+	}
 	
+	public void actualizacionMasivoTablaMaestroProducto() {
+		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
+		int idModificar = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getIdMaestroProducto();
+		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
+		maestroProducto.update(idModificar, productoNuevo);
+	}
+
+	public void actualizacionMasivoTablaMaestroProductosModificar() {
+		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
+		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
+		for (MaestroProductoDTO m : maestroProductoEnTablaProductosModificar) {
+			if (m.getIdMaestroProducto() == productoNuevo.getIdMaestroProducto()) {
+				maestroProductoEnTablaProductosModificar.set(filaSeleccionada, productoNuevo);
+			}
+		}
+	}
+	
+
+	public void ingresarProductosMasivosATablaHistorialCambioMProducto(MaestroProductoDTO productoAntiguo,
+			MaestroProductoDTO productoNuevo) {
+
+		String idMaestroProducto = "" + productoAntiguo.getIdMaestroProducto();
+		String fecha = obtenerFechaDeHoy();
+
+		String precioCostoAntiguo = "" + productoAntiguo.getPrecioCosto();
+		String precioCostoNuevo = "" + productoNuevo.getPrecioCosto();
+
+		String precioMayoristaAntiguo = "" + productoAntiguo.getPrecioMayorista();
+		String precioMayoristaNuevo = "" + productoNuevo.getPrecioMayorista();
+
+		String precioMinoristaAntiguo = "" + productoAntiguo.getPrecioMinorista();
+		String precioMinoristaNuevo = "" + productoNuevo.getPrecioMinorista();
+
+		String PuntoRepositorioAntiguo = "" + productoAntiguo.getPuntoRepositorio();
+		String CantidadAReponerAntiguo = "" + productoAntiguo.getCantidadAReponer();
+		String DiasParaReponerAntiguo = "" + productoAntiguo.getDiasParaReponer();
+
+		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idEmpleado, idMaestroProducto,
+				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioAntiguo,
+				CantidadAReponerAntiguo, CantidadAReponerAntiguo, DiasParaReponerAntiguo, DiasParaReponerAntiguo);
+
+		this.historialCambioMProducto.insert(nuevoHistorial);
+
+	}
+
+	public MaestroProductoDTO obtenerMaestroProductoNuevo(MaestroProductoDTO productoAntiguo, Double precioCostoNuevo,
+			Double precioMayoristaNuevo, Double precioMinoristaNuevo) {
+
+		int idMaestroProducto = productoAntiguo.getIdMaestroProducto();
+		String descripcion = productoAntiguo.getDescripcion();
+		String tipo = productoAntiguo.getTipo();
+		String fabricado = productoAntiguo.getFabricado();
+		double precioCosto = precioCostoNuevo;
+		double precioMayorista = precioMayoristaNuevo;
+		double precioMinorista = precioMinoristaNuevo;
+		int puntoRepositorio =productoAntiguo.getPuntoRepositorio();
+		int cantidadAReponer = productoAntiguo.getCantidadAReponer();
+		int diasParaReponer = productoAntiguo.getDiasParaReponer();
+		int idProveedor = productoAntiguo.getIdProveedor();
+		String talle = productoAntiguo.getTalle();
+		String unidadMedida = productoAntiguo.getUnidadMedida();
+		String estado = productoAntiguo.getEstado();
+
+		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo, fabricado, precioCosto, precioMayorista,
+				precioMinorista, puntoRepositorio, idProveedor, talle, unidadMedida, estado, cantidadAReponer,
+				diasParaReponer);
+	}
 
 	public void agregarProductosEnTablaModificar(ActionEvent a) {
 		for (MaestroProductoDTO m : maestroProductoEnTablaProducto) {
@@ -263,7 +325,6 @@ public class ControladorModificarMProducto {
 		controlador.inicializar();
 		controlador.mostrarVentana();
 	}
-
 
 	public void actualizarProducto(ActionEvent p) {
 		if (validarCamposModificacionUnitaria()) {
