@@ -54,7 +54,7 @@ public class VentanaVerDetalle extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		lblId = new JLabel("Motivo por el que se cancela");
+		lblId = new JLabel("-");
 		lblId.setBounds(10, 11, 145, 14);
 		panel.add(lblId);
 		
@@ -75,7 +75,7 @@ public class VentanaVerDetalle extends JFrame {
 		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Cancelacion");
+		lblNewLabel = new JLabel("Detalle");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));

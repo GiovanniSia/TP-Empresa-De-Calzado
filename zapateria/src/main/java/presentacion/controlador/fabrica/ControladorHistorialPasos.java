@@ -3,7 +3,10 @@ package presentacion.controlador.fabrica;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -225,7 +228,33 @@ public class ControladorHistorialPasos {
 							String nombreEmpleado = hp.getNombreCompleto();
 							String nombreEnTabla = idEmpleado + ", " + nombreEmpleado;
 							if(nombreEnTabla.toLowerCase().matches(".*"+empleadoParametro+".*")) {
-								historialRet.add(hp);
+								// fechaHasta()
+								//String fechaAccion = (String) palabrasPorPalabras(hp.getFecha())[0];
+								Date fechaPaso = new Date();
+								String[] fechaPasoString = palabrasPorBarra(hp.getFecha());
+								fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
+								fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
+								fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
+								boolean cumpleDesde = false;
+								if(getFechaDesdeDate() != null) {
+									if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+										cumpleDesde = true;
+									}
+								}else {
+									cumpleDesde = true;
+								}
+								boolean cumpleHasta = false;
+								if(getFechaDesdeHasta() != null) {
+									if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+										cumpleHasta = true;
+									}
+								}else {
+									cumpleHasta = true;
+								}
+								if(cumpleDesde && cumpleHasta) {
+									historialRet.add(hp);
+								}
+								
 							}
 						}
 					}
@@ -259,12 +288,60 @@ public class ControladorHistorialPasos {
 	private void refrescarTablaPorTecla() {
 		refrescarTabla();
 	}
+	
+	private String getFechaDesde() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fechaDesde = this.ventana.getFechaDesde().getDate();
+		String fechaDesdeFormato = null;
+		if (fechaDesde != null) {
+			fechaDesdeFormato = dateFormat.format(fechaDesde);
+		}
+		return fechaDesdeFormato;
+	}
+	
+	private Date getFechaDesdeDate() {
+		Date ret = this.ventana.getFechaDesde().getDate();
+		if(ret != null) {
+			ret.setHours(0);
+			ret.setMinutes(0);
+			ret.setSeconds(0);
+		}
+		return ret;
+	}
+	
+	private Date getFechaDesdeHasta() {
+		Date ret = this.ventana.getFechaHasta().getDate();
+		if(ret != null) {
+			ret.setHours(23);
+			ret.setMinutes(59);
+			ret.setSeconds(59);
+		}
+		return ret;
+	}
+	
+	private String fechaHasta() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fechaHasta = this.ventana.getFechaHasta().getDate();
+		String fechaHastaFormato = null;
+		if (fechaHasta != null) {
+			fechaHastaFormato = dateFormat.format(fechaHasta);
+		}
+		return fechaHastaFormato;
+	}
 
 	private String[] palabrasPorPalabras(String sentence) {
 		if (sentence == null || sentence.isEmpty()) {
 			return new String[0];
 		}
 		String[] words = sentence.split("\\s+");
+		return words;
+	}
+	
+	private String[] palabrasPorBarra(String sentence) {
+		if (sentence == null || sentence.isEmpty()) {
+			return new String[0];
+		}
+		String[] words = sentence.split("-");
 		return words;
 	}
 

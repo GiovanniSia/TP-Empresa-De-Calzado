@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
 
 public class VentanaVerHistorialPasos extends JFrame {
 
@@ -38,15 +39,13 @@ public class VentanaVerHistorialPasos extends JFrame {
 	private JTextField textProducto;
 	private JLabel lblProducto;
 	JTextField textSucursal;
-	private JButton btnFechaDesde;
-	private JButton btnFechaHasta;
-	private JLabel lblFechaDesde;
-	private JLabel lblFechaHasta;
 
 	private JButton btnSalir;
 	private JTextField textAccion;
 	private JTextField textEmpleado;
 	
+	JDateChooser fechaHasta;
+	JDateChooser fechaDesde;
 
 	public VentanaVerHistorialPasos() {
 		initialize();
@@ -124,22 +123,6 @@ public class VentanaVerHistorialPasos extends JFrame {
 		lblProducto.setBounds(180, 11, 46, 14);
 		panel.add(lblProducto);
 		
-		btnFechaDesde = new JButton("Desde");
-		btnFechaDesde.setBounds(265, 7, 89, 23);
-		panel.add(btnFechaDesde);
-		
-		btnFechaHasta = new JButton("Hasta");
-		btnFechaHasta.setBounds(265, 35, 89, 23);
-		panel.add(btnFechaHasta);
-		
-		lblFechaDesde = new JLabel("-");
-		lblFechaDesde.setBounds(364, 11, 75, 14);
-		panel.add(lblFechaDesde);
-		
-		lblFechaHasta = new JLabel("-");
-		lblFechaHasta.setBounds(364, 39, 75, 14);
-		panel.add(lblFechaHasta);
-		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(740, 351, 46, 38);
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
@@ -147,11 +130,11 @@ public class VentanaVerHistorialPasos extends JFrame {
 		
 		textAccion = new JTextField();
 		textAccion.setColumns(10);
-		textAccion.setBounds(553, 38, 136, 20);
+		textAccion.setBounds(265, 36, 136, 20);
 		panel.add(textAccion);
 		
 		JLabel lblPaso = new JLabel("Accion");
-		lblPaso.setBounds(553, 11, 46, 14);
+		lblPaso.setBounds(265, 11, 46, 14);
 		panel.add(lblPaso);
 		
 		textEmpleado = new JTextField();
@@ -162,6 +145,22 @@ public class VentanaVerHistorialPasos extends JFrame {
 		JLabel lblEmpleado = new JLabel("Empleado");
 		lblEmpleado.setBounds(828, 11, 75, 14);
 		panel.add(lblEmpleado);
+
+		fechaDesde = new JDateChooser();
+		fechaDesde.setBounds(411, 36, 108, 19);
+		panel.add(fechaDesde);
+		
+		fechaHasta = new JDateChooser();
+		fechaHasta.setBounds(529, 36, 108, 19);
+		panel.add(fechaHasta);
+		
+		JLabel lblFechaDesde = new JLabel("Fecha desde");
+		lblFechaDesde.setBounds(411, 11, 108, 14);
+		panel.add(lblFechaDesde);
+		
+		JLabel lblFechaHasta = new JLabel("Fecha hasta");
+		lblFechaHasta.setBounds(529, 11, 108, 14);
+		panel.add(lblFechaHasta);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -230,22 +229,6 @@ public class VentanaVerHistorialPasos extends JFrame {
 	public JTextField getTextSucursal() {
 		return textSucursal;
 	}
-
-	public JButton getBtnFechaDesde() {
-		return btnFechaDesde;
-	}
-
-	public JButton getBtnFechaHasta() {
-		return btnFechaHasta;
-	}
-
-	public JLabel getLblFechaDesde() {
-		return lblFechaDesde;
-	}
-
-	public JLabel getLblFechaHasta() {
-		return lblFechaHasta;
-	}
 	
 	public JButton getBtnSalir() {
 		return btnSalir;
@@ -257,5 +240,13 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	public JTextField getTextEmpleado() {
 		return textEmpleado;
+	}
+	
+	public JDateChooser getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public JDateChooser getFechaHasta() {
+		return fechaHasta;
 	}
 }
