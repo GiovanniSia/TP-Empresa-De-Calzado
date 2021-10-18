@@ -4,10 +4,10 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="fechaDesde" class="java.sql.Date">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaDesde}+"")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaDesde})]]></defaultValueExpression>
 	</parameter>
 	<parameter name="fechaHasta" class="java.sql.Date">
-		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaHasta}+"")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaHasta})]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT (SELECT Sum(ingr.Total) from zapateria.ingresos as ingr WHERE ingr.Fecha >= '$P!{fechaDesde}' AND ingr.Fecha <= '$P!{fechaHasta}') as total,Sum(ingr.Total) as totalSucursal,sucu.nombre,sucu.IdSucursal FROM zapateria.ingresos as ingr, zapateria.sucursales as sucu WHERE ingr.IdSucursal = sucu.IdSucursal AND ingr.Fecha >= '$P!{fechaDesde}' AND ingr.Fecha <= '$P!{fechaHasta}' group by sucu.IdSucursal ORDER BY totalSucursal DESC]]>
