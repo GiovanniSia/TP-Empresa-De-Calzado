@@ -614,6 +614,7 @@ public class VentanaModificarMProducto extends JFrame {
 		this.txtFiltroDescripcion.setText(null);
 		this.txtFiltroTalle.setText(null);
 		this.txtFiltroCodProducto.setText(null);
+		this.txtFiltroProveedor.setText(null);
 		this.lblActualizarDescripcion.setText("Descripción");
 		this.txtActualizarPrecioCosto.setText(null);
 		this.txtActualizarPrecioMayorista.setText(null);
