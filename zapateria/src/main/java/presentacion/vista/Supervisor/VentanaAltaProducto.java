@@ -2,6 +2,8 @@ package presentacion.vista.Supervisor;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -24,8 +26,7 @@ public class VentanaAltaProducto {
 	private JFrame frame;
 	
 	
-	
-	
+
 	private JTextField textDescripcion;
 	
 	private JTextField textCosto;
@@ -89,6 +90,8 @@ public class VentanaAltaProducto {
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un nuevo producto");
 		frame.setResizable(false);
+		
+		
 		
 		JLabel lblNewLabel = new JLabel("Registrar Producto");
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
@@ -191,6 +194,14 @@ public class VentanaAltaProducto {
 		frame.getContentPane().add(lblDiasParaReponer);
 	
 		textDescripcion = new JTextField();
+		textDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textDescripcion.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textDescripcion.setBounds(178, 49, 178, 19);
 		frame.getContentPane().add(textDescripcion);
 		textDescripcion.setColumns(10);
@@ -320,6 +331,8 @@ public class VentanaAltaProducto {
 	}
 	
 	
+	
+	
 	public JTextField getTextDescripcion() {
 		return textDescripcion;
 	}
@@ -391,4 +404,9 @@ public class VentanaAltaProducto {
 		return btnBorrarProveedor;
 	}
 
+	
+	
+	public JFrame getFrame() {
+		return frame;
+	}
 }

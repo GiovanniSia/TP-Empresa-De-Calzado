@@ -38,7 +38,7 @@ public class ControladorAltaProducto {
 		this.proveedor = proveedor;
 		this.productoDeProveedor = productoDeProveedor;
 
-
+		this.ventanaAltaProducto = new VentanaAltaProducto();
 		
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
@@ -50,7 +50,7 @@ public class ControladorAltaProducto {
 	}
 	
 	public void inicializar() {
-		this.ventanaAltaProducto = new VentanaAltaProducto();
+
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
 		
@@ -60,12 +60,9 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir(a));
 		this.ventanaAltaProducto.getBtnElegirProveedor().addActionListener(a -> pasarAElegirProveedor(a));
 		this.ventanaAltaProducto.getBtnBorrarProveedor().addActionListener(a -> borrarProveedor(a));
-		
-		if(this.proveedorElegido!=null) {
-			this.ventanaAltaProducto.getLblProveedorElegido().setText(this.proveedorElegido.getNombre());
-		}else {
-			this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
-		}
+
+		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
+
 		
 		llenarCb();
 		validarTeclado();
@@ -76,6 +73,15 @@ public class ControladorAltaProducto {
 	}
 	
 	
+	public void establecerProveedorElegido(ProveedorDTO prov) {
+		this.proveedorElegido=prov;
+		this.ventanaAltaProducto.getLblProveedorElegido().setText(this.proveedorElegido.getNombre());
+		this.ventanaAltaProducto.getLblProveedorElegido().repaint();
+	}
+	
+	public void salir(ActionEvent a ) {
+		this.ventanaAltaProducto.cerrar();
+	}
 	
 	public void llenarCb() {
 		String[] cbTipo = {"Producto Terminado","Materia Prima"};
@@ -272,14 +278,7 @@ public class ControladorAltaProducto {
 		return this.proveedorElegido.getId();
 		
 	}
-	
-	public void establecerProveedorElegido(ProveedorDTO prov) {
-		this.proveedorElegido=prov;
-	}
-	
-	public void salir(ActionEvent a ) {
-		this.ventanaAltaProducto.cerrar();
-	}
+
 	
 //	public void actualizarCbProveedor(ActionEvent a) {
 //		String fabricado = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
@@ -324,7 +323,7 @@ public class ControladorAltaProducto {
 	
 	
 	public void pasarAElegirProveedor(ActionEvent a) {
-		this.ventanaAltaProducto.cerrar();
+//		this.ventanaAltaProducto.cerrar();
 		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
 	}

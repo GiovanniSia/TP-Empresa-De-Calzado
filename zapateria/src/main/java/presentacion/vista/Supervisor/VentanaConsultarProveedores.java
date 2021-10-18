@@ -80,6 +80,7 @@ public class VentanaConsultarProveedores {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
+		
 		JLabel lblListaProveedores = new JLabel("Lista de proveedores");
 		lblListaProveedores.setFont(new Font("Comic Sans MS", Font.PLAIN, 21));
 		lblListaProveedores.setBounds(10, 10, 370, 40);
@@ -142,9 +143,6 @@ public class VentanaConsultarProveedores {
 		frame.getContentPane().add(btnEditarProveedor);
 		btnEditarProveedor.setVisible(false);
 	}
-
-	
-	
 
 	
 	public void show() {

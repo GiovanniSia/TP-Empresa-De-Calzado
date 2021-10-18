@@ -74,8 +74,6 @@ public class ControladorConsultarProveedor {
 		this.controladorAltaProducto.establecerProveedorElegido(proveedorElegido);
 		
 		this.ventanaConsultarProveedores.cerrar();
-		this.controladorAltaProducto.inicializar();
-		this.controladorAltaProducto.mostrarVentana();
 		
 	}
 	

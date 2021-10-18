@@ -31,6 +31,9 @@ public class VentanaVisualizarCarritos {
 
 	private JFrame frame;
 	
+	private JPanel panelTablas;
+
+
 	private JTable tableCarritos;
 	private DefaultTableModel modelTablaCarritos;
 	private String[] nombreColumnasCarritos = {"CUIL","Nombre","Hora","Tipo Cliente","Estado","P. Total Venta"};
@@ -100,16 +103,16 @@ public class VentanaVisualizarCarritos {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 928, 592);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
+		panelTablas = new JPanel();
+		panelTablas.setBackground(Color.WHITE);
+		panelTablas.setBounds(0, 0, 928, 592);
+		frame.getContentPane().add(panelTablas);
+		panelTablas.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBounds(10, 10, 909, 41);
-		panel.add(panel_1);
+		panelTablas.add(panel_1);
 		
 		JLabel lblTitulo = new JLabel("Zapater\u00EDa");
 		lblTitulo.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -139,19 +142,19 @@ public class VentanaVisualizarCarritos {
 		
 		scrollPaneTablaCarritos.setViewportView(tableCarritos);
 		
-		panel.add(scrollPaneTablaCarritos);
+		panelTablas.add(scrollPaneTablaCarritos);
 		//
 		
 		
 		JLabel lblNewLabel = new JLabel("Elegir Carrito a vender");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 34));
 		lblNewLabel.setBounds(10, 56, 505, 44);
-		panel.add(lblNewLabel);
+		panelTablas.add(lblNewLabel);
 		
 		btnElegirCarrito = new JButton("");
 		btnElegirCarrito.setBounds(793, 485, 83, 67);
 		btnElegirCarrito.setIcon(setIcono("../imagenes/cashier.png", btnElegirCarrito));
-		panel.add(btnElegirCarrito);
+		panelTablas.add(btnElegirCarrito);
 		
 		
 		//tabla detalle
@@ -177,32 +180,32 @@ public class VentanaVisualizarCarritos {
 		
 		scrollPaneDetalle.setViewportView(tableDetalle);
 		
-		panel.add(scrollPaneDetalle);
+		panelTablas.add(scrollPaneDetalle);
 		
 		JLabel lblNewLabel_1 = new JLabel("Productos en el Carrito");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 22));
 		lblNewLabel_1.setBounds(598, 72, 294, 21);
-		panel.add(lblNewLabel_1);
+		panelTablas.add(lblNewLabel_1);
 		
 		JLabel lblCobrar = new JLabel("Cobrar Carrito");
 		lblCobrar.setFont(new Font("Comic Sans MS", Font.PLAIN, 23));
 		lblCobrar.setBounds(627, 500, 164, 41);
-		panel.add(lblCobrar);
+		panelTablas.add(lblCobrar);
 		
 		lblFiltrarPor = new JLabel("Filtrar Por:");
 		lblFiltrarPor.setFont(new Font("Consolas", Font.PLAIN, 10));
 		lblFiltrarPor.setBounds(10, 102, 93, 21);
-		panel.add(lblFiltrarPor);
+		panelTablas.add(lblFiltrarPor);
 		
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Consolas", Font.PLAIN, 10));
 		lblNombre.setBounds(113, 122, 93, 13);
-		panel.add(lblNombre);
+		panelTablas.add(lblNombre);
 		
 		lblCUIL = new JLabel("CUIL");
 		lblCUIL.setFont(new Font("Consolas", Font.PLAIN, 10));
 		lblCUIL.setBounds(10, 122, 93, 13);
-		panel.add(lblCUIL);
+		panelTablas.add(lblCUIL);
 		
 		
 		//TXT
@@ -217,7 +220,7 @@ public class VentanaVisualizarCarritos {
 			}
 		});
 		textNombre.setBounds(113, 142, 96, 19);
-		panel.add(textNombre);
+		panelTablas.add(textNombre);
 		textNombre.setColumns(10);
 		
 		textCUIL = new JTextField();
@@ -231,7 +234,7 @@ public class VentanaVisualizarCarritos {
 		});
 		textCUIL.setColumns(10);
 		textCUIL.setBounds(10, 142, 96, 19);
-		panel.add(textCUIL);
+		panelTablas.add(textCUIL);
 		
 		textApellido = new JTextField();
 		textApellido.addKeyListener(new KeyAdapter() {
@@ -244,34 +247,34 @@ public class VentanaVisualizarCarritos {
 		});
 		textApellido.setColumns(10);
 		textApellido.setBounds(219, 142, 96, 19);
-		panel.add(textApellido);
+		panelTablas.add(textApellido);
 		
 		//
 		
 		lblApellido = new JLabel("Apellido");
 		lblApellido.setFont(new Font("Consolas", Font.PLAIN, 10));
 		lblApellido.setBounds(219, 120, 93, 13);
-		panel.add(lblApellido);
+		panelTablas.add(lblApellido);
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(20, 546, 35, 36);
 		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
-		panel.add(btnRegresar);
+		panelTablas.add(btnRegresar);
 		
 		lblSalir = new JLabel("Salir");
 		lblSalir.setFont(new Font("Consolas", Font.PLAIN, 14));
 		lblSalir.setBounds(65, 561, 52, 21);
-		panel.add(lblSalir);
+		panelTablas.add(lblSalir);
 		
 		btnBorrarCarrito = new JButton("");
 		btnBorrarCarrito.setBounds(480, 546, 35, 36);
 		btnBorrarCarrito.setIcon(setIcono("../imagenes/trash.png",btnBorrarCarrito));
-		panel.add(btnBorrarCarrito);
+		panelTablas.add(btnBorrarCarrito);
 		
 		JLabel lblCancelarCompra = new JLabel("Cancelar compra");
 		lblCancelarCompra.setFont(new Font("Consolas", Font.PLAIN, 14));
 		lblCancelarCompra.setBounds(357, 546, 120, 36);
-		panel.add(lblCancelarCompra);
+		panelTablas.add(lblCancelarCompra);
 		
 
 		
@@ -387,4 +390,7 @@ public class VentanaVisualizarCarritos {
 		return btnBorrarCarrito;
 	}	
 	
+	public JPanel getPanelTablas() {
+		return panelTablas;
+	}	
 }

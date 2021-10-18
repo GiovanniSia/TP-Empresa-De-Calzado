@@ -75,7 +75,7 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
-
+		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 		
 		this.controlador = controlador;
 	}
@@ -85,7 +85,7 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void inicializar() {
-		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+
 		this.listaCarritos = this.carrito.readAll();
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
@@ -129,6 +129,15 @@ public class ControladorVisualizarCarritos {
 		llenarTablaCompleta();
 		
 		
+	}
+	
+	public void actualizarVentana() {
+		this.listaCarritos = this.carrito.readAll();
+		this.listaDetalleCarrito = this.detalleCarrito.readAll();
+		realizarBusqueda();
+		mostrarDetalle();
+		this.ventanaVisualizarCarritos.getTableCarritos().updateUI();
+		this.ventanaVisualizarCarritos.getTableDetalle().updateUI();
 	}
 	
 	
@@ -279,7 +288,7 @@ public class ControladorVisualizarCarritos {
 			CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);
 			ClienteDTO client = this.cliente.selectCliente(carrito.getIdCliente());
 
-			this.ventanaVisualizarCarritos.cerrar();
+//			this.ventanaVisualizarCarritos.cerrar();
 			this.controladorRealizarVenta.establecerCarritoACobrar(carrito,this.detalleCarritoEnTabla,client);
 			this.controladorRealizarVenta.inicializar();
 			this.controladorRealizarVenta.mostrarVentana();

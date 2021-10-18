@@ -419,10 +419,8 @@ public class ControladorRealizarVenta {
 				reporte.mostrar();
 			}
 			this.ventanaRealizarVenta.cerrar();
-			this.controladorVisualizarCarritos.inicializar();
-			this.controladorVisualizarCarritos.realizarBusqueda();
-			this.controladorVisualizarCarritos.mostrarDetalle();
-			this.controladorVisualizarCarritos.mostrarVentana();
+			this.controladorVisualizarCarritos.actualizarVentana();
+
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
@@ -431,9 +429,6 @@ public class ControladorRealizarVenta {
 	
 	public void cancelarPago(ActionEvent a) {
 		this.ventanaRealizarVenta.cerrar();
-		this.controladorVisualizarCarritos.inicializar();
-		this.controladorVisualizarCarritos.realizarBusqueda();
-		this.controladorVisualizarCarritos.mostrarVentana();
 		
 	}
 	public void quitarMedioPago(ActionEvent a) {
