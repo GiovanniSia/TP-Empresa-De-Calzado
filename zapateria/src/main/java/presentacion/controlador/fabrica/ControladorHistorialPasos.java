@@ -205,11 +205,11 @@ public class ControladorHistorialPasos {
 		List<HistorialPasoDTO> historial = modelosHistorialPaso.readAll();
 		List<HistorialPasoDTO> historialRet = new ArrayList<HistorialPasoDTO>();
 		
-		String idOrdenParametro = ventana.getTextId().getText();
-		String productoParametro = ventana.getTextProducto().getText();
-		String sucursalParametro = ventana.getTextSucursal().getText();
-		String accionParametro = ventana.getTextAccion().getText();
-		String empleadoParametro = ventana.getTextEmpleado().getText();
+		String idOrdenParametro = ventana.getTextId().getText().toLowerCase();
+		String productoParametro = ventana.getTextProducto().getText().toLowerCase();
+		String sucursalParametro = ventana.getTextSucursal().getText().toLowerCase();
+		String accionParametro = ventana.getTextAccion().getText().toLowerCase();
+		String empleadoParametro = ventana.getTextEmpleado().getText().toLowerCase();
 		
 		for(HistorialPasoDTO hp: historial) {
 			int nroOrden = hp.getIdOrden();
