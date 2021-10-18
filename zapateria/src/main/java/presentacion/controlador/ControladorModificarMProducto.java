@@ -113,8 +113,13 @@ public class ControladorModificarMProducto {
 	public void actualizarMasivamente(ActionEvent a) {
 		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
 		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
-		List<MaestroProductoDTO> maestroProductosModificados = new ArrayList<MaestroProductoDTO>();
+		if (aumentar == 0 && disminuir == 0) {
+			JOptionPane.showMessageDialog(null, "Sin cambios");
+			return;
+		}
+		System.out.println(maestroProductoEnTablaProductosModificar);
 		for (MaestroProductoDTO productoTablaModificar : maestroProductoEnTablaProductosModificar) {
+			System.out.println("Producto: " + productoTablaModificar.getIdMaestroProducto());
 			Double precioCosto = productoTablaModificar.getPrecioCosto();
 			Double precioMayorista = productoTablaModificar.getPrecioMayorista();
 			Double precioMinorista = productoTablaModificar.getPrecioMinorista();
@@ -135,38 +140,26 @@ public class ControladorModificarMProducto {
 				JOptionPane.showMessageDialog(null, "Actualizacion fallida, algunos precios dan negativos");
 				return;
 			}
-
-			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar,precioCostoFinal, precioMayoristaFinal,
-					precioMinoristaFinal);
-			this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar,productoNuevo);
-
+			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCostoFinal,
+					precioMayoristaFinal, precioMinoristaFinal);
 			
-//			this.actualizacionMasivoTablaMaestroProducto();
-//			this.actualizacionMasivoTablaMaestroProductosModificar();
-//			this.refrescarTablaProducto();
-//			this.refrescarTablaProductosModificar();
-
+			
+			
+			this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);			
+			this.actualizacionMasivoTablaMaestroProducto(productoNuevo);	
 		}
-		this.limpiarCampos();
+		this.refrescarTablaProducto();
+		this.limpiarTablaMaestroProductosModificar();
 	}
-	
-	public void actualizacionMasivoTablaMaestroProducto() {
-		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
-		int idModificar = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getIdMaestroProducto();
-		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
+
+	public void actualizacionMasivoTablaMaestroProducto(MaestroProductoDTO productoNuevo) {
+		int idModificar = productoNuevo.getIdMaestroProducto();
 		maestroProducto.update(idModificar, productoNuevo);
 	}
 
-	public void actualizacionMasivoTablaMaestroProductosModificar() {
-		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
-		MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo();
-		for (MaestroProductoDTO m : maestroProductoEnTablaProductosModificar) {
-			if (m.getIdMaestroProducto() == productoNuevo.getIdMaestroProducto()) {
-				maestroProductoEnTablaProductosModificar.set(filaSeleccionada, productoNuevo);
-			}
-		}
+	public void limpiarTablaMaestroProductosModificar() {
+		this.limpiarTabla(null);
 	}
-	
 
 	public void ingresarProductosMasivosATablaHistorialCambioMProducto(MaestroProductoDTO productoAntiguo,
 			MaestroProductoDTO productoNuevo) {
@@ -206,7 +199,7 @@ public class ControladorModificarMProducto {
 		double precioCosto = precioCostoNuevo;
 		double precioMayorista = precioMayoristaNuevo;
 		double precioMinorista = precioMinoristaNuevo;
-		int puntoRepositorio =productoAntiguo.getPuntoRepositorio();
+		int puntoRepositorio = productoAntiguo.getPuntoRepositorio();
 		int cantidadAReponer = productoAntiguo.getCantidadAReponer();
 		int diasParaReponer = productoAntiguo.getDiasParaReponer();
 		int idProveedor = productoAntiguo.getIdProveedor();
@@ -231,6 +224,10 @@ public class ControladorModificarMProducto {
 
 	public void quitarProductoSeleccionado(ActionEvent a) {
 		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+			return;
+		}
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada);
 		this.maestroProductoEnTablaProductosModificar.remove(productoSeleccionado);
 		this.refrescarTablaProductosModificar();
@@ -248,6 +245,11 @@ public class ControladorModificarMProducto {
 
 	public void agregarProductoSeleccionado(ActionEvent a) {
 		int filaSeleccionada = this.filaSeleccionadaTablaProducto();
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+			return;
+		}
+		
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
 		if (!productoSeleccionadoEstaEnTablaProductosModificar(productoSeleccionado)) {
 			this.maestroProductoEnTablaProductosModificar.add(productoSeleccionado);
