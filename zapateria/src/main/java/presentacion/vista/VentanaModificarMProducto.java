@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
 
 public class VentanaModificarMProducto extends JFrame {
 
@@ -28,11 +29,11 @@ public class VentanaModificarMProducto extends JFrame {
 	private JTable tablaProducto;
 	private JPanel panel_2;
 	private JPanel panel_1;
-
 	private JScrollPane spProducto;
 	private JTextField txtFiltroDescripcion;
 	private JTextField txtFiltroTalle;
 	private JTextField txtFiltroCodProducto;
+	private JButton btnQuitarFiltro;
 	private JButton btnActualizarProductoUnitario;
 	private JButton btnVerHistorialDeCambios;
 	private JButton btnAtras;
@@ -74,6 +75,9 @@ public class VentanaModificarMProducto extends JFrame {
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JButton btnActualizarMasivamente;
+	
+	private String[] elementosCB  = {"Mayorista y Minorista","Costo","Mayorista","Minorista"};
+	private JComboBox<String> cbTipoPrecio;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -370,6 +374,10 @@ public class VentanaModificarMProducto extends JFrame {
 		btnActualizarMasivamente.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnActualizarMasivamente.setBounds(337, 426, 184, 23);
 		panel.add(btnActualizarMasivamente);
+		
+		cbTipoPrecio = new JComboBox<String>(elementosCB);
+		cbTipoPrecio.setBounds(145, 400, 128, 22);
+		panel.add(cbTipoPrecio);
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 69, 864, 81);
@@ -417,6 +425,10 @@ public class VentanaModificarMProducto extends JFrame {
 		lblProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblProveedor.setBounds(273, 29, 94, 20);
 		panel_1.add(lblProveedor);
+		
+		btnQuitarFiltro = new JButton("Quitar Filtro");
+		btnQuitarFiltro.setBounds(474, 54, 89, 23);
+		panel_1.add(btnQuitarFiltro);
 
 		lblModificarProducto = new JLabel("Modificar Producto");
 		lblModificarProducto.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -432,66 +444,16 @@ public class VentanaModificarMProducto extends JFrame {
 		panel_2.add(lblZapateria);
 		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
-//		ocultarModificacionMasiva();
-//		ocultarModificacionUnitaria();
-	}
-
-	public void mostrarModificacionUnitaria() {
-		lblModificacionUnitaria.setVisible(true);
-		lblActualizarDescripcion.setVisible(true);
-		lblMUPrecioCosto.setVisible(true);
-		lblMUPrecioMayorista.setVisible(true);
-		lblMUPrecioMinorista.setVisible(true);
-		lblMUCantidadAReponer.setVisible(true);
-		lblMUDiasParaReponer.setVisible(true);
-		lblMUPuntoRepositorio.setVisible(true);
-		txtActualizarPrecioCosto.setVisible(true);
-		txtActualizarPrecioMinorista.setVisible(true);
-		txtActualizarPrecioMayorista.setVisible(true);
-		txtFiltroProveedor.setVisible(true);
-		txtActualizarPuntoRepositorio.setVisible(true);
-		txtActualizarCantidadAReponer.setVisible(true);
-		txtActualizarDiasParaResponder.setVisible(true);
-		ocultarModificacionUnitaria();
-		ocultarModificacionMasiva();
-	}
-
-	public void ocultarModificacionUnitaria() {
-		lblModificacionUnitaria.setVisible(false);
-		lblActualizarDescripcion.setVisible(false);
-		lblMUPrecioCosto.setVisible(false);
-		lblMUPrecioMayorista.setVisible(false);
-		lblMUPrecioMinorista.setVisible(false);
-		lblMUCantidadAReponer.setVisible(false);
-		lblMUDiasParaReponer.setVisible(false);
-		lblMUPuntoRepositorio.setVisible(false);
-		txtActualizarPrecioCosto.setVisible(false);
-		txtActualizarPrecioMinorista.setVisible(false);
-		txtActualizarPrecioMayorista.setVisible(false);
-		txtFiltroProveedor.setVisible(false);
-		txtActualizarPuntoRepositorio.setVisible(false);
-		txtActualizarCantidadAReponer.setVisible(false);
-		txtActualizarDiasParaResponder.setVisible(false);
-	}
-
-	public void mostrarModificacionMasiva() {
-		lblModificacionMasiva.setVisible(true);
-		txtActualizarAumentar.setVisible(true);
-		txtActualizarDisminuir.setVisible(true);
-		lblAumentar.setVisible(true);
-		lblDisminuir.setVisible(true);
-		ocultarModificacionMasiva();
-		ocultarModificacionUnitaria();
-	}
-
-	public void ocultarModificacionMasiva() {
-		lblModificacionMasiva.setVisible(false);
-		txtActualizarAumentar.setVisible(false);
-		txtActualizarDisminuir.setVisible(false);
-		lblAumentar.setVisible(false);
-		lblDisminuir.setVisible(false);
 	}
 	
+	public JButton getBtnQuitarFiltro() {
+		return btnQuitarFiltro;
+	}
+
+	public JComboBox<String> getCbTipoPrecio() {
+		return cbTipoPrecio;
+	}
+
 	public JButton getBtnActualizarMasivamente() {
 		return btnActualizarMasivamente;
 	}

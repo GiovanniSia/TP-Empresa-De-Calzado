@@ -57,6 +57,7 @@ public class ControladorModificarMProducto {
 		maestroProductoEnTablaProductosModificar = new ArrayList<MaestroProductoDTO>();
 
 		// Botones
+		this.ventanaModificarMProducto.getBtnQuitarFiltro().addActionListener(a -> quitarFiltro(a));
 		this.ventanaModificarMProducto.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaModificarMProducto.getBtnActualizarProducto().addActionListener(c -> actualizarProducto(c));
 		this.ventanaModificarMProducto.getBtnVerHistorialDeCambios().addActionListener(v -> verHistorialDeCambios(v));
@@ -110,43 +111,75 @@ public class ControladorModificarMProducto {
 		});
 	}
 
+	public Double precioAumentado(int aumento, double precio) {
+		return aumento * precio / 100;
+	}
+
+	public Double precioDisminuido(int disminuido, double precio) {
+		return disminuido * precio / 100;
+	}
+
 	public void actualizarMasivamente(ActionEvent a) {
 		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
 		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
+		String tipoPrecioSeleccionado = this.ventanaModificarMProducto.getCbTipoPrecio().getSelectedItem().toString();
+
 		if (aumentar == 0 && disminuir == 0) {
 			JOptionPane.showMessageDialog(null, "Sin cambios");
 			return;
 		}
-		System.out.println(maestroProductoEnTablaProductosModificar);
 		for (MaestroProductoDTO productoTablaModificar : maestroProductoEnTablaProductosModificar) {
-			System.out.println("Producto: " + productoTablaModificar.getIdMaestroProducto());
 			Double precioCosto = productoTablaModificar.getPrecioCosto();
 			Double precioMayorista = productoTablaModificar.getPrecioMayorista();
 			Double precioMinorista = productoTablaModificar.getPrecioMinorista();
+//			{"Mayorista y Minorista","Costo","Mayorista","Minorista"}
 
-			Double precioCostoAumentado = aumentar * precioCosto / 100;
-			Double precioMayoristaAumentado = aumentar * precioMayorista / 100;
-			Double precioMinoristaAumentado = aumentar * precioMinorista / 100;
-
-			Double precioCostoDisminuido = disminuir * precioCosto / 100;
-			Double precioMayoristaDisminuido = disminuir * precioMayorista / 100;
-			Double precioMinoristaDiminuido = disminuir * precioMinorista / 100;
-
-			Double precioCostoFinal = precioCosto + precioCostoAumentado - precioCostoDisminuido;
-			Double precioMayoristaFinal = precioMayorista + precioMayoristaAumentado - precioMayoristaDisminuido;
-			Double precioMinoristaFinal = precioMinorista + precioMinoristaAumentado - precioMinoristaDiminuido;
-
+			Double precioCostoFinal = precioCosto + precioAumentado(aumentar, precioCosto)
+					- precioDisminuido(disminuir, precioCosto);
+			Double precioMayoristaFinal = precioMayorista + precioAumentado(aumentar, precioMayorista)
+					- precioDisminuido(disminuir, precioMayorista);
+			Double precioMinoristaFinal = precioMinorista + precioAumentado(aumentar, precioMinorista)
+					- precioDisminuido(disminuir, precioMinorista);
 			if (precioCostoFinal <= 0 || precioMayoristaFinal <= 0 || precioMinoristaFinal <= 0) {
 				JOptionPane.showMessageDialog(null, "Actualizacion fallida, algunos precios dan negativos");
 				return;
 			}
-			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCostoFinal,
-					precioMayoristaFinal, precioMinoristaFinal);
 			
+			if (precioCostoFinal >= 99999999999.0 || precioMayoristaFinal >= 99999999999.0 || precioMinoristaFinal >= 99999999999.0) {
+				JOptionPane.showMessageDialog(null, "Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999" );
+				return;
+			}
+
+			if (tipoPrecioSeleccionado.equals("Mayorista y Minorista")) {
+				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCosto,
+						precioMayoristaFinal, precioMinoristaFinal);
+
+				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
+				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
+			}
 			
+			if (tipoPrecioSeleccionado.equals("Costo")) {
+				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCostoFinal,
+						precioMayorista, precioMinorista);
+
+				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
+				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
+			}
 			
-			this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);			
-			this.actualizacionMasivoTablaMaestroProducto(productoNuevo);	
+			if (tipoPrecioSeleccionado.equals("Mayorista")) {
+				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCosto,
+						precioMayoristaFinal, precioMinorista);
+
+				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
+				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
+			}
+			if (tipoPrecioSeleccionado.equals("Minorista")) {
+				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCosto,
+						precioMayorista, precioMinoristaFinal);
+
+				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
+				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
+			}
 		}
 		this.refrescarTablaProducto();
 		this.limpiarTablaMaestroProductosModificar();
@@ -196,9 +229,11 @@ public class ControladorModificarMProducto {
 		String descripcion = productoAntiguo.getDescripcion();
 		String tipo = productoAntiguo.getTipo();
 		String fabricado = productoAntiguo.getFabricado();
+
 		double precioCosto = precioCostoNuevo;
 		double precioMayorista = precioMayoristaNuevo;
 		double precioMinorista = precioMinoristaNuevo;
+
 		int puntoRepositorio = productoAntiguo.getPuntoRepositorio();
 		int cantidadAReponer = productoAntiguo.getCantidadAReponer();
 		int diasParaReponer = productoAntiguo.getDiasParaReponer();
@@ -243,13 +278,18 @@ public class ControladorModificarMProducto {
 		limpiarCampos();
 	}
 
+	public void quitarFiltro(ActionEvent a) {
+		this.refrescarTablaProducto();
+		this.limpiarCampos();
+	}
+
 	public void agregarProductoSeleccionado(ActionEvent a) {
 		int filaSeleccionada = this.filaSeleccionadaTablaProducto();
 		if (filaSeleccionada == -1) {
 			JOptionPane.showMessageDialog(null, "Seleccione un producto");
 			return;
 		}
-		
+
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
 		if (!productoSeleccionadoEstaEnTablaProductosModificar(productoSeleccionado)) {
 			this.maestroProductoEnTablaProductosModificar.add(productoSeleccionado);
@@ -380,6 +420,28 @@ public class ControladorModificarMProducto {
 
 		if (noSeModificaronDatos()) {
 			JOptionPane.showMessageDialog(null, "No se a modificado ningun dato");
+			return false;
+		}
+		
+		int puntoRepositorio = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText());
+		int cantidadAReponer = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText());
+		int diasParaReponer = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText());
+		
+		if(precioCosto > 99999999999.0 || precioMayorista > 99999999999.0 || precioMinorista > 99999999999.0) {
+			JOptionPane.showMessageDialog(null, "Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999" );
+			return false;
+		}
+		if(puntoRepositorio > 99999999) {
+			JOptionPane.showMessageDialog(null, "Actualizacion fallida, punto de reposicion no puede superar 99.999.999" );
+			return false;
+		}
+		if(cantidadAReponer > 99999999) {
+			JOptionPane.showMessageDialog(null, "Actualizacion fallida, cantidad a reponer no puede superar 99.999.999" );
+			return false;
+		}
+		
+		if(diasParaReponer > 99999999) {
+			JOptionPane.showMessageDialog(null, "Actualizacion fallida, dias a reponer no puede superar 99.999.999" );
 			return false;
 		}
 
@@ -568,12 +630,9 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			double precioCost = mp.getPrecioCosto();
-			BigDecimal precioCosto = new BigDecimal("" + precioCost + "");
-			double precioMayorist = mp.getPrecioMayorista();
-			BigDecimal precioMayorista = new BigDecimal("" + precioMayorist + "");
-			double precioMinorist = mp.getPrecioMinorista();
-			BigDecimal precioMinorista = new BigDecimal("" + precioMinorist + "");
+			BigDecimal precioCosto = new BigDecimal("" + mp.getPrecioCosto() + "");
+			BigDecimal precioMayorista = new BigDecimal("" + mp.getPrecioMayorista() + "");
+			BigDecimal precioMinorista = new BigDecimal("" + mp.getPrecioMinorista() + "");
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
@@ -598,12 +657,9 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			double precioCost = mp.getPrecioCosto();
-			BigDecimal precioCosto = new BigDecimal("" + precioCost + "");
-			double precioMayorist = mp.getPrecioMayorista();
-			BigDecimal precioMayorista = new BigDecimal("" + precioMayorist + "");
-			double precioMinorist = mp.getPrecioMinorista();
-			BigDecimal precioMinorista = new BigDecimal("" + precioMinorist + "");
+			BigDecimal precioCosto = new BigDecimal("" + mp.getPrecioCosto() + "");
+			BigDecimal precioMayorista = new BigDecimal("" +  mp.getPrecioMayorista() + "");
+			BigDecimal precioMinorista = new BigDecimal("" +  mp.getPrecioMinorista() + "");
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
