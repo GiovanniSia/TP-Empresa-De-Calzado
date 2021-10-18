@@ -30,27 +30,42 @@ public class ControladorAltaProducto {
 	VentanaAltaProducto ventanaAltaProducto;
 	
 
-	
-	
+	ProveedorDTO proveedorElegido;
+	ControladorConsultarProveedor controladorConsultarProveedor;
 	
 	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor = proveedor;
 		this.productoDeProveedor = productoDeProveedor;
+
+
+		
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
 	}
 	
+	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
+		this.controladorConsultarProveedor=controladorConsultarProveedor;
+	}
+	
 	public void inicializar() {
 		this.ventanaAltaProducto = new VentanaAltaProducto();
-		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
 		
-		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbProveedor(a));
+		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCb(a));
+//		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbProveedor(a));
 		this.ventanaAltaProducto.getBtnRegistrar().addActionListener(a -> agregarProducto(a));
 		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir(a));
+		this.ventanaAltaProducto.getBtnElegirProveedor().addActionListener(a -> pasarAElegirProveedor(a));
+		this.ventanaAltaProducto.getBtnBorrarProveedor().addActionListener(a -> borrarProveedor(a));
+		
+		if(this.proveedorElegido!=null) {
+			this.ventanaAltaProducto.getLblProveedorElegido().setText(this.proveedorElegido.getNombre());
+		}else {
+			this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
+		}
 		
 		llenarCb();
 		validarTeclado();
@@ -74,9 +89,9 @@ public class ControladorAltaProducto {
 		}
 		
 		
-		for(ProveedorDTO p: this.todosLosProveedores) {
-			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().addItem(p.getNombre());
-		}
+//		for(ProveedorDTO p: this.todosLosProveedores) {
+//			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().addItem(p.getNombre());
+//		}
 		
 		String[] estado = {"Activo","Inactivo","Suspendido"};
 		for(int i=0; i<estado.length;i++) {
@@ -149,6 +164,17 @@ public class ControladorAltaProducto {
 		String diasRep = this.ventanaAltaProducto.getTextDiasParaReponer().getText();
 		if(diasRep.equals("")){
 			JOptionPane.showMessageDialog(null, "Debe establecer una cantidad de dias para reponer");
+			return false;
+		}
+		
+//		String prov = (String)this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().getSelectedItem();
+//		if(productoPropio.equals("No") && prov.equals("Sin seleccionar")) {
+//			JOptionPane.showMessageDialog(null, "El producto no es propio, por lo que debe tener un proveedor asignado");
+//			return false;
+//		}
+		String prov = this.ventanaAltaProducto.getLblProveedorElegido().getText();
+		if(productoPropio.equals("No") && prov.equals("Sin seleccionar")) {
+			JOptionPane.showMessageDialog(null, "El producto no es propio, por lo que debe tener un proveedor asignado");
 			return false;
 		}
 		
@@ -234,33 +260,48 @@ public class ControladorAltaProducto {
 	}
 	
 	public int obtenerProveedor() {
-		String prov = (String)this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().getSelectedItem();
+		String prov = (String)this.ventanaAltaProducto.getLblProveedorElegido().getText();
 		String resp = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
-		if(resp.equals("Si") || prov.equals("Sin seleccionar")) {
+		if(resp.equals("Si")) {
 			return 0;
 		}
-		for(ProveedorDTO p: this.todosLosProveedores) {
-			if(p.getNombre().equals(prov)) {
-				return p.getId();
-			}
+		if(this.proveedorElegido==null) {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun proveedor");
 		}
-		return 0;
 		
+		return this.proveedorElegido.getId();
+		
+	}
+	
+	public void establecerProveedorElegido(ProveedorDTO prov) {
+		this.proveedorElegido=prov;
 	}
 	
 	public void salir(ActionEvent a ) {
 		this.ventanaAltaProducto.cerrar();
 	}
 	
-	public void actualizarCbProveedor(ActionEvent a) {
-		String resp = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
-		if(resp.equals("Si")) {
-			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
-			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().disable();
-			
+//	public void actualizarCbProveedor(ActionEvent a) {
+//		String fabricado = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
+//		String tipoProducto = (String) this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
+//		if(fabricado.equals("Si") && tipoProducto.equals("Producto Terminado")) {
+//			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
+//			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().disable();
+//			
+//			return;
+//		}
+//		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().enable();
+//	}
+	
+	public void actualizarCb(ActionEvent a) {
+		String tipo =(String) this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
+		if(tipo.equals("Materia Prima")) {
+			this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(2);
+			this.ventanaAltaProducto.getComboBoxFabricado().disable();
 			return;
 		}
-		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().enable();
+		
+		this.ventanaAltaProducto.getComboBoxFabricado().enable();
 	}
 	
 	
@@ -272,7 +313,7 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getTextPrecioMayorista().setText("");
 		this.ventanaAltaProducto.getTextPrecioMinorista().setText("");
 		this.ventanaAltaProducto.getTextPuntoRepMinimo().setText("");
-		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
+//		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
 		this.ventanaAltaProducto.getTextTalle().setText("");
 		this.ventanaAltaProducto.getTextUnidadMedida().setText("");
 		this.ventanaAltaProducto.getComboBoxEstado().setSelectedIndex(0);
@@ -281,11 +322,28 @@ public class ControladorAltaProducto {
 		
 	}
 	
+	
+	public void pasarAElegirProveedor(ActionEvent a) {
+		this.ventanaAltaProducto.cerrar();
+		this.controladorConsultarProveedor.inicializar();
+		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
+	}
+	
+	public void borrarProveedor(ActionEvent a) {
+		this.proveedorElegido=null;
+		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
+	}
+	
+	
 	public static void main(String[] args) {
+		
 		MaestroProducto m = new MaestroProducto(new DAOSQLFactory());
 		Proveedor p = new Proveedor(new DAOSQLFactory());
 		ProductoDeProveedor pp = new ProductoDeProveedor(new DAOSQLFactory());
+		ControladorConsultarProveedor cp = new ControladorConsultarProveedor(p,pp);
 		ControladorAltaProducto c = new ControladorAltaProducto(m,p,pp);
+		c.setControladorConsultarProveedor(cp);
+		cp.setControladorAltaProducto(c);
 		c.inicializar();
 		c.mostrarVentana();
 	}

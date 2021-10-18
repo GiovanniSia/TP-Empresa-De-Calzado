@@ -177,8 +177,6 @@ public class VentanaVisualizarCarritos {
 		
 		scrollPaneDetalle.setViewportView(tableDetalle);
 		
-		
-		
 		panel.add(scrollPaneDetalle);
 		
 		JLabel lblNewLabel_1 = new JLabel("Productos en el Carrito");

@@ -39,13 +39,17 @@ public class VentanaAltaProducto {
 	
 	private JButton btnRegistrar;
 	private JButton btnRegresar;
-	
+	private JButton btnBorrarProveedor;
+
 	private JComboBox comboBoxEstado;
-	private JComboBox comboBoxProveedorPreferenciado;
 	private JComboBox comboBoxFabricado;
 	private JComboBox comboBoxTipo;
 
 	private JLabel lblCantidadAReponer;
+	private JButton btnElegirProveedor;
+	private JLabel lblProveedorElegido;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -148,18 +152,18 @@ public class VentanaAltaProducto {
 		
 
 		
-		JLabel lblProveedorPreferenciado = new JLabel("Proveedor Preferenciado");
-		lblProveedorPreferenciado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProveedorPreferenciado.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblProveedorPreferenciado.setBounds(42, 329, 193, 19);
-		frame.getContentPane().add(lblProveedorPreferenciado);
+		JLabel lblProveedor = new JLabel("Proveedor");
+		lblProveedor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblProveedor.setFont(new Font("Consolas", Font.BOLD, 14));
+		lblProveedor.setBounds(32, 355, 79, 19);
+		frame.getContentPane().add(lblProveedor);
 		
 
 		
 		JLabel lblTalle = new JLabel("Talle");
 		lblTalle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTalle.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblTalle.setBounds(119, 365, 56, 19);
+		lblTalle.setBounds(125, 407, 56, 19);
 		frame.getContentPane().add(lblTalle);
 		
 
@@ -167,7 +171,7 @@ public class VentanaAltaProducto {
 		JLabel lblUnidadDeMedida = new JLabel("Unidad de medida");
 		lblUnidadDeMedida.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUnidadDeMedida.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblUnidadDeMedida.setBounds(32, 402, 143, 19);
+		lblUnidadDeMedida.setBounds(32, 436, 143, 19);
 		frame.getContentPane().add(lblUnidadDeMedida);
 		
 
@@ -175,7 +179,7 @@ public class VentanaAltaProducto {
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEstado.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblEstado.setBounds(119, 441, 56, 19);
+		lblEstado.setBounds(119, 465, 56, 19);
 		frame.getContentPane().add(lblEstado);
 		
 
@@ -183,7 +187,7 @@ public class VentanaAltaProducto {
 		JLabel lblDiasParaReponer = new JLabel("Dias para reponer");
 		lblDiasParaReponer.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDiasParaReponer.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblDiasParaReponer.setBounds(32, 504, 143, 19);
+		lblDiasParaReponer.setBounds(32, 523, 143, 19);
 		frame.getContentPane().add(lblDiasParaReponer);
 	
 		textDescripcion = new JTextField();
@@ -213,23 +217,23 @@ public class VentanaAltaProducto {
 		
 		textTalle = new JTextField();
 		textTalle.setColumns(10);
-		textTalle.setBounds(178, 364, 178, 19);
+		textTalle.setBounds(178, 406, 178, 19);
 		frame.getContentPane().add(textTalle);
 		
 		textCantidadAReponer = new JTextField();
 		textCantidadAReponer.setColumns(10);
-		textCantidadAReponer.setBounds(178, 474, 178, 19);
+		textCantidadAReponer.setBounds(178, 493, 178, 19);
 		frame.getContentPane().add(textCantidadAReponer);
 		
 		
 		textDiasParaReponer = new JTextField();
 		textDiasParaReponer.setColumns(10);
-		textDiasParaReponer.setBounds(178, 503, 178, 19);
+		textDiasParaReponer.setBounds(178, 522, 178, 19);
 		frame.getContentPane().add(textDiasParaReponer);
 		
 		textUnidadMedida = new JTextField();
 		textUnidadMedida.setColumns(10);
-		textUnidadMedida.setBounds(178, 401, 178, 19);
+		textUnidadMedida.setBounds(178, 435, 178, 19);
 		frame.getContentPane().add(textUnidadMedida);
 		
 		
@@ -240,19 +244,14 @@ public class VentanaAltaProducto {
 		
 		
 		btnRegistrar = new JButton("Registrar");
-		btnRegistrar.setBounds(136, 543, 184, 33);
+		btnRegistrar.setBounds(135, 578, 184, 33);
 		frame.getContentPane().add(btnRegistrar);
 		
 		
 		comboBoxEstado = new JComboBox();
-		comboBoxEstado.setBounds(178, 440, 178, 19);
+		comboBoxEstado.setBounds(178, 464, 178, 19);
 		comboBoxEstado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxEstado);
-		
-		comboBoxProveedorPreferenciado = new JComboBox();
-		comboBoxProveedorPreferenciado.setBounds(235, 328, 178, 19);
-		comboBoxProveedorPreferenciado.addItem("Sin seleccionar");
-		frame.getContentPane().add(comboBoxProveedorPreferenciado);
 		
 		comboBoxFabricado = new JComboBox();
 		comboBoxFabricado.setBounds(178, 129, 178, 19);
@@ -269,8 +268,22 @@ public class VentanaAltaProducto {
 		lblCantidadAReponer = new JLabel("Cantidad a reponer");
 		lblCantidadAReponer.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCantidadAReponer.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblCantidadAReponer.setBounds(20, 475, 165, 19);
+		lblCantidadAReponer.setBounds(10, 494, 165, 19);
 		frame.getContentPane().add(lblCantidadAReponer);
+		
+		btnElegirProveedor = new JButton("Elegir proveedor");
+		btnElegirProveedor.setBounds(268, 354, 113, 19);
+		frame.getContentPane().add(btnElegirProveedor);
+		
+		lblProveedorElegido = new JLabel("Sin seleccionar");
+		lblProveedorElegido.setFont(new Font("Consolas", Font.PLAIN, 14));
+		lblProveedorElegido.setBounds(125, 355, 143, 19);
+		frame.getContentPane().add(lblProveedorElegido);
+		
+		btnBorrarProveedor = new JButton("");
+		btnBorrarProveedor.setBounds(380, 341, 33, 33);
+		btnBorrarProveedor.setIcon(setIcono("../imagenes/trash.png",btnBorrarProveedor));
+		frame.getContentPane().add(btnBorrarProveedor);
 	}
 
 	
@@ -351,9 +364,6 @@ public class VentanaAltaProducto {
 		return comboBoxEstado;
 	}
 
-	public JComboBox getComboBoxProveedorPreferenciado() {
-		return comboBoxProveedorPreferenciado;
-	}
 
 	public JComboBox getComboBoxFabricado() {
 		return comboBoxFabricado;
@@ -364,6 +374,21 @@ public class VentanaAltaProducto {
 	}
 	public JTextField getTextCantidadAReponer() {
 		return textCantidadAReponer;
+	}
+	public JButton getBtnElegirProveedor() {
+		return btnElegirProveedor;
+	}
+
+	public JLabel getLblProveedorElegido() {
+		return lblProveedorElegido;
+	}
+
+	public void setLblProveedorElegido(JLabel lblProveedorElegido) {
+		this.lblProveedorElegido = lblProveedorElegido;
+	}
+	
+	public JButton getBtnBorrarProveedor() {
+		return btnBorrarProveedor;
 	}
 
 }
