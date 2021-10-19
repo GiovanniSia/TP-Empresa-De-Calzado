@@ -44,4 +44,5 @@ public interface DAOAbstractFactory {
 	
 	public ProductoDeProveedorDAO createProductoDeProveedorDAO();
 	
+	public HistorialPasoDAO createHistorialPasoDAO();
 }

@@ -19,19 +19,19 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
+import com.toedter.calendar.JDateChooser;
 
-public class ReVentanaVerFabricaciones extends JFrame {
+public class VentanaVerHistorialPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Id pedido","Sucursal", "Producto", "Fecha requerido", "Cantidad", "Paso actual", "Estado", "Fecha completada", "Dias envio"};
+	private String[] nombreColumnas = { "Nro orden","Sucursal", "Producto", "Cantidad", "Accion", "Fecha y hora","Empleado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JPanel panel_2;
 	private JScrollPane spCliente;
 
-	private JButton btnSeleccionarProceso;
+	private JButton btnVerDescripcion;
 	private JLabel lblNewLabel;
 	private JLabel lblId;
 	private JTextField textId;
@@ -39,18 +39,15 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JTextField textProducto;
 	private JLabel lblProducto;
 	JTextField textSucursal;
-	private JButton btnFechaDesde;
-	private JButton btnFechaHasta;
-	private JLabel lblFechaDesde;
-	private JLabel lblFechaHasta;
 
 	private JButton btnSalir;
-	private JTextField textPasoActual;
-	private JTextField textEstado;
-	private JCheckBox chckbxCancelados;
+	private JTextField textAccion;
+	private JTextField textEmpleado;
 	
+	JDateChooser fechaHasta;
+	JDateChooser fechaDesde;
 
-	public ReVentanaVerFabricaciones() {
+	public VentanaVerHistorialPasos() {
 		initialize();
 	}
 	
@@ -60,18 +57,18 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 910, 500);
+		frame.setBounds(100, 100, 1000, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 884, 399);
+		panel.setBounds(0, 64, 974, 399);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 69, 864, 272);
+		spCliente.setBounds(10, 69, 954, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
@@ -91,13 +88,13 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 		spCliente.setViewportView(tabla);
 
-		btnSeleccionarProceso = new JButton("Seleccionar proceso");
-		btnSeleccionarProceso.addActionListener(new ActionListener() {
+		btnVerDescripcion = new JButton("Ver descripcion");
+		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnSeleccionarProceso.setBounds(10, 352, 177, 23);
-		panel.add(btnSeleccionarProceso);
+		btnVerDescripcion.setBounds(10, 352, 177, 23);
+		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
 		lblId.setBounds(10, 11, 46, 14);
@@ -126,55 +123,51 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		lblProducto.setBounds(180, 11, 46, 14);
 		panel.add(lblProducto);
 		
-		btnFechaDesde = new JButton("Desde");
-		btnFechaDesde.setBounds(265, 7, 89, 23);
-		panel.add(btnFechaDesde);
-		
-		btnFechaHasta = new JButton("Hasta");
-		btnFechaHasta.setBounds(265, 35, 89, 23);
-		panel.add(btnFechaHasta);
-		
-		lblFechaDesde = new JLabel("-");
-		lblFechaDesde.setBounds(364, 11, 75, 14);
-		panel.add(lblFechaDesde);
-		
-		lblFechaHasta = new JLabel("-");
-		lblFechaHasta.setBounds(364, 39, 75, 14);
-		panel.add(lblFechaHasta);
-		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(740, 351, 46, 38);
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
-		textPasoActual = new JTextField();
-		textPasoActual.setColumns(10);
-		textPasoActual.setBounds(503, 38, 75, 20);
-		panel.add(textPasoActual);
+		textAccion = new JTextField();
+		textAccion.setColumns(10);
+		textAccion.setBounds(265, 36, 136, 20);
+		panel.add(textAccion);
 		
-		textEstado = new JTextField();
-		textEstado.setColumns(10);
-		textEstado.setBounds(598, 38, 75, 20);
-		panel.add(textEstado);
-		
-		JLabel lblPaso = new JLabel("Paso");
-		lblPaso.setBounds(503, 11, 46, 14);
+		JLabel lblPaso = new JLabel("Accion");
+		lblPaso.setBounds(265, 11, 46, 14);
 		panel.add(lblPaso);
 		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(598, 11, 46, 14);
-		panel.add(lblEstado);
+		textEmpleado = new JTextField();
+		textEmpleado.setColumns(10);
+		textEmpleado.setBounds(828, 38, 136, 20);
+		panel.add(textEmpleado);
 		
-		chckbxCancelados = new JCheckBox("Ver cancelados");
-		chckbxCancelados.setBounds(679, 35, 97, 23);
-		panel.add(chckbxCancelados);
+		JLabel lblEmpleado = new JLabel("Empleado");
+		lblEmpleado.setBounds(828, 11, 75, 14);
+		panel.add(lblEmpleado);
+
+		fechaDesde = new JDateChooser();
+		fechaDesde.setBounds(411, 36, 108, 19);
+		panel.add(fechaDesde);
+		
+		fechaHasta = new JDateChooser();
+		fechaHasta.setBounds(529, 36, 108, 19);
+		panel.add(fechaHasta);
+		
+		JLabel lblFechaDesde = new JLabel("Fecha desde");
+		lblFechaDesde.setBounds(411, 11, 108, 14);
+		panel.add(lblFechaDesde);
+		
+		JLabel lblFechaHasta = new JLabel("Fecha hasta");
+		lblFechaHasta.setBounds(529, 11, 108, 14);
+		panel.add(lblFechaHasta);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
 		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Ordenes de fabricacion pendientes");
+		lblNewLabel = new JLabel("Historial de fabricacion");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -221,8 +214,8 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		return nombreColumnas;
 	}
 
-	public JButton getBtnTrabajarPedido() {
-		return btnSeleccionarProceso;
+	public JButton getBtnVerDescripcion() {
+		return btnVerDescripcion;
 	}
 
 	public JTextField getTextId() {
@@ -236,36 +229,24 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	public JTextField getTextSucursal() {
 		return textSucursal;
 	}
-
-	public JButton getBtnFechaDesde() {
-		return btnFechaDesde;
-	}
-
-	public JButton getBtnFechaHasta() {
-		return btnFechaHasta;
-	}
-
-	public JLabel getLblFechaDesde() {
-		return lblFechaDesde;
-	}
-
-	public JLabel getLblFechaHasta() {
-		return lblFechaHasta;
-	}
 	
 	public JButton getBtnSalir() {
 		return btnSalir;
 	}
 
-	public JTextField getTextPasoActual() {
-		return textPasoActual;
+	public JTextField getTextAccion() {
+		return textAccion;
 	}
 
-	public JTextField getTextEstado() {
-		return textEstado;
+	public JTextField getTextEmpleado() {
+		return textEmpleado;
 	}
 	
-	public JCheckBox getChckbxCancelados() {
-		return chckbxCancelados;
+	public JDateChooser getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public JDateChooser getFechaHasta() {
+		return fechaHasta;
 	}
 }

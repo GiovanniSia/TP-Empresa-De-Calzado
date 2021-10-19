@@ -8,3 +8,5 @@ encoding//reportes/caja/egresos.jrxml=UTF-8
 encoding//reportes/caja/egresosTotales.jrxml=UTF-8
 encoding//reportes/caja/ingresos.jrxml=UTF-8
 encoding//reportes/caja/ingresosTotales.jrxml=UTF-8
+encoding//reportes/ranking/SucursalesQueNoVendieron.jrxml=UTF-8
+encoding//reportes/ranking/rankingVentasXSucursal.jrxml=UTF-8

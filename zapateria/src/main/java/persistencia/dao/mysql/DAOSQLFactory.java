@@ -24,6 +24,7 @@ import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
+import persistencia.dao.interfaz.HistorialPasoDAO;
 import persistencia.dao.interfaz.IngresosDAO;
 
 public class DAOSQLFactory implements DAOAbstractFactory {
@@ -110,6 +111,10 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 
 	public TipoEgresosDAO createTipoEgresosDAO() {
 		return new TipoEgresosDAOSQL();
+	}
+	
+	public HistorialPasoDAO createHistorialPasoDAO() {
+		return new HistorialPasoDAOSQL();
 	}
 
 	@Override

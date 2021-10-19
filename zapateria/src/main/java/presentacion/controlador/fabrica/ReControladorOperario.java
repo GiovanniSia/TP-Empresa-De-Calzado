@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,9 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
+import dto.EmpleadoDTO;
 import dto.FabricacionesDTO;
+import dto.HistorialPasoDTO;
 import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
 import dto.PasoDeRecetaDTO;
@@ -24,6 +28,7 @@ import dto.RecetaDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Fabricacion;
+import modelo.HistorialPaso;
 import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
 import modelo.Stock;
@@ -33,12 +38,22 @@ import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
 import presentacion.vista.fabrica.ReVentanaSeleccionarUnaReceta;
 import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
+import presentacion.vista.fabrica.VentanaIngresarMotivoCancelacion;
 import presentacion.vista.fabrica.fecha;
 
 public class ReControladorOperario implements ActionListener {
+	
+	static final EmpleadoDTO empleadoDeMuestra = new EmpleadoDTO(1, "13138413", "Gabriel", "Perez", "Fulanito@gmail.com",
+			"Operario", "360123");
 
 	static final String error = "[HiperLink error]";
 	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
+	
+	static final String stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar = "Sin empezar";
+	static final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Inactivo/Pendiente";
+	
+	static final String stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas = "Activo/En proceso";
+	static final String stringQueDescribeElEstadoDeLasOrdenesCanceladas = "Cancelada/Cancelado";
 	
 	static final String stringQuePreguntaCancelacionDeProduccion = "¿Estas seguro que lo quieres cancelar?";
 	static final String stringQueConfirmaCancelacionDeProduccion = "Se a cancelado la produccion";
@@ -52,11 +67,16 @@ public class ReControladorOperario implements ActionListener {
 	List<FabricacionesDTO> trabajosEnLista;
 	List<RecetaDTO> recetasEnLista;
 	
+	List<FabricacionesDTO> trabajosCanceladosEnLista;
+	
+	
 	OrdenFabricaDTO ordenSeleccionado;
 	RecetaDTO recetaSeleccionado;
 	FabricacionesDTO fabricacionTrabajando;
 	ReVentanaSeleccionarUnaReceta ventanaElegirReceta;
 	ReVentanaTrabajarUnPedido ventanaUnaTrabajo;
+	
+	VentanaIngresarMotivoCancelacion ventanaParaCancelacion;
 	int idFabrica;
 	ReVentanaIngresarFechaDeLlegada ventanaDiaDeLlegada;
 	
@@ -64,6 +84,7 @@ public class ReControladorOperario implements ActionListener {
 	MaestroProducto modeloProducto;
 	OrdenFabrica modeloOrden;
 	Stock modeloStock;
+	HistorialPaso historialPaso;
 	
 	fecha ventanaParaCumple;
 	String mesCumpleCreado;
@@ -74,8 +95,10 @@ public class ReControladorOperario implements ActionListener {
 	boolean seleccionarDesde = true;
 	
 	Controlador controlador;
-	
+	EmpleadoDTO empleado;
+	//public ReControladorOperario(Controlador controlador,SucursalDTO fabrica, EmpleadoDTO empleado) {
 	public ReControladorOperario(Controlador controlador,SucursalDTO fabrica) {
+		this.empleado = empleadoDeMuestra;
 		idFabrica = fabrica.getIdSucursal();
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -89,6 +112,7 @@ public class ReControladorOperario implements ActionListener {
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
 		modeloOrden = new OrdenFabrica(new DAOSQLFactory());
 		modeloStock = new Stock(new DAOSQLFactory());
+		historialPaso = new HistorialPaso(new DAOSQLFactory());
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
 
@@ -114,6 +138,50 @@ public class ReControladorOperario implements ActionListener {
 				refrescarTablaPorTecla();
 			}
 		});
+		ventanaPrincipal.getTextEstado().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getTextPasoActual().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTablaPorTecla();
+			}
+		});
+		ventanaPrincipal.getChckbxCancelados().addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				refrescarTablaPorTecla();
+			}
+		});
 		ventanaPrincipal.getBtnFechaDesde().addActionListener(r->this.seleccionarDesde(r));
 		ventanaPrincipal.getBtnFechaHasta().addActionListener(r->this.seleccionarHasta(r));
 		
@@ -123,7 +191,8 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaUnaTrabajo = new ReVentanaTrabajarUnPedido();
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
-		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->cancelarOrden(r));
+		ventanaUnaTrabajo.getBtnCancelar().addActionListener(r->abrirVentanaParaPreguntarCancelarOrden(r));
+		ventanaUnaTrabajo.getBtnSalirVentana().addActionListener(r->cerrarVentanaUnTrabajo(r));
 		
 		ventanaDiaDeLlegada = new ReVentanaIngresarFechaDeLlegada();
 		ventanaDiaDeLlegada.getBtnbtnIngresarFecha().addActionListener(r->ingresarDias(r));
@@ -132,8 +201,9 @@ public class ReControladorOperario implements ActionListener {
 		
 		this.ventanaPrincipal.getBtnSalir().addActionListener(a -> salir(a));
 		
-		
-		
+		ventanaParaCancelacion = new VentanaIngresarMotivoCancelacion();
+		ventanaParaCancelacion.getBtnCancelar().addActionListener(a -> cancelarOrden(a));
+		ventanaParaCancelacion.getBtnNoCancelar().addActionListener(a -> noCancelarOrden(a));
 		
 		refrescarTabla();
 		
@@ -153,6 +223,9 @@ public class ReControladorOperario implements ActionListener {
 		this.controlador.mostrarVentanaMenu();
 	}
 	
+	private void cerrarVentanaUnTrabajo(ActionEvent a) {
+		this.ventanaUnaTrabajo.cerrar();
+	}
 	
 	public void mostrarMensajeEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
@@ -168,6 +241,9 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaTrabajos();
 		llenarTablaConOrdenesSinEmpezarATrabajar();
 		llenarTablaConTrabajos();
+		if(ventanaPrincipal.getChckbxCancelados().isSelected()) {
+			llenarTablaConTrabajosCancelados();
+		}
 	}
 	
 	public void trabajarSeleccionado(ActionEvent s) {
@@ -181,7 +257,7 @@ public class ReControladorOperario implements ActionListener {
 			ordenSeleccionado = ordenATrabajar;
 			inicializarComboBoxRecetas(filasSeleccionadas[0]);
 			this.ventanaElegirReceta.show();
-		}else {
+		}else if(ordenesEnLista.size() + this.trabajosEnLista.size() > filasSeleccionadas[0]){
 			//SELECCIONO UNA ORDEN YA EN MARCHA
 			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
 			if(fabricacionTrabajando.getEstado().equals("activo")) {
@@ -199,6 +275,8 @@ public class ReControladorOperario implements ActionListener {
 				this.ventanaDiaDeLlegada.show();
 			}
 			
+		}else {
+			System.out.println("Se elegio un pedido cancelado");
 		}
 		
 	}
@@ -210,6 +288,11 @@ public class ReControladorOperario implements ActionListener {
 		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
 		FabricacionesDTO fabricacion = new FabricacionesDTO(0, ordenSeleccionado.getIdOrdenFabrica(), recetaSeleccionado.getIdReceta(), 1, "activo");
 		modeloFabricacion.insertFabricacionEnMarcha(fabricacion);
+		insertarEnElHistorial(ordenSeleccionado.getIdOrdenFabrica(), 
+				empleado.getIdEmpleado(),
+				empleado.getApellido()+", "+empleado.getNombre(),
+				"Pasado a produccion",
+				"Receta nro: "+recetaSeleccionado.getIdReceta()+", "+recetaSeleccionado.getDescripcion());
 		refrescarTabla();
 		this.ventanaElegirReceta.cerrar();
 	}
@@ -238,6 +321,12 @@ public class ReControladorOperario implements ActionListener {
 				}
 				cont++;
 			}
+			this.insertarEnElHistorial(ordenTra.getIdOrdenFabrica(), 
+					this.empleado.getIdEmpleado(),
+					this.empleado.getApellido()+", "+this.empleado.getNombre(),
+					"Paso completado: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size(),
+							"");
+			
 			mostrarMensajeEmergente("Paso concretado");
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
 			modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
@@ -249,6 +338,12 @@ public class ReControladorOperario implements ActionListener {
 				
 				ventanaUnaTrabajo.cerrar();
 				*/
+				this.insertarEnElHistorial(ordenTra.getIdOrdenFabrica(), 
+						this.empleado.getIdEmpleado(),
+						this.empleado.getApellido()+", "+this.empleado.getNombre(),
+						"Se completo la orden",
+								"");
+				
 				fabricacionTrabajando.completarOrden();
 				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
 				this.ventanaDiaDeLlegada.show();
@@ -263,16 +358,23 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
-	public void cancelarOrden(ActionEvent s) {
+	private void insertarEnElHistorial(int idOrdenFabrica, int idEmpleado, String apellidoNombre, String pasoCompletado, String descripcion) {
+		HistorialPasoDTO pasoHecho = new HistorialPasoDTO(0,
+				idOrdenFabrica,
+				idEmpleado,
+				apellidoNombre,
+				pasoCompletado,
+				descripcion);
+		this.historialPaso.insert(pasoHecho);
+	}
+	
+	public void abrirVentanaParaPreguntarCancelarOrden(ActionEvent s) {
 		int res = JOptionPane.showConfirmDialog(null, stringQuePreguntaCancelacionDeProduccion, "", JOptionPane.YES_NO_OPTION);
         switch (res) {
             case JOptionPane.YES_OPTION:
-            	fabricacionTrabajando.cancelarOrden();
-        		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
-        		this.refrescarTabla();
-        		ventanaUnaTrabajo.cerrar();
-        		reiniciarTablaIngredientesDeUnTrabajo();
-        		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+            	this.ventanaParaCancelacion.getTextPane().setText("");
+            	this.ventanaParaCancelacion.mostrarVentana();
+        		
         		break;
             case JOptionPane.NO_OPTION:
             	JOptionPane.showMessageDialog(null, stringQueNoCancelaDeProduccion);
@@ -280,11 +382,45 @@ public class ReControladorOperario implements ActionListener {
         }
 	}
 	
+	private void cancelarOrden(ActionEvent s) {
+		String explicacion = this.ventanaParaCancelacion.getTextPane().getText();
+		if(explicacion.length() < 10) {
+			this.mostrarMensajeEmergente("Ingrese al menos 10 letras.");
+			return;
+		}
+		fabricacionTrabajando.cancelarOrden();
+		modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
+		this.refrescarTabla();
+		ventanaUnaTrabajo.cerrar();
+		reiniciarTablaIngredientesDeUnTrabajo();
+		JOptionPane.showMessageDialog(null, stringQueConfirmaCancelacionDeProduccion);
+		
+		PasoDeRecetaDTO pasoActual = getPasoActual();
+		
+		
+		insertarEnElHistorial(fabricacionTrabajando.getIdOrdenFabrica(), this.empleado.getIdEmpleado(), 
+				empleado.getApellido()+", "+empleado.getNombre(), 
+				"Cancelacion: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size()
+				,explicacion);//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
+		
+		this.ventanaParaCancelacion.cerrar();
+	}
+	
+	private void noCancelarOrden(ActionEvent s) {
+		this.ventanaParaCancelacion.cerrar();
+	}
+	
 	private void ingresarDias(ActionEvent s) {
 		int valorIngresado = (int) ventanaDiaDeLlegada.getSpinner().getValue();
 		if(valorIngresado < 0) {
 			return;
 		}
+		this.insertarEnElHistorial(this.getOrdenDeFabricacionDelTrabajoActual().getIdOrdenFabrica(), 
+				this.empleado.getIdEmpleado(),
+				this.empleado.getApellido()+", "+this.empleado.getNombre(),
+				"Se ingreso una fecha de llegada a la orden: ",
+						"Dias para la que llegara a la sucursal: "+valorIngresado);
+		
 		modeloFabricacion.completarOrden(fabricacionTrabajando, valorIngresado);
 		this.ventanaDiaDeLlegada.cerrar();
 		this.refrescarTabla();
@@ -308,7 +444,14 @@ public class ReControladorOperario implements ActionListener {
 			}else {
 				nombreProducto = producto.getDescripcion();
 			}
-			Object[] agregar = {o.getIdOrdenFabrica(), o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad()};
+			/*
+			static final String stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar = "Sin empezar";
+			sstatic final String stringQueDescribeElEstadoDeLasOrdenesSinEmpezar = "Sin empezar";
+			*/
+			String paso = stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar;
+			String estado = stringQueDescribeElEstadoDeLasOrdenesSinEmpezar;
+			Object[] agregar = 
+				{o.getIdOrdenFabrica(), o.getIdSucursal(), nombreProducto, o.getFechaRequerido(), o.getCantidad(), paso, estado};
 			ventanaPrincipal.getModelOrdenes().addRow(agregar);
 		}
 	}
@@ -317,12 +460,16 @@ public class ReControladorOperario implements ActionListener {
 		String id = ventanaPrincipal.getTextId().getText();
 		String sucursal = ventanaPrincipal.getTextSucursal().getText();
 		String productoText = ventanaPrincipal.getTextProducto().getText();
-		trabajosEnLista = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id, fechaDesde, fechaHasta);
 		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
+		
+		List<FabricacionesDTO> trabajos = modeloFabricacion.readAllFabricacionesEnMarcha(productoText, sucursal, id, fechaDesde, fechaHasta);
+		trabajosEnLista = new ArrayList<FabricacionesDTO>();
 		List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
 		
 		OrdenFabricaDTO orden = null;
-		for(FabricacionesDTO f: trabajosEnLista) {
+		for(FabricacionesDTO f: trabajos) {
 			String nombreProducto = null;
 			for(OrdenFabricaDTO of: todasLasOrdenes) {
 				if(of.getIdOrdenFabrica() == f.getIdOrdenFabrica()) {
@@ -356,35 +503,117 @@ public class ReControladorOperario implements ActionListener {
 					}else {
 						pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
 					}
+					
+					String estadoEnTabla = f.getEstado();
+					if(f.getEstado().equals("activo")) {
+						estadoEnTabla = stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas;
+					}
+					
+					if(estadoEnTabla.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*") && pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")) {
+						trabajosEnLista.add(f);
+						Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , estadoEnTabla, fechaCompletado, diasEnvio};
+						ventanaPrincipal.getModelOrdenes().addRow(agregar);
 						
-					
-					Object[] agregar = {orden.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , f.getEstado(), fechaCompletado, diasEnvio};
-					ventanaPrincipal.getModelOrdenes().addRow(agregar);
-					
-					ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-					    @Override
-					    public Component getTableCellRendererComponent(JTable table,
-					            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+						ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+						    @Override
+						    public Component getTableCellRendererComponent(JTable table,
+						            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
-					        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+						        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-					        String status = (String)table.getModel().getValueAt(row, 6);
-					        if ("activo".equals(status)) {
-					           setBackground(Color.ORANGE);
-					           setForeground(Color.BLACK);
-					        } else if ("completo".equals(status)){
-					        	setBackground(Color.green);
-					        	setForeground(Color.BLACK);
-					        } else {
-					        	setBackground(table.getBackground());
-					        	setForeground(Color.BLACK);
-					        }
-					        return this;
-					    }   
-					});
+						        String status = (String)table.getModel().getValueAt(row, 6);
+						        if (stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas.equals(status)) {
+						           setBackground(Color.ORANGE);
+						           setForeground(Color.BLACK);
+						        } else if ("completo".equals(status)){
+						        	setBackground(Color.green);
+						        	setForeground(Color.BLACK);
+						        } else if (stringQueDescribeElEstadoDeLasOrdenesCanceladas.equals(status) ){
+						        	setBackground(Color.red);
+						        	setForeground(Color.WHITE);
+						        }else {
+						        	setBackground(table.getBackground());
+						        	setForeground(Color.BLACK);
+						        }
+						        return this;
+						    }   
+						});
+					}
+					
 				}
 			}
 		}
+		
+	}
+	
+	private void llenarTablaConTrabajosCancelados() {
+		String id = ventanaPrincipal.getTextId().getText();
+		String sucursal = ventanaPrincipal.getTextSucursal().getText();
+		String productoText = ventanaPrincipal.getTextProducto().getText();
+		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
+		List<FabricacionesDTO> tabajosCancelados = modeloFabricacion.readAllFabricacionesCanceladas(productoText, sucursal, id, fechaDesde, fechaHasta);
+		trabajosCanceladosEnLista = new ArrayList<FabricacionesDTO>();
+		String estadoEnTabla = stringQueDescribeElEstadoDeLasOrdenesCanceladas;
+		
+		if(estadoEnTabla.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
+			for(FabricacionesDTO f: tabajosCancelados) {
+				String pasoActualString = modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).get(f.getNroPasoActual()-1).getPasosDTO().getDescripcion();
+				if(pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")){
+					trabajosCanceladosEnLista.add(f);
+					List<OrdenFabricaDTO> todasLasOrdenes = modeloOrden.readAll();
+					for(OrdenFabricaDTO of: todasLasOrdenes) {
+						if(of.getIdOrdenFabrica() == f.getIdOrdenFabrica()) {
+							OrdenFabricaDTO orden = of;
+							MaestroProductoDTO producto = buscarProducto(orden.getIdProd());
+							String nombreProducto = "";
+							if(producto == null) {
+								nombreProducto = error;
+							}else {
+								nombreProducto = producto.getDescripcion();
+							}
+							Object[] agregar = {f.getIdOrdenFabrica() ,orden.getIdSucursal(), nombreProducto, orden.getFechaRequerido(), orden.getCantidad(), pasoActualString , estadoEnTabla, "", ""};
+							ventanaPrincipal.getModelOrdenes().addRow(agregar);
+							
+							ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+							    @Override
+							    public Component getTableCellRendererComponent(JTable table,
+							            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+							        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+							        String status = (String)table.getModel().getValueAt(row, 6);
+							        if (stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas.equals(status)) {
+							           setBackground(Color.ORANGE);
+							           setForeground(Color.BLACK);
+							        } else if ("completo".equals(status)){
+							        	setBackground(Color.green);
+							        	setForeground(Color.BLACK);
+							        } else if (stringQueDescribeElEstadoDeLasOrdenesCanceladas.equals(status) ){
+							        	setBackground(Color.red);
+							        	setForeground(Color.WHITE);
+							        }else {
+							        	setBackground(table.getBackground());
+							        	setForeground(Color.BLACK);
+							        }
+							        return this;
+							    }   
+							});
+						}
+					}
+				}
+			}
+		}
+		
+		/*
+		if(f.getNroPasoActual() <= modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size()) {
+			pasoActualString = descrPaso + ": " + f.getNroPasoActual() + " de " + 
+					modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta()).size();
+		}else {
+			pasoActualString = stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar;
+		}&& pasoActualString.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*")
+		*/
 		
 	}
 	
@@ -392,6 +621,9 @@ public class ReControladorOperario implements ActionListener {
 		String id = ventanaPrincipal.getTextId().getText();
 		String sucursal = ventanaPrincipal.getTextSucursal().getText();
 		String producto = ventanaPrincipal.getTextProducto().getText();
+		
+		String estadoParametro = ventanaPrincipal.getTextEstado().getText();
+		String pasoActParametro = ventanaPrincipal.getTextPasoActual().getText();
 		/*
 		ordenesEnLista = new ArrayList<OrdenFabricaDTO>();
 		for(OrdenFabricaDTO of: modeloFabricacion.readAllOrdenesSinTrabajar()) {
@@ -402,7 +634,12 @@ public class ReControladorOperario implements ActionListener {
 				
 			}
 		}*/
-		ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
+		ordenesEnLista  = new ArrayList<OrdenFabricaDTO>();
+		List<OrdenFabricaDTO> listaAux = new ArrayList<OrdenFabricaDTO>();
+		if(stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*") && stringQueDescribeElEstadoDeLasOrdenesSinEmpezar.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
+			ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
+			System.out.println(ordenesEnLista.size());
+		}
 	}
 	
 	private MaestroProductoDTO buscarProducto(int idProducto) {
@@ -437,13 +674,10 @@ public class ReControladorOperario implements ActionListener {
 				}
 			}
 		}
+		this.ventanaElegirReceta.getComboBox().setSelectedIndex(-1);
 	}
 	
 	private void botonSeleccionarReceta(ActionEvent s) {
-		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
-			return;
-		}
-		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
 		String nombreProducto = "";
 		MaestroProductoDTO producto = buscarProducto(this.ordenSeleccionado.getIdProd());
 		if(producto == null) {
@@ -451,6 +685,19 @@ public class ReControladorOperario implements ActionListener {
 		}else {
 			nombreProducto = producto.getDescripcion();
 		}
+		System.out.println(this.ventanaElegirReceta.getComboBox().getSelectedIndex() + " El combo box");
+		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
+			
+			ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
+			ventanaElegirReceta.getLblSucursal().setText("sucursal: "+ordenSeleccionado.getIdSucursal());
+			ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());
+			ventanaElegirReceta.getLblFecha().setText("Fecha requerido: "+ordenSeleccionado.getFechaRequerido());
+			this.ventanaElegirReceta.getLblMensaje().setText("No es posible trabajar, no hay receta");
+			reiniciarTablaIngredientes();
+			return;
+		}
+		recetaSeleccionado = recetasEnLista.get(this.ventanaElegirReceta.getComboBox().getSelectedIndex());
+		
 		ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
 		ventanaElegirReceta.getLblSucursal().setText("sucursal: "+ordenSeleccionado.getIdSucursal());
 		ventanaElegirReceta.getLblIdPedido().setText("IdPedido: "+ordenSeleccionado.getIdOrdenFabrica());

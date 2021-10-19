@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SucursalesQueNoVendieron" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e97bca6f-b5de-421a-951e-601d246136cd">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fechaDesde" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaDesde})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaHasta" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaHasta})]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT sucu.IdSucursal, sucu.nombre FROM zapateria.sucursales as sucu WHERE sucu.IdSucursal NOT IN (SELECT sucu.IdSucursal from zapateria.sucursales as sucu, zapateria.ingresos as ingr WHERE ingr.IdSucursal = sucu.IdSucursal AND ingr.Fecha >= '$P!{fechaDesde}' AND ingr.Fecha <= '$P!{fechaHasta}')]]>
+	</queryString>
+	<field name="IdSucursal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdSucursal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sucursales"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sucursales"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="5" y="4" width="556" height="17" backcolor="#666666" uuid="5accbf37-87e7-4300-994d-32d2f3bb6d2b"/>
+				<staticText>
+					<reportElement mode="Transparent" x="10" y="2" width="170" height="13" forecolor="#FFFFFF" uuid="3fce3ea4-e472-47c8-b8fb-e3f5d3518fc3"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Sucursales que no vendieron]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="232" y="2" width="170" height="13" forecolor="#FFFFFF" uuid="1e7cbb51-1335-487b-8d90-72f5d5336e7d"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Codigo y nombre:]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="4" width="556" height="26" backcolor="#E0E0E0" uuid="c1744dbd-0649-47e4-a94f-be50c176464a"/>
+				<textField>
+					<reportElement x="280" y="3" width="270" height="20" uuid="04603b00-f522-415b-9e19-6a8cee7b0965"/>
+					<textFieldExpression><![CDATA[$F{IdSucursal} + " - " + $F{nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

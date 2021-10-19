@@ -35,6 +35,7 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 	JLabel lblFechaRequerida;
 	JLabel lblIdPedido;
 	private JLabel lblPasos;
+	JButton btnSalirVentana;
 
 	public ReVentanaTrabajarUnPedido() {
 		initialize();
@@ -42,13 +43,13 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 676, 390);
+		frame.setBounds(100, 100, 676, 421);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 640, 325);
+		panel.setBounds(10, 11, 640, 360);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -57,11 +58,11 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		panel.add(btnAvanzarUnPaso);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(174, 160, 154, 23);
+		btnCancelar.setBounds(476, 160, 154, 23);
 		panel.add(btnCancelar);
 		
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 194, 620, 120);
+		spCliente.setBounds(10, 229, 620, 120);
 		panel.add(spCliente);
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
@@ -85,12 +86,16 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		panel.add(lblSucursal);
 		
 		lblMensaje = new JLabel("New label");
-		lblMensaje.setBounds(338, 164, 292, 14);
+		lblMensaje.setBounds(10, 205, 356, 14);
 		panel.add(lblMensaje);
 		
 		lblPasos = new JLabel("New label");
 		lblPasos.setBounds(10, 120, 356, 14);
 		panel.add(lblPasos);
+		
+		btnSalirVentana = new JButton("Salir");
+		btnSalirVentana.setBounds(174, 160, 154, 23);
+		panel.add(btnSalirVentana);
 	}
 
 	public void show() {
@@ -154,5 +159,9 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 
 	public JLabel getLblPasos() {
 		return lblPasos;
+	}
+
+	public JButton getBtnSalirVentana() {
+		return btnSalirVentana;
 	}
 }

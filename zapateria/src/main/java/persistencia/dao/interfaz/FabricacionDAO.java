@@ -38,6 +38,6 @@ public interface FabricacionDAO {
 	
 	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock);
 	
-	
+	public List<FabricacionesDTO> readAllFabricacionesCanceladas(String descrProducto, String idSucursal, String idOrden, String fechaDesde, String Hasta);
 
 }

@@ -270,12 +270,12 @@
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="457" y="5" width="84" height="14" uuid="3c4290ae-397c-420a-84b8-90c2fd82eef0"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Monto}.intValue())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{Monto}.intValue()-($F{Monto}.intValue()*21/100))]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="391" y="5" width="74" height="14" uuid="563add24-3161-47c5-b927-8217408fc11b"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{PrecioVenta}.intValue())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[String.valueOf($F{PrecioVenta}.intValue()-($F{PrecioVenta}.intValue()*21/100))]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="4" y="5" width="60" height="14" uuid="d21ab56e-6f50-480f-ae93-c3753890d2b2"/>
