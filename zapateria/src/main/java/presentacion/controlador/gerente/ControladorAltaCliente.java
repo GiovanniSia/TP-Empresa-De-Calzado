@@ -216,7 +216,7 @@ public class ControladorAltaCliente {
 		});
 		this.ventanaAltaCliente.getTextCalle().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
+				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
 			}
 		});
 		this.ventanaAltaCliente.getTextAltura().addKeyListener(new KeyAdapter() {

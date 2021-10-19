@@ -135,7 +135,6 @@ CREATE TABLE `productosDeProveedor`
 	`Id` int(11) NOT NULL AUTO_INCREMENT,
     `IdProveedor` int(11) NOT NULL,
     `IdMaestroProducto` int(11) NOT NULL,
-    `NombreProducto` varchar(45) NOT NULL,
     `PrecioVenta` double(45,2) NOT NULL,
     `CantidadPorLote` int(11) NOT NULL,
     PRIMARY KEY (`Id`)

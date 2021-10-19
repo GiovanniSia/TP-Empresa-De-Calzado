@@ -58,7 +58,8 @@ public class ControladorAltaProducto {
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
 		
-		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCb(a));
+		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCbDadoTipo(a));
+		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbDadoFabricado(a));
 //		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbProveedor(a));
 		this.ventanaAltaProducto.getBtnRegistrar().addActionListener(a -> agregarProducto(a));
 		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir(a));
@@ -221,11 +222,11 @@ public class ControladorAltaProducto {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
 		}));
-		this.ventanaAltaProducto.getTextTalle().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloLetras(e);
-			}
-		}));
+//		this.ventanaAltaProducto.getTextTalle().addKeyListener((new KeyAdapter() {
+//			public void keyTyped(KeyEvent e) {
+//				ValidadorTeclado.ac(e);
+//			}
+//		}));
 		this.ventanaAltaProducto.getTextUnidadMedida().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
@@ -272,7 +273,6 @@ public class ControladorAltaProducto {
 	}
 	
 	public int obtenerProveedor() {
-		String prov = (String)this.ventanaAltaProducto.getLblProveedorElegido().getText();
 		String resp = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 		if(resp.equals("Si")) {
 			return 0;
@@ -298,15 +298,34 @@ public class ControladorAltaProducto {
 //		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().enable();
 //	}
 	
-	public void actualizarCb(ActionEvent a) {
+	public void actualizarCbDadoTipo(ActionEvent a) {
 		String tipo =(String) this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
 		if(tipo.equals("Materia Prima")) {
 			this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(2);
 			this.ventanaAltaProducto.getComboBoxFabricado().disable();
+			
+			this.ventanaAltaProducto.getTextPrecioMayorista().disable();
+			this.ventanaAltaProducto.getTextPrecioMinorista().disable();
+			
 			return;
 		}
-		
+		this.ventanaAltaProducto.getTextPrecioMayorista().enable();
+		this.ventanaAltaProducto.getTextPrecioMinorista().enable();
 		this.ventanaAltaProducto.getComboBoxFabricado().enable();
+	}
+	
+	public void actualizarCbDadoFabricado(ActionEvent a) {
+		String fabricado =(String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
+		if(fabricado.equals("Si")) {
+			System.out.println("se desactiva el btn elegir proveedor");
+			this.proveedorElegido=null;
+			this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
+			this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(false);
+//			this.ventanaAltaProducto.getBtnElegirProveedor().repaint();
+			return;
+		}
+		this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(true);
+		
 	}
 	
 	

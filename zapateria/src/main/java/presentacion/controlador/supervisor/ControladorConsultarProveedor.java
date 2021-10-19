@@ -148,6 +148,7 @@ public class ControladorConsultarProveedor {
 			return;
 		}
 		ProveedorDTO proveedorElegido = this.todosLosProveedores.get(filaSeleccionada);
+		System.out.println("proveedor Elegido:"+proveedorElegido.getId()+" - "+proveedorElegido.getNombre());
 		this.controladorAltaProducto.establecerProveedorElegido(proveedorElegido);
 		
 		this.ventanaConsultarProveedores.cerrar();

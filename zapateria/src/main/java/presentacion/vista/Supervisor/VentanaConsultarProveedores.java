@@ -134,8 +134,8 @@ public class VentanaConsultarProveedores {
 		frame.getContentPane().add(btnSeleccionarProveedor);
 		btnSeleccionarProveedor.setVisible(false);
 		
-		btnEditarProveedor = new JButton("Configurar");
-		btnEditarProveedor.setBounds(566, 517, 144, 29);
+		btnEditarProveedor = new JButton("Asignar Producto a Proveedor");
+		btnEditarProveedor.setBounds(526, 517, 184, 29);
 		frame.getContentPane().add(btnEditarProveedor);
 		btnEditarProveedor.setVisible(false);
 	}

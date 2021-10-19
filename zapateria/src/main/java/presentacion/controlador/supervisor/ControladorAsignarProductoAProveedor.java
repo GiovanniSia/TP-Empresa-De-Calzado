@@ -158,7 +158,7 @@ public class ControladorAsignarProductoAProveedor {
 			boolean deboAgregar=true;
 			MaestroProductoDTO maestroProducto=prod;
 			for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
+				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto() && prod.getFabricado().equals("N");
 
 			}
 //			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
