@@ -14,6 +14,7 @@ import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaAltaProducto;
 
@@ -32,8 +33,9 @@ public class ControladorAltaProducto {
 
 	ProveedorDTO proveedorElegido;
 	ControladorConsultarProveedor controladorConsultarProveedor;
+	Controlador controlador;
 	
-	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
+	public ControladorAltaProducto(Controlador controlador,MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor = proveedor;
 		this.productoDeProveedor = productoDeProveedor;
@@ -43,6 +45,8 @@ public class ControladorAltaProducto {
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
+		
+		this.controlador = controlador;
 	}
 	
 	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
@@ -81,6 +85,8 @@ public class ControladorAltaProducto {
 	
 	public void salir(ActionEvent a ) {
 		this.ventanaAltaProducto.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
 	public void llenarCb() {
@@ -334,17 +340,17 @@ public class ControladorAltaProducto {
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		MaestroProducto m = new MaestroProducto(new DAOSQLFactory());
-		Proveedor p = new Proveedor(new DAOSQLFactory());
-		ProductoDeProveedor pp = new ProductoDeProveedor(new DAOSQLFactory());
-		ControladorConsultarProveedor cp = new ControladorConsultarProveedor(p,pp);
-		ControladorAltaProducto c = new ControladorAltaProducto(m,p,pp);
-		c.setControladorConsultarProveedor(cp);
-		cp.setControladorAltaProducto(c);
-		c.inicializar();
-		c.mostrarVentana();
-	}
+//	public static void main(String[] args) {
+//		
+//		MaestroProducto m = new MaestroProducto(new DAOSQLFactory());
+//		Proveedor p = new Proveedor(new DAOSQLFactory());
+//		ProductoDeProveedor pp = new ProductoDeProveedor(new DAOSQLFactory());
+//		ControladorConsultarProveedor cp = new ControladorConsultarProveedor(p,pp);
+//		ControladorAltaProducto c = new ControladorAltaProducto(m,p,pp);
+//		c.setControladorConsultarProveedor(cp);
+//		cp.setControladorAltaProducto(c);
+//		c.inicializar();
+//		c.mostrarVentana();
+//	}
 	
 }

@@ -21,6 +21,8 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
+import modelo.ProductoDeProveedor;
+import modelo.Proveedor;
 import modelo.Stock;
 import modelo.Sucursal;
 import modelo.Zapateria;
@@ -33,6 +35,9 @@ import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
+import presentacion.controlador.supervisor.ControladorAltaProducto;
+import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
+import presentacion.controlador.supervisor.ControladorConsultarProveedor;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
 import presentacion.vista.VentanaHistorialCambioMProducto;
@@ -65,6 +70,9 @@ public class Controlador implements ActionListener {
 	
 	Factura factura;
 	DetalleFactura detalleFactura;
+	
+	Proveedor proveedor;
+	ProductoDeProveedor productoDeProveedor;
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
@@ -92,6 +100,10 @@ public class Controlador implements ActionListener {
 	//Controlador gerente
 	ControladorAltaCliente controladorAltaCliente;
 	
+	//Controlador supervisor
+	ControladorAltaProducto controladorAltaProducto;
+	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
+	ControladorConsultarProveedor contorladorConsultarProveedor;
 	
 	//Ventanas
 	/*
@@ -136,6 +148,9 @@ public class Controlador implements ActionListener {
 		this.factura = new Factura(new DAOSQLFactory());
 		this.detalleFactura = new DetalleFactura(new DAOSQLFactory());
 		
+		this.proveedor = new Proveedor(new DAOSQLFactory());
+		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
+		
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 	}
 	
@@ -160,6 +175,12 @@ public class Controlador implements ActionListener {
 		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago,this.cliente,this.empleado,this.carrito,this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura, this.ingresos); 
 		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
 		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+		
+		
+		//Supervisor
+		this.controladorAltaProducto = new ControladorAltaProducto(this,this.maestroProducto, this.proveedor, this.productoDeProveedor);
+		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
+		this.contorladorConsultarProveedor = new ControladorConsultarProveedor(this.proveedor, this.productoDeProveedor);
 		
 		
 		//cotizacion
@@ -219,6 +240,12 @@ public class Controlador implements ActionListener {
 		
 		//Alta cliente
 		this.ventanaMenuSistemaDeVentas.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
+		
+		
+		//Alta producto
+		this.ventanaMenuSistemaDeVentas.getBtnIngresarProductoNuevo().addActionListener(a -> pasarADarDeAltaProducto(a));
+		
+		//Consultar proveedores y asignarle un producto
 	}
 	
 	public void mostrarVentanaMenu() {
@@ -344,6 +371,14 @@ public class Controlador implements ActionListener {
 		this.controladorAltaCliente.inicializar();
 		this.controladorAltaCliente.mostrarVentana();
 	}
+	
+	//Supervisor
+	public void pasarADarDeAltaProducto(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorAltaCliente.inicializar();
+		this.controladorAltaCliente.mostrarVentana();
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

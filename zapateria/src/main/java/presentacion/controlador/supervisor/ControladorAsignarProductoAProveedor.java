@@ -34,15 +34,21 @@ public class ControladorAsignarProductoAProveedor {
 	List<ProductoDeProveedorDTO> productosDeProveedorEnTabla;
 	List<MaestroProductoDTO> todosLosProductoEnTabla;
 	
+	ControladorConsultarProveedor controladorConsultarProveedor;
+	
 	public ControladorAsignarProductoAProveedor(MaestroProducto maestroProducto,Proveedor proveedor,ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor=proveedor;
 		this.productoDeProveedor=productoDeProveedor;
-		this.ventanaAsignarProductoAProveedor = new VentanaAsignarProductoAProveedor();
+
 		
 		this.productosDeProveedorEnTabla = new ArrayList<ProductoDeProveedorDTO>();
 		this.todosLosProductoEnTabla = new ArrayList<MaestroProductoDTO>();
 		
+	}
+	
+	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
+		this.controladorConsultarProveedor = controladorConsultarProveedor;
 	}
 	
 	public void establecerProveedorElegido(ProveedorDTO p) {
@@ -50,11 +56,17 @@ public class ControladorAsignarProductoAProveedor {
 	}
 	
 	public void inicializar() {
+		System.out.println("SE INICIALIZA LA  VENTANA ADE ASIGNAR PROD A UN PROV");
+		this.ventanaAsignarProductoAProveedor = new VentanaAsignarProductoAProveedor();
+		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 		
 		this.ventanaAsignarProductoAProveedor.getBtnAgregar().addActionListener(a -> agregarProductoAProveedor(a));
 		this.ventanaAsignarProductoAProveedor.getBtnQuitar().addActionListener(a -> quitarProductoAProveedor(a));
+		
+		this.ventanaAsignarProductoAProveedor.getBtnSalir().addActionListener(a -> salir(a));
+		
 		this.ventanaAsignarProductoAProveedor.getTextNombre().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -121,6 +133,10 @@ public class ControladorAsignarProductoAProveedor {
 	
 	
 	public void llenarTablaProveedor() {
+		this.ventanaAsignarProductoAProveedor.getModelTablaProvElegido().setRowCount(0);//borrar datos de la tabla
+		this.ventanaAsignarProductoAProveedor.getModelTablaProvElegido().setColumnCount(0);
+		this.ventanaAsignarProductoAProveedor.getModelTablaProvElegido().setColumnIdentifiers(this.ventanaAsignarProductoAProveedor.getNombreColumnasProvElegido());
+		
 //		{"Nombre","Correo","Limite de Credito","Credito disponible"};
 		String nombre = this.proveedorElegido.getNombre();
 		String correo = this.proveedorElegido.getCorreo();
@@ -288,14 +304,23 @@ public class ControladorAsignarProductoAProveedor {
 		}return false;
 	}
 	
-	public static void main(String[] args) {
-		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
-		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
-		ControladorAsignarProductoAProveedor c = new ControladorAsignarProductoAProveedor(maestroProducto,proveedor,productoDeProveedor);
-		c.establecerProveedorElegido(new ProveedorDTO(1,"Naik","naik@gmail.com",20000,10000));
-		c.inicializar();
-		c.mostrarVentana();
+	
+	public void salir(ActionEvent a) {
+		this.ventanaAsignarProductoAProveedor.cerrar();
+//		this.controladorConsultarProveedor.inicializar();
+		this.controladorConsultarProveedor.mostrarVentana();
 	}
+	
+	
+	
+//	public static void main(String[] args) {
+//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
+//		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
+//		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
+//		ControladorAsignarProductoAProveedor c = new ControladorAsignarProductoAProveedor(maestroProducto,proveedor,productoDeProveedor);
+//		c.establecerProveedorElegido(new ProveedorDTO(1,"Naik","naik@gmail.com",20000,10000));
+//		c.inicializar();
+//		c.mostrarVentana();
+//	}
 	
 }

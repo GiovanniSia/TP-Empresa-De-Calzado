@@ -122,7 +122,7 @@ public class VentanaAsignarProductoAProveedor {
 			}
 		};
 		JScrollPane scrollPaneProvElegido = new JScrollPane(this.tableProvElegido,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneProvElegido.setBounds(0, 91, 1116, 97);
+		scrollPaneProvElegido.setBounds(10, 91, 1116, 97);
 		
 		tableProvElegido = new JTable(modelTablaProvElegido);
 		tableProvElegido.setBackground(Color.WHITE);

@@ -38,7 +38,9 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnModPrecioUnitario;
 	private JButton btnRegresar;
 	private JButton btnRegistrarUnCliente;
-	
+
+	private JButton btnIngresarProductoNuevo;
+	private JButton btnVerProveedores;
 
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
@@ -84,7 +86,7 @@ public class VentanaMenuSistemaDeVentas {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 558);
+		frame.setBounds(100, 100, 822, 649);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Sistema de Ventas");
 		frame.getContentPane().setLayout(null);
@@ -92,7 +94,7 @@ public class VentanaMenuSistemaDeVentas {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 818, 520);
+		panel.setBounds(0, 0, 818, 611);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -209,6 +211,28 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_7_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		lblNewLabel_7_1.setBounds(113, 449, 184, 20);
 		panel.add(lblNewLabel_7_1);
+		
+		btnIngresarProductoNuevo = new JButton("Ingresar producto nuevo");
+		btnIngresarProductoNuevo.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnIngresarProductoNuevo.setBounds(65, 475, 282, 35);
+		panel.add(btnIngresarProductoNuevo);
+		
+		JLabel lblNewLabel_7_1_1 = new JLabel("(Supervisor)");
+		lblNewLabel_7_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		lblNewLabel_7_1_1.setBounds(113, 520, 184, 20);
+		panel.add(lblNewLabel_7_1_1);
+		
+		btnVerProveedores = new JButton("Ver Proveedores");
+		btnVerProveedores.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnVerProveedores.setBounds(65, 542, 282, 35);
+		panel.add(btnVerProveedores);
+		
+		JLabel lblNewLabel_7_1_1_1 = new JLabel("(Supervisor)");
+		lblNewLabel_7_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		lblNewLabel_7_1_1_1.setBounds(113, 581, 184, 20);
+		panel.add(lblNewLabel_7_1_1_1);
 	}
 	
 	
@@ -288,4 +312,13 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnRegistrarUnCliente() {
 		return btnRegistrarUnCliente;
 	}
+	
+	public JButton getBtnIngresarProductoNuevo() {
+		return btnIngresarProductoNuevo;
+	}
+
+	public JButton getBtnVerProveedores() {
+		return btnVerProveedores;
+	}
+
 }
