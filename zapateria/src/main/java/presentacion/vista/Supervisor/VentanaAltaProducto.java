@@ -249,7 +249,7 @@ public class VentanaAltaProducto {
 		textPuntoRepMinimo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-                if(textPuntoRepMinimo.getText().length()>=25) {
+                if(textPuntoRepMinimo.getText().length()>=10) {
                     e.consume();
                 }
 			}
@@ -275,7 +275,7 @@ public class VentanaAltaProducto {
 		textCantidadAReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-                if(textCantidadAReponer.getText().length()>=20) {
+                if(textCantidadAReponer.getText().length()>=10) {
                     e.consume();
                 }
 			}
@@ -289,7 +289,7 @@ public class VentanaAltaProducto {
 		textDiasParaReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-                if(textDiasParaReponer.getText().length()>=20) {
+                if(textDiasParaReponer.getText().length()>=10) {
                     e.consume();
                 }
 			}
