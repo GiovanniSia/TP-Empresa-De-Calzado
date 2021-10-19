@@ -75,15 +75,21 @@ CREATE TABLE `sucursales`
 CREATE TABLE `historialCambioMProducto`
 (
   `IdHistorialCambioMProducto` int(11) NOT NULL AUTO_INCREMENT,
-  `IdEmpleado` int(11) NOT NULL,
-  `IdMaestroProducto` int(11) NOT NULL,
+  `IdEmpleado` varchar(45) NOT NULL,
+  `IdMaestroProducto` varchar(45) NOT NULL,
   `Fecha` Date NOT NULL,
-  `PrecioCostoAntiguo` double(45,2) NOT NULL,
-  `PrecioCostoNuevo` double(45,2) NOT NULL,
-  `PrecioMayoristaAntiguo` double(45,2) NOT NULL,
-  `PrecioMayoristaNuevo` double(45,2) NOT NULL,
-  `PrecioMinoristaAntiguo` double(45,2) NOT NULL,
-  `PrecioMinoristaNuevo` double(45,2) NOT NULL,
+  `PrecioCostoAntiguo` varchar(45) NOT NULL,
+  `PrecioCostoNuevo` varchar(45) NOT NULL,
+  `PrecioMayoristaAntiguo` varchar(45) NOT NULL,
+  `PrecioMayoristaNuevo` varchar(45) NOT NULL,
+  `PrecioMinoristaAntiguo` varchar(45) NOT NULL,
+  `PrecioMinoristaNuevo` varchar(45) NOT NULL,
+  `PuntoRepositorioAntiguo` varchar(45) NOT NULL,
+  `PuntoRepositorioNuevo` varchar(45) NOT NULL,
+  `CantidadAReponerAntiguo` varchar(45) NOT NULL,
+  `CantidadAReponerNuevo` varchar(45) NOT NULL,
+  `DiasParaReponerAntiguo` varchar(45) NOT NULL,
+  `DiasParaReponerNuevo` varchar(45) NOT NULL,
   PRIMARY KEY (`IdHistorialCambioMProducto`)
 );
 
