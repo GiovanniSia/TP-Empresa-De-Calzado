@@ -631,9 +631,14 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			BigDecimal precioCosto = new BigDecimal("" + mp.getPrecioCosto() + "");
-			BigDecimal precioMayorista = new BigDecimal("" + mp.getPrecioMayorista() + "");
-			BigDecimal precioMinorista = new BigDecimal("" + mp.getPrecioMinorista() + "");
+			BigDecimal precioCost = new BigDecimal(mp.getPrecioCosto());
+			String precioCosto = precioCost+"";
+			
+			BigDecimal precioMayorist = new BigDecimal(mp.getPrecioMayorista());
+			String precioMayorista=precioMayorist+"";
+			
+			BigDecimal precioMinorist = new BigDecimal(mp.getPrecioMinorista());
+			String precioMinorista=precioMinorist+"";
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
@@ -658,9 +663,16 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			BigDecimal precioCosto = new BigDecimal("" + mp.getPrecioCosto() + "");
-			BigDecimal precioMayorista = new BigDecimal("" +  mp.getPrecioMayorista() + "");
-			BigDecimal precioMinorista = new BigDecimal("" +  mp.getPrecioMinorista() + "");
+			
+			BigDecimal precioCost = new BigDecimal(mp.getPrecioCosto());
+			String precioCosto = precioCost+"";
+			
+			BigDecimal precioMayorist = new BigDecimal(mp.getPrecioMayorista());
+			String precioMayorista=precioMayorist+"";
+			
+			BigDecimal precioMinorist = new BigDecimal(mp.getPrecioMinorista());
+			String precioMinorista=precioMinorist+"";
+			
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();

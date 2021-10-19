@@ -3,6 +3,7 @@ package presentacion.controlador.supervisor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,9 +98,15 @@ public class ControladorAsignarProductoAProveedor {
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
-				String costo = ""+maestroProducto.getPrecioCosto();
-				String precioMayorista = ""+maestroProducto.getPrecioMayorista();
-				String precioMiniorista =""+maestroProducto.getPrecioMinorista();
+				 
+				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto());
+				String costo = ""+cost;
+				
+				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista());
+				String precioMayorista = ""+precioMayo;
+				
+				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista());
+				String precioMiniorista =""+precioMino;
 				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
 				String talle = maestroProducto.getTalle();
 				String[] fila = {descr,tipo,costo,precioMayorista,precioMiniorista,puntoRepMinimo,talle};
@@ -142,9 +149,14 @@ public class ControladorAsignarProductoAProveedor {
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
-				String costo = ""+maestroProducto.getPrecioCosto();
-				String precioMayorista = ""+maestroProducto.getPrecioMayorista();
-				String precioMiniorista =""+maestroProducto.getPrecioMinorista();
+				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto());
+				String costo = ""+cost;
+				
+				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista());
+				String precioMayorista = ""+precioMayo;
+				
+				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista());
+				String precioMiniorista =""+precioMino;
 				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
 				String talle = maestroProducto.getTalle();
 				String[] fila = {descr,tipo,costo,precioMayorista,precioMiniorista,puntoRepMinimo,talle};

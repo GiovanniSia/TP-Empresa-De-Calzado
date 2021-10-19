@@ -172,7 +172,7 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_6.setBounds(530, 121, 184, 20);
 		panel.add(lblNewLabel_6);
 		
-		btnModPrecioUnitario = new JButton("Modificar Precio Unitario");
+		btnModPrecioUnitario = new JButton("Modificar Producto");
 		btnModPrecioUnitario.setFont(new Font("Consolas", Font.PLAIN, 15));
 		btnModPrecioUnitario.setBounds(65, 313, 282, 35);
 		panel.add(btnModPrecioUnitario);

@@ -123,7 +123,7 @@ public class VentanaModificarMProducto extends JFrame {
 		tablaProducto.getColumnModel().getColumn(0).setResizable(false);
 		tablaProducto.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaProducto.getColumnModel().getColumn(1).setResizable(false);
-
+		tablaProducto.getTableHeader().setReorderingAllowed(false) ;
 		spProducto.setViewportView(tablaProducto);
 
 		btnAtras = new JButton("Atras");
@@ -335,6 +335,7 @@ public class VentanaModificarMProducto extends JFrame {
 			}
 		};
 		tablaProductosModificar = new JTable(modelProducto2);
+		tablaProductosModificar.getTableHeader().setReorderingAllowed(false) ;
 		spProducto_1.setViewportView(tablaProductosModificar);
 		
 		btnAgregarProductosEnTabla = new JButton("Agregar Productos en Tabla");
