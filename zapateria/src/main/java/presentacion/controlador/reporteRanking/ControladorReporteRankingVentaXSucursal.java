@@ -31,7 +31,7 @@ import presentacion.vista.fabrica.VentanaVerDetalle;
 import presentacion.vista.fabrica.VentanaVerHistorialPasos;
 import presentacion.vista.reporteRanking.VentanaVerReporteRankingXSucursal;
 
-public class ControladorHistorialPasos {
+public class ControladorReporteRankingVentaXSucursal {
 
 	Controlador controlador;
 	SucursalDTO fabrica;
@@ -44,7 +44,7 @@ public class ControladorHistorialPasos {
 
 	// public ControladorHistorialPasos(Controlador controlador)
 	// {
-	public ControladorHistorialPasos() {
+	public ControladorReporteRankingVentaXSucursal() {
 		// this.controlador = controlador;
 		this.fabrica = fabrica;
 		this.modeloFabricacion = new Fabricacion(new DAOSQLFactory());
@@ -126,7 +126,7 @@ public class ControladorHistorialPasos {
 	}
 	
 	public static void main(String[] args) {
-		ControladorHistorialPasos controladorH = new ControladorHistorialPasos();
+		ControladorReporteRankingVentaXSucursal controladorH = new ControladorReporteRankingVentaXSucursal();
 		controladorH.inicializar();
 	}
 }
