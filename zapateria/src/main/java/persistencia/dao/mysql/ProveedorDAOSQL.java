@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dto.MaestroProductoDTO;
 import dto.ProveedorDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ProveedorDAO;
@@ -72,4 +74,27 @@ public class ProveedorDAOSQL implements ProveedorDAO{
 		return new ProveedorDTO(id,nombre,correo,limiteCredito,creditoDisponible);
 	}
 
+	@Override
+	public List<ProveedorDTO> getProveedorAproximado(String nombreColumna,String txt){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM proveedor";
+
+		if (nombreColumna != null && txt!= null) {
+			sel = sel + " WHERE "+ nombreColumna + " LIKE '%" + txt + "%'";
+		}
+		ArrayList<ProveedorDTO> proveedores = new ArrayList<ProveedorDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				proveedores.add(getProveedorDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return proveedores;
+	}
+	
 }

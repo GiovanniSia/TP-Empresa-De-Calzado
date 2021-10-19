@@ -9,4 +9,6 @@ public interface ProveedorDAO {
 	public boolean insert(ProveedorDTO proveedor);
 	
 	public List<ProveedorDTO> readAll();
+	
+	public List<ProveedorDTO> getProveedorAproximado(String nombreColumna,String txt);
 }

@@ -22,4 +22,7 @@ public class Proveedor {
 		return this.proveedor.readAll();
 	}
 	
+	public List<ProveedorDTO> getProveedorAproximado(String nombreColumna,String txt){
+		return this.proveedor.getProveedorAproximado(nombreColumna, txt);
+	}
 }

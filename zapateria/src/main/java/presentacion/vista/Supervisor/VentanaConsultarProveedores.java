@@ -29,7 +29,7 @@ public class VentanaConsultarProveedores {
 	private JLabel lblNombre;
 
 	private JButton btnRegresar;
-	private JTextField textField;
+	private JTextField textNombre;
 	
 	
 	private JTable table;
@@ -86,10 +86,10 @@ public class VentanaConsultarProveedores {
 		lblListaProveedores.setBounds(10, 10, 370, 40);
 		frame.getContentPane().add(lblListaProveedores);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 107, 96, 19);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNombre = new JTextField();
+		textNombre.setBounds(10, 107, 96, 19);
+		frame.getContentPane().add(textNombre);
+		textNombre.setColumns(10);
 		
 		
 		//
@@ -177,8 +177,8 @@ public class VentanaConsultarProveedores {
 		return btnRegresar;
 	}
 
-	public JTextField getTextField() {
-		return textField;
+	public JTextField getTextNombre() {
+		return textNombre;
 	}
 
 	public JTable getTable() {
@@ -197,5 +197,8 @@ public class VentanaConsultarProveedores {
 	}
 	public DefaultTableModel getModelTablaProveedores() {
 		return modelTablaProveedores;
+	}
+	public String[] getNombreColumnasProveedores() {
+		return nombreColumnasProveedores;
 	}
 }

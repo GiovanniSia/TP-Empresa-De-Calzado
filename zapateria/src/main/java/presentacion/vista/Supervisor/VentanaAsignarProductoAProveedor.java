@@ -36,7 +36,7 @@ public class VentanaAsignarProductoAProveedor {
 	
 	private JTable tableProdDeProv;
 	private DefaultTableModel modelTablaProdDeProv;
-	private String[] nombreColumnasProdDeProv = {"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"};
+	private String[] nombreColumnasProdDeProv = {"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle","Precio Venta","Cantidad por Lote"};
 	
 	private JTable tableTodosLosProd;
 	private DefaultTableModel modelTablaProductos;
@@ -46,6 +46,9 @@ public class VentanaAsignarProductoAProveedor {
 	JButton btnSalir;
 	JButton btnQuitar;
 	JButton btnAgregar;
+	
+	private JTextField textPrecioVenta;
+	private JTextField textCantPorLote;
 	/**
 	 * Launch the application.
 	 */
@@ -196,6 +199,24 @@ public class VentanaAsignarProductoAProveedor {
 		btnSalir.setBounds(1072, 713, 54, 46);
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		frame.getContentPane().add(btnSalir);
+		
+		textPrecioVenta = new JTextField();
+		textPrecioVenta.setBounds(762, 240, 96, 19);
+		frame.getContentPane().add(textPrecioVenta);
+		textPrecioVenta.setColumns(10);
+		
+		textCantPorLote = new JTextField();
+		textCantPorLote.setColumns(10);
+		textCantPorLote.setBounds(868, 240, 96, 19);
+		frame.getContentPane().add(textCantPorLote);
+		
+		JLabel lblPrecioVenta = new JLabel("Precio Venta");
+		lblPrecioVenta.setBounds(762, 215, 89, 13);
+		frame.getContentPane().add(lblPrecioVenta);
+		
+		JLabel lblCantidadPorLote = new JLabel("Cantidad por lote");
+		lblCantidadPorLote.setBounds(868, 215, 89, 13);
+		frame.getContentPane().add(lblCantidadPorLote);
 
 	}
 	
@@ -284,6 +305,13 @@ public class VentanaAsignarProductoAProveedor {
 
 	public JButton getBtnAgregar() {
 		return btnAgregar;
+	}
+	public JTextField getTextPrecioVenta() {
+		return textPrecioVenta;
+	}
+
+	public JTextField getTextCantPorLote() {
+		return textCantPorLote;
 	}
 
 }
