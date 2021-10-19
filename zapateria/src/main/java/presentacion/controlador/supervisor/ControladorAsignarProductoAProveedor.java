@@ -56,7 +56,6 @@ public class ControladorAsignarProductoAProveedor {
 	}
 	
 	public void inicializar() {
-		System.out.println("SE INICIALIZA LA  VENTANA ADE ASIGNAR PROD A UN PROV");
 		this.ventanaAsignarProductoAProveedor = new VentanaAsignarProductoAProveedor();
 		
 		this.todosLosProductos = this.maestroProducto.readAll();
@@ -73,8 +72,9 @@ public class ControladorAsignarProductoAProveedor {
 				filtrarBusqueda();
 			}
 		});
-		validarTeclado();
 		llenarTablas();
+		validarTeclado();
+
 	}
 	
 	
@@ -103,9 +103,10 @@ public class ControladorAsignarProductoAProveedor {
 			boolean deboAgregar=true;
 			MaestroProductoDTO maestroProducto=prod;
 			for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
+				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto() ;
 
 			}
+			deboAgregar = deboAgregar && prod.getFabricado().equals("N");
 //			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
 
 			if(deboAgregar) {
@@ -158,11 +159,13 @@ public class ControladorAsignarProductoAProveedor {
 			boolean deboAgregar=true;
 			MaestroProductoDTO maestroProducto=prod;
 			for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto() && prod.getFabricado().equals("N");
+				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
+
 
 			}
+			deboAgregar = deboAgregar && prod.getFabricado().equals("N");
 //			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
-
+			System.out.println("es fabricado: "+prod.getFabricado()+" \nse debe agregar: "+deboAgregar);
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
