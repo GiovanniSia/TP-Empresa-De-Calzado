@@ -77,7 +77,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private JButton btnActualizarMasivamente;
 	
 	private String[] elementosCB  = {"Mayorista y Minorista","Costo","Mayorista","Minorista"};
-	private JComboBox<String> cbTipoPrecio;
+	private JComboBox cbTipoPrecio;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -375,9 +375,14 @@ public class VentanaModificarMProducto extends JFrame {
 		btnActualizarMasivamente.setBounds(337, 426, 184, 23);
 		panel.add(btnActualizarMasivamente);
 		
-		cbTipoPrecio = new JComboBox<String>(elementosCB);
+		cbTipoPrecio = new JComboBox(elementosCB);
 		cbTipoPrecio.setBounds(145, 400, 128, 22);
 		panel.add(cbTipoPrecio);
+		
+		JLabel lblNewLabel_3 = new JLabel("Precio:");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_3.setBounds(99, 403, 47, 14);
+		panel.add(lblNewLabel_3);
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 69, 864, 81);
@@ -450,7 +455,7 @@ public class VentanaModificarMProducto extends JFrame {
 		return btnQuitarFiltro;
 	}
 
-	public JComboBox<String> getCbTipoPrecio() {
+	public JComboBox getCbTipoPrecio() {
 		return cbTipoPrecio;
 	}
 

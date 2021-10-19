@@ -183,6 +183,7 @@ public class ControladorModificarMProducto {
 		}
 		this.refrescarTablaProducto();
 		this.limpiarTablaMaestroProductosModificar();
+		JOptionPane.showMessageDialog(null, "Modificacion Masiva realizada con exito");
 	}
 
 	public void actualizacionMasivoTablaMaestroProducto(MaestroProductoDTO productoNuevo) {
@@ -376,6 +377,7 @@ public class ControladorModificarMProducto {
 			this.refrescarTablaProducto();
 			this.refrescarTablaProductosModificar();
 			this.limpiarCampos();
+			JOptionPane.showMessageDialog(null, "Modificacion Unitaria realizada con exito");
 		}
 	}
 
@@ -418,10 +420,15 @@ public class ControladorModificarMProducto {
 			return false;
 		}
 
+		
+		
 		if (noSeModificaronDatos()) {
 			JOptionPane.showMessageDialog(null, "No se a modificado ningun dato");
 			return false;
 		}
+		
+		
+		
 		
 		int puntoRepositorio = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText());
 		int cantidadAReponer = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText());
@@ -477,30 +484,24 @@ public class ControladorModificarMProducto {
 
 		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
 
-		String precioCostoAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
-		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
+		String precioCostoAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
+		String precioCostoNuevo =""+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText());
 
-		String precioMayoristaAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMayorista();
-		String precioMayoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText();
+		String precioMayoristaAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMayorista();
+		String precioMayoristaNuevo = ""+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText());
 
-		String precioMinoristaAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMinorista();
-		String precioMinoristaNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText();
+		String precioMinoristaAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMinorista();
+		String precioMinoristaNuevo = ""+Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText());
 
-		String PuntoRepositorioAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPuntoRepositorio();
+		String PuntoRepositorioAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPuntoRepositorio();
 		String PuntoRepositorioNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText();
 
-		String CantidadAReponerAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getCantidadAReponer();
+		String CantidadAReponerAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getCantidadAReponer();
 		String CantidadAReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText();
 
-		String DiasParaReponerAntiguo = ""
-				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDiasParaReponer();
+		String DiasParaReponerAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDiasParaReponer();
 		String DiasParaReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText();
-
+		
 		if (precioCostoAntiguo.equals(precioCostoNuevo) && precioMayoristaAntiguo.equals(precioMayoristaNuevo)
 				&& precioMinoristaAntiguo.equals(precioMinoristaNuevo)
 				&& PuntoRepositorioAntiguo.equals(PuntoRepositorioNuevo)
