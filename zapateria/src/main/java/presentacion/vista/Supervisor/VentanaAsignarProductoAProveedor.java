@@ -8,6 +8,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -41,7 +43,7 @@ public class VentanaAsignarProductoAProveedor {
 	private JTable tableTodosLosProd;
 	private DefaultTableModel modelTablaProductos;
 	private String[] nombreColumnasProductos = {"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"};
-	private JTextField textField;
+	private JTextField textNombre;
 	
 	JButton btnSalir;
 	JButton btnQuitar;
@@ -182,10 +184,10 @@ public class VentanaAsignarProductoAProveedor {
 		lblNombre.setBounds(116, 238, 64, 25);
 		frame.getContentPane().add(lblNombre);
 		
-		textField = new JTextField();
-		textField.setBounds(179, 238, 132, 19);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textNombre = new JTextField();
+		textNombre.setBounds(179, 238, 132, 19);
+		frame.getContentPane().add(textNombre);
+		textNombre.setColumns(10);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(1000, 216, 126, 25);
@@ -201,11 +203,27 @@ public class VentanaAsignarProductoAProveedor {
 		frame.getContentPane().add(btnSalir);
 		
 		textPrecioVenta = new JTextField();
+		textPrecioVenta.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textPrecioVenta.getText().length()>=9) {
+                    e.consume();
+                }
+            }
+        });
 		textPrecioVenta.setBounds(762, 240, 96, 19);
 		frame.getContentPane().add(textPrecioVenta);
 		textPrecioVenta.setColumns(10);
 		
 		textCantPorLote = new JTextField();
+		textCantPorLote.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCantPorLote.getText().length()>=9) {
+                    e.consume();
+                }
+            }
+        });
 		textCantPorLote.setColumns(10);
 		textCantPorLote.setBounds(868, 240, 96, 19);
 		frame.getContentPane().add(textCantPorLote);
@@ -291,8 +309,8 @@ public class VentanaAsignarProductoAProveedor {
 		return nombreColumnasProductos;
 	}
 
-	public JTextField getTextField() {
-		return textField;
+	public JTextField getTextNombre() {
+		return textNombre;
 	}
 
 	public JButton getBtnSalir() {
