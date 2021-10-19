@@ -13,6 +13,7 @@ import persistencia.dao.interfaz.ProductoDeProveedorDAO;
 public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 
 	private static final String insert = "INSERT INTO productosDeProveedor VALUES(?,?,?,?,?)";
+	private static final String delete = "DELETE FROM productosDeProveedor WHERE Id=?";
 	private static final String readAll = "SELECT * FROM productosDeProveedor";
 	
 	@Override
@@ -45,6 +46,25 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 		return isInsertExitoso;
 	}
 
+	@Override
+	public boolean delete(ProductoDeProveedorDTO producto) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isdeleteExitoso = false;
+		try {
+			statement = conexion.prepareStatement(delete);
+			statement.setInt(1, producto.getId());
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isdeleteExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isdeleteExitoso;
+	}
+	
+	
 	@Override
 	public List<ProductoDeProveedorDTO> readAll() {
 		PreparedStatement statement;

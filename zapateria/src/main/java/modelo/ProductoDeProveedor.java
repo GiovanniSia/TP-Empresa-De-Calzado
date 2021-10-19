@@ -18,6 +18,10 @@ public class ProductoDeProveedor {
 		return this.productoDeProveedor.insert(proveedor);
 	}
 	
+	public boolean delete(ProductoDeProveedorDTO producto) {
+		return this.productoDeProveedor.delete(producto);
+	}
+	
 	public List<ProductoDeProveedorDTO> readAll(){
 		return this.productoDeProveedor.readAll();
 	}

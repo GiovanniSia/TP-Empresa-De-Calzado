@@ -31,7 +31,7 @@ public class ControladorAsignarProductoAProveedor {
 	List<MaestroProductoDTO> todosLosProductos;
 	List<ProductoDeProveedorDTO> listaProductosDeProveedor;
 	
-	List<MaestroProductoDTO> productosDeProveedorEnTabla;
+	List<ProductoDeProveedorDTO> productosDeProveedorEnTabla;
 	List<MaestroProductoDTO> todosLosProductoEnTabla;
 	
 	public ControladorAsignarProductoAProveedor(MaestroProducto maestroProducto,Proveedor proveedor,ProductoDeProveedor productoDeProveedor) {
@@ -40,7 +40,7 @@ public class ControladorAsignarProductoAProveedor {
 		this.productoDeProveedor=productoDeProveedor;
 		this.ventanaAsignarProductoAProveedor = new VentanaAsignarProductoAProveedor();
 		
-		this.productosDeProveedorEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.productosDeProveedorEnTabla = new ArrayList<ProductoDeProveedorDTO>();
 		this.todosLosProductoEnTabla = new ArrayList<MaestroProductoDTO>();
 		
 	}
@@ -54,6 +54,7 @@ public class ControladorAsignarProductoAProveedor {
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 		
 		this.ventanaAsignarProductoAProveedor.getBtnAgregar().addActionListener(a -> agregarProductoAProveedor(a));
+		this.ventanaAsignarProductoAProveedor.getBtnQuitar().addActionListener(a -> quitarProductoAProveedor(a));
 		this.ventanaAsignarProductoAProveedor.getTextNombre().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -194,7 +195,7 @@ public class ControladorAsignarProductoAProveedor {
 					
 					String[] fila = {descr,tipo,costo,precioMayorista,precioMiniorista,puntoRepMinimo,talle,precioVenta,cantPorLote};
 					this.ventanaAsignarProductoAProveedor.getModelTablaProdDeProv().addRow(fila);
-					this.productosDeProveedorEnTabla.add(p);
+					this.productosDeProveedorEnTabla.add(productoDeProv);
 				}
 			}
 		}
@@ -245,6 +246,23 @@ public class ControladorAsignarProductoAProveedor {
 		llenarTablaProductosDelProveedor();
 				
 		return;
+	}
+	
+
+	public void quitarProductoAProveedor(ActionEvent a) {
+		int filaSeleccionada = this.ventanaAsignarProductoAProveedor.getTableProdDeProv().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto");
+			return;
+		}
+		ProductoDeProveedorDTO productoSeleccionado = this.productosDeProveedorEnTabla.get(filaSeleccionada);
+		this.productoDeProveedor.delete(productoSeleccionado);
+			
+		this.todosLosProductos = this.maestroProducto.readAll();
+		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
+			
+		llenarTablaTodosLosProductos();
+		llenarTablaProductosDelProveedor();
 	}
 	
 	

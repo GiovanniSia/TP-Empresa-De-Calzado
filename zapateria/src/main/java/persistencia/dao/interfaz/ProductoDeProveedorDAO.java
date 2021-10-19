@@ -8,5 +8,7 @@ public interface ProductoDeProveedorDAO {
 
 	public boolean insert(ProductoDeProveedorDTO producto);
 	
+	public boolean delete(ProductoDeProveedorDTO producto);
+	
 	public List<ProductoDeProveedorDTO> readAll();
 }
