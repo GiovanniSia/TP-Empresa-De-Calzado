@@ -32,8 +32,8 @@ public class ClienteDAOSQL implements ClienteDAO {
 			statement.setString(3, cliente.getApellido());
 			statement.setString(4, cliente.getCUIL());
 			statement.setString(5, cliente.getCorreo());
-			statement.setInt(6, cliente.getLimiteCredito());
-			statement.setInt(7, cliente.getCreditoDisponible());
+			statement.setDouble(6, cliente.getLimiteCredito());
+			statement.setDouble(7, cliente.getCreditoDisponible());
 			statement.setString(8, cliente.getTipoCliente());
 			statement.setString(9, cliente.getImpuestoAFIP());
 			statement.setString(10, cliente.getEstado());
@@ -90,8 +90,8 @@ public class ClienteDAOSQL implements ClienteDAO {
 			statement.setString(2, cliente_nuevo.getApellido());
 			statement.setString(3, cliente_nuevo.getCUIL());
 			statement.setString(4, cliente_nuevo.getCorreo());
-			statement.setInt(5, cliente_nuevo.getLimiteCredito());
-			statement.setInt(6, cliente_nuevo.getCreditoDisponible());
+			statement.setDouble(5, cliente_nuevo.getLimiteCredito());
+			statement.setDouble(6, cliente_nuevo.getCreditoDisponible());
 			statement.setString(7, cliente_nuevo.getTipoCliente());
 			statement.setString(8, cliente_nuevo.getImpuestoAFIP());
 			statement.setString(9, cliente_nuevo.getEstado());
@@ -137,8 +137,8 @@ public class ClienteDAOSQL implements ClienteDAO {
 		String apellido = resultSet.getString("Apellido");
 		String CUIL = resultSet.getString("CUIL");
 		String correo = resultSet.getString("CorreoElectronico");
-		int limiteCredito = resultSet.getInt("LimiteCredito");
-		int creditoDisponible = resultSet.getInt("CreditoDisponible");
+		double limiteCredito = resultSet.getDouble("LimiteCredito");
+		double creditoDisponible = resultSet.getDouble("CreditoDisponible");
 		String tipoCliente = resultSet.getString("TipoCliente");
 		String impuestoAFIP = resultSet.getString("ImpuestoAFIP");
 		String estado = resultSet.getString("Estado");

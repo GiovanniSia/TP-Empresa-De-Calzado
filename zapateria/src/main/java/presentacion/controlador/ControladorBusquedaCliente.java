@@ -156,8 +156,8 @@ public class ControladorBusquedaCliente {
 			String apellido = c.getApellido();
 			String CUIL = c.getCUIL();
 			String correo = c.getCorreo();
-			int limiteCredito = c.getLimiteCredito();
-			int creditoDisponible = c.getCreditoDisponible();
+			double limiteCredito = c.getLimiteCredito();
+			double creditoDisponible = c.getCreditoDisponible();
 			String estado = c.getEstado();
 			if (!estado.equals("Inactivo")) {
 				Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,

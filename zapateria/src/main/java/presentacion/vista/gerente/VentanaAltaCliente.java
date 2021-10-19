@@ -100,11 +100,27 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(lblNombre);
 		
 		textNombre = new JTextField();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textNombre.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textNombre.setBounds(128, 113, 275, 19);
 		frame.getContentPane().add(textNombre);
 		textNombre.setColumns(10);
 		
 		textApellido = new JTextField();
+		textApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textApellido.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
 		textApellido.setColumns(10);
 		textApellido.setBounds(128, 142, 275, 19);
 		frame.getContentPane().add(textApellido);
@@ -135,6 +151,14 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(lblCUIL);
 		
 		textCorreo = new JTextField();
+		textCorreo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCorreo.getText().length()>=30) {
+                    e.consume();
+                }
+            }
+        });
 		textCorreo.setColumns(10);
 		textCorreo.setBounds(128, 206, 275, 19);
 		frame.getContentPane().add(textCorreo);
@@ -198,26 +222,66 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(lblCodPostal);
 		
 		textPais = new JTextField();
+		textPais.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textPais.getText().length()>=25) {
+                    e.consume();
+                }
+            }
+        });
 		textPais.setColumns(10);
 		textPais.setBounds(128, 361, 275, 19);
 		frame.getContentPane().add(textPais);
 		
 		textProvincia = new JTextField();
+		textProvincia.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textProvincia.getText().length()>=25) {
+                    e.consume();
+                }
+            }
+        });
 		textProvincia.setColumns(10);
 		textProvincia.setBounds(128, 400, 275, 19);
 		frame.getContentPane().add(textProvincia);
 		
 		textLocalidad = new JTextField();
+		textLocalidad.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textLocalidad.getText().length()>=25) {
+                    e.consume();
+                }
+            }
+        });
 		textLocalidad.setColumns(10);
 		textLocalidad.setBounds(128, 434, 275, 19);
 		frame.getContentPane().add(textLocalidad);
 		
 		textCalle = new JTextField();
+		textCalle.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCalle.getText().length()>=25) {
+                    e.consume();
+                }
+            }
+        });
 		textCalle.setColumns(10);
 		textCalle.setBounds(128, 468, 275, 19);
 		frame.getContentPane().add(textCalle);
 		
 		textAltura = new JTextField();
+		textAltura.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textAltura.getText().length()>=25) {
+                    e.consume();
+                }
+            }
+        });
 		textAltura.setColumns(10);
 		textAltura.setBounds(128, 500, 137, 19);
 		frame.getContentPane().add(textAltura);
@@ -255,6 +319,14 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(comboBoxTipoCliente);
 		
 		textSaldoInicial = new JTextField();
+		textSaldoInicial.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textSaldoInicial.getText().length()>=15) {
+                    e.consume();
+                }
+            }
+        });
 		textSaldoInicial.setColumns(10);
 		textSaldoInicial.setBounds(128, 324, 275, 19);
 		frame.getContentPane().add(textSaldoInicial);

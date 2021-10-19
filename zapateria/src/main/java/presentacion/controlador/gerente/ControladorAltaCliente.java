@@ -61,8 +61,8 @@ public class ControladorAltaCliente {
 			String apellido = this.ventanaAltaCliente.getTextApellido().getText();
 			String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
 			String mail = this.ventanaAltaCliente.getTextCorreo().getText();
-			int limiteCredito = Integer.parseInt(this.ventanaAltaCliente.getTextSaldoInicial().getText());
-			int creditoDisp = limiteCredito;
+			double limiteCredito = Double.parseDouble(this.ventanaAltaCliente.getTextSaldoInicial().getText());
+			double creditoDisp = limiteCredito;
 			String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
 			String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
 			String estado = "Activo";
@@ -214,11 +214,11 @@ public class ControladorAltaCliente {
 				ValidadorTeclado.aceptarLetrasYEspacios(e);
 			}
 		});
-		this.ventanaAltaCliente.getTextCalle().addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
-			}
-		});
+//		this.ventanaAltaCliente.getTextCalle().addKeyListener(new KeyAdapter() {
+//			public void keyTyped(KeyEvent e) {
+//				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
+//			}
+//		});
 		this.ventanaAltaCliente.getTextAltura().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
