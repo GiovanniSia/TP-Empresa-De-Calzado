@@ -25,7 +25,6 @@ import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import modelo.Stock;
 import modelo.Sucursal;
-import modelo.Zapateria;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Cajero.ControladorCierreCaja;
 import presentacion.controlador.Cajero.ControladorEgresosCaja;
@@ -38,14 +37,9 @@ import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
-import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.VentanaBusquedaProductos;
-import presentacion.vista.VentanaHistorialCambioMProducto;
-import presentacion.vista.VentanaHistorialCambioMoneda;
+
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
-import presentacion.vista.VentanaModificarCotizacion;
-import presentacion.vista.VentanaModificarMProducto;
 
 public class Controlador implements ActionListener {
 	
@@ -103,7 +97,7 @@ public class Controlador implements ActionListener {
 	//Controlador supervisor
 	ControladorAltaProducto controladorAltaProducto;
 	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
-	ControladorConsultarProveedor contorladorConsultarProveedor;
+	ControladorConsultarProveedor controladorConsultarProveedor;
 	
 	//Ventanas
 	/*
@@ -180,8 +174,13 @@ public class Controlador implements ActionListener {
 		//Supervisor
 		this.controladorAltaProducto = new ControladorAltaProducto(this,this.maestroProducto, this.proveedor, this.productoDeProveedor);
 		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
-		this.contorladorConsultarProveedor = new ControladorConsultarProveedor(this.proveedor, this.productoDeProveedor);
+		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this,this.proveedor, this.productoDeProveedor);
 		
+		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
+		
+		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
+		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		
 		//cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
@@ -244,7 +243,7 @@ public class Controlador implements ActionListener {
 		
 		//Alta producto
 		this.ventanaMenuSistemaDeVentas.getBtnIngresarProductoNuevo().addActionListener(a -> pasarADarDeAltaProducto(a));
-		
+		this.ventanaMenuSistemaDeVentas.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		//Consultar proveedores y asignarle un producto
 	}
 	
@@ -375,10 +374,15 @@ public class Controlador implements ActionListener {
 	//Supervisor
 	public void pasarADarDeAltaProducto(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
-		this.controladorAltaCliente.inicializar();
-		this.controladorAltaCliente.mostrarVentana();
+		this.controladorAltaProducto.inicializar();
+		this.controladorAltaProducto.mostrarVentana();
 	}
 	
+	public void pasarAConsultarProveedores(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorConsultarProveedor.inicializar();
+		this.controladorConsultarProveedor.mostrarVentana();
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
