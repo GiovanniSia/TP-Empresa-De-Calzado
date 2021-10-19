@@ -73,10 +73,19 @@ public class ReporteRankingXSucursal {
 		String[] words = sentence.split("-");
 		return words;
 	}
+	/*
+	insert into zapateria.sucursales values(2,'asd','calle','altura','pvcia','localidad','ARG','123','segundo');
+	insert into zapateria.sucursales values(3,'asd','calle','altura','pvcia','localidad','ARG','123','tercero');
+	insert into zapateria.sucursales values(4,'asd','calle','altura','pvcia','localidad','ARG','123','Sin suerte');
+	insert into zapateria.ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',100);
+	insert into zapateria.ingresos values (2,2,'2021-10-17','12:20','VT',1,'A','aaaa','EFE',150,1,'',150);
+	insert into zapateria.ingresos values (3,3,'2021-10-16','12:20','VT',1,'A','aaaa','USD',100,3,'',300);
+	insert into zapateria.ingresos values (4,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',100);
+	insert into zapateria.ingresos values (5,2,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',40);
 	
 	public static void main(String[] args) {
 		ReporteRankingXSucursal reporteRanking = new ReporteRankingXSucursal("2021-10-1","2021-11-1");
 		reporteRanking.mostrarReporte();
 	}
-
+	*/
 }
