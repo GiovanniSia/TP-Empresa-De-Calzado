@@ -351,6 +351,40 @@ CREATE TABLE `HistorialPasos`
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `RechazoCompraVirtual`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Hora` Time NOT NULL,
+  `Fecha` Date NOT NULL,
+  `idSucursal` int(11) NOT NULL,
+  `pago` double(45,2) NOT NULL,
+  `Nombre` varchar(45) NOT NULL,
+  `Apellido` varchar(45) NOT NULL,
+  `CUIL` varchar(45) NOT NULL,
+	`CorreoElectronico` varchar(45) NOT NULL,
+	`TipoCliente` varchar(45) NOT NULL,
+	`ImpuestoAFIP` varchar(45) NOT NULL,
+	`Estado` varchar(45) NOT NULL,
+	`Calle` varchar(45) NOT NULL,
+	`Altura` varchar(45) NOT NULL,
+	`Pais` varchar(45) NOT NULL,
+	`Provincia` varchar(45) NOT NULL,
+	`Localidad` varchar(45) NOT NULL,
+	`CodPostal` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
+CREATE TABLE `RechazoCompraVirtualDetalle`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdRechazoCompraVirtual` int(11) NOT NULL,
+  `IdProducto` int(11) NOT NULL,
+  `NombreProducto` varchar(45) NOT NULL,
+  `PrecioMayorista` double(45,2) NOT NULL,
+  `PrecioMinorista` double(45,2) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
 insert into tipoEgreso values("AS","Adelanto de sueldo");
 insert into tipoEgreso values("FA","Faltante");
 insert into tipoEgreso values("PP","Pago proveedor");
