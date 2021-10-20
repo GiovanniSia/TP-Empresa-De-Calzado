@@ -1,53 +1,45 @@
 [
   {
-    "cliente": {
-      "IdCliente": 1,
-      "Nombre": "Lolencio",
-      "Apellido": "Apellido",
-      "CUIL": "adadasd",
-      "CorreoElectronico": "no",
-      "LimiteCredito": 1000,
-      "CreditoDisponible": 1000,
-      "TipoCliente": "Mayorista",
-      "ImpuestoAFIP": "E",
-      "Estado": "Activo",
-      "Calle": "calle",
-      "Altura": "altura",
-      "Pais": "ARG",
-      "Provincia": "BS AS",
-      "Localidad": "Tortuguitas",
-      "CodPostal": "1667"
-    },
     "compra": {
       "1": 5
     },
     "idSucursal": 1,
-    "pago": 500.0
+    "pago": 500.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "123131231",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "TipoCliente": "Minorista",
+    "ImpuestoAFIP": "RI",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
   },
   {
-    "cliente": {
-      "IdCliente": 1,
-      "Nombre": "Lolencio",
-      "Apellido": "Apellido",
-      "CUIL": "adadasd",
-      "CorreoElectronico": "no",
-      "LimiteCredito": 1000,
-      "CreditoDisponible": 1000,
-      "TipoCliente": "Mayorista",
-      "ImpuestoAFIP": "E",
-      "Estado": "Activo",
-      "Calle": "calle",
-      "Altura": "altura",
-      "Pais": "ARG",
-      "Provincia": "BS AS",
-      "Localidad": "Tortuguitas",
-      "CodPostal": "1667"
-    },
     "compra": {
       "1": 1,
       "2": 3
     },
-    "idSucursal": 2,
-    "pago": 3.0
+    "idSucursal": 1,
+    "pago": 500.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "123131231",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "TipoCliente": "Minorista",
+    "ImpuestoAFIP": "RI",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
   }
 ]
