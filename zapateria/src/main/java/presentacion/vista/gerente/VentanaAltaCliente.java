@@ -331,10 +331,10 @@ public class VentanaAltaCliente {
 		textSaldoInicial.setBounds(128, 324, 275, 19);
 		frame.getContentPane().add(textSaldoInicial);
 		
-		JLabel lblSaldoInicial = new JLabel("Saldo inicial");
-		lblSaldoInicial.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSaldoInicial.setFont(new Font("Consolas", Font.BOLD, 15));
-		lblSaldoInicial.setBounds(10, 325, 116, 24);
+		JLabel lblSaldoInicial = new JLabel("Credito disponible");
+		lblSaldoInicial.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSaldoInicial.setFont(new Font("Consolas", Font.BOLD, 11));
+		lblSaldoInicial.setBounds(-1, 325, 127, 24);
 		frame.getContentPane().add(lblSaldoInicial);
 	}
 	

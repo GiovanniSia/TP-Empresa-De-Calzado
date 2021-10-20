@@ -116,7 +116,7 @@ public class ControladorAltaCliente {
 		}
 		String mail = this.ventanaAltaCliente.getTextCorreo().getText();
 		boolean m = mail.matches("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		if(!m && !mail.equals("")) {
+		if(!m) {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}

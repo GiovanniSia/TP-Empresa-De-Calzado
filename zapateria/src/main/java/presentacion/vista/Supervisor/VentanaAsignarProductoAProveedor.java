@@ -48,7 +48,9 @@ public class VentanaAsignarProductoAProveedor {
 	JButton btnSalir;
 	JButton btnQuitar;
 	JButton btnAgregar;
-	
+	JButton btnModificarCantidadPorLote;
+
+
 	private JTextField textPrecioVenta;
 	private JTextField textCantPorLote;
 	/**
@@ -235,6 +237,10 @@ public class VentanaAsignarProductoAProveedor {
 		JLabel lblCantidadPorLote = new JLabel("Cantidad por lote");
 		lblCantidadPorLote.setBounds(868, 215, 89, 13);
 		frame.getContentPane().add(lblCantidadPorLote);
+		
+		btnModificarCantidadPorLote = new JButton("Modificar Cantidad por lote");
+		btnModificarCantidadPorLote.setBounds(828, 462, 179, 25);
+		frame.getContentPane().add(btnModificarCantidadPorLote);
 
 	}
 	
@@ -331,5 +337,9 @@ public class VentanaAsignarProductoAProveedor {
 	public JTextField getTextCantPorLote() {
 		return textCantPorLote;
 	}
-
+	
+	
+	public JButton getBtnModificarCantidadPorLote() {
+		return btnModificarCantidadPorLote;
+	}
 }

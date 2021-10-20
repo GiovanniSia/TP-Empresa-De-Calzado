@@ -11,4 +11,6 @@ public interface ProductoDeProveedorDAO {
 	public boolean delete(ProductoDeProveedorDTO producto);
 	
 	public List<ProductoDeProveedorDTO> readAll();
+	
+	public boolean updateCantidadPorLote(double cantidad,int id); 
 }

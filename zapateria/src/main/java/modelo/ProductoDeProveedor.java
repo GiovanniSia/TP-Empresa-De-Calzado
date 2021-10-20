@@ -25,4 +25,8 @@ public class ProductoDeProveedor {
 	public List<ProductoDeProveedorDTO> readAll(){
 		return this.productoDeProveedor.readAll();
 	}
+	
+	public boolean updateCantidadPorLote(double cantidad,int id) {
+		return this.productoDeProveedor.updateCantidadPorLote(cantidad, id);
+	}
 }

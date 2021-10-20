@@ -16,6 +16,8 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 	private static final String delete = "DELETE FROM productosDeProveedor WHERE Id=?";
 	private static final String readAll = "SELECT * FROM productosDeProveedor";
 	
+	private static final String updateCantPorLote = "UPDATE productosDeProveedor SET CantidadPorLote=? WHERE Id=?";
+	
 	@Override
 	public boolean insert(ProductoDeProveedorDTO producto) {
 		PreparedStatement statement;
@@ -91,5 +93,28 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 		int cantPorLote = resultSet.getInt("CantidadPorLote");
 		return new ProductoDeProveedorDTO(id,idProveedor,idMaestroProducto,precioVenta,cantPorLote);
 	}
+	
+	
+	@Override
+	public boolean updateCantidadPorLote(double cantidad,int id) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(updateCantPorLote);
+
+			statement.setDouble(1, cantidad);
+			statement.setInt(2, id);
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
+	}
+	
 
 }

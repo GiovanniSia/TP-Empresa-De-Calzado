@@ -1,5 +1,6 @@
 package presentacion.controlador.supervisor;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -63,6 +64,8 @@ public class ControladorAsignarProductoAProveedor {
 		
 		this.ventanaAsignarProductoAProveedor.getBtnAgregar().addActionListener(a -> agregarProductoAProveedor(a));
 		this.ventanaAsignarProductoAProveedor.getBtnQuitar().addActionListener(a -> quitarProductoAProveedor(a));
+		
+		this.ventanaAsignarProductoAProveedor.getBtnModificarCantidadPorLote().addActionListener(a -> modificarCantidadPorLote(a));
 		
 		this.ventanaAsignarProductoAProveedor.getBtnSalir().addActionListener(a -> salir(a));
 		
@@ -165,7 +168,6 @@ public class ControladorAsignarProductoAProveedor {
 			}
 			deboAgregar = deboAgregar && prod.getFabricado().equals("N");
 //			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
-			System.out.println("es fabricado: "+prod.getFabricado()+" \nse debe agregar: "+deboAgregar);
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
@@ -314,7 +316,52 @@ public class ControladorAsignarProductoAProveedor {
 		this.controladorConsultarProveedor.mostrarVentana();
 	}
 	
-	
+	public void modificarCantidadPorLote(ActionEvent a) {
+		int filaSeleccionada = this.ventanaAsignarProductoAProveedor.getTableProdDeProv().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto");
+			return;
+		}
+		ProductoDeProveedorDTO proveedorSeleccionado = this.productosDeProveedorEnTabla.get(filaSeleccionada);
+		int valorNuevo=0;
+		String resp=null;
+		boolean repetir = true;
+	    while (repetir) {
+	    	
+	    	try {
+	    		resp=JOptionPane.showInputDialog("Ingrese la nueva cantidad de productos por lote");
+	    		if(resp==null) {
+	    			System.out.println("el valor de la resp fue null");
+	    			repetir=false;
+	    			
+	    		}else {
+	    			System.out.println("el valor nuevo: "+valorNuevo);
+	    			valorNuevo = Integer.parseInt(resp);
+
+		            repetir = false;
+	    		}
+	    	 }
+	    	 catch(HeadlessException | NumberFormatException e) {
+	    		    		 
+	    		 JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
+	         }
+	    }
+	    System.out.println("la resp: "+resp+" el valor nuevo: "+valorNuevo);
+	    if(resp==null && valorNuevo==0) {
+	    	return;
+	    }
+	    
+	    boolean update = this.productoDeProveedor.updateCantidadPorLote(valorNuevo, proveedorSeleccionado.getId());
+	    if(!update) {
+	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el nuevo valor");
+	    }else {
+	    	JOptionPane.showMessageDialog(null, "Nuevo valor actualizado con exito");
+	    }
+		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
+		llenarTablaProductosDelProveedor();
+	    
+	}
 	
 //	public static void main(String[] args) {
 //		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
