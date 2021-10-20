@@ -31,7 +31,9 @@ import modelo.Fabricacion;
 import modelo.HistorialPaso;
 import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
+import modelo.PedidosPendientes;
 import modelo.Stock;
+import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
@@ -317,10 +319,18 @@ public class ReControladorOperario implements ActionListener {
 							restante = 0;
 						}
 						modeloFabricacion.actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
+						System.out.println("Producto: "+mp.getDescripcion());
+						System.out.println("cantidad de stock disp: "+ss.getStockDisponible()+"\nPunto de rep minimo: "+mp.getPuntoRepositorio());
+						if(ss.getStockDisponible() < mp.getPuntoRepositorio()) {
+							System.out.println("Se deberia generar el pedido");
+							PedidosPendientes.generarPedidoAutomatico(1, mp);
+						}
+						
 					}
 				}
 				cont++;
 			}
+			System.out.println("-------------------------------------------");
 			this.insertarEnElHistorial(ordenTra.getIdOrdenFabrica(), 
 					this.empleado.getIdEmpleado(),
 					this.empleado.getApellido()+", "+this.empleado.getNombre(),
@@ -638,7 +648,7 @@ public class ReControladorOperario implements ActionListener {
 		List<OrdenFabricaDTO> listaAux = new ArrayList<OrdenFabricaDTO>();
 		if(stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*") && stringQueDescribeElEstadoDeLasOrdenesSinEmpezar.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
 			ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
-			System.out.println(ordenesEnLista.size());
+//			System.out.println(ordenesEnLista.size());
 		}
 	}
 	
@@ -685,7 +695,7 @@ public class ReControladorOperario implements ActionListener {
 		}else {
 			nombreProducto = producto.getDescripcion();
 		}
-		System.out.println(this.ventanaElegirReceta.getComboBox().getSelectedIndex() + " El combo box");
+//		System.out.println(this.ventanaElegirReceta.getComboBox().getSelectedIndex() + " El combo box");
 		if(this.ventanaElegirReceta.getComboBox().getSelectedIndex() == -1) {
 			
 			ventanaElegirReceta.getLblSolicitado().setText(nombreProducto+"; cantidad ordenada: "+this.ordenSeleccionado.getCantidad()+".");
@@ -915,7 +925,7 @@ public class ReControladorOperario implements ActionListener {
 	
 	private void elegirAnio(ActionEvent a) {
 		anioCumpleCreado = ventanaParaCumple.getComboBox().getSelectedItem().toString();
-		System.out.println(anioCumpleCreado);
+//		System.out.println(anioCumpleCreado);
 		
 		seleccionarMes();
 	}
@@ -937,7 +947,7 @@ public class ReControladorOperario implements ActionListener {
 	
 	private void elegirMes(ActionEvent a) {
 		mesCumpleCreado = Integer.toString(ventanaParaCumple.getComboBox().getSelectedIndex()+1);
-		System.out.println(anioCumpleCreado);
+//		System.out.println(anioCumpleCreado);
 		seleccionarDia();
 	}
 	
@@ -1008,7 +1018,7 @@ public class ReControladorOperario implements ActionListener {
 	
 	private void elegirDia(ActionEvent a) {
 		diaCumpleCreado = Integer.toString(ventanaParaCumple.getComboBox().getSelectedIndex()+1);
-		System.out.println(anioCumpleCreado + " " + mesCumpleCreado + " " + diaCumpleCreado);
+//		System.out.println(anioCumpleCreado + " " + mesCumpleCreado + " " + diaCumpleCreado);
 		ventanaParaCumple.cerrar();
 		if(this.seleccionarDesde) {
 			fechaDesde = formarFecha();

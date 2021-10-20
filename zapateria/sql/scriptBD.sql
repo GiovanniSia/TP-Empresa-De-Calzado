@@ -364,8 +364,8 @@ CREATE TABLE `PedidosPendientes`
     `PrecioTotal` double(45,2) NOT NULL,
     `Estado` varchar(45) NOT NULL,
     `IdSucursal` int(11) NOT NULL,
-    `FechaEnvioMail` Date NOT NULL,
-	`FechaCompleto` Date NOT NULL,
+    `FechaEnvioMail` Date DEFAULT NULL,
+	`FechaCompleto` Date DEFAULT NULL,
     PRIMARY KEY(`Id`)
 );
 
@@ -390,7 +390,32 @@ INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050 ,20
 INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000 ,6000,3   ,2,"N",300,"Activo",1000,1);
 INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050 ,2000,5   ,1,"M",300,"Activo",200,100);
 INSERT INTO maestroProductos values(6,"ZapatillaAdidas"  ,"PT","S",100 ,8050 ,1100,5   ,2,"M",300,"Activo",200,100);
-INSERT INTO maestroProductos values(7,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
+
+INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","N",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
+INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","N",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","N",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
+
+INSERT INTO maestroProductos values(10,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
+
+insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
+insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
+insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
+/*
+  `IdMaestroProducto` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(45) NOT NULL,
+  `Tipo` varchar(45) NOT NULL,
+  `Fabricado` varchar(45) NOT NULL,
+  `PrecioCosto` double(45,2) NOT NULL,
+  `PrecioMayorista` double(45,2) NOT NULL,
+  `PrecioMinorista` double(45,2) NOT NULL,
+  `PuntoRepositorio` int(11) NOT NULL,
+  `IdProveedor` int(11) NOT NULL,
+  `Talle` varchar(45) NOT NULL,
+  `UnidadMedida` varchar(45) NOT NULL,
+  `Estado` varchar(45) NOT NULL,
+  `CantidadAReponer` int(11) NOT NULL,
+  `DiasParaReponer` int(11) NOT NULL,
+  */
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
@@ -398,7 +423,12 @@ INSERT INTO stock VALUES(3,3,3,"ASDF5325",2000);
 INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
 INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
 INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
-INSERT INTO stock VALUES(7,1,7,"ASDF11111",1000);
+
+insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
+insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
+insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
+
+INSERT INTO stock VALUES(11,1,10,"ASDF11111",1000);
 
 
 insert into clientes values(1, "Consumidor Final", "","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
@@ -418,14 +448,6 @@ insert into paso values(3,"Preparación");
 insert into paso values(4,"Montado");
 insert into paso values(5,"Pegado");
 insert into paso values(6,"Terminado");
-
-INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","N",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
-INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","N",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
-INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","N",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
-
-insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
-insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
-insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
 
 insert into pasosReceta values(1,1,1,1);
 insert into pasosReceta values(2,1,2,2);
@@ -476,9 +498,7 @@ insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
 insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
-insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
-insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
-insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
+
 
 INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");
 INSERT INTO sucursales VALUES(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU");

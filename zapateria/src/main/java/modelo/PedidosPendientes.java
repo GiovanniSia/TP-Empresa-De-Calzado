@@ -51,13 +51,20 @@ public class PedidosPendientes {
 		if(prov==null) {
 			//VERIFICAR LUEGO QUE PASA SI NO HAY UN PROVEEDOR PREFERENCIADO PARA ESTE PRODUCTO			
 		}
-
+		
+		if(prodProv==null) {
+			 JOptionPane.showMessageDialog(null, "No existe ningun proveedor que venda este producto, no se pudo crear el pedido automático", "Error", JOptionPane.ERROR_MESSAGE);
+			 return;
+		}
+		
 		int idProv = prov.getId();
 		String nombreProv = prov.getNombre();
 		int idMaestroProd = producto.getIdMaestroProducto();
 		String nombreMaestroprod = producto.getDescripcion();
-		int cantidad = producto.getCantidadAReponer();
 		
+		int cantPorLote = prodProv.getCantidadPorLote();
+		int cantidadTotal = determinarCantidad(producto,prodProv);;
+				
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
 		
@@ -65,14 +72,15 @@ public class PedidosPendientes {
 	    String hora = tf.format(LocalDateTime.now());
 		
 	    double precioUnidad = prodProv.getPrecioVenta();
-	    double precioTotal = precioUnidad;
+	    int auxCantDeLotes = cantidadTotal/cantPorLote;
+	    double precioTotal = precioUnidad * auxCantDeLotes;
 	    
 	    String estado = "En espera";
 	    int idSuc = idSucursal;
 	    String fechaEnvio = null;
 	    String fechaCompleto = null;
 	    
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,fechaCompleto);
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,fechaCompleto);
 	    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {
@@ -84,6 +92,39 @@ public class PedidosPendientes {
 	
 	
 	
+	private static int determinarCantidad(MaestroProductoDTO producto, ProductoDeProveedorDTO prodProv) {
+		int cantProdDeseada = producto.getCantidadAReponer();
+		int cantProd=0;
+		int cantLotes=0;
+		double costo = prodProv.getPrecioVenta();
+		while(cantProd<cantProdDeseada) {
+			cantProd +=prodProv.getCantidadPorLote();
+			cantLotes++;
+		}
+		double costoTotal = cantLotes * costo;
+		if(cantProd==cantProdDeseada) {
+			System.out.println("Se stock con cantidad justa");
+			return cantProd;
+		}else {
+			//si la cant que se compro supera a lo que se pidio se verifica que esa cantidad no supere el +20%
+			int auxCantLotes = cantLotes-1;
+			double precioConUnStockMenos = auxCantLotes * costo; 
+			double conAumentoDePorciento = ( (20 *precioConUnStockMenos)/100 ) + precioConUnStockMenos;//+20% al precio con -1 stock
+					
+			boolean superaLaReglaDeRedondeo = conAumentoDePorciento < costoTotal;
+			if(superaLaReglaDeRedondeo) {
+				System.out.println("Se compra un stock menos ya que este no supera el +20%, por lo que se usara un stock menos");
+				cantProd = cantProd-cantLotes;//le quitamos un stock porque supera el 20%
+				return cantProd;
+			}else {
+				System.out.println("Se compra un stock de mas y no supera el 20%");
+				return cantProd;
+			}
+		}
+		 
+		
+	}
+
 	private static ProductoDeProveedorDTO getProductoDeProveedor(int idProveedor,int idProducto) {
 		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		ArrayList<ProductoDeProveedorDTO> todosLosProductoDeProveedor = (ArrayList<ProductoDeProveedorDTO>) productoDeProveedor.readAll();
