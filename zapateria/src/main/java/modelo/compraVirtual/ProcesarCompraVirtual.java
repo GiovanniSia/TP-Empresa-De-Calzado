@@ -1,21 +1,38 @@
 package modelo.compraVirtual;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
+
 import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
+import dto.DetalleCarritoDTO;
+import dto.DetalleFacturaDTO;
+import dto.EmpleadoDTO;
+import dto.FacturaDTO;
+import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
+import modelo.DetalleFactura;
+import modelo.Factura;
+import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 
 public class ProcesarCompraVirtual {
+	
+	private static final int idVendedorVirtual = 0;
+	private static final int idCajeroVirtual = 0;
+	private static String nombreCajeroVirtual = "compraVirtual";
+	private static String nombreVendedorVirtual = "compraVirtual";
 	
 	public static void RutinaProcesarCompra() {
 		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
@@ -33,11 +50,12 @@ public class ProcesarCompraVirtual {
 				
 			}else {
 				//Se compra
+				registrarCompraVirtual(compraVirtual);
 				
 			}
 		}
 	}
-	
+
 	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
 			return "";
@@ -165,6 +183,17 @@ public class ProcesarCompraVirtual {
 		return ret;
 	}
 	
+	private static ClienteDTO getCliente(String CUIL) {
+		ClienteDTO ret = null;
+		Cliente modeloCliente = new Cliente(new DAOSQLFactory());
+		for(ClienteDTO c: modeloCliente.readAll()) {
+			if(c.getCUIL().equals(CUIL)) {
+				ret = c;
+			}
+		}
+		return ret;
+	}
+	
 	private static boolean esMailValido(String email) {
 		if(email == null) {
 			return false;
@@ -210,6 +239,191 @@ public class ProcesarCompraVirtual {
 			if(mp.getIdMaestroProducto() == idProducto) {
 				ret = mp;
 			}
+		}
+		return ret;
+	}
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	// FUNCION IMPORTANTE
+	
+	private static void registrarCompraVirtual(CompraVirtualDTO compraVirtual) {
+		String nroFactura = generarFacturaCompraVirtual(compraVirtual);
+		registrarIngreso(compraVirtual, nroFactura);
+	}
+
+	private static void registrarIngreso(CompraVirtualDTO compraVirtual, String nroFactura) {
+		ClienteDTO cliente = getCliente(compraVirtual.getCUIL());
+		
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	    String fecha = f.format(LocalDateTime.now());
+	    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+	    String hora = dtf.format(LocalDateTime.now());
+	    
+	    Ingresos ingresos = new Ingresos(new DAOSQLFactory());
+	    
+	    String categoriaAFIP = determinarCategoriaFactura(cliente);
+	    IngresosDTO datoIngreso = new IngresosDTO(0, compraVirtual.getIdSucursal(), fecha, hora, "VT", 
+	    		cliente.getIdCliente(), categoriaAFIP, nroFactura, "PV", compraVirtual.getPago(), 
+	    		1.0, "OPERACION", compraVirtual.getPago());
+	    
+	    ingresos.insert(datoIngreso); 		
+	}
+	
+	private static String obtenerNombreCategoria(ClienteDTO cliente) {
+		String tipo = cliente.getImpuestoAFIP();
+		if(tipo.equals("RI")) {
+			return "Responsable Inscripto";
+		}
+		if(tipo.equals("M")) {
+			return "Monotributista";
+		}
+		if(tipo.equals("CF")) {
+			return "Consumidor Final";
+		}
+		if(tipo.equals("E")) {
+			return "Excento";
+		}
+		return "Categoria no encontrada en el sistema";
+	}
+	
+	private static String determinarCategoriaFactura(ClienteDTO cliente) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+			return "A";
+		}
+		if(cliente.getImpuestoAFIP().equals("E")) {
+			return "B";
+		}
+		if(cliente.getPais() != "Argentina") {//si la persona no vive en arg es excento
+			return "E";
+		}
+		return "";
+	}
+
+	private static String generarFacturaCompraVirtual(CompraVirtualDTO compraVirtual) {
+		String ret = "";
+		ClienteDTO client = getCliente(compraVirtual.getCUIL());
+		
+		int idCliente = client.getIdCliente();
+		String nombreCliente =client.getApellido()+" "+ client.getNombre();
+		//private static final int idVendedorVirtual = 0;
+		//private static final int idCajeroVirtual = 0;
+		int idCajero= idCajeroVirtual;
+		int idVendedor = idVendedorVirtual;
+		String nombreCajero = nombreCajeroVirtual;
+		String nombreVendedor = nombreVendedorVirtual;
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		String fecha = dtf.format(LocalDateTime.now());
+		
+		String tipoFactura = determinarCategoriaFactura(client);
+		
+		int idSucursal = compraVirtual.getIdSucursal();
+		String nroFacturaCompleto = tipoFactura+generarNroSucursal(idSucursal)+generarNroFacturaSecuencial();
+		double descuento = 0;
+		
+		double totalBruto = calcularTotalBruto(client, compraVirtual.getPago());
+		double totalFactura = compraVirtual.getPago();
+		
+		String tipoVenta = client.getTipoCliente();//mayorista/minorista
+		
+		String calle = client.getCalle();
+		String altura = client.getAltura(); 
+		String pais = client.getPais();
+		String provincia = client.getProvincia();
+		String localidad = client.getLocalidad();
+		String codPostal = client.getCodPostal();
+		String CUIL = client.getCUIL();
+		String correo = client.getCorreo();
+		
+		
+		String impuestoAFIP = obtenerNombreCategoria(client);
+		double IVA = deboCalcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
+		FacturaDTO facturaGenerada = new FacturaDTO(0,0,idCliente,nombreCliente,idCajero,nombreCajero,idVendedor,nombreVendedor,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
+		
+		//registramos la factura en la bd
+		Factura modeloFactura = new Factura(new DAOSQLFactory());
+		boolean insertFactura = modeloFactura.insert(facturaGenerada);
+		if(insertFactura==false) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+			return null;
+		}
+		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
+		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
+		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		return nroFacturaCompleto;
+	}
+	
+	private static void registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
+		for(int idProducto: compraVirtual.getCompra().keySet()) {
+			int id=0;
+			int idProd = idProducto;
+			int cant = compraVirtual.getCompra().get(idProducto);
+			
+			MaestroProductoDTO producto = getProducto(idProd);
+			String descr = producto.getDescripcion();
+			double precioCosto = producto.getPrecioCosto();
+			
+			double precioVenta;
+			ClienteDTO cliente = getCliente(compraVirtual.getCUIL());
+			if(cliente.getTipoCliente().equals("Mayorista")) {
+				precioVenta = producto.getPrecioMayorista();
+			}else {
+				precioVenta = producto.getPrecioMinorista();
+			}
+					
+			double monto = precioVenta * cant;
+			int idFactura = factura.getIdFactura();
+			String unidadMedida =""+producto.getUnidadMedida();//CHEQUEAR
+			
+			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id,idProd,cant,descr,precioCosto,precioVenta,monto,idFactura,unidadMedida);
+			
+			DetalleFactura detalleFactura = new DetalleFactura(new DAOSQLFactory());
+			boolean insertDetalleFactura = detalleFactura.insert(detalleFactur);//se guarda en la bd
+			if(!insertDetalleFactura) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error en uno de los ingresos de factura");
+			}
+		}
+	}
+	
+	private static String generarNroSucursal(int idSucursal) {
+		String nroSucursal = ""+idSucursal;
+		String nroSucFactura=""+nroSucursal;
+		while(nroSucFactura.length() < 5) {
+			nroSucFactura = "0" + nroSucFactura;
+		}
+		return nroSucFactura;
+	}
+
+	private static String generarNroFacturaSecuencial() {
+		Factura factura = new Factura(new DAOSQLFactory());
+		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) factura.readAll();
+		if(todasLasFacturas.size()==0) {
+			return "1";
+		}
+		FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size()-1);
+		String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
+		
+		String ultSec="";
+		//damos por hecho que 1 dig sera para el tipo de factura, y 5 para el nro de sucursal
+		for(int i=6; i<nroCompletoUlt.length() ; i++) {
+			ultSec = ultSec+ nroCompletoUlt.charAt(i);//obtenemos los ult 8 dig secuenciales
+		}
+		int viejoSuma = Integer.parseInt(ultSec);
+		int nuevoSec = (viejoSuma+1);
+		return ""+nuevoSec;
+	}
+	
+	private static boolean deboCalcularIVA(ClienteDTO cliente) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static double calcularTotalBruto(ClienteDTO cliente, double total) {
+		double ret = total;
+		if(deboCalcularIVA(cliente)) {
+			ret = total- ((21/100) * total);
 		}
 		return ret;
 	}
