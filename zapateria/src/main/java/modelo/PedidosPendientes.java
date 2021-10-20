@@ -102,8 +102,9 @@ public class PedidosPendientes {
 			cantLotes++;
 		}
 		double costoTotal = cantLotes * costo;
+		System.out.println("cantidad total de prod luego del while: "+cantProd+" - cantidad de lotes: "+cantLotes);
 		if(cantProd==cantProdDeseada) {
-			System.out.println("Se stock con cantidad justa");
+			System.out.println("Se compra stock con cantidad justa");
 			return cantProd;
 		}else {
 			//si la cant que se compro supera a lo que se pidio se verifica que esa cantidad no supere el +20%
@@ -113,11 +114,14 @@ public class PedidosPendientes {
 					
 			boolean superaLaReglaDeRedondeo = conAumentoDePorciento < costoTotal;
 			if(superaLaReglaDeRedondeo) {
-				System.out.println("Se compra un stock menos ya que este no supera el +20%, por lo que se usara un stock menos");
-				cantProd = cantProd-cantLotes;//le quitamos un stock porque supera el 20%
+				System.out.println("Se compra un stock menos ya que este supera el +20%, por lo que se usara un stock menos");				
+				//le quitamos un stock porque supera el 20%
+				cantProd -=prodProv.getCantidadPorLote();
+				System.out.println("Cantidad total de prod que se compran: "+cantProd+"\ncant de lotes: "+auxCantLotes);
 				return cantProd;
 			}else {
 				System.out.println("Se compra un stock de mas y no supera el 20%");
+				System.out.println("Cantidad total de prod que se compran: "+cantProd+"\ncant de lotes: "+cantLotes);
 				return cantProd;
 			}
 		}
