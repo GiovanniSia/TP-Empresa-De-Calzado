@@ -1,8 +1,10 @@
 package modelo.compraVirtual;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
 import dto.MaestroProductoDTO;
@@ -15,7 +17,28 @@ import persistencia.dao.mysql.DAOSQLFactory;
 
 public class ProcesarCompraVirtual {
 	
-	public static String validarDatosCliente(CompraVirtualDTO compraVirtual) {
+	public static void RutinaProcesarCompra() {
+		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
+		if(listaCompraProcesar == null) {
+			return;
+		}
+		if(listaCompraProcesar.size()==0) {
+			return;
+		}
+		String mensajeReporte = "";
+		for(CompraVirtualDTO compraVirtual: listaCompraProcesar) {
+			mensajeReporte = reporteDatosErroneos(compraVirtual);
+			if(reporteDeDatosNoValidoParaComprar(mensajeReporte)) {
+				//No se compra
+				
+			}else {
+				//Se compra
+				
+			}
+		}
+	}
+	
+	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
 			return "";
 		}
@@ -93,6 +116,10 @@ public class ProcesarCompraVirtual {
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		}
 		return ret;
+	}
+	
+	private static boolean reporteDeDatosNoValidoParaComprar(String reporte) {
+		return !reporte.equals(reporte);
 	}
 	
 	private static boolean esAfipValido(String afip) {
