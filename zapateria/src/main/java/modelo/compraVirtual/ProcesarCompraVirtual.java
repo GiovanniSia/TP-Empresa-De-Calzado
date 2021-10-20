@@ -5,7 +5,12 @@ import java.util.regex.Pattern;
 
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
+import dto.MaestroProductoDTO;
+import dto.SucursalDTO;
 import modelo.Cliente;
+import modelo.MaestroProducto;
+import modelo.Sucursal;
+import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 
 public class ProcesarCompraVirtual {
@@ -70,6 +75,16 @@ public class ProcesarCompraVirtual {
 		ret = ret && esDatoStringValido(compraVirtual.getLocalidad());
 		ret = ret && esDatoStringValido(compraVirtual.getCodPostal());
 		*/
+		if(!esSucursalValida(compraVirtual.getIdSucursal())) {
+			ret = ret + ";La sucursal no es valida";
+		}else {
+			for(int idProducto: compraVirtual.getCompra().keySet()) {
+				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
+					ret = ret + ";No es posible vender uno de los productos";
+				}
+			}
+		}
+		
 		if(ret.equals("")) {
 			//darDeAltaCliente();
 			Cliente modeloCliente = new Cliente(new DAOSQLFactory());
@@ -135,6 +150,41 @@ public class ProcesarCompraVirtual {
             return true;
         }
         return false;
+	}
+	
+	private static boolean esSucursalValida(int idSucursal) {
+		boolean ret = false;
+		Sucursal modeloSucursal = new Sucursal(new DAOSQLFactory());
+		for(SucursalDTO s: modeloSucursal.readAll()) {
+			ret = ret || s.getIdSucursal() == idSucursal;
+		}
+		return ret;
+	}
+	
+	private static boolean sePuedeVenderElProducto(int idProducto, int idSucursal, int cantidadAComprar) {
+		MaestroProductoDTO producto = getProducto(idProducto);
+		if(producto == null) {
+			return false;
+		}
+		if(!producto.getEstado().equals("Activo")) {
+			return false;
+		}
+		int cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
+		if(cantStock >= cantidadAComprar) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static MaestroProductoDTO getProducto(int idProducto) {
+		MaestroProducto modeloProducto = new MaestroProducto(new DAOSQLFactory());
+		MaestroProductoDTO ret = null;
+		for(MaestroProductoDTO mp: modeloProducto.readAll()) {
+			if(mp.getIdMaestroProducto() == idProducto) {
+				ret = mp;
+			}
+		}
+		return ret;
 	}
 
 	public static void main(String[] args) {
