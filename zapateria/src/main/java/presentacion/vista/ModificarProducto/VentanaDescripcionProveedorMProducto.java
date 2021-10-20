@@ -16,6 +16,8 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.JComboBox;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -113,6 +115,15 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		panel_1.add(lblNuevoProveedor);
 
 		txtActualizarCambioDescripcion = new JTextField();
+		txtActualizarCambioDescripcion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			 char validar = e.getKeyChar();
+			 if(!Character.isLetter(validar) || txtActualizarCambioDescripcion.getText().length() >= 20) {
+				 e.consume();
+			 }
+			}
+		});
 		txtActualizarCambioDescripcion.setBounds(166, 103, 127, 20);
 		panel_1.add(txtActualizarCambioDescripcion);
 		txtActualizarCambioDescripcion.setColumns(10);

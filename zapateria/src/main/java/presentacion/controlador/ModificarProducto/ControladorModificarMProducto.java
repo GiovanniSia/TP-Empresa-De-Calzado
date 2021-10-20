@@ -128,6 +128,7 @@ public class ControladorModificarMProducto {
 
 		ControladorDescripcionProveedorMProducto controlador = new ControladorDescripcionProveedorMProducto(
 				productoSeleccionado);
+		this.ventanaModificarMProducto.cerrar();
 		controlador.inicializar();
 		controlador.mostrarVentana();
 	}
@@ -228,7 +229,6 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizacionMasivoTablaMaestroProducto(MaestroProductoDTO productoNuevo) {
-		System.out.println(productoNuevo.getPrecioMayorista() + "," + productoNuevo.getPrecioMinorista());
 		int idModificar = productoNuevo.getIdMaestroProducto();
 		maestroProducto.update(idModificar, productoNuevo);
 	}
