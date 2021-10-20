@@ -32,7 +32,7 @@ public class ProcesarCompraVirtual {
 	private static final int idVendedorVirtual = 0;
 	private static final int idCajeroVirtual = 0;
 	private static String nombreCajeroVirtual = "compraVirtual";
-	private static String nombreVendedorVirtual = "compraVirtual";
+	private static String nombreVendedorVirtual = "";
 	
 	public static void RutinaProcesarCompra() {
 		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
@@ -47,7 +47,7 @@ public class ProcesarCompraVirtual {
 			mensajeReporte = reporteDatosErroneos(compraVirtual);
 			if(reporteDeDatosNoValidoParaComprar(mensajeReporte)) {
 				//No se compra
-				
+				System.out.println(mensajeReporte);
 			}else {
 				//Se compra
 				registrarCompraVirtual(compraVirtual);
@@ -66,6 +66,9 @@ public class ProcesarCompraVirtual {
 		}
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
 			ret = ret + ";El nombre no es valido";
+		}
+		if(!esDatoStringValido(compraVirtual.getCUIL())) {
+			ret = ret + ";El CUIL no es valido";
 		}
 		if(!esDatoStringValido(compraVirtual.getApellido())) {
 			ret = ret + ";El apellido no es valido";
@@ -137,7 +140,7 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static boolean reporteDeDatosNoValidoParaComprar(String reporte) {
-		return !reporte.equals(reporte);
+		return !reporte.equals("");
 	}
 	
 	private static boolean esAfipValido(String afip) {
@@ -300,7 +303,6 @@ public class ProcesarCompraVirtual {
 	}
 
 	private static String generarFacturaCompraVirtual(CompraVirtualDTO compraVirtual) {
-		String ret = "";
 		ClienteDTO client = getCliente(compraVirtual.getCUIL());
 		
 		int idCliente = client.getIdCliente();

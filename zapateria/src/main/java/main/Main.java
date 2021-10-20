@@ -6,6 +6,7 @@ import java.util.HashMap;
 import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
+import modelo.compraVirtual.ProcesarCompraVirtual;
 import presentacion.controlador.Controlador;
 
 
@@ -15,34 +16,38 @@ public class Main {
 		Controlador controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
-		/*
+		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
-		ClienteDTO cliente = new ClienteDTO(1, "Lolencio", "Apellido", "adadasd", "no", 1000,
-				1000, "Mayorista", "E", "Activo", "calle", "altura",
-				"ARG", "BS AS", "Tortuguitas", "1667");
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
-		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 500, 1, "Sebas",
-				"Cubilla", "123131231", "sebastianx3600@gmail.com", "Minorista", 
-				"RI", "Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 500, 2, "Juan", "Lopez","4223004","juan@mgail.com","Mayorista","E","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 		compras.add(cvd);
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 500, 1, "Sebas",
-				"Cubilla", "123131231", "sebastianx3600@gmail.com", "Minorista", 
+				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com", "Minorista", 
 				"RI", "Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd2);
-		JsonListaCompraVirtual.guardarLista(compras);
 		
-		compras = JsonListaCompraVirtual.getLista();
-		for(CompraVirtualDTO cvFOR: compras) {
-			System.out.println(cvFOR+ ", "+cvFOR.getNombre()+": "+cvFOR.getCompra().get(1));
-		}
-		*/
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);
+		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
+				"asd", "", "sebas@gmail.com", "Minorista", 
+				"RI", "", "", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd3);
+		JsonListaCompraVirtual.guardarLista(compras);
+		compras = null;
+		//compras = JsonListaCompraVirtual.getLista();
+		//for(CompraVirtualDTO cvFOR: compras)
+		//	System.out.println(cvFOR+ ", "+cvFOR.getNombre()+": "+cvFOR.getCompra().get(1));
+		
+		ProcesarCompraVirtual.RutinaProcesarCompra();
 	}
 }
