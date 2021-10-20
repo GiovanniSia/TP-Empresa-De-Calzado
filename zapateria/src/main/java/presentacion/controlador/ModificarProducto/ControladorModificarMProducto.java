@@ -142,9 +142,20 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarMasivamente(ActionEvent a) {
+		String aumentarString = this.ventanaModificarMProducto.getTxtActualizarAumentar().getText();
 
-		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
-		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
+		int aumentar = 0;
+		if (!aumentarString.equals("")) {
+			aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
+		}
+
+		String disminuirString = this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText();
+
+		int disminuir = 0;
+		if (!disminuirString.equals("")) {
+			disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
+		}
+
 		String tipoPrecioSeleccionado = this.ventanaModificarMProducto.getCbTipoPrecio().getSelectedItem().toString();
 
 		if (aumentar == 0 && disminuir == 0) {
@@ -183,8 +194,11 @@ public class ControladorModificarMProducto {
 				return;
 			}
 
-			if (precioCostoFinal >= 99999999999.0 || precioMayoristaFinal >= 99999999999.0
-					|| precioMinoristaFinal >= 99999999999.0) {
+			String costo = precioCostoFinal.toString();
+			String mayorista = precioMayoristaFinal.toString();
+			String minorista = precioMinoristaFinal.toString();
+
+			if (costo.length() >= 10 || mayorista.length() >= 10 || minorista.length() >= 10) {
 				JOptionPane.showMessageDialog(null,
 						"Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999");
 				return;
