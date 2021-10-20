@@ -108,9 +108,7 @@ public class ControladorRealizarVenta {
 	}
 	
 	
-	public void inicializar() {
-		System.out.println("cantidad de ingresos por registrar: "+this.listaDeIngresosARegistrar.size());
-		
+	public void inicializar() {		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listamediosDePago = this.medioPago.readAll();
 		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
@@ -393,9 +391,13 @@ public class ControladorRealizarVenta {
 				
 				for(MaestroProductoDTO mp: this.todosLosProductos) {
 					if(mp.getIdMaestroProducto() == det.getIdProducto()) {
-						if(generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp)) {
-						}else {
+						generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp);
+							
+						//verificar generar pedido
+						if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(this.idSucursal, mp) && mp.getFabricado().equals("N")) {
+							
 						}
+						
 					}
 				}
 			}

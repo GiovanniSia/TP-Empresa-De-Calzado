@@ -350,6 +350,26 @@ CREATE TABLE `HistorialPasos`
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `PedidosPendientes`
+(
+	`Id` int(11) NOT NULL AUTO_INCREMENT,
+    `IdProveedor` int(11) NOT NULL,
+    `NombreProveedor` varchar(45) NOT NULL,
+    `IdMaestroProducto` int(11) NOT NULL,
+    `NombreMaestroProducto` varchar(45) NOT NULL,
+    `Cantidad` int(11) NOT NULL,
+    `Fecha` Date NOT NULL,
+    `Hora` Time NOT NULL,
+    `PrecioUnidad` double(45,2) NOT NULL,
+    `PrecioTotal` double(45,2) NOT NULL,
+    `Estado` varchar(45) NOT NULL,
+    `IdSucursal` int(11) NOT NULL,
+    `FechaEnvioMail` Date NOT NULL,
+	`FechaCompleto` Date NOT NULL,
+    PRIMARY KEY(`Id`)
+);
+
+
 insert into tipoEgreso values("AS","Adelanto de sueldo");
 insert into tipoEgreso values("FA","Faltante");
 insert into tipoEgreso values("PP","Pago proveedor");
