@@ -12,6 +12,7 @@ package dto;
 public class HistorialCambioMProductoDTO {
 
 	private int idHistorialCambioProducto;
+	private String idSucursal;
 	private String idEmpleado;
 	private String idMaestroProducto;
 	private String fecha;
@@ -34,13 +35,15 @@ public class HistorialCambioMProductoDTO {
 	private String diasParaReponerAntiguo;
 	private String diasParaReponerNuevo;
 
-	public HistorialCambioMProductoDTO(int idHistorialCambioProducto, String idEmpleado, String idMaestroProducto,
-			String fecha, String precioCostoAntiguo, String precioCostoNuevo, String precioMayoristaAntiguo,
-			String precioMayoristaNuevo, String precioMinoristaAntiguo, String precioMinoristaNuevo,
-			String puntoRepositorioAntiguo, String puntoRepositorioNuevo, String cantidadAReponerAntiguo,
-			String cantidadAReponerNuevo, String diasParaReponerAntiguo, String diasParaReponerNuevo) {
+	public HistorialCambioMProductoDTO(int idHistorialCambioProducto, String idSucursal, String idEmpleado,
+			String idMaestroProducto, String fecha, String precioCostoAntiguo, String precioCostoNuevo,
+			String precioMayoristaAntiguo, String precioMayoristaNuevo, String precioMinoristaAntiguo,
+			String precioMinoristaNuevo, String puntoRepositorioAntiguo, String puntoRepositorioNuevo,
+			String cantidadAReponerAntiguo, String cantidadAReponerNuevo, String diasParaReponerAntiguo,
+			String diasParaReponerNuevo) {
 		super();
 		this.idHistorialCambioProducto = idHistorialCambioProducto;
+		this.idSucursal = idSucursal;
 		this.idEmpleado = idEmpleado;
 		this.idMaestroProducto = idMaestroProducto;
 		this.fecha = fecha;
@@ -60,6 +63,10 @@ public class HistorialCambioMProductoDTO {
 
 	public int getIdHistorialCambioProducto() {
 		return idHistorialCambioProducto;
+	}
+
+	public String getIdSucursal() {
+		return idSucursal;
 	}
 
 	public String getIdEmpleado() {
@@ -124,6 +131,10 @@ public class HistorialCambioMProductoDTO {
 
 	public void setIdHistorialCambioProducto(int idHistorialCambioProducto) {
 		this.idHistorialCambioProducto = idHistorialCambioProducto;
+	}
+
+	public void setIdSucursal(String idSucursal) {
+		this.idSucursal = idSucursal;
 	}
 
 	public void setIdEmpleado(String idEmpleado) {

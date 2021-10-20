@@ -14,10 +14,13 @@ public class ControladorHistorialCambioMProducto {
 	private VentanaHistorialCambioMProducto ventanaHistorialCambioProducto;
 	private HistorialCambioMProducto historialCambioMProducto;
 	private List<HistorialCambioMProductoDTO> historialCambioMproductoEnTabla;
-
+	private ControladorModificarMProducto controladorModificarMProducto;
+	
+	
 	public ControladorHistorialCambioMProducto(HistorialCambioMProducto historialCambioMProducto) {
 		this.ventanaHistorialCambioProducto = new VentanaHistorialCambioMProducto();
 		this.historialCambioMProducto = historialCambioMProducto;
+		this.controladorModificarMProducto = new ControladorModificarMProducto();
 	}
 
 	public void inicializar() {
@@ -61,6 +64,8 @@ public class ControladorHistorialCambioMProducto {
 
 	public void volverAModificarProducto(ActionEvent e) {
 		this.ventanaHistorialCambioProducto.cerrar();
+		controladorModificarMProducto.inicializar();
+		controladorModificarMProducto.mostrarVentana();
 	}
 
 	public void mostrarVentana() {
@@ -80,6 +85,7 @@ public class ControladorHistorialCambioMProducto {
 				.setColumnIdentifiers(this.ventanaHistorialCambioProducto.getNombreColumnas());
 
 		for (HistorialCambioMProductoDTO hcmp : historialCambioMproductoEnTabla) {
+			String codSucursal = hcmp.getIdSucursal();
 			String codEmpleado = hcmp.getIdEmpleado();
 			String codProducto = hcmp.getIdMaestroProducto();
 			String fecha = hcmp.getFecha();
@@ -102,7 +108,7 @@ public class ControladorHistorialCambioMProducto {
 			String DiasParaReponerAntiguo = hcmp.getDiasParaReponerAntiguo();
 			String DiasParaReponerNuevo = hcmp.getDiasParaReponerNuevo();
 
-			Object[] fila = { codEmpleado, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo,
+			Object[] fila = { codEmpleado, codSucursal, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo,
 					precioMayoristaAntiguo, precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo,
 					PuntoRepositorioAntiguo, PuntoRepositorioNuevo, CantidadAReponerAntiguo, CantidadAReponerNuevo,
 					DiasParaReponerAntiguo, DiasParaReponerNuevo };

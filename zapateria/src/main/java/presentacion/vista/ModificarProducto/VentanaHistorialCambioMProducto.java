@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class VentanaHistorialCambioMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = {"Cod.Empleado", "Cod.Producto", "Fecha", "P.CostoAntiguo", "P.CostoNuevo", "P.MayoristaAntiguo",
+	private String[] nombreColumnas = {"Cod.Empleado","Cod. Sucursal", "Cod.Producto", "Fecha", "P.CostoAntiguo", "P.CostoNuevo", "P.MayoristaAntiguo",
 			"P.MayoristaNuevo", "P.MinoristaAntiguo", "P.MinoristaNuevo","PuntoRepositorioAntiguo","PuntoRepositorioNuevo","CantidadAReponerAntiguo","CantidadAReponerNuevo","DiasParaReponerAntiguo","DiasParaReponerNuevo"};
 	private DefaultTableModel modelhistorialCambioMProducto;
 	private JTable tablaHistorialCambioMProducto;

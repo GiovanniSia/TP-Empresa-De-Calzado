@@ -270,10 +270,11 @@ public class ControladorModificarMProducto {
 		String CantidadAReponerAntiguo = "" + productoAntiguo.getCantidadAReponer();
 		String DiasParaReponerAntiguo = "" + productoAntiguo.getDiasParaReponer();
 
-		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idEmpleado, idMaestroProducto,
-				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
-				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioAntiguo,
-				CantidadAReponerAntiguo, CantidadAReponerAntiguo, DiasParaReponerAntiguo, DiasParaReponerAntiguo);
+		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idSucursal, idEmpleado,
+				idMaestroProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo,
+				precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo,
+				PuntoRepositorioAntiguo, CantidadAReponerAntiguo, CantidadAReponerAntiguo, DiasParaReponerAntiguo,
+				DiasParaReponerAntiguo);
 
 		this.historialCambioMProducto.insert(nuevoHistorial);
 
@@ -417,10 +418,10 @@ public class ControladorModificarMProducto {
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
-	// Abrir ventana para ver la tabla historialCambioMProducto
 	public void verHistorialDeCambios(ActionEvent v) {
 		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
 		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
+		this.ventanaModificarMProducto.cerrar();
 		controlador.inicializar();
 		controlador.mostrarVentana();
 	}
@@ -615,10 +616,11 @@ public class ControladorModificarMProducto {
 				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDiasParaReponer();
 		String DiasParaReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText();
 
-		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idEmpleado, idMaestroProducto,
-				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
-				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioNuevo,
-				CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo, DiasParaReponerNuevo);
+		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idSucursal, idEmpleado,
+				idMaestroProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo,
+				precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo,
+				PuntoRepositorioNuevo, CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo,
+				DiasParaReponerNuevo);
 
 		this.historialCambioMProducto.insert(nuevoHistorial);
 
