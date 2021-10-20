@@ -26,13 +26,16 @@ import modelo.MaestroProducto;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.reportes.ReporteFactura;
 
 public class ProcesarCompraVirtual {
 	
 	private static final int idVendedorVirtual = 0;
 	private static final int idCajeroVirtual = 0;
 	private static String nombreCajeroVirtual = "compraVirtual";
-	private static String nombreVendedorVirtual = "";
+	private static String nombreVendedorVirtual = "compraVirtual";
+	
+	private static int porcentajeTolerancia = 1;
 	
 	public static void RutinaProcesarCompra() {
 		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
@@ -50,17 +53,19 @@ public class ProcesarCompraVirtual {
 				System.out.println(mensajeReporte);
 			}else {
 				//Se compra
-				registrarCompraVirtual(compraVirtual);
-				
+				registrarCompraVirtual(compraVirtual);	//GENERA Y MUESTRA LAS FACTURAS
 			}
 		}
 	}
 
 	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
-		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
-			return "";
-		}
 		String ret = "";
+		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
+			if(!esPagoSuficiente(compraVirtual)) {
+				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+			}
+			return ret;
+		}
 		if(!esPagoValido(compraVirtual.getPago())) {
 			ret = ret + ";El pago no es valido";
 		}
@@ -135,12 +140,38 @@ public class ProcesarCompraVirtual {
 			modeloCliente.insert(new ClienteDTO(0, compraVirtual.getNombre(), compraVirtual.getApellido(),compraVirtual.getCUIL(), compraVirtual.getCorreoElectronico(), 0,
 			0, compraVirtual.getTipoCliente(), compraVirtual.getImpuestoAFIP(), "Activo", compraVirtual.getCalle(), compraVirtual.getAltura(),
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
+		
+			if(!esPagoSuficiente(compraVirtual)) {
+				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+			}
 		}
 		return ret;
 	}
 	
 	private static boolean reporteDeDatosNoValidoParaComprar(String reporte) {
 		return !reporte.equals("");
+	}
+	
+	private static boolean esPagoSuficiente(CompraVirtualDTO compraVirtual) {
+		double cantidadAPagar = calcularTotalAPagar(compraVirtual);
+		int porcentaje = porcentajeTolerancia;
+		double mayor = cantidadAPagar + (cantidadAPagar*porcentaje/100);
+		double menor = cantidadAPagar - (cantidadAPagar*porcentaje/100);
+		return menor < compraVirtual.getPago() && mayor > compraVirtual.getPago();
+	}
+	
+	private static double calcularTotalAPagar(CompraVirtualDTO compraVirtual) {
+		double cantidadAPagar = 0.0;
+		ClienteDTO cliente = getCliente(compraVirtual.getCUIL());
+		for(int idProducto: compraVirtual.getCompra().keySet()) {
+			MaestroProductoDTO producto = getProducto(idProducto);
+			if(cliente.getTipoCliente().equals("Mayorista")) {
+				cantidadAPagar = cantidadAPagar+(producto.getPrecioMayorista()*compraVirtual.getCompra().get(idProducto));
+			}else {
+				cantidadAPagar = cantidadAPagar+(producto.getPrecioMinorista()*compraVirtual.getCompra().get(idProducto));
+			}
+		}
+		return cantidadAPagar;
 	}
 	
 	private static boolean esAfipValido(String afip) {
@@ -252,6 +283,8 @@ public class ProcesarCompraVirtual {
 	private static void registrarCompraVirtual(CompraVirtualDTO compraVirtual) {
 		String nroFactura = generarFacturaCompraVirtual(compraVirtual);
 		registrarIngreso(compraVirtual, nroFactura);
+		ReporteFactura reporte = new ReporteFactura(nroFactura);
+		reporte.mostrar();
 	}
 
 	private static void registrarIngreso(CompraVirtualDTO compraVirtual, String nroFactura) {
