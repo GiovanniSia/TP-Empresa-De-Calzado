@@ -371,6 +371,7 @@ CREATE TABLE `RechazoCompraVirtual`
 	`Provincia` varchar(45) NOT NULL,
 	`Localidad` varchar(45) NOT NULL,
 	`CodPostal` varchar(45) NOT NULL,
+	`Motivo` TEXT NOT NULL,
   PRIMARY KEY (`Id`)
 );
 

@@ -19,11 +19,11 @@ public class RechazoCompraVirtualDTO {
 	String Pais;
 	String Provincia;
 	String Localidad;
-	String CodPostal;
+	String CodPostal;String motivo;
 	public RechazoCompraVirtualDTO(int id, String hora, String fecha, int idSucursal, double pago, String nombre,
 			String apellido, String cUIL, String correoElectronico, String tipoCliente, String impuestoAFIP,
 			String estado, String calle, String altura, String pais, String provincia, String localidad,
-			String codPostal) {
+			String codPostal, String motivo) {
 		super();
 		Id = id;
 		Hora = hora;
@@ -43,6 +43,7 @@ public class RechazoCompraVirtualDTO {
 		Provincia = provincia;
 		Localidad = localidad;
 		CodPostal = codPostal;
+		this.motivo = motivo;
 	}
 	public int getId() {
 		return Id;
@@ -151,6 +152,12 @@ public class RechazoCompraVirtualDTO {
 	}
 	public void setCodPostal(String codPostal) {
 		CodPostal = codPostal;
+	}
+	public String getMotivo() {
+		return motivo;
+	}
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
 	}
 
 }
