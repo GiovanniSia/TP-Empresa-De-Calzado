@@ -29,6 +29,7 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
+import modelo.PedidosPendientes;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
@@ -380,11 +381,7 @@ public class ControladorRealizarVenta {
 		return cliente.getCreditoDisponible() >= cantidad;
 	}
 	
-	public void registrarPago(ActionEvent a) {
-		
-		System.out.println("cantidad total pagado: "+this.totalPagado);
-		System.out.println("cantidad total pagado + desc: "+this.totalPagado+this.descuento);
-		
+	public void registrarPago(ActionEvent a) {		
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
 			
 			for(DetalleCarritoDTO det: detalleCarritoACobrar) {
@@ -395,7 +392,7 @@ public class ControladorRealizarVenta {
 							
 						//verificar generar pedido
 						if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(this.idSucursal, mp) && mp.getFabricado().equals("N")) {
-							
+							PedidosPendientes.generarPedidoAutomatico(this.idSucursal,mp);
 						}
 						
 					}

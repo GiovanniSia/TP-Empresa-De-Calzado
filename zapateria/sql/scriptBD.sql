@@ -384,12 +384,13 @@ INSERT INTO medioPago values ("TCV","Tarjeta Credito VISA",1);
 INSERT INTO medioPago values ("MPA","Mercado Pago",1);
 INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
 
-INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020  ,1500 ,2,"M",200,"Activo",36,100);
-INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000 ,2 ,3,"XL",200,"Activo",10,100);
-INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050,2000,5  ,1,"XXL",300,"Activo",200,100);
-INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000,6000,3  ,2,"N",300,"Activo",1000,1);
-INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050,2000,5  ,1,"M",300,"Activo",200,100);
-INSERT INTO maestroProductos values(6,"ZapatillaAdidas"  ,"PT","S",100 ,8050,1100,5  ,2,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020,1500,2,"M",200,"Activo",36,100);
+INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000,2   ,3,"XL",200,"Activo",10,100);
+INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050 ,2000,5   ,1,"XXL",300,"Activo",200,100);
+INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000 ,6000,3   ,2,"N",300,"Activo",1000,1);
+INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050 ,2000,5   ,1,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(6,"ZapatillaAdidas"  ,"PT","S",100 ,8050 ,1100,5   ,2,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(7,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
@@ -397,6 +398,8 @@ INSERT INTO stock VALUES(3,3,3,"ASDF5325",2000);
 INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
 INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
 INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
+INSERT INTO stock VALUES(7,1,7,"ASDF11111",1000);
+
 
 insert into clientes values(1, "Consumidor Final", "","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
 insert into clientes values(2, "Juan", "Lopez","4223004","juan@mgail.com",100,100,"Mayorista","E","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");

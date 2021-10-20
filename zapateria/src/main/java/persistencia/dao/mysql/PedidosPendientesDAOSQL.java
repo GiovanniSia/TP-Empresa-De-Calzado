@@ -28,16 +28,17 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 			statement.setInt(1, pedido.getId());
 			statement.setInt(2,pedido.getIdProveedor());
 			statement.setString(3, pedido.getNombreProveedor());
-			statement.setString(4,pedido.getNombreMaestroProducto());
-			statement.setInt(5, pedido.getCantidad());
-			statement.setString(6, pedido.getFecha());
-			statement.setString(7, pedido.getHora());
-			statement.setDouble(8, pedido.getPrecioUnidad());
-			statement.setDouble(9, pedido.getPrecioTotal());
-			statement.setString(10, pedido.getEstado());
-			statement.setInt(11, pedido.getIdSucursal());
-			statement.setString(12, pedido.getFechaEnvioMail());
-			statement.setString(13, pedido.getFechaCompleto());
+			statement.setInt(4, pedido.getIdMaestroProducto());
+			statement.setString(5,pedido.getNombreMaestroProducto());
+			statement.setInt(6, pedido.getCantidad());
+			statement.setString(7, pedido.getFecha());
+			statement.setString(8, pedido.getHora());
+			statement.setDouble(9, pedido.getPrecioUnidad());
+			statement.setDouble(10, pedido.getPrecioTotal());
+			statement.setString(11, pedido.getEstado());
+			statement.setInt(12, pedido.getIdSucursal());
+			statement.setString(13, pedido.getFechaEnvioMail());
+			statement.setString(14, pedido.getFechaCompleto());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
