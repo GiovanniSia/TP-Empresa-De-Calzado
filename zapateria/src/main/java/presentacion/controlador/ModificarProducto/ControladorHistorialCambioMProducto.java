@@ -1,4 +1,4 @@
-package presentacion.controlador;
+package presentacion.controlador.ModificarProducto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -8,7 +8,7 @@ import java.util.List;
 import dto.HistorialCambioMProductoDTO;
 import modelo.HistorialCambioMProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.vista.VentanaHistorialCambioMProducto;
+import presentacion.vista.ModificarProducto.VentanaHistorialCambioMProducto;
 
 public class ControladorHistorialCambioMProducto {
 	private VentanaHistorialCambioMProducto ventanaHistorialCambioProducto;

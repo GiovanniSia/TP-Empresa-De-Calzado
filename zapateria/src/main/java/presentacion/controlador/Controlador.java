@@ -30,17 +30,19 @@ import presentacion.controlador.Cajero.ControladorEgresosCaja;
 import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
+import presentacion.controlador.ModificarProducto.ControladorHistorialCambioMProducto;
+import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
-import presentacion.vista.VentanaHistorialCambioMProducto;
 import presentacion.vista.VentanaHistorialCambioMoneda;
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
 import presentacion.vista.VentanaModificarCotizacion;
-import presentacion.vista.VentanaModificarMProducto;
+import presentacion.vista.ModificarProducto.VentanaHistorialCambioMProducto;
+import presentacion.vista.ModificarProducto.VentanaModificarMProducto;
 
 public class Controlador implements ActionListener {
 	

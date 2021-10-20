@@ -1,4 +1,4 @@
-package presentacion.vista;
+package presentacion.vista.ModificarProducto;
 
 import java.awt.Color;
 import java.awt.Font;

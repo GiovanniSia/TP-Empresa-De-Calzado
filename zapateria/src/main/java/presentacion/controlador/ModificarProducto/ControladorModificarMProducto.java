@@ -1,4 +1,4 @@
-package presentacion.controlador;
+package presentacion.controlador.ModificarProducto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import dto.MaestroProductoDTO;
 import modelo.HistorialCambioMProducto;
 import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.vista.VentanaModificarMProducto;
+import presentacion.controlador.Controlador;
+import presentacion.vista.ModificarProducto.VentanaModificarMProducto;
 
 public class ControladorModificarMProducto {
+	static final String idSucursal = "1";
 	static final String idEmpleado = "1";
 
 	private VentanaModificarMProducto ventanaModificarMProducto;
@@ -73,6 +76,9 @@ public class ControladorModificarMProducto {
 
 		this.ventanaModificarMProducto.getBtnActualizarMasivamente().addActionListener(a -> actualizarMasivamente(a));
 
+		this.ventanaModificarMProducto.getBtnCambiarDescripcionYProveedor()
+				.addActionListener(a -> cambiarDescripcionYProveedor(a));
+
 		// Tabla Productos Modificar
 		this.ventanaModificarMProducto.getTablaProductosModificar().addMouseListener(new MouseAdapter() {
 			@Override
@@ -111,6 +117,21 @@ public class ControladorModificarMProducto {
 		});
 	}
 
+	public void cambiarDescripcionYProveedor(ActionEvent a) {
+		int filaSeleccionada = filaSeleccionadaTablaProducto();
+
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un producto");
+			return;
+		}
+		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
+
+		ControladorDescripcionProveedorMProducto controlador = new ControladorDescripcionProveedorMProducto(
+				productoSeleccionado);
+		controlador.inicializar();
+		controlador.mostrarVentana();
+	}
+
 	public Double precioAumentado(int aumento, double precio) {
 		return aumento * precio / 100;
 	}
@@ -120,6 +141,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarMasivamente(ActionEvent a) {
+
 		int aumentar = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarAumentar().getText());
 		int disminuir = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDisminuir().getText());
 		String tipoPrecioSeleccionado = this.ventanaModificarMProducto.getCbTipoPrecio().getSelectedItem().toString();
@@ -129,24 +151,41 @@ public class ControladorModificarMProducto {
 			return;
 		}
 		for (MaestroProductoDTO productoTablaModificar : maestroProductoEnTablaProductosModificar) {
-			Double precioCosto = productoTablaModificar.getPrecioCosto();
-			Double precioMayorista = productoTablaModificar.getPrecioMayorista();
-			Double precioMinorista = productoTablaModificar.getPrecioMinorista();
-//			{"Mayorista y Minorista","Costo","Mayorista","Minorista"}
 
-			Double precioCostoFinal = precioCosto + precioAumentado(aumentar, precioCosto)
-					- precioDisminuido(disminuir, precioCosto);
-			Double precioMayoristaFinal = precioMayorista + precioAumentado(aumentar, precioMayorista)
-					- precioDisminuido(disminuir, precioMayorista);
-			Double precioMinoristaFinal = precioMinorista + precioAumentado(aumentar, precioMinorista)
-					- precioDisminuido(disminuir, precioMinorista);
+			BigDecimal bdCosto = new BigDecimal(productoTablaModificar.getPrecioCosto()).setScale(2,
+					RoundingMode.HALF_UP);
+			Double precioCosto = bdCosto.doubleValue();
+
+			BigDecimal bdMayorista = new BigDecimal(productoTablaModificar.getPrecioMayorista()).setScale(2,
+					RoundingMode.HALF_UP);
+			Double precioMayorista = bdMayorista.doubleValue();
+
+			BigDecimal bdMinorista = new BigDecimal(productoTablaModificar.getPrecioMinorista()).setScale(2,
+					RoundingMode.HALF_UP);
+			Double precioMinorista = bdMinorista.doubleValue();
+
+			BigDecimal bdCostoFinal = new BigDecimal(
+					precioCosto + precioAumentado(aumentar, precioCosto) - precioDisminuido(disminuir, precioCosto))
+							.setScale(2, RoundingMode.HALF_UP);
+			Double precioCostoFinal = bdCostoFinal.doubleValue();
+
+			BigDecimal bdMayoristaFinal = new BigDecimal(precioMayorista + precioAumentado(aumentar, precioMayorista)
+					- precioDisminuido(disminuir, precioMayorista)).setScale(2, RoundingMode.HALF_UP);
+			Double precioMayoristaFinal = bdMayoristaFinal.doubleValue();
+
+			BigDecimal bdMinoristaFinal = new BigDecimal(precioMinorista + precioAumentado(aumentar, precioMinorista)
+					- precioDisminuido(disminuir, precioMinorista)).setScale(2, RoundingMode.HALF_UP);
+			Double precioMinoristaFinal = bdMinoristaFinal.doubleValue();
+
 			if (precioCostoFinal <= 0 || precioMayoristaFinal <= 0 || precioMinoristaFinal <= 0) {
 				JOptionPane.showMessageDialog(null, "Actualizacion fallida, algunos precios dan negativos");
 				return;
 			}
-			
-			if (precioCostoFinal >= 99999999999.0 || precioMayoristaFinal >= 99999999999.0 || precioMinoristaFinal >= 99999999999.0) {
-				JOptionPane.showMessageDialog(null, "Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999" );
+
+			if (precioCostoFinal >= 99999999999.0 || precioMayoristaFinal >= 99999999999.0
+					|| precioMinoristaFinal >= 99999999999.0) {
+				JOptionPane.showMessageDialog(null,
+						"Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999");
 				return;
 			}
 
@@ -157,7 +196,7 @@ public class ControladorModificarMProducto {
 				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
 				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
 			}
-			
+
 			if (tipoPrecioSeleccionado.equals("Costo")) {
 				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCostoFinal,
 						precioMayorista, precioMinorista);
@@ -165,7 +204,7 @@ public class ControladorModificarMProducto {
 				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
 				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
 			}
-			
+
 			if (tipoPrecioSeleccionado.equals("Mayorista")) {
 				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCosto,
 						precioMayoristaFinal, precioMinorista);
@@ -174,10 +213,12 @@ public class ControladorModificarMProducto {
 				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
 			}
 			if (tipoPrecioSeleccionado.equals("Minorista")) {
+
 				MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(productoTablaModificar, precioCosto,
 						precioMayorista, precioMinoristaFinal);
 
 				this.ingresarProductosMasivosATablaHistorialCambioMProducto(productoTablaModificar, productoNuevo);
+
 				this.actualizacionMasivoTablaMaestroProducto(productoNuevo);
 			}
 		}
@@ -187,6 +228,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizacionMasivoTablaMaestroProducto(MaestroProductoDTO productoNuevo) {
+		System.out.println(productoNuevo.getPrecioMayorista() + "," + productoNuevo.getPrecioMinorista());
 		int idModificar = productoNuevo.getIdMaestroProducto();
 		maestroProducto.update(idModificar, productoNuevo);
 	}
@@ -420,35 +462,36 @@ public class ControladorModificarMProducto {
 			return false;
 		}
 
-		
-		
 		if (noSeModificaronDatos()) {
 			JOptionPane.showMessageDialog(null, "No se a modificado ningun dato");
 			return false;
 		}
-		
-		
-		
-		
-		int puntoRepositorio = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText());
-		int cantidadAReponer = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText());
-		int diasParaReponer = Integer.parseInt(this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText());
-		
-		if(precioCosto > 99999999999.0 || precioMayorista > 99999999999.0 || precioMinorista > 99999999999.0) {
-			JOptionPane.showMessageDialog(null, "Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999" );
+
+		int puntoRepositorio = Integer
+				.parseInt(this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText());
+		int cantidadAReponer = Integer
+				.parseInt(this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText());
+		int diasParaReponer = Integer
+				.parseInt(this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText());
+
+		if (precioCosto > 99999999999.0 || precioMayorista > 99999999999.0 || precioMinorista > 99999999999.0) {
+			JOptionPane.showMessageDialog(null,
+					"Actualizacion fallida, el precio no puede ser mayor a: $99.999.999.999");
 			return false;
 		}
-		if(puntoRepositorio > 99999999) {
-			JOptionPane.showMessageDialog(null, "Actualizacion fallida, punto de reposicion no puede superar 99.999.999" );
+		if (puntoRepositorio > 99999999) {
+			JOptionPane.showMessageDialog(null,
+					"Actualizacion fallida, punto de reposicion no puede superar 99.999.999");
 			return false;
 		}
-		if(cantidadAReponer > 99999999) {
-			JOptionPane.showMessageDialog(null, "Actualizacion fallida, cantidad a reponer no puede superar 99.999.999" );
+		if (cantidadAReponer > 99999999) {
+			JOptionPane.showMessageDialog(null,
+					"Actualizacion fallida, cantidad a reponer no puede superar 99.999.999");
 			return false;
 		}
-		
-		if(diasParaReponer > 99999999) {
-			JOptionPane.showMessageDialog(null, "Actualizacion fallida, dias a reponer no puede superar 99.999.999" );
+
+		if (diasParaReponer > 99999999) {
+			JOptionPane.showMessageDialog(null, "Actualizacion fallida, dias a reponer no puede superar 99.999.999");
 			return false;
 		}
 
@@ -484,24 +527,33 @@ public class ControladorModificarMProducto {
 
 		int filaSeleccionada = this.filaSeleccionadaTablaProductosModificar();
 
-		String precioCostoAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
-		String precioCostoNuevo =""+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText());
+		String precioCostoAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
+		String precioCostoNuevo = ""
+				+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText());
 
-		String precioMayoristaAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMayorista();
-		String precioMayoristaNuevo = ""+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText());
+		String precioMayoristaAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMayorista();
+		String precioMayoristaNuevo = ""
+				+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMayorista().getText());
 
-		String precioMinoristaAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMinorista();
-		String precioMinoristaNuevo = ""+Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText());
+		String precioMinoristaAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioMinorista();
+		String precioMinoristaNuevo = ""
+				+ Double.parseDouble(this.ventanaModificarMProducto.getTxtActualizarPrecioMinorista().getText());
 
-		String PuntoRepositorioAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPuntoRepositorio();
+		String PuntoRepositorioAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPuntoRepositorio();
 		String PuntoRepositorioNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarPuntoRepositorio().getText();
 
-		String CantidadAReponerAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getCantidadAReponer();
+		String CantidadAReponerAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getCantidadAReponer();
 		String CantidadAReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarCantidadAReponer().getText();
 
-		String DiasParaReponerAntiguo = ""+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDiasParaReponer();
+		String DiasParaReponerAntiguo = ""
+				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getDiasParaReponer();
 		String DiasParaReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText();
-		
+
 		if (precioCostoAntiguo.equals(precioCostoNuevo) && precioMayoristaAntiguo.equals(precioMayoristaNuevo)
 				&& precioMinoristaAntiguo.equals(precioMinoristaNuevo)
 				&& PuntoRepositorioAntiguo.equals(PuntoRepositorioNuevo)
@@ -631,14 +683,16 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			BigDecimal precioCost = new BigDecimal(mp.getPrecioCosto());
-			String precioCosto = precioCost+"";
-			
-			BigDecimal precioMayorist = new BigDecimal(mp.getPrecioMayorista());
-			String precioMayorista=precioMayorist+"";
-			
-			BigDecimal precioMinorist = new BigDecimal(mp.getPrecioMinorista());
-			String precioMinorista=precioMinorist+"";
+
+			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
+			Double precioCosto = bdCosto.doubleValue();
+
+			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
+			Double precioMayorista = bdMayorista.doubleValue();
+
+			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
+			Double precioMinorista = bdMinorista.doubleValue();
+
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
@@ -663,16 +717,16 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			
-			BigDecimal precioCost = new BigDecimal(mp.getPrecioCosto());
-			String precioCosto = precioCost+"";
-			
-			BigDecimal precioMayorist = new BigDecimal(mp.getPrecioMayorista());
-			String precioMayorista=precioMayorist+"";
-			
-			BigDecimal precioMinorist = new BigDecimal(mp.getPrecioMinorista());
-			String precioMinorista=precioMinorist+"";
-			
+
+			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
+			Double precioCosto = bdCosto.doubleValue();
+
+			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
+			Double precioMayorista = bdMayorista.doubleValue();
+
+			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
+			Double precioMinorista = bdMinorista.doubleValue();
+
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
