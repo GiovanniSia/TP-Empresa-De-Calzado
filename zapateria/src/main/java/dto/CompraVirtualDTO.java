@@ -24,8 +24,6 @@ public class CompraVirtualDTO {
 	String Localidad;
 	String CodPostal;
 	
-	
-	
 	public CompraVirtualDTO(HashMap<Integer, Integer> compra, int idSucursal, double pago, int idCliente, String nombre,
 			String apellido, String cUIL, String correoElectronico,
 			String tipoCliente, String impuestoAFIP, String calle, String altura, String pais,

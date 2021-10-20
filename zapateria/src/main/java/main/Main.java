@@ -15,7 +15,7 @@ public class Main {
 		Controlador controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
-		
+		/*
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		ClienteDTO cliente = new ClienteDTO(1, "Lolencio", "Apellido", "adadasd", "no", 1000,
 				1000, "Mayorista", "E", "Activo", "calle", "altura",
@@ -43,5 +43,6 @@ public class Main {
 		for(CompraVirtualDTO cvFOR: compras) {
 			System.out.println(cvFOR+ ", "+cvFOR.getNombre()+": "+cvFOR.getCompra().get(1));
 		}
+		*/
 	}
 }
