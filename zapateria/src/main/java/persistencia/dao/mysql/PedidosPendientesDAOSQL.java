@@ -12,7 +12,7 @@ import persistencia.dao.interfaz.PedidosPendientesDAO;
 
 public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 
-	private static final String insert = "INSERT INTO PedidosPendientes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String insert = "INSERT INTO PedidosPendientes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String delete = "DELETE FROM PedidosPendientes WHERE Id=?";
 	private static final String update = "UPDATE PedidosPendientes SET FechaCompleto=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
@@ -38,7 +38,10 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 			statement.setString(11, pedido.getEstado());
 			statement.setInt(12, pedido.getIdSucursal());
 			statement.setString(13, pedido.getFechaEnvioMail());
-			statement.setString(14, pedido.getFechaCompleto());
+			statement.setString(14, pedido.getHoraEnvioMail());
+			statement.setString(15, pedido.getFechaCompleto());
+			statement.setString(16, pedido.getHoraCompleto());
+			statement.setString(17, pedido.getUnidadMedida());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -111,8 +114,10 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		String estado = resultSet.getString("Estado");
 		int idSucursal = resultSet.getInt("IdSucursal");
 		String fechaEnvioMail = resultSet.getString("FechaEnvioMail");
+		String horaEnvio = resultSet.getString("HoraEnvioMail");
 		String fechaCompleto = resultSet.getString("FechaCompleto");
-		
-		return new PedidosPendientesDTO(id,idProveedor,nombreProveedor,idMaestroProducto,nombreMaestroProducto,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSucursal,fechaEnvioMail,fechaCompleto);
+		String horaCompleto = resultSet.getString("HoraCompleto");
+		String unidadMedida = resultSet.getString("UnidadMedida");
+		return new PedidosPendientesDTO(id,idProveedor,nombreProveedor,idMaestroProducto,nombreMaestroProducto,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSucursal,fechaEnvioMail,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 	}
 }

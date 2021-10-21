@@ -365,7 +365,10 @@ CREATE TABLE `PedidosPendientes`
     `Estado` varchar(45) NOT NULL,
     `IdSucursal` int(11) NOT NULL,
     `FechaEnvioMail` Date DEFAULT NULL,
+    `HoraEnvioMail` TIME DEFAULT NULL,
 	`FechaCompleto` Date DEFAULT NULL,
+    `HoraCompleto` TIME DEFAULT NULL,
+    `UnidadMedida` varchar(45) NOT NULL,
     PRIMARY KEY(`Id`)
 );
 
@@ -415,6 +418,18 @@ insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
   `Estado` varchar(45) NOT NULL,
   `CantidadAReponer` int(11) NOT NULL,
   `DiasParaReponer` int(11) NOT NULL,
+  
+  
+  
+  CREATE TABLE `stock`
+(
+  `IdStock` int(11) NOT NULL AUTO_INCREMENT,
+  `IdSucursal` int(11) NOT NULL,
+  `IdProducto` int(11) NOT NULL,
+  `CodigoLote` varchar(45) NOT NULL,
+  `StockDisponible` int(11) NOT NULL,
+  PRIMARY KEY (`IdStock`)
+);
   */
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);

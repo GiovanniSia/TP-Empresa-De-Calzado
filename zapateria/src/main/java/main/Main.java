@@ -28,18 +28,7 @@ public class Main {
 			props.setProperty("mail.smtp.ssl.trust", "*");
 //			props.put("mail.debug", "true");
 			Session session = Session.getDefaultInstance(props);
-			
-			/*
-			 * prop.put("mail.smtp.ssl.trust", "*");
-			 * mail.smtp.starttls.enable=false
-			 *  mail.smtp.starttls.enable
-			Properties properties = new Properties();
-			properties.put("mail.smtp.host", mailAccount.getMailHost());
-			properties.put("mail.smtp.port", mailAccount.getPort());
-			properties.put("mail.smtp.auth", mailAccount.isAuth());
-			properties.put("mail.smtp.starttls.enable",mailAccount.isStartTls());
-			*/
-			
+
 			String correoRemitente = "subelza150@gmail.com";
 			String contrasenia = "";
 			String correoReceptor = "sebastianx3600@gmail.com";

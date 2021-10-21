@@ -78,9 +78,11 @@ public class PedidosPendientes {
 	    String estado = "En espera";
 	    int idSuc = idSucursal;
 	    String fechaEnvio = null;
+	    String horaEnvio = null;
 	    String fechaCompleto = null;
-	    
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,fechaCompleto);
+	    String horaCompleto = null;
+	    String unidadMedida = producto.getUnidadMedida();
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 	    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {

@@ -94,14 +94,13 @@
     		<version>1.5.2</version>
 		</dependency>
 
-<!--
-		 https://mvnrepository.com/artifact/javax.mail/mail 
+		<!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
 		<dependency>
-    		<groupId>javax.mail</groupId>
-    		<artifactId>mail</artifactId>
+    		<groupId>com.toedter</groupId>
+    		<artifactId>jcalendar</artifactId>
     		<version>1.4</version>
-	</dependency>
--->
+		</dependency>
+			
 	</dependencies>
 
 	<build>
