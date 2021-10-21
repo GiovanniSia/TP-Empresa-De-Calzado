@@ -157,7 +157,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Historial de fabricacion");
+		lblNewLabel = new JLabel("Compras virtuales");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));

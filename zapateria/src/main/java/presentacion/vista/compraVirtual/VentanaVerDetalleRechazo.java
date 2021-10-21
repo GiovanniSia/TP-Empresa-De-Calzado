@@ -25,7 +25,6 @@ public class VentanaVerDetalleRechazo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private DefaultTableModel modelOrdenes;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
 	
@@ -62,6 +61,10 @@ public class VentanaVerDetalleRechazo extends JFrame {
 	private JLabel lblLocalidad;
 	private JLabel lblCodPostal;
 	
+	private JScrollPane spCliente;
+	private String[] nombreColumnasTablaPrincipal = { "Cod Producto","Descripcion","Mayorista", "Minorista", "Costo"};
+	private DefaultTableModel modelDeTablaPrincipal;
+	private JTable tabla;
 
 	public VentanaVerDetalleRechazo() {
 		initialize();
@@ -73,13 +76,13 @@ public class VentanaVerDetalleRechazo extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 524, 546);
+		frame.setBounds(100, 100, 524, 651);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 496, 443);
+		panel.setBounds(0, 64, 496, 537);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -88,11 +91,11 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		panel.add(lblEstado);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(10, 250, 476, 148);
+		textPane.setBounds(10, 344, 476, 148);
 		panel.add(textPane);
 		
 		btnSalir = new JButton("Cerrar");
-		btnSalir.setBounds(309, 409, 177, 23);
+		btnSalir.setBounds(309, 503, 177, 23);
 		panel.add(btnSalir);
 		
 		JLabel lblNewLabel_1 = new JLabel("Fecha");
@@ -144,7 +147,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		panel.add(lblNewLabel_6);
 		
 		lblNewLabel_7 = new JLabel("Correo electronico");
-		lblNewLabel_7.setBounds(10, 161, 103, 14);
+		lblNewLabel_7.setBounds(10, 216, 103, 14);
 		panel.add(lblNewLabel_7);
 		
 		lblCuil = new JLabel("New label");
@@ -152,7 +155,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		panel.add(lblCuil);
 		
 		lblCorreo = new JLabel("New label");
-		lblCorreo.setBounds(123, 161, 79, 14);
+		lblCorreo.setBounds(123, 216, 79, 14);
 		panel.add(lblCorreo);
 		
 		lblNewLabel_8 = new JLabel("ImpuestoAFIP");
@@ -218,13 +221,34 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		lblCodPostal = new JLabel("New label");
 		lblCodPostal.setBounds(403, 186, 79, 14);
 		panel.add(lblCodPostal);
+		
+		modelDeTablaPrincipal = new DefaultTableModel(null, nombreColumnasTablaPrincipal){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+            	/*
+                if(columnas == 3) {
+                    return true;
+                }else {*/
+                    return false;
+                //}
+            }
+        };
+		tabla = new JTable(modelDeTablaPrincipal);
+		
+		spCliente = new JScrollPane();
+		spCliente.setBounds(10, 241, 476, 92);
+		
+		spCliente.setViewportView(tabla);
+		panel.add(spCliente);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
 		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Detalle");
+		lblNewLabel = new JLabel("Detalle rechazo");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -250,7 +274,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 	}
 	
 	public DefaultTableModel getModelOrdenes() {
-		return modelOrdenes;
+		return modelDeTablaPrincipal;
 	}
 
 	public JTextPane getTextPane() {
@@ -324,6 +348,8 @@ public class VentanaVerDetalleRechazo extends JFrame {
 	public JLabel getLblCodPostal() {
 		return lblCodPostal;
 	}
-	
-	
+
+	public String[] getNombreColumnasTablaPrincipal() {
+		return nombreColumnasTablaPrincipal;
+	}
 }

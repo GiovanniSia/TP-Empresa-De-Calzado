@@ -17,7 +17,7 @@ public class Main {
 		Controlador controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
-		/*
+		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
@@ -41,6 +41,7 @@ public class Main {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);
+		detalle.put(19, 10);
 		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
@@ -48,15 +49,17 @@ public class Main {
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
-		compras = null;
-		//compras = JsonListaCompraVirtual.getLista();
-		//for(CompraVirtualDTO cvFOR: compras)
-		//	System.out.println(cvFOR+ ", "+cvFOR.getNombre()+": "+cvFOR.getCompra().get(1));
+		
+		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
+				"asd", "", null, 
+				"RI", "", "", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd4);
+		JsonListaCompraVirtual.guardarLista(compras);
+		
 		
 		//ProcesarCompraVirtual.FuncionProcesarCompra();
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		*/
-		
 		
 	}
 }

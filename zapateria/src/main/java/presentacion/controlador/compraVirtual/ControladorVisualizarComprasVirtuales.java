@@ -11,6 +11,7 @@ import dto.ClienteDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.RechazoCompraVirtualDTO;
+import dto.RechazoCompraVirtualDetalleDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
 import modelo.Factura;
@@ -190,7 +191,30 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ventanaRechazo.getLblProvincia().setText(rechazoSeleccionado.getProvincia());
 		ventanaRechazo.getLblSucursal().setText(rechazoSeleccionado.getIdSucursal()+"");
 		ventanaRechazo.getTextPane().setText(rechazoSeleccionado.getMotivo());
+		
+		mostrarDetalleRechazo(rechazoSeleccionado);
 		ventanaRechazo.mostrarVentana();
+	}
+	
+	private void mostrarDetalleRechazo(RechazoCompraVirtualDTO rechazo) {
+		borrarContenidoTablaDetalleRechazo();
+		List<RechazoCompraVirtualDetalleDTO> detalleRechazo = this.modeloRechazoVirtual.readAllDetallesDeUnRechazoCompraVirtual(rechazo.getId());
+		for(RechazoCompraVirtualDetalleDTO rcvd: detalleRechazo) {
+			//{ "Cod Producto","Descripcion","Mayorista", "Minorista", "Costo"};
+			String codProducto = rcvd.getIdProducto()+"";
+			String descripcion = rcvd.getNombreProducto();
+			String mayorista = rcvd.getPrecioMayorista()+"";
+			String minorista = rcvd.getPrecioMinorista()+"";
+			String costo = rcvd.getPrecioCosto()+"";
+			Object[] agregar = {codProducto, descripcion, mayorista, minorista, costo};
+			ventanaRechazo.getModelOrdenes().addRow(agregar);
+		}
+	}
+
+	private void borrarContenidoTablaDetalleRechazo() {
+		ventanaRechazo.getModelOrdenes().setRowCount(0);
+		ventanaRechazo.getModelOrdenes().setColumnCount(0);
+		ventanaRechazo.getModelOrdenes().setColumnIdentifiers(ventanaRechazo.getNombreColumnasTablaPrincipal());
 	}
 	
 	@Override

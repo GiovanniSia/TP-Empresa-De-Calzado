@@ -110,6 +110,9 @@ public class ProcesarCompraVirtual {
 	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
 		String ret = "";
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
+			if(!esPagoValido(compraVirtual.getPago())) {
+				ret = ret + ";El pago no es valido";
+			} else
 			if(!esPagoSuficiente(compraVirtual)) {
 				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
 			}

@@ -82,20 +82,21 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			statement.setString(3, fecha);
 			statement.setInt(4, compra.getIdSucursal());
 			statement.setDouble(5, compra.getPago());
-			statement.setString(6, compra.getNombre());
-			statement.setString(7, compra.getApellido());
-			statement.setString(8, compra.getCUIL());
-			statement.setString(9, compra.getCorreoElectronico());
+			
+			statement.setString(6, seguroNoNull(compra.getNombre()));
+			statement.setString(7, seguroNoNull(compra.getApellido()));
+			statement.setString(8, seguroNoNull(compra.getCUIL()));
+			statement.setString(9, seguroNoNull(compra.getCorreoElectronico()));
 			//statement.setString(10, compra.getTipoCliente());
-			statement.setString(10, compra.getImpuestoAFIP());
-			statement.setString(11, compra.getEstado());
-			statement.setString(12, compra.getCalle());
-			statement.setString(13, compra.getAltura());
-			statement.setString(14, compra.getPais());
-			statement.setString(15, compra.getProvincia());
-			statement.setString(16, compra.getLocalidad());
-			statement.setString(17, compra.getCodPostal());
-			statement.setString(18, motivo);
+			statement.setString(10, seguroNoNull(compra.getImpuestoAFIP()));
+			statement.setString(11, seguroNoNull(compra.getEstado()));
+			statement.setString(12, seguroNoNull(compra.getCalle()));
+			statement.setString(13, seguroNoNull(compra.getAltura()));
+			statement.setString(14, seguroNoNull(compra.getPais()));
+			statement.setString(15, seguroNoNull(compra.getProvincia()));
+			statement.setString(16, seguroNoNull(compra.getLocalidad()));
+			statement.setString(17, seguroNoNull(compra.getCodPostal()));
+			statement.setString(18, seguroNoNull(motivo));
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -110,6 +111,12 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			}
 		}
 		return isInsertExitoso;
+	}
+	
+	private String seguroNoNull(String verificar) {
+		if(verificar == null)
+			return "[Dato nulo]";
+		return verificar;
 	}
 	
 	private static final String insertDetalleRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtualDetalle VALUES(?,?,?,?,?,?,?,?)";
