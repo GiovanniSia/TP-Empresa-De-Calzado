@@ -142,6 +142,12 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarMasivamente(ActionEvent a) {
+		
+		if(maestroProductoEnTablaProductosModificar.size() ==0) {
+			JOptionPane.showMessageDialog(null, "No hay productos para modificar ");
+			return;
+		}
+		
 		String aumentarString = this.ventanaModificarMProducto.getTxtActualizarAumentar().getText();
 
 		int aumentar = 0;
@@ -158,7 +164,7 @@ public class ControladorModificarMProducto {
 
 		String tipoPrecioSeleccionado = this.ventanaModificarMProducto.getCbTipoPrecio().getSelectedItem().toString();
 
-		if (aumentar == 0 && disminuir == 0) {
+		if (aumentar == disminuir) {
 			JOptionPane.showMessageDialog(null, "Sin cambios");
 			return;
 		}
