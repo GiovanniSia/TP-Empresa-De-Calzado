@@ -115,7 +115,7 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 		return isInsertExitoso;
 	}
 	
-	private static final String insertDetalleRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtualDetalle VALUES(?,?,?,?,?,?,?)";
+	private static final String insertDetalleRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtualDetalle VALUES(?,?,?,?,?,?,?,?)";
 	public boolean insertDetalleRechazoCompraVirtual(RechazoCompraVirtualDetalleDTO detalle) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -129,7 +129,7 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			statement.setDouble(5, detalle.getPrecioMayorista());
 			statement.setDouble(6, detalle.getPrecioMinorista());
 			statement.setDouble(7, detalle.getPrecioCosto());
-
+			statement.setInt(8, detalle.getCantidad());
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
@@ -172,8 +172,9 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 		double PrecioMayorista = resultSet.getDouble("PrecioMayorista");
 		double PrecioMinorista = resultSet.getDouble("PrecioMinorista");
 		double PrecioCosto = resultSet.getDouble("PrecioCosto");
+		int Cantidad = resultSet.getInt("Cantidad");
 		return new RechazoCompraVirtualDetalleDTO(Id,IdRechazoCompraVirtual,IdProducto,NombreProducto,
-				PrecioMayorista,PrecioMinorista,PrecioCosto);
+				PrecioMayorista,PrecioMinorista,PrecioCosto,Cantidad);
 	}
 
 }

@@ -9,8 +9,9 @@ public class RechazoCompraVirtualDetalleDTO {
 	double PrecioMayorista;
 	double PrecioMinorista;
 	double PrecioCosto;
+	int Cantidad;
 	public RechazoCompraVirtualDetalleDTO(int id, int idRechazoCompraVirtual, int idProducto, String nombreProducto,
-			double precioMayorista, double precioMinorista, double precioCosto) {
+			double precioMayorista, double precioMinorista, double precioCosto, int Cantidad) {
 		super();
 		Id = id;
 		IdRechazoCompraVirtual = idRechazoCompraVirtual;
@@ -19,6 +20,7 @@ public class RechazoCompraVirtualDetalleDTO {
 		PrecioMayorista = precioMayorista;
 		PrecioMinorista = precioMinorista;
 		PrecioCosto = precioCosto;
+		this.Cantidad = Cantidad;
 	}
 	public int getId() {
 		return Id;
@@ -62,5 +64,13 @@ public class RechazoCompraVirtualDetalleDTO {
 	public void setPrecioCosto(double precioCosto) {
 		PrecioCosto = precioCosto;
 	}
+	public int getCantidad() {
+		return Cantidad;
+	}
+	public void setCantidad(int cantidad) {
+		Cantidad = cantidad;
+	}
+	
+	
 
 }

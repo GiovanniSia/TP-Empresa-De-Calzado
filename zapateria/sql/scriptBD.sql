@@ -384,6 +384,7 @@ CREATE TABLE `RechazoCompraVirtualDetalle`
   `PrecioMayorista` double(45,2) NOT NULL,
   `PrecioMinorista` double(45,2) NOT NULL,
   `PrecioCosto` double(45,2) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 

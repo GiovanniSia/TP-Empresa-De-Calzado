@@ -84,7 +84,7 @@ public class ProcesarCompraVirtual {
 				precioCosto = producto.getPrecioCosto();
 			}
 			RechazoCompraVirtualDetalleDTO detalleInsertar = new RechazoCompraVirtualDetalleDTO(0, idRechazo, idProducto, 
-					nombreProducto, precioMayorista, precioMinorista, precioCosto);
+					nombreProducto, precioMayorista, precioMinorista, precioCosto, compraVirtual.getCompra().get(idProducto));
 			modeloRechazo.insertDetalleRechazoCompraVirtual(detalleInsertar);
 		}
 		
