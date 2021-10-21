@@ -17,7 +17,7 @@ public class Main {
 		Controlador controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
-		
+		/*
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
@@ -55,7 +55,7 @@ public class Main {
 		
 		//ProcesarCompraVirtual.FuncionProcesarCompra();
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		
+		*/
 		
 		
 	}
