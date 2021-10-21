@@ -8,10 +8,12 @@ import javax.swing.UIManager;
 import dto.ClienteDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
+import dto.RechazoCompraVirtualDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
 import modelo.Factura;
 import modelo.Ingresos;
+import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.compraVirtual.VentanaVerComprasVirtuales;
 
@@ -26,9 +28,12 @@ public class ControladorVisualizarComprasVirtuales {
 	Ingresos modeloIngresos;
 	Cliente modeloCliente;
 	
+	RechazoCompraVirtual modeloRechazoVirtual;
 	List<IngresosDTO> ingresosEnLista;
+	List<RechazoCompraVirtualDTO> rechazosEnLista;
 	
 	public ControladorVisualizarComprasVirtuales() {
+		modeloRechazoVirtual = new RechazoCompraVirtual(new DAOSQLFactory());
 		modeloFactura = new Factura(new DAOSQLFactory());
 		modeloDetalleFactura = new DetalleFactura(new DAOSQLFactory());
 		modeloIngresos = new Ingresos(new DAOSQLFactory());
@@ -49,10 +54,10 @@ public class ControladorVisualizarComprasVirtuales {
 	public void refrescarTabla() {
 		vaciarTablaPrincipal();
 		ingresosEnLista = recuperarComprasVirtuales();
-		
 		llenarTablaConIngresos(ingresosEnLista);
 		
-		llenarTablaConRechazos();
+		rechazosEnLista = recuperarRechazos();
+		llenarTablaConRechazos(rechazosEnLista);
 	}
 
 	private void vaciarTablaPrincipal() {
@@ -104,9 +109,37 @@ public class ControladorVisualizarComprasVirtuales {
 		return null;
 	}
 	
-	private void llenarTablaConRechazos() {
+	private void llenarTablaConRechazos(List<RechazoCompraVirtualDTO> rechazos) {
 		// TODO Auto-generated method stub
 		//stringQueIndicaQueUnDatoEstaVacio
+		for(RechazoCompraVirtualDTO re: rechazos) {
+			String idRechazo = re.getId()+"";
+			String idSucursal = re.getIdSucursal()+"";
+			
+			String cuil = "";
+			if(re.getCUIL().equals("")) {
+				cuil = stringQueIndicaQueUnDatoEstaVacio;
+			}else {
+				cuil = re.getIdSucursal()+"";
+			}
+			
+			String nombre = "";
+			if(re.getNombre().equals("")) {
+				nombre = stringQueIndicaQueUnDatoEstaVacio;
+			}else {
+				nombre = re.getIdSucursal()+"";
+			}
+			String fecha = re.getFecha();
+			String hora = re.getHora();
+			Object[] agregar = {idRechazo, idSucursal, cuil, nombre, fecha, hora};
+			ventanaPrincipal.getModelDeTablaPrincipal().addRow(agregar);
+		}
+		
+	}
+	
+	private List<RechazoCompraVirtualDTO> recuperarRechazos(){
+		List<RechazoCompraVirtualDTO> todosRechazos = modeloRechazoVirtual.readAllRechazosComprasVirtuales();
+		return todosRechazos;
 	}
 	
 	public static void main(String[] args) {
