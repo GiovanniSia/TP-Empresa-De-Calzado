@@ -1,5 +1,7 @@
 package presentacion.controlador.compraVirtual;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +17,10 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.reportes.ReporteFactura;
 import presentacion.vista.compraVirtual.VentanaVerComprasVirtuales;
 
-public class ControladorVisualizarComprasVirtuales {
+public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	private final static String  stringQueIndicaQueUnDatoEstaVacio = "[dato inexistente]"; 
 	
@@ -44,6 +47,7 @@ public class ControladorVisualizarComprasVirtuales {
 			System.out.println("Error setting native LAF: " + e);
 		}
 		ventanaPrincipal = new VentanaVerComprasVirtuales();
+		ventanaPrincipal.getBtnVerDescripcion().addActionListener(r->botonVerDescripcion(r));
 	}
 	
 	public void inicializar() {
@@ -140,6 +144,28 @@ public class ControladorVisualizarComprasVirtuales {
 	private List<RechazoCompraVirtualDTO> recuperarRechazos(){
 		List<RechazoCompraVirtualDTO> todosRechazos = modeloRechazoVirtual.readAllRechazosComprasVirtuales();
 		return todosRechazos;
+	}
+	
+	private void botonVerDescripcion(ActionEvent a) {
+		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return;
+		}
+		if(ingresosEnLista.size() > filasSeleccionadas[0]) {
+			//Seleccion un ingreso
+			mostrarFactura(ingresosEnLista.get(filasSeleccionadas[0]).getNroFactura());
+		}
+	}
+	
+	private void mostrarFactura(String nroFacturaCompleto) {
+		ReporteFactura factura = new ReporteFactura(nroFacturaCompleto);
+		factura.mostrar();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public static void main(String[] args) {
