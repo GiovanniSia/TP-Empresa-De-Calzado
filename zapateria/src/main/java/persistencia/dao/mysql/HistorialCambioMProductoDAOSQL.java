@@ -170,21 +170,21 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		String DiasParaReponerAntiguo = resultSet.getString("DiasParaReponerAntiguo");
 		String DiasParaReponerNuevo = resultSet.getString("DiasParaReponerNuevo");
 
-		return new HistorialCambioMProductoDTO(idHistorialCambioProducto, idSucursal, idEmpleado, idMaestroProducto, fecha,
-				precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+		return new HistorialCambioMProductoDTO(idHistorialCambioProducto, idSucursal, idEmpleado, idMaestroProducto,
+				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
 				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioNuevo,
 				CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo, DiasParaReponerNuevo);
 	}
 
-	public List<HistorialCambioMProductoDTO> getHistorialCambioMProductoAproximado(String nombreColumna1,
-			String txtAprox1, String nombreColumna2, String txtAprox2) {
+	public List<HistorialCambioMProductoDTO> getFiltroHistorialCambioMProducto(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM historialCambioMProducto WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
-		if (nombreColumna2 != null && txtAprox2 != null) {
-			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
-		}
+		String sel = "SELECT * FROM historialcambiomproducto WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + " AND " + nombreColumna3 + " LIKE '%"
+				+ txtAprox3 + "%'" + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
 
 		ArrayList<HistorialCambioMProductoDTO> historialCambioMProducto = new ArrayList<HistorialCambioMProductoDTO>();
 		Conexion conexion = Conexion.getConexion();

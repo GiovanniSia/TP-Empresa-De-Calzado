@@ -15,8 +15,7 @@ public class ControladorHistorialCambioMProducto {
 	private HistorialCambioMProducto historialCambioMProducto;
 	private List<HistorialCambioMProductoDTO> historialCambioMproductoEnTabla;
 	private ControladorModificarMProducto controladorModificarMProducto;
-	
-	
+
 	public ControladorHistorialCambioMProducto(HistorialCambioMProducto historialCambioMProducto) {
 		this.ventanaHistorialCambioProducto = new VentanaHistorialCambioMProducto();
 		this.historialCambioMProducto = historialCambioMProducto;
@@ -36,30 +35,47 @@ public class ControladorHistorialCambioMProducto {
 		this.ventanaHistorialCambioProducto.getTxtFiltroCodEmpleado().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				historialCambioMproductoEnTabla = historialCambioMProducto.getHistorialCambioMProductoAproximado(
-						"IdEmpleado", ventanaHistorialCambioProducto.getTxtFiltroCodEmpleado().getText(), null, null);
-				llenarTabla(historialCambioMproductoEnTabla);
+				realizarBusqueda();
+			}
+		});
+
+		this.ventanaHistorialCambioProducto.getTxtFiltroCodSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaHistorialCambioProducto.getTxtFiltroCodProducto().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				historialCambioMproductoEnTabla = historialCambioMProducto.getHistorialCambioMProductoAproximado(
-						"IdMaestroProducto", ventanaHistorialCambioProducto.getTxtFiltroCodProducto().getText(), null,
-						null);
-				llenarTabla(historialCambioMproductoEnTabla);
+				realizarBusqueda();
 			}
 		});
 
 		this.ventanaHistorialCambioProducto.getTxtFiltroFecha().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				historialCambioMproductoEnTabla = historialCambioMProducto.getHistorialCambioMProductoAproximado(
-						"Fecha", ventanaHistorialCambioProducto.getTxtFiltroFecha().getText(), null, null);
-				llenarTabla(historialCambioMproductoEnTabla);
+				realizarBusqueda();
 			}
 		});
+	}
+
+	public void realizarBusqueda() {
+		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().setRowCount(0);
+		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().setColumnCount(0);
+		this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto()
+				.setColumnIdentifiers(this.ventanaHistorialCambioProducto.getNombreColumnas());
+
+		String txtCodEmpleado = this.ventanaHistorialCambioProducto.getTxtFiltroCodEmpleado().getText();
+		String txtCodSucursal = this.ventanaHistorialCambioProducto.getTxtFiltroCodSucursal().getText();
+		String txtCodProducto = this.ventanaHistorialCambioProducto.getTxtFiltroCodProducto().getText();
+		String txtFecha = this.ventanaHistorialCambioProducto.getTxtFiltroFecha().getText();
+		List<HistorialCambioMProductoDTO> ProductosAproximados = this.historialCambioMProducto
+				.getFiltroHistorialCambioMProducto("IdEmpleado", txtCodEmpleado, "IdSucursal", txtCodSucursal,
+						"IdMaestroProducto", txtCodProducto, "Fecha", txtFecha);
+		llenarTabla(ProductosAproximados);
+		this.historialCambioMproductoEnTabla = ProductosAproximados;
 	}
 
 	public void volverAModificarProducto(ActionEvent e) {
@@ -115,11 +131,4 @@ public class ControladorHistorialCambioMProducto {
 			this.ventanaHistorialCambioProducto.getModelhistorialCambioMProducto().addRow(fila);
 		}
 	}
-
-//	public static void main(String[] args) {
-//		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
-//		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
-//	}
 }
