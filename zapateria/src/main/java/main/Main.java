@@ -53,8 +53,8 @@ public class Main {
 		//for(CompraVirtualDTO cvFOR: compras)
 		//	System.out.println(cvFOR+ ", "+cvFOR.getNombre()+": "+cvFOR.getCompra().get(1));
 		
-		ProcesarCompraVirtual.RutinaProcesarCompra();
-		
+		//ProcesarCompraVirtual.FuncionProcesarCompra();
+		ProcesarCompraVirtual.RutinaProcesarCompra(1);
 		
 		
 		

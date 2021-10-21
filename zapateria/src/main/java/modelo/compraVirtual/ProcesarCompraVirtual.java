@@ -3,6 +3,8 @@ package modelo.compraVirtual;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +40,20 @@ public class ProcesarCompraVirtual {
 	
 	private static int porcentajeTolerancia = 1;
 	
-	public static void RutinaProcesarCompra() {
+	public static void RutinaProcesarCompra(int minutos) {
+		long tiempo = minutos*60*1000;
+		Timer timer = new Timer();
+		TimerTask tarea = new TimerTask() {
+			@Override
+			public void run() {
+				FuncionProcesarCompra();
+			}
+		};
+		timer.scheduleAtFixedRate(tarea, 0, tiempo);
+		
+	}
+	
+	public static void FuncionProcesarCompra() {
 		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
 		if(listaCompraProcesar == null) {
 			return;
