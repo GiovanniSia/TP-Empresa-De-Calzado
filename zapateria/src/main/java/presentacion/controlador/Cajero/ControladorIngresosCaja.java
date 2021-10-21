@@ -27,6 +27,18 @@ public class ControladorIngresosCaja {
 	
 	Controlador controlador;
 
+	public static void main(String[] args) {
+		ControladorIngresosCaja c = new ControladorIngresosCaja();
+		c.inicializar();
+		c.mostrarVentana();
+	}
+	
+	public ControladorIngresosCaja() {
+		this.caja = new Caja(new DAOSQLFactory());
+		this.ventanaIngresosCaja = new VentanaIngresosCaja();
+	}
+	
+	
 	public ControladorIngresosCaja(Controlador controlador, Caja caja) {
 		this.ventanaIngresosCaja = new VentanaIngresosCaja();
 		this.caja = caja;
@@ -141,7 +153,10 @@ public class ControladorIngresosCaja {
 			JOptionPane.showMessageDialog(null, "El campo no puede ser cero");
 			return;
 		}
-		
+		if(Integer.parseInt(obtenerSaldoActual())>=1000000000){
+			JOptionPane.showMessageDialog(null, "Recarga invalida, se supero el limite. Limite: 1.000.000.000");
+			return;
+		}	
 		ingresarRecarga();
 		this.ventanaIngresosCaja.cerrar();
 		this.controlador.inicializar();
@@ -195,12 +210,5 @@ public class ControladorIngresosCaja {
 
 	public void mostrarVentana() {
 		this.ventanaIngresosCaja.show();
-	}
-
-	public static void main(String[] args) {
-//		Caja modelo = new Caja(new DAOSQLFactory());
-//		ControladorIngresosCaja controlador = new ControladorIngresosCaja(modelo);
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
 	}
 }
