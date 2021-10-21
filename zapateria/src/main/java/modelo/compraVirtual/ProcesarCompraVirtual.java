@@ -11,12 +11,11 @@ import javax.swing.JOptionPane;
 import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
-import dto.DetalleCarritoDTO;
 import dto.DetalleFacturaDTO;
-import dto.EmpleadoDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
+import dto.RechazoCompraVirtualDetalleDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
@@ -35,6 +34,8 @@ public class ProcesarCompraVirtual {
 	private static String nombreCajeroVirtual = "compraVirtual";
 	private static String nombreVendedorVirtual = "compraVirtual";
 	
+	private static String nombreParaProductoQueNoEstaEnLaBaseDeDatos = "[Hiperlink error]";
+	
 	private static int porcentajeTolerancia = 1;
 	
 	public static void RutinaProcesarCompra() {
@@ -51,7 +52,7 @@ public class ProcesarCompraVirtual {
 			if(reporteDeDatosNoValidoParaComprar(mensajeReporte)) {
 				//No se compra
 				//System.out.println(mensajeReporte);
-				registrarRechazo(compraVirtual);
+				registrarRechazo(compraVirtual,mensajeReporte);
 			}else {
 				//Se compra
 				registrarCompraVirtual(compraVirtual);	//GENERA Y MUESTRA LAS FACTURAS
@@ -59,8 +60,33 @@ public class ProcesarCompraVirtual {
 		}
 	}
 
-	private static void registrarRechazo(CompraVirtualDTO compraVirtual) {
-		
+	private static void registrarRechazo(CompraVirtualDTO compraVirtual,String motivoRechazo) {
+		RechazoCompraVirtual modeloRechazo = new RechazoCompraVirtual(new DAOSQLFactory());
+		/*
+		RechazoCompraVirtualDTO rechazo = new RechazoCompraVirtualDTO(0, "", "", compraVirtual.getIdSucursal(),compraVirtual.getPago(),
+				compraVirtual.getNombre(), compraVirtual.getApellido(), compraVirtual.getCUIL(), compraVirtual.getCorreoElectronico(), 
+				compraVirtual.getTipoCliente(), compraVirtual.getImpuestoAFIP(), compraVirtual.getEstado(), compraVirtual.getCalle(),
+				compraVirtual.getAltura(), compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), 
+				compraVirtual.getCodPostal(), motivoRechazo);
+				*/
+		modeloRechazo.insertRechazoCompraVirtualDAOSQL(compraVirtual, motivoRechazo);
+		int idRechazo = modeloRechazo.readAllRechazosComprasVirtuales().size();
+		for(int idProducto: compraVirtual.getCompra().keySet()) {
+			MaestroProductoDTO producto = getProducto(idProducto);
+			String nombreProducto = nombreParaProductoQueNoEstaEnLaBaseDeDatos;
+			double precioMayorista = 0;
+			double precioMinorista = 0;
+			double precioCosto = 0;
+			if(producto != null) {
+				nombreProducto = producto.getDescripcion()+producto.getTalle();
+				precioMayorista = producto.getPrecioMayorista();
+				precioMinorista = producto.getPrecioMinorista();
+				precioCosto = producto.getPrecioCosto();
+			}
+			RechazoCompraVirtualDetalleDTO detalleInsertar = new RechazoCompraVirtualDetalleDTO(0, idRechazo, idProducto, 
+					nombreProducto, precioMayorista, precioMinorista, precioCosto);
+			modeloRechazo.insertDetalleRechazoCompraVirtual(detalleInsertar);
+		}
 		
 	}
 
