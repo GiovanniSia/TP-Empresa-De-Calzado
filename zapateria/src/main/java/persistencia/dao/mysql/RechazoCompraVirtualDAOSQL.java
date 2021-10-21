@@ -12,6 +12,7 @@ import java.util.List;
 import dto.CajaDTO;
 import dto.CompraVirtualDTO;
 import dto.RechazoCompraVirtualDTO;
+import dto.RechazoCompraVirtualDetalleDTO;
 import dto.StockDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.RechazoCompraVirtualDAO;
@@ -112,6 +113,67 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			}
 		}
 		return isInsertExitoso;
+	}
+	
+	private static final String insertDetalleRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtualDetalle VALUES(?,?,?,?,?,?,?)";
+	public boolean insertDetalleRechazoCompraVirtual(RechazoCompraVirtualDetalleDTO detalle) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try {
+			statement = conexion.prepareStatement(insertDetalleRechazoCompraVirtual);
+			statement.setInt(1, 0);
+			statement.setInt(2, detalle.getIdRechazoCompraVirtual());
+			statement.setInt(3, detalle.getIdProducto());
+			statement.setString(4, detalle.getNombreProducto());
+			statement.setDouble(5, detalle.getPrecioMayorista());
+			statement.setDouble(6, detalle.getPrecioMinorista());
+			statement.setDouble(7, detalle.getPrecioCosto());
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
+	
+	private static final String readAllDetalle = "SELECT * FROM RechazoCompraVirtualDetalle WHERE IdRechazoCompraVirtual = ?;";
+	public List<RechazoCompraVirtualDetalleDTO> readAllDetallesDeUnRechazoCompraVirtual(int IdRechazoCompraVirtual) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<RechazoCompraVirtualDetalleDTO> rechazos = new ArrayList<RechazoCompraVirtualDetalleDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllDetalle);
+			statement.setInt(1, IdRechazoCompraVirtual);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				rechazos.add(getDetalleRechazoCompraVirtualDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rechazos;
+	}
+	
+	private RechazoCompraVirtualDetalleDTO getDetalleRechazoCompraVirtualDTO(ResultSet resultSet) throws SQLException {
+		int Id = resultSet.getInt("Id");
+		int IdRechazoCompraVirtual = resultSet.getInt("IdRechazoCompraVirtual");
+		int IdProducto = resultSet.getInt("IdProducto");
+		String NombreProducto = resultSet.getString("NombreProducto");
+		double PrecioMayorista = resultSet.getDouble("PrecioMayorista");
+		double PrecioMinorista = resultSet.getDouble("PrecioMinorista");
+		double PrecioCosto = resultSet.getDouble("PrecioCosto");
+		return new RechazoCompraVirtualDetalleDTO(Id,IdRechazoCompraVirtual,IdProducto,NombreProducto,
+				PrecioMayorista,PrecioMinorista,PrecioCosto);
 	}
 
 }

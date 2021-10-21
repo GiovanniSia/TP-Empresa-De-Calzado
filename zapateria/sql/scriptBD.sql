@@ -383,6 +383,7 @@ CREATE TABLE `RechazoCompraVirtualDetalle`
   `NombreProducto` varchar(45) NOT NULL,
   `PrecioMayorista` double(45,2) NOT NULL,
   `PrecioMinorista` double(45,2) NOT NULL,
+  `PrecioCosto` double(45,2) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 
