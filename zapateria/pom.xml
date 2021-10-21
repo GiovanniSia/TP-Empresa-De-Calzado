@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ar.edu.ungs</groupId>
-	<artifactId>agenda</artifactId>
+	<artifactId>zapateria</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Agenda App</name>
+	<name>Zapateria App</name>
 	<description>Aplicacion desktop</description>
 
 
@@ -86,6 +86,22 @@
 			<version>1.2.0</version>
 		</dependency>
 
+
+
+		<dependency>
+    		<groupId>com.sun.mail</groupId>
+    		<artifactId>javax.mail</artifactId>
+    		<version>1.5.2</version>
+		</dependency>
+
+<!--
+		 https://mvnrepository.com/artifact/javax.mail/mail 
+		<dependency>
+    		<groupId>javax.mail</groupId>
+    		<artifactId>mail</artifactId>
+    		<version>1.4</version>
+	</dependency>
+-->
 	</dependencies>
 
 	<build>
