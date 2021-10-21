@@ -113,12 +113,14 @@ public class ProcesarCompraVirtual {
 		if(!esMailValido(compraVirtual.getCorreoElectronico())) {
 			ret = ret + ";El CorreoElectronico no es valido";
 		}
+		/*
 		if(!esTipoClienteValido(compraVirtual.getTipoCliente())) {
 			ret = ret + ";El TipoCliente no es valido";
 		}
 		if(!esDatoStringValido(compraVirtual.getTipoCliente())) {
 			ret = ret + ";El TipoCliente no es valido";
 		}
+		*/
 		if(!esAfipValido(compraVirtual.getImpuestoAFIP())) {
 			ret = ret + ";El tipo de afip no es valido";
 		}
@@ -170,7 +172,10 @@ public class ProcesarCompraVirtual {
 			//darDeAltaCliente();
 			Cliente modeloCliente = new Cliente(new DAOSQLFactory());
 			modeloCliente.insert(new ClienteDTO(0, compraVirtual.getNombre(), compraVirtual.getApellido(),compraVirtual.getCUIL(), compraVirtual.getCorreoElectronico(), 0,
-			0, compraVirtual.getTipoCliente(), compraVirtual.getImpuestoAFIP(), "Activo", compraVirtual.getCalle(), compraVirtual.getAltura(),
+			0,
+			//compraVirtual.getTipoCliente(),
+			"Minorista",
+			compraVirtual.getImpuestoAFIP(), "Activo", compraVirtual.getCalle(), compraVirtual.getAltura(),
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		
 			if(!esPagoSuficiente(compraVirtual)) {
@@ -214,7 +219,7 @@ public class ProcesarCompraVirtual {
 		ret = ret && (afip.equals("RI") || afip.equals("E") || afip.equals("CF"));
 		return ret;
 	}
-	
+	/*
 	private static boolean esTipoClienteValido(String tipoCliente) {
 		boolean ret = true;
 		if(tipoCliente == null) {
@@ -222,7 +227,7 @@ public class ProcesarCompraVirtual {
 		}
 		ret = ret && (tipoCliente.equals("Mayorista") || tipoCliente.equals("Minorista"));
 		return ret;
-	}
+	}*/
 	
 	private static boolean esDatoStringValido(String dato) {
 		boolean ret = true;

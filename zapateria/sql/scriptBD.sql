@@ -361,8 +361,8 @@ CREATE TABLE `RechazoCompraVirtual`
   `Nombre` varchar(45) NOT NULL,
   `Apellido` varchar(45) NOT NULL,
   `CUIL` varchar(45) NOT NULL,
-	`CorreoElectronico` varchar(45) NOT NULL,
-	`TipoCliente` varchar(45) NOT NULL,
+	`CorreoElectronico` varchar(45) NOT NULL,/*
+	`TipoCliente` varchar(45) NOT NULL,*/
 	`ImpuestoAFIP` varchar(45) NOT NULL,
 	`Estado` varchar(45) NOT NULL,
 	`Calle` varchar(45) NOT NULL,

@@ -11,7 +11,7 @@ public class RechazoCompraVirtualDTO {
 	String Apellido;
 	String CUIL;
 	String CorreoElectronico;
-	String TipoCliente;
+	//String TipoCliente;
 	String ImpuestoAFIP;
 	String Estado;
 	String Calle;
@@ -21,7 +21,9 @@ public class RechazoCompraVirtualDTO {
 	String Localidad;
 	String CodPostal;String motivo;
 	public RechazoCompraVirtualDTO(int id, String hora, String fecha, int idSucursal, double pago, String nombre,
-			String apellido, String cUIL, String correoElectronico, String tipoCliente, String impuestoAFIP,
+			String apellido, String cUIL, String correoElectronico, 
+			//String tipoCliente,
+			String impuestoAFIP,
 			String estado, String calle, String altura, String pais, String provincia, String localidad,
 			String codPostal, String motivo) {
 		super();
@@ -34,7 +36,7 @@ public class RechazoCompraVirtualDTO {
 		Apellido = apellido;
 		CUIL = cUIL;
 		CorreoElectronico = correoElectronico;
-		TipoCliente = tipoCliente;
+		//TipoCliente = tipoCliente;
 		ImpuestoAFIP = impuestoAFIP;
 		Estado = estado;
 		Calle = calle;
@@ -99,12 +101,14 @@ public class RechazoCompraVirtualDTO {
 	public void setCorreoElectronico(String correoElectronico) {
 		CorreoElectronico = correoElectronico;
 	}
+	/*
 	public String getTipoCliente() {
 		return TipoCliente;
 	}
 	public void setTipoCliente(String tipoCliente) {
 		TipoCliente = tipoCliente;
 	}
+	*/
 	public String getImpuestoAFIP() {
 		return ImpuestoAFIP;
 	}

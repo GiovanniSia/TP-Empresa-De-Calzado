@@ -14,7 +14,7 @@ public class CompraVirtualDTO {
 	String Apellido;
 	String CUIL;
 	String CorreoElectronico;
-	String TipoCliente;
+	//String TipoCliente;
 	String ImpuestoAFIP;
 	String Estado;
 	String Calle;
@@ -26,7 +26,8 @@ public class CompraVirtualDTO {
 	
 	public CompraVirtualDTO(HashMap<Integer, Integer> compra, int idSucursal, double pago, int idCliente, String nombre,
 			String apellido, String cUIL, String correoElectronico,
-			String tipoCliente, String impuestoAFIP, String calle, String altura, String pais,
+			//String tipoCliente,
+			String impuestoAFIP, String calle, String altura, String pais,
 			String provincia, String localidad, String codPostal) {
 		super();
 		this.compra = compra;
@@ -37,7 +38,7 @@ public class CompraVirtualDTO {
 		Apellido = apellido;
 		CUIL = cUIL;
 		CorreoElectronico = correoElectronico;
-		TipoCliente = tipoCliente;
+		//TipoCliente = tipoCliente;
 		ImpuestoAFIP = impuestoAFIP;
 		Estado = "Activo";
 		Calle = calle;
@@ -128,7 +129,7 @@ public class CompraVirtualDTO {
 	public void setCorreoElectronico(String correoElectronico) {
 		CorreoElectronico = correoElectronico;
 	}
-
+/*
 	public String getTipoCliente() {
 		return TipoCliente;
 	}
@@ -136,7 +137,7 @@ public class CompraVirtualDTO {
 	public void setTipoCliente(String tipoCliente) {
 		TipoCliente = tipoCliente;
 	}
-
+*/
 	public String getImpuestoAFIP() {
 		return ImpuestoAFIP;
 	}

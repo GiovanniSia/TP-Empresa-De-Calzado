@@ -47,7 +47,7 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 		String Apellido = resultSet.getString("Apellido");
 		String CUIL = resultSet.getString("CUIL");
 		String CorreoElectronico = resultSet.getString("CorreoElectronico");
-		String TipoCliente = resultSet.getString("TipoCliente");
+		//String TipoCliente = resultSet.getString("TipoCliente");
 		String ImpuestoAFIP = resultSet.getString("ImpuestoAFIP");
 		String Estado = resultSet.getString("Estado");
 		String Calle = resultSet.getString("Calle");
@@ -57,15 +57,12 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 		String Localidad = resultSet.getString("Localidad");
 		String CodPostal = resultSet.getString("CodPostal");
 		String motivo = resultSet.getString("Motivo");
-		/*
-		int idStock = resultSet.getInt("IdStock");
-		String codigoLote = resultSet.getString("CodigoLote");
-		double totalFactura = resultSet.getDouble("TotalFactura");*/
 		return new RechazoCompraVirtualDTO(Id,Hora,Fecha,idSucursal,pago,Nombre,Apellido,CUIL,CorreoElectronico,
-				TipoCliente, ImpuestoAFIP, Estado, Calle, Altura, Pais, Provincia, Localidad, CodPostal, motivo);
+				//TipoCliente,
+				ImpuestoAFIP, Estado, Calle, Altura, Pais, Provincia, Localidad, CodPostal, motivo);
 	}
 	
-	private static final String insertRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtual VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String insertRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtual VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public boolean insertRechazoCompraVirtualDAOSQL(CompraVirtualDTO compra, String motivo) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -89,16 +86,16 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			statement.setString(7, compra.getApellido());
 			statement.setString(8, compra.getCUIL());
 			statement.setString(9, compra.getCorreoElectronico());
-			statement.setString(10, compra.getTipoCliente());
-			statement.setString(11, compra.getImpuestoAFIP());
-			statement.setString(12, compra.getEstado());
-			statement.setString(13, compra.getCalle());
-			statement.setString(14, compra.getAltura());
-			statement.setString(15, compra.getPais());
-			statement.setString(16, compra.getProvincia());
-			statement.setString(17, compra.getLocalidad());
-			statement.setString(18, compra.getCodPostal());
-			statement.setString(19, motivo);
+			//statement.setString(10, compra.getTipoCliente());
+			statement.setString(10, compra.getImpuestoAFIP());
+			statement.setString(11, compra.getEstado());
+			statement.setString(12, compra.getCalle());
+			statement.setString(13, compra.getAltura());
+			statement.setString(14, compra.getPais());
+			statement.setString(15, compra.getProvincia());
+			statement.setString(16, compra.getLocalidad());
+			statement.setString(17, compra.getCodPostal());
+			statement.setString(18, motivo);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
