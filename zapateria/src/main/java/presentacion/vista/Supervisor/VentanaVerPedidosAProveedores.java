@@ -155,13 +155,13 @@ public class VentanaVerPedidosAProveedores {
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFecha.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblFecha.setBounds(626, 38, 79, 19);
+		lblFecha.setBounds(656, 37, 79, 19);
 		panelTabla.add(lblFecha);
 		
 		JLabel lblHora = new JLabel("Hora");
 		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHora.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblHora.setBounds(727, 37, 79, 19);
+		lblHora.setBounds(798, 37, 79, 19);
 		panelTabla.add(lblHora);
 		
 		
@@ -253,13 +253,13 @@ public class VentanaVerPedidosAProveedores {
 		
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(636, 51, 70, 19);
+		dateChooser.setBounds(636, 51, 122, 19);
 		panelTabla.add(dateChooser);
 		
 		spinnerHora = new JSpinner( new SpinnerDateModel());
 		JSpinner.DateEditor de_spinnerHora = new JSpinner.DateEditor(spinnerHora, "HH:mm:ss");
 		spinnerHora.setEditor(de_spinnerHora);
-		spinnerHora.setBounds(727, 52, 70, 19);
+		spinnerHora.setBounds(808, 52, 70, 19);
 //		spinner.setValue(new Date()); // will only show the current time
 		panelTabla.add(spinnerHora);
 		

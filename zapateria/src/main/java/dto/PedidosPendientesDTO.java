@@ -35,6 +35,8 @@ public class PedidosPendientesDTO {
 		this.estado = estado;
 		this.idSucursal = idSucursal;
 		this.fechaEnvioMail = fechaEnvioMail;
+		this.horaEnvioMail = horaEnvioMail;
+		this.horaCompleto = horaCompleto;
 		this.fechaCompleto = fechaCompleto;
 		this.unidadMedida = unidadMedida;
 	}
