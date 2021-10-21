@@ -18,12 +18,14 @@ import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
+import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
+import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -469,6 +471,7 @@ public class ProcesarCompraVirtual {
 			if(!insertDetalleFactura) {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error en uno de los ingresos de factura");
 			}
+			descontarStock(compraVirtual.getIdSucursal(), idProducto, compraVirtual.getCompra().get(idProducto));
 		}
 	}
 	
@@ -513,6 +516,24 @@ public class ProcesarCompraVirtual {
 			ret = total- ((21/100) * total);
 		}
 		return ret;
+	}
+	
+	private static void descontarStock(int idSucursalADescontar, int idProducto, int cantidadADescontar) {
+		Stock modeloStock = new Stock(new DAOSQLFactory());
+		int restar = cantidadADescontar;
+		for(StockDTO s: modeloStock.readAll()) {
+			if(s.getIdProducto()==idProducto && s.getIdSucursal()==idSucursalADescontar) {
+				int aux = s.getStockDisponible() - restar;
+				if(aux < 0) {
+					s.setStockDisponible(0);
+					restar = -aux;
+				}else {
+					s.setStockDisponible(aux);
+					restar = 0;
+				}
+				modeloStock.actualizarStock(s.getIdStock(), s.getStockDisponible());
+			}
+		}
 	}
 
 	public static void main(String[] args) {
