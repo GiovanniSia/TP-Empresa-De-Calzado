@@ -50,12 +50,18 @@ public class ProcesarCompraVirtual {
 			mensajeReporte = reporteDatosErroneos(compraVirtual);
 			if(reporteDeDatosNoValidoParaComprar(mensajeReporte)) {
 				//No se compra
-				System.out.println(mensajeReporte);
+				//System.out.println(mensajeReporte);
+				registrarRechazo(compraVirtual);
 			}else {
 				//Se compra
 				registrarCompraVirtual(compraVirtual);	//GENERA Y MUESTRA LAS FACTURAS
 			}
 		}
+	}
+
+	private static void registrarRechazo(CompraVirtualDTO compraVirtual) {
+		
+		
 	}
 
 	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
