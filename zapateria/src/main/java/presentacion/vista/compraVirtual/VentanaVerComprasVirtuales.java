@@ -36,12 +36,12 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	private JLabel lblId;
 	private JTextField textId;
 	private JLabel lblSucursal;
-	private JTextField textProducto;
+	private JTextField textCUIL;
 	private JLabel lblCUIL;
 	JTextField textSucursal;
 
 	private JButton btnSalir;
-	private JTextField textAccion;
+	private JTextField textCliente;
 	
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
@@ -113,10 +113,10 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		textSucursal.setBounds(95, 36, 75, 20);
 		panel.add(textSucursal);
 		
-		textProducto = new JTextField();
-		textProducto.setColumns(10);
-		textProducto.setBounds(180, 36, 75, 20);
-		panel.add(textProducto);
+		textCUIL = new JTextField();
+		textCUIL.setColumns(10);
+		textCUIL.setBounds(180, 36, 75, 20);
+		panel.add(textCUIL);
 		
 		lblCUIL = new JLabel("CUIL");
 		lblCUIL.setBounds(180, 11, 46, 14);
@@ -127,10 +127,10 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
-		textAccion = new JTextField();
-		textAccion.setColumns(10);
-		textAccion.setBounds(265, 36, 136, 20);
-		panel.add(textAccion);
+		textCliente = new JTextField();
+		textCliente.setColumns(10);
+		textCliente.setBounds(265, 36, 136, 20);
+		panel.add(textCliente);
 		
 		JLabel lblNombre = new JLabel("Cliente");
 		lblNombre.setBounds(265, 11, 46, 14);
@@ -212,8 +212,8 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		return textId;
 	}
 
-	public JTextField getTextProducto() {
-		return textProducto;
+	public JTextField getTextCUIL() {
+		return textCUIL;
 	}
 
 	public JTextField getTextSucursal() {
@@ -224,8 +224,8 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		return btnSalir;
 	}
 
-	public JTextField getTextAccion() {
-		return textAccion;
+	public JTextField getTextCliente() {
+		return textCliente;
 	}
 	
 	public JDateChooser getFechaDesde() {

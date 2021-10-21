@@ -2,6 +2,8 @@ package presentacion.controlador.compraVirtual;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,30 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		}
 		ventanaPrincipal = new VentanaVerComprasVirtuales();
 		ventanaPrincipal.getBtnVerDescripcion().addActionListener(r->botonVerDescripcion(r));
+		ventanaPrincipal.getTextCliente().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
+		ventanaPrincipal.getTextCUIL().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
+		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
+		ventanaPrincipal.getTextSucursal().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
 		
 		ventanaRechazo = new VentanaVerDetalleRechazo();
 		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
@@ -93,11 +119,26 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	}
 	
 	private List<IngresosDTO> recuperarComprasVirtuales(){
+		String nroOrden = this.ventanaPrincipal.getTextId().getText();
+		String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
+		String cuil = this.ventanaPrincipal.getTextCUIL().getText();
+		String clienteString = this.ventanaPrincipal.getTextCliente().getText();
+		
 		List<IngresosDTO> ret  = new ArrayList<IngresosDTO>();
 		List<IngresosDTO> todasLosIngresos = this.modeloIngresos.readAll();
 		for(IngresosDTO ingreso: todasLosIngresos) {
 			if(ingreso.getMedioPago().equals("PV")) {
-				ret.add(ingreso);
+				ClienteDTO cliente = getCliente(ingreso.getIdCliente());
+				
+				boolean deboAgregar = true;
+				deboAgregar = deboAgregar && cliente.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
+				String nombreCliente = cliente.getApellido()+", "+cliente.getNombre();
+				deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
+				deboAgregar = deboAgregar && (ingreso.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
+				deboAgregar = deboAgregar && (ingreso.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
+				if(deboAgregar) {
+					ret.add(ingreso);
+				}
 			}
 		}
 		return ret;
