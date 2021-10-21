@@ -41,7 +41,7 @@ public class Main {
 			*/
 			
 			String correoRemitente = "subelza150@gmail.com";
-			String contrasenia = "42155072";
+			String contrasenia = "";
 			String correoReceptor = "sebastianx3600@gmail.com";
 			String asunto = "Prueba";
 			String mensaje = "Hola seba xd";
