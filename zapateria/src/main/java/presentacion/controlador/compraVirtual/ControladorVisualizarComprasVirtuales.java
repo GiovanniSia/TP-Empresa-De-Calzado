@@ -19,12 +19,15 @@ import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.reportes.ReporteFactura;
 import presentacion.vista.compraVirtual.VentanaVerComprasVirtuales;
+import presentacion.vista.compraVirtual.VentanaVerDetalleRechazo;
 
 public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	private final static String  stringQueIndicaQueUnDatoEstaVacio = "[dato inexistente]"; 
 	
 	VentanaVerComprasVirtuales ventanaPrincipal;
+	
+	VentanaVerDetalleRechazo ventanaRechazo;
 	
 	Factura modeloFactura;
 	DetalleFactura modeloDetalleFactura;
@@ -48,6 +51,8 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		}
 		ventanaPrincipal = new VentanaVerComprasVirtuales();
 		ventanaPrincipal.getBtnVerDescripcion().addActionListener(r->botonVerDescripcion(r));
+		
+		ventanaRechazo = new VentanaVerDetalleRechazo();
 	}
 	
 	public void inicializar() {
@@ -154,12 +159,38 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		if(ingresosEnLista.size() > filasSeleccionadas[0]) {
 			//Seleccion un ingreso
 			mostrarFactura(ingresosEnLista.get(filasSeleccionadas[0]).getNroFactura());
+		}else {
+			mostrarDatosRechazo(filasSeleccionadas[0]-ingresosEnLista.size());
 		}
 	}
-	
+
 	private void mostrarFactura(String nroFacturaCompleto) {
 		ReporteFactura factura = new ReporteFactura(nroFacturaCompleto);
 		factura.mostrar();
+	}
+	
+	private void mostrarDatosRechazo(int indexRechazoSeleccionado) {
+		//ventanaRechazo
+		RechazoCompraVirtualDTO rechazoSeleccionado = rechazosEnLista.get(indexRechazoSeleccionado);
+		ventanaRechazo.getLblAltura().setText(rechazoSeleccionado.getAltura());
+		ventanaRechazo.getLblApellido().setText(rechazoSeleccionado.getApellido());
+		ventanaRechazo.getLblAltura().setText(rechazoSeleccionado.getAltura());
+		ventanaRechazo.getLblCalle().setText(rechazoSeleccionado.getCalle());
+		ventanaRechazo.getLblCodPostal().setText(rechazoSeleccionado.getCodPostal());
+		ventanaRechazo.getLblCorreo().setText(rechazoSeleccionado.getCorreoElectronico());
+		ventanaRechazo.getLblCuil().setText(rechazoSeleccionado.getCUIL());
+		ventanaRechazo.getLblEstadoa().setText(rechazoSeleccionado.getEstado());
+		ventanaRechazo.getLblFecha().setText(rechazoSeleccionado.getFecha());
+		ventanaRechazo.getLblHora().setText(rechazoSeleccionado.getHora());
+		ventanaRechazo.getLblImpuesto().setText(rechazoSeleccionado.getImpuestoAFIP());
+		ventanaRechazo.getLblLocalidad().setText(rechazoSeleccionado.getLocalidad());
+		ventanaRechazo.getLblNombre().setText(rechazoSeleccionado.getNombre());
+		ventanaRechazo.getLblPago().setText(rechazoSeleccionado.getPago()+"");
+		ventanaRechazo.getLblPais().setText(rechazoSeleccionado.getPais());
+		ventanaRechazo.getLblProvincia().setText(rechazoSeleccionado.getProvincia());
+		ventanaRechazo.getLblSucursal().setText(rechazoSeleccionado.getIdSucursal()+"");
+		ventanaRechazo.getTextPane().setText(rechazoSeleccionado.getMotivo());
+		ventanaRechazo.mostrarVentana();
 	}
 	
 	@Override
