@@ -54,8 +54,19 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ventanaPrincipal.getBtnVerDescripcion().addActionListener(r->botonVerDescripcion(r));
 		
 		ventanaRechazo = new VentanaVerDetalleRechazo();
+		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
+		
+		ventanaPrincipal.getBtnSalir().addActionListener(r->cerrarTodoElControlador(r));
 	}
 	
+	private void cerrarTodoElControlador(ActionEvent r) {
+		//METER CODIGO PARA SALIR DE ESTE CONTROLADOR
+	}
+
+	private void cerrarVentanaDetalle(ActionEvent r) {
+		ventanaRechazo.cerrar();
+	}
+
 	public void inicializar() {
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
@@ -120,8 +131,6 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	}
 	
 	private void llenarTablaConRechazos(List<RechazoCompraVirtualDTO> rechazos) {
-		// TODO Auto-generated method stub
-		//stringQueIndicaQueUnDatoEstaVacio
 		for(RechazoCompraVirtualDTO re: rechazos) {
 			String idRechazo = re.getId()+"";
 			String idSucursal = re.getIdSucursal()+"";
