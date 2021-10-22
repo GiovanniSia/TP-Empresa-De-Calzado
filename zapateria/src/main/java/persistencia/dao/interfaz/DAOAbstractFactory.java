@@ -47,4 +47,6 @@ public interface DAOAbstractFactory {
 	public HistorialPasoDAO createHistorialPasoDAO();
 	
 	public PedidosPendientesDAO createPedidosPendientesDAO();
+	
+	public RechazoCompraVirtualDAO createRechazoCompraVirtualDAO();
 }

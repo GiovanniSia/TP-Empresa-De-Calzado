@@ -82,10 +82,9 @@ public class ReporteRankingXSucursal {
 	insert into zapateria.ingresos values (3,3,'2021-10-16','12:20','VT',1,'A','aaaa','USD',100,3,'',300);
 	insert into zapateria.ingresos values (4,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',100);
 	insert into zapateria.ingresos values (5,2,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',40);
-	
+	*/
 	public static void main(String[] args) {
 		ReporteRankingXSucursal reporteRanking = new ReporteRankingXSucursal("2021-10-1","2021-11-1");
 		reporteRanking.mostrarReporte();
 	}
-	*/
 }

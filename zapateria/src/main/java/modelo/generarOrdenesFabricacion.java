@@ -25,7 +25,7 @@ public class generarOrdenesFabricacion {
 		}*/
 	}
 	
-	private static int contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
+	public static int contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<StockDTO> todosLosStocks = a.createStockDAO().readAll();
 		int cantidadContador = 0;
