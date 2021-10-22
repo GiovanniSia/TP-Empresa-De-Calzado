@@ -107,7 +107,7 @@ public class CarritoDAOSQL implements CarritoDAO{
 			sel = sel+" AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
 		}
 		if(nombreColumna3!=null && txt3!=null) {
-			sel = " AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
+			sel = sel+" AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
 		}
 		
 		ArrayList<CarritoDTO> carritos = new ArrayList<CarritoDTO>();

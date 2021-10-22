@@ -99,45 +99,6 @@ public class VentanaAltaCliente {
 		lblNombre.setBounds(10, 114, 94, 18);
 		frame.getContentPane().add(lblNombre);
 		
-		textNombre = new JTextField();
-		textNombre.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-                if(textNombre.getText().length()>=25) {
-                    e.consume();
-                }
-			}
-		});
-		textNombre.setBounds(128, 113, 275, 19);
-		frame.getContentPane().add(textNombre);
-		textNombre.setColumns(10);
-		
-		textApellido = new JTextField();
-		textApellido.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-                if(textApellido.getText().length()>=25) {
-                    e.consume();
-                }
-			}
-		});
-		textApellido.setColumns(10);
-		textApellido.setBounds(128, 142, 275, 19);
-		frame.getContentPane().add(textApellido);
-		
-		textCUIL = new JTextField();
-		textCUIL.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(textCUIL.getText().length()>=12) {
-                    e.consume();
-                }
-            }
-        });
-		textCUIL.setColumns(10);
-		textCUIL.setBounds(128, 171, 275, 19);
-		frame.getContentPane().add(textCUIL);
-		
 		JLabel lblApellido = new JLabel("Apellido");
 		lblApellido.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblApellido.setFont(new Font("Consolas", Font.BOLD, 15));
@@ -149,19 +110,6 @@ public class VentanaAltaCliente {
 		lblCUIL.setFont(new Font("Consolas", Font.BOLD, 15));
 		lblCUIL.setBounds(10, 169, 94, 24);
 		frame.getContentPane().add(lblCUIL);
-		
-		textCorreo = new JTextField();
-		textCorreo.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(textCorreo.getText().length()>=30) {
-                    e.consume();
-                }
-            }
-        });
-		textCorreo.setColumns(10);
-		textCorreo.setBounds(128, 206, 275, 19);
-		frame.getContentPane().add(textCorreo);
 		
 		JLabel lblCorreo = new JLabel("Correo");
 		lblCorreo.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -221,11 +169,65 @@ public class VentanaAltaCliente {
 		lblCodPostal.setBounds(10, 533, 116, 24);
 		frame.getContentPane().add(lblCodPostal);
 		
+		
+		textNombre = new JTextField();
+		textNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textNombre.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
+		textNombre.setBounds(128, 113, 275, 19);
+		frame.getContentPane().add(textNombre);
+		textNombre.setColumns(10);
+		
+		textApellido = new JTextField();
+		textApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+                if(textApellido.getText().length()>=25) {
+                    e.consume();
+                }
+			}
+		});
+		textApellido.setColumns(10);
+		textApellido.setBounds(128, 142, 275, 19);
+		frame.getContentPane().add(textApellido);
+		
+		textCUIL = new JTextField();
+		textCUIL.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCUIL.getText().length()>=12) {
+                    e.consume();
+                }
+            }
+        });
+		textCUIL.setColumns(10);
+		textCUIL.setBounds(128, 171, 275, 19);
+		frame.getContentPane().add(textCUIL);
+		
+		
+		textCorreo = new JTextField();
+		textCorreo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCorreo.getText().length()>=20) {
+                    e.consume();
+                }
+            }
+        });
+		textCorreo.setColumns(10);
+		textCorreo.setBounds(128, 206, 275, 19);
+		frame.getContentPane().add(textCorreo);
+		
 		textPais = new JTextField();
 		textPais.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textPais.getText().length()>=25) {
+                if(textPais.getText().length()>=20) {
                     e.consume();
                 }
             }
@@ -238,7 +240,7 @@ public class VentanaAltaCliente {
 		textProvincia.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textProvincia.getText().length()>=25) {
+                if(textProvincia.getText().length()>=20) {
                     e.consume();
                 }
             }
@@ -251,7 +253,7 @@ public class VentanaAltaCliente {
 		textLocalidad.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textLocalidad.getText().length()>=25) {
+                if(textLocalidad.getText().length()>=20) {
                     e.consume();
                 }
             }
@@ -264,7 +266,7 @@ public class VentanaAltaCliente {
 		textCalle.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textCalle.getText().length()>=25) {
+                if(textCalle.getText().length()>=20) {
                     e.consume();
                 }
             }
@@ -277,7 +279,7 @@ public class VentanaAltaCliente {
 		textAltura.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textAltura.getText().length()>=25) {
+                if(textAltura.getText().length()>=10) {
                     e.consume();
                 }
             }

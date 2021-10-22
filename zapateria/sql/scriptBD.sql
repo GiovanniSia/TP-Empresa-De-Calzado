@@ -440,34 +440,6 @@ INSERT INTO maestroProductos values(10,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1
 insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
 insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
 insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
-/*
-  `IdMaestroProducto` int(11) NOT NULL AUTO_INCREMENT,
-  `Descripcion` varchar(45) NOT NULL,
-  `Tipo` varchar(45) NOT NULL,
-  `Fabricado` varchar(45) NOT NULL,
-  `PrecioCosto` double(45,2) NOT NULL,
-  `PrecioMayorista` double(45,2) NOT NULL,
-  `PrecioMinorista` double(45,2) NOT NULL,
-  `PuntoRepositorio` int(11) NOT NULL,
-  `IdProveedor` int(11) NOT NULL,
-  `Talle` varchar(45) NOT NULL,
-  `UnidadMedida` varchar(45) NOT NULL,
-  `Estado` varchar(45) NOT NULL,
-  `CantidadAReponer` int(11) NOT NULL,
-  `DiasParaReponer` int(11) NOT NULL,
-  
-  
-  
-  CREATE TABLE `stock`
-(
-  `IdStock` int(11) NOT NULL AUTO_INCREMENT,
-  `IdSucursal` int(11) NOT NULL,
-  `IdProducto` int(11) NOT NULL,
-  `CodigoLote` varchar(45) NOT NULL,
-  `StockDisponible` int(11) NOT NULL,
-  PRIMARY KEY (`IdStock`)
-);
-  */
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);

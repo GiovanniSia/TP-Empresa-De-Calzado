@@ -156,29 +156,32 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		String sel = "SELECT * FROM PedidosPendientes";
-		if(nombreColumna1!=null && txt1!=null) {
+		if(nombreColumna1!=null && !txt1.equals("")) {
 			sel = sel +" WHERE " + nombreColumna1 + " LIKE '%" + txt1 + "%'";
 		}
-		if(nombreColumna2!=null && txt2!=null) {
+		if(nombreColumna2!=null && !txt2.equals("")) {
 			sel = sel+" AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
 		}
-		if(nombreColumna3!=null && txt3!=null) {
-			sel = " AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
+		if(nombreColumna3!=null && !txt3.equals("")) {
+			sel = sel+" AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
 		}
-		if(nombreColumna4!=null && txt4!=null) {
-			sel = " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";
+		if(nombreColumna4!=null &&  !txt4.equals("")) {
+			sel = sel+ " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";
 		}
-		if(nombreColumna5!=null && (txt5!=null || !txt5.equals("Sin seleccionar") ) ) {
-			sel = " AND " + nombreColumna5 + " LIKE '%" + txt5 + "%'";
+		if(nombreColumna5!=null && !txt5.equals("Sin seleccionar")  ) {
+			sel = sel+ " AND " + nombreColumna5 + " LIKE '%" + txt5 + "%'";
 		}
-		if(nombreColumna6!=null && txt6!=null) {
-			sel = " AND " + nombreColumna6 + " LIKE '%" + txt6 + "%'";
+		//JDate chooser puede ser nulo
+		if(nombreColumna6!=null && txt6!=null ) {
+			sel = sel+ " AND " + nombreColumna6 + " LIKE '%" + txt6 + "%'";
 		}
-		if(nombreColumna7!=null && txt7!=null) {
-			sel = " AND " + nombreColumna7 + " LIKE '%" + txt7 + "%'";
+		//spiner de hora/date puede ser nulo
+		if(nombreColumna7!=null && txt7!=null ) {
+			sel = sel+ " AND " + nombreColumna7 + " LIKE '%" + txt7 + "%'";
 		}
+		//cb puede ser nulo
 		if(nombreColumna8!=null && txt8!=null) {
-			sel = " AND " + nombreColumna8 + " LIKE '%" + txt8 + "%'";
+			sel = sel+ " AND " + nombreColumna8 + " LIKE '%" + txt8 + "%'";
 		}
 		
 		System.out.println(sel);

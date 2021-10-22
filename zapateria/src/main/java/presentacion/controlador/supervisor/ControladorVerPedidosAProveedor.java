@@ -108,13 +108,19 @@ public class ControladorVerPedidosAProveedor {
         if (fech != null) {
             fecha = dateFormat.format(fech);
         } 
+	
+		DateFormat dateFmt = new SimpleDateFormat("HH:mm:ss");
+		Date fechaHora = (Date) this.ventanaVerPedidosAProveedor.getSpinnerHora().getValue();
 		
-		System.out.println(fecha);
-		Object hora =ventanaVerPedidosAProveedor.getSpinnerHora().getValue();
+		String hora = null;
+        if (fechaHora != null) {
+            hora = dateFmt.format(fechaHora);
+        } 
+        
 		System.out.println("hora: "+hora);
 		//falta el ultimo cb que no se que va
 		
-		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fecha, "Hora", null, null, null);
+		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fecha, "Hora", hora, null, null);
 		
 		llenarTablaFiltrada(pedidosFiltrados);
 	}
