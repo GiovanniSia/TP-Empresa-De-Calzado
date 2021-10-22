@@ -3,6 +3,8 @@ package presentacion.controlador.fabrica;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -92,6 +94,29 @@ public class ControladorHistorialPasos {
 				refrescarTablaPorTecla();
 			}
 		});
+		
+		ventana.getFechaDesde().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+		ventana.getFechaHasta().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
 		
 		ventanaExplicacion = new VentanaVerDetalle();
 		ventanaExplicacion.getBtnSalir().addActionListener(r -> cerrarDescripcion(r));
