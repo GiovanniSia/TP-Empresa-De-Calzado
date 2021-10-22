@@ -206,7 +206,13 @@ public class ReControladorOperario implements ActionListener {
 		ventanaParaCancelacion = new VentanaIngresarMotivoCancelacion();
 		ventanaParaCancelacion.getBtnCancelar().addActionListener(a -> cancelarOrden(a));
 		ventanaParaCancelacion.getBtnNoCancelar().addActionListener(a -> noCancelarOrden(a));
-		
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Error de la maquina");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Error con los materiales");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Falta de materiales");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Accidente en la fabrica");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Falla electrica");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Accidente con el operario");
+		ventanaParaCancelacion.getComboBoxMotivo().addItem("Otro");
 		refrescarTabla();
 		
 	}
