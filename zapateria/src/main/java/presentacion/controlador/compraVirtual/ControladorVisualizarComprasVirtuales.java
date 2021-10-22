@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +80,29 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 				refrescarTabla();
 			}
 		});
+		ventanaPrincipal.getFechaDesde().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+		
+		ventanaPrincipal.getFechaHasta().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
 		
 		ventanaRechazo = new VentanaVerDetalleRechazo();
 		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
