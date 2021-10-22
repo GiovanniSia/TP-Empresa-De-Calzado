@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.UIManager;
 
 import dto.ClienteDTO;
-import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
@@ -136,6 +136,30 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 				deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
 				deboAgregar = deboAgregar && (ingreso.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
 				deboAgregar = deboAgregar && (ingreso.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
+				
+				Date fechaPaso = new Date();
+				String[] fechaPasoString = palabrasPorBarra(ingreso.getFecha());
+				fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
+				fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
+				fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
+				
+				boolean cumpleDesde = false;
+				if(getFechaDesdeDate() != null) {
+					if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+						cumpleDesde = true;
+					}
+				}else {
+					cumpleDesde = true;
+				}
+				boolean cumpleHasta = false;
+				if(getFechaDesdeHasta() != null) {
+					if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+						cumpleHasta = true;
+					}
+				}else {
+					cumpleHasta = true;
+				}
+				deboAgregar = deboAgregar && (cumpleDesde && cumpleHasta);
 				if(deboAgregar) {
 					ret.add(ingreso);
 				}
@@ -211,6 +235,30 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
 			deboAgregar = deboAgregar && (r.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
 			deboAgregar = deboAgregar && (r.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
+			
+			Date fechaPaso = new Date();
+			String[] fechaPasoString = palabrasPorBarra(r.getFecha());
+			fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
+			fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
+			fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
+			
+			boolean cumpleDesde = false;
+			if(getFechaDesdeDate() != null) {
+				if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+					cumpleDesde = true;
+				}
+			}else {
+				cumpleDesde = true;
+			}
+			boolean cumpleHasta = false;
+			if(getFechaDesdeHasta() != null) {
+				if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+					cumpleHasta = true;
+				}
+			}else {
+				cumpleHasta = true;
+			}
+			deboAgregar = deboAgregar && (cumpleDesde && cumpleHasta);
 			if(deboAgregar) {
 				ret.add(r);
 			}
@@ -281,6 +329,34 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ventanaRechazo.getModelOrdenes().setRowCount(0);
 		ventanaRechazo.getModelOrdenes().setColumnCount(0);
 		ventanaRechazo.getModelOrdenes().setColumnIdentifiers(ventanaRechazo.getNombreColumnasTablaPrincipal());
+	}
+	
+	private Date getFechaDesdeDate() {
+		Date ret = this.ventanaPrincipal.getFechaDesde().getDate();
+		if(ret != null) {
+			ret.setHours(0);
+			ret.setMinutes(0);
+			ret.setSeconds(0);
+		}
+		return ret;
+	}
+	
+	private Date getFechaDesdeHasta() {
+		Date ret = this.ventanaPrincipal.getFechaHasta().getDate();
+		if(ret != null) {
+			ret.setHours(23);
+			ret.setMinutes(59);
+			ret.setSeconds(59);
+		}
+		return ret;
+	}
+	
+	private String[] palabrasPorBarra(String sentence) {
+		if (sentence == null || sentence.isEmpty()) {
+			return new String[0];
+		}
+		String[] words = sentence.split("-");
+		return words;
 	}
 	
 	@Override
