@@ -154,10 +154,10 @@ public class ControladorHistorialPasos {
 		ventana.getModelOrdenes().setRowCount(0);
 		ventana.getModelOrdenes().setColumnCount(0);
 		ventana.getModelOrdenes().setColumnIdentifiers(ventana.getNombreColumnas());
-
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(0).setPreferredWidth(5);
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(1).setPreferredWidth(5);
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(3).setPreferredWidth(6);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(2).setPreferredWidth(120);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(4).setPreferredWidth(195);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(5).setPreferredWidth(100);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(6).setPreferredWidth(150);
 	}
 
 	private void llenarTablaConElHistorial() {

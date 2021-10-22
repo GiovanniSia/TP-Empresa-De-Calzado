@@ -13,7 +13,7 @@ public class HistorialPasoDTO {
 	private String NombreCompleto;
 	private String DescrPasoCompletado;
 	private String Descr;
-	private String tipo;
+	private String tipoCancelacion;
 
 	public HistorialPasoDTO(int id, String hora, String fecha, int idOrden, int idEmpleado, String nombreCompleto,
 			String descrPasoCompletado, String descr, String tipo) {
@@ -25,7 +25,7 @@ public class HistorialPasoDTO {
 		NombreCompleto = nombreCompleto;
 		DescrPasoCompletado = descrPasoCompletado;
 		Descr = descr;
-		this.tipo = tipo;
+		this.tipoCancelacion = tipo;
 	}
 
 	public HistorialPasoDTO(int id, int idOrden, int idEmpleado, String nombreCompleto, String descrPasoCompletado,
@@ -36,7 +36,7 @@ public class HistorialPasoDTO {
 		NombreCompleto = nombreCompleto;
 		DescrPasoCompletado = descrPasoCompletado;
 		Descr = descr;
-		this.tipo = tipo;
+		this.tipoCancelacion = tipo;
 
 		Fecha = generarFechaActual();
 		hora = generarHoraActual();
@@ -122,10 +122,10 @@ public class HistorialPasoDTO {
 	}
 
 	public String getTipo() {
-		return tipo;
+		return tipoCancelacion;
 	}
 
 	public void setTipo(String tipo) {
-		this.tipo = tipo;
+		this.tipoCancelacion = tipo;
 	}
 }
