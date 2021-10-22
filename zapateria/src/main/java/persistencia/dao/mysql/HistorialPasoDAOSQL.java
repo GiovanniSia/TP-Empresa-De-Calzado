@@ -42,10 +42,11 @@ public class HistorialPasoDAOSQL implements HistorialPasoDAO{
 		String NombreCompleto = resultSet.getString("NombreCompleto");
 		String DescrPasoCompletado = resultSet.getString("DescrPasoCompletado");
 		String Descr = resultSet.getString("Descr");
-		return new HistorialPasoDTO(Id, Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr);
+		String TipoCancelacion = resultSet.getString("TipoCancelacion");
+		return new HistorialPasoDTO(Id, Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr, TipoCancelacion);
 	}
 
-	private static final String insert = "INSERT INTO HistorialPasos(Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr) VALUES(?,?,?,?,?,?,?);";
+	private static final String insert = "INSERT INTO HistorialPasos(Hora, Fecha, IdOrden, IdEmpleado, NombreCompleto, DescrPasoCompletado, Descr, TipoCancelacion) VALUES(?,?,?,?,?,?,?,?);";
 
 	public boolean insert(HistorialPasoDTO pasoHistorial){
 		PreparedStatement statement;
@@ -60,6 +61,7 @@ public class HistorialPasoDAOSQL implements HistorialPasoDAO{
 			statement.setString(5, pasoHistorial.getNombreCompleto());
 			statement.setString(6, pasoHistorial.getDescrPasoCompletado());
 			statement.setString(7, pasoHistorial.getDescr());
+			statement.setString(8, pasoHistorial.getTipo());
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;

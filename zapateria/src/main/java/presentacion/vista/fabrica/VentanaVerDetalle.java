@@ -111,4 +111,8 @@ public class VentanaVerDetalle extends JFrame {
 	public JButton getBtnSalir() {
 		return btnSalir;
 	}
+
+	public JLabel getLblId() {
+		return lblId;
+	}
 }

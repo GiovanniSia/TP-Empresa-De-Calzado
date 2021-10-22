@@ -110,6 +110,15 @@ public class ControladorHistorialPasos {
 		String mensaje = historialEnLista.get(filasSeleccionadas[0]).getDescr();
 		return mensaje;
 	}
+	
+	private String getTipoCancelacion() {
+		int[] filasSeleccionadas = ventana.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return "";
+		}
+		String mensaje = historialEnLista.get(filasSeleccionadas[0]).getTipo();
+		return mensaje;
+	}
 
 	private void cerrarDescripcion(ActionEvent s) {
 		ventanaExplicacion.cerrar();
@@ -130,6 +139,7 @@ public class ControladorHistorialPasos {
 		*/
 		mensajeAMostrar = mensaje;
 		ventanaExplicacion.getTextPane().setText(mensajeAMostrar);
+		ventanaExplicacion.getLblId().setText(getTipoCancelacion());
 		ventanaExplicacion.mostrarVentana();
 		//mostrarMensajeEmergente(mensajeAMostrar);
 	}

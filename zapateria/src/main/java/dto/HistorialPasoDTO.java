@@ -13,9 +13,10 @@ public class HistorialPasoDTO {
 	private String NombreCompleto;
 	private String DescrPasoCompletado;
 	private String Descr;
+	private String tipo;
 
 	public HistorialPasoDTO(int id, String hora, String fecha, int idOrden, int idEmpleado, String nombreCompleto,
-			String descrPasoCompletado, String descr) {
+			String descrPasoCompletado, String descr, String tipo) {
 		this.id = id;
 		this.hora = hora;
 		Fecha = fecha;
@@ -24,16 +25,18 @@ public class HistorialPasoDTO {
 		NombreCompleto = nombreCompleto;
 		DescrPasoCompletado = descrPasoCompletado;
 		Descr = descr;
+		this.tipo = tipo;
 	}
 
 	public HistorialPasoDTO(int id, int idOrden, int idEmpleado, String nombreCompleto, String descrPasoCompletado,
-			String descr) {
+			String descr, String tipo) {
 		this.id = id;
 		IdOrden = idOrden;
 		IdEmpleado = idEmpleado;
 		NombreCompleto = nombreCompleto;
 		DescrPasoCompletado = descrPasoCompletado;
 		Descr = descr;
+		this.tipo = tipo;
 
 		Fecha = generarFechaActual();
 		hora = generarHoraActual();
@@ -116,5 +119,13 @@ public class HistorialPasoDTO {
 
 	public void setDescr(String descr) {
 		Descr = descr;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

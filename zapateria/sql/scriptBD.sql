@@ -348,6 +348,7 @@ CREATE TABLE `HistorialPasos`
   `NombreCompleto` varchar(45) NOT NULL,
   `DescrPasoCompletado` varchar(45) NOT NULL,
   `Descr` TEXT NOT NULL,
+  `TipoCancelacion` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 );
 

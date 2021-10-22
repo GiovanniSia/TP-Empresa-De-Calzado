@@ -300,7 +300,8 @@ public class ReControladorOperario implements ActionListener {
 				empleado.getIdEmpleado(),
 				empleado.getApellido()+", "+empleado.getNombre(),
 				"Pasado a produccion",
-				"Receta nro: "+recetaSeleccionado.getIdReceta()+", "+recetaSeleccionado.getDescripcion());
+				"Receta nro: "+recetaSeleccionado.getIdReceta()+", "+recetaSeleccionado.getDescripcion(), 
+				"");
 		refrescarTabla();
 		this.ventanaElegirReceta.cerrar();
 	}
@@ -341,7 +342,7 @@ public class ReControladorOperario implements ActionListener {
 					this.empleado.getIdEmpleado(),
 					this.empleado.getApellido()+", "+this.empleado.getNombre(),
 					"Paso completado: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size(),
-							"");
+							"", "");
 			
 			mostrarMensajeEmergente("Paso concretado");
 			fabricacionTrabajando.setNroPasoActual(fabricacionTrabajando.getNroPasoActual()+1);
@@ -358,6 +359,7 @@ public class ReControladorOperario implements ActionListener {
 						this.empleado.getIdEmpleado(),
 						this.empleado.getApellido()+", "+this.empleado.getNombre(),
 						"Se completo la orden",
+								"",
 								"");
 				
 				fabricacionTrabajando.completarOrden();
@@ -374,13 +376,14 @@ public class ReControladorOperario implements ActionListener {
 		reiniciarTablaIngredientesDeUnTrabajo();
 	}
 	
-	private void insertarEnElHistorial(int idOrdenFabrica, int idEmpleado, String apellidoNombre, String pasoCompletado, String descripcion) {
+	private void insertarEnElHistorial(int idOrdenFabrica, int idEmpleado, String apellidoNombre, String pasoCompletado, String descripcion, String tipoCancelacion) {
 		HistorialPasoDTO pasoHecho = new HistorialPasoDTO(0,
 				idOrdenFabrica,
 				idEmpleado,
 				apellidoNombre,
 				pasoCompletado,
-				descripcion);
+				descripcion,
+				tipoCancelacion);
 		this.historialPaso.insert(pasoHecho);
 	}
 	
@@ -417,7 +420,7 @@ public class ReControladorOperario implements ActionListener {
 		insertarEnElHistorial(fabricacionTrabajando.getIdOrdenFabrica(), this.empleado.getIdEmpleado(), 
 				empleado.getApellido()+", "+empleado.getNombre(), 
 				"Cancelacion: "+pasoActual.getPasosDTO().getDescripcion()+": "+fabricacionTrabajando.getNroPasoActual()+" de "+modeloFabricacion.readAllPasosFromOneReceta(fabricacionTrabajando.getIdReceta()).size()
-				,explicacion);//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
+				,explicacion, (String) ventanaParaCancelacion.getComboBoxMotivo().getSelectedItem());//FALTA METER UNA DESCRICION DE PORQUE SE CANCELO
 		
 		this.ventanaParaCancelacion.cerrar();
 	}
@@ -435,7 +438,8 @@ public class ReControladorOperario implements ActionListener {
 				this.empleado.getIdEmpleado(),
 				this.empleado.getApellido()+", "+this.empleado.getNombre(),
 				"Se ingreso una fecha de llegada a la orden: ",
-						"Dias para la que llegara a la sucursal: "+valorIngresado);
+						"Dias para la que llegara a la sucursal: "+valorIngresado,
+						"");
 		
 		modeloFabricacion.completarOrden(fabricacionTrabajando, valorIngresado);
 		this.ventanaDiaDeLlegada.cerrar();
