@@ -157,7 +157,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			String fecha = i.getFecha();
 			String hora = i.getHora();
 			
-			Object[] agregar = {idIngreso, idSucursal, cuil, nombre, fecha, hora};
+			Object[] agregar = {idIngreso, idSucursal, cuil, nombre, fecha, hora, "Aceptada"};
 			ventanaPrincipal.getModelDeTablaPrincipal().addRow(agregar);
 		}
 	}
@@ -187,11 +187,11 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			if(re.getNombre().equals("")) {
 				nombre = stringQueIndicaQueUnDatoEstaVacio;
 			}else {
-				nombre = re.getIdSucursal()+"";
+				nombre = re.getApellido()+", "+re.getNombre();
 			}
 			String fecha = re.getFecha();
 			String hora = re.getHora();
-			Object[] agregar = {idRechazo, idSucursal, cuil, nombre, fecha, hora};
+			Object[] agregar = {idRechazo, idSucursal, cuil, nombre, fecha, hora, "Rechazada"};
 			ventanaPrincipal.getModelDeTablaPrincipal().addRow(agregar);
 		}
 		
@@ -199,7 +199,23 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	private List<RechazoCompraVirtualDTO> recuperarRechazos(){
 		List<RechazoCompraVirtualDTO> todosRechazos = modeloRechazoVirtual.readAllRechazosComprasVirtuales();
-		return todosRechazos;
+		List<RechazoCompraVirtualDTO> ret = new ArrayList<RechazoCompraVirtualDTO>();
+		String nroOrden = this.ventanaPrincipal.getTextId().getText();
+		String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
+		String cuil = this.ventanaPrincipal.getTextCUIL().getText();
+		String clienteString = this.ventanaPrincipal.getTextCliente().getText();
+		for(RechazoCompraVirtualDTO r: todosRechazos) {
+			boolean deboAgregar = true;
+			deboAgregar = deboAgregar && r.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
+			String nombreCliente = r.getApellido()+", "+r.getNombre();
+			deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
+			deboAgregar = deboAgregar && (r.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
+			deboAgregar = deboAgregar && (r.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
+			if(deboAgregar) {
+				ret.add(r);
+			}
+		}
+		return ret;
 	}
 	
 	private void botonVerDescripcion(ActionEvent a) {
