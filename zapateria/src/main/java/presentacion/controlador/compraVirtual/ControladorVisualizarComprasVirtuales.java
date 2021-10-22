@@ -143,6 +143,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		*/
 	}
 	
+	@SuppressWarnings("deprecation")
 	private List<IngresosDTO> recuperarComprasVirtuales(){
 		String nroOrden = this.ventanaPrincipal.getTextId().getText();
 		String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
@@ -246,6 +247,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	private List<RechazoCompraVirtualDTO> recuperarRechazos(){
 		List<RechazoCompraVirtualDTO> todosRechazos = modeloRechazoVirtual.readAllRechazosComprasVirtuales();
 		List<RechazoCompraVirtualDTO> ret = new ArrayList<RechazoCompraVirtualDTO>();
@@ -356,6 +358,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ventanaRechazo.getModelOrdenes().setColumnIdentifiers(ventanaRechazo.getNombreColumnasTablaPrincipal());
 	}
 	
+	@SuppressWarnings("deprecation")
 	private Date getFechaDesdeDate() {
 		Date ret = this.ventanaPrincipal.getFechaDesde().getDate();
 		if(ret != null) {
@@ -366,6 +369,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		return ret;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private Date getFechaDesdeHasta() {
 		Date ret = this.ventanaPrincipal.getFechaHasta().getDate();
 		if(ret != null) {
@@ -386,7 +390,6 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	

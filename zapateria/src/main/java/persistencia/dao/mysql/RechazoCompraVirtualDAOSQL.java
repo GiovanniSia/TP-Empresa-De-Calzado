@@ -9,11 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.CajaDTO;
 import dto.CompraVirtualDTO;
 import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
-import dto.StockDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.RechazoCompraVirtualDAO;
 

@@ -3,14 +3,10 @@ package presentacion.controlador.fabrica;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 import javax.swing.UIManager;
 
 import dto.HistorialPasoDTO;
@@ -21,7 +17,6 @@ import modelo.Fabricacion;
 import modelo.HistorialPaso;
 import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
-import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.VentanaVerDetalle;
@@ -123,8 +118,8 @@ public class ControladorHistorialPasos {
 	private void verDescripcion(ActionEvent s) {
 		String mensaje = getDescripcion();
 		String mensajeAMostrar = "<html><body>";
-		int x = 1;
 		/*
+		int x = 1;
 		for(String palabra: palabrasPorPalabras(mensaje)) {
 			if(x%15 == 0) {
 				mensajeAMostrar = mensajeAMostrar + "<br>";
@@ -167,7 +162,7 @@ public class ControladorHistorialPasos {
 					+ productoTrabajandoLocal.getDescripcion() + ", " + productoTrabajandoLocal.getTalle();
 			String cantidad = ordenTrabajandoLocal.getCantidad() + "";
 			String accion = hp.getDescrPasoCompletado();
-			String detalle = hp.getDescr();
+			//String detalle = hp.getDescr();
 			String idEmpleado = hp.getIdEmpleado() + "";
 			String nombreEmpleado = hp.getNombreCompleto();
 			String fechaHora = hp.getFecha() + " " + hp.getHora();
@@ -201,6 +196,7 @@ public class ControladorHistorialPasos {
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	private List<HistorialPasoDTO> recuperarTodoElHistorial() {
 		List<HistorialPasoDTO> historial = modelosHistorialPaso.readAll();
 		List<HistorialPasoDTO> historialRet = new ArrayList<HistorialPasoDTO>();
@@ -269,14 +265,7 @@ public class ControladorHistorialPasos {
 	private void mostrarVentana() {
 		ventana.mostrarVentana();
 	}
-
-	private void mostrarMensajeEmergente(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
-		return;
-	}
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		SucursalDTO suc = new SucursalDTO(1, "3123314", "Uruguay", "134", "BsAs", "Tortuguitas", "Argentina", "1669",
 				"Una mas");
@@ -289,16 +278,7 @@ public class ControladorHistorialPasos {
 		refrescarTabla();
 	}
 	
-	private String getFechaDesde() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date fechaDesde = this.ventana.getFechaDesde().getDate();
-		String fechaDesdeFormato = null;
-		if (fechaDesde != null) {
-			fechaDesdeFormato = dateFormat.format(fechaDesde);
-		}
-		return fechaDesdeFormato;
-	}
-	
+	@SuppressWarnings("deprecation")
 	private Date getFechaDesdeDate() {
 		Date ret = this.ventana.getFechaDesde().getDate();
 		if(ret != null) {
@@ -309,6 +289,7 @@ public class ControladorHistorialPasos {
 		return ret;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private Date getFechaDesdeHasta() {
 		Date ret = this.ventana.getFechaHasta().getDate();
 		if(ret != null) {
@@ -317,24 +298,6 @@ public class ControladorHistorialPasos {
 			ret.setSeconds(59);
 		}
 		return ret;
-	}
-	
-	private String fechaHasta() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date fechaHasta = this.ventana.getFechaHasta().getDate();
-		String fechaHastaFormato = null;
-		if (fechaHasta != null) {
-			fechaHastaFormato = dateFormat.format(fechaHasta);
-		}
-		return fechaHastaFormato;
-	}
-
-	private String[] palabrasPorPalabras(String sentence) {
-		if (sentence == null || sentence.isEmpty()) {
-			return new String[0];
-		}
-		String[] words = sentence.split("\\s+");
-		return words;
 	}
 	
 	private String[] palabrasPorBarra(String sentence) {

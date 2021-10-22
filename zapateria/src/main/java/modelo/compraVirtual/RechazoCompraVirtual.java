@@ -7,7 +7,6 @@ import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.RechazoCompraVirtualDAO;
-import persistencia.dao.interfaz.TipoEgresosDAO;
 
 public class RechazoCompraVirtual {
 	

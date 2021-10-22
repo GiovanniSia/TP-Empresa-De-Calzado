@@ -2,9 +2,7 @@ package persistencia.dao.interfaz;
 
 import java.util.List;
 
-import dto.CajaDTO;
 import dto.CompraVirtualDTO;
-import dto.EmpleadoDTO;
 import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 

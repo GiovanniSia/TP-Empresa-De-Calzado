@@ -1,15 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import datos.JsonListaCompraVirtual;
-import dto.ClienteDTO;
-import dto.CompraVirtualDTO;
-import modelo.compraVirtual.ProcesarCompraVirtual;
 import presentacion.controlador.Controlador;
-import presentacion.reportes.ReporteFactura;
-
 
 public class Main {
 
@@ -17,7 +8,7 @@ public class Main {
 		Controlador controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
-		
+		/*
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
@@ -56,10 +47,7 @@ public class Main {
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd4);
 		JsonListaCompraVirtual.guardarLista(compras);
-		
-		
-		//ProcesarCompraVirtual.FuncionProcesarCompra();
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		
+		*/
 	}
 }
