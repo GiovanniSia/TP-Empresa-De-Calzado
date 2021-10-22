@@ -12,9 +12,9 @@ import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 
 public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoDAO {
-	private static final String insert = "INSERT INTO historialCambioMProducto VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO historialCambioMProducto VALUES(?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM historialCambioMProducto WHERE IdHistorialCambioMProducto = ?";
-	private static final String update = "UPDATE historialCambioMProducto set IdEmpleado=?, IdMaestroProducto=?, Fecha=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=?, PuntoRepositorioAntiguo=?,PuntoRepositorioNuevo=?, CantidadAReponerAntiguo=?,CantidadAReponerNuevo=?,DiasParaReponerAntiguo=?,DiasParaReponerNuevo=?  where IdHistorialCambioMProducto=?";
+	private static final String update = "UPDATE historialCambioMProducto set IdSucursal=? IdEmpleado=?, IdMaestroProducto=?, Fecha=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=?, PuntoRepositorioAntiguo=?,PuntoRepositorioNuevo=?, CantidadAReponerAntiguo=?,CantidadAReponerNuevo=?,DiasParaReponerAntiguo=?,DiasParaReponerNuevo=?  where IdHistorialCambioMProducto=?";
 	private static final String readall = "SELECT * FROM historialCambioMProducto";
 
 	@Override
@@ -26,27 +26,28 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 			statement = conexion.prepareStatement(insert);
 
 			statement.setInt(1, historialCambiMProducto.getIdHistorialCambioProducto());
-			statement.setString(2, historialCambiMProducto.getIdEmpleado());
-			statement.setString(3, historialCambiMProducto.getIdMaestroProducto());
-			statement.setString(4, historialCambiMProducto.getFecha());
+			statement.setString(2, historialCambiMProducto.getIdSucursal());
+			statement.setString(3, historialCambiMProducto.getIdEmpleado());
+			statement.setString(4, historialCambiMProducto.getIdMaestroProducto());
+			statement.setString(5, historialCambiMProducto.getFecha());
 
-			statement.setString(5, historialCambiMProducto.getPrecioCostoAntiguo());
-			statement.setString(6, historialCambiMProducto.getPrecioCostoNuevo());
+			statement.setString(6, historialCambiMProducto.getPrecioCostoAntiguo());
+			statement.setString(7, historialCambiMProducto.getPrecioCostoNuevo());
 
-			statement.setString(7, historialCambiMProducto.getPrecioMayoristaAntiguo());
-			statement.setString(8, historialCambiMProducto.getPrecioMayoristaNuevo());
+			statement.setString(8, historialCambiMProducto.getPrecioMayoristaAntiguo());
+			statement.setString(9, historialCambiMProducto.getPrecioMayoristaNuevo());
 
-			statement.setString(9, historialCambiMProducto.getPrecioMinoristaAntiguo());
-			statement.setString(10, historialCambiMProducto.getPrecioMinoristaNuevo());
+			statement.setString(10, historialCambiMProducto.getPrecioMinoristaAntiguo());
+			statement.setString(11, historialCambiMProducto.getPrecioMinoristaNuevo());
 
-			statement.setString(11, historialCambiMProducto.getPuntoRepositorioAntiguo());
-			statement.setString(12, historialCambiMProducto.getPuntoRepositorioNuevo());
+			statement.setString(12, historialCambiMProducto.getPuntoRepositorioAntiguo());
+			statement.setString(13, historialCambiMProducto.getPuntoRepositorioNuevo());
 
-			statement.setString(13, historialCambiMProducto.getCantidadAReponerAntiguo());
-			statement.setString(14, historialCambiMProducto.getCantidadAReponerNuevo());
+			statement.setString(14, historialCambiMProducto.getCantidadAReponerAntiguo());
+			statement.setString(15, historialCambiMProducto.getCantidadAReponerNuevo());
 
-			statement.setString(15, historialCambiMProducto.getDiasParaReponerAntiguo());
-			statement.setString(16, historialCambiMProducto.getDiasParaReponerNuevo());
+			statement.setString(16, historialCambiMProducto.getDiasParaReponerAntiguo());
+			statement.setString(17, historialCambiMProducto.getDiasParaReponerNuevo());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -91,29 +92,30 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		try {
 			statement = conexion.prepareStatement(update);
 
-			statement.setString(1, historialCambioMProducto_nuevo.getIdEmpleado());
-			statement.setString(2, historialCambioMProducto_nuevo.getIdMaestroProducto());
-			statement.setString(3, historialCambioMProducto_nuevo.getFecha());
+			statement.setString(1, historialCambioMProducto_nuevo.getIdSucursal());
+			statement.setString(2, historialCambioMProducto_nuevo.getIdEmpleado());
+			statement.setString(3, historialCambioMProducto_nuevo.getIdMaestroProducto());
+			statement.setString(4, historialCambioMProducto_nuevo.getFecha());
 
-			statement.setString(4, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
-			statement.setString(5, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
+			statement.setString(5, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
+			statement.setString(6, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
 
-			statement.setString(6, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
-			statement.setString(7, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
+			statement.setString(7, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
+			statement.setString(8, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
 
-			statement.setString(8, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
-			statement.setString(9, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
+			statement.setString(9, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
+			statement.setString(10, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
 
-			statement.setString(10, historialCambioMProducto_nuevo.getPuntoRepositorioAntiguo());
-			statement.setString(11, historialCambioMProducto_nuevo.getPuntoRepositorioNuevo());
+			statement.setString(11, historialCambioMProducto_nuevo.getPuntoRepositorioAntiguo());
+			statement.setString(12, historialCambioMProducto_nuevo.getPuntoRepositorioNuevo());
 
-			statement.setString(12, historialCambioMProducto_nuevo.getCantidadAReponerAntiguo());
-			statement.setString(13, historialCambioMProducto_nuevo.getCantidadAReponerNuevo());
+			statement.setString(13, historialCambioMProducto_nuevo.getCantidadAReponerAntiguo());
+			statement.setString(14, historialCambioMProducto_nuevo.getCantidadAReponerNuevo());
 
-			statement.setString(14, historialCambioMProducto_nuevo.getDiasParaReponerAntiguo());
-			statement.setString(15, historialCambioMProducto_nuevo.getDiasParaReponerNuevo());
+			statement.setString(15, historialCambioMProducto_nuevo.getDiasParaReponerAntiguo());
+			statement.setString(16, historialCambioMProducto_nuevo.getDiasParaReponerNuevo());
 
-			statement.setInt(16, id_historialCambioMProducto_a_actualizar);
+			statement.setInt(17, id_historialCambioMProducto_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -145,6 +147,7 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 
 	private HistorialCambioMProductoDTO getHistorialCambioMProductoDTO(ResultSet resultSet) throws SQLException {
 		int idHistorialCambioProducto = resultSet.getInt("IdHistorialCambioMProducto");
+		String idSucursal = resultSet.getString("IdSucursal");
 		String idEmpleado = resultSet.getString("IdEmpleado");
 		String idMaestroProducto = resultSet.getString("IdMaestroProducto");
 		String fecha = resultSet.getString("Fecha");
@@ -167,21 +170,21 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		String DiasParaReponerAntiguo = resultSet.getString("DiasParaReponerAntiguo");
 		String DiasParaReponerNuevo = resultSet.getString("DiasParaReponerNuevo");
 
-		return new HistorialCambioMProductoDTO(idHistorialCambioProducto, idEmpleado, idMaestroProducto, fecha,
-				precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+		return new HistorialCambioMProductoDTO(idHistorialCambioProducto, idSucursal, idEmpleado, idMaestroProducto,
+				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
 				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioNuevo,
 				CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo, DiasParaReponerNuevo);
 	}
 
-	public List<HistorialCambioMProductoDTO> getHistorialCambioMProductoAproximado(String nombreColumna1,
-			String txtAprox1, String nombreColumna2, String txtAprox2) {
+	public List<HistorialCambioMProductoDTO> getFiltroHistorialCambioMProducto(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM historialCambioMProducto WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'";
 
-		if (nombreColumna2 != null && txtAprox2 != null) {
-			sel = sel + "AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
-		}
+		String sel = "SELECT * FROM historialcambiomproducto WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + " AND " + nombreColumna3 + " LIKE '%"
+				+ txtAprox3 + "%'" + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
 
 		ArrayList<HistorialCambioMProductoDTO> historialCambioMProducto = new ArrayList<HistorialCambioMProductoDTO>();
 		Conexion conexion = Conexion.getConexion();

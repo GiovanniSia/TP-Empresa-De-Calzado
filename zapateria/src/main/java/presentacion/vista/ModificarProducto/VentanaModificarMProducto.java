@@ -1,4 +1,4 @@
-package presentacion.vista;
+package presentacion.vista.ModificarProducto;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -78,6 +78,7 @@ public class VentanaModificarMProducto extends JFrame {
 	
 	private String[] elementosCB  = {"Mayorista y Minorista","Costo","Mayorista","Minorista"};
 	private JComboBox cbTipoPrecio;
+	private JButton btnCambiarDescripcionYProveedor;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -99,7 +100,7 @@ public class VentanaModificarMProducto extends JFrame {
 		panel.setBounds(0, 147, 864, 459);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
-
+		
 		spProducto = new JScrollPane();
 		spProducto.setBounds(10, 11, 844, 117);
 		panel.add(spProducto);
@@ -338,14 +339,14 @@ public class VentanaModificarMProducto extends JFrame {
 		tablaProductosModificar.getTableHeader().setReorderingAllowed(false) ;
 		spProducto_1.setViewportView(tablaProductosModificar);
 		
-		btnAgregarProductosEnTabla = new JButton("Agregar Productos en Tabla");
-		btnAgregarProductosEnTabla.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAgregarProductosEnTabla.setBounds(605, 134, 249, 23);
+		btnAgregarProductosEnTabla = new JButton("Agregar Productos a Tabla Modificar");
+		btnAgregarProductosEnTabla.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnAgregarProductosEnTabla.setBounds(612, 134, 242, 23);
 		panel.add(btnAgregarProductosEnTabla);
 		
 		btnAgregarProductoSeleccionado = new JButton("Agregar Producto Seleccionado");
-		btnAgregarProductoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnAgregarProductoSeleccionado.setBounds(353, 134, 249, 23);
+		btnAgregarProductoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnAgregarProductoSeleccionado.setBounds(373, 134, 229, 23);
 		panel.add(btnAgregarProductoSeleccionado);
 		
 		JLabel lblNewLabel = new JLabel("Productos a Modificar");
@@ -384,6 +385,11 @@ public class VentanaModificarMProducto extends JFrame {
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_3.setBounds(99, 403, 47, 14);
 		panel.add(lblNewLabel_3);
+		
+		btnCambiarDescripcionYProveedor = new JButton("Cambiar Descripcion y Proveedor");
+		btnCambiarDescripcionYProveedor.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCambiarDescripcionYProveedor.setBounds(145, 134, 218, 23);
+		panel.add(btnCambiarDescripcionYProveedor);
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 69, 864, 81);
@@ -486,6 +492,10 @@ public class VentanaModificarMProducto extends JFrame {
 
 	public JTextField getTxtFiltroDescripcion() {
 		return txtFiltroDescripcion;
+	}
+	
+	public JButton getBtnCambiarDescripcionYProveedor() {
+		return btnCambiarDescripcionYProveedor;
 	}
 
 	public JTextField getTxtFiltroTalle() {

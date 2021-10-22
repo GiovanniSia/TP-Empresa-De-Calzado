@@ -75,6 +75,7 @@ CREATE TABLE `sucursales`
 CREATE TABLE `historialCambioMProducto`
 (
   `IdHistorialCambioMProducto` int(11) NOT NULL AUTO_INCREMENT,
+  `IdSucursal` varchar(45) NOT NULL,
   `IdEmpleado` varchar(45) NOT NULL,
   `IdMaestroProducto` varchar(45) NOT NULL,
   `Fecha` Date NOT NULL,

@@ -1,4 +1,4 @@
-package presentacion.vista;
+package presentacion.vista.ModificarProducto;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class VentanaHistorialCambioMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = {"Cod.Empleado", "Cod.Producto", "Fecha", "P.CostoAntiguo", "P.CostoNuevo", "P.MayoristaAntiguo",
+	private String[] nombreColumnas = {"Cod.Empleado","Cod. Sucursal", "Cod.Producto", "Fecha", "P.CostoAntiguo", "P.CostoNuevo", "P.MayoristaAntiguo",
 			"P.MayoristaNuevo", "P.MinoristaAntiguo", "P.MinoristaNuevo","PuntoRepositorioAntiguo","PuntoRepositorioNuevo","CantidadAReponerAntiguo","CantidadAReponerNuevo","DiasParaReponerAntiguo","DiasParaReponerNuevo"};
 	private DefaultTableModel modelhistorialCambioMProducto;
 	private JTable tablaHistorialCambioMProducto;
@@ -37,6 +37,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 	private JButton btnVolverAModificarProducto;
 
 	private JPanel panel_1;
+	private JTextField txtFiltroCodSucursal;
 
 	public VentanaHistorialCambioMProducto() {
 		initialize();
@@ -98,22 +99,22 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		panel_1.setLayout(null);
 
 		lblCodProducto = new JLabel("Cod. Producto");
-		lblCodProducto.setBounds(137, 36, 114, 20);
+		lblCodProducto.setBounds(262, 36, 114, 20);
 		lblCodProducto.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(lblCodProducto);
 
 		txtFiltroCodProducto = new JTextField();
 
-		txtFiltroCodProducto.setBounds(134, 67, 116, 20);
+		txtFiltroCodProducto.setBounds(259, 67, 116, 20);
 		panel_1.add(txtFiltroCodProducto);
 
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFecha.setBounds(261, 36, 70, 20);
+		lblFecha.setBounds(386, 36, 70, 20);
 		panel_1.add(lblFecha);
 
 		txtFiltroFecha = new JTextField();
-		txtFiltroFecha.setBounds(261, 67, 114, 20);
+		txtFiltroFecha.setBounds(386, 67, 114, 20);
 		panel_1.add(txtFiltroFecha);
 
 		lblCodEmpleado = new JLabel("Cod. Empleado");
@@ -129,6 +130,15 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
+		
+		JLabel lblCodSucursal = new JLabel("Cod. Sucursal");
+		lblCodSucursal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodSucursal.setBounds(137, 36, 114, 20);
+		panel_1.add(lblCodSucursal);
+		
+		txtFiltroCodSucursal = new JTextField();
+		txtFiltroCodSucursal.setBounds(134, 67, 116, 20);
+		panel_1.add(txtFiltroCodSucursal);
 
 		lblVerHistorialCambiosMProducto = new JLabel("Historial de Cambios de Productos");
 		lblVerHistorialCambiosMProducto.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -159,6 +169,10 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 
 	public JTextField getTxtFiltroCodProducto() {
 		return txtFiltroCodProducto;
+	}
+	
+	public JTextField getTxtFiltroCodSucursal() {
+		return txtFiltroCodSucursal;
 	}
 
 	public JTextField getTxtFiltroFecha() {
@@ -194,5 +208,4 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
-
 }
