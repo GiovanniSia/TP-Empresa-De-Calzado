@@ -15,7 +15,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.PedidosPendientesDTO;
+import dto.StockDTO;
 import modelo.PedidosPendientes;
+import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.Supervisor.VentanaVerPedidosAProveedores;
 
@@ -23,19 +25,24 @@ public class ControladorVerPedidosAProveedor {
 
 	PedidosPendientes pedidosPendientes;
 	
+	Stock stock;
+	List<StockDTO> listaStock;
+	
 	List<PedidosPendientesDTO> todosLosPedidosPendientes;
 	List<PedidosPendientesDTO> pedidosPendientesEnTabla;
 	
 	VentanaVerPedidosAProveedores ventanaVerPedidosAProveedor;
 	
-	public ControladorVerPedidosAProveedor(PedidosPendientes pedidosPendientes) {
+	public ControladorVerPedidosAProveedor(PedidosPendientes pedidosPendientes, Stock stock) {
 		this.pedidosPendientes = pedidosPendientes;
 		this.todosLosPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 		this.pedidosPendientesEnTabla = new ArrayList<PedidosPendientesDTO>();
 		this.ventanaVerPedidosAProveedor = new VentanaVerPedidosAProveedores();
+		this.stock = stock;
 	}
 	
 	public void inicializar() {
+		this.listaStock = this.stock.readAll();
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		
 		this.ventanaVerPedidosAProveedor.getBtnSalir().addActionListener(a -> salir(a));
@@ -117,7 +124,6 @@ public class ControladorVerPedidosAProveedor {
             hora = dateFmt.format(fechaHora);
         } 
         
-		System.out.println("hora: "+hora);
 		//falta el ultimo cb que no se que va
 		
 		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fecha, "Hora", hora, null, null);
@@ -217,23 +223,49 @@ public class ControladorVerPedidosAProveedor {
 	    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
 	    String hora = tf.format(LocalDateTime.now());
 		
-		boolean update = this.pedidosPendientes.finalizarPedido("Completado", fecha, hora, pedidoSeleccionado.getId());
+	    
+		StockDTO stockDeProd = getStock(pedidoSeleccionado.getIdMaestroProducto());
 		
-		if(update) {
-			JOptionPane.showMessageDialog(null, "Pedido completado con exito");
-		}else {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al completar el pedido");
+		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+stockDeProd.getStockDisponible()+" -> Stock actualizado: "+(stockDeProd.getStockDisponible()+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if(resp==0) {
+			boolean update = this.pedidosPendientes.finalizarPedido("Completado", fecha, hora, pedidoSeleccionado.getId());
+			
+			if(update) {
+				JOptionPane.showMessageDialog(null, "Pedido completado con exito");
+			}else {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al completar el pedido");
+			}
+			
+			int nuevaCant = stockDeProd.getStockDisponible() + pedidoSeleccionado.getCantidad();
+			
+			boolean descontarStock = this.stock.actualizarStock(stockDeProd.getIdStock(), nuevaCant);
+			if(!descontarStock) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al reponer el stock", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		}
+		
 		
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		llenarTablaCompleta();
 		
 	}
 	
+	public StockDTO getStock(int idProducto) {
+		for(StockDTO s: this.listaStock) {
+			if(s.getIdProducto()==idProducto) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
 	
 	public static void main(String[] args) {
 		PedidosPendientes pedido = new PedidosPendientes(new DAOSQLFactory());
-		ControladorVerPedidosAProveedor c = new ControladorVerPedidosAProveedor(pedido);
+		Stock stock = new Stock(new DAOSQLFactory());
+		ControladorVerPedidosAProveedor c = new ControladorVerPedidosAProveedor(pedido,stock);
 		c.inicializar();
 		c.mostrarVentana();
 	}

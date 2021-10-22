@@ -467,7 +467,10 @@ public class ControladorBusquedaProductos {
 				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
 					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
 					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
-					System.out.println("se pudo?: "+a);
+					if(!a) {
+						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al descontar del stock");
+						return;
+					}
 				}
 			}
 		}
