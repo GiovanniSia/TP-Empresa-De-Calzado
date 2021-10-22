@@ -156,16 +156,16 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 		String sel = "SELECT * FROM PedidosPendientes";
-		if(nombreColumna1!=null && !txt1.equals("")) {
+		if(nombreColumna1!=null) {
 			sel = sel +" WHERE " + nombreColumna1 + " LIKE '%" + txt1 + "%'";
 		}
-		if(nombreColumna2!=null && !txt2.equals("")) {
+		if(nombreColumna2!=null) {
 			sel = sel+" AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
 		}
-		if(nombreColumna3!=null && !txt3.equals("")) {
+		if(nombreColumna3!=null) {
 			sel = sel+" AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
 		}
-		if(nombreColumna4!=null &&  !txt4.equals("")) {
+		if(nombreColumna4!=null) {
 			sel = sel+ " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";
 		}
 		if(nombreColumna5!=null && !txt5.equals("Sin seleccionar")  ) {
