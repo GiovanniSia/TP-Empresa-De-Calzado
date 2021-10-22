@@ -1,10 +1,15 @@
 package presentacion.controlador.supervisor;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -39,7 +44,14 @@ public class ControladorVerPedidosAProveedor {
 		
 		this.ventanaVerPedidosAProveedor.getBtnConfirmarCancelacionDe().addActionListener(a -> cancelarPedido(a));
 		
-		llenarTabla();
+		this.ventanaVerPedidosAProveedor.getTextId().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		
+		llenarTablaCompleta();
 	}
 	
 	
@@ -56,33 +68,91 @@ public class ControladorVerPedidosAProveedor {
 		cerrarVentana();
 	}
 	
-	public void llenarTabla() {
+	public void llenarTablaCompleta() {
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnCount(0);
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnIdentifiers(this.ventanaVerPedidosAProveedor.getNombreColumnasTablaPedidos());
 		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
 		
 		for(PedidosPendientesDTO p: this.todosLosPedidosPendientes) {
-			int id = p.getId();
-			String proveedor = p.getNombreProveedor();
-			String prod = p.getNombreMaestroProducto();
-			int cant = p.getCantidad();
-			String unidadMedida = p.getUnidadMedida();
-			
-			double precioTota = p.getPrecioTotal();
-			BigDecimal precioTotal = new BigDecimal(precioTota);
-			
-			
-			
-			String estado = p.getEstado();
-			String fechaHora = p.getFecha()+" - "+p.getHora();
-			String fechaHoraEnvio = p.getFechaEnvioMail() != null ? p.getFechaEnvioMail()+" - "+p.getHoraEnvioMail() : "-";
-			String fechaHoraCierre = p.getFechaCompleto() != null ? p.getFechaCompleto()+" - "+p.getHoraCompleto() : "-";
-			Object[] fila = {id,proveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre};
-			this.ventanaVerPedidosAProveedor.getModelTablaPedidos().addRow(fila);
-			this.pedidosPendientesEnTabla.add(p);
+			escribirTabla(p);
 		}
 	}
+	
+	public void realizarBusqueda() {
+		String id=this.ventanaVerPedidosAProveedor.getTextId().getText();
+		String proveedor = this.ventanaVerPedidosAProveedor.getTextProveedor().getText();
+		String producto = this.ventanaVerPedidosAProveedor.getTextProducto().getText();
+		String precio = this.ventanaVerPedidosAProveedor.getTextPrecio().getText();
+		String estado = (String)this.ventanaVerPedidosAProveedor.getComboBoxEstado().getSelectedItem();
+		
+		
+		/*
+		public String fechaDesde() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaDesde = this.ventanaHistorialCambioMoneda.getFechaDesde().getDate();
+
+        String fechaDesdeFormato = null;
+        if (fechaDesde != null) {
+            fechaDesdeFormato = dateFormat.format(fechaDesde);
+        }
+        return fechaDesdeFormato;
+    }
+		
+		
+		*/
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fech = this.ventanaVerPedidosAProveedor.getDateChooser().getDate();
+		
+		String fecha = null;
+        if (fech != null) {
+            fecha = dateFormat.format(fech);
+        } 
+		
+		System.out.println(fecha);
+		Object hora =ventanaVerPedidosAProveedor.getSpinnerHora().getValue();
+		System.out.println("hora: "+hora);
+		//falta el ultimo cb que no se que va
+		
+		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fecha, "Hora", null, null, null);
+		
+		llenarTablaFiltrada(pedidosFiltrados);
+	}
+	
+	public void escribirTabla(PedidosPendientesDTO p) {
+		int id = p.getId();
+		String proveedor = p.getNombreProveedor();
+		String prod = p.getNombreMaestroProducto();
+		int cant = p.getCantidad();
+		String unidadMedida = p.getUnidadMedida();
+		
+		double precioTota = p.getPrecioTotal();
+		BigDecimal precioTotal = new BigDecimal(precioTota);
+		
+		
+		
+		String estado = p.getEstado();
+		String fechaHora = p.getFecha()+" - "+p.getHora();
+		String fechaHoraEnvio = p.getFechaEnvioMail() != null ? p.getFechaEnvioMail()+" - "+p.getHoraEnvioMail() : "-";
+		String fechaHoraCierre = p.getFechaCompleto() != null ? p.getFechaCompleto()+" - "+p.getHoraCompleto() : "-";
+		Object[] fila = {id,proveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre};
+		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().addRow(fila);
+		this.pedidosPendientesEnTabla.add(p);	
+	}
+	
+	
+	public void llenarTablaFiltrada(List<PedidosPendientesDTO> pedidosFiltrados) {
+		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setRowCount(0);//borrar datos de la tabla
+		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnCount(0);
+		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnIdentifiers(this.ventanaVerPedidosAProveedor.getNombreColumnasTablaPedidos());
+		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
+		
+		for(PedidosPendientesDTO p: pedidosFiltrados) {
+			escribirTabla(p);
+		}
+		
+	}
+	
 	
 	public void cancelarPedido(ActionEvent a) {
 		int filaSeleccionada = this.ventanaVerPedidosAProveedor.getTablePedidos().getSelectedRow();
@@ -110,7 +180,7 @@ public class ControladorVerPedidosAProveedor {
 		}
 		
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
-		llenarTabla();
+		llenarTablaCompleta();
 	}
 	
 	public void confirmarPedido(ActionEvent a) {
@@ -150,7 +220,7 @@ public class ControladorVerPedidosAProveedor {
 		}
 		
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
-		llenarTabla();
+		llenarTablaCompleta();
 		
 	}
 	

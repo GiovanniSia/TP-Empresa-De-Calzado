@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dto.CarritoDTO;
 import dto.PedidosPendientesDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
@@ -16,6 +18,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	private static final String delete = "DELETE FROM PedidosPendientes WHERE Id=?";
 	private static final String finalzarPedido = "UPDATE PedidosPendientes SET Estado=?, FechaCompleto=?, HoraCompleto=? WHERE Id=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
+
 	
 	@Override
 	public boolean insert(PedidosPendientesDTO pedido) {
@@ -145,4 +148,55 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		String unidadMedida = resultSet.getString("UnidadMedida");
 		return new PedidosPendientesDTO(id,idProveedor,nombreProveedor,idMaestroProducto,nombreMaestroProducto,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSucursal,fechaEnvioMail,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 	}
+	
+	
+	
+	@Override
+	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String txt6, String nombreColumna7,String txt7, String nombreColumna8,String txt8){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM PedidosPendientes";
+		if(nombreColumna1!=null && txt1!=null) {
+			sel = sel +" WHERE " + nombreColumna1 + " LIKE '%" + txt1 + "%'";
+		}
+		if(nombreColumna2!=null && txt2!=null) {
+			sel = sel+" AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
+		}
+		if(nombreColumna3!=null && txt3!=null) {
+			sel = " AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
+		}
+		if(nombreColumna4!=null && txt4!=null) {
+			sel = " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";
+		}
+		if(nombreColumna5!=null && (txt5!=null || !txt5.equals("Sin seleccionar") ) ) {
+			sel = " AND " + nombreColumna5 + " LIKE '%" + txt5 + "%'";
+		}
+		if(nombreColumna6!=null && txt6!=null) {
+			sel = " AND " + nombreColumna6 + " LIKE '%" + txt6 + "%'";
+		}
+		if(nombreColumna7!=null && txt7!=null) {
+			sel = " AND " + nombreColumna7 + " LIKE '%" + txt7 + "%'";
+		}
+		if(nombreColumna8!=null && txt8!=null) {
+			sel = " AND " + nombreColumna8 + " LIKE '%" + txt8 + "%'";
+		}
+		
+		System.out.println(sel);
+		
+		
+		ArrayList<PedidosPendientesDTO> pedidos = new ArrayList<PedidosPendientesDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				pedidos.add(getPedidoPendienteDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pedidos;
+	}	
+	
+	
 }

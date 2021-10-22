@@ -111,7 +111,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 			
 			String mensaje="";
 			for(PedidosPendientesDTO p: pedidosDeProv) {
-				mensaje = p.getNombreMaestroProducto() + " - "+p.getCantidad()+ "\n";
+				mensaje = mensaje + p.getNombreMaestroProducto() + " - "+p.getCantidad()+ "\n";
 			}
 			
 			Properties props = new Properties();

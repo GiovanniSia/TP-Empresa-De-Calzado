@@ -15,4 +15,5 @@ public interface PedidosPendientesDAO {
 	
 	public List<PedidosPendientesDTO> readAll();
 	
+	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String txt6, String nombreColumna7,String txt7, String nombreColumna8,String txt8);
 }
