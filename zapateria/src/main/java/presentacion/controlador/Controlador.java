@@ -2,6 +2,7 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -245,6 +246,14 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnIngresarProductoNuevo().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaMenuSistemaDeVentas.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		//Consultar proveedores y asignarle un producto
+		
+		
+		try {
+			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void mostrarVentanaMenu() {
