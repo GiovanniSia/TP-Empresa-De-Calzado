@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.MaestroProductoDTO;
 import dto.ProveedorDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ProveedorDAO;

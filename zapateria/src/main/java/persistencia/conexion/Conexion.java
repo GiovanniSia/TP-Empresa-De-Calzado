@@ -15,7 +15,7 @@ public class Conexion {
 			// Class.forName("com.mysql.jdbc.Driver"); // quitar si no es necesario,
 			// versiones antiguas de mysql
 			Class.forName("com.mysql.cj.jdbc.Driver"); // PARA VERSIONES MAS AVANZADAS
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/zapateria", "root", "root");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/zapateria", "root", "");
 
 			// Conexion con la base de datos en la nube
 			// this.connection =

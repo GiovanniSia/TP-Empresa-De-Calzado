@@ -4,7 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import javax.swing.JComboBox;
@@ -18,7 +17,7 @@ public class fecha extends JFrame
 	
 	private JLabel lblFecha;
 	
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	
 	public static fecha getInstance()
 	{
@@ -55,7 +54,7 @@ public class fecha extends JFrame
 		btnElegir.setBounds(348, 43, 89, 23);
 		panel.add(btnElegir);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		comboBox.setBounds(248, 7, 89, 22);
 		panel.add(comboBox);
 		
@@ -76,7 +75,7 @@ public class fecha extends JFrame
 		return lblFecha;
 	}
 	
-	public JComboBox getComboBox() {
+	public JComboBox<String> getComboBox() {
 		return comboBox;
 	}
 	

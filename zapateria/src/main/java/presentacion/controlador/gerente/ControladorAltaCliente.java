@@ -9,7 +9,6 @@ import javax.swing.JOptionPane;
 
 import dto.ClienteDTO;
 import modelo.Cliente;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaAltaCliente;

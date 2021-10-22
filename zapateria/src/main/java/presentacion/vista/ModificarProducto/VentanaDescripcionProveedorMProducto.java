@@ -33,7 +33,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private JButton btnAtras;
 	private JButton btnActualizarProducto;
 	private JTextField txtActualizarCambioDescripcion;
-	private JComboBox cbActualizarCambioProveedor;
+	private JComboBox<String> cbActualizarCambioProveedor;
 
 	public static void main(String[] args) {
 		VentanaDescripcionProveedorMProducto v = new VentanaDescripcionProveedorMProducto();
@@ -128,7 +128,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		panel_1.add(txtActualizarCambioDescripcion);
 		txtActualizarCambioDescripcion.setColumns(10);
 
-		cbActualizarCambioProveedor = new JComboBox();
+		cbActualizarCambioProveedor = new JComboBox<String>();
 		cbActualizarCambioProveedor.setBounds(464, 104, 127, 22);
 		panel_1.add(cbActualizarCambioProveedor);
 
@@ -171,7 +171,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		return txtActualizarCambioDescripcion;
 	}
 
-	public JComboBox getCbActualizarCambioProveedor() {
+	public JComboBox<String> getCbActualizarCambioProveedor() {
 		return cbActualizarCambioProveedor;
 	}
 

@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 
 import dto.EmpleadoDTO;
 import dto.FabricacionesDTO;
@@ -33,7 +32,6 @@ import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
 import modelo.PedidosPendientes;
 import modelo.Stock;
-import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.ReVentanaIngresarFechaDeLlegada;
@@ -156,31 +154,26 @@ public class ReControladorOperario implements ActionListener {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
 				refrescarTablaPorTecla();
 			}
 		});
@@ -525,7 +518,12 @@ public class ReControladorOperario implements ActionListener {
 						ventanaPrincipal.getModelOrdenes().addRow(agregar);
 						
 						ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-						    @Override
+						    /**
+							 * 
+							 */
+							private static final long serialVersionUID = 1L;
+
+							@Override
 						    public Component getTableCellRendererComponent(JTable table,
 						            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
@@ -587,7 +585,12 @@ public class ReControladorOperario implements ActionListener {
 							ventanaPrincipal.getModelOrdenes().addRow(agregar);
 							
 							ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-							    @Override
+							    /**
+								 * 
+								 */
+								private static final long serialVersionUID = 1L;
+
+								@Override
 							    public Component getTableCellRendererComponent(JTable table,
 							            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
@@ -645,7 +648,7 @@ public class ReControladorOperario implements ActionListener {
 			}
 		}*/
 		ordenesEnLista  = new ArrayList<OrdenFabricaDTO>();
-		List<OrdenFabricaDTO> listaAux = new ArrayList<OrdenFabricaDTO>();
+//		List<OrdenFabricaDTO> listaAux = new ArrayList<OrdenFabricaDTO>();
 		if(stringQueDescribeElPasoActualDeLosOrdenesSinEmpezar.toLowerCase().matches(".*"+pasoActParametro.toLowerCase()+".*") && stringQueDescribeElEstadoDeLasOrdenesSinEmpezar.toLowerCase().matches(".*"+estadoParametro.toLowerCase()+".*")) {
 			ordenesEnLista = modeloFabricacion.readAllOrdenesSinTrabajar(producto,sucursal,id,fechaDesde,fechaHasta);
 //			System.out.println(ordenesEnLista.size());
@@ -738,7 +741,12 @@ public class ReControladorOperario implements ActionListener {
 		}
 		
 		ventanaElegirReceta.getTablaOrdenesPendientes().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Component getTableCellRendererComponent(JTable table,
                     Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
@@ -819,7 +827,12 @@ public class ReControladorOperario implements ActionListener {
 			//ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
 			hayMateriales = hayMateriales && cantUsar <= cantDisponible;
 			ventanaUnaTrabajo.getTablaIngredientes().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
-                @Override
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				@Override
                 public Component getTableCellRendererComponent(JTable table,
                         Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 
@@ -906,7 +919,7 @@ public class ReControladorOperario implements ActionListener {
 	private void seleccionarAnio() {
 		ventanaParaCumple.getLblFecha().setText("Seleccione año");
 		ventanaParaCumple.getComboBox().removeAllItems();
-		DefaultComboBoxModel valores = new DefaultComboBoxModel();
+		DefaultComboBoxModel<String> valores = new DefaultComboBoxModel<String>();
 		ArrayList<String> val = new ArrayList<String>();
 		for(int x = 0; x < 122-100; x++) {
 			val.add(Integer.toString(x + 1900 + 100));
@@ -933,8 +946,8 @@ public class ReControladorOperario implements ActionListener {
 	private void seleccionarMes() {
 		ventanaParaCumple.getLblFecha().setText("Seleccione mes");
 		ventanaParaCumple.getComboBox().removeAllItems();
-		DefaultComboBoxModel valores = new DefaultComboBoxModel();
-		ventanaParaCumple.getComboBox().setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+//		DefaultComboBoxModel<String> valores = new DefaultComboBoxModel<String>();
+		ventanaParaCumple.getComboBox().setModel(new DefaultComboBoxModel<String>(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
 		ventanaParaCumple.getComboBox().setSelectedIndex(0);
 		
 		for(ActionListener i: ventanaParaCumple.getBtnElegir().getActionListeners()) {
@@ -999,7 +1012,7 @@ public class ReControladorOperario implements ActionListener {
 				diaMaximo = 31;
 				break;
 		}
-		DefaultComboBoxModel valores = new DefaultComboBoxModel();
+		DefaultComboBoxModel<String> valores = new DefaultComboBoxModel<String>();
 		ArrayList<String> val = new ArrayList<String>();
 		for(int x = 1; x <= diaMaximo; x++) {
 			val.add(Integer.toString(x));

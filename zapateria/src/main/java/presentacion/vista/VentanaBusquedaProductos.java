@@ -22,14 +22,12 @@ import persistencia.conexion.Conexion;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
-import javax.swing.JRadioButton;
 
 public class VentanaBusquedaProductos {
 
@@ -185,24 +183,24 @@ public class VentanaBusquedaProductos {
 		//BOTONES
 		btnAniadirProd = new JButton();
 		btnAniadirProd.setBounds(511, 115, 47, 42);
-		btnAniadirProd.setIcon(setIcono("imagenes/cart.png",btnAniadirProd));
+//		btnAniadirProd.setIcon(setIcono("imagenes/cart.png",btnAniadirProd));
 		panel.add(btnAniadirProd);
 		
 		btnQuitarProducto = new JButton("");
 		btnQuitarProducto.setBounds(855, 23, 39, 37);
-		btnQuitarProducto.setIcon(setIcono("imagenes/trash.png",btnQuitarProducto));
+//		btnQuitarProducto.setIcon(setIcono("imagenes/trash.png",btnQuitarProducto));
 		panel.add(btnQuitarProducto);
 		
 		btnArmarVenta = new JButton("");
 		btnArmarVenta.setForeground(Color.WHITE);
 		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 		btnArmarVenta.setBounds(508, 522, 93, 63);
-		btnArmarVenta.setIcon(setIcono("imagenes/dollar-symbol.png",btnArmarVenta));
+//		btnArmarVenta.setIcon(setIcono("imagenes/dollar-symbol.png",btnArmarVenta));
 		frame.getContentPane().add(btnArmarVenta);
 		
 		btnAtras = new JButton("");
 		btnAtras.setBounds(20, 534, 51, 63);
-		btnAtras.setIcon(setIcono("imagenes/back.png",btnAtras));
+//		btnAtras.setIcon(setIcono("imagenes/back.png",btnAtras));
 		frame.getContentPane().add(btnAtras);
 		
 		lblValorTotal = new JLabel("$0");

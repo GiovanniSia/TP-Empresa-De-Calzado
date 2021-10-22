@@ -13,7 +13,6 @@ import dto.ProveedorDTO;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaAltaProducto;
@@ -108,7 +107,7 @@ public class ControladorAltaProducto {
 		
 		String[] estado = {"Activo","Inactivo","Suspendido"};
 		for(int i=0; i<estado.length;i++) {
-			this.ventanaAltaProducto.getComboBoxEstado().addItem(estado[i]);
+			this.ventanaAltaProducto.getComboBoxFabricado().addItem(estado[i]);
 		}
 		
 	}
@@ -163,7 +162,7 @@ public class ControladorAltaProducto {
 			JOptionPane.showMessageDialog(null, "Debe establecer una unidad de medida");
 			return false;
 		}
-		String estado =(String) this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
+		String estado =(String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 		if(estado.equals("Sin seleccionar")) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un estado para el producto");
 			return false;
@@ -260,7 +259,7 @@ public class ControladorAltaProducto {
 			int proveedor = obtenerProveedor();
 			String talle = this.ventanaAltaProducto.getTextTalle().getText();
 			String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
-			String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
+			String estado = (String)this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 			int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
 			int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
 			
@@ -298,6 +297,7 @@ public class ControladorAltaProducto {
 //		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().enable();
 //	}
 	
+	@SuppressWarnings("deprecation")
 	public void actualizarCbDadoTipo(ActionEvent a) {
 		String tipo =(String) this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
 		if(tipo.equals("Materia Prima")) {
@@ -340,7 +340,7 @@ public class ControladorAltaProducto {
 //		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
 		this.ventanaAltaProducto.getTextTalle().setText("");
 		this.ventanaAltaProducto.getTextUnidadMedida().setText("");
-		this.ventanaAltaProducto.getComboBoxEstado().setSelectedIndex(0);
+		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(0);
 		this.ventanaAltaProducto.getTextCantidadAReponer().setText("");
 		this.ventanaAltaProducto.getTextDiasParaReponer().setText("");
 		

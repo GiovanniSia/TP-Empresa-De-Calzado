@@ -39,6 +39,7 @@ public class HistorialPasoDTO {
 		hora = generarHoraActual();
 	}
 
+	@SuppressWarnings("deprecation")
 	private String generarFechaActual() {
 		java.util.Date fecha = new java.util.Date();
 		int diaCompletado = fecha.getDate();

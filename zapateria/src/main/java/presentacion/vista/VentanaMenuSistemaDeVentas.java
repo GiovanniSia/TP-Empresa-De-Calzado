@@ -13,7 +13,6 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -187,7 +186,7 @@ public class VentanaMenuSistemaDeVentas {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(760, 460, 48, 50);
-		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
+//		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
 		panel.add(btnRegresar);
 		
 		btnGenerarOrdenDe = new JButton("Generar orden de manufactura");

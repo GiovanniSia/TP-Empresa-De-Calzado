@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.EmpleadoDTO;
-import dto.MaestroProductoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.EmpleadoDAO;
 

@@ -9,10 +9,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.ProveedorDTO;
-import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.Supervisor.VentanaConsultarProveedores;
 

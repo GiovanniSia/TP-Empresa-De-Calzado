@@ -16,7 +16,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 import persistencia.conexion.Conexion;
 
@@ -237,7 +236,7 @@ public class VentanaAsignarProductoAProveedor {
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(1072, 713, 54, 46);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 //		frame.getContentPane().add(btnSalir);
 		panel.add(btnSalir);
 		

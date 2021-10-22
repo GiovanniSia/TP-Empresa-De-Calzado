@@ -126,7 +126,7 @@ public class VentanaConsultarProveedores {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(10, 529, 56, 46);
-		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+//		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
 		frame.getContentPane().add(btnRegresar);
 		
 		btnSeleccionarProveedor = new JButton("Seleccionar Proveedor");

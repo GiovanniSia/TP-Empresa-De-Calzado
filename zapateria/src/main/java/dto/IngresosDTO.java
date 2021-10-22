@@ -1,8 +1,5 @@
 package dto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class IngresosDTO {
 	int id;
 	int idSucursal;

@@ -1,6 +1,5 @@
 package presentacion.vista.fabrica;
 
-import java.awt.Font;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,19 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.SwingConstants;
 
 public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	JComboBox comboBox;
+	JComboBox<String> comboBox;
 	
 	JButton btnTrabajar;
 	
@@ -55,7 +49,7 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		comboBox.setBounds(98, 11, 192, 22);
 		panel.add(comboBox);
 		
@@ -115,7 +109,7 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		this.setVisible(true);
 	}
 
-	public JComboBox getComboBox() {
+	public JComboBox<String> getComboBox() {
 		return comboBox;
 	}
 	

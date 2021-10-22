@@ -16,7 +16,6 @@ import dto.ProveedorDTO;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaAsignarProductoAProveedor;
 

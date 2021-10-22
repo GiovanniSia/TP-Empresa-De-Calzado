@@ -123,7 +123,7 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(740, 351, 46, 38);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
 		JLabel lblNewLabel_1 = new JLabel("Cantidad deseada");

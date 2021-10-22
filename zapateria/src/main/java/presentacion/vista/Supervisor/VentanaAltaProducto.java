@@ -42,9 +42,9 @@ public class VentanaAltaProducto {
 	private JButton btnRegresar;
 	private JButton btnBorrarProveedor;
 
-	private JComboBox comboBoxEstado;
-	private JComboBox comboBoxFabricado;
-	private JComboBox comboBoxTipo;
+	private JComboBox<String> comboBoxEstado;
+	private JComboBox<String> comboBoxFabricado;
+	private JComboBox<String> comboBoxTipo;
 
 	private JLabel lblCantidadAReponer;
 	private JButton btnElegirProveedor;
@@ -314,7 +314,7 @@ public class VentanaAltaProducto {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(10, 553, 50, 58);
-		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+//		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
 		frame.getContentPane().add(btnRegresar);
 		
 		
@@ -323,17 +323,17 @@ public class VentanaAltaProducto {
 		frame.getContentPane().add(btnRegistrar);
 		
 		
-		comboBoxEstado = new JComboBox();
+		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setBounds(178, 464, 178, 19);
 		comboBoxEstado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxEstado);
 		
-		comboBoxFabricado = new JComboBox();
+		comboBoxFabricado = new JComboBox<String>();
 		comboBoxFabricado.setBounds(178, 129, 178, 19);
 		comboBoxFabricado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxFabricado);
 		
-		comboBoxTipo = new JComboBox();
+		comboBoxTipo = new JComboBox<String>();
 		comboBoxTipo.setBounds(178, 89, 178, 19);
 		comboBoxTipo.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipo);
@@ -357,7 +357,7 @@ public class VentanaAltaProducto {
 		
 		btnBorrarProveedor = new JButton("");
 		btnBorrarProveedor.setBounds(380, 341, 33, 33);
-		btnBorrarProveedor.setIcon(setIcono("../imagenes/trash.png",btnBorrarProveedor));
+//		btnBorrarProveedor.setIcon(setIcono("../imagenes/trash.png",btnBorrarProveedor));
 		frame.getContentPane().add(btnBorrarProveedor);
 	}
 
@@ -437,16 +437,16 @@ public class VentanaAltaProducto {
 		return btnRegresar;
 	}
 
-	public JComboBox getComboBoxEstado() {
+	public JComboBox<String> JComboBox() {
 		return comboBoxEstado;
 	}
 
 
-	public JComboBox getComboBoxFabricado() {
+	public JComboBox<String> getComboBoxFabricado() {
 		return comboBoxFabricado;
 	}
 
-	public JComboBox getComboBoxTipo() {
+	public JComboBox<String> getComboBoxTipo() {
 		return comboBoxTipo;
 	}
 	public JTextField getTextCantidadAReponer() {

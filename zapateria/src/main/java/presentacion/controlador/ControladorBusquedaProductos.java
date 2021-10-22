@@ -3,11 +3,8 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -362,7 +359,7 @@ public class ControladorBusquedaProductos {
 						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
 				}else {
-					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
+//					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
 
 					return s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
 				}

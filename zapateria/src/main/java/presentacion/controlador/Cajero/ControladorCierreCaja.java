@@ -16,7 +16,6 @@ import dto.IngresosDTO;
 import dto.MedioPagoDTO;
 import dto.MedioPagoEgresoDTO;
 import modelo.Caja;
-import dto.SucursalDTO;
 import modelo.Egresos;
 import modelo.Empleado;
 import modelo.HistorialCambioMoneda;
@@ -27,7 +26,6 @@ import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ControladorHistorialCambioCotizacion;
 import presentacion.reportes.ReporteCajaDiaria;
-import presentacion.reportes.ReporteFactura;
 import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
@@ -80,7 +78,7 @@ public class ControladorCierreCaja {
 	}
 	
 	public void mostrarReporte() {
-		ReporteCajaDiaria ca = new ReporteCajaDiaria(this.idSucursal);
+		ReporteCajaDiaria ca = new ReporteCajaDiaria(idSucursal);
 		ca.mostrarUltimoReporte();
 		
 	}
@@ -108,7 +106,7 @@ public class ControladorCierreCaja {
 			return;
 		}
 		
-		EmpleadoDTO empleado = this.empleado.selectEmpleado(this.idEmpleado);
+		EmpleadoDTO empleado = this.empleado.selectEmpleado(idEmpleado);
 		ArrayList<CajaDTO> cajas = (ArrayList<CajaDTO>) this.caja.readAll();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());

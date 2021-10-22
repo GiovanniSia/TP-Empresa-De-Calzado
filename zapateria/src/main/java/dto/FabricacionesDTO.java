@@ -36,6 +36,7 @@ public class FabricacionesDTO {
 		Estado = "cancelado";
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void completarOrden() {
 		Estado = "completo";
 		java.util.Date fecha = new java.util.Date();

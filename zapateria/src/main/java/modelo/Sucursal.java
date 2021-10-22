@@ -2,10 +2,8 @@ package modelo;
 
 import java.util.List;
 
-import dto.EmpleadoDTO;
 import dto.SucursalDTO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
-import persistencia.dao.interfaz.EmpleadoDAO;
 import persistencia.dao.interfaz.SucursalDAO;
 
 public class Sucursal {

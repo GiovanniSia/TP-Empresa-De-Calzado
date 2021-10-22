@@ -30,10 +30,11 @@ public class EnviarCorreosAProveedoresAutomatico {
 
 	
 	
+	@SuppressWarnings("deprecation")
 	public static void verificarEnvioDeMailsAutomatico() throws ParseException {
 		
 		String diaDeEnvio = "viernes";
-		int horaDeEnvio = 20; 
+//		int horaDeEnvio = 20; 
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -98,13 +99,13 @@ public class EnviarCorreosAProveedoresAutomatico {
 		}
 	}
 	
-	private static void imprimirMail(ArrayList<PedidosPendientesDTO> pedidosDeProv) {	
-		String mensaje="";
-		for(PedidosPendientesDTO p: pedidosDeProv) {
-			mensaje = p.getNombreMaestroProducto() + " - "+p.getCantidad()+ "\n";
-		}
-		System.out.println("el msj: \n"+mensaje);
-	}
+//	private static void imprimirMail(ArrayList<PedidosPendientesDTO> pedidosDeProv) {	
+//		String mensaje="";
+//		for(PedidosPendientesDTO p: pedidosDeProv) {
+//			mensaje = p.getNombreMaestroProducto() + " - "+p.getCantidad()+ "\n";
+//		}
+//		System.out.println("el msj: \n"+mensaje);
+//	}
 	
 	private static void enviarMail(ProveedorDTO proveedor,ArrayList<PedidosPendientesDTO> pedidosDeProv) {
 		try {
@@ -146,24 +147,12 @@ public class EnviarCorreosAProveedoresAutomatico {
 			
 			
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 //			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
 			JOptionPane.showMessageDialog(null, "Error, el primero xd");
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Error, el segundo xd");
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		try {
-			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 }

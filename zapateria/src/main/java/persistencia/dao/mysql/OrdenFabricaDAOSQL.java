@@ -26,7 +26,7 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 			statement = conexion.prepareStatement(insert);
 			statement.setInt(1, ordenAInsertar.getIdProd());
 			
-			java.util.Date fecha = new java.util.Date();
+//			java.util.Date fecha = new java.util.Date();
 			/*
 			System.out.println (fecha);
 			System.out.println(fecha.getDate());

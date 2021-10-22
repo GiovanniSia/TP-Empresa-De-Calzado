@@ -17,7 +17,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.Icon;
@@ -43,8 +42,8 @@ public class VentanaAltaCliente {
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
 
-	private JComboBox comboBoxImpuestoAFIP;
-	private JComboBox comboBoxTipoCliente;
+	private JComboBox<String> comboBoxImpuestoAFIP;
+	private JComboBox<String> comboBoxTipoCliente;
 	private JTextField textSaldoInicial;
 
 	/**
@@ -305,15 +304,15 @@ public class VentanaAltaCliente {
 		
 		btnCancelar = new JButton("");
 		btnCancelar.setBounds(10, 628, 40, 44);
-		btnCancelar.setIcon(setIcono("../imagenes/back.png",btnCancelar));
+//		btnCancelar.setIcon(setIcono("../imagenes/back.png",btnCancelar));
 		frame.getContentPane().add(btnCancelar);
 		
-		comboBoxImpuestoAFIP = new JComboBox();
+		comboBoxImpuestoAFIP = new JComboBox<String>();
 		comboBoxImpuestoAFIP.setBounds(128, 278, 198, 23);
 		this.comboBoxImpuestoAFIP.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxImpuestoAFIP);
 		
-		comboBoxTipoCliente = new JComboBox();
+		comboBoxTipoCliente = new JComboBox<String>();
 		comboBoxTipoCliente.setBounds(128, 247, 198, 23);
 		this.comboBoxTipoCliente.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipoCliente);
@@ -423,11 +422,11 @@ public class VentanaAltaCliente {
 		return btnCancelar;
 	}
 	
-	public JComboBox getComboBoxImpuestoAFIP() {
+	public JComboBox<String> getComboBoxImpuestoAFIP() {
 		return comboBoxImpuestoAFIP;
 	}
 
-	public JComboBox getComboBoxTipoCliente() {
+	public JComboBox<String> getComboBoxTipoCliente() {
 		return comboBoxTipoCliente;
 	}
 	public JTextField getTextSaldoInicial() {

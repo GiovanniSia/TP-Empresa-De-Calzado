@@ -48,7 +48,7 @@ public class VentanaVerPedidosAProveedores {
 	private JButton btnConfirmarPedido;
 	private JButton btnConfirmarCancelacionDe;
 	
-	private JComboBox comboBoxEstado;
+	private JComboBox<String> comboBoxEstado;
 	
 	private JDateChooser dateChooser;
 	private JSpinner spinnerHora;
@@ -207,18 +207,18 @@ public class VentanaVerPedidosAProveedores {
 		scrollPaneProdDeProv.setViewportView(tableProdDeProv);
 		frame.getContentPane().add(scrollPaneProdDeProv);
 		*/
-		comboBoxEstado = new JComboBox();
+		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setBounds(422, 51, 146, 21);
 		comboBoxEstado.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstado);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
 		comboBox_1.setBounds(965, 51, 146, 21);
 		panelTabla.add(comboBox_1);
 		
 		btnSalir = new JButton("<");
 		btnSalir.setBounds(61, 620, 74, 63);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
 		btnConfirmarPedido = new JButton("Confirmar Pedido Completado");
@@ -344,7 +344,7 @@ public class VentanaVerPedidosAProveedores {
 		return btnConfirmarCancelacionDe;
 	}
 
-	public JComboBox getComboBoxEstado() {
+	public JComboBox<String> getComboBoxEstado() {
 		return comboBoxEstado;
 	}
 

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.CarritoDTO;
-import dto.ClienteDTO;
-import dto.MaestroProductoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.CarritoDAO;
 

@@ -5,7 +5,6 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -153,7 +152,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnElegirCarrito = new JButton("");
 		btnElegirCarrito.setBounds(793, 485, 83, 67);
-		btnElegirCarrito.setIcon(setIcono("../imagenes/cashier.png", btnElegirCarrito));
+//		btnElegirCarrito.setIcon(setIcono("../imagenes/cashier.png", btnElegirCarrito));
 		panelTablas.add(btnElegirCarrito);
 		
 		
@@ -258,7 +257,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(20, 546, 35, 36);
-		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+//		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
 		panelTablas.add(btnRegresar);
 		
 		lblSalir = new JLabel("Salir");
@@ -268,7 +267,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnBorrarCarrito = new JButton("");
 		btnBorrarCarrito.setBounds(480, 546, 35, 36);
-		btnBorrarCarrito.setIcon(setIcono("../imagenes/trash.png",btnBorrarCarrito));
+//		btnBorrarCarrito.setIcon(setIcono("../imagenes/trash.png",btnBorrarCarrito));
 		panelTablas.add(btnBorrarCarrito);
 		
 		JLabel lblCancelarCompra = new JLabel("Cancelar compra");

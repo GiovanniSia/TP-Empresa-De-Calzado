@@ -85,7 +85,11 @@ public class VentanaVerHistorialPasos extends JFrame {
             }
         };
 		tabla = new JTable(modelOrdenes);
-
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(1000);
+		tabla.getColumnModel().getColumn(0).setResizable(false);
+		tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tabla.getColumnModel().getColumn(1).setResizable(false);
+		
 		spCliente.setViewportView(tabla);
 
 		btnVerDescripcion = new JButton("Ver descripcion");
@@ -125,7 +129,7 @@ public class VentanaVerHistorialPasos extends JFrame {
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(740, 351, 46, 38);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
 		textAccion = new JTextField();

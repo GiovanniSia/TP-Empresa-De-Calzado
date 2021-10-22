@@ -111,7 +111,7 @@ public class ControladorDescripcionProveedorMProducto {
 	}
 
 	public void rellenarCampoProveedorDeProducto() {
-		this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().addItem(producto.getIdProveedor());
+		this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().addItem(""+producto.getIdProveedor());
 		rellenarPosiblesProveedoresPorducto();
 	}
 
@@ -120,7 +120,7 @@ public class ControladorDescripcionProveedorMProducto {
 		for (ProductoDeProveedorDTO pp : ProductosDeProveedorEnTabla) {
 			if (pp.getIdMaestroProducto() == producto.getIdMaestroProducto()
 					&& pp.getIdProveedor() != producto.getIdProveedor()) {
-				this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().addItem(pp.getIdProveedor());
+				this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().addItem(""+pp.getIdProveedor());
 			}
 		}
 	}

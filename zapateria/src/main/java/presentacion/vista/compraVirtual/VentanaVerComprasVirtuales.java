@@ -124,7 +124,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(918, 350, 46, 38);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
 		panel.add(btnSalir);
 		
 		textCliente = new JTextField();

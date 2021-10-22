@@ -31,11 +31,9 @@ import modelo.MaestroProducto;
 import modelo.MedioPago;
 import modelo.PedidosPendientes;
 import modelo.generarOrdenesFabricacion;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.reportes.ReporteFactura;
 import presentacion.vista.Cajero.VentanaRealizarVenta;
-import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
 public class ControladorRealizarVenta {
 	
@@ -139,7 +137,6 @@ public class ControladorRealizarVenta {
 		this.ventanaRealizarVenta.show();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void llenarCbMedioPago() {
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
@@ -232,7 +229,7 @@ public class ControladorRealizarVenta {
 		String mp = medioPago.getIdMoneda();
 				
 		//EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
-		IngresosDTO ingreso = new IngresosDTO(0,this.idSucursal,"","","VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
+		IngresosDTO ingreso = new IngresosDTO(0,idSucursal,"","","VT",idCliente,tipoFactura,"0",mp,cantidad,valorConversion,nroOperacion,totalArg);
 		this.listaDeIngresosARegistrar.add(ingreso);
 		//{"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
 				
@@ -388,11 +385,11 @@ public class ControladorRealizarVenta {
 				
 				for(MaestroProductoDTO mp: this.todosLosProductos) {
 					if(mp.getIdMaestroProducto() == det.getIdProducto()) {
-						generarOrdenesFabricacion.verificarYGenerarOrden(this.idSucursal, mp);
+						generarOrdenesFabricacion.verificarYGenerarOrden(idSucursal, mp);
 							
 						//verificar generar pedido
-						if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(this.idSucursal, mp) && mp.getFabricado().equals("N")) {
-							PedidosPendientes.generarPedidoAutomatico(this.idSucursal,mp);
+						if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(idSucursal, mp) && mp.getFabricado().equals("N")) {
+							PedidosPendientes.generarPedidoAutomatico(idSucursal,mp);
 						}
 						
 					}
@@ -414,7 +411,7 @@ public class ControladorRealizarVenta {
 			//si selecciona que si devuelve un 0, no un 1, y la x un -1
 			int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?", "Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 			if(resp==0) {
-				ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), this.idSucursal);
+				ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal);
 				reporte.mostrar();
 			}
 			this.ventanaRealizarVenta.cerrar();
@@ -458,7 +455,7 @@ public class ControladorRealizarVenta {
 		int idCliente = client.getIdCliente();
 		String nombreCliente =client.getApellido()+" "+ client.getNombre();
 		
-		int idCajero= this.idEmpleado;
+		int idCajero= idEmpleado;
 		int idVendedor = this.carritoACobrar.getIdVendedor();
 		EmpleadoDTO cajero = this.cajero.selectEmpleado(idCajero);
 		String nombreCajero = cajero.getApellido()+" "+cajero.getNombre();
