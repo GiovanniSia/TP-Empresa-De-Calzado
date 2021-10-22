@@ -22,6 +22,7 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
+import modelo.PedidosPendientes;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import modelo.Stock;
@@ -76,6 +77,8 @@ public class Controlador implements ActionListener {
 	
 	Proveedor proveedor;
 	ProductoDeProveedor productoDeProveedor;
+	
+	PedidosPendientes pedidosPendientes;
 	//Controladores
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	ControladorBusquedaProductos controladorBusquedaProducto;
@@ -155,6 +158,8 @@ public class Controlador implements ActionListener {
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
+		
+		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
 	}
 	
 	
@@ -201,7 +206,7 @@ public class Controlador implements ActionListener {
 		this.controladorIngresosCaja = new ControladorIngresosCaja(this,caja); 
 		
 		//Egreso Caja
-		this.controladorEgresosCaja = new ControladorEgresosCaja(this,egresos);
+		this.controladorEgresosCaja = new ControladorEgresosCaja(this,egresos,pedidosPendientes);
 		
 		//Cierre Caja
 		this.controladorCierreCaja = new ControladorCierreCaja(this,caja,ingresos,egresos,empleado); 

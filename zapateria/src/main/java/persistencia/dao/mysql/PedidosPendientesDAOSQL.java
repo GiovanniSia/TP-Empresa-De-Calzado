@@ -18,7 +18,8 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	private static final String delete = "DELETE FROM PedidosPendientes WHERE Id=?";
 	private static final String finalzarPedido = "UPDATE PedidosPendientes SET Estado=?, FechaCompleto=?, HoraCompleto=? WHERE Id=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
-
+	
+	private static final String cambiarEstado = "UPDATE FROM PedidosPendientes SET Estado=? WHERE Id=?";
 	
 	@Override
 	public boolean insert(PedidosPendientesDTO pedido) {
@@ -79,6 +80,28 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		return isdeleteExitoso;
 	}
 
+	@Override
+	public boolean cambiarEstado(int id,String estado) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(cambiarEstado);
+
+			statement.setString(1, estado);
+			statement.setInt(2, id);
+
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
+	}
+	
 	@Override
 	public boolean update(PedidosPendientesDTO nuevopedido, int idPedido) {
 		// TODO Auto-generated method stub

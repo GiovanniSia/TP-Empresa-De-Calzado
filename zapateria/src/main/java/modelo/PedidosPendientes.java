@@ -38,7 +38,9 @@ public class PedidosPendientes {
 		return this.pedido.finalizarPedido(nuevoEstado, fechaCompleto, HoraCompleto,idPedido);
 	}
 	
-	
+	public boolean cambiarEstado(int id, String estado){
+		return this.pedido.cambiarEstado(id,estado);
+	}
 	
 	public List<PedidosPendientesDTO> readAll(){
 		return this.pedido.readAll();

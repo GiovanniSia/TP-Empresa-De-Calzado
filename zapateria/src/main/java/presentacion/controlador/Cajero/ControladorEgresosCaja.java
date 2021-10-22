@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import dto.EgresosDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
+import dto.PedidosPendientesDTO;
 import dto.TipoEgresosDTO;
 import modelo.Egresos;
 import modelo.Ingresos;
 import modelo.MedioPagoEgreso;
+import modelo.PedidosPendientes;
 import modelo.TipoEgresos;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
@@ -23,6 +26,9 @@ public class ControladorEgresosCaja {
 	private VentanaEgresoCaja ventanaEgresoCaja;
 	private Egresos egresos;
 
+	PedidosPendientes pedidosPendientes;
+	List<PedidosPendientesDTO>	listaPedidosPendientes;
+	
 	private List<TipoEgresosDTO> listaTipoEgresos;
 	private TipoEgresos tipoEgresos;
 
@@ -44,15 +50,17 @@ public class ControladorEgresosCaja {
 		this.ingresos = new Ingresos(new DAOSQLFactory());
 	}
 	
-	public ControladorEgresosCaja(Controlador controlador, Egresos egresos) {
+	public ControladorEgresosCaja(Controlador controlador, Egresos egresos,PedidosPendientes pedidosPendientes) {
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 		this.egresos = egresos;
-
+		this.pedidosPendientes=pedidosPendientes;
 		this.controlador = controlador;
+		this.listaPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 
 	}
 
 	public void inicializar() {
+		this.listaPedidosPendientes = this.pedidosPendientes.readAll();
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 
 		this.egresos = new Egresos(new DAOSQLFactory());
@@ -156,12 +164,40 @@ public class ControladorEgresosCaja {
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
 				ingresarEgreso(detalle);
+				
+				registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra));
+				
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
 		}
 		actualizarLblBalance();
 	}
 
+	private void registrarPedidoComoPagado(int ppNroOrdenCompra) {
+		for(PedidosPendientesDTO p: this.listaPedidosPendientes) {
+			if(p.getId()==ppNroOrdenCompra) {
+				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+				double pagoRestante = p.getPrecioTotal() - pago;
+				
+				boolean update=false;
+				
+				if(pagoRestante<0) {
+					update = this.pedidosPendientes.cambiarEstado(p.getId(),"Pagado");
+				}else {
+					
+				}
+				
+				
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como completo el pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				return;
+			}
+		}
+	}
+	
+	
+	
 	public boolean validarCampos() {
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String medioPagoSeleccionado = this.ventanaEgresoCaja.getMedioPagoSeleccionado();
