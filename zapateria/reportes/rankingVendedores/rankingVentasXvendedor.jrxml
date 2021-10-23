@@ -42,6 +42,15 @@ Order by totalVendedor DESC]]>
 	</background>
 	<title>
 		<band height="87" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="556" height="80" uuid="8f2d16cb-0118-481d-bec6-b5fa1765cad8"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+			</frame>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="465" y="0" width="84" height="20" uuid="02a5166b-d5cd-4605-bb0d-802a0fed2b82"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
@@ -84,18 +93,21 @@ Order by totalVendedor DESC]]>
 			<textField>
 				<reportElement x="130" y="60" width="70" height="15" uuid="599a7ae2-b0b3-422c-be90-d2d4e40881bc"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{fechaDesde}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd").format($P{fechaDesde}))]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="236" y="60" width="70" height="15" uuid="3b29707a-e136-4706-b751-65072212607c"/>
+				<reportElement x="236" y="60" width="54" height="15" uuid="3b29707a-e136-4706-b751-65072212607c"/>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression><![CDATA[$P{fechaHasta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd").format($P{fechaHasta}))]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="0" y="86" width="556" height="1" uuid="506a0612-5196-402d-84cd-4f393956fbe8">
 					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
 			</line>
 		</band>
 	</title>
@@ -121,6 +133,11 @@ Order by totalVendedor DESC]]>
 					<textElement textAlignment="Center"/>
 					<text><![CDATA[% Ventas]]></text>
 				</staticText>
+				<staticText>
+					<reportElement mode="Transparent" x="139" y="2" width="97" height="13" forecolor="#FFFFFF" uuid="fb2dc53c-1148-46e7-b722-317c4b9802e2"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Codigo vendedor]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</columnHeader>
@@ -130,8 +147,8 @@ Order by totalVendedor DESC]]>
 				<reportElement mode="Opaque" x="0" y="4" width="556" height="26" backcolor="#E0E0E0" uuid="389b5d3c-d48e-4e0a-90a8-ca8e9d9b7701"/>
 				<textField>
 					<reportElement x="440" y="6" width="100" height="15" uuid="c2b4c596-e513-4bfa-86f1-8e68e50c222b"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[$F{totalVendedor}]]></textFieldExpression>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{totalVendedor}.intValue()]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="11" y="6" width="100" height="15" uuid="796d67e3-6e27-4651-8ffa-ddab922eb71c"/>
@@ -140,8 +157,13 @@ Order by totalVendedor DESC]]>
 				</textField>
 				<textField>
 					<reportElement x="280" y="7" width="100" height="15" uuid="39aae7a5-850a-45ec-95b0-b3568c281b9e"/>
-					<textElement textAlignment="Right"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[Math.round(($F{totalVendedor}*100/$F{total})) + "%"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="137" y="6" width="100" height="15" uuid="4f542888-35ae-4679-8cdf-4ae913519545"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{IdVendedor}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -163,14 +185,14 @@ Order by totalVendedor DESC]]>
 		<band height="290" splitType="Stretch">
 			<pieChart>
 				<chart evaluationTime="Report">
-					<reportElement x="-3" y="3" width="549" height="180" uuid="110dbb32-d8ec-4fba-b813-41138487aece"/>
+					<reportElement x="20" y="90" width="549" height="180" uuid="fd8e651e-aeaa-409d-a413-7c0f3a3c7486"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<pieDataset>
 					<dataset resetType="Report"/>
-					<keyExpression><![CDATA[$F{IdVendedor}]]></keyExpression>
+					<keyExpression><![CDATA[$F{NombreVendedor}]]></keyExpression>
 					<valueExpression><![CDATA[$F{totalVendedor}]]></valueExpression>
 					<labelExpression><![CDATA[$F{NombreVendedor}+" "+ $F{IdVendedor} +": " + Math.round(($F{totalVendedor}*100/$F{total})) + "%"]]></labelExpression>
 				</pieDataset>
@@ -179,17 +201,23 @@ Order by totalVendedor DESC]]>
 					<itemLabel/>
 				</piePlot>
 			</pieChart>
-			<subreport overflowType="Stretch">
-				<reportElement x="-17" y="201" width="590" height="40" uuid="b034338c-9d39-46a5-b8ce-a47bd4391432"/>
-				<subreportParameter name="fechaDesde">
-					<subreportParameterExpression><![CDATA[$P{fechaDesde}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="fechaHasta">
-					<subreportParameterExpression><![CDATA[$P{fechaHasta}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["reportes/ranking/SucursalesQueNoVendieron.jasper"]]></subreportExpression>
-			</subreport>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="18" width="556" height="31" backcolor="#666666" uuid="5c336235-2458-4331-abfd-12b063f07c71"/>
+				<staticText>
+					<reportElement mode="Transparent" x="10" y="2" width="170" height="27" forecolor="#FFFFFF" uuid="78f27c50-7ed9-4bc6-b6e3-460b095174a1"/>
+					<textElement textAlignment="Center">
+						<font size="20"/>
+					</textElement>
+					<text><![CDATA[Total de ventas]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="330" y="3" width="210" height="24" forecolor="#FFFFFF" uuid="2e1a1d17-6fb1-458c-a16f-912b75dbb3e4"/>
+					<textElement textAlignment="Center">
+						<font size="18"/>
+					</textElement>
+					<textFieldExpression><![CDATA["$ " +$F{total}.intValue()]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 	</summary>
 </jasperReport>
