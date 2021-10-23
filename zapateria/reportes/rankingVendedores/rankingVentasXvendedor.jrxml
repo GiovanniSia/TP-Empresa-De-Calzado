@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rankingVentasXSucursal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c9135a02-a1b6-4753-b9f8-d750f50a14b6">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="fechaDesde" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaDesde})]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaHasta" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[new SimpleDateFormat("YYYY/MM/DD").format($P{fechaHasta})]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT SUM(fac.TotalFactura) as totalVendedor, fac.NombreVendedor, fac.IdVendedor,
+(Select SUM(fac2.TotalFactura) FROM zapateria.Factura as fac2 WHERE fac2.Fecha >= '$P!{fechaDesde}' AND fac2.Fecha <= '$P!{fechaHasta}') as total
+FROM zapateria.Factura as fac 
+WHERE fac.Fecha >= '$P!{fechaDesde}' AND fac.Fecha <= '$P!{fechaHasta}' 
+group by fac.IdVendedor 
+Order by totalVendedor DESC]]>
+	</queryString>
+	<field name="totalVendedor" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="totalVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="totalVendedor"/>
+	</field>
+	<field name="NombreVendedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IdVendedor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdVendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="465" y="0" width="84" height="20" uuid="02a5166b-d5cd-4605-bb0d-802a0fed2b82"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="95" y="0" width="164" height="25" uuid="10e2eb89-2fee-4c41-8900-6c901facf55c">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Zapatería Argento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="341" y="0" width="124" height="20" uuid="4bfae1e8-8843-43c0-b253-20c6e86b14f3"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha y hora de emisión:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="37" width="165" height="23" uuid="d1247ca1-c2cd-47dc-8c5e-4d514c9d679d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ranking Ventas por vendedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="60" width="36" height="20" uuid="198ee9de-0200-45a9-a729-3585754204d1"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="60" width="36" height="20" uuid="efba1306-4adc-4113-94af-e0deca6c6685"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="60" width="70" height="15" uuid="599a7ae2-b0b3-422c-be90-d2d4e40881bc"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$P{fechaDesde}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="236" y="60" width="70" height="15" uuid="3b29707a-e136-4706-b751-65072212607c"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$P{fechaHasta}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="86" width="556" height="1" uuid="506a0612-5196-402d-84cd-4f393956fbe8">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="4" width="556" height="17" backcolor="#666666" uuid="235aa756-6395-4059-8b85-073b3fad3633"/>
+				<staticText>
+					<reportElement mode="Transparent" x="10" y="2" width="57" height="13" forecolor="#FFFFFF" uuid="af744ca6-ba7b-481f-bc69-c5cb09a7a8ef"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Vendedor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="425" y="2" width="120" height="13" forecolor="#FFFFFF" uuid="0ad55468-88d9-495f-bd3c-099c2f514074"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Total de Ventas (en AR$)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="290" y="2" width="80" height="13" forecolor="#FFFFFF" uuid="15002321-9c63-444a-a5d2-08b205e2bc86"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[% Ventas]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="37" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="4" width="556" height="26" backcolor="#E0E0E0" uuid="389b5d3c-d48e-4e0a-90a8-ca8e9d9b7701"/>
+				<textField>
+					<reportElement x="440" y="6" width="100" height="15" uuid="c2b4c596-e513-4bfa-86f1-8e68e50c222b"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{totalVendedor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="11" y="6" width="100" height="15" uuid="796d67e3-6e27-4651-8ffa-ddab922eb71c"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{NombreVendedor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="7" width="100" height="15" uuid="39aae7a5-850a-45ec-95b0-b3568c281b9e"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[Math.round(($F{totalVendedor}*100/$F{total})) + "%"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement x="5" y="9" width="556" height="1" uuid="49919e88-42a4-40fa-ae6a-c7bd98bd63cf">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="290" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-3" y="3" width="549" height="180" uuid="110dbb32-d8ec-4fba-b813-41138487aece"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Report"/>
+					<keyExpression><![CDATA[$F{IdVendedor}]]></keyExpression>
+					<valueExpression><![CDATA[$F{totalVendedor}]]></valueExpression>
+					<labelExpression><![CDATA[$F{NombreVendedor}+" "+ $F{IdVendedor} +": " + Math.round(($F{totalVendedor}*100/$F{total})) + "%"]]></labelExpression>
+				</pieDataset>
+				<piePlot labelFormat="{2}" legendLabelFormat="{0}">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<subreport overflowType="Stretch">
+				<reportElement x="-17" y="201" width="590" height="40" uuid="b034338c-9d39-46a5-b8ce-a47bd4391432"/>
+				<subreportParameter name="fechaDesde">
+					<subreportParameterExpression><![CDATA[$P{fechaDesde}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fechaHasta">
+					<subreportParameterExpression><![CDATA[$P{fechaHasta}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportes/ranking/SucursalesQueNoVendieron.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
