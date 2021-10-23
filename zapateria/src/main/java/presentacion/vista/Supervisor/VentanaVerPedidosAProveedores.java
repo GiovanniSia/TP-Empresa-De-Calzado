@@ -24,7 +24,6 @@ import persistencia.conexion.Conexion;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
@@ -218,7 +217,7 @@ public class VentanaVerPedidosAProveedores {
 		
 		btnSalir = new JButton("<");
 		btnSalir.setBounds(61, 620, 74, 63);
-//		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+		cambiarIconoBotones(btnSalir,  "back.png");
 		panel.add(btnSalir);
 		
 		btnConfirmarPedido = new JButton("Confirmar Pedido Completado");
@@ -268,12 +267,10 @@ public class VentanaVerPedidosAProveedores {
 		
 	}
 	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	public void show() {

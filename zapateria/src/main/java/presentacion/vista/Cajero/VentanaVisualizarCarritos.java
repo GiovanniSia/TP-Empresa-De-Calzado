@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -152,7 +151,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnElegirCarrito = new JButton("");
 		btnElegirCarrito.setBounds(793, 485, 83, 67);
-//		btnElegirCarrito.setIcon(setIcono("../imagenes/cashier.png", btnElegirCarrito));
+		cambiarIconoBotones(btnElegirCarrito,  "cashier.png");
 		panelTablas.add(btnElegirCarrito);
 		
 		
@@ -257,7 +256,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(20, 546, 35, 36);
-//		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+		cambiarIconoBotones(btnRegresar,  "back.png");
 		panelTablas.add(btnRegresar);
 		
 		lblSalir = new JLabel("Salir");
@@ -267,7 +266,7 @@ public class VentanaVisualizarCarritos {
 		
 		btnBorrarCarrito = new JButton("");
 		btnBorrarCarrito.setBounds(480, 546, 35, 36);
-//		btnBorrarCarrito.setIcon(setIcono("../imagenes/trash.png",btnBorrarCarrito));
+		cambiarIconoBotones(btnBorrarCarrito,  "trash.png");
 		panelTablas.add(btnBorrarCarrito);
 		
 		JLabel lblCancelarCompra = new JLabel("Cancelar compra");
@@ -324,13 +323,10 @@ public class VentanaVisualizarCarritos {
 	}
 	
 	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	

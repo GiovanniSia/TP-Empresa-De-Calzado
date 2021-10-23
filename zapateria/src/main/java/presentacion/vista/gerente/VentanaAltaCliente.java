@@ -19,7 +19,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -304,7 +303,7 @@ public class VentanaAltaCliente {
 		
 		btnCancelar = new JButton("");
 		btnCancelar.setBounds(10, 628, 40, 44);
-//		btnCancelar.setIcon(setIcono("../imagenes/back.png",btnCancelar));
+		cambiarIconoBotones(btnCancelar,  "back.png");
 		frame.getContentPane().add(btnCancelar);
 		
 		comboBoxImpuestoAFIP = new JComboBox<String>();
@@ -360,13 +359,10 @@ public class VentanaAltaCliente {
 		frame.setVisible(false);
 	}
 	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	

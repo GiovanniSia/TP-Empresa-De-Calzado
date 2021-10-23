@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -126,7 +125,7 @@ public class VentanaConsultarProveedores {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(10, 529, 56, 46);
-//		btnRegresar.setIcon(setIcono("../imagenes/back.png",btnRegresar));
+		cambiarIconoBotones(btnRegresar,  "back.png");
 		frame.getContentPane().add(btnRegresar);
 		
 		btnSeleccionarProveedor = new JButton("Seleccionar Proveedor");
@@ -163,14 +162,11 @@ public class VentanaConsultarProveedores {
 	public void cerrar() {
 		frame.setVisible(false);
 	}
-	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	public JButton getBtnRegresar() {
