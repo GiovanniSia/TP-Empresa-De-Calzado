@@ -3,6 +3,7 @@ package modelo.compraVirtual;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -540,7 +541,7 @@ public class ProcesarCompraVirtual {
 	}
 
 	public static void main(String[] args) {
-		/*
+		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
@@ -580,7 +581,7 @@ public class ProcesarCompraVirtual {
 		compras.add(cvd4);
 		JsonListaCompraVirtual.guardarLista(compras);
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		*/
+		
 	}
 
 }

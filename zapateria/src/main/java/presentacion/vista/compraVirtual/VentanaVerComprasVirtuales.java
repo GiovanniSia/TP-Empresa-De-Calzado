@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
 
 public class VentanaVerComprasVirtuales extends JFrame {
 
@@ -45,6 +46,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
+	JCheckBox chckbxCancelados;
 
 	public VentanaVerComprasVirtuales() {
 		initialize();
@@ -151,6 +153,10 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
 		lblFechaHasta.setBounds(529, 11, 108, 14);
 		panel.add(lblFechaHasta);
+		
+		chckbxCancelados = new JCheckBox("Cancelados");
+		chckbxCancelados.setBounds(825, 35, 97, 23);
+		panel.add(chckbxCancelados);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -234,5 +240,9 @@ public class VentanaVerComprasVirtuales extends JFrame {
 
 	public JDateChooser getFechaHasta() {
 		return fechaHasta;
+	}
+
+	public JCheckBox getChckbxCancelados() {
+		return chckbxCancelados;
 	}
 }
