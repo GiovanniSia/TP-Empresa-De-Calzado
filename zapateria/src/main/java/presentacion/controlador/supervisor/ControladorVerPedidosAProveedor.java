@@ -22,7 +22,6 @@ import dto.PedidosPendientesDTO;
 import dto.StockDTO;
 import modelo.PedidosPendientes;
 import modelo.Stock;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.Supervisor.VentanaVerPedidosAProveedores;
 

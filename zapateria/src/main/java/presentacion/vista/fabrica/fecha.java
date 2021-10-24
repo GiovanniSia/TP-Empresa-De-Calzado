@@ -1,10 +1,16 @@
 package presentacion.vista.fabrica;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import persistencia.conexion.Conexion;
 
 import javax.swing.JComboBox;
 
@@ -63,9 +69,28 @@ public class fecha extends JFrame
 	
 	public void mostrarVentana()
 	{
-		this.setVisible(true);
+		show();
 	}
-
+	
+	public void show() {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() 
+		{
+			@Override
+		    public void windowClosing(WindowEvent e) {
+		        int confirm = JOptionPane.showOptionDialog(
+		             null, "¿Estas seguro que quieres salir?", 
+		             "Advertencia", JOptionPane.YES_NO_OPTION,
+		             JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) {
+		        	Conexion.getConexion().cerrarConexion();
+		           System.exit(0);
+		        }
+		    }
+		});
+		setVisible(true);
+	}
+	
 	public JButton getBtnElegir() 
 	{
 		return btnElegir;
