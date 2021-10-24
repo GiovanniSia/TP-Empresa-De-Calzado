@@ -180,16 +180,19 @@ public class ControladorEgresosCaja {
 				double pagoRestante = p.getPrecioTotal() - pago;
 				
 				boolean update=false;
-				
+				boolean updateTotal = false;
 				if(pagoRestante<0) {
 					update = this.pedidosPendientes.cambiarEstado(p.getId(),"Pagado");
 				}else {
-					
+					updateTotal = this.pedidosPendientes.updateTotal(p.getId(), pagoRestante);
 				}
 				
 				
 				if(!update) {
 					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como completo el pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				if(!updateTotal) {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el total del pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);	
 				}
 				return;
 			}

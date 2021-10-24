@@ -157,8 +157,6 @@ public class ControladorVerPedidosAProveedor {
 	}
 	
 	public void realizarBusqueda() {
-		this.listaStock = this.stock.readAll();
-		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		
 		String id=this.ventanaVerPedidosAProveedor.getTextId().getText();
 		String proveedor = this.ventanaVerPedidosAProveedor.getTextProveedor().getText();
@@ -240,6 +238,7 @@ public class ControladorVerPedidosAProveedor {
 		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
 		 String cBestadoSolo = (String) this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().getSelectedItem(); 
 		for(PedidosPendientesDTO p: pedidosFiltrados) {
+			System.out.println("prod: "+p.getNombreMaestroProducto()+" - "+p.getEstado());
 			if(!cBestadoSolo.equals("Sin seleccionar")) {
 				if(cBestadoSolo.equals("Alta") && p.getFecha()!=null) {
 					escribirTabla(p);

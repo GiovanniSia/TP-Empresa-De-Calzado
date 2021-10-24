@@ -90,14 +90,26 @@ public class EnviarCorreosAProveedoresAutomatico {
 //			enviarMail(prov,pedidosDeProv);
 			if(pedidosDeProv.size()!=0) {
 //				System.out.println("se envia el mail");
-//				imprimirMail(pedidosDeProv);
-				enviarMail(prov,pedidosDeProv);
+				imprimirMail(pedidosDeProv);
+//				enviarMail(prov,pedidosDeProv);
+				marcarPedidoComoEnviado(pedidosDeProv);
 			}
 			
 			pedidosDeProv.removeAll(pedidosDeProv);
 		}
 	}
 	
+	private static void marcarPedidoComoEnviado(ArrayList<PedidosPendientesDTO> pedidos) {
+		PedidosPendientes pedidosPendietes = new PedidosPendientes(new DAOSQLFactory());
+		for(PedidosPendientesDTO pedido: pedidos) {
+			boolean update = pedidosPendietes.cambiarEstado(pedido.getId(), "Enviado");
+			if(!update) {
+				System.out.println("ha ocurrido un error al marcar al pedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getCantidad()+" como enviado");
+			}
+		}
+		
+	}
+
 	private static void imprimirMail(ArrayList<PedidosPendientesDTO> pedidosDeProv) {	
 		String mensaje="";
 		for(PedidosPendientesDTO p: pedidosDeProv) {

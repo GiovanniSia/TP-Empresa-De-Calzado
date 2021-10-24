@@ -19,6 +19,8 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	private static final String finalzarPedido = "UPDATE PedidosPendientes SET Estado=?, FechaCompleto=?, HoraCompleto=? WHERE Id=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
 	
+	private static final String updateTotal = "UPDATE FROM PedidosPendientes SET PrecioTotal=? WHERE Id=?";
+	
 	private static final String cambiarEstado = "UPDATE FROM PedidosPendientes SET Estado=? WHERE Id=?";
 	
 	@Override
@@ -103,8 +105,28 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	}
 	
 	@Override
+	public boolean updateTotal(int idPedido, double nuevoPrecio) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(updateTotal);
+
+			statement.setDouble(1, nuevoPrecio);
+			statement.setInt(2, idPedido);
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
+	}
+	
+	@Override
 	public boolean update(PedidosPendientesDTO nuevopedido, int idPedido) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

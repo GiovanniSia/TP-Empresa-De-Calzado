@@ -46,6 +46,10 @@ public class PedidosPendientes {
 		return this.pedido.readAll();
 	}
 	
+	public boolean updateTotal(int idPedido, double nuevoPrecio) {
+		return this.pedido.updateTotal(idPedido, nuevoPrecio);
+	}
+	
 	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String txt6, String nombreColumna7,String txt7, String nombreColumna8,String txt8){
 		return this.pedido.getPedidosPendientesFiltrados(nombreColumna1, txt1, nombreColumna2, txt2, nombreColumna3, txt3, nombreColumna4, txt4, nombreColumna5, txt5, nombreColumna6, txt6, nombreColumna7, txt7, nombreColumna8, txt8);
 	}
