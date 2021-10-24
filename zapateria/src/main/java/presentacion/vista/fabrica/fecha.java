@@ -69,26 +69,7 @@ public class fecha extends JFrame
 	
 	public void mostrarVentana()
 	{
-		show();
-	}
-	
-	public void show() {
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter() 
-		{
-			@Override
-		    public void windowClosing(WindowEvent e) {
-		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estas seguro que quieres salir?", 
-		             "Advertencia", JOptionPane.YES_NO_OPTION,
-		             JOptionPane.QUESTION_MESSAGE, null, null, null);
-		        if (confirm == 0) {
-		        	Conexion.getConexion().cerrarConexion();
-		           System.exit(0);
-		        }
-		    }
-		});
-		setVisible(true);
+		this.setVisible(true);
 	}
 	
 	public JButton getBtnElegir() 

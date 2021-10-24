@@ -15,6 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import persistencia.conexion.Conexion;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -146,11 +149,19 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frame.addWindowListener(new WindowAdapter() {
+		this.frame.addWindowListener(new WindowAdapter() 
+		{
 			@Override
-			public void windowClosing(WindowEvent e) {
-				frame.setVisible(false);
-			}
+		    public void windowClosing(WindowEvent e) {
+		        int confirm = JOptionPane.showOptionDialog(
+		             null, "¿Estas seguro que quieres salir?", 
+		             "Advertencia", JOptionPane.YES_NO_OPTION,
+		             JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) {
+		        	Conexion.getConexion().cerrarConexion();
+		           System.exit(0);
+		        }
+		    }
 		});
 		this.frame.setVisible(true);
 	}

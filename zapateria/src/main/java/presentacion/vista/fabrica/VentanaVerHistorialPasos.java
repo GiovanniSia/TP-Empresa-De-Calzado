@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
+import persistencia.conexion.Conexion;
+
 public class VentanaVerHistorialPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -176,23 +178,31 @@ public class VentanaVerHistorialPasos extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 	}
 
-	public void show() {
-		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				frame.setVisible(false);
-			}
-		});
-		this.frame.setVisible(true);
-	}
-
 	public void cerrar() {
 		frame.setVisible(false);
 	}
 
 	public void mostrarVentana() {
 		this.setVisible(true);
+	}
+	
+	public void show() {
+		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.frame.addWindowListener(new WindowAdapter() 
+		{
+			@Override
+		    public void windowClosing(WindowEvent e) {
+		        int confirm = JOptionPane.showOptionDialog(
+		             null, "¿Estas seguro que quieres salir?", 
+		             "Advertencia", JOptionPane.YES_NO_OPTION,
+		             JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) {
+		        	Conexion.getConexion().cerrarConexion();
+		           System.exit(0);
+		        }
+		    }
+		});
+		this.frame.setVisible(true);
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
