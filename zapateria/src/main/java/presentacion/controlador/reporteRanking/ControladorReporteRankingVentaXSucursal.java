@@ -1,35 +1,20 @@
 package presentacion.controlador.reporteRanking;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 import javax.swing.UIManager;
 
-import dto.HistorialPasoDTO;
-import dto.MaestroProductoDTO;
-import dto.OrdenFabricaDTO;
 import dto.SucursalDTO;
 import modelo.Fabricacion;
-import modelo.HistorialPaso;
 import modelo.MaestroProducto;
 import modelo.OrdenFabrica;
-import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.reportes.ReporteRankingXSucursal;
 import presentacion.reportes.ReporteRankingXVendedor;
-import presentacion.vista.fabrica.VentanaVerDetalle;
-import presentacion.vista.fabrica.VentanaVerHistorialPasos;
 import presentacion.vista.reporteRanking.VentanaVerReporteRankingXSucursal;
 
 public class ControladorReporteRankingVentaXSucursal {
@@ -47,7 +32,7 @@ public class ControladorReporteRankingVentaXSucursal {
 	// {
 	public ControladorReporteRankingVentaXSucursal() {
 		// this.controlador = controlador;
-		this.fabrica = fabrica;
+//		this.fabrica = fabrica;
 		this.modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
 
@@ -111,10 +96,10 @@ public class ControladorReporteRankingVentaXSucursal {
 		ventana.mostrarVentana();
 	}
 
-	private void mostrarMensajeEmergente(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
-		return;
-	}
+//	private void mostrarMensajeEmergente(String mensaje) {
+//		JOptionPane.showMessageDialog(null, mensaje);
+//		return;
+//	}
 	
 	private String getFechaDesde() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -136,6 +121,7 @@ public class ControladorReporteRankingVentaXSucursal {
 		return fechaHastaFormato;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private String generarFechaActual() {
 		java.util.Date fecha = new java.util.Date();
 		int diaCompletado = fecha.getDate();

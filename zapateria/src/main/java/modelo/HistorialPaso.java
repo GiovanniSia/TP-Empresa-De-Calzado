@@ -2,9 +2,7 @@ package modelo;
 
 import java.util.List;
 
-import dto.EmpleadoDTO;
 import dto.HistorialPasoDTO;
-import persistencia.dao.interfaz.CajaDAO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
 import persistencia.dao.interfaz.HistorialPasoDAO;
 

@@ -1,6 +1,5 @@
 package dto;
 
-import java.sql.Date;
 
 public class FacturaDTO {
 	

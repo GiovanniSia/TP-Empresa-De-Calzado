@@ -30,10 +30,11 @@ public class EnviarCorreosAProveedoresAutomatico {
 
 	
 	
+	@SuppressWarnings("deprecation")
 	public static void verificarEnvioDeMailsAutomatico() throws ParseException {
 		
 		String diaDeEnvio = "viernes";
-		int horaDeEnvio = 20; 
+//		int horaDeEnvio = 20; 
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -61,7 +62,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 				}
 			};
 			//121 = 2021, 9 = mes (10), 21 dia, 20 hora, 45 minutos, 00 segundos
-			//                 año,m,d ,hr,m ,seg
+			//                 aï¿½o,m,d ,hr,m ,seg
 			Date fe = new Date(121,9,22,13,04,00);//fecha de hoy 21/10/21
 			
 			timer.schedule(tarea, fe);
@@ -158,24 +159,12 @@ public class EnviarCorreosAProveedoresAutomatico {
 			
 			
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 //			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
 			JOptionPane.showMessageDialog(null, "Error, el primero xd");
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Error, el segundo xd");
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		try {
-			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 }

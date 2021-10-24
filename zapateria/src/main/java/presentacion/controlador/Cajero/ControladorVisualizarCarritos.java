@@ -1,14 +1,11 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +19,10 @@ import dto.StockDTO;
 import modelo.Carrito;
 import modelo.Cliente;
 import modelo.DetalleCarrito;
-import modelo.DetalleFactura;
-import modelo.Empleado;
-import modelo.Factura;
-import modelo.Ingresos;
 import modelo.MaestroProducto;
-import modelo.MedioPago;
 import modelo.Stock;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
-import presentacion.vista.VentanaMenuSistemaDeVentas;
 import presentacion.vista.Cajero.VentanaVisualizarCarritos;
 
 public class ControladorVisualizarCarritos {

@@ -15,7 +15,6 @@ import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.FabricacionDAO;
-import persistencia.dao.interfaz.OrdenFabricaDAO;
 
 public class FabricacionDAOSQL implements FabricacionDAO{
 	
@@ -343,6 +342,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		return isInsertExitoso;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public FabricacionesDTO completarOrden(FabricacionesDTO fabri, int diaLlega) {
 		fabri.completarOrden();
 		java.util.Date fechaActual = new java.util.Date();
@@ -387,12 +387,13 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		return ret;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void actualizarSiLlegoFechaDeEntrega(FabricacionesDTO f) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate());
-		int anio = fechaActual.getYear();
-		int mes = fechaActual.getMonth();
-		int dia = fechaActual.getDate();
+//		int anio = fechaActual.getYear();
+//		int mes = fechaActual.getMonth();
+//		int dia = fechaActual.getDate();
 		
 		java.util.Date fechaEntrega = new java.util.Date();
 		fechaEntrega.setYear(f.getAnioCompletado()-1900);

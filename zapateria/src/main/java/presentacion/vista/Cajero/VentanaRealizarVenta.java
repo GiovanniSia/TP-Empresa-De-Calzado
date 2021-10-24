@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Image;
+//import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.UIManager;
@@ -20,8 +21,9 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
+//import javax.swing.Icon;
+//import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -36,9 +38,10 @@ public class VentanaRealizarVenta {
 	private String[] nombreColumnasMedioPago = {"Método","Moneda","Num. Operación","Cantidad","Cant. (en AR$)"};
 	private JScrollPane scrollPaneMedioPago;
 	
-	private JComboBox comboBoxMetodoPago;
+	private JComboBox<String> comboBoxMetodoPago;
 	private JTextField textNumOperacion;
 	
+	@SuppressWarnings("unused")
 	private SpinnerModel spinnerModelCant;
 
 
@@ -179,7 +182,7 @@ public class VentanaRealizarVenta {
 		//
 		
 		//ComboBox
-		comboBoxMetodoPago = new JComboBox();
+		comboBoxMetodoPago = new JComboBox<String>();
 		comboBoxMetodoPago.addItem("Sin seleccionar");
 		comboBoxMetodoPago.setBounds(10, 63, 168, 21);
 		panel_2.add(comboBoxMetodoPago);
@@ -246,12 +249,12 @@ public class VentanaRealizarVenta {
 		
 		btnAgregarMedioPago = new JButton("");
 		btnAgregarMedioPago.setBounds(668, 32, 55, 52);
-		btnAgregarMedioPago.setIcon(setIcono("../imagenes/pay.png",btnAgregarMedioPago));
+		cambiarIconoBotones(btnAgregarMedioPago,  "pay.png");
 		panel_2.add(btnAgregarMedioPago);
 		
 		btnQuitarMedioPago = new JButton("");
 		btnQuitarMedioPago.setBounds(755, 32, 46, 52);
-		btnQuitarMedioPago.setIcon(setIcono("../imagenes/trash.png",btnQuitarMedioPago));
+		cambiarIconoBotones(btnQuitarMedioPago,  "trash.png");
 		panel_2.add(btnQuitarMedioPago);
 		
 		JLabel lblAadirDescuento = new JLabel("A\u00F1adir descuento");
@@ -277,7 +280,7 @@ public class VentanaRealizarVenta {
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
 		btnCancelarVenta.setBounds(127, 460, 61, 47);
 		btnCancelarVenta.setBackground(null);
-		btnCancelarVenta.setIcon(setIcono("../imagenes/cancel.png", btnCancelarVenta));
+		cambiarIconoBotones(btnCancelarVenta,  "cancel.png");
 		panel.add(btnCancelarVenta);
 		
 		btnFinalizarVenta = new JButton("");
@@ -285,8 +288,7 @@ public class VentanaRealizarVenta {
 		btnFinalizarVenta.setBounds(689, 460, 67, 47);
 //		btnFinalizarVenta.setBorder(null);
 //		btnFinalizarVenta.setBackground(null);
-
-		btnFinalizarVenta.setIcon(setIcono("../imagenes/dollar-symbol.png", btnFinalizarVenta));
+		cambiarIconoBotones(btnFinalizarVenta,  "dollar-symbol.png");
 		panel.add(btnFinalizarVenta);
 
 		JLabel lblCancelar = new JLabel("Cancelar");
@@ -320,15 +322,10 @@ public class VentanaRealizarVenta {
 		this.frame.setVisible(true);
 	}
 
-	
-	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	public void cerrar() {
@@ -340,7 +337,7 @@ public class VentanaRealizarVenta {
 		return tableMedioPago;
 	}
 
-	public JComboBox getComboBoxMetodoPago() {
+	public JComboBox<String> getComboBoxMetodoPago() {
 		return comboBoxMetodoPago;
 	}
 

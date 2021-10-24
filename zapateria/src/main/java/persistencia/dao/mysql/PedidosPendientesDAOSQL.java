@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.CarritoDTO;
 import dto.PedidosPendientesDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
@@ -195,7 +194,8 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	}
 	
 	
-	//la estructura de esta funcion solo fuciona para la clase ver pedidos pendientes, sino pasar en null los ultimos 6 parametros
+	
+//	@SuppressWarnings("null")
 	@Override
 	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String fechaDesde, String fechaHasta,String nombreColumna7, String horaDesde,String horaHasta){
 		PreparedStatement statement;
@@ -241,9 +241,6 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 				sel = sel + "AND " + nombreColumna7 +" BETWEEN '" + horaDesde +  "' AND '"  + horaHasta +"'";		
 			}
 		}
-		
-		System.out.println(sel);
-		
 		
 		ArrayList<PedidosPendientesDTO> pedidos = new ArrayList<PedidosPendientesDTO>();
 		Conexion conexion = Conexion.getConexion();

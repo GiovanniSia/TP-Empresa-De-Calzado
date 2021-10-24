@@ -19,7 +19,7 @@ import presentacion.vista.generarOrdenesManufactura.VentanaGenerarOrdenManufactu
 public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	private static final int idSucursal = 1;
-	private static final int idEmpleado = 1;
+//	private static final int idEmpleado = 1;
 	
 	private ArrayList<MaestroProductoDTO> productosEnLista;
 	

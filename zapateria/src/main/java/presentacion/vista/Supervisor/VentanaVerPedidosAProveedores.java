@@ -25,12 +25,10 @@ import persistencia.conexion.Conexion;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 
 public class VentanaVerPedidosAProveedores {
 
@@ -50,7 +48,7 @@ public class VentanaVerPedidosAProveedores {
 	private JButton btnConfirmarPedido;
 	private JButton btnConfirmarCancelacionDe;
 	
-	private JComboBox comboBoxEstado;
+	private JComboBox<String> comboBoxEstado;
 	
 	private JDateChooser dateChooserDesde;
 	private JSpinner spinnerHoraDesde;
@@ -59,7 +57,7 @@ public class VentanaVerPedidosAProveedores {
 
 	private JSpinner spinnerHoraHasta;
 	
-	private JComboBox comboBoxEstadoSolo;
+	private JComboBox<String> comboBoxEstadoSolo;
 
 
 	/**
@@ -88,6 +86,7 @@ public class VentanaVerPedidosAProveedores {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("deprecation")
 	private void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -210,19 +209,19 @@ public class VentanaVerPedidosAProveedores {
 		scrollPaneProdDeProv.setViewportView(tableProdDeProv);
 		frame.getContentPane().add(scrollPaneProdDeProv);
 		*/
-		comboBoxEstado = new JComboBox();
+		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setBounds(422, 51, 146, 21);
 		comboBoxEstado.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstado);
 		
-		comboBoxEstadoSolo = new JComboBox();
+		comboBoxEstadoSolo = new JComboBox<String>();
 		comboBoxEstadoSolo.setBounds(1119, 51, 138, 21);
 		comboBoxEstadoSolo.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstadoSolo);
 		
 		btnSalir = new JButton("<");
 		btnSalir.setBounds(61, 620, 74, 63);
-		btnSalir.setIcon(setIcono("../imagenes/back.png",btnSalir));
+		cambiarIconoBotones(btnSalir,  "back.png");
 		panel.add(btnSalir);
 		
 		btnConfirmarPedido = new JButton("Confirmar Pedido Completado");
@@ -292,12 +291,10 @@ public class VentanaVerPedidosAProveedores {
 		
 	}
 	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
 	
 	public void show() {
@@ -307,7 +304,7 @@ public class VentanaVerPedidosAProveedores {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir?", 
+		             null, "¿Estas seguro que quieres salir?", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
@@ -368,7 +365,7 @@ public class VentanaVerPedidosAProveedores {
 		return btnConfirmarCancelacionDe;
 	}
 
-	public JComboBox getComboBoxEstado() {
+	public JComboBox<String> getComboBoxEstado() {
 		return comboBoxEstado;
 	}
 
@@ -390,7 +387,7 @@ public class VentanaVerPedidosAProveedores {
 
 
 	
-	public JComboBox getComboBoxEstadoSolo() {
+	public JComboBox<String> getComboBoxEstadoSolo() {
 		return comboBoxEstadoSolo;
 	}
 }

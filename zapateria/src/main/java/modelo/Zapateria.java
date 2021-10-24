@@ -1,8 +1,5 @@
 package modelo;
 
-import java.util.List;
-import persistencia.dao.interfaz.DAOAbstractFactory;
-	
 public class Zapateria {
 	String CUIT = "23-33016244-9";
 	String categoriaAFIP = "Responsable inscripto";

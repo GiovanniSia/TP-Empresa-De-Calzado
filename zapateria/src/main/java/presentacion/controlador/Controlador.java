@@ -2,14 +2,9 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import dto.CarritoDTO;
-import dto.ClienteDTO;
-import dto.DetalleCarritoDTO;
 import dto.SucursalDTO;
 import modelo.Caja;
 import modelo.Carrito;
@@ -43,14 +38,9 @@ import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
-import presentacion.vista.VentanaBusquedaCliente;
-import presentacion.vista.VentanaBusquedaProductos;
-import presentacion.vista.VentanaHistorialCambioMoneda;
+
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
-import presentacion.vista.VentanaModificarCotizacion;
-import presentacion.vista.ModificarProducto.VentanaHistorialCambioMProducto;
-import presentacion.vista.ModificarProducto.VentanaModificarMProducto;
 
 public class Controlador implements ActionListener {
 	
@@ -141,6 +131,7 @@ public class Controlador implements ActionListener {
 //	}
 	
 	//Coso para el properties
+	@SuppressWarnings("unused")
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
 	
 	
@@ -276,7 +267,6 @@ public class Controlador implements ActionListener {
 //		try {
 //			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
 //		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 	}
@@ -428,7 +418,6 @@ public class Controlador implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

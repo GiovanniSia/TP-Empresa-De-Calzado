@@ -2,7 +2,6 @@ package persistencia.dao.interfaz;
 
 import java.util.List;
 
-import dto.ClienteDTO;
 import dto.FabricacionesDTO;
 import dto.OrdenFabricaDTO;
 import dto.PasoDeRecetaDTO;

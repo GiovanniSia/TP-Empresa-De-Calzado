@@ -13,13 +13,11 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import persistencia.conexion.Conexion;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -188,8 +186,8 @@ public class VentanaMenuSistemaDeVentas {
 		panel.add(lblNewLabel_7);
 		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(760, 551, 48, 50);
-		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
+		btnRegresar.setBounds(760, 460, 48, 50);
+		cambiarIconoBotones(btnRegresar,  "back.png");
 		panel.add(btnRegresar);
 		
 		btnGenerarOrdenDe = new JButton("Generar orden de manufactura");
@@ -257,7 +255,7 @@ public class VentanaMenuSistemaDeVentas {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir?", 
+		             null, "¿Estas seguro que quieres salir?", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
@@ -273,19 +271,11 @@ public class VentanaMenuSistemaDeVentas {
 		frame.setVisible(false);
 	}
 	
-	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		boton.setIcon(Icono);
 	}
-	
-	
-	
-	
 	
 	public JButton getBtnArmarVenta() {
 		return btnArmarVenta;
