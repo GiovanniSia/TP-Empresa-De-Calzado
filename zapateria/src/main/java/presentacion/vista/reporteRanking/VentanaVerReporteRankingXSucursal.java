@@ -34,6 +34,7 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 	
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
+	JButton btnVerReporteVendedores;
 
 	public VentanaVerReporteRankingXSucursal() {
 		initialize();
@@ -45,17 +46,17 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 379, 223);
+		frame.setBounds(100, 100, 379, 260);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 353, 109);
+		panel.setBounds(0, 64, 353, 146);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		btnVerDescripcion = new JButton("Ver reporte");
+		btnVerDescripcion = new JButton("Ver reporte por sucursales");
 		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -83,13 +84,17 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
 		lblFechaHasta.setBounds(184, 11, 108, 14);
 		panel.add(lblFechaHasta);
+		
+		btnVerReporteVendedores = new JButton("Ver reporte por vendedores");
+		btnVerReporteVendedores.setBounds(73, 100, 177, 23);
+		panel.add(btnVerReporteVendedores);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
 		panel_2.setBounds(0, 0, 806, 10);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Ver ranking de ventas por sucursal");
+		lblNewLabel = new JLabel("Ver ranking de ventas");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -137,5 +142,9 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	public JDateChooser getFechaHasta() {
 		return fechaHasta;
+	}
+
+	public JButton getBtnVerReporteVendedores() {
+		return btnVerReporteVendedores;
 	}
 }

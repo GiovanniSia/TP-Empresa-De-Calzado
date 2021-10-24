@@ -3,6 +3,7 @@ package modelo.compraVirtual;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -115,6 +116,14 @@ public class ProcesarCompraVirtual {
 			} else
 			if(!esPagoSuficiente(compraVirtual)) {
 				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+			}
+			if(!esSucursalValida(compraVirtual.getIdSucursal())) {
+				ret = ret + ";La sucursal no es valida";
+			}
+			for(int idProducto: compraVirtual.getCompra().keySet()) {
+				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
+					ret = ret + ";No es posible vender uno de los productos";
+				}
 			}
 			return ret;
 		}
@@ -424,9 +433,25 @@ public class ProcesarCompraVirtual {
 		String provincia = client.getProvincia();
 		String localidad = client.getLocalidad();
 		String codPostal = client.getCodPostal();
+		
+		boolean deboUsarDatosDeLaCompra = true;
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getCalle());
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getAltura());
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getPais());
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getProvincia());
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getLocalidad());
+		deboUsarDatosDeLaCompra = deboUsarDatosDeLaCompra && esDatoStringValido(compraVirtual.getCodPostal());
+		if(deboUsarDatosDeLaCompra) {
+			calle = compraVirtual.getCalle();
+			altura = compraVirtual.getAltura(); 
+			pais = compraVirtual.getPais();
+			provincia = compraVirtual.getProvincia();
+			localidad = compraVirtual.getLocalidad();
+			codPostal = compraVirtual.getCodPostal();
+		}
+		
 		String CUIL = client.getCUIL();
 		String correo = client.getCorreo();
-		
 		
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = deboCalcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
@@ -540,7 +565,7 @@ public class ProcesarCompraVirtual {
 	}
 
 	public static void main(String[] args) {
-		/*
+		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);
@@ -559,6 +584,16 @@ public class ProcesarCompraVirtual {
 				"RI", "Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd2);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);
+		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"RI", "Calle falsaasdasdas", "5421", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd22);
 		
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -580,7 +615,7 @@ public class ProcesarCompraVirtual {
 		compras.add(cvd4);
 		JsonListaCompraVirtual.guardarLista(compras);
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		*/
+		
 	}
 
 }

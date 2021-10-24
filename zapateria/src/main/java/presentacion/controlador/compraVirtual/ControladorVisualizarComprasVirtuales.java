@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -103,7 +105,38 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			            refrescarTabla();
 			        }
 			    });
-		
+		ventanaPrincipal.getChckbxCancelados().addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				refrescarTabla();
+			}
+		});
 		ventanaRechazo = new VentanaVerDetalleRechazo();
 		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
 		
@@ -128,8 +161,13 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ingresosEnLista = recuperarComprasVirtuales();
 		llenarTablaConIngresos(ingresosEnLista);
 		
-		rechazosEnLista = recuperarRechazos();
-		llenarTablaConRechazos(rechazosEnLista);
+		if(ventanaPrincipal.getChckbxCancelados().isSelected()) {
+			rechazosEnLista = recuperarRechazos();
+			llenarTablaConRechazos(rechazosEnLista);
+		}else {
+			rechazosEnLista = new ArrayList<RechazoCompraVirtualDTO>();
+		}
+		
 	}
 
 	private void vaciarTablaPrincipal() {
@@ -223,7 +261,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	private void llenarTablaConRechazos(List<RechazoCompraVirtualDTO> rechazos) {
 		for(RechazoCompraVirtualDTO re: rechazos) {
-			String idRechazo = re.getId()+"";
+			String idRechazo = re.getId()+"(RE)";
 			String idSucursal = re.getIdSucursal()+"";
 			
 			String cuil = "";

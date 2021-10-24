@@ -3,6 +3,8 @@ package presentacion.controlador.fabrica;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,6 +95,29 @@ public class ControladorHistorialPasos {
 			}
 		});
 		
+		ventana.getFechaDesde().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+		ventana.getFechaHasta().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+		
 		ventanaExplicacion = new VentanaVerDetalle();
 		ventanaExplicacion.getBtnSalir().addActionListener(r -> cerrarDescripcion(r));
 	}
@@ -108,6 +133,15 @@ public class ControladorHistorialPasos {
 			return "";
 		}
 		String mensaje = historialEnLista.get(filasSeleccionadas[0]).getDescr();
+		return mensaje;
+	}
+	
+	private String getTipoCancelacion() {
+		int[] filasSeleccionadas = ventana.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return "";
+		}
+		String mensaje = historialEnLista.get(filasSeleccionadas[0]).getTipo();
 		return mensaje;
 	}
 
@@ -130,6 +164,7 @@ public class ControladorHistorialPasos {
 		*/
 		mensajeAMostrar = mensaje;
 		ventanaExplicacion.getTextPane().setText(mensajeAMostrar);
+		ventanaExplicacion.getLblId().setText(getTipoCancelacion());
 		ventanaExplicacion.mostrarVentana();
 		//mostrarMensajeEmergente(mensajeAMostrar);
 	}
@@ -144,10 +179,10 @@ public class ControladorHistorialPasos {
 		ventana.getModelOrdenes().setRowCount(0);
 		ventana.getModelOrdenes().setColumnCount(0);
 		ventana.getModelOrdenes().setColumnIdentifiers(ventana.getNombreColumnas());
-
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(0).setPreferredWidth(5);
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(1).setPreferredWidth(5);
-		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(3).setPreferredWidth(6);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(2).setPreferredWidth(120);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(4).setPreferredWidth(195);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(5).setPreferredWidth(100);
+		ventana.getTablaFabricacionesEnMarcha().getColumnModel().getColumn(6).setPreferredWidth(150);
 	}
 
 	private void llenarTablaConElHistorial() {

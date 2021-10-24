@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.JComboBox;
 
 public class VentanaIngresarMotivoCancelacion extends JFrame {
 
@@ -34,6 +35,7 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 	
 	JTextPane textPane;
 	JButton btnNoCancelar;
+	JComboBox<String> comboBoxMotivo;
 	
 
 	public VentanaIngresarMotivoCancelacion() {
@@ -73,12 +75,16 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 		panel.add(lblEstado);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(10, 38, 476, 299);
+		textPane.setBounds(10, 85, 476, 252);
 		panel.add(textPane);
 		
 		btnNoCancelar = new JButton("No Cancelar");
 		btnNoCancelar.setBounds(309, 352, 177, 23);
 		panel.add(btnNoCancelar);
+		
+		comboBoxMotivo = new JComboBox<String>();
+		comboBoxMotivo.setBounds(20, 36, 227, 23);
+		panel.add(comboBoxMotivo);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -124,5 +130,9 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 
 	public JButton getBtnNoCancelar() {
 		return btnNoCancelar;
+	}
+
+	public JComboBox<String> getComboBoxMotivo() {
+		return comboBoxMotivo;
 	}
 }

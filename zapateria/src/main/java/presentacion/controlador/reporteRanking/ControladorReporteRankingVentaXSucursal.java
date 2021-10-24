@@ -27,6 +27,7 @@ import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.reportes.ReporteRankingXSucursal;
+import presentacion.reportes.ReporteRankingXVendedor;
 import presentacion.vista.fabrica.VentanaVerDetalle;
 import presentacion.vista.fabrica.VentanaVerHistorialPasos;
 import presentacion.vista.reporteRanking.VentanaVerReporteRankingXSucursal;
@@ -63,6 +64,25 @@ public class ControladorReporteRankingVentaXSucursal {
 		 */
 		ventana = new VentanaVerReporteRankingXSucursal();
 		ventana.getBtnVerDescripcion().addActionListener(r->mostrarReporte(r));
+		ventana.getBtnVerReporteVendedores().addActionListener(r->mostrarReporteXVendedores(r));
+	}
+
+	private void mostrarReporteXVendedores(ActionEvent r) {
+		String fechaDesde = getFechaDesde();
+		String fechaHasta = fechaHasta();
+		
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-mm-DD"); 
+        //String fechaHoy = dtf.format(LocalDateTime.now());
+		
+		String fechaHoy = generarFechaActual();
+		if(fechaDesde == null) {
+			fechaDesde = fechaHoy;
+		}
+		if(fechaHasta == null) {
+			fechaHasta = fechaHoy;
+		}
+		ReporteRankingXVendedor reporteRanking = new ReporteRankingXVendedor(fechaDesde,fechaHasta);
+		reporteRanking.mostrarReporte();
 	}
 
 	private void mostrarReporte(ActionEvent r) {
