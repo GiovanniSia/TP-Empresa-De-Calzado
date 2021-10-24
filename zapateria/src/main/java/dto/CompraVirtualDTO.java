@@ -27,7 +27,7 @@ public class CompraVirtualDTO {
 	public CompraVirtualDTO(HashMap<Integer, Integer> compra, int idSucursal, double pago, int idCliente, String nombre,
 			String apellido, String cUIL, String correoElectronico,
 			//String tipoCliente,
-			String impuestoAFIP, String calle, String altura, String pais,
+			String calle, String altura, String pais,
 			String provincia, String localidad, String codPostal) {
 		super();
 		this.compra = compra;
@@ -39,7 +39,7 @@ public class CompraVirtualDTO {
 		CUIL = cUIL;
 		CorreoElectronico = correoElectronico;
 		//TipoCliente = tipoCliente;
-		ImpuestoAFIP = impuestoAFIP;
+		ImpuestoAFIP = "CF";
 		Estado = "Activo";
 		Calle = calle;
 		Altura = altura;

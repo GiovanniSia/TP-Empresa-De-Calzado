@@ -389,7 +389,7 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static String determinarCategoriaFactura(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
 			return "A";
 		}
 		if(cliente.getImpuestoAFIP().equals("E")) {
@@ -532,7 +532,7 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static boolean deboCalcularIVA(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
 			return true;
 		}
 		return false;
@@ -572,7 +572,7 @@ public class ProcesarCompraVirtual {
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
 				//"Mayorista",
-				"E","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+				"1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 		compras.add(cvd);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -581,7 +581,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"RI", "Calle falsa", "5421", "Argentina",
+				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd2);
 		
@@ -591,7 +591,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"RI", "Calle falsaasdasdas", "5421", "Argentina",
+				"Calle falsaasdasdas", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd22);
 		
@@ -603,14 +603,14 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
-				"RI", "", "", "Argentina",
+				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
 		
 		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
 				"asd", "", null, 
-				"RI", "", "", "Argentina",
+				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd4);
 		JsonListaCompraVirtual.guardarLista(compras);
