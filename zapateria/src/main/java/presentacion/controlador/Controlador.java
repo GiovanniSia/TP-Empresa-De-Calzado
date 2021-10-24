@@ -14,6 +14,7 @@ import dto.SucursalDTO;
 import modelo.Caja;
 import modelo.Carrito;
 import modelo.Cliente;
+import modelo.ConfiguracionBD;
 import modelo.DetalleCarrito;
 import modelo.DetalleFactura;
 import modelo.Egresos;
@@ -138,6 +139,10 @@ public class Controlador implements ActionListener {
 //		this.sucursal = sucursal;
 //		this.cliente = cliente;
 //	}
+	
+	//Coso para el properties
+	private ConfiguracionBD config = ConfiguracionBD.getInstance();
+	
 	
 	public Controlador() {
 		this.cliente = new Cliente(new DAOSQLFactory());

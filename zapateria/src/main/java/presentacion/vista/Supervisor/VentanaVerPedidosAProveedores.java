@@ -216,7 +216,7 @@ public class VentanaVerPedidosAProveedores {
 		panelTabla.add(comboBoxEstado);
 		
 		comboBoxEstadoSolo = new JComboBox();
-		comboBoxEstadoSolo.setBounds(1187, 51, 70, 21);
+		comboBoxEstadoSolo.setBounds(1119, 51, 138, 21);
 		comboBoxEstadoSolo.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstadoSolo);
 		

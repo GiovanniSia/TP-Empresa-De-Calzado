@@ -12,6 +12,7 @@ public class Conexion {
 
 	private Conexion() {
 		try {
+			
 			// Class.forName("com.mysql.jdbc.Driver"); // quitar si no es necesario,
 			// versiones antiguas de mysql
 			Class.forName("com.mysql.cj.jdbc.Driver"); // PARA VERSIONES MAS AVANZADAS
@@ -22,9 +23,9 @@ public class Conexion {
 			// DriverManager.getConnection("jdbc:mysql://bxg6oprxsdqe3o0kxt53-mysql.services.clever-cloud.com:3306/bxg6oprxsdqe3o0kxt53","uvau8lhbjts2x60c","SdmScZxrm9q47VH7U2qZ");
 
 			this.connection.setAutoCommit(false);
-			log.info("Conexión exitosa");
+			log.info("Conexion exitosa");
 		} catch (Exception e) {
-			log.error("Conexión fallida", e);
+			log.error("Conexion fallida", e);
 		}
 	}
 
@@ -44,7 +45,7 @@ public class Conexion {
 			this.connection.close();
 			log.info("Conexion cerrada");
 		} catch (SQLException e) {
-			log.error("Error al cerrar la conexión!", e);
+			log.error("Error al cerrar la conexion!", e);
 		}
 		instancia = null;
 	}
