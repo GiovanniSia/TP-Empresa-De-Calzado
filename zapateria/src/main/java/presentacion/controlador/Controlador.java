@@ -41,7 +41,7 @@ import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
-
+import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.vista.VentanaBusquedaCliente;
 import presentacion.vista.VentanaBusquedaProductos;
 import presentacion.vista.VentanaHistorialCambioMoneda;
@@ -110,6 +110,10 @@ public class Controlador implements ActionListener {
 	ControladorAltaProducto controladorAltaProducto;
 	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
 	ControladorConsultarProveedor controladorConsultarProveedor;
+	
+	
+	//Ver pedidos pendientes
+	ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
 	
 	//Ventanas
 	/*
@@ -218,7 +222,8 @@ public class Controlador implements ActionListener {
 		//Alta cliente
 		this.controladorAltaCliente = new ControladorAltaCliente(this,this.cliente); 
 		
-		
+		//Ver pedidos a prov
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);
 		
 		//Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
@@ -260,6 +265,8 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		//Consultar proveedores y asignarle un producto
 		
+		//Ver pedidos a prov
+		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		
 //		try {
 //			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
@@ -405,6 +412,14 @@ public class Controlador implements ActionListener {
 		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentana();
 	}
+
+	//Ver pedidos a proveedor
+	public void pasarAVerPedidosAProveedor(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorVerPedidosAProveedor.inicializar();
+		this.controladorVerPedidosAProveedor.mostrarVentana();
+	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

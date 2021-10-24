@@ -425,7 +425,7 @@ INSERT INTO medioPago values ("MPA","Mercado Pago",1);
 INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
 
 INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020,1500,2,"M",200,"Activo",36,100);
-INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","S",200 ,8000 ,4000,2   ,3,"XL",200,"Activo",10,100);
+INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","N",200 ,8000 ,4000,2   ,4,"XL",200,"Activo",10,100);
 INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050 ,2000,5   ,1,"XXL",300,"Activo",200,100);
 INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000 ,6000,3   ,2,"N",300,"Activo",1000,1);
 INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050 ,2000,5   ,1,"M",300,"Activo",200,100);
@@ -440,6 +440,7 @@ INSERT INTO maestroProductos values(10,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1
 insert into proveedor values(1,"Naik","naik@gmail.com",20000,10000);
 insert into proveedor values(2,"Adida","adida@gmail.com",3000,1000);
 insert into proveedor values(3,"Rebuk","rebuk@gmail.com",200,500);
+insert into proveedor values(4,"ProveedorX","prov@gmail.com",2000,500);
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
@@ -522,6 +523,8 @@ insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
 insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
+
+
 
 
 INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");

@@ -91,7 +91,6 @@ public class ControladorAltaCliente {
 		this.listaClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
 		String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
 		for(ClienteDTO c: this.listaClientes) {
-			System.out.println("cuil de un x cliente: "+c.getCUIL()+"\nNuevo cliente: "+CUIL);
 			if(c.getCUIL().equals(CUIL)){
 				return true;
 			}

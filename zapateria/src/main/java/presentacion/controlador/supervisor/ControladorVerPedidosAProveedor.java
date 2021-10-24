@@ -3,6 +3,8 @@ package presentacion.controlador.supervisor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,12 +15,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import dto.PedidosPendientesDTO;
 import dto.StockDTO;
 import modelo.PedidosPendientes;
 import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.Supervisor.VentanaVerPedidosAProveedores;
 
 public class ControladorVerPedidosAProveedor {
@@ -33,12 +38,15 @@ public class ControladorVerPedidosAProveedor {
 	
 	VentanaVerPedidosAProveedores ventanaVerPedidosAProveedor;
 	
-	public ControladorVerPedidosAProveedor(PedidosPendientes pedidosPendientes, Stock stock) {
+	Controlador controlador;
+	
+	public ControladorVerPedidosAProveedor(Controlador controlador,PedidosPendientes pedidosPendientes, Stock stock) {
 		this.pedidosPendientes = pedidosPendientes;
 		this.todosLosPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 		this.pedidosPendientesEnTabla = new ArrayList<PedidosPendientesDTO>();
 		this.ventanaVerPedidosAProveedor = new VentanaVerPedidosAProveedores();
 		this.stock = stock;
+		this.controlador=controlador;
 	}
 	
 	public void inicializar() {
@@ -51,15 +59,75 @@ public class ControladorVerPedidosAProveedor {
 		
 		this.ventanaVerPedidosAProveedor.getBtnConfirmarCancelacionDe().addActionListener(a -> cancelarPedido(a));
 		
+		
 		this.ventanaVerPedidosAProveedor.getTextId().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				realizarBusqueda();
 			}
 		});
+		this.ventanaVerPedidosAProveedor.getTextProveedor().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaVerPedidosAProveedor.getTextProducto().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaVerPedidosAProveedor.getTextPrecio().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaVerPedidosAProveedor.getComboBoxEstado().addActionListener(a -> realizarBusqueda(a));
+
+		this.ventanaVerPedidosAProveedor.getDateChooserDesde().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				realizarBusqueda();
+				}		
+		});
 		
+		this.ventanaVerPedidosAProveedor.getSpinnerHoraDesde().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				//actualizar cantidad
+				realizarBusqueda();
+			}			
+		});
+				
+		this.ventanaVerPedidosAProveedor.getDateChooserHasta().addPropertyChangeListener(
+			new PropertyChangeListener() {
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					// TODO Auto-generated method stub
+					realizarBusqueda();
+				}
+		});
+		
+		this.ventanaVerPedidosAProveedor.getSpinnerHoraHasta().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent a) {
+				realizarBusqueda();
+			}
+		});
+		
+		this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().addActionListener(a -> realizarBusqueda(a));
+		
+		llenarComboBoxes();
 		llenarTablaCompleta();
 	}
+	
+	public void realizarBusqueda(ActionEvent a) {
+		realizarBusqueda();
+	}
+	
 	
 	
 	public void mostrarVentana() {
@@ -68,6 +136,8 @@ public class ControladorVerPedidosAProveedor {
 	
 	public void cerrarVentana() {
 		this.ventanaVerPedidosAProveedor.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
 	
@@ -87,46 +157,56 @@ public class ControladorVerPedidosAProveedor {
 	}
 	
 	public void realizarBusqueda() {
+		this.listaStock = this.stock.readAll();
+		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
+		
 		String id=this.ventanaVerPedidosAProveedor.getTextId().getText();
 		String proveedor = this.ventanaVerPedidosAProveedor.getTextProveedor().getText();
 		String producto = this.ventanaVerPedidosAProveedor.getTextProducto().getText();
 		String precio = this.ventanaVerPedidosAProveedor.getTextPrecio().getText();
 		String estado = (String)this.ventanaVerPedidosAProveedor.getComboBoxEstado().getSelectedItem();
-		
-		
-		/*
-		public String fechaDesde() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaDesde = this.ventanaHistorialCambioMoneda.getFechaDesde().getDate();
 
-        String fechaDesdeFormato = null;
-        if (fechaDesde != null) {
-            fechaDesdeFormato = dateFormat.format(fechaDesde);
-        }
-        return fechaDesdeFormato;
-    }
-		
-		
-		*/
+		//Fecha desde
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date fech = this.ventanaVerPedidosAProveedor.getDateChooser().getDate();
+		Date fechD = this.ventanaVerPedidosAProveedor.getDateChooserDesde().getDate();
 		
-		String fecha = null;
-        if (fech != null) {
-            fecha = dateFormat.format(fech);
-        } 
-	
-		DateFormat dateFmt = new SimpleDateFormat("HH:mm:ss");
-		Date fechaHora = (Date) this.ventanaVerPedidosAProveedor.getSpinnerHora().getValue();
-		
-		String hora = null;
-        if (fechaHora != null) {
-            hora = dateFmt.format(fechaHora);
+		String fechaDesde = null;
+        if (fechD != null) {
+            fechaDesde = dateFormat.format(fechD);
         } 
         
-		//falta el ultimo cb que no se que va
+        
+        
+		DateFormat dateFmt = new SimpleDateFormat("HH:mm:ss");
+		Date fechaHoraDesde = (Date) this.ventanaVerPedidosAProveedor.getSpinnerHoraDesde().getValue();
+	
+		//Hora desde
+		String horaDesde = null;
+        if (fechaHoraDesde != null) {
+            horaDesde = dateFmt.format(fechaHoraDesde);
+        } 
+        
+        
+        //Fecha HASTA
+        Date fechaH = this.ventanaVerPedidosAProveedor.getDateChooserHasta().getDate();
+        String fechaHasta = null;
+        if( fechaH != null) {
+        	fechaHasta = dateFormat.format(fechaH);
+        }
+        
+        //Hora hasta
+        Date fechaHoraHasta = (Date) this.ventanaVerPedidosAProveedor.getSpinnerHoraHasta().getValue(); 
+        String horaHasta = null;
+        if(fechaHoraHasta != null) {
+        	horaHasta = dateFmt.format(fechaHoraHasta);
+        }
+
+        //falta el ultimo cb que no se que va
+//        String cBestadoSolo = (String) this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().getSelectedItem(); 
+        
+        
 		
-		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fecha, "Hora", hora, null, null);
+		ArrayList<PedidosPendientesDTO> pedidosFiltrados = (ArrayList<PedidosPendientesDTO>) this.pedidosPendientes.getPedidosPendientesFiltrados("Id", id, "NombreProveedor", proveedor, "NombreMaestroProducto", producto, "PrecioTotal", precio, "Estado", estado, "Fecha", fechaDesde, fechaHasta, "Hora", horaDesde,horaHasta);
 		
 		llenarTablaFiltrada(pedidosFiltrados);
 	}
@@ -158,9 +238,22 @@ public class ControladorVerPedidosAProveedor {
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnCount(0);
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().setColumnIdentifiers(this.ventanaVerPedidosAProveedor.getNombreColumnasTablaPedidos());
 		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
-		
+		 String cBestadoSolo = (String) this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().getSelectedItem(); 
 		for(PedidosPendientesDTO p: pedidosFiltrados) {
-			escribirTabla(p);
+			if(!cBestadoSolo.equals("Sin seleccionar")) {
+				if(cBestadoSolo.equals("Alta") && p.getFecha()!=null) {
+					escribirTabla(p);
+				}
+				if(cBestadoSolo.equals("Envio") && p.getFechaEnvioMail()!=null) {
+					escribirTabla(p);
+				}
+				if(cBestadoSolo.equals("Cierre") && p.getFechaCompleto()!=null) {
+					escribirTabla(p);
+				}
+			}else {
+				escribirTabla(p);
+			}
+			
 		}
 		
 	}
@@ -202,8 +295,8 @@ public class ControladorVerPedidosAProveedor {
 			return;
 		}
 		PedidosPendientesDTO pedidoSeleccionado = this.pedidosPendientesEnTabla.get(filaSeleccionada);
-		if(pedidoSeleccionado.getEstado().equals("Completado")) {
-			JOptionPane.showMessageDialog(null, "No es posible completar este pedido, el pedido ya ha sido compeltado", "Error", JOptionPane.ERROR_MESSAGE);
+		if(pedidoSeleccionado.getEstado().equals("Recibido")) {
+			JOptionPane.showMessageDialog(null, "No es posible marcar como recibido este pedido", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if( pedidoSeleccionado.getEstado().equals("Cancelado") ) {
@@ -229,12 +322,12 @@ public class ControladorVerPedidosAProveedor {
 		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+stockDeProd.getStockDisponible()+" -> Stock actualizado: "+(stockDeProd.getStockDisponible()+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if(resp==0) {
-			boolean update = this.pedidosPendientes.finalizarPedido("Completado", fecha, hora, pedidoSeleccionado.getId());
+			boolean update = this.pedidosPendientes.finalizarPedido("Recibido", fecha, hora, pedidoSeleccionado.getId());
 			
 			if(update) {
-				JOptionPane.showMessageDialog(null, "Pedido completado con exito");
+				JOptionPane.showMessageDialog(null, "Pedido marcado como recibido con exito");
 			}else {
-				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al completar el pedido");
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como recibido el pedido");
 			}
 			
 			int nuevaCant = stockDeProd.getStockDisponible() + pedidoSeleccionado.getCantidad();
@@ -262,12 +355,25 @@ public class ControladorVerPedidosAProveedor {
 	}
 	
 	
-	public static void main(String[] args) {
-		PedidosPendientes pedido = new PedidosPendientes(new DAOSQLFactory());
-		Stock stock = new Stock(new DAOSQLFactory());
-		ControladorVerPedidosAProveedor c = new ControladorVerPedidosAProveedor(pedido,stock);
-		c.inicializar();
-		c.mostrarVentana();
+	public void llenarComboBoxes() {
+		String[] estados = {"En espera","Recibido","Pagado","Cancelado"};
+		for(int i=0; i<estados.length; i++) {
+			this.ventanaVerPedidosAProveedor.getComboBoxEstado().addItem(estados[i]);
+		}
+		
+		String[] estadosTabla = {"Alta","Envio","Cierre"};
+		for(int i=0; i<estadosTabla.length; i++) {
+			this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().addItem(estadosTabla[i]);
+		}
 	}
+	
+	
+//	public static void main(String[] args) {
+//		PedidosPendientes pedido = new PedidosPendientes(new DAOSQLFactory());
+//		Stock stock = new Stock(new DAOSQLFactory());
+//		ControladorVerPedidosAProveedor c = new ControladorVerPedidosAProveedor(pedido,stock);
+//		c.inicializar();
+//		c.mostrarVentana();
+//	}
 	
 }

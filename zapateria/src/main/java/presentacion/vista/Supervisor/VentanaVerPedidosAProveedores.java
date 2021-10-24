@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Date;
 
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
@@ -29,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
 
 public class VentanaVerPedidosAProveedores {
 
@@ -50,9 +52,16 @@ public class VentanaVerPedidosAProveedores {
 	
 	private JComboBox comboBoxEstado;
 	
-	private JDateChooser dateChooser;
-	private JSpinner spinnerHora;
+	private JDateChooser dateChooserDesde;
+	private JSpinner spinnerHoraDesde;
 	
+	private JDateChooser dateChooserHasta;
+
+	private JSpinner spinnerHoraHasta;
+	
+	private JComboBox comboBoxEstadoSolo;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -152,17 +161,11 @@ public class VentanaVerPedidosAProveedores {
 		lblEstado.setBounds(449, 37, 79, 19);
 		panelTabla.add(lblEstado);
 		
-		JLabel lblFecha = new JLabel("Fecha");
-		lblFecha.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFecha.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblFecha.setBounds(656, 37, 79, 19);
-		panelTabla.add(lblFecha);
-		
-		JLabel lblHora = new JLabel("Hora");
-		lblHora.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHora.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblHora.setBounds(798, 37, 79, 19);
-		panelTabla.add(lblHora);
+		JLabel lblFechaDesde = new JLabel("Desde");
+		lblFechaDesde.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFechaDesde.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblFechaDesde.setBounds(690, 23, 79, 19);
+		panelTabla.add(lblFechaDesde);
 		
 		
 		
@@ -212,9 +215,10 @@ public class VentanaVerPedidosAProveedores {
 		comboBoxEstado.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstado);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(965, 51, 146, 21);
-		panelTabla.add(comboBox_1);
+		comboBoxEstadoSolo = new JComboBox();
+		comboBoxEstadoSolo.setBounds(1187, 51, 70, 21);
+		comboBoxEstadoSolo.addItem("Sin seleccionar");
+		panelTabla.add(comboBoxEstadoSolo);
 		
 		btnSalir = new JButton("<");
 		btnSalir.setBounds(61, 620, 74, 63);
@@ -250,20 +254,40 @@ public class VentanaVerPedidosAProveedores {
 		textProveedor.setColumns(10);
 		textProveedor.setBounds(56, 52, 96, 19);
 		panelTabla.add(textProveedor);
+				
+		JLabel lblFechaHasta = new JLabel("Hasta");
+		lblFechaHasta.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFechaHasta.setFont(new Font("Consolas", Font.PLAIN, 13));
+		lblFechaHasta.setBounds(910, 23, 79, 19);
+		panelTabla.add(lblFechaHasta);
 		
 		
-		dateChooser = new JDateChooser();
-		dateChooser.setBounds(636, 51, 122, 19);
-		panelTabla.add(dateChooser);
+		dateChooserDesde = new JDateChooser();
+		dateChooserDesde.setBounds(618, 52, 122, 19);
+		panelTabla.add(dateChooserDesde);
 		
-		spinnerHora = new JSpinner( new SpinnerDateModel());
-		JSpinner.DateEditor de_spinnerHora = new JSpinner.DateEditor(spinnerHora, "HH:mm:ss");
-		spinnerHora.setEditor(de_spinnerHora);
-		spinnerHora.setBounds(808, 52, 70, 19);
+		dateChooserHasta = new JDateChooser();
+		dateChooserHasta.setBounds(853, 51, 122, 19);
+		panelTabla.add(dateChooserHasta);
+		
+		
+		
+		spinnerHoraDesde = new JSpinner( new SpinnerDateModel());
+		JSpinner.DateEditor de_spinnerHoraDesde = new JSpinner.DateEditor(spinnerHoraDesde, "HH:mm");
+		spinnerHoraDesde.setEditor(de_spinnerHoraDesde);
+		spinnerHoraDesde.setBounds(750, 52, 70, 19);
+		
+		spinnerHoraDesde.setValue(new Date(0, 0,0, 00, 0, 0));
 //		spinner.setValue(new Date()); // will only show the current time
-		panelTabla.add(spinnerHora);
+		panelTabla.add(spinnerHoraDesde);
 		
 		
+		spinnerHoraHasta = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor de_spinnerHoraHasta = new JSpinner.DateEditor(spinnerHoraHasta, "HH:mm");
+		spinnerHoraHasta.setEditor(de_spinnerHoraHasta);
+		spinnerHoraHasta.setBounds(985, 52, 70, 19);
+		spinnerHoraHasta.setValue(new Date(0, 0,0, 00, 0, 0));
+		panelTabla.add(spinnerHoraHasta);
 		
 		
 	}
@@ -348,12 +372,25 @@ public class VentanaVerPedidosAProveedores {
 		return comboBoxEstado;
 	}
 
-	public JDateChooser getDateChooser() {
-		return dateChooser;
+	public JDateChooser getDateChooserDesde() {
+		return dateChooserDesde;
 	}
 
-	public JSpinner getSpinnerHora() {
-		return spinnerHora;
+	public JSpinner getSpinnerHoraDesde() {
+		return spinnerHoraDesde;
 	}
 
+	public JDateChooser getDateChooserHasta() {
+		return dateChooserHasta;
+	}
+
+	public JSpinner getSpinnerHoraHasta() {
+		return spinnerHoraHasta;
+	}
+
+
+	
+	public JComboBox getComboBoxEstadoSolo() {
+		return comboBoxEstadoSolo;
+	}
 }

@@ -38,6 +38,8 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnModPrecioUnitario;
 	private JButton btnRegresar;
 	private JButton btnRegistrarUnCliente;
+	JButton btnVerPedidosA;
+
 
 	private JButton btnIngresarProductoNuevo;
 	private JButton btnVerProveedores;
@@ -186,7 +188,7 @@ public class VentanaMenuSistemaDeVentas {
 		panel.add(lblNewLabel_7);
 		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(760, 460, 48, 50);
+		btnRegresar.setBounds(760, 551, 48, 50);
 		btnRegresar.setIcon(setIcono("imagenes/back.png",btnRegresar));
 		panel.add(btnRegresar);
 		
@@ -233,6 +235,17 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_7_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		lblNewLabel_7_1_1_1.setBounds(113, 581, 184, 20);
 		panel.add(lblNewLabel_7_1_1_1);
+		
+		btnVerPedidosA = new JButton("Ver Pedidos a Proveeodres");
+		btnVerPedidosA.setFont(new Font("Consolas", Font.PLAIN, 15));
+		btnVerPedidosA.setBounds(473, 405, 282, 35);
+		panel.add(btnVerPedidosA);
+		
+		JLabel lblNewLabel_7_1_1_1_1 = new JLabel("(Supervisor)");
+		lblNewLabel_7_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
+		lblNewLabel_7_1_1_1_1.setBounds(542, 453, 184, 20);
+		panel.add(lblNewLabel_7_1_1_1_1);
 	}
 	
 	
@@ -320,5 +333,8 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnVerProveedores() {
 		return btnVerProveedores;
 	}
-
+	
+	public JButton getBtnVerPedidosA() {
+		return btnVerPedidosA;
+	}
 }

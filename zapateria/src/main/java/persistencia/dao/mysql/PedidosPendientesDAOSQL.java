@@ -173,38 +173,51 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	}
 	
 	
-	
+	//la estructura de esta funcion solo fuciona para la clase ver pedidos pendientes, sino pasar en null los ultimos 6 parametros
 	@Override
-	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String txt6, String nombreColumna7,String txt7, String nombreColumna8,String txt8){
+	public List<PedidosPendientesDTO> getPedidosPendientesFiltrados(String nombreColumna1, String txt1, String nombreColumna2, String txt2, String nombreColumna3,String txt3, String nombreColumna4,String txt4, String nombreColumna5,String txt5, String nombreColumna6,String fechaDesde, String fechaHasta,String nombreColumna7, String horaDesde,String horaHasta){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		String sel = "SELECT * FROM PedidosPendientes";
-		if(nombreColumna1!=null) {
-			sel = sel +" WHERE " + nombreColumna1 + " LIKE '%" + txt1 + "%'";
+		String sel = "SELECT * FROM PedidosPendientes WHERE ";
+		
+		if(nombreColumna1!=null ) {
+			sel = sel+ nombreColumna1 + " LIKE '%" + txt1 + "%'";
 		}
 		if(nombreColumna2!=null) {
 			sel = sel+" AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
 		}
-		if(nombreColumna3!=null) {
+		if(nombreColumna3!=null ) {
 			sel = sel+" AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";
 		}
-		if(nombreColumna4!=null) {
+		if(nombreColumna4!=null ) {
 			sel = sel+ " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";
 		}
 		if(nombreColumna5!=null && !txt5.equals("Sin seleccionar")  ) {
 			sel = sel+ " AND " + nombreColumna5 + " LIKE '%" + txt5 + "%'";
 		}
 		//JDate chooser puede ser nulo
-		if(nombreColumna6!=null && txt6!=null ) {
-			sel = sel+ " AND " + nombreColumna6 + " LIKE '%" + txt6 + "%'";
+		if(nombreColumna6!=null && (fechaDesde!=null || fechaHasta != null)) {
+			if(fechaDesde != null && fechaHasta == null) {
+				sel = sel+ " AND " + nombreColumna6 + " >= DATE('" + fechaDesde + "')";
+			}
+			if(fechaDesde == null && fechaHasta != null) {
+				sel = sel+ " AND " + nombreColumna6 + " <= DATE('" + fechaHasta + "')";	
+			}
+			if(fechaDesde != null && fechaHasta != null) {
+				sel = sel + "AND " + nombreColumna6 +" BETWEEN '" + fechaDesde +  "' AND '"  + fechaHasta +"'";
+			}
 		}
 		//spiner de hora/date puede ser nulo
-		if(nombreColumna7!=null && txt7!=null ) {
-			sel = sel+ " AND " + nombreColumna7 + " LIKE '%" + txt7 + "%'";
-		}
-		//cb puede ser nulo
-		if(nombreColumna8!=null && txt8!=null) {
-			sel = sel+ " AND " + nombreColumna8 + " LIKE '%" + txt8 + "%'";
+		if(nombreColumna7 != null && (!horaDesde.equals("00:00:00") || !horaHasta.equals("00:00:00"))) {
+			if(!horaDesde.equals("00:00:00") && horaHasta.equals("00:00:00")) {
+				sel = sel+ " AND " + nombreColumna7 + " >='" + horaDesde + "'";
+			}
+			if(horaDesde.equals("00:00:00") && !horaHasta.equals("00:00:00")){
+				sel = sel+ " AND " + nombreColumna7 + " <= '" + horaHasta + "'";	
+			}
+			if(!horaDesde.equals("00:00:00") && !horaHasta.equals("00:00:00")) {
+				sel = sel + "AND " + nombreColumna7 +" BETWEEN '" + horaDesde +  "' AND '"  + horaHasta +"'";		
+			}
 		}
 		
 		System.out.println(sel);
