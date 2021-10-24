@@ -88,7 +88,7 @@ public class PedidosPendientes {
 	    double precioUnidad = prodProv.getPrecioVenta();
 	    int auxCantDeLotes = cantidadTotal/cantPorLote;
 	    double precioTotal = precioUnidad * auxCantDeLotes;
-	    
+	    	    
 	    String estado = "En espera";
 	    int idSuc = idSucursal;
 	    String fechaEnvio = null;
@@ -128,7 +128,7 @@ public class PedidosPendientes {
 			double precioConUnStockMenos = auxCantLotes * costo; 
 			double conAumentoDePorciento = ( (20 *precioConUnStockMenos)/100 ) + precioConUnStockMenos;//+20% al precio con -1 stock
 					
-			boolean superaLaReglaDeRedondeo = conAumentoDePorciento < costoTotal;
+			boolean superaLaReglaDeRedondeo = conAumentoDePorciento > costoTotal;
 			if(superaLaReglaDeRedondeo) {
 				System.out.println("Se compra un stock menos ya que este supera el +20%, por lo que se usara un stock menos");				
 				//le quitamos un stock porque supera el 20%
@@ -148,8 +148,11 @@ public class PedidosPendientes {
 	private static ProductoDeProveedorDTO getProductoDeProveedor(int idProveedor,int idProducto) {
 		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		ArrayList<ProductoDeProveedorDTO> todosLosProductoDeProveedor = (ArrayList<ProductoDeProveedorDTO>) productoDeProveedor.readAll();
+		System.out.println("idProv: "+idProveedor+" idProd: "+idProducto);
 		for(ProductoDeProveedorDTO p: todosLosProductoDeProveedor) {
+			System.out.println("producto que se encuentra, idProv : "+p.getIdProveedor()+" idMP: "+p.getIdMaestroProducto());
 			if(idProveedor==p.getIdProveedor() && p.getIdMaestroProducto()==idProducto) {
+				System.out.println("se encontro el prov");
 				return p;
 			}
 		}

@@ -19,9 +19,9 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	private static final String finalzarPedido = "UPDATE PedidosPendientes SET Estado=?, FechaCompleto=?, HoraCompleto=? WHERE Id=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
 	
-	private static final String updateTotal = "UPDATE FROM PedidosPendientes SET PrecioTotal=? WHERE Id=?";
+	private static final String updateTotal = "UPDATE PedidosPendientes SET PrecioTotal=? WHERE Id=?";
 	
-	private static final String cambiarEstado = "UPDATE FROM PedidosPendientes SET Estado=? WHERE Id=?";
+	private static final String cambiarEstado = "UPDATE PedidosPendientes SET Estado=? WHERE Id=?";
 	
 	@Override
 	public boolean insert(PedidosPendientesDTO pedido) {

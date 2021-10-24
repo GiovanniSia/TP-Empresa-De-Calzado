@@ -179,21 +179,29 @@ public class ControladorEgresosCaja {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
 				double pagoRestante = p.getPrecioTotal() - pago;
 				
-				boolean update=false;
-				boolean updateTotal = false;
-				if(pagoRestante<0) {
+				boolean update=true;
+				boolean updateTotal = true;
+				if(pagoRestante<=0) {
 					update = this.pedidosPendientes.cambiarEstado(p.getId(),"Pagado");
+
+					if(!update) {
+						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como completo el pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						JOptionPane.showMessageDialog(null, "Se ha completado el pago del pedido: "+p.getId()+".\nPedido marcado como 'Pagado'", "Pago", JOptionPane.OK_OPTION);
+					}
+					
 				}else {
 					updateTotal = this.pedidosPendientes.updateTotal(p.getId(), pagoRestante);
+					
+					if(!updateTotal) {
+						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el total del pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);	
+					}else {
+						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: "+p.getId()+".\nNuevo saldo: "+pagoRestante,"Pago", JOptionPane.OK_OPTION);
+					}
 				}
 				
 				
-				if(!update) {
-					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como completo el pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				if(!updateTotal) {
-					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el total del pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);	
-				}
+				
 				return;
 			}
 		}

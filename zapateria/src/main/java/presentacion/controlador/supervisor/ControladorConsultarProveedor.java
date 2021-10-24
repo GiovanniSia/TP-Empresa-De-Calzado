@@ -48,7 +48,6 @@ public class ControladorConsultarProveedor {
 	}
 	
 	public void inicializar() {
-		System.out.println("SE INICIALIZA LA VENTANA DE CONSULTAR PROVEEDORES");
 		this.ventanaConsultarProveedores = new VentanaConsultarProveedores();
 		
 		
