@@ -17,15 +17,16 @@ public class ConfiguracionBD {
 	private Properties properties;
 	
 	public static ConfiguracionBD getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new ConfiguracionBD();
+		if (INSTANCE == null) {
+			INSTANCE = new ConfiguracionBD();	
+		}
+		
 		return INSTANCE;
 	}
 	
 	private ConfiguracionBD() {
 		BasicConfigurator.configure();
 		leerProperties();
-		establecerPropertiesEnvioAutoMailPorDefecto();
 	}
 
 	public void guardar() {
@@ -61,6 +62,8 @@ public class ConfiguracionBD {
 				folder.mkdir();
 			}
 			guardar();
+
+			establecerPropertiesEnvioAutoMailPorDefecto();
 		}
 	}
 	
@@ -97,7 +100,7 @@ public class ConfiguracionBD {
 	private void establecerPropertiesEnvioAutoMailPorDefecto() {
 		try {
 			writeValue("DiaDeEnvio","jueves");
-			writeValue("HoraDeEnvio","18:00:00");
+			writeValue("HoraDeEnvio","19:00:00");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
