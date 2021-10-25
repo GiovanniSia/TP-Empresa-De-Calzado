@@ -114,35 +114,35 @@ public class ProcesarCompraVirtual {
 		String ret = "";
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
 			if(!esPagoValido(compraVirtual.getPago())) {
-				ret = ret + ";El pago no es valido";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 			} else
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"% \n";
 			}
 			if(!esSucursalValida(compraVirtual.getIdSucursal())) {
-				ret = ret + ";La sucursal no es valida";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
 			}
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";No es posible vender uno de los productos";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+"No es posible vender uno de los productos \n";
 				}
 			}
 			return ret;
 		}
 		if(!esPagoValido(compraVirtual.getPago())) {
-			ret = ret + ";El pago no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
-			ret = ret + ";El nombre no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCUIL())) {
-			ret = ret + ";El CUIL no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CUIL no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getApellido())) {
-			ret = ret + ";El apellido no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El apellido no es valido \n";
 		}
 		if(!esMailValido(compraVirtual.getCorreoElectronico())) {
-			ret = ret + ";El CorreoElectronico no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CorreoElectronico no es valido \n";
 		}
 		/*
 		if(!esTipoClienteValido(compraVirtual.getTipoCliente())) {
@@ -153,25 +153,25 @@ public class ProcesarCompraVirtual {
 		}
 		*/
 		if(!esAfipValido(compraVirtual.getImpuestoAFIP())) {
-			ret = ret + ";El tipo de afip no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El tipo de afip no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCalle())) {
-			ret = ret + ";La calle no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La calle no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getAltura())) {
-			ret = ret + ";La altura no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La altura no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getPais())) {
-			ret = ret + ";El pais no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El pais no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getProvincia())) {
-			ret = ret + ";La provincia no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La provincia no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getLocalidad())) {
-			ret = ret + ";La localidad no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La localidad no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCodPostal())) {
-			ret = ret + ";El codigo postal no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El codigo postal no es valido \n";
 		}
 		/* por si lo quiero booleando
 		boolean ret = true;
@@ -190,11 +190,11 @@ public class ProcesarCompraVirtual {
 		ret = ret && esDatoStringValido(compraVirtual.getCodPostal());
 		*/
 		if(!esSucursalValida(compraVirtual.getIdSucursal())) {
-			ret = ret + ";La sucursal no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
 		}else {
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";No es posible vender uno de los productos";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
 				}
 			}
 		}
@@ -210,7 +210,7 @@ public class ProcesarCompraVirtual {
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
 			}
 		}
 		return ret;
@@ -599,7 +599,6 @@ public class ProcesarCompraVirtual {
 		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
-		/*
 		detalle.put(1, 5);
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
@@ -644,7 +643,8 @@ public class ProcesarCompraVirtual {
 				"asd", "", null, 
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
-		compras.add(cvd4);*/
+		compras.add(cvd4);
+		
 		/*
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1959);
@@ -653,6 +653,7 @@ public class ProcesarCompraVirtual {
 				"1002", "201", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd5);*/
+		/*
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(2, 1965);
 		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 15720000, 9, "Vicentino",
@@ -660,6 +661,7 @@ public class ProcesarCompraVirtual {
 				"1002", "201", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd5);
+		*/
 		JsonListaCompraVirtual.guardarLista(compras);
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
 		
