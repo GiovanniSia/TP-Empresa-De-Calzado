@@ -15,6 +15,7 @@ import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
 import dto.DetalleFacturaDTO;
+import dto.EgresosDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
@@ -23,6 +24,7 @@ import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
+import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
@@ -326,7 +328,11 @@ public class ProcesarCompraVirtual {
 			return false;
 		}
 		int cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
-		if(cantStock >= cantidadAComprar) {
+		if(cantStock == 0) {
+			return false;
+		}
+		if(cantStock >= 1) {	//if(cantStock >= cantidadAComprar) 
+			//CAMBIO PQ SE LE HACE NOTA DE CREDITO AL CLIENTE CON LO QUE NO TENEMOS
 			return true;
 		}
 		return false;
@@ -389,10 +395,10 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static String determinarCategoriaFactura(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
 			return "A";
 		}
-		if(cliente.getImpuestoAFIP().equals("E")) {
+		if(cliente.getImpuestoAFIP().equals("E") || cliente.getImpuestoAFIP().equals("CF")) {
 			return "B";
 		}
 		if(cliente.getPais() != "Argentina") {//si la persona no vive en arg es excento
@@ -466,11 +472,30 @@ public class ProcesarCompraVirtual {
 		}
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
-		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
+		if(notaCredito != 0) {
+			registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
+		}
 		return nroFacturaCompleto;
 	}
 	
-	private static void registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
+	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
+		String hora = dtfhora.format(LocalDateTime.now());
+		String tipoEgreso = "Nota Credito";
+		String tipo = "NC";
+		String Detalle = nroFacturaCompleta;
+		double Monto = notaCredito;
+		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgreso, tipo, Detalle,
+				Monto);
+		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
+		modeloEgreso.insert(egresoNuevo);
+	}
+
+	private static double registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
+		double retNotaCredito = 0.0;
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			int id=0;
 			int idProd = idProducto;
@@ -487,6 +512,11 @@ public class ProcesarCompraVirtual {
 			}else {
 				precioVenta = producto.getPrecioMinorista();
 			}
+			if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd) < cant) {
+				retNotaCredito += -(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)*precioVenta;
+				//cant = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd); 
+				//EN CASO DE QUE NO SE QUIERA MOSTRAR PRODUCTOS FANTASMAS EN LA FACTURA DESCOMENTAR EL DE ARRIBA
+			}
 					
 			double monto = precioVenta * cant;
 			int idFactura = factura.getIdFactura();
@@ -501,6 +531,7 @@ public class ProcesarCompraVirtual {
 			}
 			descontarStock(compraVirtual.getIdSucursal(), idProducto, compraVirtual.getCompra().get(idProducto));
 		}
+		return retNotaCredito;
 	}
 	
 	private static String generarNroSucursal(int idSucursal) {
@@ -532,7 +563,7 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static boolean deboCalcularIVA(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
 			return true;
 		}
 		return false;
@@ -568,6 +599,7 @@ public class ProcesarCompraVirtual {
 		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
+		/*
 		detalle.put(1, 5);
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
@@ -612,7 +644,22 @@ public class ProcesarCompraVirtual {
 				"asd", "", null, 
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
-		compras.add(cvd4);
+		compras.add(cvd4);*/
+		/*
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1959);
+		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 13713000, 9, "Vicentino",
+				"Reboredo", "223004", "pepeptS@mgail.com", 
+				"1002", "201", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd5);*/
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(2, 1965);
+		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 15720000, 9, "Vicentino",
+				"Reboredo", "223004", "pepeptS@mgail.com", 
+				"1002", "201", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd5);
 		JsonListaCompraVirtual.guardarLista(compras);
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
 		
