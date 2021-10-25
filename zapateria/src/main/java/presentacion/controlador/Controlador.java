@@ -273,11 +273,11 @@ public class Controlador implements ActionListener {
 		//Ver pedidos a prov
 		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		
-		try {
-			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void mostrarVentanaMenu() {

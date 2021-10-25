@@ -255,10 +255,10 @@ rowSM.addListSelectionListener(new ListSelectionListener() {
 		
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
 		System.out.println("fila seleccionada: "+filaSeleccionada);
-//		if(filaSeleccionada==-1) {
+		if(filaSeleccionada==-1) {
 //			JOptionPane.showMessageDialog(null, "wtf esto no deberia aparecer xd");
-//			return;
-//		}
+			return;
+		}
 		CarritoDTO carritoSeleccionado = this.carritosEnTabla.get(filaSeleccionada);
 		
 		for(DetalleCarritoDTO detalleCar: this.listaDetalleCarrito) {

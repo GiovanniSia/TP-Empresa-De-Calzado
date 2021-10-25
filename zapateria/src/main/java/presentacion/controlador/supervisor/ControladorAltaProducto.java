@@ -107,7 +107,7 @@ public class ControladorAltaProducto {
 		
 		String[] estado = {"Activo","Inactivo","Suspendido"};
 		for(int i=0; i<estado.length;i++) {
-			this.ventanaAltaProducto.getComboBoxFabricado().addItem(estado[i]);
+			this.ventanaAltaProducto.getComboBoxEstado().addItem(estado[i]);
 		}
 		
 	}
@@ -136,12 +136,12 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		String precioMayorista = this.ventanaAltaProducto.getTextPrecioMayorista().getText();
-		if(precioMayorista.equals("")) {
+		if(precioMayorista.equals("") && !tipo.equals("Materia Prima")) {
 			JOptionPane.showMessageDialog(null, "El precio mayorista no puede ser vacio");
 			return false;
 		}
 		String precioMinorista = this.ventanaAltaProducto.getTextPrecioMinorista().getText();
-		if(precioMinorista.equals("")) {
+		if(precioMinorista.equals("") && !tipo.equals("Materia Prima")) {
 			JOptionPane.showMessageDialog(null, "El precio minorista no puede ser vacio");
 			return false;
 		}
@@ -248,26 +248,52 @@ public class ControladorAltaProducto {
 	
 	public void agregarProducto(ActionEvent a ) {
 		if(todosLosCamposSonCorrectos()) {
-			int id = 0;
-			String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
-			String tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
-			String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
-			double costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());
-			double precioMayorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMayorista().getText());
-			double precioMinorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMinorista().getText());
-			int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
-			int proveedor = obtenerProveedor();
-			String talle = this.ventanaAltaProducto.getTextTalle().getText();
-			String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
-			String estado = (String)this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
-			int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
-			int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
+			String tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
+			if(!tipo.equals("Materia Prima")) {
+				int id = 0;
+				String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
+				tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
+				String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
+				double costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());
+				double precioMayorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMayorista().getText());
+				double precioMinorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMinorista().getText());
+				int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
+				int proveedor = obtenerProveedor();
+				String talle = this.ventanaAltaProducto.getTextTalle().getText();
+				String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
+				String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
+				int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
+				int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
+				
+				MaestroProductoDTO producto = new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
+				
+				this.maestroProducto.insert(producto);	
+				JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
+				borrarDatosEscritos();
+			}else {
+				int id = 0;
+				String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
+				tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
+				String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
+				double costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());
+				double precioMayorista = 0;
+				double precioMinorista = 0;
+				int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
+				int proveedor = obtenerProveedor();
+				String talle = this.ventanaAltaProducto.getTextTalle().getText();
+				String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
+				String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
+				int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
+				int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
+				
+				MaestroProductoDTO producto = new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
+				
+				this.maestroProducto.insert(producto);	
+				JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
+				borrarDatosEscritos();
+			}
 			
-			MaestroProductoDTO producto = new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
 			
-			this.maestroProducto.insert(producto);	
-			JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
-			borrarDatosEscritos();
 		}
 	}
 	

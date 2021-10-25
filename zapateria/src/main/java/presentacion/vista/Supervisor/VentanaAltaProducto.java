@@ -393,7 +393,7 @@ public class VentanaAltaProducto {
 		return btnRegresar;
 	}
 
-	public JComboBox<String> JComboBox() {
+	public JComboBox<String> getComboBoxEstado() {
 		return comboBoxEstado;
 	}
 
