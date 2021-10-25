@@ -20,18 +20,18 @@ public class ControladorDescripcionProveedorMProducto {
 	private MaestroProductoDTO producto;
 	private ControladorModificarMProducto controladorModificarMProducto;
 
-	public ControladorDescripcionProveedorMProducto(MaestroProductoDTO producto) {
+	public ControladorDescripcionProveedorMProducto() {
 		this.ventanaDescripcionProveedorMProducto = new VentanaDescripcionProveedorMProducto();
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
-		this.producto = producto;
-		this.controladorModificarMProducto = new ControladorModificarMProducto();
+		
+		this.ventanaDescripcionProveedorMProducto.getBtnAtras().addActionListener(r -> atras(r));
+		this.ventanaDescripcionProveedorMProducto.getBtnActualizarProducto()
+		.addActionListener(a -> actualizarProducto(a));
+		
 	}
 
 	public void inicializar() {
-		this.ventanaDescripcionProveedorMProducto.getBtnAtras().addActionListener(r -> atras(r));
-		this.ventanaDescripcionProveedorMProducto.getBtnActualizarProducto()
-				.addActionListener(a -> actualizarProducto(a));
 
 		rellenarTablaProductoSeleccionado();
 		rellenarCampoDescripcion();
@@ -46,6 +46,10 @@ public class ControladorDescripcionProveedorMProducto {
 		int idProveedorAntiguo = this.producto.getIdProveedor();
 		int idProveedorNuevo = Integer.parseInt(this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().getSelectedItem().toString());
 		
+		if(descripcionNueva.equals("")) {
+			JOptionPane.showMessageDialog(null, "No se permite una descripcion vacia");
+			return;
+		}
 
 		if (descripcionAntigua.equals(descripcionNueva) && idProveedorAntiguo == idProveedorNuevo) {
 			JOptionPane.showMessageDialog(null, "No se a modificado ningun dato");
@@ -56,9 +60,8 @@ public class ControladorDescripcionProveedorMProducto {
 			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(descripcionNueva, idProveedorNuevo);
 			actualizacionMaestroProducto(productoNuevo);
 			JOptionPane.showMessageDialog(null, "Modificacion de descripcion y proveedor con exito");
+			controladorModificarMProducto.refrescarTablaProducto();
 			this.ventanaDescripcionProveedorMProducto.cerrar();
-			controladorModificarMProducto.inicializar();
-			controladorModificarMProducto.mostrarVentana();
 			return;
 		}
 
@@ -66,9 +69,8 @@ public class ControladorDescripcionProveedorMProducto {
 			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(descripcionNueva, idProveedorAntiguo);
 			actualizacionMaestroProducto(productoNuevo);
 			JOptionPane.showMessageDialog(null, "Modificacion de descripcion con exito");
+			controladorModificarMProducto.refrescarTablaProducto();
 			this.ventanaDescripcionProveedorMProducto.cerrar();
-			controladorModificarMProducto.inicializar();
-			controladorModificarMProducto.mostrarVentana();
 			return;
 		}
 
@@ -76,11 +78,14 @@ public class ControladorDescripcionProveedorMProducto {
 			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(descripcionAntigua, idProveedorNuevo);
 			actualizacionMaestroProducto(productoNuevo);
 			JOptionPane.showMessageDialog(null, "Modificacion de proveedor con exito");
+			controladorModificarMProducto.refrescarTablaProducto();
 			this.ventanaDescripcionProveedorMProducto.cerrar();
-			controladorModificarMProducto.inicializar();
-			controladorModificarMProducto.mostrarVentana();
 			return;
 		}
+	}
+	
+	public void ocultarVentana() {
+		this.ventanaDescripcionProveedorMProducto.cerrar();
 	}
 
 	public void actualizacionMaestroProducto(MaestroProductoDTO productoNuevo) {
@@ -111,6 +116,7 @@ public class ControladorDescripcionProveedorMProducto {
 	}
 
 	public void rellenarCampoProveedorDeProducto() {
+		this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().removeAllItems();
 		this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().addItem(""+producto.getIdProveedor());
 		rellenarPosiblesProveedoresPorducto();
 	}
@@ -134,8 +140,6 @@ public class ControladorDescripcionProveedorMProducto {
 	
 	public void atras(ActionEvent r) {
 		this.ventanaDescripcionProveedorMProducto.cerrar();
-		controladorModificarMProducto.inicializar();
-		controladorModificarMProducto.mostrarVentana();
 	}
 	
 	
@@ -162,4 +166,13 @@ public class ControladorDescripcionProveedorMProducto {
 	public void refrescarDatosTabla() {
 		this.ProductosDeProveedorEnTabla = productoDeProveedor.readAll();
 	}
+
+	public void setMaestroProductoDTO(MaestroProductoDTO p) {
+		this.producto = p;
+	}
+	
+	public void setControladorModificarMProducto(ControladorModificarMProducto c) {
+		this.controladorModificarMProducto = c;
+	}
 }
+

@@ -34,7 +34,8 @@ public class ControladorModificarMProducto {
 	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
 	
 	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
-
+	private ControladorDescripcionProveedorMProducto controladorDescripcionProveedorMProducto;
+	
 	Controlador controlador;
 
 	public static void main(String[] args) {
@@ -55,6 +56,8 @@ public class ControladorModificarMProducto {
 	}
 
 	public void inicializar() {
+		controladorDescripcionProveedorMProducto = new ControladorDescripcionProveedorMProducto();
+		
 		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
 		controladorHistorialCambioMProducto = new ControladorHistorialCambioMProducto(modelo);
 		
@@ -121,7 +124,7 @@ public class ControladorModificarMProducto {
 			}
 		});
 	}
-
+		
 	public void cambiarDescripcionYProveedor(ActionEvent a) {
 		int filaSeleccionada = filaSeleccionadaTablaProducto();
 
@@ -130,12 +133,16 @@ public class ControladorModificarMProducto {
 			return;
 		}
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
+		
 
-		ControladorDescripcionProveedorMProducto controlador = new ControladorDescripcionProveedorMProducto(
-				productoSeleccionado);
-		this.ventanaModificarMProducto.cerrar();
-		controlador.inicializar();
-		controlador.mostrarVentana();
+		
+		controladorDescripcionProveedorMProducto.setMaestroProductoDTO(productoSeleccionado);
+
+		controladorDescripcionProveedorMProducto.setControladorModificarMProducto(this);
+		controladorDescripcionProveedorMProducto.inicializar();
+		
+		controladorDescripcionProveedorMProducto.mostrarVentana();
+		
 	}
 
 	public Double precioAumentado(int aumento, double precio) {
@@ -424,6 +431,7 @@ public class ControladorModificarMProducto {
 	}
 
 	public void atras(ActionEvent a) {	
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
 		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
 		this.controlador.inicializar();
