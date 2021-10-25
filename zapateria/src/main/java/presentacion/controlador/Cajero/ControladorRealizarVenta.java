@@ -606,10 +606,10 @@ public class ControladorRealizarVenta {
 	}
 	
 	public String determinarCategoriaFactura(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
 			return "A";
 		}
-		if(cliente.getImpuestoAFIP().equals("E")) {
+		if(cliente.getImpuestoAFIP().equals("E") || cliente.getImpuestoAFIP().equals("CF")) {
 			return "B";
 		}
 		if(cliente.getPais() != "Argentina") {//si la persona no vive en arg es excento

@@ -56,7 +56,7 @@ public class ConfiguracionBD {
 		try {
 			properties.load(new FileInputStream("config/config.properties"));
 		} catch (IOException e) {
-			log.info("Creando nuevo archivo de configuraciÃ³n");
+			log.info("Creando nuevo archivo de configuracion");
 			File folder = new File("config");
 			if (!folder.exists()) {
 				folder.mkdir();

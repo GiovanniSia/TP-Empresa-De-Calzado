@@ -154,8 +154,8 @@ public class ControladorAltaCliente {
 			return false;
 		}
 		String altura = this.ventanaAltaCliente.getTextAltura().getText();
-		if(altura.equals("")) {
-			JOptionPane.showMessageDialog(null, "La altura no puede ser vacia");
+		if(altura.equals("") || altura.equals("0")) {
+			JOptionPane.showMessageDialog(null, "La altura es incorrecta");
 			return false;
 		}
 		String codPostal = this.ventanaAltaCliente.getTextCodPostal().getText();
