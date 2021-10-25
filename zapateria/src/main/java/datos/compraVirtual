@@ -102,5 +102,65 @@
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
     "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "1": 1959
+    },
+    "idSucursal": 1,
+    "pago": 1.3713E7,
+    "IdCliente": 9,
+    "Nombre": "Vicentino",
+    "Apellido": "Reboredo",
+    "CUIL": "223004",
+    "CorreoElectronico": "pepeptS@mgail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "1002",
+    "Altura": "201",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "2": 1965
+    },
+    "idSucursal": 1,
+    "pago": 1.572E7,
+    "IdCliente": 9,
+    "Nombre": "Vicentino",
+    "Apellido": "Reboredo",
+    "CUIL": "223004",
+    "CorreoElectronico": "pepeptS@mgail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "1002",
+    "Altura": "201",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "2": 1965
+    },
+    "idSucursal": 1,
+    "pago": 30.0,
+    "IdCliente": 9,
+    "Nombre": "Jose",
+    "Apellido": "Jos",
+    "CUIL": "1236543",
+    "CorreoElectronico": "pepeptS@mgail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "1002",
+    "Altura": "201",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
   }
 ]
