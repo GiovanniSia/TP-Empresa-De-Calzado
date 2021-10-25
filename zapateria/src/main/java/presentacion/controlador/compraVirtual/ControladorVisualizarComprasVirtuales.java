@@ -15,11 +15,13 @@ import java.util.List;
 import javax.swing.UIManager;
 
 import dto.ClienteDTO;
+import dto.EgresosDTO;
 import dto.IngresosDTO;
 import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
+import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.compraVirtual.RechazoCompraVirtual;
@@ -40,6 +42,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	DetalleFactura modeloDetalleFactura;
 	Ingresos modeloIngresos;
 	Cliente modeloCliente;
+	Egresos modeloEgresos;
 	
 	RechazoCompraVirtual modeloRechazoVirtual;
 	List<IngresosDTO> ingresosEnLista;
@@ -51,6 +54,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		modeloDetalleFactura = new DetalleFactura(new DAOSQLFactory());
 		modeloIngresos = new Ingresos(new DAOSQLFactory());
 		modeloCliente = new Cliente(new DAOSQLFactory());
+		modeloEgresos = new Egresos(new DAOSQLFactory());
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -245,9 +249,25 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			String fecha = i.getFecha();
 			String hora = i.getHora();
 			
-			Object[] agregar = {idIngreso, idSucursal, cuil, nombre, fecha, hora, "Aceptada"};
+			String notaCredit = "0";
+			EgresosDTO notaCredito = getNotaCredito(i.getNroFactura(), i);
+			if(notaCredito != null) {
+				notaCredit = notaCredito.getTotal()+"";
+			}
+			
+			Object[] agregar = {idIngreso, idSucursal, cuil, nombre, fecha, hora, "Aceptada",notaCredit};
 			ventanaPrincipal.getModelDeTablaPrincipal().addRow(agregar);
 		}
+	}
+
+	private EgresosDTO getNotaCredito(String nroFactura, IngresosDTO i) {
+		List<EgresosDTO> todosLosEgresos = modeloEgresos.readAll();
+		for(EgresosDTO e: todosLosEgresos) {
+			if(i.getNroFactura().equals(e.getDetalle())) {
+				return e;
+			}
+		}
+		return null;
 	}
 
 	private ClienteDTO getCliente(int idCliente) {
