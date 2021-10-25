@@ -32,6 +32,8 @@ public class ControladorModificarMProducto {
 	private List<MaestroProductoDTO> maestroProductoEnTablaProducto;
 
 	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
+	
+	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
 
 	Controlador controlador;
 
@@ -53,6 +55,9 @@ public class ControladorModificarMProducto {
 	}
 
 	public void inicializar() {
+		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
+		controladorHistorialCambioMProducto = new ControladorHistorialCambioMProducto(modelo);
+		
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.historialCambioMProducto = new HistorialCambioMProducto(new DAOSQLFactory());
 
@@ -418,18 +423,16 @@ public class ControladorModificarMProducto {
 		this.maestroProductoEnTablaProducto = ProductosAproximados;
 	}
 
-	public void atras(ActionEvent a) {
+	public void atras(ActionEvent a) {	
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
-		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
-		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
-		this.ventanaModificarMProducto.cerrar();
-		controlador.inicializar();
-		controlador.mostrarVentana();
+		controladorHistorialCambioMProducto.inicializar();
+		controladorHistorialCambioMProducto.mostrarVentana();
 	}
 
 	public void actualizarProducto(ActionEvent p) {
