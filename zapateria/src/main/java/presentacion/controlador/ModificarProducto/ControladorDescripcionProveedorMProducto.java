@@ -44,8 +44,8 @@ public class ControladorDescripcionProveedorMProducto {
 				.getText();
 
 		int idProveedorAntiguo = this.producto.getIdProveedor();
-		int idProveedorNuevo = (int) this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor()
-				.getSelectedItem();
+		int idProveedorNuevo = Integer.parseInt(this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().getSelectedItem().toString());
+		
 
 		if (descripcionAntigua.equals(descripcionNueva) && idProveedorAntiguo == idProveedorNuevo) {
 			JOptionPane.showMessageDialog(null, "No se a modificado ningun dato");
@@ -130,11 +130,15 @@ public class ControladorDescripcionProveedorMProducto {
 				.setText(producto.getDescripcion());
 	}
 
+	
+	
 	public void atras(ActionEvent r) {
 		this.ventanaDescripcionProveedorMProducto.cerrar();
 		controladorModificarMProducto.inicializar();
 		controladorModificarMProducto.mostrarVentana();
 	}
+	
+	
 
 	public void mostrarVentana() {
 		this.ventanaDescripcionProveedorMProducto.show();
