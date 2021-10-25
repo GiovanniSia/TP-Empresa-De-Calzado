@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.SwingConstants;
 
 public class VentanaRealizarVenta {
 
@@ -89,66 +90,59 @@ public class VentanaRealizarVenta {
 		}
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 854, 554);
+		frame.setBounds(100, 100, 854, 573);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 840, 517);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 0, 840, 534);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		frame.setResizable(false);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBounds(10, 10, 827, 41);
-		panel.add(panel_1);
-		
-		JLabel lblTitulo = new JLabel("Zapateria");
-		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 38));
-		lblTitulo.setBounds(10, 0, 310, 41);
-		panel_1.add(lblTitulo);
-		
 		JLabel lblNewLabel = new JLabel("Venta");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 29));
-		lblNewLabel.setBounds(20, 50, 234, 47);
+		lblNewLabel.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblNewLabel.setBounds(10, 50, 234, 47);
 		panel.add(lblNewLabel);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 96, 827, 360);
+		panel_2.setBackground(new Color(255, 248, 220));
+		panel_2.setBounds(10, 96, 820, 360);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel lblMediosDePago = new JLabel("Medios de pago");
-		lblMediosDePago.setFont(new Font("Consolas", Font.PLAIN, 12));
+		lblMediosDePago.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		lblMediosDePago.setBounds(10, 10, 158, 21);
 		panel_2.add(lblMediosDePago);
 		
-		JLabel lblDineroRestante = new JLabel("Pagando");
-		lblDineroRestante.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
-		lblDineroRestante.setBounds(542, 312, 158, 34);
+		JLabel lblDineroRestante = new JLabel("Pagando:");
+		lblDineroRestante.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblDineroRestante.setBounds(553, 301, 76, 59);
 		panel_2.add(lblDineroRestante);
 		
 		JLabel lblMtodoDePago = new JLabel("Método de pago");
-		lblMtodoDePago.setFont(new Font("Consolas", Font.PLAIN, 12));
+		lblMtodoDePago.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		lblMtodoDePago.setBounds(10, 41, 100, 21);
 		panel_2.add(lblMtodoDePago);
 		
 		JLabel lblltimosDgitos = new JLabel("Numero de operacion");
-		lblltimosDgitos.setFont(new Font("Consolas", Font.PLAIN, 12));
+		lblltimosDgitos.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblltimosDgitos.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		lblltimosDgitos.setBounds(218, 10, 138, 21);
 		panel_2.add(lblltimosDgitos);
 
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
-		lblTotalAPagar.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
-		lblTotalAPagar.setBounds(10, 312, 158, 34);
+		lblTotalAPagar.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblTotalAPagar.setBounds(33, 301, 112, 59);
 		panel_2.add(lblTotalAPagar);
 		
 		lblTotalAPagarValor = new JLabel("$0");
+		lblTotalAPagarValor.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTotalAPagarValor.setBackground(new Color(255, 255, 255));
 		lblTotalAPagarValor.setForeground(Color.BLACK);
-		lblTotalAPagarValor.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		lblTotalAPagarValor.setBounds(126, 312, 177, 34);
+		lblTotalAPagarValor.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblTotalAPagarValor.setBounds(149, 301, 116, 59);
 		panel_2.add(lblTotalAPagarValor);
 		
 		//TABLAS
@@ -167,12 +161,13 @@ public class VentanaRealizarVenta {
 			}
 		};
 		scrollPaneMedioPago = new JScrollPane(this.tableMedioPago, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneMedioPago.setBounds(0, 94, 820, 208);
+		scrollPaneMedioPago.setBounds(10, 94, 800, 208);
 		
 		tableMedioPago = new JTable(modelTablaMedioPago);
 		tableMedioPago.setBounds(334, 254, 641, 208);
 		this.tableMedioPago.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableMedioPago.getColumnModel().getColumn(0).setResizable(false);
+		tableMedioPago.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		
 		scrollPaneMedioPago.setViewportView(tableMedioPago);
 		panel_2.add(scrollPaneMedioPago);
@@ -191,14 +186,16 @@ public class VentanaRealizarVenta {
 		spinnerModelCant = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
 		
 		JLabel lblModificarCantidad = new JLabel("Monto");
-		lblModificarCantidad.setFont(new Font("Consolas", Font.PLAIN, 12));
-		lblModificarCantidad.setBounds(318, 41, 38, 21);
+		lblModificarCantidad.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblModificarCantidad.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblModificarCantidad.setBounds(318, 41, 38, 15);
 		panel_2.add(lblModificarCantidad);
 		
 		lblPrecioVentaValor = new JLabel("$0");
-		lblPrecioVentaValor.setBounds(617, 312, 177, 34);
+		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblPrecioVentaValor.setBounds(639, 301, 148, 59);
 		panel_2.add(lblPrecioVentaValor);
-		lblPrecioVentaValor.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblPrecioVentaValor.setFont(new Font("Oxygen", Font.PLAIN, 18));
 		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
 		
 		//TXT
@@ -211,7 +208,7 @@ public class VentanaRealizarVenta {
                 }
             }
         });
-		textCantidad.setBounds(362, 40, 133, 19);
+		textCantidad.setBounds(362, 39, 133, 20);
 		panel_2.add(textCantidad);
 		textCantidad.setColumns(10);
 		
@@ -225,7 +222,7 @@ public class VentanaRealizarVenta {
             }
         });
 		textDescuento.setColumns(10);
-		textDescuento.setBounds(362, 64, 133, 19);
+		textDescuento.setBounds(362, 64, 133, 20);
 		panel_2.add(textDescuento);
 		
 		
@@ -239,65 +236,96 @@ public class VentanaRealizarVenta {
             }
         });
 		textNumOperacion.setColumns(10);
-		textNumOperacion.setBounds(362, 9, 133, 20);
+		textNumOperacion.setBounds(362, 12, 133, 20);
 		panel_2.add(textNumOperacion);
 		
 		//
 		
 		btnAgregarMedioPago = new JButton("");
 		btnAgregarMedioPago.setBounds(668, 32, 55, 52);
-		btnAgregarMedioPago.setIcon(setIcono("../imagenes/pay.png",btnAgregarMedioPago));
+
+		cambiarIconoBotones(btnAgregarMedioPago,  "pay2.png");
 		panel_2.add(btnAgregarMedioPago);
 		
 		btnQuitarMedioPago = new JButton("");
-		btnQuitarMedioPago.setBounds(755, 32, 46, 52);
-		btnQuitarMedioPago.setIcon(setIcono("../imagenes/trash.png",btnQuitarMedioPago));
+		btnQuitarMedioPago.setBounds(755, 31, 55, 52);
+		cambiarIconoBotones(btnQuitarMedioPago,  "trash2.png");
+
 		panel_2.add(btnQuitarMedioPago);
 		
 		JLabel lblAadirDescuento = new JLabel("A\u00F1adir descuento");
-		lblAadirDescuento.setFont(new Font("Consolas", Font.PLAIN, 12));
-		lblAadirDescuento.setBounds(240, 65, 116, 21);
+		lblAadirDescuento.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblAadirDescuento.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblAadirDescuento.setBounds(240, 65, 116, 18);
 		panel_2.add(lblAadirDescuento);
 		
 
 		
 		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
-		lblDescuento.setBounds(256, 312, 158, 34);
+		lblDescuento.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblDescuento.setBounds(310, 301, 91, 59);
 		panel_2.add(lblDescuento);
 		
 		lblDescuentoDescontado = new JLabel("$0");
+		lblDescuentoDescontado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDescuentoDescontado.setForeground(Color.BLACK);
-		lblDescuentoDescontado.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblDescuentoDescontado.setFont(new Font("Oxygen", Font.PLAIN, 18));
 		lblDescuentoDescontado.setBackground(Color.WHITE);
-		lblDescuentoDescontado.setBounds(355, 312, 177, 34);
+		lblDescuentoDescontado.setBounds(406, 301, 112, 59);
 		panel_2.add(lblDescuentoDescontado);
+		
+		JLabel lblAgregar = new JLabel("Agregar");
+		lblAgregar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAgregar.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblAgregar.setBounds(668, 15, 55, 15);
+		panel_2.add(lblAgregar);
+		
+		JLabel lblQuitar = new JLabel("Quitar");
+		lblQuitar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQuitar.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblQuitar.setBounds(755, 15, 55, 15);
+		panel_2.add(lblQuitar);
 		
 		btnCancelarVenta = new JButton("");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnCancelarVenta.setBounds(127, 460, 61, 47);
+		btnCancelarVenta.setBounds(97, 460, 67, 63);
 		btnCancelarVenta.setBackground(null);
-		btnCancelarVenta.setIcon(setIcono("../imagenes/cancel.png", btnCancelarVenta));
+
+		cambiarIconoBotones(btnCancelarVenta,  "cancel2.png");
+
 		panel.add(btnCancelarVenta);
 		
 		btnFinalizarVenta = new JButton("");
 		btnFinalizarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnFinalizarVenta.setBounds(689, 460, 67, 47);
+		btnFinalizarVenta.setBounds(493, 460, 67, 63);
 //		btnFinalizarVenta.setBorder(null);
 //		btnFinalizarVenta.setBackground(null);
 
-		btnFinalizarVenta.setIcon(setIcono("../imagenes/dollar-symbol.png", btnFinalizarVenta));
+		cambiarIconoBotones(btnFinalizarVenta,  "cash.png");
+
 		panel.add(btnFinalizarVenta);
 
 		JLabel lblCancelar = new JLabel("Cancelar");
-		lblCancelar.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		lblCancelar.setBounds(34, 452, 114, 55);
+		lblCancelar.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblCancelar.setBounds(174, 460, 95, 63);
 		panel.add(lblCancelar);
 		
 		JLabel lblRealizarCobro = new JLabel("Realizar cobro");
-		lblRealizarCobro.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-		lblRealizarCobro.setBounds(536, 452, 188, 55);
+		lblRealizarCobro.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblRealizarCobro.setBounds(570, 460, 149, 63);
 		panel.add(lblRealizarCobro);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 837, 50);
+		panel.add(panel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel_2.setBounds(10, 0, 421, 50);
+		panel_1.add(lblNewLabel_2);
 	}
 	
 	
@@ -320,15 +348,12 @@ public class VentanaRealizarVenta {
 		this.frame.setVisible(true);
 	}
 
-	
-	
-	public Icon setIcono(String url,JButton boton) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(url));
-		int ancho = boton.getWidth();
-		int alto = boton.getHeight();
-		
-		ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
-		return icono;
+
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+
 	}
 	
 	public void cerrar() {
