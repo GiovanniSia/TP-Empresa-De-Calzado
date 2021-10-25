@@ -94,6 +94,7 @@ public class ControladorModificarCotizacion {
 	}
 
 	public void atras(ActionEvent a) {
+		this.controladorHistorialCambioCotizacion.ocultarVentana();
 		this.ventanaModificarCotizacion.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();

@@ -128,6 +128,10 @@ public class ControladorHistorialCambioCotizacion {
 		this.mostrarMProductosEnTabla();
 	}
 
+	public void ocultarVentana() {
+		this.ventanaHistorialCambioMoneda.cerrar();
+	}
+	
 	public void mostrarMProductosEnTabla() {
 		this.historialCambioMonedaEnTabla = historialCambioMoneda.readAll();
 		this.llenarTabla(historialCambioMonedaEnTabla);
