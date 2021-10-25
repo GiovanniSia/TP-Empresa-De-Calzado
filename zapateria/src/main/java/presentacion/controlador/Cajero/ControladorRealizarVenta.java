@@ -606,7 +606,7 @@ public class ControladorRealizarVenta {
 	}
 	
 	public String determinarCategoriaFactura(ClienteDTO cliente) {
-		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M") || cliente.getImpuestoAFIP().equals("CF")) {
 			return "A";
 		}
 		if(cliente.getImpuestoAFIP().equals("E")) {

@@ -2,6 +2,7 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 
@@ -41,6 +42,7 @@ import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
+import presentacion.vista.VentanaTareasAutomatizadas;
 
 public class Controlador implements ActionListener {
 	
@@ -121,7 +123,8 @@ public class Controlador implements ActionListener {
 	VentanaMenu ventanaMenu;
 	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
 	
-	
+	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
+	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
 	
 //	public Controlador(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal, Cliente cliente) {
 //		this.maestroProducto = maestroProducto;
@@ -131,7 +134,6 @@ public class Controlador implements ActionListener {
 //	}
 	
 	//Coso para el properties
-	@SuppressWarnings("unused")
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
 	
 	
@@ -167,10 +169,15 @@ public class Controlador implements ActionListener {
 		this.ventanaMenu = new VentanaMenu();
 		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
 		
+		this.ventanaTareasAutomatizadas = new VentanaTareasAutomatizadas();
+		
 //		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
 //		this.vistaBusquedaProducto = new VentanaBusquedaProductos();
 
 		this.reControladorOperario = new ReControladorOperario(this,this.sucursalObj);
+		
+		//Config
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this.ventanaTareasAutomatizadas,config);		
 		
 		//armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this,cliente);
@@ -227,10 +234,12 @@ public class Controlador implements ActionListener {
 		
 		
 		//VentanaMenu de sistemas
+		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
+		this.ventanaMenuSistemaDeVentas.getBtnConfig().addActionListener(a -> pasarAConfig(a));
 		//armar Venta
 		this.ventanaMenuSistemaDeVentas.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
 		this.ventanaMenuSistemaDeVentas.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
-		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
+
 		
 		//cotizacion
 		this.ventanaMenuSistemaDeVentas.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
@@ -264,11 +273,11 @@ public class Controlador implements ActionListener {
 		//Ver pedidos a prov
 		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		
-//		try {
-//			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico();
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void mostrarVentanaMenu() {
@@ -282,6 +291,11 @@ public class Controlador implements ActionListener {
 	public void regresarMenuPrincipal(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.ventanaMenu.show();
+	}
+
+	public void pasarAConfig(ActionEvent a) {
+		this.ventanaTareasAutomatizadas.show();
+		this.controladorTareasAutomatizadas.inicializar();
 	}
 	
 	

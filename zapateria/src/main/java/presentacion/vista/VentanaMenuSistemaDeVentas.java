@@ -51,7 +51,7 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnGenerarOrdenDe;
 
 	private JLabel lblNewLabel_8;
-
+	private JButton btnConfig;
 
 	/**
 	 * Launch the application.
@@ -244,6 +244,11 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_7_1_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
 		lblNewLabel_7_1_1_1_1.setBounds(542, 453, 184, 20);
 		panel.add(lblNewLabel_7_1_1_1_1);
+		
+		btnConfig = new JButton("");
+		btnConfig.setBounds(760, 520, 48, 50);
+		cambiarIconoBotones(btnConfig,"setting.png");
+		panel.add(btnConfig);
 	}
 	
 	
@@ -327,4 +332,10 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnVerPedidosA() {
 		return btnVerPedidosA;
 	}
+
+
+	public JButton getBtnConfig() {
+		return btnConfig;
+	}
+
 }

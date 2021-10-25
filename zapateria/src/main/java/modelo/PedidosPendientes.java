@@ -148,34 +148,15 @@ public class PedidosPendientes {
 	private static ProductoDeProveedorDTO getProductoDeProveedor(int idProveedor,int idProducto) {
 		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		ArrayList<ProductoDeProveedorDTO> todosLosProductoDeProveedor = (ArrayList<ProductoDeProveedorDTO>) productoDeProveedor.readAll();
-		System.out.println("idProv: "+idProveedor+" idProd: "+idProducto);
 		for(ProductoDeProveedorDTO p: todosLosProductoDeProveedor) {
 			System.out.println("producto que se encuentra, idProv : "+p.getIdProveedor()+" idMP: "+p.getIdMaestroProducto());
 			if(idProveedor==p.getIdProveedor() && p.getIdMaestroProducto()==idProducto) {
-				System.out.println("se encontro el prov");
 				return p;
 			}
 		}
 		return null;
 	}
 
-	/*
-		`Id` int(11) NOT NULL AUTO_INCREMENT,
-    `IdProveedor` int(11) NOT NULL,
-    `NombreProveedor` varchar(45) NOT NULL,
-    `IdMaestroProducto` int(11) NOT NULL,
-    `NombreMaestroProducto` varchar(45) NOT NULL,
-    `Cantidad` int(11) NOT NULL,
-    `Fecha` Date NOT NULL,
-    `Hora` Time NOT NULL,
-    `PrecioUnidad` double(45,2) NOT NULL,
-    `PrecioTotal` double(45,2) NOT NULL,
-    `Estado` varchar(45) NOT NULL,
-    `IdSucursal` int(11) NOT NULL,
-    `FechaEnvioMail` Date NOT NULL,
-	`FechaCompleto` Date NOT NULL,
-	
-	*/
 	private static ProveedorDTO getProveedorDeProducto(MaestroProductoDTO prod) {
 		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
 		ArrayList<ProveedorDTO> todosLosProveedores = (ArrayList<ProveedorDTO>) proveedor.readAll();

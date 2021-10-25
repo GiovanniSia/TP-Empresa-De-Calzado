@@ -1,11 +1,14 @@
 package presentacion.controlador;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
@@ -22,6 +25,7 @@ import javax.swing.JOptionPane;
 
 import dto.PedidosPendientesDTO;
 import dto.ProveedorDTO;
+import modelo.ConfiguracionBD;
 import modelo.PedidosPendientes;
 import modelo.Proveedor;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -30,11 +34,17 @@ public class EnviarCorreosAProveedoresAutomatico {
 
 	
 	
-	@SuppressWarnings("deprecation")
-	public static void verificarEnvioDeMailsAutomatico() throws ParseException {
+	public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException {
 		
-		String diaDeEnvio = "viernes";
-//		int horaDeEnvio = 20; 
+		String diaDeEnvio="";
+		String horaProperties="";
+		try {
+			diaDeEnvio = config.getValue("DiaDeEnvio");
+			horaProperties = config.getValue("HoraDeEnvio");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -45,29 +55,58 @@ public class EnviarCorreosAProveedoresAutomatico {
 		String dia = outFormat.format(date); 
 		//goal devuelve el dia actual
 		
-//		System.out.println("El dia actual: "+dia+" - El dia que que digo yo: "+ diaDeEnvio);
-		if(dia.equals(diaDeEnvio)) {
-	
-			Timer timer = new Timer();
-			
-			TimerTask tarea = new TimerTask() {
-	
-				@Override
-				public void run() {
-					//Enviar mails
-					enviarMails();
+	    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+	    String horaActual = tf.format(LocalDateTime.now());
+		
+		
+		System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
 
-					System.out.println("se ejecuta el timer");
+	
+		Timer timer = new Timer();
+			
+		TimerTask tarea = new TimerTask() {
+	
+			@Override
+			public void run() {
+				//Enviar mails
+				enviarMails();
+				System.out.println("se ejecuta el timer");
 					
-				}
-			};
+			}
+		};
 			//121 = 2021, 9 = mes (10), 21 dia, 20 hora, 45 minutos, 00 segundos
 			//                 a�o,m,d ,hr,m ,seg
-			Date fe = new Date(121,9,22,13,04,00);//fecha de hoy 21/10/21
-			
-			timer.schedule(tarea, fe);
 		
-		}	
+		if(dia.equals(diaDeEnvio)) {
+			//SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE ENVIE
+			Date fe;
+			try {
+				fe = establecerFechaParaElTimer(dia,horaProperties);
+				timer.schedule(tarea, fe);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		
+			
+	}
+	
+	@SuppressWarnings("deprecation")
+	private static Date establecerFechaParaElTimer(String NombreDia,String hora) {
+		Calendar fecha = new GregorianCalendar();
+		Date d = new Date();
+		int anio = d.getYear();
+		int mes = d.getMonth();
+		int diaActual = fecha.get(Calendar.DAY_OF_MONTH);
+		
+		int h = Integer.parseInt(hora.substring(0, 2));
+		int min = Integer.parseInt(hora.substring(3, 5));
+		int seg = Integer.parseInt(hora.substring(6, 8));
+		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
+		return new Date(anio,mes,diaActual,h,min,seg);//fecha de hoy 21/10/21
 	}
 	
 	private static void enviarMails() {
@@ -83,7 +122,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 		for(ProveedorDTO prov: todosLosProveedores) {
 			for(PedidosPendientesDTO pedido: todosLosPedidos) {
 //				System.out.println("Prov: "+prov.getNombre()+" - "+prov.getId()+"\nPedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getIdProveedor());
-				if(prov.getId() == pedido.getIdProveedor()) {
+				if(prov.getId() == pedido.getIdProveedor() && pedido.getEstado().equals("En espera")) {
 					pedidosDeProv.add(pedido);
 //					
 				}	
@@ -94,6 +133,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 				imprimirMail(pedidosDeProv);
 //				enviarMail(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
+				System.out.println("se envia el mail!!");
 			}
 			
 			pedidosDeProv.removeAll(pedidosDeProv);
