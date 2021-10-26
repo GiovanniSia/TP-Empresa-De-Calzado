@@ -101,6 +101,8 @@ public class ConfiguracionBD {
 		try {
 			writeValue("DiaDeEnvio","jueves");
 			writeValue("HoraDeEnvio","19:00:00");
+			writeValue("CompraVirtualTolerancia","2");
+			writeValue("CompraVirtualMinutosProceso","1");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

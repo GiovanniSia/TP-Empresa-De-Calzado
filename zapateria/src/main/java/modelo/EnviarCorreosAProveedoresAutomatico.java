@@ -1,18 +1,16 @@
-package presentacion.controlador;
-
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
-import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
+package modelo;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
+import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
-import java.nio.file.WatchEvent.Kind;
+
+import static java.nio.file.StandardWatchEventKinds.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,15 +35,10 @@ import javax.swing.JOptionPane;
 
 import dto.PedidosPendientesDTO;
 import dto.ProveedorDTO;
-import modelo.ConfiguracionBD;
-import modelo.PedidosPendientes;
-import modelo.Proveedor;
+import modelo.compraVirtual.ProcesarCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 
 public class EnviarCorreosAProveedoresAutomatico {
-
-	
-	
 public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException, IOException {
 		
 		boolean yaFueSeteado = false;
@@ -82,7 +75,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //			} 	
 //		}
 		
-		
+		ProcesarCompraVirtual procesoDeCompraVirtual = new ProcesarCompraVirtual();
+		procesoDeCompraVirtual.RutinaProcesarCompra(config);
 		while(true) {
 			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
@@ -94,8 +88,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 			String dia = outFormat.format(date); 
 			//goal devuelve el dia actual
 			
-//		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
-//		    String horaActual = tf.format(LocalDateTime.now());
+		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		    String horaActual = tf.format(LocalDateTime.now());
 			
 			
 //			System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
@@ -123,6 +117,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 					diaDeEnvio = config.getValue("DiaDeEnvio");
 					horaProperties = config.getValue("HoraDeEnvio");
 					System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
+					procesoDeCompraVirtual.cambioConfig(config);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -198,7 +193,6 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		System.out.println("el msj: \n"+mensaje);
 	}
 	
-	@SuppressWarnings("unused")
 	private static void enviarMail(ProveedorDTO proveedor,ArrayList<PedidosPendientesDTO> pedidosDeProv) {
 		try {
 			
@@ -216,10 +210,10 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //			props.put("mail.debug", "true");
 			Session session = Session.getDefaultInstance(props);
 
-			String correoRemitente = "";
+			String correoRemitente = "subelza150@gmail.com";
 			String contrasenia = "";
-			String correoReceptor = "";
-			String asunto = "Pedido de Productos";
+			String correoReceptor = "sebastianx3600@gmail.com";
+			String asunto = "Prueba";
 			
 			MimeMessage message = new MimeMessage(session);
 
@@ -293,6 +287,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
             
             return false;
 		  } catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
 		 return false;
@@ -326,8 +321,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
                     
                     
                     // obtener informacion del evento ocurrido
-                    @SuppressWarnings("unchecked")
-					WatchEvent<Path> currEvent = (WatchEvent<Path>) event;
+                    WatchEvent<Path> currEvent = (WatchEvent<Path>) event;
                     Path dirEntry = currEvent.context();
 
                     System.out.println(eventKind + " occurred on " + dirEntry);
@@ -348,4 +342,6 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
         }
         return false;
     }
+	
+	
 }

@@ -1,5 +1,6 @@
 package modelo.compraVirtual;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import dto.RechazoCompraVirtualDetalleDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
+import modelo.ConfiguracionBD;
 import modelo.DetalleFactura;
 import modelo.Egresos;
 import modelo.Factura;
@@ -38,30 +40,73 @@ public class ProcesarCompraVirtual {
 	
 	private static final int idVendedorVirtual = 0;
 	private static final int idCajeroVirtual = 0;
-	private static String nombreCajeroVirtual = "compraVirtual";
-	private static String nombreVendedorVirtual = "compraVirtual";
+	private static final String nombreCajeroVirtual = "compraVirtual";
+	private static final String nombreVendedorVirtual = "compraVirtual";
 	
 	private static String nombreParaProductoQueNoEstaEnLaBaseDeDatos = "[Hiperlink error]";
 	
-	public static void RutinaProcesarCompra(int minutos) {
-		long tiempo = minutos*60*1000;
-		Timer timer = new Timer();
-		TimerTask tarea = new TimerTask() {
+	public void cambioConfig(ConfiguracionBD config) {
+		timer.cancel();
+		long tiempo;
+		try {
+			tiempo = Integer.valueOf(config.getValue("CompraVirtualMinutosProceso"))*60*1000;
+		}catch(NumberFormatException | IOException e) {
+			tiempo = 1*60*1000;
+		}
+		timer = new Timer();
+		tarea = new TimerTask() {
 			@Override
 			public void run() {
-				FuncionProcesarCompra();
+				try {
+					FuncionProcesarCompra(config);
+				} catch (NumberFormatException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		timer.scheduleAtFixedRate(tarea, 0, tiempo);
+	}
+	
+	TimerTask tarea;
+	Timer timer;
+	
+	public void RutinaProcesarCompra(ConfiguracionBD config) throws NumberFormatException, IOException {
+		long tiempo;
+		try {
+			tiempo = Integer.valueOf(config.getValue("CompraVirtualMinutosProceso"))*60*1000;
+		}catch(NumberFormatException | IOException e) {
+			tiempo = 1*60*1000;
+		}
+		timer = new Timer();
+		tarea = new TimerTask() {
+			@Override
+			public void run() {
+				try {
+					FuncionProcesarCompra(config);
+				} catch (NumberFormatException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 		timer.scheduleAtFixedRate(tarea, 0, tiempo);
 		
 	}
 	
-	public static int getPorcentajeTolerancia() {
-		return 1;
+	public static int getPorcentajeTolerancia(ConfiguracionBD config) throws NumberFormatException, IOException {
+		int ret = 1;
+		try {
+			return Integer.valueOf(config.getValue("CompraVirtualTolerancia"));
+		}catch(NumberFormatException | IOException e) {
+			
+		}
+		return ret;
+		
 		//Aqui reemplazar con el get del properties
 	}
 	
-	public static void FuncionProcesarCompra() {
+	public static void FuncionProcesarCompra(ConfiguracionBD config) throws NumberFormatException, IOException {
 		ArrayList<CompraVirtualDTO> listaCompraProcesar = JsonListaCompraVirtual.getLista();
 		if(listaCompraProcesar == null) {
 			return;
@@ -71,7 +116,7 @@ public class ProcesarCompraVirtual {
 		}
 		String mensajeReporte = "";
 		for(CompraVirtualDTO compraVirtual: listaCompraProcesar) {
-			mensajeReporte = reporteDatosErroneos(compraVirtual);
+			mensajeReporte = reporteDatosErroneos(compraVirtual, config);
 			if(reporteDeDatosNoValidoParaComprar(mensajeReporte)) {
 				//No se compra
 				//System.out.println(mensajeReporte);
@@ -113,14 +158,14 @@ public class ProcesarCompraVirtual {
 		
 	}
 
-	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual) {
+	public static String reporteDatosErroneos(CompraVirtualDTO compraVirtual,ConfiguracionBD config) throws NumberFormatException, IOException {
 		String ret = "";
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
 			if(!esPagoValido(compraVirtual.getPago())) {
 				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 			} else
-			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
+			if(!esPagoSuficiente(compraVirtual, config)) {
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia(config)+"% \n";
 			}
 			if(!esSucursalValida(compraVirtual.getIdSucursal())) {
 				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
@@ -138,8 +183,8 @@ public class ProcesarCompraVirtual {
 		if(!esPagoValido(compraVirtual.getPago())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 		} else
-			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
+			if(!esPagoSuficiente(compraVirtual, config)) {
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia(config)+"% \n";
 			}
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
@@ -221,8 +266,8 @@ public class ProcesarCompraVirtual {
 			compraVirtual.getImpuestoAFIP(), "Activo", compraVirtual.getCalle(), compraVirtual.getAltura(),
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		
-			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"%";
+			if(!esPagoSuficiente(compraVirtual, config)) {
+				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia(config)+"%";
 			}
 		}
 		return ret;
@@ -232,9 +277,9 @@ public class ProcesarCompraVirtual {
 		return !reporte.equals("");
 	}
 	
-	private static boolean esPagoSuficiente(CompraVirtualDTO compraVirtual) {
+	private static boolean esPagoSuficiente(CompraVirtualDTO compraVirtual,ConfiguracionBD config) throws NumberFormatException, IOException {
 		double cantidadAPagar = calcularTotalAPagar(compraVirtual);
-		int porcentaje = getPorcentajeTolerancia();
+		int porcentaje = getPorcentajeTolerancia(config);
 		double mayor = cantidadAPagar + (cantidadAPagar*porcentaje/100);
 		double menor = cantidadAPagar - (cantidadAPagar*porcentaje/100);
 		return menor < compraVirtual.getPago() && mayor > compraVirtual.getPago();
@@ -681,8 +726,8 @@ public class ProcesarCompraVirtual {
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd4);
-		
-		
+		JsonListaCompraVirtual.guardarLista(compras);
+		/*
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1959);
 		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 13713000, 9, "Vicentino",
@@ -708,8 +753,8 @@ public class ProcesarCompraVirtual {
 		compras.add(cvd7);
 		
 		JsonListaCompraVirtual.guardarLista(compras);
-		ProcesarCompraVirtual.RutinaProcesarCompra(1);
-		
+		//ProcesarCompraVirtual.RutinaProcesarCompra();
+		*/
 	}
 
 }
