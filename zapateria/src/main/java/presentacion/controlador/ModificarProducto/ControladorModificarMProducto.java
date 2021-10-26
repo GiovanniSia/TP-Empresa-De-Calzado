@@ -154,7 +154,8 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarMasivamente(ActionEvent a) {
-		
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		if(maestroProductoEnTablaProductosModificar.size() ==0) {
 			JOptionPane.showMessageDialog(null, "No hay productos para modificar ");
 			return;
@@ -444,6 +445,8 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarProducto(ActionEvent p) {
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		if (validarCamposModificacionUnitaria()) {
 			this.ingresarProductoATablaHistorialCambioMProducto();
 			this.actualizarTablaMaestroProducto();
