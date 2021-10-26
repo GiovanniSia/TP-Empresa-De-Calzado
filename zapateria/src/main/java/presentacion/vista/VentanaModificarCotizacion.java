@@ -118,7 +118,9 @@ public class VentanaModificarCotizacion extends JFrame {
 		txtActualizarTasaConvercion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if(txtActualizarTasaConvercion.getText().length()>=15) {
+				int key = e.getKeyChar();
+				boolean numeros = key >= 48 && key <= 57 || key == 46;
+				if (txtActualizarTasaConvercion.getText().length() >= 9 || !numeros) {
 					e.consume();
 				}
 			}

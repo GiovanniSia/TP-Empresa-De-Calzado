@@ -14,22 +14,18 @@ public class ControladorHistorialCambioMProducto {
 	private VentanaHistorialCambioMProducto ventanaHistorialCambioProducto;
 	private HistorialCambioMProducto historialCambioMProducto;
 	private List<HistorialCambioMProductoDTO> historialCambioMproductoEnTabla;
-	private ControladorModificarMProducto controladorModificarMProducto;
 
 	public ControladorHistorialCambioMProducto(HistorialCambioMProducto historialCambioMProducto) {
 		this.ventanaHistorialCambioProducto = new VentanaHistorialCambioMProducto();
 		this.historialCambioMProducto = historialCambioMProducto;
-		this.controladorModificarMProducto = new ControladorModificarMProducto();
+		this.historialCambioMProducto = new HistorialCambioMProducto(new DAOSQLFactory());		
+		this.ventanaHistorialCambioProducto = new VentanaHistorialCambioMProducto();
 	}
 
 	public void inicializar() {
-		this.historialCambioMProducto = new HistorialCambioMProducto(new DAOSQLFactory());
-
-		this.ventanaHistorialCambioProducto = new VentanaHistorialCambioMProducto();
 
 		// Botones
-		this.ventanaHistorialCambioProducto.getBtnVolverAModificarProducto()
-				.addActionListener(v -> volverAModificarProducto(v));
+		this.ventanaHistorialCambioProducto.getBtnVolverAModificarProducto().addActionListener(v -> volverAModificarProducto(v));
 
 		// TextFiltos
 		this.ventanaHistorialCambioProducto.getTxtFiltroCodEmpleado().addKeyListener(new KeyAdapter() {
@@ -80,13 +76,15 @@ public class ControladorHistorialCambioMProducto {
 
 	public void volverAModificarProducto(ActionEvent e) {
 		this.ventanaHistorialCambioProducto.cerrar();
-		controladorModificarMProducto.inicializar();
-		controladorModificarMProducto.mostrarVentana();
 	}
 
 	public void mostrarVentana() {
 		this.ventanaHistorialCambioProducto.show();
 		this.mostrarMProductosEnTabla();
+	}
+	
+	public void ocultarVentana() {
+		this.ventanaHistorialCambioProducto.cerrar();
 	}
 
 	public void mostrarMProductosEnTabla() {

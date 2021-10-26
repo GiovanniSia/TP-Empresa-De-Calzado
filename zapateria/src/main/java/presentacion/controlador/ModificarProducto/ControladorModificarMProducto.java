@@ -32,7 +32,10 @@ public class ControladorModificarMProducto {
 	private List<MaestroProductoDTO> maestroProductoEnTablaProducto;
 
 	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
-
+	
+	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
+	private ControladorDescripcionProveedorMProducto controladorDescripcionProveedorMProducto;
+	
 	Controlador controlador;
 
 	public static void main(String[] args) {
@@ -53,6 +56,11 @@ public class ControladorModificarMProducto {
 	}
 
 	public void inicializar() {
+		controladorDescripcionProveedorMProducto = new ControladorDescripcionProveedorMProducto();
+		
+		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
+		controladorHistorialCambioMProducto = new ControladorHistorialCambioMProducto(modelo);
+		
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.historialCambioMProducto = new HistorialCambioMProducto(new DAOSQLFactory());
 
@@ -116,7 +124,7 @@ public class ControladorModificarMProducto {
 			}
 		});
 	}
-
+		
 	public void cambiarDescripcionYProveedor(ActionEvent a) {
 		int filaSeleccionada = filaSeleccionadaTablaProducto();
 
@@ -125,12 +133,16 @@ public class ControladorModificarMProducto {
 			return;
 		}
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
+		
 
-		ControladorDescripcionProveedorMProducto controlador = new ControladorDescripcionProveedorMProducto(
-				productoSeleccionado);
-		this.ventanaModificarMProducto.cerrar();
-		controlador.inicializar();
-		controlador.mostrarVentana();
+		
+		controladorDescripcionProveedorMProducto.setMaestroProductoDTO(productoSeleccionado);
+
+		controladorDescripcionProveedorMProducto.setControladorModificarMProducto(this);
+		controladorDescripcionProveedorMProducto.inicializar();
+		
+		controladorDescripcionProveedorMProducto.mostrarVentana();
+		
 	}
 
 	public Double precioAumentado(int aumento, double precio) {
@@ -142,7 +154,8 @@ public class ControladorModificarMProducto {
 	}
 
 	public void actualizarMasivamente(ActionEvent a) {
-		
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		if(maestroProductoEnTablaProductosModificar.size() ==0) {
 			JOptionPane.showMessageDialog(null, "No hay productos para modificar ");
 			return;
@@ -418,21 +431,22 @@ public class ControladorModificarMProducto {
 		this.maestroProductoEnTablaProducto = ProductosAproximados;
 	}
 
-	public void atras(ActionEvent a) {
+	public void atras(ActionEvent a) {	
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
-		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
-		ControladorHistorialCambioMProducto controlador = new ControladorHistorialCambioMProducto(modelo);
-		this.ventanaModificarMProducto.cerrar();
-		controlador.inicializar();
-		controlador.mostrarVentana();
+		controladorHistorialCambioMProducto.inicializar();
+		controladorHistorialCambioMProducto.mostrarVentana();
 	}
 
 	public void actualizarProducto(ActionEvent p) {
+		this.controladorDescripcionProveedorMProducto.ocultarVentana();
+		this.controladorHistorialCambioMProducto.ocultarVentana();
 		if (validarCamposModificacionUnitaria()) {
 			this.ingresarProductoATablaHistorialCambioMProducto();
 			this.actualizarTablaMaestroProducto();

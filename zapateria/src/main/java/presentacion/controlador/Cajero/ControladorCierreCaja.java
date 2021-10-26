@@ -2,6 +2,7 @@ package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,9 +31,9 @@ import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
 
-	private static final int idEmpleado=1;
-	private static final int idSucursal=1;
-	
+	private static final int idEmpleado = 1;
+	private static final int idSucursal = 1;
+
 	private VentanaCierreCaja ventanaCierreCaja;
 
 	private Ingresos ingresos;
@@ -44,8 +45,9 @@ public class ControladorCierreCaja {
 	Empleado empleado;
 	Caja caja;
 	Controlador controlador;
-	
-	public ControladorCierreCaja(Controlador controlador,Caja caja,Ingresos ingresos, Egresos egresos,Empleado empleado) {
+
+	public ControladorCierreCaja(Controlador controlador, Caja caja, Ingresos ingresos, Egresos egresos,
+			Empleado empleado) {
 		this.ventanaCierreCaja = new VentanaCierreCaja();
 		this.caja = caja;
 		this.ingresos = ingresos;
@@ -76,11 +78,11 @@ public class ControladorCierreCaja {
 		mostrarBalanceCaja();
 
 	}
-	
+
 	public void mostrarReporte() {
 		ReporteCajaDiaria ca = new ReporteCajaDiaria(idSucursal);
 		ca.mostrarUltimoReporte();
-		
+
 	}
 
 	public void cerrarCajaDeSucursal(ActionEvent a) {
@@ -105,45 +107,42 @@ public class ControladorCierreCaja {
 			JOptionPane.showMessageDialog(null, "No se han validado todos los medios de pago");
 			return;
 		}
-		
+
 		EmpleadoDTO empleado = this.empleado.selectEmpleado(idEmpleado);
 		ArrayList<CajaDTO> cajas = (ArrayList<CajaDTO>) this.caja.readAll();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
-		for(CajaDTO c: cajas) {
-			if(c.getFecha().equals(fecha)) {
-				if(c.getCierre()!=0) {
+		for (CajaDTO c : cajas) {
+			if (c.getFecha().equals(fecha)) {
+				if (c.getCierre() != 0) {
 					JOptionPane.showMessageDialog(null, "La caja ya ha sido cerrada el d�a de hoy");
 				}
-				
-				//se modifica en la bd, pero no en este arraylist
-				boolean cierreCaja = this.caja.cerrarCaja(empleado,c.getIdCaja());
-				
-				if(!cierreCaja) {
+
+				// se modifica en la bd, pero no en este arraylist
+				boolean cierreCaja = this.caja.cerrarCaja(empleado, c.getIdCaja());
+
+				if (!cierreCaja) {
 					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al cerrar la caja");
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Cierre de caja Exitoso");
-					int resp = JOptionPane.showConfirmDialog(null, "Quiere ver el reporte?", "Ver Reporte", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if(resp==0) {
+					int resp = JOptionPane.showConfirmDialog(null, "Quiere ver el reporte?", "Ver Reporte",
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (resp == 0) {
 						mostrarReporte();
 					}
 				}
 				return;
 			}
 		}
-		
 
-		
-		
-		
 	}
 
 	public BigDecimal ObtenerTotalIngreso() {
 		int cantidadFilas = this.ventanaCierreCaja.getTablaMedioPagoIngresos().getRowCount();
 		BigDecimal suma = new BigDecimal("0.00");
 		for (int i = 0; i < cantidadFilas; i++) {
-			BigDecimal total = new BigDecimal(
-					"" + this.ventanaCierreCaja.getTablaMedioPagoIngresos().getValueAt(i, 2) + "");
+			BigDecimal total = new BigDecimal("" + this.ventanaCierreCaja.getTablaMedioPagoIngresos().getValueAt(i, 2))
+					.setScale(2, RoundingMode.HALF_UP);
 			suma = suma.add(total);
 		}
 		return suma;
@@ -153,8 +152,9 @@ public class ControladorCierreCaja {
 		int cantidadFilas = this.ventanaCierreCaja.getTablaMedioPagoEgresos().getRowCount();
 		BigDecimal suma = new BigDecimal("0.00");
 		for (int i = 0; i < cantidadFilas; i++) {
-			BigDecimal total = new BigDecimal(
-					"" + this.ventanaCierreCaja.getTablaMedioPagoEgresos().getValueAt(i, 2) + "");
+
+			BigDecimal total = new BigDecimal("" + this.ventanaCierreCaja.getTablaMedioPagoEgresos().getValueAt(i, 2))
+					.setScale(2, RoundingMode.HALF_UP);
 			suma = suma.add(total);
 		}
 		return suma;
@@ -222,12 +222,12 @@ public class ControladorCierreCaja {
 			int idCliente = i.getIdCliente();
 			String tipoFactura = i.getTipoFactura();
 			String medioPago = i.getMedioPago();
-			BigDecimal monto = new BigDecimal("" + i.getCantidad() + "");
 
-			BigDecimal cotizacion = new BigDecimal("" + i.getCotizacion() + "");
+			BigDecimal monto = new BigDecimal(i.getCantidad()).setScale(2, RoundingMode.HALF_UP);
+			BigDecimal cotizacion = new BigDecimal(i.getCotizacion()).setScale(2, RoundingMode.HALF_UP);
 
 			String nroOperacion = i.getOperacion();
-			BigDecimal total = new BigDecimal("" + i.getTotal() + "");
+			BigDecimal total = new BigDecimal(i.getTotal()).setScale(2, RoundingMode.HALF_UP);
 
 			Object[] fila = { hora, tipo, idCliente, tipoFactura, medioPago, monto, cotizacion, nroOperacion, total };
 			this.ventanaCierreCaja.getModelIngresos().addRow(fila);
@@ -252,7 +252,7 @@ public class ControladorCierreCaja {
 			String tipo = e.getTipo();
 			String detalle = e.getDetalle();
 			String medioPago = e.getMedioPago();
-			BigDecimal total = new BigDecimal("" + e.getTotal() + "");
+			BigDecimal total = new BigDecimal(e.getTotal()).setScale(2, RoundingMode.HALF_UP);
 
 			Object[] fila = { hora, tipo, detalle, medioPago, total };
 			this.ventanaCierreCaja.getModelEgresos().addRow(fila);
@@ -263,7 +263,7 @@ public class ControladorCierreCaja {
 		BigDecimal totalMedioPago = new BigDecimal(0);
 		for (IngresosDTO ingreso : this.ingresosEnTabla) {
 			if (ingreso.getMedioPago().equals(medioPago)) {
-				BigDecimal total = new BigDecimal("" + ingreso.getTotal() + "");
+				BigDecimal total = new BigDecimal(ingreso.getTotal()).setScale(2, RoundingMode.HALF_UP);
 				totalMedioPago = totalMedioPago.add(total);
 			}
 		}
@@ -289,7 +289,7 @@ public class ControladorCierreCaja {
 		BigDecimal totalMedioPagoEgreso = new BigDecimal(0);
 		for (EgresosDTO e : this.egresosEnTabla) {
 			if (e.getMedioPago().equals(medioPagoEgreso)) {
-				BigDecimal total = new BigDecimal("" + e.getTotal() + "");
+				BigDecimal total = new BigDecimal(e.getTotal()).setScale(2, RoundingMode.HALF_UP);
 				totalMedioPagoEgreso = totalMedioPagoEgreso.add(total);
 			}
 		}
@@ -309,13 +309,4 @@ public class ControladorCierreCaja {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-//		Ingresos ingresos = new Ingresos(new DAOSQLFactory());
-//		Egresos egresos = new Egresos(new DAOSQLFactory());
-//		ControladorCierreCaja controlador = new ControladorCierreCaja(ingresos, egresos);
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
-	}
-
 }

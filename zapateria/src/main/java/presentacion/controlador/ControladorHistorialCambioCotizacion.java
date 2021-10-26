@@ -24,12 +24,10 @@ public class ControladorHistorialCambioCotizacion {
 	public ControladorHistorialCambioCotizacion(HistorialCambioMoneda historialCambioMoneda) {
 		this.ventanaHistorialCambioMoneda = new VentanaHistorialCambioMoneda();
 		this.historialCambioMoneda = historialCambioMoneda;
+		this.historialCambioMoneda = new HistorialCambioMoneda(new DAOSQLFactory());
 	}
 
 	public void inicializar() {
-		this.historialCambioMoneda = new HistorialCambioMoneda(new DAOSQLFactory());
-
-		this.ventanaHistorialCambioMoneda = new VentanaHistorialCambioMoneda();
 
 		// Botones
 		this.ventanaHistorialCambioMoneda.getBtnVolverAModificarConversion()
@@ -130,6 +128,10 @@ public class ControladorHistorialCambioCotizacion {
 		this.mostrarMProductosEnTabla();
 	}
 
+	public void ocultarVentana() {
+		this.ventanaHistorialCambioMoneda.cerrar();
+	}
+	
 	public void mostrarMProductosEnTabla() {
 		this.historialCambioMonedaEnTabla = historialCambioMoneda.readAll();
 		this.llenarTabla(historialCambioMonedaEnTabla);

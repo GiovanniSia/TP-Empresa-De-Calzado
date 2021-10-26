@@ -26,7 +26,8 @@ public class ControladorModificarCotizacion {
 	private MedioPago medioPago;
 	private HistorialCambioMoneda historialCambioMoneda;
 	private List<MedioPagoDTO> medioPagoEnTabla;
-
+	private ControladorHistorialCambioCotizacion controladorHistorialCambioCotizacion;
+	
 	Controlador controlador;
 	
 	public ControladorModificarCotizacion(Controlador controlador,MedioPago medioPago) {
@@ -36,6 +37,9 @@ public class ControladorModificarCotizacion {
 	}
 
 	public void inicializar() {
+		HistorialCambioMoneda modelo = new HistorialCambioMoneda(new DAOSQLFactory());
+		controladorHistorialCambioCotizacion = new ControladorHistorialCambioCotizacion(modelo);
+		
 		this.medioPago = new MedioPago(new DAOSQLFactory());
 		this.historialCambioMoneda = new HistorialCambioMoneda(new DAOSQLFactory());
 
@@ -90,16 +94,15 @@ public class ControladorModificarCotizacion {
 	}
 
 	public void atras(ActionEvent a) {
+		this.controladorHistorialCambioCotizacion.ocultarVentana();
 		this.ventanaModificarCotizacion.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
-		HistorialCambioMoneda modelo = new HistorialCambioMoneda(new DAOSQLFactory());
-		ControladorHistorialCambioCotizacion controlador = new ControladorHistorialCambioCotizacion(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
+		controladorHistorialCambioCotizacion.inicializar();
+		controladorHistorialCambioCotizacion.mostrarVentana();
 	}
 
 	public void actualizarMedioPago(ActionEvent p) {
