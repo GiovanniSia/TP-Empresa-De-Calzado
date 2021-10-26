@@ -47,18 +47,14 @@ public class ControladorTareasAutomatizadas {
 	
 
 	
-	private void llenarCbCorreosProv() {
-		String[] frecEnvioMail = {"Nunca"," 7 dias","14 dias","21 dias","28 dias"};
-		for(int i=0; i < frecEnvioMail.length; i++) {
-			this.ventanaTareasAutomatizadas.getComboBoxPedidosCadaDias().addItem(frecEnvioMail[i]);
-		}
-		
+	private void llenarCbCorreosProv() {		
 		String[] dias = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
 		for(int i=0; i < dias.length; i++) {
 			this.ventanaTareasAutomatizadas.getComboBoxPedidosDias().addItem(dias[i]);
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setParametros() {
 		try {
 			String h = config.getValue("HoraDeEnvio");
@@ -79,7 +75,6 @@ public class ControladorTareasAutomatizadas {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -109,7 +104,6 @@ public class ControladorTareasAutomatizadas {
 			config.writeValue("HoraDeEnvio", hora);
 			JOptionPane.showMessageDialog(null, "Datos actualizados correctamente", "Actualizacion", JOptionPane.OK_OPTION);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

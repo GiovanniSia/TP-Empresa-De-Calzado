@@ -29,7 +29,6 @@ public class VentanaTareasAutomatizadas {
 	private JSpinner spinnerTolerancia;
 	private JComboBox<String> comboBoxFrecuenciaProcesamientoCompraVirtuales;
 	private JButton btnActualizar;
-	private JComboBox<String> comboBoxPedidosCadaDias;
 	private JButton btnRegresar;
 	/**
 	 * Launch the application.
@@ -91,20 +90,15 @@ public class VentanaTareasAutomatizadas {
 		lblPedidosAProveedor.setFont(new Font("Consolas", Font.PLAIN, 30));
 		lblPedidosAProveedor.setBounds(582, 36, 393, 50);
 		panelParametros.add(lblPedidosAProveedor);
-		
-		JLabel lblEnviarPedidosoa = new JLabel("Enviar pedidos a proveedor cada:");
-		lblEnviarPedidosoa.setFont(new Font("Consolas", Font.PLAIN, 15));
-		lblEnviarPedidosoa.setBounds(582, 105, 286, 28);
-		panelParametros.add(lblEnviarPedidosoa);
 				
 		JLabel lblLosDias = new JLabel("Los dias: ");
 		lblLosDias.setFont(new Font("Consolas", Font.PLAIN, 15));
-		lblLosDias.setBounds(582, 161, 286, 28);
+		lblLosDias.setBounds(582, 114, 286, 28);
 		panelParametros.add(lblLosDias);
 			
 		JLabel lblALas = new JLabel("A las:");
 		lblALas.setFont(new Font("Consolas", Font.PLAIN, 15));
-		lblALas.setBounds(582, 220, 286, 28);
+		lblALas.setBounds(582, 175, 286, 28);
 		panelParametros.add(lblALas);
 				
 		JLabel lblNewLabel_1 = new JLabel();
@@ -152,7 +146,7 @@ public class VentanaTareasAutomatizadas {
 		spinnerPedidosHora = new JSpinner(new SpinnerDateModel());
 		JSpinner.DateEditor de_spinnerHora = new JSpinner.DateEditor(spinnerPedidosHora, "HH:mm:ss");
 		spinnerPedidosHora.setEditor(de_spinnerHora);
-		spinnerPedidosHora.setBounds(867, 224, 180, 25);
+		spinnerPedidosHora.setBounds(867, 175, 180, 25);
 		panelParametros.add(spinnerPedidosHora);
 		
 		spinnerTolerancia = new JSpinner();
@@ -167,17 +161,12 @@ public class VentanaTareasAutomatizadas {
 		panelParametros.add(btnActualizar);
 
 		comboBoxPedidosDias = new JComboBox<String>();
-		comboBoxPedidosDias.setBounds(867, 164, 214, 25);
+		comboBoxPedidosDias.setBounds(867, 115, 214, 25);
 		panelParametros.add(comboBoxPedidosDias);
 		
 		comboBoxFrecuenciaProcesamientoCompraVirtuales = new JComboBox<String>();
 		comboBoxFrecuenciaProcesamientoCompraVirtuales.setBounds(239, 228, 214, 25);
 		panelParametros.add(comboBoxFrecuenciaProcesamientoCompraVirtuales);
-		
-		comboBoxPedidosCadaDias = new JComboBox<String>();
-		comboBoxPedidosCadaDias.addItem("Sin seleccionar");
-		comboBoxPedidosCadaDias.setBounds(867, 108, 214, 25);
-		panelParametros.add(comboBoxPedidosCadaDias);	
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(10, 355, 44, 47);
@@ -233,10 +222,6 @@ public class VentanaTareasAutomatizadas {
 
 	public JButton getBtnActualizar() {
 		return btnActualizar;
-	}
-
-	public JComboBox<String> getComboBoxPedidosCadaDias() {
-		return comboBoxPedidosCadaDias;
 	}
 
 	public JButton getBtnRegresar() {

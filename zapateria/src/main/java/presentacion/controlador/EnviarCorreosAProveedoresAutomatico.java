@@ -1,6 +1,18 @@
 package presentacion.controlador;
 
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+import static java.nio.file.StandardWatchEventKinds.OVERFLOW;
+
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+import java.nio.file.WatchEvent.Kind;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -34,36 +46,21 @@ public class EnviarCorreosAProveedoresAutomatico {
 
 	
 	
-	public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException {
+public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException, IOException {
 		
+		boolean yaFueSeteado = false;
+	
 		String diaDeEnvio="";
 		String horaProperties="";
 		try {
 			diaDeEnvio = config.getValue("DiaDeEnvio");
 			horaProperties = config.getValue("HoraDeEnvio");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
-		String fecha = dtf.format(LocalDateTime.now());
-		
-		SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date date = inFormat.parse(fecha);
-		SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
-		String dia = outFormat.format(date); 
-		//goal devuelve el dia actual
-		
-	    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
-	    String horaActual = tf.format(LocalDateTime.now());
-		
-		
-		System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
-
-	
+		} 	
+		System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
 		Timer timer = new Timer();
-			
+		
 		TimerTask tarea = new TimerTask() {
 	
 			@Override
@@ -74,24 +71,66 @@ public class EnviarCorreosAProveedoresAutomatico {
 					
 			}
 		};
-			//121 = 2021, 9 = mes (10), 21 dia, 20 hora, 45 minutos, 00 segundos
-			//                 a�o,m,d ,hr,m ,seg
 		
-		if(dia.equals(diaDeEnvio)) {
-			//SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE ENVIE
-			Date fe;
+		
+//		if(huboCambiosEnFichero()) {
+//			try {
+//				diaDeEnvio = config.getValue("DiaDeEnvio");
+//				horaProperties = config.getValue("HoraDeEnvio");
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} 	
+//		}
+		
+		
+		while(true) {
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
+			String fecha = dtf.format(LocalDateTime.now());
+			
+			SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = inFormat.parse(fecha);
+			SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
+			String dia = outFormat.format(date); 
+			//goal devuelve el dia actual
+			
+//		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+//		    String horaActual = tf.format(LocalDateTime.now());
+			
+			
+//			System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
+						
+			if(dia.equals(diaDeEnvio) && !yaFueSeteado) {
+//				System.out.println("entro a ver si hoy es el dia: "+dia+" - "+diaDeEnvio);
+				//SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE ENVIE
+				Date fe;
+				try {
+					fe = establecerFechaParaElTimer(dia,horaProperties);
+					timer.schedule(tarea, fe);
+					yaFueSeteado=true;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}else {
+				if(!dia.equals(diaDeEnvio)) {
+					yaFueSeteado=false;
+				}
+				
+			}
 			try {
-				fe = establecerFechaParaElTimer(dia,horaProperties);
-				timer.schedule(tarea, fe);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				if(seCambioElProperties()) {
+					diaDeEnvio = config.getValue("DiaDeEnvio");
+					horaProperties = config.getValue("HoraDeEnvio");
+					System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
+				}
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-		}
-
-		
 			
+			
+			
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -105,7 +144,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 		int h = Integer.parseInt(hora.substring(0, 2));
 		int min = Integer.parseInt(hora.substring(3, 5));
 		int seg = Integer.parseInt(hora.substring(6, 8));
-		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
+//		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
 		return new Date(anio,mes,diaActual,h,min,seg);//fecha de hoy 21/10/21
 	}
 	
@@ -159,6 +198,7 @@ public class EnviarCorreosAProveedoresAutomatico {
 		System.out.println("el msj: \n"+mensaje);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void enviarMail(ProveedorDTO proveedor,ArrayList<PedidosPendientesDTO> pedidosDeProv) {
 		try {
 			
@@ -176,10 +216,10 @@ public class EnviarCorreosAProveedoresAutomatico {
 //			props.put("mail.debug", "true");
 			Session session = Session.getDefaultInstance(props);
 
-			String correoRemitente = "subelza150@gmail.com";
+			String correoRemitente = "";
 			String contrasenia = "";
-			String correoReceptor = "sebastianx3600@gmail.com";
-			String asunto = "Prueba";
+			String correoReceptor = "";
+			String asunto = "Pedido de Productos";
 			
 			MimeMessage message = new MimeMessage(session);
 
@@ -207,4 +247,105 @@ public class EnviarCorreosAProveedoresAutomatico {
 			e.printStackTrace();
 		}
 	}
+	
+	public static boolean seCambioElProperties() throws InterruptedException {
+		  try (WatchService ws = FileSystems.getDefault().newWatchService()) {
+	            // carpeta que deseamos monitorear
+//			  	Path aux = Paths.get("config.properties");
+			  	
+	            Path dirToWatch = Paths.get("config");
+//			  	Path dirToWatch = aux.toAbsolutePath();
+	            // eventos que deseamos que nos envien notificaciones
+	            dirToWatch.register(ws, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+	            
+	            // obtener el key
+                WatchKey key = ws.take();
+                
+                // procesar los eventos ocurridos
+                for (WatchEvent<?> event : key.pollEvents()) {
+                    Kind<?> eventKind = event.kind();
+                    if (eventKind == OVERFLOW) {
+                        System.out.println("Event overflow occurred");
+                        return true;
+                    }
+                    if (eventKind == ENTRY_MODIFY) {
+                        System.out.println("Se modifico el coso");
+                        return true;
+                    }
+                    
+                    
+                    // obtener informacion del evento ocurrido
+                    @SuppressWarnings("unchecked")
+					WatchEvent<Path> currEvent = (WatchEvent<Path>) event;
+                    Path dirEntry = currEvent.context();
+
+                    System.out.println(eventKind + " occurred on " + dirEntry);
+                    return false;
+                }
+                
+                // resetear el key
+                boolean isKeyValid = key.reset();
+                if (!isKeyValid) {
+                    return false;
+                }
+                
+   
+            
+            return false;
+		  } catch (IOException e) {
+			e.printStackTrace();
+		}    
+		 return false;
+	}
+	
+	
+	public static boolean huboCambiosEnFichero() {
+        try (WatchService ws = FileSystems.getDefault().newWatchService()) {
+            // carpeta que deseamos monitorear
+            Path dirToWatch = Paths.get("config");
+
+            // eventos que deseamos que nos envien notificaciones
+            dirToWatch.register(ws, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+            System.out.println("Watching " + dirToWatch + " for events.");
+            
+            while (true) {
+                // obtener el key
+                WatchKey key = ws.take();
+                
+                // procesar los eventos ocurridos
+                for (WatchEvent<?> event : key.pollEvents()) {
+                    Kind<?> eventKind = event.kind();
+                    if (eventKind == OVERFLOW) {
+                        System.out.println("Event overflow occurred");
+                        return true;
+                    }
+                    if (eventKind == ENTRY_MODIFY) {
+                        System.out.println("Se modifico el coso");
+                        return true;
+                    }
+                    
+                    
+                    // obtener informacion del evento ocurrido
+                    @SuppressWarnings("unchecked")
+					WatchEvent<Path> currEvent = (WatchEvent<Path>) event;
+                    Path dirEntry = currEvent.context();
+
+                    System.out.println(eventKind + " occurred on " + dirEntry);
+                    return true;
+                }
+                
+                // resetear el key
+                boolean isKeyValid = key.reset();
+                if (!isKeyValid) {
+                    break;
+                }
+                
+            }
+            
+            return false;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
