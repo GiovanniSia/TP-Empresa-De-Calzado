@@ -62,13 +62,13 @@ public class VentanaModificarCotizacion extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 517, 493);
+		frame.setBounds(100, 100, 517, 492);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 148, 501, 320);
+		panel.setBounds(0, 148, 501, 305);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -98,19 +98,19 @@ public class VentanaModificarCotizacion extends JFrame {
 		spMedioPago.setViewportView(tablaMedioPago);
 
 		btnAtras = new JButton("Atras");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		btnAtras.setBounds(10, 275, 108, 23);
 		panel.add(btnAtras);
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
 		lblActualizarDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblActualizarDescripcion.setBounds(110, 186, 273, 21);
+		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblActualizarDescripcion.setBounds(170, 192, 134, 21);
 		panel.add(lblActualizarDescripcion);
 
 		lblTasaConvercion = new JLabel("Tasa Conversion");
-		lblTasaConvercion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTasaConvercion.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblTasaConvercion.setBounds(51, 218, 120, 14);
 		panel.add(lblTasaConvercion);
 
@@ -123,11 +123,11 @@ public class VentanaModificarCotizacion extends JFrame {
 				}
 			}
 		});
-		txtActualizarTasaConvercion.setBounds(171, 217, 151, 20);
+		txtActualizarTasaConvercion.setBounds(170, 218, 151, 20);
 		panel.add(txtActualizarTasaConvercion);
 
 		btnActualizarCotizacion = new JButton("Actualizar \r\nCotizaci\u00F3n");
-		btnActualizarCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnActualizarCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		btnActualizarCotizacion.setBounds(160, 241, 172, 23);
 		panel.add(btnActualizarCotizacion);
 
@@ -139,17 +139,17 @@ public class VentanaModificarCotizacion extends JFrame {
 		btnVerHistorialDeCambios = new JButton("Ver Historial de Cambios");
 		btnVerHistorialDeCambios.setBounds(290, 275, 201, 23);
 		panel.add(btnVerHistorialDeCambios);
-		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 69, 501, 81);
+		panel_1.setBounds(0, 67, 501, 81);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescripcion.setBounds(139, 21, 158, 20);
-		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDescripcion.setBounds(139, 33, 158, 20);
+		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		panel_1.add(lblDescripcion);
 
 		txtFiltroDescripcion = new JTextField();
@@ -159,7 +159,7 @@ public class VentanaModificarCotizacion extends JFrame {
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
 		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFiltrarPor.setBounds(10, 0, 70, 14);
+		lblFiltrarPor.setBounds(10, 11, 70, 14);
 		panel_1.add(lblFiltrarPor);
 		 
 		textFiltroCodMoneda = new JTextField();
@@ -168,8 +168,8 @@ public class VentanaModificarCotizacion extends JFrame {
 		
 		lblCodMoneda = new JLabel("Cod. Moneda");
 		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCodMoneda.setBounds(10, 21, 119, 20);
+		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblCodMoneda.setBounds(10, 33, 119, 20);
 		panel_1.add(lblCodMoneda);
 
 		lblModificarCotizacion = new JLabel("Modificar Cotizaci\u00F3n");

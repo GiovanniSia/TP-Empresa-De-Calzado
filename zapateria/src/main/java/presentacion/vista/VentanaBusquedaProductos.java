@@ -1,7 +1,6 @@
 package presentacion.vista;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -55,13 +54,10 @@ public class VentanaBusquedaProductos {
 	private JLabel lblNombre;
 	private JLabel lblTalle;
 	private JButton btnAniadirProd;
-	private JPanel panel_1;
-	private JLabel lblTitulo;
 	private JLabel lblSubtitulo;
 
 
 	private JButton btnQuitarProducto;
-	private JButton btnAtras;
 	private JButton btnArmarVenta;
 	
 
@@ -79,6 +75,10 @@ public class VentanaBusquedaProductos {
 	private JSpinner spinnerProductos;
 	private JSpinner spinnerPrecioDesde;
 	private JSpinner spinnerPrecioHasta;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_1;
+	private JButton btnAtras;
+	private JLabel lblNewLabel_2;
 	/**
 	 * Launch the application.
 	 */
@@ -118,15 +118,17 @@ public class VentanaBusquedaProductos {
 		
 		
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
 		frame.setBounds(100, 100, 953, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapatería Argento - Realizar Venta");
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBackground(new Color(245, 255, 250));
+		panel.setBorder(null);
 		panel.setBounds(10, 96, 919, 419);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -152,6 +154,7 @@ public class VentanaBusquedaProductos {
 		tableProductosFiltrados = new JTable(modelTablaProductosFiltrados);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
+		tableProductosFiltrados.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
 		panel.add(scrollPaneProductosFiltrados);
@@ -167,14 +170,17 @@ public class VentanaBusquedaProductos {
 		panel.add(txtTalle);
 		
 		lblNombre = new JLabel("Nombre");
+		lblNombre.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		lblNombre.setBounds(10, 121, 69, 13);
 		panel.add(lblNombre);
 		
 		lblTalle = new JLabel("Talle");
+		lblTalle.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		lblTalle.setBounds(115, 121, 29, 13);
 		panel.add(lblTalle);
 		
 		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
+		lblFiltrarPor.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 100, 69, 13);
 		panel.add(lblFiltrarPor);
 		
@@ -188,6 +194,13 @@ public class VentanaBusquedaProductos {
 		btnQuitarProducto = new JButton("");
 		btnQuitarProducto.setBounds(855, 23, 39, 37);
 		cambiarIconoBotones(btnQuitarProducto,  "trash.png");
+
+		cambiarIconoBotones(btnAniadirProd,  "meterCarrito.png");
+		panel.add(btnAniadirProd);
+		
+		btnQuitarProducto = new JButton("");
+		btnQuitarProducto.setBounds(870, 23, 39, 37);
+		cambiarIconoBotones(btnQuitarProducto,  "trash2.png");
 		panel.add(btnQuitarProducto);
 		
 		btnArmarVenta = new JButton("");
@@ -201,15 +214,20 @@ public class VentanaBusquedaProductos {
 		btnAtras.setBounds(20, 534, 51, 63);
 		cambiarIconoBotones(btnAtras,  "back.png");
 		frame.getContentPane().add(btnAtras);
+
+		btnArmarVenta.setBounds(719, 526, 72, 63);
+		cambiarIconoBotones(btnArmarVenta,  "cash.png");
+		frame.getContentPane().add(btnArmarVenta);
+		
 		
 		lblValorTotal = new JLabel("$0");
 		lblValorTotal.setForeground(new Color(0, 100, 0));
-		lblValorTotal.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblValorTotal.setFont(new Font("Oxygen", Font.PLAIN, 18));
 		lblValorTotal.setBounds(776, 370, 133, 39);
 		panel.add(lblValorTotal);
 		
 		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+		lblTotal.setFont(new Font("Oxygen", Font.BOLD, 17));
 		lblTotal.setBounds(707, 370, 63, 39);
 		panel.add(lblTotal);
 		
@@ -237,16 +255,18 @@ public class VentanaBusquedaProductos {
 		
 		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
-		
+		tableCarrito.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		scrollPaneCarrito.setViewportView(tableCarrito);
 				
-		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setBounds(588, 41, 55, 19);
+		JLabel lblCantidad = new JLabel("Cambiar cantidad");
+		lblCantidad.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblCantidad.setBounds(588, 41, 90, 19);
 		panel.add(lblCantidad);
 		
 
 		JLabel lblClienteSeleccionado = new JLabel("Cliente Seleccionado:");
-		lblClienteSeleccionado.setBounds(10, 0, 134, 13);
+		lblClienteSeleccionado.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblClienteSeleccionado.setBounds(10, 11, 153, 13);
 		panel.add(lblClienteSeleccionado);
 
 		
@@ -266,88 +286,104 @@ public class VentanaBusquedaProductos {
 		};
 		
 		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneCliente.setBounds(10, 23, 548, 48);
+		scrollPaneCliente.setBounds(10, 41, 548, 48);
 		
 		tableCliente = new JTable(modelTablaCliente);
 		this.tableCliente.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCliente.getColumnModel().getColumn(0).setResizable(false);
 		scrollPaneCliente.setViewportView(tableCliente);
+		tableCliente.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		
 		panel.add(scrollPaneCliente);
 		
 		
 		
 		lblCantidad_1 = new JLabel("Cantidad");
-		lblCantidad_1.setBounds(308, 118, 55, 19);
+		lblCantidad_1.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblCantidad_1.setBounds(390, 118, 47, 19);
 		panel.add(lblCantidad_1);
 		
-		lblQuitarDelCarrito = new JLabel("Quitar");
-		lblQuitarDelCarrito.setBounds(806, 40, 39, 20);
+		lblQuitarDelCarrito = new JLabel("Quitar del carrito");
+		lblQuitarDelCarrito.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblQuitarDelCarrito.setBounds(776, 40, 95, 20);
 		panel.add(lblQuitarDelCarrito);
 		
 		lblPrecioDesde = new JLabel("Precio desde");
-		lblPrecioDesde.setBounds(154, 121, 77, 13);
+		lblPrecioDesde.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblPrecioDesde.setBounds(183, 121, 69, 13);
 		panel.add(lblPrecioDesde);
 		
 		lblPrecioHasta = new JLabel("Precio hasta");
-		lblPrecioHasta.setBounds(218, 121, 77, 13);
+		lblPrecioHasta.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblPrecioHasta.setBounds(294, 121, 63, 13);
 		panel.add(lblPrecioHasta);
 		
 
 		
 		JLabel lblAgregar = new JLabel("Agregar");
+		lblAgregar.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		lblAgregar.setBounds(462, 137, 39, 20);
 		panel.add(lblAgregar);
 		
 		JLabel lblCarrito = new JLabel("Carrito de compras");
-		lblCarrito.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
+		lblCarrito.setFont(new Font("Oxygen", Font.PLAIN, 17));
 		lblCarrito.setBounds(587, 0, 258, 31);
 		panel.add(lblCarrito);
 		
-		//
-		
-
-		panel_1 = new JPanel();
-		panel_1.setBounds(10, 10, 919, 41);
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
-		
-		lblTitulo = new JLabel("Zapateria");
-		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
-		lblTitulo.setBounds(10, 0, 195, 41);
-		panel_1.add(lblTitulo);
-		
 		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		lblSubtitulo.setBounds(20, 54, 195, 41);
+		lblSubtitulo.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblSubtitulo.setBounds(10, 57, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
 		
 		JLabel lblNewLabel = new JLabel("Confirmar pedido");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 35));
-		lblNewLabel.setBounds(221, 525, 356, 50);
+		lblNewLabel.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblNewLabel.setBounds(536, 526, 173, 63);
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
 		spinnerModelCarrito = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
 		spinnerCarrito = new JSpinner(spinnerModelCarrito);
-		spinnerCarrito.setBounds(632, 41, 47, 19);
+		spinnerCarrito.setBounds(681, 40, 47, 19);
 		panel.add(spinnerCarrito);
 		
 		spinnerModelProductos = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
 		spinnerProductos = new JSpinner(spinnerModelProductos);
-		spinnerProductos.setBounds(316, 138, 47, 19);
+		spinnerProductos.setBounds(390, 137, 47, 19);
 		panel.add(spinnerProductos);
 		
 		
 		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		spinnerPrecioDesde = new JSpinner(spinnerModelDesde);
-		spinnerPrecioDesde.setBounds(164, 138, 47, 19);
+		spinnerPrecioDesde.setBounds(199, 137, 47, 19);
 		panel.add(spinnerPrecioDesde);
 		
 		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		spinnerPrecioHasta = new JSpinner(spinnerModelHasta);
-		spinnerPrecioHasta.setBounds(218, 138, 47, 19);
+		spinnerPrecioHasta.setBounds(310, 137, 47, 19);
 		panel.add(spinnerPrecioHasta);
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 937, 50);
+		frame.getContentPane().add(panel_1);
+		
+		lblNewLabel_1 = new JLabel("Zapateria Argento");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel_1.setBounds(10, 11, 421, 28);
+		panel_1.add(lblNewLabel_1);
+		
+		btnAtras = new JButton("");
+		btnAtras.setBackground(new Color(248, 248, 255));
+		btnAtras.setBounds(81, 526, 55, 50);
+		frame.getContentPane().add(btnAtras);
+		cambiarIconoBotones(btnAtras,  "back2.png");
+		
+		lblNewLabel_2 = new JLabel("Atr\u00E1s");
+		lblNewLabel_2.setFont(new Font("Oxygen", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(146, 526, 55, 50);
+		frame.getContentPane().add(lblNewLabel_2);
 		//
 	}
 	
@@ -375,10 +411,10 @@ public class VentanaBusquedaProductos {
 	public void cerrar() {
 		frame.setVisible(false);
 	}
-	
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	
