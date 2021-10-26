@@ -209,11 +209,6 @@ public class VentanaBusquedaProductos {
 		btnArmarVenta.setBounds(508, 522, 93, 63);
 		cambiarIconoBotones(btnArmarVenta,  "dollar-symbol.png");
 		frame.getContentPane().add(btnArmarVenta);
-		
-		btnAtras = new JButton("");
-		btnAtras.setBounds(20, 534, 51, 63);
-		cambiarIconoBotones(btnAtras,  "back.png");
-		frame.getContentPane().add(btnAtras);
 
 		btnArmarVenta.setBounds(719, 526, 72, 63);
 		cambiarIconoBotones(btnArmarVenta,  "cash.png");

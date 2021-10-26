@@ -97,45 +97,11 @@ public class ControladorVisualizarCarritos {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("se deberia mostrar el detalle");
 				mostrarDetalle();
 			}
 			
 		});
-		
-		/*
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-...
-//Ask to be notified of selection changes.
-ListSelectionModel rowSM = table.getSelectionModel();
-rowSM.addListSelectionListener(new ListSelectionListener() {
 
-    public void valueChanged(ListSelectionEvent e) {
-        //Ignore extra messages.
-        if (e.getValueIsAdjusting()) return;
-
-        ListSelectionModel lsm =
-            (ListSelectionModel)e.getSource();
-
-        if (lsm.isSelectionEmpty()) {
-            ...//no rows are selected
-        } else {
-            int selectedRow = lsm.getMinSelectionIndex();
-            ...//selectedRow is selected
-
-        }
-    }
-});
-		
-		*/
-//		this.ventanaVisualizarCarritos.getTableCarritos().addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				System.out.println("se deberia mostrar el detalle");
-//				mostrarDetalle();
-//			}
-//		});
-		
 		this.ventanaVisualizarCarritos.getTextCUIL().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {

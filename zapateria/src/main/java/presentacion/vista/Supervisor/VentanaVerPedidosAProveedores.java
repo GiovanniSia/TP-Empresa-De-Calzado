@@ -94,19 +94,20 @@ public class VentanaVerPedidosAProveedores {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 25, 1301, 762);
+		frame.setBounds(100, 30, 1197, 573);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 1287, 725);
+		panel.setBounds(0, 0, 1169, 539);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panelTitulo = new JPanel();
-		panelTitulo.setBounds(0, 0, 1277, 72);
+		panelTitulo.setBounds(0, 0, 1169, 72);
 		panel.add(panelTitulo);
 		panelTitulo.setLayout(null);
 		
@@ -121,7 +122,7 @@ public class VentanaVerPedidosAProveedores {
 		panel.add(lblNewLabel);
 		
 		JPanel panelTabla = new JPanel();
-		panelTabla.setBounds(10, 144, 1267, 471);
+		panelTabla.setBounds(10, 144, 1159, 315);
 		panel.add(panelTabla);
 		panelTabla.setLayout(null);
 		
@@ -180,7 +181,7 @@ public class VentanaVerPedidosAProveedores {
 			}			
 		};
 		JScrollPane scrollPaneTablaPedidos = new JScrollPane(this.tablePedidos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneTablaPedidos.setBounds(10, 81, 1247, 380);
+		scrollPaneTablaPedidos.setBounds(10, 81, 1148, 233);
 		
 		tablePedidos = new JTable(modelTablaPedidos);
 		tablePedidos.setBounds(10, 81, 1247, 380);
@@ -215,23 +216,23 @@ public class VentanaVerPedidosAProveedores {
 		panelTabla.add(comboBoxEstado);
 		
 		comboBoxEstadoSolo = new JComboBox<String>();
-		comboBoxEstadoSolo.setBounds(1119, 51, 138, 21);
+		comboBoxEstadoSolo.setBounds(1065, 50, 79, 21);
 		comboBoxEstadoSolo.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstadoSolo);
 		
 		btnSalir = new JButton("<");
-		btnSalir.setBounds(61, 620, 74, 63);
+		btnSalir.setBounds(80, 469, 74, 63);
 		cambiarIconoBotones(btnSalir,  "back.png");
 		panel.add(btnSalir);
 		
 		btnConfirmarPedido = new JButton("Confirmar Pedido Completado");
 		btnConfirmarPedido.setFont(new Font("Consolas", Font.PLAIN, 17));
-		btnConfirmarPedido.setBounds(188, 625, 399, 51);
+		btnConfirmarPedido.setBounds(214, 469, 399, 51);
 		panel.add(btnConfirmarPedido);
 		
 		btnConfirmarCancelacionDe = new JButton("Confirmar Cancelacion de Pedido");
 		btnConfirmarCancelacionDe.setFont(new Font("Consolas", Font.PLAIN, 17));
-		btnConfirmarCancelacionDe.setBounds(648, 625, 399, 51);
+		btnConfirmarCancelacionDe.setBounds(640, 469, 399, 51);
 		panel.add(btnConfirmarCancelacionDe);
 		
 		textId = new JTextField();
