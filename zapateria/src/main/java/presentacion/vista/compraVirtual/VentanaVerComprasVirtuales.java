@@ -28,7 +28,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnasTablaPrincipal = { "Nro orden","Sucursal", "CUIL", "Cliente", "Fecha", "Hora", "Estado"};
+	private String[] nombreColumnasTablaPrincipal = { "Nro orden","Sucursal", "CUIL", "Cliente", "Fecha", "Hora", "Estado", "Nota Credito"};
 	private DefaultTableModel modelDeTablaPrincipal;
 	private JTable tabla;
 	private JPanel panel_2;

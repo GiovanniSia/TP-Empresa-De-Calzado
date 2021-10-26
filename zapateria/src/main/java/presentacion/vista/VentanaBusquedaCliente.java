@@ -1,9 +1,11 @@
 package presentacion.vista;
 
 import java.awt.Font;
-
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,24 +25,26 @@ public class VentanaBusquedaCliente extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JButton btnPasarAVenta;
-	private JButton btnAtras;
 	private String[] nombreColumnas = { "Cod. Cliente", "Nombre", "Apellido", "CUIL", "Correo Electronico","Limite Credito", "Credito Disponible",
 			"Estado" };
-	private JLabel lblZapateria;
 	private JLabel lblNombre;
 	private JTextField txtFieldNombre;
 	private DefaultTableModel modelCliente;
 	private JTable tablaClientes;
 	private JTextField txtFieldApellido;
 	private JTextField txtFieldCUIL;
-	private JPanel panel_2;
 
 	private JLabel lblCodCliente;
 	private JTextField txtFieldCodCliente;
 	private JLabel lblFiltrarPor;
 	private JLabel lblElegirCliente;
 	private JScrollPane spCliente;
+	private JPanel panel_2;
+	private JLabel lblNewLabel;
+	private JButton btnPasarAVenta;
+	private JButton btnAtras;
+	private JLabel lblAtrs;
+	private JLabel lblElegirProductos;
 
 	public VentanaBusquedaCliente() {
 		initialize();
@@ -53,19 +57,22 @@ public class VentanaBusquedaCliente extends JFrame {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 428);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 822, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 191, 806, 203);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 191, 806, 224);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
 		spCliente.setBounds(10, 11, 776, 145);
+		spCliente.setBackground(new Color(248, 248, 255));
 		panel.add(spCliente);
 
 		modelCliente =	new DefaultTableModel(null, nombreColumnas) {
@@ -81,6 +88,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		};
 		
 		tablaClientes = new JTable(modelCliente);
+		tablaClientes.setFont(new Font("Oxygen", Font.PLAIN, 11));
 		
 		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
@@ -88,26 +96,39 @@ public class VentanaBusquedaCliente extends JFrame {
 		tablaClientes.getColumnModel().getColumn(1).setResizable(false);
 		
 		spCliente.setViewportView(tablaClientes);
-
-		btnAtras = new JButton("Atras");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-		btnAtras.setBounds(10, 167, 108, 23);
-		panel.add(btnAtras);
-
-		btnPasarAVenta = new JButton("Pasar a Venta");
-		btnPasarAVenta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnPasarAVenta.setBounds(290, 167, 159, 23);
+		
+		btnPasarAVenta = new JButton("");
+		btnPasarAVenta.setBackground(new Color(248, 248, 255));
+		btnPasarAVenta.setBounds(478, 163, 55, 50);
 		panel.add(btnPasarAVenta);
+		cambiarIconoBotones(btnPasarAVenta,  "carrito2.png");
+		
+		btnAtras = new JButton("");
+		btnAtras.setBackground(new Color(248, 248, 255));
+		btnAtras.setBounds(114, 163, 55, 50);
+		panel.add(btnAtras);
+		cambiarIconoBotones(btnAtras,  "back2.png");
+		
+		lblAtrs = new JLabel("Atras");
+		lblAtrs.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblAtrs.setBounds(179, 178, 70, 20);
+		panel.add(lblAtrs);
+		
+		lblElegirProductos = new JLabel("Elegir Productos");
+		lblElegirProductos.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblElegirProductos.setBounds(543, 178, 119, 20);
+		panel.add(lblElegirProductos);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setForeground(new Color(248, 248, 255));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 95, 806, 95);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(108, 36, 70, 20);
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNombre.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		panel_1.add(lblNombre);
 
 		txtFieldNombre = new JTextField();
@@ -116,12 +137,12 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldNombre);
 
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblApellido.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		lblApellido.setBounds(251, 36, 70, 20);
 		panel_1.add(lblApellido);
 
 		JLabel lblCUIL = new JLabel("CUIL");
-		lblCUIL.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCUIL.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		lblCUIL.setBounds(409, 36, 41, 20);
 		panel_1.add(lblCUIL);
 
@@ -134,7 +155,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldCUIL);
 
 		lblCodCliente = new JLabel("Cod. Cliente");
-		lblCodCliente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCodCliente.setFont(new Font("Oxygen", Font.PLAIN, 14));
 		lblCodCliente.setBounds(10, 36, 86, 20);
 		panel_1.add(lblCodCliente);
 
@@ -143,24 +164,32 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldCodCliente);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
-		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFiltrarPor.setBounds(10, 11, 70, 14);
+		lblFiltrarPor.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblFiltrarPor.setBounds(10, 0, 70, 25);
 		panel_1.add(lblFiltrarPor);
 
-		lblZapateria = new JLabel("Zapater\u00EDa");
-		lblZapateria.setBounds(10, 11, 129, 30);
-		frame.getContentPane().add(lblZapateria);
-		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
-
 		lblElegirCliente = new JLabel("Elegir Cliente");
-		lblElegirCliente.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblElegirCliente.setBounds(10, 52, 129, 30);
+		lblElegirCliente.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblElegirCliente.setBounds(10, 52, 140, 30);
 		frame.getContentPane().add(lblElegirCliente);
-
+		
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 41);
+		panel_2.setLayout(null);
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 806, 50);
 		frame.getContentPane().add(panel_2);
+		
+		lblNewLabel = new JLabel("Zapateria Argento");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 11, 421, 28);
+		panel_2.add(lblNewLabel);
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 
 	public void show() {

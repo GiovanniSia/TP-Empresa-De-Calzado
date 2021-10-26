@@ -13,19 +13,20 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import persistencia.conexion.Conexion;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
 
 public class VentanaMenuSistemaDeVentas {
 
 	private JFrame frame;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	
 	private JButton btnArmarVenta;
 	private JButton btnCobrarVenta;
@@ -38,20 +39,20 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnRegistrarUnCliente;
 	JButton btnVerPedidosA;
 
-
 	private JButton btnIngresarProductoNuevo;
 	private JButton btnVerProveedores;
-
+	private JButton btnGenerarOrdenDe;
+	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
 	private JLabel lblNewLabel_5;
-	private JLabel lblNewLabel_6;
-	private JLabel lblNewLabel_7;
-	private JButton btnGenerarOrdenDe;
-
-	private JLabel lblNewLabel_8;
 	private JButton btnConfig;
+
+//	private JButton btnConfig;
+
 
 	/**
 	 * Launch the application.
@@ -86,169 +87,173 @@ public class VentanaMenuSistemaDeVentas {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 649);
+		frame.setBounds(100, 100, 822, 589);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Sistema de Ventas");
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(0, 0, 818, 611);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 0, 806, 550);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 0, 798, 43);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 808, 50);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		lblNewLabel = new JLabel("ZAPATERIA");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-		lblNewLabel.setBounds(0, 5, 421, 28);
+		lblNewLabel = new JLabel("Zapateria Argento");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 11, 421, 28);
 		panel_1.add(lblNewLabel);
 		
-		lblNewLabel_1 = new JLabel("(Vendedor)");
-		lblNewLabel_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(113, 121, 184, 20);
-		panel.add(lblNewLabel_1);
+		lblNewLabel_4 = new JLabel("Sucursal:");
+		lblNewLabel_4.setFont(new Font("Oxygen", Font.BOLD, 14));
+		lblNewLabel_4.setBounds(565, 22, 109, 14);
+		panel_1.add(lblNewLabel_4);
 		
 		btnArmarVenta = new JButton("Armar Venta");
-		btnArmarVenta.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnArmarVenta.setBounds(65, 70, 282, 41);
+		btnArmarVenta.setForeground(new Color(51, 102, 153));
+		btnArmarVenta.setBackground(new Color(51, 102, 204));
+		btnArmarVenta.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnArmarVenta.setBounds(53, 133, 282, 41);
 		panel.add(btnArmarVenta);
 		
 		btnCobrarVenta = new JButton("Cobrar Venta");
-		btnCobrarVenta.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnCobrarVenta.setBounds(65, 151, 282, 41);
+		btnCobrarVenta.setForeground(new Color(51, 102, 153));
+		btnCobrarVenta.setBackground(new Color(51, 102, 204));
+		btnCobrarVenta.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnCobrarVenta.setBounds(53, 221, 282, 41);
 		panel.add(btnCobrarVenta);
 		
 		btnCotizaciones = new JButton("Cotizaciones");
-		btnCotizaciones.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnCotizaciones.setBounds(65, 232, 282, 41);
+		btnCotizaciones.setForeground(new Color(51, 102, 153));
+		btnCotizaciones.setBackground(new Color(51, 102, 204));
+		btnCotizaciones.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnCotizaciones.setBounds(449, 133, 282, 41);
 		panel.add(btnCotizaciones);
 		
 		btnEgresoCaja = new JButton("Egreso de Caja");
-		btnEgresoCaja.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnEgresoCaja.setBounds(473, 151, 282, 41);
+		btnEgresoCaja.setForeground(new Color(51, 102, 153));
+		btnEgresoCaja.setBackground(new Color(51, 102, 204));
+		btnEgresoCaja.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnEgresoCaja.setBounds(53, 322, 282, 41);
 		panel.add(btnEgresoCaja);
 		
 		btnIngresoCaja = new JButton("Ingreso de Caja");
-		btnIngresoCaja.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnIngresoCaja.setBounds(473, 70, 282, 41);
+		btnIngresoCaja.setForeground(new Color(51, 102, 153));
+		btnIngresoCaja.setBackground(new Color(51, 102, 204));
+		btnIngresoCaja.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnIngresoCaja.setBounds(53, 273, 282, 41);
 		panel.add(btnIngresoCaja);
 		
 		btnCierreCaja = new JButton("Cierre de Caja");
-		btnCierreCaja.setFont(new Font("Consolas", Font.PLAIN, 28));
-		btnCierreCaja.setBounds(473, 232, 282, 41);
+		btnCierreCaja.setForeground(new Color(51, 102, 153));
+		btnCierreCaja.setBackground(new Color(51, 102, 204));
+		btnCierreCaja.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnCierreCaja.setBounds(53, 374, 282, 41);
 		panel.add(btnCierreCaja);
 		
-		lblNewLabel_2 = new JLabel("(Cajero)");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_2.setBounds(113, 202, 184, 20);
-		panel.add(lblNewLabel_2);
-		
-		lblNewLabel_3 = new JLabel("(Supervisor)");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_3.setBounds(113, 283, 184, 20);
-		panel.add(lblNewLabel_3);
-		
-		lblNewLabel_4 = new JLabel("(Cajero)");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_4.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_4.setBounds(530, 281, 184, 20);
-		panel.add(lblNewLabel_4);
-		
-		lblNewLabel_5 = new JLabel("(Cajero)");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_5.setBounds(530, 202, 184, 20);
-		panel.add(lblNewLabel_5);
-		
-		lblNewLabel_6 = new JLabel("(Cajero)");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_6.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_6.setBounds(530, 121, 184, 20);
-		panel.add(lblNewLabel_6);
-		
+
 		btnModPrecioUnitario = new JButton("Modificar Producto");
-		btnModPrecioUnitario.setFont(new Font("Consolas", Font.PLAIN, 15));
-		btnModPrecioUnitario.setBounds(65, 313, 282, 35);
+		btnModPrecioUnitario.setForeground(new Color(51, 102, 153));
+		btnModPrecioUnitario.setBackground(new Color(51, 102, 204));
+		btnModPrecioUnitario.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnModPrecioUnitario.setBounds(449, 303, 282, 41);
+
 		panel.add(btnModPrecioUnitario);
 		
-		lblNewLabel_7 = new JLabel("(Supervisor)");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_7.setBounds(113, 358, 184, 20);
-		panel.add(lblNewLabel_7);
-		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(760, 460, 48, 50);
-		cambiarIconoBotones(btnRegresar,  "back.png");
+
+		btnRegresar.setBackground(new Color(248, 248, 255));
+		btnRegresar.setBounds(53, 469, 55, 50);
+		cambiarIconoBotones(btnRegresar,  "back2.png");
+
 		panel.add(btnRegresar);
 		
-		btnGenerarOrdenDe = new JButton("Generar orden de manufactura");
-		btnGenerarOrdenDe.setFont(new Font("Consolas", Font.PLAIN, 13));
-		btnGenerarOrdenDe.setBounds(473, 307, 282, 41);
+		btnGenerarOrdenDe = new JButton("Orden de Manufactura");
+		btnGenerarOrdenDe.setForeground(new Color(51, 102, 153));
+		btnGenerarOrdenDe.setBackground(new Color(51, 102, 204));
+		btnGenerarOrdenDe.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnGenerarOrdenDe.setBounds(449, 374, 282, 41);
 		panel.add(btnGenerarOrdenDe);
 		
-		lblNewLabel_8 = new JLabel("(Gerente)");
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_8.setBounds(530, 358, 184, 20);
-		panel.add(lblNewLabel_8);
-		
+
 		btnRegistrarUnCliente = new JButton("Registrar un Cliente");
-		btnRegistrarUnCliente.setFont(new Font("Consolas", Font.PLAIN, 15));
-		btnRegistrarUnCliente.setBounds(65, 405, 282, 35);
+		btnRegistrarUnCliente.setForeground(new Color(51, 102, 153));
+		btnRegistrarUnCliente.setBackground(new Color(51, 102, 204));
+		btnRegistrarUnCliente.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnRegistrarUnCliente.setBounds(449, 185, 282, 41);
 		panel.add(btnRegistrarUnCliente);
 		
-		JLabel lblNewLabel_7_1 = new JLabel("(Gerente)");
-		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_7_1.setBounds(113, 449, 184, 20);
-		panel.add(lblNewLabel_7_1);
-		
-		btnIngresarProductoNuevo = new JButton("Ingresar producto nuevo");
-		btnIngresarProductoNuevo.setFont(new Font("Consolas", Font.PLAIN, 15));
-		btnIngresarProductoNuevo.setBounds(65, 475, 282, 35);
+		btnIngresarProductoNuevo = new JButton("Ingresar Producto Nuevo");
+		btnIngresarProductoNuevo.setForeground(new Color(51, 102, 153));
+		btnIngresarProductoNuevo.setBackground(new Color(51, 102, 204));
+		btnIngresarProductoNuevo.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnIngresarProductoNuevo.setBounds(449, 254, 282, 41);
 		panel.add(btnIngresarProductoNuevo);
 		
-		JLabel lblNewLabel_7_1_1 = new JLabel("(Supervisor)");
-		lblNewLabel_7_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_7_1_1.setBounds(113, 520, 184, 20);
-		panel.add(lblNewLabel_7_1_1);
-		
+
 		btnVerProveedores = new JButton("Ver Proveedores");
-		btnVerProveedores.setFont(new Font("Consolas", Font.PLAIN, 15));
-		btnVerProveedores.setBounds(65, 542, 282, 35);
+		btnVerProveedores.setForeground(new Color(51, 102, 153));
+		btnVerProveedores.setBackground(new Color(51, 102, 204));
+		btnVerProveedores.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerProveedores.setBounds(449, 478, 282, 41);
 		panel.add(btnVerProveedores);
 		
-		JLabel lblNewLabel_7_1_1_1 = new JLabel("(Supervisor)");
-		lblNewLabel_7_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_7_1_1_1.setBounds(113, 581, 184, 20);
-		panel.add(lblNewLabel_7_1_1_1);
-		
-		btnVerPedidosA = new JButton("Ver Pedidos a Proveeodres");
-		btnVerPedidosA.setFont(new Font("Consolas", Font.PLAIN, 15));
-		btnVerPedidosA.setBounds(473, 405, 282, 35);
+		btnVerPedidosA = new JButton("Ver Pedidos a Proveedores");
+		btnVerPedidosA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnVerPedidosA.setForeground(new Color(51, 102, 153));
+		btnVerPedidosA.setBackground(new Color(51, 102, 204));
+		btnVerPedidosA.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerPedidosA.setBounds(449, 426, 282, 41);
 		panel.add(btnVerPedidosA);
 		
-		JLabel lblNewLabel_7_1_1_1_1 = new JLabel("(Supervisor)");
-		lblNewLabel_7_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1_1_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 10));
-		lblNewLabel_7_1_1_1_1.setBounds(542, 453, 184, 20);
-		panel.add(lblNewLabel_7_1_1_1_1);
+		JSeparator separator = new JSeparator();
+		separator.setBounds(53, 185, 282, 6);
+		panel.add(separator);
+		
+		lblNewLabel_1 = new JLabel("Vendedor");
+		lblNewLabel_1.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblNewLabel_1.setBounds(53, 108, 55, 14);
+		panel.add(lblNewLabel_1);
+		
+
+		lblNewLabel_2 = new JLabel("Cajero");
+		lblNewLabel_2.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblNewLabel_2.setBounds(53, 196, 55, 14);
+		panel.add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("Supervisor / Gerente");
+		lblNewLabel_3.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblNewLabel_3.setBounds(449, 108, 109, 14);
+		panel.add(lblNewLabel_3);
+		
+		separator_1 = new JSeparator();
+		separator_1.setBounds(449, 237, 282, 6);
+		panel.add(separator_1);
+		
+		separator_2 = new JSeparator();
+		separator_2.setBounds(449, 357, 282, 6);
+		panel.add(separator_2);
+		
+		lblNewLabel_5 = new JLabel("Atr\u00E1s");
+		lblNewLabel_5.setFont(new Font("Oxygen", Font.PLAIN, 16));
+		lblNewLabel_5.setBounds(138, 485, 55, 21);
+		panel.add(lblNewLabel_5);
 		
 		btnConfig = new JButton("");
-		btnConfig.setBounds(760, 520, 48, 50);
-		cambiarIconoBotones(btnConfig,"setting.png");
+		btnConfig.setBounds(741, 58, 55, 41);
 		panel.add(btnConfig);
+
 	}
 	
 	
@@ -276,9 +281,10 @@ public class VentanaMenuSistemaDeVentas {
 		frame.setVisible(false);
 	}
 	
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	
@@ -337,5 +343,6 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnConfig() {
 		return btnConfig;
 	}
+
 
 }

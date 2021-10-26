@@ -15,6 +15,7 @@ import datos.JsonListaCompraVirtual;
 import dto.ClienteDTO;
 import dto.CompraVirtualDTO;
 import dto.DetalleFacturaDTO;
+import dto.EgresosDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
@@ -23,6 +24,7 @@ import dto.StockDTO;
 import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.DetalleFactura;
+import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
@@ -41,8 +43,6 @@ public class ProcesarCompraVirtual {
 	
 	private static String nombreParaProductoQueNoEstaEnLaBaseDeDatos = "[Hiperlink error]";
 	
-	private static int porcentajeTolerancia = 1;
-	
 	public static void RutinaProcesarCompra(int minutos) {
 		long tiempo = minutos*60*1000;
 		Timer timer = new Timer();
@@ -54,6 +54,11 @@ public class ProcesarCompraVirtual {
 		};
 		timer.scheduleAtFixedRate(tarea, 0, tiempo);
 		
+	}
+	
+	public static int getPorcentajeTolerancia() {
+		return 1;
+		//Aqui reemplazar con el get del properties
 	}
 	
 	public static void FuncionProcesarCompra() {
@@ -112,35 +117,41 @@ public class ProcesarCompraVirtual {
 		String ret = "";
 		if(estaRegistradoElCliente(compraVirtual.getCUIL())) {
 			if(!esPagoValido(compraVirtual.getPago())) {
-				ret = ret + ";El pago no es valido";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 			} else
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
 			}
 			if(!esSucursalValida(compraVirtual.getIdSucursal())) {
-				ret = ret + ";La sucursal no es valida";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
 			}
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";No es posible vender uno de los productos";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+"No es posible vender uno de los productos \n";
+				}
+				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
 				}
 			}
 			return ret;
 		}
 		if(!esPagoValido(compraVirtual.getPago())) {
-			ret = ret + ";El pago no es valido";
-		}
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
+		} else
+			if(!esPagoSuficiente(compraVirtual)) {
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
+			}
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
-			ret = ret + ";El nombre no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCUIL())) {
-			ret = ret + ";El CUIL no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CUIL no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getApellido())) {
-			ret = ret + ";El apellido no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El apellido no es valido \n";
 		}
 		if(!esMailValido(compraVirtual.getCorreoElectronico())) {
-			ret = ret + ";El CorreoElectronico no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CorreoElectronico no es valido \n";
 		}
 		/*
 		if(!esTipoClienteValido(compraVirtual.getTipoCliente())) {
@@ -151,25 +162,25 @@ public class ProcesarCompraVirtual {
 		}
 		*/
 		if(!esAfipValido(compraVirtual.getImpuestoAFIP())) {
-			ret = ret + ";El tipo de afip no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El tipo de afip no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCalle())) {
-			ret = ret + ";La calle no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La calle no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getAltura())) {
-			ret = ret + ";La altura no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La altura no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getPais())) {
-			ret = ret + ";El pais no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El pais no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getProvincia())) {
-			ret = ret + ";La provincia no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La provincia no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getLocalidad())) {
-			ret = ret + ";La localidad no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La localidad no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCodPostal())) {
-			ret = ret + ";El codigo postal no es valido";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El codigo postal no es valido \n";
 		}
 		/* por si lo quiero booleando
 		boolean ret = true;
@@ -188,11 +199,14 @@ public class ProcesarCompraVirtual {
 		ret = ret && esDatoStringValido(compraVirtual.getCodPostal());
 		*/
 		if(!esSucursalValida(compraVirtual.getIdSucursal())) {
-			ret = ret + ";La sucursal no es valida";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
 		}else {
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";No es posible vender uno de los productos";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
+				}
+				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
 				}
 			}
 		}
@@ -208,7 +222,7 @@ public class ProcesarCompraVirtual {
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"%";
 			}
 		}
 		return ret;
@@ -220,7 +234,7 @@ public class ProcesarCompraVirtual {
 	
 	private static boolean esPagoSuficiente(CompraVirtualDTO compraVirtual) {
 		double cantidadAPagar = calcularTotalAPagar(compraVirtual);
-		int porcentaje = porcentajeTolerancia;
+		int porcentaje = getPorcentajeTolerancia();
 		double mayor = cantidadAPagar + (cantidadAPagar*porcentaje/100);
 		double menor = cantidadAPagar - (cantidadAPagar*porcentaje/100);
 		return menor < compraVirtual.getPago() && mayor > compraVirtual.getPago();
@@ -231,10 +245,12 @@ public class ProcesarCompraVirtual {
 		ClienteDTO cliente = getCliente(compraVirtual.getCUIL());
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			MaestroProductoDTO producto = getProducto(idProducto);
-			if(cliente.getTipoCliente().equals("Mayorista")) {
-				cantidadAPagar = cantidadAPagar+(producto.getPrecioMayorista()*compraVirtual.getCompra().get(idProducto));
+			if(cliente != null && cliente.getTipoCliente().equals("Mayorista")) {
+				if(producto != null)
+					cantidadAPagar = cantidadAPagar+(producto.getPrecioMayorista()*compraVirtual.getCompra().get(idProducto));
 			}else {
-				cantidadAPagar = cantidadAPagar+(producto.getPrecioMinorista()*compraVirtual.getCompra().get(idProducto));
+				if(producto != null)
+					cantidadAPagar = cantidadAPagar+(producto.getPrecioMinorista()*compraVirtual.getCompra().get(idProducto));
 			}
 		}
 		return cantidadAPagar;
@@ -317,6 +333,19 @@ public class ProcesarCompraVirtual {
 		return ret;
 	}
 	
+	private static boolean hayAlgoDeStock(int idProducto, int idSucursal, int cantidadAComprar) {
+		MaestroProductoDTO producto = getProducto(idProducto);
+		if(producto == null) {
+			return false;
+		}
+		int cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
+		if(cantStock == 0) {
+			return false;
+		}
+		return true;
+		
+	}
+	
 	private static boolean sePuedeVenderElProducto(int idProducto, int idSucursal, int cantidadAComprar) {
 		MaestroProductoDTO producto = getProducto(idProducto);
 		if(producto == null) {
@@ -325,11 +354,25 @@ public class ProcesarCompraVirtual {
 		if(!producto.getEstado().equals("Activo")) {
 			return false;
 		}
+		return true;
+		/*
+		MaestroProductoDTO producto = getProducto(idProducto);
+		if(producto == null) {
+			return false;
+		}
+		if(!producto.getEstado().equals("Activo")) {
+			return false;
+		}
 		int cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
-		if(cantStock >= cantidadAComprar) {
+		if(cantStock == 0) {
+			return false;
+		}
+		if(cantStock >= 1) {	//if(cantStock >= cantidadAComprar) 
+			//CAMBIO PQ SE LE HACE NOTA DE CREDITO AL CLIENTE CON LO QUE NO TENEMOS
 			return true;
 		}
 		return false;
+		 */
 	}
 	
 	private static MaestroProductoDTO getProducto(int idProducto) {
@@ -392,7 +435,7 @@ public class ProcesarCompraVirtual {
 		if(cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
 			return "A";
 		}
-		if(cliente.getImpuestoAFIP().equals("E")) {
+		if(cliente.getImpuestoAFIP().equals("E") || cliente.getImpuestoAFIP().equals("CF")) {
 			return "B";
 		}
 		if(cliente.getPais() != "Argentina") {//si la persona no vive en arg es excento
@@ -466,11 +509,30 @@ public class ProcesarCompraVirtual {
 		}
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
-		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
+		if(notaCredito != 0) {
+			registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
+		}
 		return nroFacturaCompleto;
 	}
 	
-	private static void registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
+	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal) {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
+		String hora = dtfhora.format(LocalDateTime.now());
+		String tipoEgreso = "Nota Credito";
+		String tipo = "NC";
+		String Detalle = nroFacturaCompleta;
+		double Monto = notaCredito;
+		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgreso, tipo, Detalle,
+				Monto);
+		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
+		modeloEgreso.insert(egresoNuevo);
+	}
+
+	private static double registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
+		double retNotaCredito = 0.0;
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			int id=0;
 			int idProd = idProducto;
@@ -487,6 +549,11 @@ public class ProcesarCompraVirtual {
 			}else {
 				precioVenta = producto.getPrecioMinorista();
 			}
+			if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd) < cant) {
+				retNotaCredito += -(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)*precioVenta;
+				//cant = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd); 
+				//EN CASO DE QUE NO SE QUIERA MOSTRAR PRODUCTOS FANTASMAS EN LA FACTURA DESCOMENTAR EL DE ARRIBA
+			}
 					
 			double monto = precioVenta * cant;
 			int idFactura = factura.getIdFactura();
@@ -501,6 +568,7 @@ public class ProcesarCompraVirtual {
 			}
 			descontarStock(compraVirtual.getIdSucursal(), idProducto, compraVirtual.getCompra().get(idProducto));
 		}
+		return retNotaCredito;
 	}
 	
 	private static String generarNroSucursal(int idSucursal) {
@@ -572,7 +640,7 @@ public class ProcesarCompraVirtual {
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
 				//"Mayorista",
-				"E","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+				"1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 		compras.add(cvd);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -581,7 +649,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"RI", "Calle falsa", "5421", "Argentina",
+				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd2);
 		
@@ -591,7 +659,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"RI", "Calle falsaasdasdas", "5421", "Argentina",
+				"Calle falsaasdasdas", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd22);
 		
@@ -603,16 +671,42 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
-				"RI", "", "", "Argentina",
+				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
 		
 		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
 				"asd", "", null, 
-				"RI", "", "", "Argentina",
+				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd4);
+		
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1959);
+		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 13713000, 9, "Vicentino",
+				"Reboredo", "223004", "pepeptS@mgail.com", 
+				"1002", "201", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd5);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(2, 1965);
+		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 1, 15720000, 9, "Vicentino",
+				"Reboredo", "223004", "pepeptS@mgail.com", 
+				"1002", "201", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd6);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(2, 1965);
+		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 1, 30, 9, "Jose",
+				"Jos", "1236543", "pepeptS@mgail.com", 
+				"1002", "201", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd7);
+		
 		JsonListaCompraVirtual.guardarLista(compras);
 		ProcesarCompraVirtual.RutinaProcesarCompra(1);
 		

@@ -11,10 +11,17 @@ import javax.swing.UIManager;
 import persistencia.conexion.Conexion;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaMenu {
 
@@ -54,27 +61,55 @@ public class VentanaMenu {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 428);
+		frame.getContentPane().setBackground(new Color(153, 204, 255));
+		frame.getContentPane().setForeground(new Color(153, 204, 255));
+		frame.setBounds(100, 100, 710, 415);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Inicio");
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		JLabel lblNewLabel = new JLabel("Zapateria");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 54));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(26, 10, 772, 127);
+		lblNewLabel.setForeground(UIManager.getColor("FormattedTextField.selectionForeground"));
+		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 54));
+		lblNewLabel.setBounds(370, 11, 314, 71);
 		frame.getContentPane().add(lblNewLabel);
 		
 		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
-		btnOperatoriaDeFabrica.setFont(new Font("Consolas", Font.PLAIN, 29));
-		btnOperatoriaDeFabrica.setBounds(162, 147, 471, 57);
+		btnOperatoriaDeFabrica.setOpaque(true);
+		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
+		btnOperatoriaDeFabrica.setToolTipText("");
+		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
+		btnOperatoriaDeFabrica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnOperatoriaDeFabrica.setFont(new Font("Oxygen", Font.PLAIN, 29));
+		btnOperatoriaDeFabrica.setBounds(361, 171, 323, 57);
 		frame.getContentPane().add(btnOperatoriaDeFabrica);
 		
 		btnSistemaDeVentas = new JButton("Sistema de Ventas");
-		btnSistemaDeVentas.setFont(new Font("Consolas", Font.PLAIN, 29));
-		btnSistemaDeVentas.setBounds(166, 245, 471, 57);
+		btnSistemaDeVentas.setBackground(new Color(51, 102, 204));
+		btnSistemaDeVentas.setForeground(new Color(51, 102, 153));
+		btnSistemaDeVentas.setFont(new Font("Oxygen", Font.PLAIN, 29));
+		btnSistemaDeVentas.setBounds(361, 270, 323, 57);
 		frame.getContentPane().add(btnSistemaDeVentas);
+		
+		JLabel lblArgento = new JLabel("Argento");
+		lblArgento.setForeground(UIManager.getColor("FormattedTextField.selectionForeground"));
+		lblArgento.setVerticalAlignment(SwingConstants.TOP);
+		lblArgento.setHorizontalAlignment(SwingConstants.LEFT);
+		lblArgento.setFont(new Font("Oxygen", Font.BOLD, 54));
+		lblArgento.setBounds(370, 75, 314, 71);
+		frame.getContentPane().add(lblArgento);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(0, 0, 351, 378);
+		frame.getContentPane().add(lblNewLabel_1);
+		cambiarIconoLabel(lblNewLabel_1, "zapas.png");
 		
 		
 	}
@@ -101,8 +136,11 @@ public class VentanaMenu {
 	public void cerrar() {
 		frame.setVisible(false);
 	}
-	
-	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
+	}
 	
 
 	public JButton getBtnOperatoriaDeFabrica() {
@@ -112,5 +150,4 @@ public class VentanaMenu {
 	public JButton getBtnSistemaDeVentas() {
 		return btnSistemaDeVentas;
 	}
-
 }
