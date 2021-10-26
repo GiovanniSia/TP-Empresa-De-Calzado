@@ -21,7 +21,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.SwingConstants;
 
 public class VentanaIngresosCaja extends JFrame {
 	private static final long serialVersionUID = 1L;
