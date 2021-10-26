@@ -43,8 +43,6 @@ public class ProcesarCompraVirtual {
 	
 	private static String nombreParaProductoQueNoEstaEnLaBaseDeDatos = "[Hiperlink error]";
 	
-	private static int porcentajeTolerancia = 1;
-	
 	public static void RutinaProcesarCompra(int minutos) {
 		long tiempo = minutos*60*1000;
 		Timer timer = new Timer();
@@ -56,6 +54,11 @@ public class ProcesarCompraVirtual {
 		};
 		timer.scheduleAtFixedRate(tarea, 0, tiempo);
 		
+	}
+	
+	public static int getPorcentajeTolerancia() {
+		return 1;
+		//Aqui reemplazar con el get del properties
 	}
 	
 	public static void FuncionProcesarCompra() {
@@ -117,7 +120,7 @@ public class ProcesarCompraVirtual {
 				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 			} else
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"% \n";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
 			}
 			if(!esSucursalValida(compraVirtual.getIdSucursal())) {
 				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida()+" La sucursal no es valida \n";
@@ -136,7 +139,7 @@ public class ProcesarCompraVirtual {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaNoValido()+" El pago no es valido \n";
 		} else
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"% \n";
+				ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPagaInsuficiente()+" El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"% \n";
 			}
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
@@ -219,7 +222,7 @@ public class ProcesarCompraVirtual {
 			compraVirtual.getPais(), compraVirtual.getProvincia(), compraVirtual.getLocalidad(), compraVirtual.getCodPostal()));
 		
 			if(!esPagoSuficiente(compraVirtual)) {
-				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+porcentajeTolerancia+"%";
+				ret = ret + "; El pago no es suficiente, pago de la compra: "+compraVirtual.getPago()+", total a pagar:"+calcularTotalAPagar(compraVirtual)+", la tolerancia es de"+getPorcentajeTolerancia()+"%";
 			}
 		}
 		return ret;
@@ -231,7 +234,7 @@ public class ProcesarCompraVirtual {
 	
 	private static boolean esPagoSuficiente(CompraVirtualDTO compraVirtual) {
 		double cantidadAPagar = calcularTotalAPagar(compraVirtual);
-		int porcentaje = porcentajeTolerancia;
+		int porcentaje = getPorcentajeTolerancia();
 		double mayor = cantidadAPagar + (cantidadAPagar*porcentaje/100);
 		double menor = cantidadAPagar - (cantidadAPagar*porcentaje/100);
 		return menor < compraVirtual.getPago() && mayor > compraVirtual.getPago();
