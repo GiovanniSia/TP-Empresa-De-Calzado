@@ -33,6 +33,7 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 	private JPanel panel_1;
 	private JLabel lblXSucursal;
 	private JLabel lblFechaDesde_2;
+	private JLabel lblVolver;
 
 	public VentanaVerReporteRankingXSucursal() {
 		initialize();
@@ -45,14 +46,14 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 379, 260);
+		frame.setBounds(100, 100, 379, 310);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 64, 363, 157);
+		panel.setBounds(0, 64, 363, 196);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -90,7 +91,8 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		
 		btnRegresar = new JButton("");
 		btnRegresar.setBackground(new Color(248, 248, 255));
-		btnRegresar.setBounds(297, 97, 46, 38);
+		btnRegresar.setBounds(20, 134, 60, 60);
+		cambiarIconoBotones(btnRegresar,  "back2.png");
 		panel.add(btnRegresar);
 		
 		lblXSucursal = new JLabel("X Sucursal");
@@ -102,6 +104,11 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		lblFechaDesde_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFechaDesde_2.setBounds(261, 66, 97, 57);
 		panel.add(lblFechaDesde_2);
+		
+		lblVolver = new JLabel("Volver");
+		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblVolver.setBounds(87, 137, 97, 57);
+		panel.add(lblVolver);
 		
 		lblNewLabel = new JLabel("Ver Ranking de Ventas");
 		lblNewLabel.setBounds(10, 21, 324, 32);
