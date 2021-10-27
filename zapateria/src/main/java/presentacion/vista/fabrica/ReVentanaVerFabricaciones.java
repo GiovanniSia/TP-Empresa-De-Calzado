@@ -50,6 +50,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JTextField textPasoActual;
 	private JTextField textEstado;
 	private JCheckBox chckbxCancelados;
+	private JButton btnVerHistorialPasos;
 	
 
 	public ReVentanaVerFabricaciones() {
@@ -170,6 +171,10 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		chckbxCancelados = new JCheckBox("Ver cancelados");
 		chckbxCancelados.setBounds(679, 35, 97, 23);
 		panel.add(chckbxCancelados);
+		
+		btnVerHistorialPasos = new JButton("Historial");
+		btnVerHistorialPasos.setBounds(197, 352, 177, 23);
+		panel.add(btnVerHistorialPasos);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -274,5 +279,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	
 	public JCheckBox getChckbxCancelados() {
 		return chckbxCancelados;
+	}
+
+	public JButton getBtnVerHistorialPasos() {
+		return btnVerHistorialPasos;
 	}
 }

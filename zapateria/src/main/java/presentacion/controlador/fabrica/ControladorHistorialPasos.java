@@ -43,8 +43,8 @@ public class ControladorHistorialPasos {
 
 	// public ControladorHistorialPasos(Controlador controlador,SucursalDTO fabrica)
 	// {
-	public ControladorHistorialPasos(SucursalDTO fabrica) {
-		// this.controlador = controlador;
+	public ControladorHistorialPasos(Controlador controlador, SucursalDTO fabrica) {
+		this.controlador = controlador;
 		this.fabrica = fabrica;
 		this.modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
@@ -120,11 +120,20 @@ public class ControladorHistorialPasos {
 		
 		ventanaExplicacion = new VentanaVerDetalle();
 		ventanaExplicacion.getBtnSalir().addActionListener(r -> cerrarDescripcion(r));
+		
+		ventana.getBtnSalir().addActionListener(r -> verControladorOperario(r));
 	}
 
 	public void inicializar() {
 		refrescarTabla();
 		mostrarVentana();
+	}
+	
+	private void verControladorOperario(ActionEvent r) {
+		this.ventana.cerrar();
+		ReControladorOperario con = new ReControladorOperario(controlador, fabrica);
+		con.inicializar();
+		con.mostrarVentana();
 	}
 	
 	private String getDescripcion() {
@@ -300,14 +309,6 @@ public class ControladorHistorialPasos {
 	private void mostrarVentana() {
 		ventana.mostrarVentana();
 	}
-	public static void main(String[] args) {
-
-		SucursalDTO suc = new SucursalDTO(1, "3123314", "Uruguay", "134", "BsAs", "Tortuguitas", "Argentina", "1669",
-				"Una mas");
-		ControladorHistorialPasos con = new ControladorHistorialPasos(suc);
-		con.inicializar();
-
-	}
 	
 	private void refrescarTablaPorTecla() {
 		refrescarTabla();
@@ -341,6 +342,15 @@ public class ControladorHistorialPasos {
 		}
 		String[] words = sentence.split("-");
 		return words;
+	}
+	
+	public static void main(String[] args) {
+/*
+		SucursalDTO suc = new SucursalDTO(1, "3123314", "Uruguay", "134", "BsAs", "Tortuguitas", "Argentina", "1669",
+				"Una mas");
+		ControladorHistorialPasos con = new ControladorHistorialPasos();
+		con.inicializar();
+*/
 	}
 
 }
