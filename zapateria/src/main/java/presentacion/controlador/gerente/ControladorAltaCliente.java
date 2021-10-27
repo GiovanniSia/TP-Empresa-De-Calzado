@@ -234,7 +234,7 @@ public class ControladorAltaCliente {
 	
 	public void cargarComboBoxes() {
 		String[] tipoCliente = {"Mayorista","Minorista"};
-		String[] impuestoAFIP = {"Responsable Inscripto","Monotributista","Exento"};
+		String[] impuestoAFIP = {"Responsable Inscripto","Monotributista","Exento","Consumidor Final"};
 		
 		for(int i=0; i<tipoCliente.length;i++) {
 			this.ventanaAltaCliente.getComboBoxTipoCliente().addItem(tipoCliente[i]);

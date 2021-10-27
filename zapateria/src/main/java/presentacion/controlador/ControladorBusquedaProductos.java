@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dto.CarritoDTO;
 import dto.ClienteDTO;
@@ -67,6 +70,7 @@ public class ControladorBusquedaProductos {
 	}
 
 	public void inicializar() {
+		System.out.println("se inicializa el buscar prod");
 		this.listaStock = this.stock.readAll();
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		//estos dos se guardan en la aplicacion no lo obtenemos de la bd
@@ -94,14 +98,31 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getBtnQuitarProducto().addActionListener(a -> quitarProductoDelCarrito(a));
 		this.vistaBusquedaProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
 		this.vistaBusquedaProductos.getBtnPasarAElegir().addActionListener(a -> armarVenta(a));
-		this.vistaBusquedaProductos.getTableCarrito().addMouseListener(new MouseAdapter() {
+		
+		
+		this.vistaBusquedaProductos.getTableCarrito().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSMCarrito = this.vistaBusquedaProductos.getTableCarrito().getSelectionModel();
+		
+		rowSMCarrito.addListSelectionListener(new ListSelectionListener() {
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
-				//cuando se clickea en la tabla, se actualiza el spinner
+			public void valueChanged(ListSelectionEvent e) {
+				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().getSelectedRow();
+				if(filaSeleccionada==-1) return;
+//				//cuando se clickea en la tabla, se actualiza el spinner
 				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
 			}
+			
 		});
+		
+//		this.vistaBusquedaProductos.getTableCarrito().addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
+//				//cuando se clickea en la tabla, se actualiza el spinner
+//				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+//			}
+//		});
 		
 		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
 

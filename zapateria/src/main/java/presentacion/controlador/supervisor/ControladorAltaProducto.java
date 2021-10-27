@@ -198,7 +198,7 @@ public class ControladorAltaProducto {
 
 		this.ventanaAltaProducto.getTextDescripcion().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
+				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
 			}
 		}));
 		this.ventanaAltaProducto.getTextCosto().addKeyListener((new KeyAdapter() {

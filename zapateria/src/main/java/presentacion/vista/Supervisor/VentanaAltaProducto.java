@@ -182,7 +182,7 @@ public class VentanaAltaProducto {
 		textCosto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCosto.getText().length() >= 25) {
+				if (textCosto.getText().length() >= 15) {
 					e.consume();
 				}
 			}
@@ -195,7 +195,7 @@ public class VentanaAltaProducto {
 		textPrecioMayorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textPrecioMayorista.getText().length() >= 25) {
+				if (textPrecioMayorista.getText().length() >= 15) {
 					e.consume();
 				}
 			}
@@ -208,7 +208,7 @@ public class VentanaAltaProducto {
 		textPrecioMinorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textPrecioMinorista.getText().length() >= 25) {
+				if (textPrecioMinorista.getText().length() >= 15) {
 					e.consume();
 				}
 			}
@@ -221,7 +221,7 @@ public class VentanaAltaProducto {
 		textPuntoRepMinimo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textPuntoRepMinimo.getText().length() >= 10) {
+				if (textPuntoRepMinimo.getText().length() >= 8) {
 					e.consume();
 				}
 			}
@@ -247,7 +247,7 @@ public class VentanaAltaProducto {
 		textCantidadAReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCantidadAReponer.getText().length() >= 10) {
+				if (textCantidadAReponer.getText().length() >= 8) {
 					e.consume();
 				}
 			}
@@ -260,7 +260,7 @@ public class VentanaAltaProducto {
 		textDiasParaReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textDiasParaReponer.getText().length() >= 10) {
+				if (textDiasParaReponer.getText().length() >= 8) {
 					e.consume();
 				}
 			}
@@ -273,7 +273,7 @@ public class VentanaAltaProducto {
 		textUnidadMedida.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textUnidadMedida.getText().length() >= 20) {
+				if (textUnidadMedida.getText().length() >= 15) {
 					e.consume();
 				}
 			}
