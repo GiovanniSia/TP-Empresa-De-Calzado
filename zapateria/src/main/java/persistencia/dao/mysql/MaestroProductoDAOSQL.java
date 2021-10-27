@@ -80,8 +80,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isUpdateExitoso = false;
 		try {
-			statement = conexion.prepareStatement(update);
-
+			statement = conexion.prepareStatement(update);	
 			statement.setString(1, maestroProductos_nuevo.getDescripcion());
 			statement.setString(2, maestroProductos_nuevo.getTipo());
 			statement.setString(3, maestroProductos_nuevo.getFabricado());

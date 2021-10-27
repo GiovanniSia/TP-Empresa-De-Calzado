@@ -204,16 +204,20 @@ public class ControladorAsignarProductoAProveedor {
 					String descr = p.getDescripcion();
 					String tipo = p.getTipo();
 					String costo = ""+p.getPrecioCosto();
-					String precioMayorista = ""+p.getPrecioMayorista();
-					String precioMiniorista =""+p.getPrecioMinorista();
+					
+					BigDecimal precioMayorista = new BigDecimal(p.getPrecioMayorista());
+//					String precioMayorista = ""+precioMayo;
+					
+					BigDecimal precioMinorista = new BigDecimal(p.getPrecioMinorista()); 
+//					String precioMinorista =""+precioMino;
 					String puntoRepMinimo = ""+p.getPuntoRepositorio();
 					String talle = p.getTalle();
 					
-					String precioVenta =""+productoDeProv.getPrecioVenta(); ;
-					String cantPorLote=""+productoDeProv.getCantidadPorLote();
+					BigDecimal precioVenta = new BigDecimal(productoDeProv.getPrecioVenta());
+					BigDecimal cantPorLote=new BigDecimal(productoDeProv.getCantidadPorLote());
 					
 					
-					String[] fila = {descr,tipo,costo,precioMayorista,precioMiniorista,puntoRepMinimo,talle,precioVenta,cantPorLote};
+					Object[] fila = {descr,tipo,costo,precioMayorista,precioMinorista,puntoRepMinimo,talle,precioVenta,cantPorLote};
 					this.ventanaAsignarProductoAProveedor.getModelTablaProdDeProv().addRow(fila);
 					this.productosDeProveedorEnTabla.add(productoDeProv);
 				}

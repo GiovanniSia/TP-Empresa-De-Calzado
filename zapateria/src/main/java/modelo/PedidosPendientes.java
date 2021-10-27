@@ -58,6 +58,9 @@ public class PedidosPendientes {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static void generarPedidoAutomatico(int idSucursal, MaestroProductoDTO producto) {
+		
+		//Un maestroProducto tiene si o si un proveedor preferenciado (si no es fabricado en nuestra fabrica
+		
 		PedidosPendientes pedidosPendientes = new PedidosPendientes(new DAOSQLFactory()); 
 		
 		ProveedorDTO prov = getProveedorDeProducto(producto);
@@ -154,6 +157,14 @@ public class PedidosPendientes {
 				return p;
 			}
 		}
+//si el proveedor que se pide no provee este producto entonces se busca otro proveedor que si provea este producto al menos
+		for(ProductoDeProveedorDTO p: todosLosProductoDeProveedor) {
+			System.out.println("producto que se encuentra, idProv : "+p.getIdProveedor()+" idMP: "+p.getIdMaestroProducto());
+			if(p.getIdMaestroProducto()==idProducto) {
+				return p;
+			}
+		}
+//		si retorna null es porque ningunn proveedor provee este producto
 		return null;
 	}
 
@@ -162,6 +173,7 @@ public class PedidosPendientes {
 		ArrayList<ProveedorDTO> todosLosProveedores = (ArrayList<ProveedorDTO>) proveedor.readAll();
 		for(ProveedorDTO p: todosLosProveedores) {
 			if(p.getId()== prod.getIdProveedor()) {
+				//retorna el prov pref
 				return p;
 			}
 		}

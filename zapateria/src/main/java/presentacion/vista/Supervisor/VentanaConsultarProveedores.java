@@ -34,7 +34,7 @@ public class VentanaConsultarProveedores {
 	private JTable table;
 	private DefaultTableModel modelTablaProveedores;
 
-	private String[] nombreColumnasProveedores = {"Nombre","Correo","Limite de crédito","Credito disponible"};
+	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Limite de crédito","Credito disponible"};
 	private JScrollPane scrollPane;
 	
 	private JButton btnSeleccionarProveedor;

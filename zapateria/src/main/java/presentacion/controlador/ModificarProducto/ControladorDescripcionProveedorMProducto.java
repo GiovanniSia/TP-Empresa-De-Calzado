@@ -40,12 +40,10 @@ public class ControladorDescripcionProveedorMProducto {
 
 	public void actualizarProducto(ActionEvent a) {
 		String descripcionAntigua = this.producto.getDescripcion();
-		String descripcionNueva = this.ventanaDescripcionProveedorMProducto.getTxtActualizarCambioDescripcion()
-				.getText();
+		String descripcionNueva = this.ventanaDescripcionProveedorMProducto.getTxtActualizarCambioDescripcion().getText();
 
 		int idProveedorAntiguo = this.producto.getIdProveedor();
 		int idProveedorNuevo = Integer.parseInt(this.ventanaDescripcionProveedorMProducto.getCbActualizarCambioProveedor().getSelectedItem().toString());
-		
 		if(descripcionNueva.equals("")) {
 			JOptionPane.showMessageDialog(null, "No se permite una descripcion vacia");
 			return;
@@ -65,7 +63,7 @@ public class ControladorDescripcionProveedorMProducto {
 			return;
 		}
 
-		if (!descripcionAntigua.equals(descripcionNueva)) {
+		if (!descripcionAntigua.equals(descripcionNueva) && idProveedorAntiguo == idProveedorNuevo) {
 			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(descripcionNueva, idProveedorAntiguo);
 			actualizacionMaestroProducto(productoNuevo);
 			JOptionPane.showMessageDialog(null, "Modificacion de descripcion con exito");
@@ -74,7 +72,7 @@ public class ControladorDescripcionProveedorMProducto {
 			return;
 		}
 
-		if (idProveedorAntiguo != idProveedorNuevo) {
+		if (descripcionAntigua.equals(descripcionNueva) && idProveedorAntiguo != idProveedorNuevo) {
 			MaestroProductoDTO productoNuevo = obtenerMaestroProductoNuevo(descripcionAntigua, idProveedorNuevo);
 			actualizacionMaestroProducto(productoNuevo);
 			JOptionPane.showMessageDialog(null, "Modificacion de proveedor con exito");

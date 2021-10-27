@@ -94,6 +94,8 @@ public class ControladorRealizarVenta {
 		this.listamediosDePago = new ArrayList<MedioPagoDTO>();
 		this.listaDeIngresosARegistrar = new ArrayList<IngresosDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
+
+		this.ventanaRealizarVenta = new VentanaRealizarVenta();
 	}
 	
 	public void setControladorVisualizarCarritos(ControladorVisualizarCarritos controladorVisualizarCarritos) {
@@ -111,7 +113,6 @@ public class ControladorRealizarVenta {
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listamediosDePago = this.medioPago.readAll();
 		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
-		this.ventanaRealizarVenta = new VentanaRealizarVenta();
 		this.ventanaRealizarVenta.getBtnAgregarMedioPago().addActionListener(a -> agregarMedioDePago(a));
 		this.ventanaRealizarVenta.getBtnQuitarMedioPago().addActionListener(a -> quitarMedioPago(a));
 		this.ventanaRealizarVenta.getBtnFinalizarVenta().addActionListener(a -> registrarPago(a));
@@ -135,6 +136,10 @@ public class ControladorRealizarVenta {
 	
 	public void mostrarVentana() {
 		this.ventanaRealizarVenta.show();
+	}
+	
+	public void cerrarVentana() {
+		this.ventanaRealizarVenta.cerrar();
 	}
 	
 	public void llenarCbMedioPago() {
@@ -667,6 +672,5 @@ public class ControladorRealizarVenta {
 				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
 			}
 		});
-	}
-
+	}	
 }

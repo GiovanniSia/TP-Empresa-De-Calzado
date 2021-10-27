@@ -290,6 +290,7 @@ public class Controlador implements ActionListener {
 	public void regresarMenuPrincipal(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.ventanaMenu.show();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAConfig(ActionEvent a) {
@@ -323,6 +324,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		controladorBusquedaCliente.inicializar();		
 		this.controladorBusquedaCliente.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	public void pasarACobrarVenta(ActionEvent a) {
@@ -334,6 +336,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorVisualizarCarritos.inicializar();
 		this.controladorVisualizarCarritos.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	
@@ -342,6 +345,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorModificarCotizacion.inicializar();
 		this.controladorModificarCotizacion.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	//Mod precio unitario
@@ -349,6 +353,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorModificarMProducto.inicializar();
 		this.controladorModificarMProducto.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	//Ingreso de caja
@@ -361,6 +366,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorIngresosCaja.inicializar();
 		this.controladorIngresosCaja.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	
@@ -374,6 +380,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorEgresosCaja.inicializar();
 		this.controladorEgresosCaja.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	
@@ -392,6 +399,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorCierreCaja.inicializar();
 		this.controladorCierreCaja.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	//Generar ord de manuf
@@ -399,6 +407,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorGenerarOrdenesManufactura.inicializar();
 		this.controladorGenerarOrdenesManufactura.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	
@@ -406,6 +415,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorAltaCliente.inicializar();
 		this.controladorAltaCliente.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	//Supervisor
@@ -413,12 +423,14 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorAltaProducto.inicializar();
 		this.controladorAltaProducto.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	public void pasarAConsultarProveedores(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	//Ver pedidos a proveedor
@@ -426,6 +438,7 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.cerrar();
 		this.controladorVerPedidosAProveedor.inicializar();
 		this.controladorVerPedidosAProveedor.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	
 	

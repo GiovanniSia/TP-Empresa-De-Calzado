@@ -243,7 +243,7 @@ public class VentanaAsignarProductoAProveedor {
 		textPrecioVenta.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textPrecioVenta.getText().length()>=9) {
+                if(textPrecioVenta.getText().length()>=8) {
                     e.consume();
                 }
             }
@@ -257,7 +257,7 @@ public class VentanaAsignarProductoAProveedor {
 		textCantPorLote.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textCantPorLote.getText().length()>=9) {
+                if(textCantPorLote.getText().length()>=8) {
                     e.consume();
                 }
             }

@@ -41,7 +41,7 @@ public class VentanaVerPedidosAProveedores {
 	
 	private JTable tablePedidos;
 	private DefaultTableModel modelTablaPedidos;
-	private String[] nombreColumnasTablaPedidos = {"Id,","Proveedor","Producto","Cantidad","Uni. Medida","Precio de pedido","Estado","Fecha - hora de alta","Fecha - hora de envio","Fecha - hora de cierre"};
+	private String[] nombreColumnasTablaPedidos = {"Id","Proveedor","Producto","Cantidad","Uni. Medida","Precio de pedido","Estado","Fecha - hora de alta","Fecha - hora de envio","Fecha - hora de cierre"};
 
 	
 	private JButton btnSalir;

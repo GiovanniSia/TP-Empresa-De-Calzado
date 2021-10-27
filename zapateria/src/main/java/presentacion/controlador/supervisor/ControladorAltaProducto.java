@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.MaestroProductoDTO;
+import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
@@ -277,6 +278,13 @@ public class ControladorAltaProducto {
 			MaestroProductoDTO producto = new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
 			
 			this.maestroProducto.insert(producto);	
+			
+			//se asigna al proveedor como proveedor de este material
+//			
+//			ProductoDeProveedorDTO prodDeProv = new ProductoDeProveedorDTO();
+//			
+//			this.productoDeProveedor.insert();
+			
 			JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
 			borrarDatosEscritos();
 			

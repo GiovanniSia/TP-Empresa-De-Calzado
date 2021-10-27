@@ -129,11 +129,12 @@ public class ControladorConsultarProveedor {
 		
 //		"Nombre","Correo","Limite de crédito","Credito disponible"
 		for(ProveedorDTO p: this.todosLosProveedores) {
+			String id = ""+p.getId();
 			String nombre = p.getNombre();
 			String correo = p.getCorreo();
 			String limiteCred = ""+p.getLimiteCredito();
 			String credDisp =""+p.getCreditoDisponible();
-			String[] filas= {nombre,correo,limiteCred,credDisp};
+			String[] filas= {id,nombre,correo,limiteCred,credDisp};
 			this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
 		}
 	}

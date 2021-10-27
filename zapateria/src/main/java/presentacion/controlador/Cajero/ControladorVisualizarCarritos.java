@@ -278,7 +278,6 @@ public class ControladorVisualizarCarritos {
 			return;
 		
 		}
-
 		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
@@ -318,6 +317,7 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos.cerrar();
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
+		this.controladorRealizarVenta.cerrarVentana();
 	}
 	
 	public void borrarCarrito(ActionEvent a) {
