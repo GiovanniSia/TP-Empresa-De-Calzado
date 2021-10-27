@@ -677,7 +677,7 @@ public class ProcesarCompraVirtual {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
@@ -726,7 +726,18 @@ public class ProcesarCompraVirtual {
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd4);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1994);
+		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
+				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667");
+		compras.add(cvd5);
 		JsonListaCompraVirtual.guardarLista(compras);
+		
+		
 		/*
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1959);
@@ -755,6 +766,8 @@ public class ProcesarCompraVirtual {
 		JsonListaCompraVirtual.guardarLista(compras);
 		//ProcesarCompraVirtual.RutinaProcesarCompra();
 		*/
+		ProcesarCompraVirtual a = new ProcesarCompraVirtual();
+		a.RutinaProcesarCompra(ConfiguracionBD.getInstance());
 	}
 
 }

@@ -102,5 +102,25 @@
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
     "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "1": 1994
+    },
+    "idSucursal": 1,
+    "pago": 4027880.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "1231312319987654",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
   }
 ]
