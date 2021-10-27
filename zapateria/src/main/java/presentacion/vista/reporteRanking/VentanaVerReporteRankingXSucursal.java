@@ -26,12 +26,11 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	private JButton btnVerDescripcion;
 	private JLabel lblNewLabel;
-
-	private JButton btnSalir;
 	
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
 	JButton btnVerReporteVendedores;
+	private JButton btnRegresar;
 
 	public VentanaVerReporteRankingXSucursal() {
 		initialize();
@@ -60,11 +59,6 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		});
 		btnVerDescripcion.setBounds(73, 66, 177, 23);
 		panel.add(btnVerDescripcion);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(740, 351, 46, 38);
-		cambiarIconoBotones(btnSalir,  "back.png");
-		panel.add(btnSalir);
 
 		fechaDesde = new JDateChooser();
 		fechaDesde.setBounds(10, 36, 108, 19);
@@ -85,6 +79,11 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		btnVerReporteVendedores = new JButton("Ver reporte por vendedores");
 		btnVerReporteVendedores.setBounds(73, 100, 177, 23);
 		panel.add(btnVerReporteVendedores);
+		
+		btnRegresar = new JButton("");
+		btnRegresar.setBackground(new Color(248, 248, 255));
+		btnRegresar.setBounds(297, 97, 46, 38);
+		panel.add(btnRegresar);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(Color.GRAY);
@@ -126,16 +125,10 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
-		boton.setIcon(Icono);
 	}
 	
 	public JButton getBtnVerDescripcion() {
 		return btnVerDescripcion;
-	}
-	
-	public JButton getBtnSalir() {
-		return btnSalir;
 	}
 	
 	public JDateChooser getFechaDesde() {
@@ -148,5 +141,9 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	public JButton getBtnVerReporteVendedores() {
 		return btnVerReporteVendedores;
+	}
+
+	public JButton getBtnRegresar() {
+		return btnRegresar;
 	}
 }

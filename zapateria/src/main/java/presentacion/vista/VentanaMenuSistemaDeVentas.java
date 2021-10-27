@@ -38,6 +38,8 @@ public class VentanaMenuSistemaDeVentas {
 	private JButton btnRegresar;
 	private JButton btnRegistrarUnCliente;
 	JButton btnVerPedidosA;
+	JButton btnVerReporteRanking;
+	JButton btnVerComprasVirtuales;
 
 	private JButton btnIngresarProductoNuevo;
 	private JButton btnVerProveedores;
@@ -87,7 +89,7 @@ public class VentanaMenuSistemaDeVentas {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 589);
+		frame.setBounds(100, 100, 822, 724);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Sistema de Ventas");
 		frame.getContentPane().setLayout(null);
@@ -96,7 +98,7 @@ public class VentanaMenuSistemaDeVentas {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 0, 806, 550);
+		panel.setBounds(0, 0, 806, 684);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -253,6 +255,28 @@ public class VentanaMenuSistemaDeVentas {
 		btnConfig = new JButton("");
 		btnConfig.setBounds(741, 58, 55, 41);
 		panel.add(btnConfig);
+		
+		JSeparator separator_1_1 = new JSeparator();
+		separator_1_1.setBounds(449, 530, 282, 6);
+		panel.add(separator_1_1);
+		
+		btnVerReporteRanking = new JButton("Ranking de ventas");
+		btnVerReporteRanking.setForeground(new Color(51, 102, 153));
+		btnVerReporteRanking.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerReporteRanking.setBackground(new Color(51, 102, 204));
+		btnVerReporteRanking.setBounds(449, 547, 282, 41);
+		panel.add(btnVerReporteRanking);
+		
+		btnVerComprasVirtuales = new JButton("Compras virtuales");
+		btnVerComprasVirtuales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnVerComprasVirtuales.setForeground(new Color(51, 102, 153));
+		btnVerComprasVirtuales.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerComprasVirtuales.setBackground(new Color(51, 102, 204));
+		btnVerComprasVirtuales.setBounds(449, 599, 282, 41);
+		panel.add(btnVerComprasVirtuales);
 
 	}
 	
@@ -343,6 +367,13 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnConfig() {
 		return btnConfig;
 	}
+	
+	public JButton getBtnVerReporteRanking() {
+		return btnVerReporteRanking;
+	}
 
+	public JButton getBtnVerComprasVirtuales() {
+		return btnVerComprasVirtuales;
+	}
 
 }

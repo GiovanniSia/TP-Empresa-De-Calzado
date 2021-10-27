@@ -27,11 +27,8 @@ public class ControladorReporteRankingVentaXSucursal {
 	MaestroProducto modeloProducto;
 	
 	VentanaVerReporteRankingXSucursal ventana;
-
-	// public ControladorHistorialPasos(Controlador controlador)
-	// {
-	public ControladorReporteRankingVentaXSucursal() {
-		// this.controlador = controlador;
+	public ControladorReporteRankingVentaXSucursal(Controlador controlador) {
+		this.controlador = controlador;
 //		this.fabrica = fabrica;
 		this.modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloProducto = new MaestroProducto(new DAOSQLFactory());
@@ -50,6 +47,13 @@ public class ControladorReporteRankingVentaXSucursal {
 		ventana = new VentanaVerReporteRankingXSucursal();
 		ventana.getBtnVerDescripcion().addActionListener(r->mostrarReporte(r));
 		ventana.getBtnVerReporteVendedores().addActionListener(r->mostrarReporteXVendedores(r));
+		ventana.getBtnRegresar().addActionListener(r->cerrarVentana(r));
+	}
+
+	private void cerrarVentana(ActionEvent r) {
+		ventana.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	private void mostrarReporteXVendedores(ActionEvent r) {
@@ -132,7 +136,8 @@ public class ControladorReporteRankingVentaXSucursal {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		ControladorReporteRankingVentaXSucursal controladorH = new ControladorReporteRankingVentaXSucursal();
-		controladorH.inicializar();
+		controladorH.inicializar();*/
 	}
 }

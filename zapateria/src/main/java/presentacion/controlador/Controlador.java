@@ -31,9 +31,11 @@ import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.ModificarProducto.ControladorHistorialCambioMProducto;
 import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
+import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtuales;
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
+import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
@@ -107,6 +109,9 @@ public class Controlador implements ActionListener {
 	//Ver pedidos pendientes
 	ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
 	
+	ControladorVisualizarComprasVirtuales controladorVisualizarComprasVirtuales;
+	ControladorReporteRankingVentaXSucursal controladorReporteRankingVentaXSucursal;
+	
 	//Ventanas
 	/*
 	VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -124,6 +129,7 @@ public class Controlador implements ActionListener {
 	
 	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
 	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
+	
 	
 //	public Controlador(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal, Cliente cliente) {
 //		this.maestroProducto = maestroProducto;
@@ -202,6 +208,9 @@ public class Controlador implements ActionListener {
 		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		
+		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
+		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
+		
 		//cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this,medioPago); 
 		
@@ -272,13 +281,16 @@ public class Controlador implements ActionListener {
 		//Ver pedidos a prov
 		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		
+		this.ventanaMenuSistemaDeVentas.getBtnVerComprasVirtuales().addActionListener(a -> pasarAVerComprasVirtuales(a));
+		this.ventanaMenuSistemaDeVentas.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
 //		try {
 //			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
 //		} catch (ParseException e) {
 //			e.printStackTrace();
 //		}
 	}
-	
+
+
 	public void mostrarVentanaMenu() {
 		this.ventanaMenu.show();
 	}
@@ -428,6 +440,15 @@ public class Controlador implements ActionListener {
 		this.controladorVerPedidosAProveedor.mostrarVentana();
 	}
 	
+	public void pasarAVerComprasVirtuales(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorVisualizarComprasVirtuales.inicializar();
+	}
+	
+	private void pasarAVerRanking(ActionEvent a) {
+		this.ventanaMenuSistemaDeVentas.cerrar();
+		this.controladorReporteRankingVentaXSucursal.inicializar();
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
