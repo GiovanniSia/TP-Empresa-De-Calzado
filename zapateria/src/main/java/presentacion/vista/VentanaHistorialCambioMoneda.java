@@ -2,8 +2,11 @@ package presentacion.vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,8 +27,6 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	private String[] nombreColumnas = { "Cod. Moneda","Descripcion","Empleado","Fecha","Hora","T.Conversion Antigua","T.Conversion Nueva" };
 	private DefaultTableModel modelHistorialCambioMoneda;
 	private JTable tablaHistorialCambioMoneda;
-	private JPanel panel_2;
-	private JLabel lblZapateria;
 	private JLabel lblFiltrarPor;
 	private JLabel lblHistorialCotizacion;
 	private JScrollPane spHistorialCambioMoneda;
@@ -41,6 +42,9 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	private JDateChooser fechaHasta;
 	private JButton btnFiltrarFechas;
 	private JButton btnReiniciarTabla;
+	private JPanel panel_2;
+	private JLabel lblNewLabel;
+	private JLabel lblVolver;
 	
 	public static void main(String[] args) {
 		VentanaHistorialCambioMoneda v = new VentanaHistorialCambioMoneda();
@@ -59,13 +63,15 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 765, 403);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 765, 470);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 157, 749, 207);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 186, 749, 245);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -91,35 +97,42 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		tablaHistorialCambioMoneda.getColumnModel().getColumn(0).setResizable(false);
 		tablaHistorialCambioMoneda.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaHistorialCambioMoneda.getColumnModel().getColumn(1).setResizable(false);
+		tablaHistorialCambioMoneda.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spHistorialCambioMoneda.setViewportView(tablaHistorialCambioMoneda);
 
-		btnVolverAModificarConversion = new JButton("Volver a Modificar Conversi\u00F3n");
+		btnVolverAModificarConversion = new JButton("");
 		btnVolverAModificarConversion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-		btnVolverAModificarConversion.setBounds(251, 181, 244, 23);
+		btnVolverAModificarConversion.setBounds(86, 181, 50, 50);
+		cambiarIconoBotones(btnVolverAModificarConversion,  "back2.png");
 		panel.add(btnVolverAModificarConversion);
+		
+		lblVolver = new JLabel("Volver");
+		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblVolver.setBounds(146, 181, 70, 50);
+		panel.add(lblVolver);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 69, 749, 93);
+		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBounds(0, 96, 749, 93);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
-		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFiltrarPor.setBounds(10, 11, 70, 14);
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFiltrarPor.setBounds(10, 11, 70, 21);
 		panel_1.add(lblFiltrarPor);
 		
 		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDescripcion.setBounds(133, 37, 153, 14);
+		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblDescripcion.setBounds(133, 39, 153, 24);
 		panel_1.add(lblDescripcion);
 		
 		lblFechaDesde = new JLabel("Fecha desde");
 		lblFechaDesde.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFechaDesde.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFechaDesde.setBounds(309, 37, 108, 14);
+		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblFechaDesde.setBounds(309, 39, 108, 24);
 		panel_1.add(lblFechaDesde);
 		
 		textFiltroDescripcion = new JTextField();
@@ -134,8 +147,8 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		
 		lblCodMoneda = new JLabel("Cod. Moneda");
 		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCodMoneda.setBounds(20, 39, 103, 14);
+		lblCodMoneda.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblCodMoneda.setBounds(20, 39, 103, 24);
 		panel_1.add(lblCodMoneda);
 		
 		fechaHasta = new JDateChooser();
@@ -148,33 +161,43 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		
 		lblFechaHasta = new JLabel("Fecha hasta");
 		lblFechaHasta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFechaHasta.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFechaHasta.setBounds(427, 39, 108, 14);
+		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblFechaHasta.setBounds(427, 39, 108, 24);
 		panel_1.add(lblFechaHasta);
 		
 		btnFiltrarFechas = new JButton("Filtrar por Fechas");
-		btnFiltrarFechas.setBounds(545, 62, 117, 21);
+		btnFiltrarFechas.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		btnFiltrarFechas.setBounds(583, 60, 138, 23);
 		panel_1.add(btnFiltrarFechas);
 		
 		btnReiniciarTabla = new JButton("Quitar filtro");
-		btnReiniciarTabla.setBounds(583, 9, 138, 23);
+		btnReiniciarTabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		btnReiniciarTabla.setBounds(613, 28, 108, 23);
 		panel_1.add(btnReiniciarTabla);
 
 		lblHistorialCotizacion = new JLabel("Historial de Cambios de Cotizaci\u00F3n");
-		lblHistorialCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblHistorialCotizacion.setBounds(10, 41, 397, 30);
+		lblHistorialCotizacion.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblHistorialCotizacion.setBounds(10, 47, 397, 50);
 		frame.getContentPane().add(lblHistorialCotizacion);
-
+		
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 749, 41);
+		panel_2.setLayout(null);
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 749, 50);
 		frame.getContentPane().add(panel_2);
-
-		lblZapateria = new JLabel("Zapater\u00EDa");
-		panel_2.add(lblZapateria);
-		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		
+		lblNewLabel = new JLabel("Zapateria Argento");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 0, 421, 50);
+		panel_2.add(lblNewLabel);
 	}
 	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
 	
 	public JButton getBtnReiniciarTabla() {
 		return btnReiniciarTabla;

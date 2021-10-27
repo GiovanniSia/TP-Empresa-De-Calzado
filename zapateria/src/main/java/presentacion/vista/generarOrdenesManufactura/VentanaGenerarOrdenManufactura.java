@@ -30,7 +30,6 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 	private String[] nombreColumnas = { "Id producto","Talle", "Descripcion", "Cantidad en stock"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
-	private JPanel panel_2;
 	private JScrollPane spCliente;
 
 	private JButton btnGenerarPedido;
@@ -45,6 +44,11 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 	private JButton btnSalir;
 	
 	JSpinner spinnerCantidad;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblFiltrarPor;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
 
 	public VentanaGenerarOrdenManufactura() {
 		initialize();
@@ -56,18 +60,20 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 500);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 822, 571);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 806, 399);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 100, 806, 432);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 69, 776, 272);
+		spCliente.setBounds(10, 81, 776, 272);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, this.nombreColumnas){
@@ -85,66 +91,95 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
             }
         };
         tabla = new JTable(modelOrdenes);
+        tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spCliente.setViewportView(tabla);
 
-		btnGenerarPedido = new JButton("Generar pedido");
+		btnGenerarPedido = new JButton("");
 		btnGenerarPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnGenerarPedido.setBounds(212, 352, 177, 23);
+		btnGenerarPedido.setBounds(511, 361, 60, 60);
+		cambiarIconoBotones(btnGenerarPedido,  "plus.png");
 		panel.add(btnGenerarPedido);
 		
-		lblId = new JLabel("Id");
-		lblId.setBounds(10, 11, 46, 14);
+		lblId = new JLabel("id");
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblId.setBounds(10, 34, 46, 14);
 		panel.add(lblId);
 		
 		textId = new JTextField();
-		textId.setBounds(10, 36, 75, 20);
+		textId.setBounds(10, 48, 75, 20);
 		panel.add(textId);
 		textId.setColumns(10);
 		
 		lblSucursal = new JLabel("Talle");
-		lblSucursal.setBounds(180, 11, 46, 14);
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSucursal.setBounds(180, 34, 46, 14);
 		panel.add(lblSucursal);
 		
 		textTalle = new JTextField();
 		textTalle.setColumns(10);
-		textTalle.setBounds(180, 38, 75, 20);
+		textTalle.setBounds(180, 50, 75, 20);
 		panel.add(textTalle);
 		
 		textProducto = new JTextField();
 		textProducto.setColumns(10);
-		textProducto.setBounds(95, 38, 75, 20);
+		textProducto.setBounds(95, 50, 75, 20);
 		panel.add(textProducto);
 		
 		lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(95, 11, 46, 14);
+		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblProducto.setBounds(95, 34, 57, 14);
 		panel.add(lblProducto);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(740, 351, 46, 38);
-		cambiarIconoBotones(btnSalir,  "back.png");
+		btnSalir.setBounds(118, 361, 60, 60);
+		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
-		JLabel lblNewLabel_1 = new JLabel("Cantidad deseada");
-		lblNewLabel_1.setBounds(20, 352, 104, 23);
+		JLabel lblNewLabel_1 = new JLabel("Cantidad Deseada");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(382, 361, 119, 23);
 		panel.add(lblNewLabel_1);
 		
 		spinnerCantidad = new JSpinner();
-		spinnerCantidad.setBounds(134, 352, 68, 23);
+		spinnerCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		spinnerCantidad.setBounds(416, 385, 60, 36);
 		panel.add(spinnerCantidad);
-
-		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
-		frame.getContentPane().add(panel_2);
+		
+		lblFiltrarPor = new JLabel("Filtrar por:");
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFiltrarPor.setBounds(10, 0, 75, 25);
+		panel.add(lblFiltrarPor);
+		
+		lblNewLabel_3 = new JLabel("Generar Orden");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(580, 361, 163, 60);
+		panel.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("Atras");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(190, 361, 163, 60);
+		panel.add(lblNewLabel_4);
 		
 		lblNewLabel = new JLabel("Generar orden de manufactura");
-		lblNewLabel.setBounds(10, 21, 324, 32);
+		lblNewLabel.setBounds(10, 48, 324, 50);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 806, 50);
+		frame.getContentPane().add(panel_1);
+		
+		lblNewLabel_2 = new JLabel("Zapateria Argento");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_2.setBounds(10, 0, 421, 50);
+		panel_1.add(lblNewLabel_2);
 	}
 
 	public void show() {
@@ -176,7 +211,7 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	

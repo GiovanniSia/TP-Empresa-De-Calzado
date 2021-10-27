@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JComboBox;
+import java.awt.Color;
+import javax.swing.JPanel;
 
 public class VentanaAltaProducto {
 
@@ -46,6 +48,10 @@ public class VentanaAltaProducto {
 	private JLabel lblCantidadAReponer;
 	private JButton btnElegirProveedor;
 	private JLabel lblProveedorElegido;
+	private JPanel panel;
+	private JLabel lblNewLabel_2;
+	private JLabel lblAtras;
+	private JLabel lblRegistrarProducto;
 
 	/**
 	 * Launch the application.
@@ -81,91 +87,80 @@ public class VentanaAltaProducto {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(500, 100, 427, 656);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(500, 100, 442, 705);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un nuevo producto");
 		frame.setResizable(false);
 
 		JLabel lblNewLabel = new JLabel("Registrar Producto");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 10, 403, 25);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		lblNewLabel.setBounds(10, 47, 403, 38);
 		frame.getContentPane().add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Descripcion");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_1.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(82, 50, 93, 19);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(20, 93, 156, 19);
 		frame.getContentPane().add(lblNewLabel_1);
 
 		JLabel lblTipo = new JLabel("Tipo");
-		lblTipo.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTipo.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblTipo.setBounds(125, 90, 50, 19);
+		lblTipo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblTipo.setBounds(20, 133, 156, 19);
 		frame.getContentPane().add(lblTipo);
 
 		JLabel lblProductoPropio = new JLabel("Producto Propio?");
-		lblProductoPropio.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProductoPropio.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblProductoPropio.setBounds(32, 130, 143, 19);
+		lblProductoPropio.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblProductoPropio.setBounds(20, 173, 156, 19);
 		frame.getContentPane().add(lblProductoPropio);
 
 		JLabel lblCostoDeProduccion = new JLabel("Costo de Produccion");
-		lblCostoDeProduccion.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCostoDeProduccion.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblCostoDeProduccion.setBounds(20, 172, 165, 19);
+		lblCostoDeProduccion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblCostoDeProduccion.setBounds(20, 216, 156, 19);
 		frame.getContentPane().add(lblCostoDeProduccion);
 
 		JLabel lblPrecioMayorista = new JLabel("Precio Mayorista");
-		lblPrecioMayorista.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioMayorista.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblPrecioMayorista.setBounds(32, 213, 143, 19);
+		lblPrecioMayorista.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblPrecioMayorista.setBounds(20, 256, 156, 19);
 		frame.getContentPane().add(lblPrecioMayorista);
 
 		JLabel lblPrecioMinorista = new JLabel("Precio Minorista");
-		lblPrecioMinorista.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPrecioMinorista.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblPrecioMinorista.setBounds(32, 255, 143, 19);
+		lblPrecioMinorista.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblPrecioMinorista.setBounds(20, 298, 156, 19);
 		frame.getContentPane().add(lblPrecioMinorista);
 
 		JLabel lblPuntoDeReposicion = new JLabel("Punto de reposicion minimo");
-		lblPuntoDeReposicion.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPuntoDeReposicion.setFont(new Font("Consolas", Font.BOLD, 13));
-		lblPuntoDeReposicion.setBounds(32, 295, 193, 19);
+		lblPuntoDeReposicion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblPuntoDeReposicion.setBounds(20, 339, 156, 19);
 		frame.getContentPane().add(lblPuntoDeReposicion);
 
 		JLabel lblProveedor = new JLabel("Proveedor");
-		lblProveedor.setHorizontalAlignment(SwingConstants.LEFT);
-		lblProveedor.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblProveedor.setBounds(32, 355, 79, 19);
+		lblProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblProveedor.setBounds(10, 383, 79, 32);
 		frame.getContentPane().add(lblProveedor);
 
 		JLabel lblTalle = new JLabel("Talle");
-		lblTalle.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTalle.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblTalle.setBounds(125, 407, 56, 19);
+		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblTalle.setBounds(20, 427, 148, 19);
 		frame.getContentPane().add(lblTalle);
 
 		JLabel lblUnidadDeMedida = new JLabel("Unidad de medida");
-		lblUnidadDeMedida.setHorizontalAlignment(SwingConstants.LEFT);
-		lblUnidadDeMedida.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblUnidadDeMedida.setBounds(32, 436, 143, 19);
+		lblUnidadDeMedida.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblUnidadDeMedida.setBounds(20, 458, 148, 19);
 		frame.getContentPane().add(lblUnidadDeMedida);
 
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEstado.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblEstado.setBounds(119, 465, 56, 19);
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEstado.setBounds(20, 487, 148, 19);
 		frame.getContentPane().add(lblEstado);
 
 		JLabel lblDiasParaReponer = new JLabel("Dias para reponer");
-		lblDiasParaReponer.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDiasParaReponer.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblDiasParaReponer.setBounds(32, 523, 143, 19);
+		lblDiasParaReponer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblDiasParaReponer.setBounds(20, 543, 148, 19);
 		frame.getContentPane().add(lblDiasParaReponer);
 
 		textDescripcion = new JTextField();
+		textDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -174,11 +169,12 @@ public class VentanaAltaProducto {
 				}
 			}
 		});
-		textDescripcion.setBounds(178, 49, 178, 19);
+		textDescripcion.setBounds(178, 93, 178, 25);
 		frame.getContentPane().add(textDescripcion);
 		textDescripcion.setColumns(10);
 
 		textCosto = new JTextField();
+		textCosto.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textCosto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -188,10 +184,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textCosto.setColumns(10);
-		textCosto.setBounds(178, 171, 178, 19);
+		textCosto.setBounds(178, 215, 178, 25);
 		frame.getContentPane().add(textCosto);
 
 		textPrecioMayorista = new JTextField();
+		textPrecioMayorista.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPrecioMayorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -201,10 +198,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPrecioMayorista.setColumns(10);
-		textPrecioMayorista.setBounds(178, 212, 178, 19);
+		textPrecioMayorista.setBounds(178, 256, 178, 25);
 		frame.getContentPane().add(textPrecioMayorista);
 
 		textPrecioMinorista = new JTextField();
+		textPrecioMinorista.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPrecioMinorista.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -214,10 +212,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPrecioMinorista.setColumns(10);
-		textPrecioMinorista.setBounds(178, 254, 178, 19);
+		textPrecioMinorista.setBounds(178, 298, 178, 25);
 		frame.getContentPane().add(textPrecioMinorista);
 
 		textPuntoRepMinimo = new JTextField();
+		textPuntoRepMinimo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPuntoRepMinimo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -227,10 +226,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPuntoRepMinimo.setColumns(10);
-		textPuntoRepMinimo.setBounds(235, 293, 178, 19);
+		textPuntoRepMinimo.setBounds(178, 336, 178, 25);
 		frame.getContentPane().add(textPuntoRepMinimo);
 
 		textTalle = new JTextField();
+		textTalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textTalle.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -240,10 +240,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textTalle.setColumns(10);
-		textTalle.setBounds(178, 406, 178, 19);
+		textTalle.setBounds(178, 427, 178, 19);
 		frame.getContentPane().add(textTalle);
 
 		textCantidadAReponer = new JTextField();
+		textCantidadAReponer.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textCantidadAReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -253,10 +254,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textCantidadAReponer.setColumns(10);
-		textCantidadAReponer.setBounds(178, 493, 178, 19);
+		textCantidadAReponer.setBounds(178, 514, 178, 19);
 		frame.getContentPane().add(textCantidadAReponer);
 
 		textDiasParaReponer = new JTextField();
+		textDiasParaReponer.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textDiasParaReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -266,10 +268,11 @@ public class VentanaAltaProducto {
 			}
 		});
 		textDiasParaReponer.setColumns(10);
-		textDiasParaReponer.setBounds(178, 522, 178, 19);
+		textDiasParaReponer.setBounds(178, 543, 178, 19);
 		frame.getContentPane().add(textDiasParaReponer);
 
 		textUnidadMedida = new JTextField();
+		textUnidadMedida.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textUnidadMedida.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -279,52 +282,79 @@ public class VentanaAltaProducto {
 			}
 		});
 		textUnidadMedida.setColumns(10);
-		textUnidadMedida.setBounds(178, 435, 178, 19);
+		textUnidadMedida.setBounds(178, 456, 178, 19);
 		frame.getContentPane().add(textUnidadMedida);
 
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(10, 553, 50, 58);
-		cambiarIconoBotones(btnRegresar, "back.png");
+		btnRegresar.setBounds(30, 597, 60, 60);
+		cambiarIconoBotones(btnRegresar, "back2.png");
 		frame.getContentPane().add(btnRegresar);
 
-		btnRegistrar = new JButton("Registrar");
-		btnRegistrar.setBounds(135, 578, 184, 33);
+		btnRegistrar = new JButton("");
+		btnRegistrar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		btnRegistrar.setBounds(188, 596, 60, 60);
+		cambiarIconoBotones(btnRegistrar, "regis2.png");
 		frame.getContentPane().add(btnRegistrar);
 
 		comboBoxEstado = new JComboBox<String>();
-		comboBoxEstado.setBounds(178, 464, 178, 19);
+		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		comboBoxEstado.setBounds(178, 485, 178, 19);
 		comboBoxEstado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxEstado);
 
 		comboBoxFabricado = new JComboBox<String>();
-		comboBoxFabricado.setBounds(178, 129, 178, 19);
+		comboBoxFabricado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		comboBoxFabricado.setBounds(178, 173, 178, 25);
 		comboBoxFabricado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxFabricado);
 
 		comboBoxTipo = new JComboBox<String>();
-		comboBoxTipo.setBounds(178, 89, 178, 19);
+		comboBoxTipo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		comboBoxTipo.setBounds(178, 133, 178, 25);
 		comboBoxTipo.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipo);
 
 		lblCantidadAReponer = new JLabel("Cantidad a reponer");
-		lblCantidadAReponer.setHorizontalAlignment(SwingConstants.LEFT);
-		lblCantidadAReponer.setFont(new Font("Consolas", Font.BOLD, 14));
-		lblCantidadAReponer.setBounds(10, 494, 165, 19);
+		lblCantidadAReponer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblCantidadAReponer.setBounds(20, 515, 148, 19);
 		frame.getContentPane().add(lblCantidadAReponer);
 
 		btnElegirProveedor = new JButton("Elegir proveedor");
-		btnElegirProveedor.setBounds(268, 354, 113, 19);
+		btnElegirProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		btnElegirProveedor.setBounds(246, 383, 124, 33);
 		frame.getContentPane().add(btnElegirProveedor);
 
 		lblProveedorElegido = new JLabel("Sin seleccionar");
-		lblProveedorElegido.setFont(new Font("Consolas", Font.PLAIN, 14));
-		lblProveedorElegido.setBounds(125, 355, 143, 19);
+		lblProveedorElegido.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblProveedorElegido.setBounds(99, 383, 159, 31);
 		frame.getContentPane().add(lblProveedorElegido);
 
 		btnBorrarProveedor = new JButton("");
-		btnBorrarProveedor.setBounds(380, 341, 33, 33);
+		btnBorrarProveedor.setBounds(380, 383, 33, 33);
 		cambiarIconoBotones(btnBorrarProveedor, "trash.png");
 		frame.getContentPane().add(btnBorrarProveedor);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 426, 50);
+		frame.getContentPane().add(panel);
+		
+		lblNewLabel_2 = new JLabel("Zapateria Argento");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_2.setBounds(10, 0, 236, 50);
+		panel.add(lblNewLabel_2);
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(99, 597, 112, 60);
+		frame.getContentPane().add(lblAtras);
+		
+		lblRegistrarProducto = new JLabel("Registrar Producto");
+		lblRegistrarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblRegistrarProducto.setBounds(258, 596, 137, 60);
+		frame.getContentPane().add(lblRegistrarProducto);
 	}
 
 	public void show() {

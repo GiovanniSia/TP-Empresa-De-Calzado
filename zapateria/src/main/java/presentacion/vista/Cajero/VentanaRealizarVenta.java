@@ -100,10 +100,11 @@ public class VentanaRealizarVenta {
 		panel.setBounds(0, 0, 840, 534);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		
 		JLabel lblNewLabel = new JLabel("Venta");
-		lblNewLabel.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblNewLabel.setBounds(10, 50, 234, 47);
 		panel.add(lblNewLabel);
 		
@@ -114,29 +115,29 @@ public class VentanaRealizarVenta {
 		panel_2.setLayout(null);
 		
 		JLabel lblMediosDePago = new JLabel("Medios de pago");
-		lblMediosDePago.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblMediosDePago.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblMediosDePago.setBounds(10, 10, 158, 21);
 		panel_2.add(lblMediosDePago);
 		
 		JLabel lblDineroRestante = new JLabel("Pagando:");
-		lblDineroRestante.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblDineroRestante.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblDineroRestante.setBounds(553, 301, 76, 59);
 		panel_2.add(lblDineroRestante);
 		
 		JLabel lblMtodoDePago = new JLabel("Método de pago");
-		lblMtodoDePago.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblMtodoDePago.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblMtodoDePago.setBounds(10, 41, 100, 21);
 		panel_2.add(lblMtodoDePago);
 		
 		JLabel lblltimosDgitos = new JLabel("Numero de operacion");
 		lblltimosDgitos.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblltimosDgitos.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblltimosDgitos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblltimosDgitos.setBounds(218, 10, 138, 21);
 		panel_2.add(lblltimosDgitos);
 
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
-		lblTotalAPagar.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblTotalAPagar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblTotalAPagar.setBounds(33, 301, 112, 59);
 		panel_2.add(lblTotalAPagar);
 		
@@ -144,7 +145,7 @@ public class VentanaRealizarVenta {
 		lblTotalAPagarValor.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTotalAPagarValor.setBackground(new Color(255, 255, 255));
 		lblTotalAPagarValor.setForeground(Color.BLACK);
-		lblTotalAPagarValor.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblTotalAPagarValor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblTotalAPagarValor.setBounds(149, 301, 116, 59);
 		panel_2.add(lblTotalAPagarValor);
 		
@@ -170,7 +171,7 @@ public class VentanaRealizarVenta {
 		tableMedioPago.setBounds(334, 254, 641, 208);
 		this.tableMedioPago.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableMedioPago.getColumnModel().getColumn(0).setResizable(false);
-		tableMedioPago.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableMedioPago.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		scrollPaneMedioPago.setViewportView(tableMedioPago);
 		panel_2.add(scrollPaneMedioPago);
@@ -190,7 +191,7 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblModificarCantidad = new JLabel("Monto");
 		lblModificarCantidad.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblModificarCantidad.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblModificarCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblModificarCantidad.setBounds(318, 41, 38, 15);
 		panel_2.add(lblModificarCantidad);
 		
@@ -198,7 +199,7 @@ public class VentanaRealizarVenta {
 		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblPrecioVentaValor.setBounds(639, 301, 148, 59);
 		panel_2.add(lblPrecioVentaValor);
-		lblPrecioVentaValor.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblPrecioVentaValor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
 		
 		//TXT
@@ -259,40 +260,40 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblAadirDescuento = new JLabel("A\u00F1adir descuento");
 		lblAadirDescuento.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblAadirDescuento.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblAadirDescuento.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblAadirDescuento.setBounds(240, 65, 116, 18);
 		panel_2.add(lblAadirDescuento);
 		
 
 		
 		JLabel lblDescuento = new JLabel("Descuento:");
-		lblDescuento.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblDescuento.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblDescuento.setBounds(310, 301, 91, 59);
 		panel_2.add(lblDescuento);
 		
 		lblDescuentoDescontado = new JLabel("$0");
 		lblDescuentoDescontado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDescuentoDescontado.setForeground(Color.BLACK);
-		lblDescuentoDescontado.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblDescuentoDescontado.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblDescuentoDescontado.setBackground(Color.WHITE);
 		lblDescuentoDescontado.setBounds(406, 301, 112, 59);
 		panel_2.add(lblDescuentoDescontado);
 		
 		JLabel lblAgregar = new JLabel("Agregar");
 		lblAgregar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAgregar.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblAgregar.setBounds(668, 15, 55, 15);
 		panel_2.add(lblAgregar);
 		
 		JLabel lblQuitar = new JLabel("Quitar");
 		lblQuitar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQuitar.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblQuitar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblQuitar.setBounds(755, 15, 55, 15);
 		panel_2.add(lblQuitar);
 		
 		btnCancelarVenta = new JButton("");
 		btnCancelarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnCancelarVenta.setBounds(97, 460, 67, 63);
+		btnCancelarVenta.setBounds(97, 460, 63, 63);
 		btnCancelarVenta.setBackground(null);
 
 
@@ -302,7 +303,7 @@ public class VentanaRealizarVenta {
 		
 		btnFinalizarVenta = new JButton("");
 		btnFinalizarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 26));
-		btnFinalizarVenta.setBounds(493, 460, 67, 63);
+		btnFinalizarVenta.setBounds(493, 460, 63, 63);
 //		btnFinalizarVenta.setBorder(null);
 //		btnFinalizarVenta.setBackground(null);
 
@@ -311,12 +312,12 @@ public class VentanaRealizarVenta {
 		panel.add(btnFinalizarVenta);
 
 		JLabel lblCancelar = new JLabel("Cancelar");
-		lblCancelar.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblCancelar.setBounds(174, 460, 95, 63);
 		panel.add(lblCancelar);
 		
 		JLabel lblRealizarCobro = new JLabel("Realizar cobro");
-		lblRealizarCobro.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblRealizarCobro.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblRealizarCobro.setBounds(570, 460, 149, 63);
 		panel.add(lblRealizarCobro);
 		
@@ -328,7 +329,7 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
 		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblNewLabel_2.setBounds(10, 0, 421, 50);
 		panel_1.add(lblNewLabel_2);
 	}

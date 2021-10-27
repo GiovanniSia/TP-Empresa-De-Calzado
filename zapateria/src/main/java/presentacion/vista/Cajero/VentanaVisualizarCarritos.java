@@ -102,6 +102,7 @@ public class VentanaVisualizarCarritos {
 		frame.setTitle("Zapatería Argento - Realizar Venta");
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 
 
@@ -132,18 +133,18 @@ public class VentanaVisualizarCarritos {
 		tableCarritos.setBounds(10, 133, 908, 322);	
 		this.tableCarritos.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCarritos.getColumnModel().getColumn(0).setResizable(false);
-		tableCarritos.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableCarritos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		scrollPaneTablaCarritos.setViewportView(tableCarritos);
 		
 		panelTablas.add(scrollPaneTablaCarritos);
 		//
 		
 		
-		JLabel lblNewLabel = new JLabel("Elegir Carrito a vender");
+		JLabel lblNewLabel = new JLabel("Elegir Carrito a Vender");
 
 
-		lblNewLabel.setFont(new Font("Oxygen", Font.PLAIN, 22));
-		lblNewLabel.setBounds(10, 61, 505, 29);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblNewLabel.setBounds(10, 48, 505, 42);
 		panelTablas.add(lblNewLabel);
 		
 		btnElegirCarrito = new JButton("");
@@ -174,7 +175,7 @@ public class VentanaVisualizarCarritos {
 		tableDetalle.setBounds(598, 139, 320, 311);
 		this.tableDetalle.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableDetalle.getColumnModel().getColumn(0).setResizable(false);
-		tableDetalle.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableDetalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		scrollPaneDetalle.setViewportView(tableDetalle);
 		
@@ -185,27 +186,27 @@ public class VentanaVisualizarCarritos {
 		
 		JLabel lblNewLabel_1 = new JLabel("Productos en el Carrito");
 
-		lblNewLabel_1.setFont(new Font("Oxygen", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(535, 62, 294, 21);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		lblNewLabel_1.setBounds(535, 48, 294, 42);
 		panelTablas.add(lblNewLabel_1);
 		
 		JLabel lblCobrar = new JLabel("Cobrar Carrito");
-		lblCobrar.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblCobrar.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblCobrar.setBounds(665, 485, 164, 67);
 		panelTablas.add(lblCobrar);
 		
 		lblFiltrarPor = new JLabel("Filtrar Por:");
-		lblFiltrarPor.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 95, 93, 21);
 		panelTablas.add(lblFiltrarPor);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblNombre.setBounds(113, 117, 93, 21);
 		panelTablas.add(lblNombre);
 		
 		lblCUIL = new JLabel("CUIL");
-		lblCUIL.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblCUIL.setBounds(10, 117, 93, 21);
 		panelTablas.add(lblCUIL);
 
@@ -268,7 +269,7 @@ public class VentanaVisualizarCarritos {
 
 		
 
-		lblApellido.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblApellido.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblApellido.setBounds(219, 115, 93, 23);
 		panelTablas.add(lblApellido);
 		
@@ -278,7 +279,7 @@ public class VentanaVisualizarCarritos {
 		panelTablas.add(btnRegresar);
 		
 		lblSalir = new JLabel("Atras");
-		lblSalir.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblSalir.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblSalir.setBounds(138, 485, 52, 67);
 		panelTablas.add(lblSalir);
 		
@@ -288,7 +289,7 @@ public class VentanaVisualizarCarritos {
 		panelTablas.add(btnBorrarCarrito);
 		
 		JLabel lblCancelarCompra = new JLabel("Cancelar compra");
-		lblCancelarCompra.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblCancelarCompra.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblCancelarCompra.setBounds(296, 485, 167, 67);
 		panelTablas.add(lblCancelarCompra);
 
@@ -301,7 +302,7 @@ public class VentanaVisualizarCarritos {
 		
 		lblNewLabel_2 = new JLabel("Zapateria Argento");
 		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblNewLabel_2.setBounds(10, 0, 421, 50);
 		panel.add(lblNewLabel_2);
 

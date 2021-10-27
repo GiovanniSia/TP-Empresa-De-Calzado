@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
+import javax.swing.SwingConstants;
 
 public class VentanaBusquedaProductos {
 
@@ -154,7 +155,7 @@ public class VentanaBusquedaProductos {
 		tableProductosFiltrados = new JTable(modelTablaProductosFiltrados);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
-		tableProductosFiltrados.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableProductosFiltrados.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
 		panel.add(scrollPaneProductosFiltrados);
@@ -170,17 +171,17 @@ public class VentanaBusquedaProductos {
 		panel.add(txtTalle);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblNombre.setBounds(10, 121, 69, 13);
 		panel.add(lblNombre);
 		
 		lblTalle = new JLabel("Talle");
-		lblTalle.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblTalle.setBounds(115, 121, 29, 13);
 		panel.add(lblTalle);
 		
 		JLabel lblFiltrarPor = new JLabel("Filtrar Por:");
-		lblFiltrarPor.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 100, 69, 13);
 		panel.add(lblFiltrarPor);
 		
@@ -188,7 +189,7 @@ public class VentanaBusquedaProductos {
 		//BOTONES
 		btnAniadirProd = new JButton();
 		btnAniadirProd.setBounds(511, 115, 47, 42);
-		cambiarIconoBotones(btnAniadirProd,  "cart.png");
+		cambiarIconoBotones(btnAniadirProd,  "carrito2.png");
 		panel.add(btnAniadirProd);
 		
 		btnQuitarProducto = new JButton("");
@@ -207,7 +208,6 @@ public class VentanaBusquedaProductos {
 		btnArmarVenta.setForeground(Color.WHITE);
 		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 		btnArmarVenta.setBounds(508, 522, 93, 63);
-		cambiarIconoBotones(btnArmarVenta,  "dollar-symbol.png");
 		frame.getContentPane().add(btnArmarVenta);
 
 		btnArmarVenta.setBounds(719, 526, 72, 63);
@@ -217,12 +217,12 @@ public class VentanaBusquedaProductos {
 		
 		lblValorTotal = new JLabel("$0");
 		lblValorTotal.setForeground(new Color(0, 100, 0));
-		lblValorTotal.setFont(new Font("Oxygen", Font.PLAIN, 18));
+		lblValorTotal.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblValorTotal.setBounds(776, 370, 133, 39);
 		panel.add(lblValorTotal);
 		
 		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setFont(new Font("Oxygen", Font.BOLD, 17));
+		lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
 		lblTotal.setBounds(707, 370, 63, 39);
 		panel.add(lblTotal);
 		
@@ -250,17 +250,17 @@ public class VentanaBusquedaProductos {
 		
 		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
-		tableCarrito.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		scrollPaneCarrito.setViewportView(tableCarrito);
 				
 		JLabel lblCantidad = new JLabel("Cambiar cantidad");
-		lblCantidad.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblCantidad.setBounds(588, 41, 90, 19);
 		panel.add(lblCantidad);
 		
 
 		JLabel lblClienteSeleccionado = new JLabel("Cliente Seleccionado:");
-		lblClienteSeleccionado.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblClienteSeleccionado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblClienteSeleccionado.setBounds(10, 11, 153, 13);
 		panel.add(lblClienteSeleccionado);
 
@@ -287,51 +287,52 @@ public class VentanaBusquedaProductos {
 		this.tableCliente.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCliente.getColumnModel().getColumn(0).setResizable(false);
 		scrollPaneCliente.setViewportView(tableCliente);
-		tableCliente.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tableCliente.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		panel.add(scrollPaneCliente);
 		
 		
 		
 		lblCantidad_1 = new JLabel("Cantidad");
-		lblCantidad_1.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblCantidad_1.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblCantidad_1.setBounds(390, 118, 47, 19);
 		panel.add(lblCantidad_1);
 		
 		lblQuitarDelCarrito = new JLabel("Quitar del carrito");
-		lblQuitarDelCarrito.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblQuitarDelCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblQuitarDelCarrito.setBounds(776, 40, 95, 20);
 		panel.add(lblQuitarDelCarrito);
 		
 		lblPrecioDesde = new JLabel("Precio desde");
-		lblPrecioDesde.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblPrecioDesde.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblPrecioDesde.setBounds(183, 121, 69, 13);
 		panel.add(lblPrecioDesde);
 		
 		lblPrecioHasta = new JLabel("Precio hasta");
-		lblPrecioHasta.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		lblPrecioHasta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblPrecioHasta.setBounds(294, 121, 63, 13);
 		panel.add(lblPrecioHasta);
 		
 
 		
 		JLabel lblAgregar = new JLabel("Agregar");
-		lblAgregar.setFont(new Font("Oxygen", Font.PLAIN, 11));
-		lblAgregar.setBounds(462, 137, 39, 20);
+		lblAgregar.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblAgregar.setBounds(447, 115, 54, 42);
 		panel.add(lblAgregar);
 		
 		JLabel lblCarrito = new JLabel("Carrito de compras");
-		lblCarrito.setFont(new Font("Oxygen", Font.PLAIN, 17));
+		lblCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		lblCarrito.setBounds(587, 0, 258, 31);
 		panel.add(lblCarrito);
 		
 		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblSubtitulo.setBounds(10, 57, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
 		
 		JLabel lblNewLabel = new JLabel("Confirmar pedido");
-		lblNewLabel.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblNewLabel.setBounds(536, 526, 173, 63);
 		frame.getContentPane().add(lblNewLabel);
 		
@@ -365,19 +366,19 @@ public class VentanaBusquedaProductos {
 		
 		lblNewLabel_1 = new JLabel("Zapateria Argento");
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Oxygen", Font.BOLD, 24));
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblNewLabel_1.setBounds(10, 11, 421, 28);
 		panel_1.add(lblNewLabel_1);
 		
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(81, 526, 55, 50);
+		btnAtras.setBounds(81, 526, 65, 63);
 		frame.getContentPane().add(btnAtras);
 		cambiarIconoBotones(btnAtras,  "back2.png");
 		
-		lblNewLabel_2 = new JLabel("Atr\u00E1s");
-		lblNewLabel_2.setFont(new Font("Oxygen", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(146, 526, 55, 50);
+		lblNewLabel_2 = new JLabel("Atras");
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(150, 526, 55, 63);
 		frame.getContentPane().add(lblNewLabel_2);
 		//
 	}

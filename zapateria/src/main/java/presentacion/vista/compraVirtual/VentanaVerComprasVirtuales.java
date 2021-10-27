@@ -31,7 +31,6 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	private String[] nombreColumnasTablaPrincipal = { "Nro orden","Sucursal", "CUIL", "Cliente", "Fecha", "Hora", "Estado", "Nota Credito"};
 	private DefaultTableModel modelDeTablaPrincipal;
 	private JTable tabla;
-	private JPanel panel_2;
 	private JScrollPane spCliente;
 
 	private JButton btnVerDescripcion;
@@ -60,13 +59,16 @@ public class VentanaVerComprasVirtuales extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 500);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 993, 565);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 974, 399);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 106, 974, 420);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -88,55 +90,65 @@ public class VentanaVerComprasVirtuales extends JFrame {
             }
         };
 		tabla = new JTable(modelDeTablaPrincipal);
+		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spCliente.setViewportView(tabla);
 
-		btnVerDescripcion = new JButton("Ver descripcion");
+		btnVerDescripcion = new JButton("");
 		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerDescripcion.setBounds(10, 352, 177, 23);
+		btnVerDescripcion.setBounds(622, 352, 65, 59);
+		cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
 		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblId.setBounds(10, 11, 46, 14);
 		panel.add(lblId);
 		
 		textId = new JTextField();
+		textId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textId.setBounds(10, 36, 75, 20);
 		panel.add(textId);
 		textId.setColumns(10);
 		
 		lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblSucursal.setBounds(95, 11, 46, 14);
 		panel.add(lblSucursal);
 		
 		textSucursal = new JTextField();
+		textSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textSucursal.setColumns(10);
 		textSucursal.setBounds(95, 36, 75, 20);
 		panel.add(textSucursal);
 		
 		textCUIL = new JTextField();
+		textCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textCUIL.setColumns(10);
 		textCUIL.setBounds(180, 36, 75, 20);
 		panel.add(textCUIL);
 		
 		lblCUIL = new JLabel("CUIL");
+		lblCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblCUIL.setBounds(180, 11, 46, 14);
 		panel.add(lblCUIL);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(918, 350, 46, 38);
-		cambiarIconoBotones(btnSalir,  "back.png");
+		btnSalir.setBounds(130, 352, 65, 59);
+		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
 		textCliente = new JTextField();
+		textCliente.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textCliente.setColumns(10);
 		textCliente.setBounds(265, 36, 136, 20);
 		panel.add(textCliente);
 		
 		JLabel lblNombre = new JLabel("Cliente");
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblNombre.setBounds(265, 11, 46, 14);
 		panel.add(lblNombre);
 
@@ -149,26 +161,46 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		panel.add(fechaHasta);
 		
 		JLabel lblFechaDesde = new JLabel("Fecha desde");
+		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblFechaDesde.setBounds(411, 11, 108, 14);
 		panel.add(lblFechaDesde);
 		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
+		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblFechaHasta.setBounds(529, 11, 108, 14);
 		panel.add(lblFechaHasta);
 		
 		chckbxCancelados = new JCheckBox("Cancelados");
+		chckbxCancelados.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		chckbxCancelados.setBounds(825, 35, 97, 23);
 		panel.add(chckbxCancelados);
-
-		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Ver Descripcion");
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(711, 352, 123, 57);
+		panel.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Atras");
+		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_2_1.setBounds(220, 352, 123, 57);
+		panel.add(lblNewLabel_2_1);
+		
+		lblNewLabel = new JLabel("Compras Virtuales");
+		lblNewLabel.setBounds(10, 63, 324, 32);
+		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 2, 974, 50);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Compras virtuales");
-		lblNewLabel.setBounds(10, 21, 324, 32);
-		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		JLabel lblNewLabel_1 = new JLabel("Zapateria Argento");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_1.setBounds(10, 0, 421, 50);
+		panel_2.add(lblNewLabel_1);
 	}
 
 	public void show() {
@@ -200,7 +232,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	

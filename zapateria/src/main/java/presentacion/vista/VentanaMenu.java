@@ -72,7 +72,7 @@ public class VentanaMenu {
 		lblNewLabel.setForeground(UIManager.getColor("FormattedTextField.selectionForeground"));
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 54));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 54));
 		lblNewLabel.setBounds(370, 11, 314, 71);
 		frame.getContentPane().add(lblNewLabel);
 		
@@ -85,14 +85,14 @@ public class VentanaMenu {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnOperatoriaDeFabrica.setFont(new Font("Oxygen", Font.PLAIN, 29));
+		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
 		btnOperatoriaDeFabrica.setBounds(361, 171, 323, 57);
 		frame.getContentPane().add(btnOperatoriaDeFabrica);
 		
 		btnSistemaDeVentas = new JButton("Sistema de Ventas");
 		btnSistemaDeVentas.setBackground(new Color(51, 102, 204));
 		btnSistemaDeVentas.setForeground(new Color(51, 102, 153));
-		btnSistemaDeVentas.setFont(new Font("Oxygen", Font.PLAIN, 29));
+		btnSistemaDeVentas.setFont(new Font("Segoe UI", Font.PLAIN, 29));
 		btnSistemaDeVentas.setBounds(361, 270, 323, 57);
 		frame.getContentPane().add(btnSistemaDeVentas);
 		
@@ -100,8 +100,8 @@ public class VentanaMenu {
 		lblArgento.setForeground(UIManager.getColor("FormattedTextField.selectionForeground"));
 		lblArgento.setVerticalAlignment(SwingConstants.TOP);
 		lblArgento.setHorizontalAlignment(SwingConstants.LEFT);
-		lblArgento.setFont(new Font("Oxygen", Font.BOLD, 54));
-		lblArgento.setBounds(370, 75, 314, 71);
+		lblArgento.setFont(new Font("Segoe UI", Font.BOLD, 54));
+		lblArgento.setBounds(370, 75, 314, 85);
 		frame.getContentPane().add(lblArgento);
 		
 		JLabel lblNewLabel_1 = new JLabel("New label");

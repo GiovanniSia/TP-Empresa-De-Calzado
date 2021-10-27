@@ -22,7 +22,6 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JPanel panel_2;
 
 	private JButton btnVerDescripcion;
 	private JLabel lblNewLabel;
@@ -32,6 +31,9 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
 	JButton btnVerReporteVendedores;
+	private JPanel panel_1;
+	private JLabel lblXSucursal;
+	private JLabel lblFechaDesde_2;
 
 	public VentanaVerReporteRankingXSucursal() {
 		initialize();
@@ -43,22 +45,25 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
 		frame.setBounds(100, 100, 379, 260);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 353, 146);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 64, 363, 157);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		btnVerDescripcion = new JButton("Ver reporte por sucursales");
+		btnVerDescripcion = new JButton("");
 		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerDescripcion.setBounds(73, 66, 177, 23);
+		btnVerDescripcion.setBounds(20, 66, 57, 57);
+		cambiarIconoBotones(btnVerDescripcion,  "report.png");
 		panel.add(btnVerDescripcion);
 		
 		btnSalir = new JButton("");
@@ -67,35 +72,50 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		panel.add(btnSalir);
 
 		fechaDesde = new JDateChooser();
-		fechaDesde.setBounds(10, 36, 108, 19);
+		fechaDesde.setBounds(20, 36, 108, 19);
 		panel.add(fechaDesde);
 		
 		fechaHasta = new JDateChooser();
-		fechaHasta.setBounds(184, 36, 108, 19);
+		fechaHasta.setBounds(194, 36, 108, 19);
 		panel.add(fechaHasta);
 		
 		JLabel lblFechaDesde = new JLabel("Fecha desde");
-		lblFechaDesde.setBounds(10, 11, 108, 14);
+		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFechaDesde.setBounds(20, 11, 108, 14);
 		panel.add(lblFechaDesde);
 		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
-		lblFechaHasta.setBounds(184, 11, 108, 14);
+		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFechaHasta.setBounds(194, 11, 108, 14);
 		panel.add(lblFechaHasta);
 		
-		btnVerReporteVendedores = new JButton("Ver reporte por vendedores");
-		btnVerReporteVendedores.setBounds(73, 100, 177, 23);
+		btnVerReporteVendedores = new JButton("");
+		btnVerReporteVendedores.setBounds(194, 66, 57, 57);
+		cambiarIconoBotones(btnVerReporteVendedores,  "report2.png");
 		panel.add(btnVerReporteVendedores);
-
-		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
-		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Ver ranking de ventas");
+		lblXSucursal = new JLabel("X Sucursal");
+		lblXSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblXSucursal.setBounds(87, 66, 97, 57);
+		panel.add(lblXSucursal);
+		
+		lblFechaDesde_2 = new JLabel("X Vendedor");
+		lblFechaDesde_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblFechaDesde_2.setBounds(261, 66, 97, 57);
+		panel.add(lblFechaDesde_2);
+		
+		lblNewLabel = new JLabel("Ver Ranking de Ventas");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 1, 363, 9);
+		frame.getContentPane().add(panel_1);
 	}
+	
 
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -126,7 +146,7 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	
