@@ -75,6 +75,9 @@ public class ProcesarCompraVirtual {
 		long tiempo;
 		try {
 			tiempo = Integer.valueOf(config.getValue("CompraVirtualMinutosProceso"))*60*1000;
+			String tolerancia = "";
+			tolerancia = config.getValue("CompraVirtualTolerancia");
+			System.out.println("Compra Virtual: \n minutos de proceso: "+tiempo/60/1000+"\n tolerancia: "+tolerancia);
 		}catch(NumberFormatException | IOException e) {
 			tiempo = 1*60*1000;
 		}

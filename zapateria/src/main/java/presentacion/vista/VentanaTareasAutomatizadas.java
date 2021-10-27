@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 public class VentanaTareasAutomatizadas {
 
@@ -149,7 +151,8 @@ public class VentanaTareasAutomatizadas {
 		spinnerPedidosHora.setBounds(867, 175, 180, 25);
 		panelParametros.add(spinnerPedidosHora);
 		
-		spinnerTolerancia = new JSpinner();
+		SpinnerModel sm = new SpinnerNumberModel(0, 0, 100, 1); //default value,lower bound,upper bound,increment by
+		spinnerTolerancia = new JSpinner(sm);
 		spinnerTolerancia.setBounds(239, 109, 60, 35);
 		panelParametros.add(spinnerTolerancia);
 		
