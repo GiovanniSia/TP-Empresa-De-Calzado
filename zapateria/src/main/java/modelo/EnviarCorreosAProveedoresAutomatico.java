@@ -11,6 +11,7 @@ import java.nio.file.WatchService;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -85,15 +86,19 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 			SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = inFormat.parse(fecha);
 			SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
-			String dia = outFormat.format(date); 
+			String d = outFormat.format(date); 
+			
+			String cadenaNormalize = Normalizer.normalize(d, Normalizer.Form.NFD);   
+			String dia = cadenaNormalize.replaceAll("[^\\p{ASCII}]", "");
+			
 			//goal devuelve el dia actual
 			
 		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
 		    String horaActual = tf.format(LocalDateTime.now());
 			
 			
-//			System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
-						
+			System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
+		    
 			if(dia.equals(diaDeEnvio) && !yaFueSeteado) {
 //				System.out.println("entro a ver si hoy es el dia: "+dia+" - "+diaDeEnvio);
 				//SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE ENVIE
