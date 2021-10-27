@@ -2,9 +2,11 @@ package presentacion.vista.ModificarProducto;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,8 +27,6 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private String[] nombreColumnas = { "Codigo", "Descripción", "Proveedor", "Talle" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaProductoSeleccionado;
-	private JPanel panel_2;
-	private JLabel lblZapateria;
 	private JLabel lblProductcoSeleccionado;
 	private JLabel lblTItulo;
 	private JPanel panel_1;
@@ -34,6 +34,10 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private JButton btnActualizarProducto;
 	private JTextField txtActualizarCambioDescripcion;
 	private JComboBox<String> cbActualizarCambioProveedor;
+	private JPanel panel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblAtras;
+	private JLabel lblActualizarProducto;
 
 	public static void main(String[] args) {
 		VentanaDescripcionProveedorMProducto v = new VentanaDescripcionProveedorMProducto();
@@ -52,7 +56,8 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 621, 294);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 621, 392);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -72,12 +77,13 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		};
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 69, 605, 188);
+		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBounds(0, 96, 605, 257);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblProductcoSeleccionado = new JLabel("Producto Seleccionado:");
-		lblProductcoSeleccionado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblProductcoSeleccionado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblProductcoSeleccionado.setBounds(10, 11, 161, 14);
 		panel_1.add(lblProductcoSeleccionado);
 
@@ -94,23 +100,25 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 
 		spProductoSeleccionado.setViewportView(tablaProductoSeleccionado);
 
-		btnAtras = new JButton("Atras");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnAtras.setBounds(10, 151, 89, 23);
+		btnAtras = new JButton("");
+		btnAtras.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnAtras.setBounds(89, 166, 60, 60);
+		cambiarIconoBotones(btnAtras,  "back2.png");
 		panel_1.add(btnAtras);
 
-		btnActualizarProducto = new JButton("Actualizar Producto");
-		btnActualizarProducto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnActualizarProducto.setBounds(410, 148, 179, 28);
+		btnActualizarProducto = new JButton("");
+		btnActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		btnActualizarProducto.setBounds(316, 166, 60, 60);
+		cambiarIconoBotones(btnActualizarProducto,  "update.png");
 		panel_1.add(btnActualizarProducto);
 
 		JLabel lblNewLabel = new JLabel("Cambiar Descripcion");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblNewLabel.setBounds(10, 102, 130, 23);
 		panel_1.add(lblNewLabel);
 
 		JLabel lblNuevoProveedor = new JLabel("Cambiar Proveedor");
-		lblNuevoProveedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNuevoProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblNuevoProveedor.setBounds(324, 102, 130, 23);
 		panel_1.add(lblNuevoProveedor);
 
@@ -131,22 +139,41 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		cbActualizarCambioProveedor = new JComboBox<String>();
 		cbActualizarCambioProveedor.setBounds(464, 104, 127, 22);
 		panel_1.add(cbActualizarCambioProveedor);
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAtras.setBounds(159, 166, 130, 60);
+		panel_1.add(lblAtras);
+		
+		lblActualizarProducto = new JLabel("Actualizar Producto");
+		lblActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblActualizarProducto.setBounds(386, 166, 130, 60);
+		panel_1.add(lblActualizarProducto);
 
 		lblTItulo = new JLabel("Cambiar Descripcion y Proveedor de Producto");
-		lblTItulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblTItulo.setBounds(10, 41, 595, 30);
+		lblTItulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTItulo.setBounds(10, 55, 469, 30);
 		frame.getContentPane().add(lblTItulo);
-
-		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 605, 41);
-		frame.getContentPane().add(panel_2);
-
-		lblZapateria = new JLabel("Zapater\u00EDa");
-		panel_2.add(lblZapateria);
-		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 605, 50);
+		frame.getContentPane().add(panel);
+		
+		lblNewLabel_1 = new JLabel("Zapateria Argento");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_1.setBounds(10, 0, 421, 50);
+		panel.add(lblNewLabel_1);
 	}
 
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	
 	public String[] getNombreColumnas() {
 		return nombreColumnas;
 	}

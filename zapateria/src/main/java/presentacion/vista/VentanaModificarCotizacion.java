@@ -2,8 +2,11 @@ package presentacion.vista;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,8 +30,6 @@ public class VentanaModificarCotizacion extends JFrame {
 	private String[] nombreColumnas = { "Cod. Moneda", "Descripcion", "Tasa Conversion" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaMedioPago;
-	private JPanel panel_2;
-	private JLabel lblZapateria;
 	private JLabel lblDescripcion;
 	private JLabel lblActualizarDescripcion;
 	private JLabel lblTasaConvercion;
@@ -44,6 +45,11 @@ public class VentanaModificarCotizacion extends JFrame {
 	private JPanel panel_1;
 	private JTextField textFiltroCodMoneda;
 	private JLabel lblCodMoneda;
+	private JPanel panel_2;
+	private JLabel lblNewLabel;
+	private JLabel lblActualizar;
+	private JLabel lblAtras;
+	private JLabel lblHistorialDeCambios;
 
 	public static void main(String[] args) {
 		VentanaModificarCotizacion v = new VentanaModificarCotizacion();
@@ -62,14 +68,17 @@ public class VentanaModificarCotizacion extends JFrame {
 		}
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 517, 492);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 517, 551);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 148, 501, 305);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 162, 501, 350);
 		frame.getContentPane().add(panel);
+		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
 
 		spMedioPago = new JScrollPane();
@@ -97,24 +106,25 @@ public class VentanaModificarCotizacion extends JFrame {
 
 		spMedioPago.setViewportView(tablaMedioPago);
 
-		btnAtras = new JButton("Atras");
+		btnAtras = new JButton("");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 11));
-
-		btnAtras.setBounds(10, 275, 108, 23);
+		btnAtras.setBounds(25, 272, 50, 50);
+		cambiarIconoBotones(btnAtras,  "back2.png");
 		panel.add(btnAtras);
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
 		lblActualizarDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblActualizarDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblActualizarDescripcion.setBounds(170, 192, 134, 21);
+		lblActualizarDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblActualizarDescripcion.setBounds(150, 192, 151, 21);
 		panel.add(lblActualizarDescripcion);
 
 		lblTasaConvercion = new JLabel("Tasa Conversion");
-		lblTasaConvercion.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblTasaConvercion.setBounds(51, 218, 120, 14);
+		lblTasaConvercion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblTasaConvercion.setBounds(51, 219, 89, 14);
 		panel.add(lblTasaConvercion);
 
 		txtActualizarTasaConvercion = new JTextField();
+		txtActualizarTasaConvercion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtActualizarTasaConvercion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -125,33 +135,51 @@ public class VentanaModificarCotizacion extends JFrame {
 				}
 			}
 		});
-		txtActualizarTasaConvercion.setBounds(170, 218, 151, 20);
+		txtActualizarTasaConvercion.setBounds(150, 215, 151, 23);
 		panel.add(txtActualizarTasaConvercion);
 
-		btnActualizarCotizacion = new JButton("Actualizar \r\nCotizaci\u00F3n");
+		btnActualizarCotizacion = new JButton("");
 		btnActualizarCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnActualizarCotizacion.setBounds(160, 241, 172, 23);
+		btnActualizarCotizacion.setBounds(311, 201, 50, 50);
+		cambiarIconoBotones(btnActualizarCotizacion,  "update.png");
 		panel.add(btnActualizarCotizacion);
 
 		lblDatosModificables = new JLabel("Datos modificables de moneda seleccionada");
-		lblDatosModificables.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDatosModificables.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblDatosModificables.setBounds(10, 167, 307, 14);
 		panel.add(lblDatosModificables);
 
-		btnVerHistorialDeCambios = new JButton("Ver Historial de Cambios");
-		btnVerHistorialDeCambios.setBounds(290, 275, 201, 23);
+		btnVerHistorialDeCambios = new JButton("");
+		btnVerHistorialDeCambios.setBounds(266, 272, 50, 50);
+		cambiarIconoBotones(btnVerHistorialDeCambios,  "history.png");
 		panel.add(btnVerHistorialDeCambios);
 		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
+		lblActualizar = new JLabel("Actualizar");
+		lblActualizar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblActualizar.setBounds(371, 199, 86, 50);
+		panel.add(lblActualizar);
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(85, 272, 50, 50);
+		panel.add(lblAtras);
+		
+		lblHistorialDeCambios = new JLabel("Historial de Cambios");
+		lblHistorialDeCambios.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblHistorialDeCambios.setBounds(326, 272, 151, 50);
+		panel.add(lblHistorialDeCambios);
 
 		panel_1 = new JPanel();
-		panel_1.setBounds(0, 67, 501, 81);
+		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBounds(0, 86, 501, 415);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDescripcion.setBounds(139, 33, 158, 20);
-		lblDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblDescripcion.setBounds(139, 24, 158, 29);
+		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		panel_1.add(lblDescripcion);
 
 		txtFiltroDescripcion = new JTextField();
@@ -160,8 +188,8 @@ public class VentanaModificarCotizacion extends JFrame {
 		panel_1.add(txtFiltroDescripcion);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
-		lblFiltrarPor.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFiltrarPor.setBounds(10, 11, 70, 14);
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblFiltrarPor.setBounds(10, 0, 86, 29);
 		panel_1.add(lblFiltrarPor);
 		 
 		textFiltroCodMoneda = new JTextField();
@@ -170,25 +198,33 @@ public class VentanaModificarCotizacion extends JFrame {
 		
 		lblCodMoneda = new JLabel("Cod. Moneda");
 		lblCodMoneda.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCodMoneda.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblCodMoneda.setBounds(10, 33, 119, 20);
+		lblCodMoneda.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblCodMoneda.setBounds(10, 24, 119, 29);
 		panel_1.add(lblCodMoneda);
 
 		lblModificarCotizacion = new JLabel("Modificar Cotizaci\u00F3n");
-		lblModificarCotizacion.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblModificarCotizacion.setBounds(10, 39, 198, 30);
+		lblModificarCotizacion.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblModificarCotizacion.setBounds(10, 50, 222, 36);
 		frame.getContentPane().add(lblModificarCotizacion);
-
+		
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 501, 37);
+		panel_2.setLayout(null);
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 501, 50);
 		frame.getContentPane().add(panel_2);
-
-		lblZapateria = new JLabel("Zapater\u00EDa");
-		panel_2.add(lblZapateria);
-		lblZapateria.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		
+		lblNewLabel = new JLabel("Zapateria Argento");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 0, 421, 50);
+		panel_2.add(lblNewLabel);
 	}
 
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
 	
 	public JTextField getTxtFiltroCodMoneda() {
 		return textFiltroCodMoneda;

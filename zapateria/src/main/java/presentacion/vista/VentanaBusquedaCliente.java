@@ -88,7 +88,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		};
 		
 		tablaClientes = new JTable(modelCliente);
-		tablaClientes.setFont(new Font("Oxygen", Font.PLAIN, 11));
+		tablaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
@@ -110,13 +110,13 @@ public class VentanaBusquedaCliente extends JFrame {
 		cambiarIconoBotones(btnAtras,  "back2.png");
 		
 		lblAtrs = new JLabel("Atras");
-		lblAtrs.setFont(new Font("Oxygen", Font.PLAIN, 14));
-		lblAtrs.setBounds(179, 178, 70, 20);
+		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtrs.setBounds(179, 163, 70, 50);
 		panel.add(lblAtrs);
 		
 		lblElegirProductos = new JLabel("Elegir Productos");
-		lblElegirProductos.setFont(new Font("Oxygen", Font.PLAIN, 14));
-		lblElegirProductos.setBounds(543, 178, 119, 20);
+		lblElegirProductos.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblElegirProductos.setBounds(543, 163, 119, 50);
 		panel.add(lblElegirProductos);
 
 		JPanel panel_1 = new JPanel();
@@ -128,7 +128,7 @@ public class VentanaBusquedaCliente extends JFrame {
 
 		lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(108, 36, 70, 20);
-		lblNombre.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		panel_1.add(lblNombre);
 
 		txtFieldNombre = new JTextField();
@@ -137,12 +137,12 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldNombre);
 
 		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblApellido.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblApellido.setBounds(251, 36, 70, 20);
 		panel_1.add(lblApellido);
 
 		JLabel lblCUIL = new JLabel("CUIL");
-		lblCUIL.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblCUIL.setBounds(409, 36, 41, 20);
 		panel_1.add(lblCUIL);
 
@@ -155,7 +155,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldCUIL);
 
 		lblCodCliente = new JLabel("Cod. Cliente");
-		lblCodCliente.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblCodCliente.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblCodCliente.setBounds(10, 36, 86, 20);
 		panel_1.add(lblCodCliente);
 
@@ -164,13 +164,13 @@ public class VentanaBusquedaCliente extends JFrame {
 		panel_1.add(txtFieldCodCliente);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
-		lblFiltrarPor.setFont(new Font("Oxygen", Font.PLAIN, 14));
+		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 0, 70, 25);
 		panel_1.add(lblFiltrarPor);
 
 		lblElegirCliente = new JLabel("Elegir Cliente");
-		lblElegirCliente.setFont(new Font("Oxygen", Font.PLAIN, 22));
-		lblElegirCliente.setBounds(10, 52, 140, 30);
+		lblElegirCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblElegirCliente.setBounds(10, 52, 189, 43);
 		frame.getContentPane().add(lblElegirCliente);
 		
 		panel_2 = new JPanel();
@@ -181,8 +181,8 @@ public class VentanaBusquedaCliente extends JFrame {
 		
 		lblNewLabel = new JLabel("Zapateria Argento");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 11, 421, 28);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 0, 421, 50);
 		panel_2.add(lblNewLabel);
 	}
 	

@@ -40,6 +40,8 @@ public class VentanaIngresosCaja extends JFrame {
 	private JLabel lblNewLabel_3;
 	private JButton btnAtras;
 	private JButton btnRealizarIngreso;
+	private JLabel lblAtras;
+	private JLabel lblRecargar;
 	
 	
 	public static void main(String[] args) {
@@ -84,18 +86,18 @@ public class VentanaIngresosCaja extends JFrame {
 
 
 		lblNewLabel_1.setBackground(new Color(248, 248, 255));
-		lblNewLabel_1.setBounds(34, 5, 163, 56);
-		lblNewLabel_1.setFont(new Font("Oxygen", Font.PLAIN, 22));
+		lblNewLabel_1.setBounds(34, 5, 176, 56);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		panel_1.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estado de la Caja:");
-		lblNewLabel_2.setFont(new Font("Oxygen", Font.PLAIN, 12));
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(207, 22, 142, 14);
 		panel_1.add(lblNewLabel_2);
 		
 		lblActualizarEstadoCaja = new JLabel("Sin estado");
-		lblActualizarEstadoCaja.setFont(new Font("Oxygen", Font.PLAIN, 12));
+		lblActualizarEstadoCaja.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarEstadoCaja.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarEstadoCaja.setBounds(207, 47, 142, 14);
 		panel_1.add(lblActualizarEstadoCaja);
@@ -103,19 +105,19 @@ public class VentanaIngresosCaja extends JFrame {
 		lblSaldoActual = new JLabel("Saldo actual:");
 		lblSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblSaldoActual.setFont(new Font("Oxygen", Font.PLAIN, 12));
+		lblSaldoActual.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSaldoActual.setBounds(344, 22, 142, 14);
 		panel_1.add(lblSaldoActual);
 		
 		lblActualizarSaldoActual = new JLabel("$0");
 		lblActualizarSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 
-		lblActualizarSaldoActual.setFont(new Font("Oxygen", Font.PLAIN, 12));
+		lblActualizarSaldoActual.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarSaldoActual.setBounds(344, 47, 142, 14);
 		panel_1.add(lblActualizarSaldoActual);
 		
 		lblActualizarFechaHoy = new JLabel("");
-		lblActualizarFechaHoy.setFont(new Font("Oxygen", Font.PLAIN, 12));
+		lblActualizarFechaHoy.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarFechaHoy.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarFechaHoy.setBounds(287, 5, 125, 14);
 		panel_1.add(lblActualizarFechaHoy);
@@ -132,7 +134,7 @@ public class VentanaIngresosCaja extends JFrame {
 		lblIngresoSaldoInicial = new JLabel("Ingresar saldo inicial:");
 
 
-		lblIngresoSaldoInicial.setFont(new Font("Oxygen", Font.PLAIN, 16));
+		lblIngresoSaldoInicial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblIngresoSaldoInicial.setBounds(70, 11, 171, 32);
 
 		panel_2.add(lblIngresoSaldoInicial);
@@ -158,7 +160,7 @@ public class VentanaIngresosCaja extends JFrame {
 		lblRegarcaSaldo = new JLabel("Ingresar recarga de saldo:");
 
 
-		lblRegarcaSaldo.setFont(new Font("Oxygen", Font.PLAIN, 16));
+		lblRegarcaSaldo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblRegarcaSaldo.setBounds(36, 54, 205, 32);
 
 		panel_2.add(lblRegarcaSaldo);
@@ -183,17 +185,27 @@ public class VentanaIngresosCaja extends JFrame {
 		
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(36, 97, 55, 50);
+		btnAtras.setBounds(36, 97, 50, 50);
 		panel_2.add(btnAtras);
 		cambiarIconoBotones(btnAtras,  "back2.png");
 		
 		btnRealizarIngreso = new JButton("");
 		btnRealizarIngreso.setBackground(new Color(248, 248, 255));
-		btnRealizarIngreso.setBounds(394, 97, 55, 50);
+		btnRealizarIngreso.setBounds(313, 98, 50, 50);
 
 
 		panel_2.add(btnRealizarIngreso);
 		cambiarIconoBotones(btnRealizarIngreso,  "cashier2.png");
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(96, 97, 44, 50);
+		panel_2.add(lblAtras);
+		
+		lblRecargar = new JLabel("Recargar");
+		lblRecargar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblRecargar.setBounds(373, 98, 76, 50);
+		panel_2.add(lblRecargar);
 		
 
 		panel = new JPanel();
@@ -204,12 +216,12 @@ public class VentanaIngresosCaja extends JFrame {
 		
 		lblNewLabel = new JLabel("Zapateria Argento");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Oxygen", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 11, 421, 28);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel.setBounds(10, 0, 421, 50);
 		panel.add(lblNewLabel);
 		
 		lblNewLabel_3 = new JLabel("Sucursal:");
-		lblNewLabel_3.setFont(new Font("Oxygen", Font.BOLD, 14));
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		lblNewLabel_3.setBounds(565, 22, 109, 14);
 		panel.add(lblNewLabel_3);
 	}
