@@ -31,8 +31,8 @@ public class VentanaModificarMProducto extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
-			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
+	private String[] nombreColumnas = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayo",
+			"PrecioMino", "PuntoRepo", "CantARepo", "DiasP/Repo" };
 	private DefaultTableModel modelProducto;
 	private JTable tablaProducto;
 	private JPanel panel_1;
@@ -70,8 +70,8 @@ public class VentanaModificarMProducto extends JFrame {
 	private JLabel lblAumentar;
 	private JLabel lblDisminuir;
 	
-	private String[] nombreColumnas2 = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayorista",
-			"PrecioMinorista", "PuntoRepositorio", "CantidadAReponer", "DiasParaReponer" };
+	private String[] nombreColumnas2 = { "Codigo", "Descripción", "Proveedor", "Talle", "PrecioCosto", "PrecioMayo",
+			"PrecioMino", "PuntoRepo", "CantARepo", "DiasP/Repo" };
 	private DefaultTableModel modelProducto2;
 	private JTable tablaProductosModificar;
 	private JButton btnAgregarProductosEnTabla;
@@ -83,7 +83,7 @@ public class VentanaModificarMProducto extends JFrame {
 	private JButton btnActualizarMasivamente;
 	
 	private String[] elementosCB  = {"Mayorista y Minorista","Costo","Mayorista","Minorista"};
-	private JComboBox cbTipoPrecio;
+	private JComboBox<String> cbTipoPrecio;
 	private JButton btnCambiarDescripcionYProveedor;
 	private JPanel panel_2;
 	private JLabel lblNewLabel_4;
@@ -391,7 +391,7 @@ public class VentanaModificarMProducto extends JFrame {
 		cambiarIconoBotones(btnActualizarMasivamente,  "many.png");
 		panel.add(btnActualizarMasivamente);
 		
-		cbTipoPrecio = new JComboBox(elementosCB);
+		cbTipoPrecio = new JComboBox<String>(elementosCB);
 		cbTipoPrecio.setBounds(164, 463, 128, 22);
 		panel.add(cbTipoPrecio);
 		
@@ -523,7 +523,7 @@ public class VentanaModificarMProducto extends JFrame {
 		return btnQuitarFiltro;
 	}
 
-	public JComboBox getCbTipoPrecio() {
+	public JComboBox<String> getCbTipoPrecio() {
 		return cbTipoPrecio;
 	}
 

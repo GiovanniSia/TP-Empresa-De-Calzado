@@ -367,7 +367,7 @@ public class VentanaBusquedaProductos {
 		lblNewLabel_1 = new JLabel("Zapateria Argento");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 11, 421, 28);
+		lblNewLabel_1.setBounds(10, 0, 421, 50);
 		panel_1.add(lblNewLabel_1);
 		
 		btnAtras = new JButton("");

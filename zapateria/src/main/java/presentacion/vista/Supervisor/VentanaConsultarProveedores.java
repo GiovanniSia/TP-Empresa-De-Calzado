@@ -88,6 +88,7 @@ public class VentanaConsultarProveedores {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		
 		JLabel lblListaProveedores = new JLabel("Lista de proveedores");

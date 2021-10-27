@@ -70,6 +70,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 106, 974, 420);
 		frame.getContentPane().add(panel);
+		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();

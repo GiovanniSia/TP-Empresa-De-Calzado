@@ -93,6 +93,7 @@ public class VentanaAsignarProductoAProveedor {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 //		panel.add(scrollPaneFrame);		
 		/*
 		JScrollPane scrollPaneTodosLosProd = new JScrollPane(this.tableTodosLosProd,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

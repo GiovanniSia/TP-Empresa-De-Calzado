@@ -78,6 +78,7 @@ public class VentanaModificarCotizacion extends JFrame {
 		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 162, 501, 350);
 		frame.getContentPane().add(panel);
+		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
 
 		spMedioPago = new JScrollPane();

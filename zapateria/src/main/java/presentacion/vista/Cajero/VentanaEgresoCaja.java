@@ -78,6 +78,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+		frame.setLocationRelativeTo(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Tipo de Egreso");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));

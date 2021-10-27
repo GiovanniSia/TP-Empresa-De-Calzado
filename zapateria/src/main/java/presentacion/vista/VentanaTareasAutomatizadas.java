@@ -80,6 +80,7 @@ public class VentanaTareasAutomatizadas {
 		panelParametros.setBounds(10, 99, 626, 440);
 		panel.add(panelParametros);
 		panelParametros.setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JLabel lblComprasVirtuales = new JLabel("Compras Virtuales");
 		lblComprasVirtuales.setFont(new Font("Segoe UI", Font.PLAIN, 22));

@@ -93,6 +93,7 @@ public class VentanaAltaProducto {
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un nuevo producto");
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 
 		JLabel lblNewLabel = new JLabel("Registrar Producto");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));

@@ -23,8 +23,8 @@ import java.awt.event.ActionEvent;
 public class VentanaHistorialCambioMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = {"Cod.Empleado","Cod. Sucursal", "Cod.Producto", "Fecha", "P.CostoAntiguo", "P.CostoNuevo", "P.MayoristaAntiguo",
-			"P.MayoristaNuevo", "P.MinoristaAntiguo", "P.MinoristaNuevo","PuntoRepositorioAntiguo","PuntoRepositorioNuevo","CantidadAReponerAntiguo","CantidadAReponerNuevo","DiasParaReponerAntiguo","DiasParaReponerNuevo"};
+	private String[] nombreColumnas = {"Cod.Emp","Cod. Suc", "Cod.Prod", "Fecha", "P.CostAntiguo", "P.CostNuevo", "P.MayoAntiguo",
+			"P.MayoNuevo", "P.MinoAntiguo", "P.MinoNuevo","PtoRepoAntiguo","PtoRepoNuevo","CantRepoAntiguo","CantRepoNuevo","DiasRepAntiguo","DiasRepNuevo"};
 	private DefaultTableModel modelhistorialCambioMProducto;
 	private JTable tablaHistorialCambioMProducto;
 	private JLabel lblCodProducto;
@@ -56,19 +56,19 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 1036, 477);
+		frame.setBounds(100, 100, 1280, 477);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 175, 1022, 263);
+		panel.setBounds(0, 175, 1264, 263);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spHistorialCambiosMProducto = new JScrollPane();
-		spHistorialCambiosMProducto.setBounds(10, 11, 1002, 167);
+		spHistorialCambiosMProducto.setBounds(10, 11, 1254, 167);
 		panel.add(spHistorialCambiosMProducto);
 
 		modelhistorialCambioMProducto = new DefaultTableModel(null, nombreColumnas) {
@@ -108,7 +108,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 89, 1022, 87);
+		panel_1.setBounds(0, 89, 1264, 87);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -163,7 +163,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 1022, 50);
+		panel_2.setBounds(0, 0, 1264, 50);
 		frame.getContentPane().add(panel_2);
 		
 		lblNewLabel = new JLabel("Zapateria Argento");

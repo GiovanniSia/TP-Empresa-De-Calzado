@@ -3,6 +3,8 @@ package presentacion.vista.fabrica;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 
 public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
@@ -32,6 +37,8 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 	private JLabel lblSucursal;
 	private JLabel lblNewLabel;
 	private JLabel lblFecha;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_1;
 
 	public ReVentanaSeleccionarUnaReceta() {
 		initialize();
@@ -39,21 +46,25 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 700, 469);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 703, 475);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 664, 408);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(10, 25, 664, 408);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		comboBox = new JComboBox<String>();
-		comboBox.setBounds(98, 11, 192, 22);
+		comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		comboBox.setBounds(98, 11, 252, 22);
 		panel.add(comboBox);
 		
 		lblSolicitado = new JLabel("New label");
+		lblSolicitado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSolicitado.setBounds(10, 45, 356, 28);
 		panel.add(lblSolicitado);
 		
@@ -63,31 +74,55 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas);
 		tabla = new JTable(modelOrdenes);
+		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		spCliente.setViewportView(tabla);
 		
 		lblMensaje = new JLabel("New label");
+		lblMensaje.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblMensaje.setBounds(10, 335, 356, 28);
 		panel.add(lblMensaje);
 		
-		btnTrabajar = new JButton("Pasar a produccion");
-		btnTrabajar.setBounds(10, 374, 154, 23);
+		btnTrabajar = new JButton("");
+		btnTrabajar.setBounds(400, 337, 60, 60);
+		cambiarIconoBotones(btnTrabajar,  "pick.png");
 		panel.add(btnTrabajar);
 		
 		lblNewLabel = new JLabel("Receta");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel.setBounds(10, 15, 78, 14);
 		panel.add(lblNewLabel);
 		
 		lblSucursal = new JLabel("New label");
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSucursal.setBounds(10, 123, 356, 28);
 		panel.add(lblSucursal);
 		
 		lblIdPedido = new JLabel("New label");
+		lblIdPedido.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblIdPedido.setBounds(10, 84, 356, 28);
 		panel.add(lblIdPedido);
 		
 		lblFecha = new JLabel("New label");
+		lblFecha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblFecha.setBounds(10, 162, 356, 28);
 		panel.add(lblFecha);
+		
+		lblNewLabel_1 = new JLabel("Pasar a Produccion");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(470, 337, 184, 60);
+		panel.add(lblNewLabel_1);
+		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 0, 687, 14);
+		frame.getContentPane().add(panel_1);
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 
 	public void show() {
