@@ -30,6 +30,7 @@ import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
+import modelo.PedidosPendientes;
 import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
@@ -615,6 +616,10 @@ public class ProcesarCompraVirtual {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error en uno de los ingresos de factura");
 			}
 			descontarStock(compraVirtual.getIdSucursal(), idProducto, compraVirtual.getCompra().get(idProducto));
+			generarOrdenesFabricacion.verificarYGenerarOrden(compraVirtual.getIdSucursal(), producto);
+			if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(), producto) && producto.getFabricado().equals("N")) {
+				PedidosPendientes.generarPedidoAutomatico(compraVirtual.getIdSucursal(),producto);
+			}
 		}
 		return retNotaCredito;
 	}
