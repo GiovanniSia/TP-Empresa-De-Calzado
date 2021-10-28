@@ -475,7 +475,7 @@ public class VentanaModificarMProducto extends JFrame {
 		btnQuitarFiltro = new JButton("<html>Quitar Filtro<html>");
 		btnQuitarFiltro.setVerticalAlignment(SwingConstants.TOP);
 		btnQuitarFiltro.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		btnQuitarFiltro.setBounds(204, 89, 59, 39);
+		btnQuitarFiltro.setBounds(204, 89, 69, 39);
 		panel_1.add(btnQuitarFiltro);
 		
 				txtFiltroProveedor = new JTextField();
