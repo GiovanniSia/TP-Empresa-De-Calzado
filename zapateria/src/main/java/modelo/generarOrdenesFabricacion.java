@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.List;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.OrdenFabricaDTO;
 import dto.StockDTO;
@@ -126,6 +127,18 @@ public class generarOrdenesFabricacion {
 			}
 		}
 		return ret;
+	}
+	
+	public static void actualizarTodosLosTrabajosListosParaLosEnvios() {
+		//ESTA FUNCION ES MAS PARA EL MODELO YA PARA QUE SEA USADA AL FFINAL DE CADA DIA O AL INICIO, DARA DE ALTA EL STOCK DE 
+		//LOS TRABAJOS COMPLETOS CUYAS FECHAS DE LLEGADA PASEN A LA ACTUAL
+		//, LITERALMENTE RECORRE TODAS LOS PROCESOS DE TRABAJO COMPLETADOS Y 
+		//VERFICA SI LA FECHA ESTA LISTA PARA EL ENVIO
+		Fabricacion modeloFabricacion = new Fabricacion(new DAOSQLFactory());
+		List<FabricacionesDTO> todasLasOrdenesCompletas = modeloFabricacion.readAllFabricacionesCompletas();
+		for(FabricacionesDTO of: todasLasOrdenesCompletas) {
+			modeloFabricacion.actualizarSiLlegoFechaDeEntrega(of);
+		}
 	}
 	
 }

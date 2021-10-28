@@ -27,6 +27,7 @@ import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import modelo.Stock;
 import modelo.Sucursal;
+import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Cajero.ControladorCierreCaja;
 import presentacion.controlador.Cajero.ControladorEgresosCaja;
@@ -294,7 +295,7 @@ public class Controlador implements ActionListener {
 //			e.printStackTrace();
 //		}
 		escribirNombreSucursal();
-		
+		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
 
 	public void escribirNombreSucursal() {

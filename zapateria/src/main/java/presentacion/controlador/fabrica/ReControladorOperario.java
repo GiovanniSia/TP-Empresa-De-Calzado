@@ -40,7 +40,7 @@ import presentacion.vista.fabrica.ReVentanaTrabajarUnPedido;
 import presentacion.vista.fabrica.ReVentanaVerFabricaciones;
 import presentacion.vista.fabrica.VentanaIngresarMotivoCancelacion;
 import presentacion.vista.fabrica.fecha;
-
+import modelo.generarOrdenesFabricacion;
 public class ReControladorOperario implements ActionListener {
 	
 	static final EmpleadoDTO empleadoDeMuestra = new EmpleadoDTO(1, "13138413", "Gabriel", "Perez", "Fulanito@gmail.com",
@@ -334,7 +334,7 @@ public class ReControladorOperario implements ActionListener {
 						modeloFabricacion.actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
 						System.out.println("Producto: "+mp.getDescripcion());
 						System.out.println("cantidad de stock disp: "+ss.getStockDisponible()+"\nPunto de rep minimo: "+mp.getPuntoRepositorio());
-						if(ss.getStockDisponible() < mp.getPuntoRepositorio()) {
+						if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(this.fabrica.getIdSucursal(),mp.getIdMaestroProducto())<= mp.getPuntoRepositorio()) {
 							System.out.println("Se deberia generar el pedido");
 							PedidosPendientes.generarPedidoAutomatico(1, mp);
 						}

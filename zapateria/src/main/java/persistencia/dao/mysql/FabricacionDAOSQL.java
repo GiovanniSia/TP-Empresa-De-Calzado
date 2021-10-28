@@ -400,15 +400,13 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		fechaEntrega.setMonth(f.getMesCompletado()-1);
 		fechaEntrega.setDate(f.getDiaCompletado()+f.getDiaDisponible());
 		boolean deboStockear = false;
-		if(fechaActual.getYear() >= fechaEntrega.getYear()) {
+		if(fechaActual.getYear() > fechaEntrega.getYear()) {
 			deboStockear = true;
 		}
-		
-		if(fechaActual.getMonth() >= fechaEntrega.getMonth()) {
+		if(fechaActual.getMonth() > fechaEntrega.getMonth()) {
 			deboStockear = true;
 		}
-		
-		if(fechaActual.getDate() >= fechaEntrega.getDate() && fechaActual.getMonth() == fechaEntrega.getMonth() 
+		if(fechaActual.getDate() >= fechaEntrega.getDate() && fechaActual.getMonth() >= fechaEntrega.getMonth() 
 				&& fechaActual.getYear() == fechaEntrega.getYear()) {
 			deboStockear = true;
 		}
