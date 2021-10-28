@@ -175,7 +175,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		
 		lblCorreo = new JLabel("New label");
 		lblCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblCorreo.setBounds(123, 216, 132, 14);
+		lblCorreo.setBounds(123, 216, 363, 14);
 		panel.add(lblCorreo);
 		
 		lblNewLabel_8 = new JLabel("ImpuestoAFIP");

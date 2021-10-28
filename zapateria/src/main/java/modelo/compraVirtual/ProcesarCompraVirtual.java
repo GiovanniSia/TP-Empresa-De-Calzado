@@ -193,7 +193,7 @@ public class ProcesarCompraVirtual {
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
 		}
-		if(!esDatoStringValido(compraVirtual.getCUIL())) {
+		if(!esDatoStringValido(compraVirtual.getCUIL()) || compraVirtual.getCUIL().length() != 11 || compraVirtual.getCUIL().matches("[0-9]{11}")) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CUIL no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getApellido())) {
