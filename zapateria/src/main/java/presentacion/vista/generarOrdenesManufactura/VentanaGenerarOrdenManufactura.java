@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
@@ -144,7 +146,8 @@ public class VentanaGenerarOrdenManufactura extends JFrame {
 		lblNewLabel_1.setBounds(382, 361, 119, 23);
 		panel.add(lblNewLabel_1);
 		
-		spinnerCantidad = new JSpinner();
+		SpinnerModel sm = new SpinnerNumberModel(1, 1, 5999, 1); //default value,lower bound,upper bound,increment by
+		spinnerCantidad = new JSpinner(sm);
 		spinnerCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		spinnerCantidad.setBounds(416, 385, 60, 36);
 		panel.add(spinnerCantidad);
