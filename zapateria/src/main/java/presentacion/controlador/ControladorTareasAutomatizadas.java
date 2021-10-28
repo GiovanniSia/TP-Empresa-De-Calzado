@@ -19,13 +19,14 @@ public class ControladorTareasAutomatizadas {
 	public ControladorTareasAutomatizadas(VentanaTareasAutomatizadas ventanaTareasAutomatizadas,ConfiguracionBD config) {
 		this.ventanaTareasAutomatizadas = ventanaTareasAutomatizadas;
 		this.config=config;
+		this.ventanaTareasAutomatizadas.getBtnRegresar().addActionListener(a -> salir(a));
+		
+		this.ventanaTareasAutomatizadas.getBtnActualizar().addActionListener(a -> actualizarValores(a));
 	}
 	
 	public void inicializar() {
 		
-		this.ventanaTareasAutomatizadas.getBtnRegresar().addActionListener(a -> salir(a));
 		
-		this.ventanaTareasAutomatizadas.getBtnActualizar().addActionListener(a -> actualizarValores(a));
 		
 		llenarCbCorreosProv();
 		setParametros();
@@ -73,6 +74,18 @@ public class ControladorTareasAutomatizadas {
 					this.ventanaTareasAutomatizadas.getComboBoxPedidosDias().setSelectedIndex(i);
 				}
 			}
+			//Para compras virtuales
+			this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().removeAll();
+			this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().addItem(1+" minuto");
+			this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().addItem(2+" minutos");
+			this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().addItem(3+" minutos");
+			for(int x = 5; x <= 130; x = x + 5) {
+				this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().addItem(x+" minutos");
+			}
+			String CompraVirtualMinutosProceso = config.getValue("CompraVirtualMinutosProceso");
+			this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().setSelectedItem(CompraVirtualMinutosProceso+" minutos");
+			String CompraVirtualTolerancia = config.getValue("CompraVirtualTolerancia");
+			this.ventanaTareasAutomatizadas.getSpinnerTolerancia().setValue(Integer.valueOf(CompraVirtualTolerancia));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,11 +111,23 @@ public class ControladorTareasAutomatizadas {
         	return;
         }
 		
-        
+        //Compras virtuales
+        String minutosComprasVirtuales = (String) this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().getSelectedItem();
+        minutosComprasVirtuales = minutosComprasVirtuales.split(" ")[0];
+        int toleranciaComprasVirtuales = (int) this.ventanaTareasAutomatizadas.getSpinnerTolerancia().getValue();
+        if(toleranciaComprasVirtuales < 0 || toleranciaComprasVirtuales >= 100) {
+        	JOptionPane.showMessageDialog(null, "El valor de tolerancia no es valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        	return;
+        }
+		
 		try {
 			config.writeValue("DiaDeEnvio", nuevoDia.toLowerCase());
 			config.writeValue("HoraDeEnvio", hora);
-			JOptionPane.showMessageDialog(null, "Datos actualizados correctamente", "Actualizacion", JOptionPane.OK_OPTION);
+			
+			config.writeValue("CompraVirtualTolerancia", toleranciaComprasVirtuales+"");
+			config.writeValue("CompraVirtualMinutosProceso", minutosComprasVirtuales);
+			
+			JOptionPane.showMessageDialog(null, "Datos actualizados correctamente", "Actualizacion", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

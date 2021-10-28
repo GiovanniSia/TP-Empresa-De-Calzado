@@ -47,6 +47,8 @@ public class VentanaVerHistorialPasos extends JFrame {
 	
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
+	private JLabel lblAtras;
+	private JLabel lblVerDetalleDe;
 
 	public VentanaVerHistorialPasos() {
 		initialize();
@@ -58,13 +60,15 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 500);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 1000, 527);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 974, 399);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 64, 984, 415);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -90,64 +94,76 @@ public class VentanaVerHistorialPasos extends JFrame {
 		tabla.getColumnModel().getColumn(0).setResizable(false);
 		tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tabla.getColumnModel().getColumn(1).setResizable(false);
+		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		spCliente.setViewportView(tabla);
 
-		btnVerDescripcion = new JButton("Ver descripcion");
+		btnVerDescripcion = new JButton("");
 		btnVerDescripcion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerDescripcion.setBounds(10, 352, 177, 23);
+		btnVerDescripcion.setBounds(545, 352, 60, 60);
+		cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
 		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblId.setBounds(10, 11, 46, 14);
 		panel.add(lblId);
 		
 		textId = new JTextField();
+		textId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textId.setBounds(10, 36, 75, 20);
 		panel.add(textId);
 		textId.setColumns(10);
 		
 		lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSucursal.setBounds(95, 11, 46, 14);
 		panel.add(lblSucursal);
 		
 		textSucursal = new JTextField();
+		textSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textSucursal.setColumns(10);
 		textSucursal.setBounds(95, 36, 75, 20);
 		panel.add(textSucursal);
 		
 		textProducto = new JTextField();
+		textProducto.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textProducto.setColumns(10);
 		textProducto.setBounds(180, 36, 75, 20);
 		panel.add(textProducto);
 		
 		lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(180, 11, 46, 14);
+		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblProducto.setBounds(180, 11, 60, 14);
 		panel.add(lblProducto);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(740, 351, 46, 38);
-		cambiarIconoBotones(btnSalir,  "back.png");
+		btnSalir.setBounds(169, 352, 60, 60);
+		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
 		textAccion = new JTextField();
+		textAccion.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textAccion.setColumns(10);
 		textAccion.setBounds(265, 36, 136, 20);
 		panel.add(textAccion);
 		
 		JLabel lblPaso = new JLabel("Accion");
+		lblPaso.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblPaso.setBounds(265, 11, 46, 14);
 		panel.add(lblPaso);
 		
 		textEmpleado = new JTextField();
+		textEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textEmpleado.setColumns(10);
 		textEmpleado.setBounds(828, 38, 136, 20);
 		panel.add(textEmpleado);
 		
 		JLabel lblEmpleado = new JLabel("Empleado");
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblEmpleado.setBounds(828, 11, 75, 14);
 		panel.add(lblEmpleado);
 
@@ -160,16 +176,28 @@ public class VentanaVerHistorialPasos extends JFrame {
 		panel.add(fechaHasta);
 		
 		JLabel lblFechaDesde = new JLabel("Fecha desde");
+		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblFechaDesde.setBounds(411, 11, 108, 14);
 		panel.add(lblFechaDesde);
 		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
+		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblFechaHasta.setBounds(529, 11, 108, 14);
 		panel.add(lblFechaHasta);
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(239, 352, 46, 60);
+		panel.add(lblAtras);
+		
+		lblVerDetalleDe = new JLabel("Ver Detalle de Fabricacion");
+		lblVerDetalleDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblVerDetalleDe.setBounds(615, 352, 182, 60);
+		panel.add(lblVerDetalleDe);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
+		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setBounds(0, 0, 984, 10);
 		frame.getContentPane().add(panel_2);
 		
 		lblNewLabel = new JLabel("Historial de fabricacion");
@@ -207,7 +235,7 @@ public class VentanaVerHistorialPasos extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	

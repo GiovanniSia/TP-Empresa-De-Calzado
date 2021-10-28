@@ -26,6 +26,7 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.reportes.ReporteFactura;
 import presentacion.vista.compraVirtual.VentanaVerComprasVirtuales;
 import presentacion.vista.compraVirtual.VentanaVerDetalleRechazo;
@@ -47,8 +48,9 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	RechazoCompraVirtual modeloRechazoVirtual;
 	List<IngresosDTO> ingresosEnLista;
 	List<RechazoCompraVirtualDTO> rechazosEnLista;
-	
-	public ControladorVisualizarComprasVirtuales() {
+	Controlador controlador;
+	public ControladorVisualizarComprasVirtuales(Controlador controlador) {
+		this.controlador = controlador;
 		modeloRechazoVirtual = new RechazoCompraVirtual(new DAOSQLFactory());
 		modeloFactura = new Factura(new DAOSQLFactory());
 		modeloDetalleFactura = new DetalleFactura(new DAOSQLFactory());
@@ -148,7 +150,10 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	}
 	
 	private void cerrarTodoElControlador(ActionEvent r) {
-		//METER CODIGO PARA SALIR DE ESTE CONTROLADOR
+		this.ventanaPrincipal.cerrar();
+		this.ventanaRechazo.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	private void cerrarVentanaDetalle(ActionEvent r) {
@@ -452,8 +457,10 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		ControladorVisualizarComprasVirtuales co = new ControladorVisualizarComprasVirtuales();
 		co.inicializar();
+		*/
 	}
 
 }

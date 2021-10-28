@@ -1,9 +1,11 @@
 package presentacion.vista.fabrica;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +26,7 @@ public class VentanaVerDetalle extends JFrame {
 	
 	JTextPane textPane;
 	JButton btnSalir;
+	private JLabel lblNewLabel_1;
 	
 
 	public VentanaVerDetalle() {
@@ -36,18 +39,21 @@ public class VentanaVerDetalle extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 524, 500);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 524, 524);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 496, 399);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 64, 508, 421);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		lblId = new JLabel("-");
-		lblId.setBounds(10, 11, 145, 14);
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblId.setBounds(10, 0, 145, 34);
 		panel.add(lblId);
 		
 		JLabel lblEstado = new JLabel("Estado");
@@ -55,22 +61,35 @@ public class VentanaVerDetalle extends JFrame {
 		panel.add(lblEstado);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(10, 38, 476, 299);
+		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textPane.setBounds(10, 38, 488, 299);
 		panel.add(textPane);
 		
-		btnSalir = new JButton("Cerrar");
-		btnSalir.setBounds(309, 352, 177, 23);
+		btnSalir = new JButton("");
+		btnSalir.setBounds(183, 350, 60, 60);
+		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
+		
+		lblNewLabel_1 = new JLabel("Volver");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(253, 348, 60, 62);
+		panel.add(lblNewLabel_1);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
+		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setBounds(0, 0, 508, 10);
 		frame.getContentPane().add(panel_2);
 		
 		lblNewLabel = new JLabel("Detalle");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 
 	public void show() {

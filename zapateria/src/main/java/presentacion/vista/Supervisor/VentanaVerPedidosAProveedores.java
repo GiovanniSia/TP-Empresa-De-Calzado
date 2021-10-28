@@ -58,6 +58,11 @@ public class VentanaVerPedidosAProveedores {
 	private JSpinner spinnerHoraHasta;
 	
 	private JComboBox<String> comboBoxEstadoSolo;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
 
 
 	/**
@@ -94,77 +99,63 @@ public class VentanaVerPedidosAProveedores {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 30, 1197, 573);
+		frame.setBounds(100, 30, 1186, 573);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 0, 1169, 539);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JPanel panelTitulo = new JPanel();
-		panelTitulo.setBounds(0, 0, 1169, 72);
-		panel.add(panelTitulo);
-		panelTitulo.setLayout(null);
-		
-		JLabel lblTitulo = new JLabel("ZAPATERIA");
-		lblTitulo.setFont(new Font("Comic Sans MS", Font.PLAIN, 27));
-		lblTitulo.setBounds(10, 10, 631, 52);
-		panelTitulo.add(lblTitulo);
-		
 		JLabel lblNewLabel = new JLabel("Pedidos a Proveedores");
-		lblNewLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
-		lblNewLabel.setBounds(10, 82, 646, 72);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblNewLabel.setBounds(10, 50, 646, 51);
 		panel.add(lblNewLabel);
 		
 		JPanel panelTabla = new JPanel();
-		panelTabla.setBounds(10, 144, 1159, 315);
+		panelTabla.setBackground(new Color(248, 248, 255));
+		panelTabla.setBounds(10, 98, 1159, 347);
 		panel.add(panelTabla);
 		panelTabla.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Filtrar por:");
-		lblNewLabel_1.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(0, 0, 183, 31);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblNewLabel_1.setBounds(10, 0, 183, 31);
 		panelTabla.add(lblNewLabel_1);		
 		
 		JLabel lblId = new JLabel("Id");
-		lblId.setHorizontalAlignment(SwingConstants.CENTER);
-		lblId.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblId.setBounds(10, 37, 29, 19);
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblId.setBounds(10, 32, 29, 19);
 		panelTabla.add(lblId);
 				
 		JLabel lblProveedor = new JLabel("Proveedor");
-		lblProveedor.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProveedor.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblProveedor.setBounds(56, 37, 79, 19);
+		lblProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblProveedor.setBounds(56, 32, 79, 19);
 		panelTabla.add(lblProveedor);
 
 		JLabel lblProducto = new JLabel("Producto");
-		lblProducto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProducto.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblProducto.setBounds(174, 38, 79, 19);
+		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblProducto.setBounds(170, 32, 79, 19);
 		panelTabla.add(lblProducto);
 				
 		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrecio.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblPrecio.setBounds(300, 37, 79, 19);
+		lblPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblPrecio.setBounds(290, 32, 79, 19);
 		panelTabla.add(lblPrecio);
 				
 		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEstado.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblEstado.setBounds(449, 37, 79, 19);
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblEstado.setBounds(422, 32, 79, 19);
 		panelTabla.add(lblEstado);
 		
 		JLabel lblFechaDesde = new JLabel("Desde");
 		lblFechaDesde.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFechaDesde.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblFechaDesde.setBounds(690, 23, 79, 19);
+		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblFechaDesde.setBounds(681, 32, 79, 19);
 		panelTabla.add(lblFechaDesde);
 		
 		
@@ -181,7 +172,7 @@ public class VentanaVerPedidosAProveedores {
 			}			
 		};
 		JScrollPane scrollPaneTablaPedidos = new JScrollPane(this.tablePedidos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneTablaPedidos.setBounds(10, 81, 1148, 233);
+		scrollPaneTablaPedidos.setBounds(0, 81, 1149, 266);
 		
 		tablePedidos = new JTable(modelTablaPedidos);
 		tablePedidos.setBounds(10, 81, 1247, 380);
@@ -211,54 +202,62 @@ public class VentanaVerPedidosAProveedores {
 		frame.getContentPane().add(scrollPaneProdDeProv);
 		*/
 		comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		comboBoxEstado.setBounds(422, 51, 146, 21);
 		comboBoxEstado.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstado);
 		
 		comboBoxEstadoSolo = new JComboBox<String>();
+		comboBoxEstadoSolo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		comboBoxEstadoSolo.setBounds(1065, 50, 79, 21);
 		comboBoxEstadoSolo.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstadoSolo);
 		
-		btnSalir = new JButton("<");
-		btnSalir.setBounds(80, 469, 74, 63);
-		cambiarIconoBotones(btnSalir,  "back.png");
+		btnSalir = new JButton("");
+		btnSalir.setBounds(156, 455, 60, 60);
+		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
-		btnConfirmarPedido = new JButton("Confirmar Pedido Completado");
-		btnConfirmarPedido.setFont(new Font("Consolas", Font.PLAIN, 17));
-		btnConfirmarPedido.setBounds(214, 469, 399, 51);
+		btnConfirmarPedido = new JButton("");
+		btnConfirmarPedido.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+		btnConfirmarPedido.setBounds(393, 455, 60, 60);
+		cambiarIconoBotones(btnConfirmarPedido,  "check2.png");
 		panel.add(btnConfirmarPedido);
 		
-		btnConfirmarCancelacionDe = new JButton("Confirmar Cancelacion de Pedido");
-		btnConfirmarCancelacionDe.setFont(new Font("Consolas", Font.PLAIN, 17));
-		btnConfirmarCancelacionDe.setBounds(640, 469, 399, 51);
+		btnConfirmarCancelacionDe = new JButton("");
+		btnConfirmarCancelacionDe.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+		btnConfirmarCancelacionDe.setBounds(720, 455, 60, 60);
+		cambiarIconoBotones(btnConfirmarCancelacionDe,  "cancel2.png");
 		panel.add(btnConfirmarCancelacionDe);
 		
 		textId = new JTextField();
+		textId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textId.setBounds(10, 52, 29, 19);
 		panelTabla.add(textId);
 		textId.setColumns(10);
 		
 		textPrecio = new JTextField();
+		textPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPrecio.setColumns(10);
 		textPrecio.setBounds(290, 52, 96, 19);
 		panelTabla.add(textPrecio);
 		
 		textProducto = new JTextField();
+		textProducto.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textProducto.setColumns(10);
 		textProducto.setBounds(170, 52, 96, 19);
 		panelTabla.add(textProducto);
 		
 		textProveedor = new JTextField();
+		textProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textProveedor.setColumns(10);
 		textProveedor.setBounds(56, 52, 96, 19);
 		panelTabla.add(textProveedor);
 				
 		JLabel lblFechaHasta = new JLabel("Hasta");
 		lblFechaHasta.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFechaHasta.setFont(new Font("Consolas", Font.PLAIN, 13));
-		lblFechaHasta.setBounds(910, 23, 79, 19);
+		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblFechaHasta.setBounds(915, 32, 79, 19);
 		panelTabla.add(lblFechaHasta);
 		
 		
@@ -273,6 +272,7 @@ public class VentanaVerPedidosAProveedores {
 		
 		
 		spinnerHoraDesde = new JSpinner( new SpinnerDateModel());
+		spinnerHoraDesde.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		JSpinner.DateEditor de_spinnerHoraDesde = new JSpinner.DateEditor(spinnerHoraDesde, "HH:mm");
 		spinnerHoraDesde.setEditor(de_spinnerHoraDesde);
 		spinnerHoraDesde.setBounds(750, 52, 70, 19);
@@ -283,18 +283,46 @@ public class VentanaVerPedidosAProveedores {
 		
 		
 		spinnerHoraHasta = new JSpinner(new SpinnerDateModel());
+		spinnerHoraHasta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		JSpinner.DateEditor de_spinnerHoraHasta = new JSpinner.DateEditor(spinnerHoraHasta, "HH:mm");
 		spinnerHoraHasta.setEditor(de_spinnerHoraHasta);
 		spinnerHoraHasta.setBounds(985, 52, 70, 19);
 		spinnerHoraHasta.setValue(new Date(0, 0,0, 00, 0, 0));
 		panelTabla.add(spinnerHoraHasta);
 		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 1169, 50);
+		panel.add(panel_1);
+		
+		lblNewLabel_2 = new JLabel("Zapateria Argento");
+		lblNewLabel_2.setForeground(Color.WHITE);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_2.setBounds(10, 0, 236, 50);
+		panel_1.add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("Confirmar Pedido Completado");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(463, 455, 212, 60);
+		panel.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("Confirmar Cancelacion de Pedido");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(790, 455, 231, 60);
+		panel.add(lblNewLabel_4);
+		
+		lblNewLabel_5 = new JLabel("Atras");
+		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_5.setBounds(226, 455, 60, 60);
+		panel.add(lblNewLabel_5);
+		
 		
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	

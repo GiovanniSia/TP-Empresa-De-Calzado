@@ -19,6 +19,10 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPanel;
 
 public class VentanaConsultarProveedores {
 
@@ -39,6 +43,11 @@ public class VentanaConsultarProveedores {
 	
 	private JButton btnSeleccionarProveedor;
 	private JButton btnEditarProveedor;
+	private JPanel panel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblSeleccionarProveedor;
+	private JLabel lblAtras;
+	private JLabel lblAsignarProductoA;
 	
 	
 	/**
@@ -74,19 +83,21 @@ public class VentanaConsultarProveedores {
             System.out.println("Error setting native LAF: " + e);
       }
 		frame = new JFrame();
-		frame.setBounds(100, 100, 736, 622);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 736, 663);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		
 		
 		JLabel lblListaProveedores = new JLabel("Lista de proveedores");
-		lblListaProveedores.setFont(new Font("Comic Sans MS", Font.PLAIN, 21));
-		lblListaProveedores.setBounds(10, 10, 370, 40);
+		lblListaProveedores.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblListaProveedores.setBounds(10, 52, 370, 50);
 		frame.getContentPane().add(lblListaProveedores);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(10, 107, 96, 19);
+		textNombre.setBounds(79, 132, 174, 19);
 		frame.getContentPane().add(textNombre);
 		textNombre.setColumns(10);
 		
@@ -101,7 +112,7 @@ public class VentanaConsultarProveedores {
 			}
 		};
 		scrollPane = new JScrollPane(this.table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
-		scrollPane.setBounds(10, 136, 702, 371);
+		scrollPane.setBounds(10, 162, 702, 371);
 		
 		table = new JTable(modelTablaProveedores);
 		table.setBounds(10, 136, 702, 371);
@@ -113,29 +124,63 @@ public class VentanaConsultarProveedores {
 
 		
 		lblNewLabel = new JLabel("Filtrar por:");
-		lblNewLabel.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblNewLabel.setBounds(10, 48, 96, 19);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel.setBounds(10, 103, 96, 19);
 		frame.getContentPane().add(lblNewLabel);
 		
 		lblNombre = new JLabel("Nombre");
-		lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNombre.setFont(new Font("Consolas", Font.PLAIN, 10));
-		lblNombre.setBounds(10, 89, 96, 19);
+		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombre.setBounds(10, 132, 96, 19);
 		frame.getContentPane().add(lblNombre);
 		
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(10, 529, 56, 46);
-		cambiarIconoBotones(btnRegresar,  "back.png");
+		btnRegresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRegresar.setBounds(31, 544, 60, 60);
+		cambiarIconoBotones(btnRegresar,  "back2.png");
 		frame.getContentPane().add(btnRegresar);
 		
-		btnSeleccionarProveedor = new JButton("Seleccionar Proveedor");
-		btnSeleccionarProveedor.setBounds(218, 517, 211, 29);
+		btnSeleccionarProveedor = new JButton("");
+		btnSeleccionarProveedor.setBounds(225, 546, 60, 60);
 		frame.getContentPane().add(btnSeleccionarProveedor);
+		cambiarIconoBotones(btnSeleccionarProveedor,  "plus.png");
 		btnSeleccionarProveedor.setVisible(false);
 		
-		btnEditarProveedor = new JButton("Asignar Producto a Proveedor");
-		btnEditarProveedor.setBounds(526, 517, 184, 29);
+		btnEditarProveedor = new JButton("");
+		btnEditarProveedor.setBounds(439, 546, 60, 60);
+		cambiarIconoBotones(btnEditarProveedor,  "plus.png");
 		frame.getContentPane().add(btnEditarProveedor);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 720, 50);
+		frame.getContentPane().add(panel);
+		
+		lblNewLabel_1 = new JLabel("Zapateria Argento");
+		lblNewLabel_1.setForeground(Color.WHITE);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblNewLabel_1.setBounds(10, 0, 236, 50);
+		panel.add(lblNewLabel_1);
+		
+		lblSeleccionarProveedor = new JLabel("Seleccionar Proveedor");
+		lblSeleccionarProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblSeleccionarProveedor.setBounds(295, 546, 134, 58);
+		frame.getContentPane().add(lblSeleccionarProveedor);
+		lblSeleccionarProveedor.setVisible(false);
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAtras.setBounds(101, 546, 45, 58);
+		frame.getContentPane().add(lblAtras);
+		
+		lblAsignarProductoA = new JLabel("Asignar Producto a Proveedor");
+		lblAsignarProductoA.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAsignarProductoA.setBounds(509, 546, 190, 58);
+		frame.getContentPane().add(lblAsignarProductoA);
 		btnEditarProveedor.setVisible(false);
 	}
 
@@ -165,7 +210,7 @@ public class VentanaConsultarProveedores {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
 	

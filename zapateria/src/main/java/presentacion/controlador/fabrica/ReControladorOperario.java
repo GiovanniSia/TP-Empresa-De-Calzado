@@ -96,9 +96,11 @@ public class ReControladorOperario implements ActionListener {
 	
 	Controlador controlador;
 	EmpleadoDTO empleado;
+	SucursalDTO fabrica;
 	//public ReControladorOperario(Controlador controlador,SucursalDTO fabrica, EmpleadoDTO empleado) {
 	public ReControladorOperario(Controlador controlador,SucursalDTO fabrica) {
 		this.empleado = empleadoDeMuestra;
+		this.fabrica = fabrica;
 		idFabrica = fabrica.getIdSucursal();
 		try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -115,9 +117,10 @@ public class ReControladorOperario implements ActionListener {
 		historialPaso = new HistorialPaso(new DAOSQLFactory());
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
+		ventanaPrincipal.getBtnVerHistorialPasos().addActionListener(r-> verHistorialPasos(r));
 
 	}
-	
+
 	public void inicializar() {
 		ventanaPrincipal.getBtnTrabajarPedido().addActionListener(r->trabajarSeleccionado(r));
 		ventanaPrincipal.getTextProducto().addKeyListener(new KeyAdapter() {
@@ -208,6 +211,16 @@ public class ReControladorOperario implements ActionListener {
 		ventanaParaCancelacion.getComboBoxMotivo().addItem("Otro");
 		refrescarTabla();
 		
+	}
+	
+	private void verHistorialPasos(ActionEvent r) {
+		ventanaPrincipal.cerrar();
+		/*
+		SucursalDTO suc = new SucursalDTO(1, "3123314", "Uruguay", "134", "BsAs", "Tortuguitas", "Argentina", "1669",
+				"Una mas");
+				*/
+		ControladorHistorialPasos con = new ControladorHistorialPasos(this.controlador, this.fabrica);
+		con.inicializar();
 	}
 	
 	public void mostrarVentana() {

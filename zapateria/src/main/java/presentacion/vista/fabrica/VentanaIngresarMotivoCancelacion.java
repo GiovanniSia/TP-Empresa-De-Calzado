@@ -1,9 +1,11 @@
 package presentacion.vista.fabrica;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
 
 public class VentanaIngresarMotivoCancelacion extends JFrame {
 
@@ -30,6 +33,8 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 	JTextPane textPane;
 	JButton btnNoCancelar;
 	JComboBox<String> comboBoxMotivo;
+	private JLabel lblVolverNoCancelar;
+	private JLabel lblConfirmarCancelacion;
 	
 
 	public VentanaIngresarMotivoCancelacion() {
@@ -42,26 +47,30 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 524, 500);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(100, 100, 524, 508);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 64, 496, 399);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 64, 508, 399);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		btnCancelar = new JButton("Cancelacion");
+		btnCancelar = new JButton("");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnCancelar.setBounds(10, 352, 177, 23);
+		btnCancelar.setBounds(256, 333, 60, 60);
+		cambiarIconoBotones(btnCancelar,  "cancel2.png");
 		panel.add(btnCancelar);
 		
-		lblId = new JLabel("Motivo por el que se cancela");
-		lblId.setBounds(10, 11, 145, 14);
+		lblId = new JLabel("Motivo por el que se cancela la fabricacion del producto");
+		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblId.setBounds(20, 10, 296, 23);
 		panel.add(lblId);
 		
 		JLabel lblEstado = new JLabel("Estado");
@@ -69,26 +78,46 @@ public class VentanaIngresarMotivoCancelacion extends JFrame {
 		panel.add(lblEstado);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(10, 85, 476, 252);
+		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textPane.setBounds(10, 70, 488, 252);
 		panel.add(textPane);
 		
-		btnNoCancelar = new JButton("No Cancelar");
-		btnNoCancelar.setBounds(309, 352, 177, 23);
+		btnNoCancelar = new JButton("");
+		btnNoCancelar.setBounds(20, 333, 60, 60);
+		cambiarIconoBotones(btnNoCancelar,  "back2.png");
 		panel.add(btnNoCancelar);
 		
 		comboBoxMotivo = new JComboBox<String>();
+		comboBoxMotivo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		comboBoxMotivo.setBounds(20, 36, 227, 23);
 		panel.add(comboBoxMotivo);
+		
+		lblVolverNoCancelar = new JLabel("Volver, no cancelar");
+		lblVolverNoCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblVolverNoCancelar.setBounds(90, 333, 131, 60);
+		panel.add(lblVolverNoCancelar);
+		
+		lblConfirmarCancelacion = new JLabel("Confirmar Cancelacion");
+		lblConfirmarCancelacion.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblConfirmarCancelacion.setBounds(326, 333, 158, 60);
+		panel.add(lblConfirmarCancelacion);
 
 		panel_2 = new JPanel();
-		panel_2.setBackground(Color.GRAY);
-		panel_2.setBounds(0, 0, 806, 10);
+		panel_2.setBackground(new Color(255, 255, 255));
+		panel_2.setBounds(0, 0, 508, 10);
 		frame.getContentPane().add(panel_2);
 		
 		lblNewLabel = new JLabel("Cancelacion");
-		lblNewLabel.setBounds(10, 21, 324, 32);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 21, 508, 32);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 
 	public void show() {
