@@ -32,10 +32,10 @@ public class ControladorModificarMProducto {
 	private List<MaestroProductoDTO> maestroProductoEnTablaProducto;
 
 	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
-	
+
 	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
 	private ControladorDescripcionProveedorMProducto controladorDescripcionProveedorMProducto;
-	
+
 	Controlador controlador;
 
 	public static void main(String[] args) {
@@ -57,10 +57,10 @@ public class ControladorModificarMProducto {
 
 	public void inicializar() {
 		controladorDescripcionProveedorMProducto = new ControladorDescripcionProveedorMProducto();
-		
+
 		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
 		controladorHistorialCambioMProducto = new ControladorHistorialCambioMProducto(modelo);
-		
+
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.historialCambioMProducto = new HistorialCambioMProducto(new DAOSQLFactory());
 
@@ -124,7 +124,7 @@ public class ControladorModificarMProducto {
 			}
 		});
 	}
-		
+
 	public void cambiarDescripcionYProveedor(ActionEvent a) {
 		int filaSeleccionada = filaSeleccionadaTablaProducto();
 
@@ -133,16 +133,14 @@ public class ControladorModificarMProducto {
 			return;
 		}
 		MaestroProductoDTO productoSeleccionado = this.maestroProductoEnTablaProducto.get(filaSeleccionada);
-		
 
-		
 		controladorDescripcionProveedorMProducto.setMaestroProductoDTO(productoSeleccionado);
 
 		controladorDescripcionProveedorMProducto.setControladorModificarMProducto(this);
 		controladorDescripcionProveedorMProducto.inicializar();
-		
+
 		controladorDescripcionProveedorMProducto.mostrarVentana();
-		
+
 	}
 
 	public Double precioAumentado(int aumento, double precio) {
@@ -156,11 +154,11 @@ public class ControladorModificarMProducto {
 	public void actualizarMasivamente(ActionEvent a) {
 		this.controladorDescripcionProveedorMProducto.ocultarVentana();
 		this.controladorHistorialCambioMProducto.ocultarVentana();
-		if(maestroProductoEnTablaProductosModificar.size() ==0) {
+		if (maestroProductoEnTablaProductosModificar.size() == 0) {
 			JOptionPane.showMessageDialog(null, "No hay productos para modificar ");
 			return;
 		}
-		
+
 		String aumentarString = this.ventanaModificarMProducto.getTxtActualizarAumentar().getText();
 
 		int aumentar = 0;
@@ -276,6 +274,11 @@ public class ControladorModificarMProducto {
 		String idMaestroProducto = "" + productoAntiguo.getIdMaestroProducto();
 		String fecha = obtenerFechaDeHoy();
 
+		String descripcionAntiguo = "" + productoAntiguo.getDescripcion();
+		String descripcionNuevo = "" + productoAntiguo.getDescripcion();
+		String proveedorAntiguo = "" + productoAntiguo.getIdProveedor();
+		String prpobeedorNuevo = "" + productoAntiguo.getIdProveedor();
+
 		String precioCostoAntiguo = "" + productoAntiguo.getPrecioCosto();
 		String precioCostoNuevo = "" + productoNuevo.getPrecioCosto();
 
@@ -290,10 +293,10 @@ public class ControladorModificarMProducto {
 		String DiasParaReponerAntiguo = "" + productoAntiguo.getDiasParaReponer();
 
 		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idSucursal, idEmpleado,
-				idMaestroProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo,
-				precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo,
-				PuntoRepositorioAntiguo, CantidadAReponerAntiguo, CantidadAReponerAntiguo, DiasParaReponerAntiguo,
-				DiasParaReponerAntiguo);
+				idMaestroProducto, fecha, descripcionAntiguo, descripcionNuevo, proveedorAntiguo, prpobeedorNuevo,
+				precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioAntiguo,
+				CantidadAReponerAntiguo, CantidadAReponerAntiguo, DiasParaReponerAntiguo, DiasParaReponerAntiguo);
 
 		this.historialCambioMProducto.insert(nuevoHistorial);
 
@@ -431,7 +434,7 @@ public class ControladorModificarMProducto {
 		this.maestroProductoEnTablaProducto = ProductosAproximados;
 	}
 
-	public void atras(ActionEvent a) {	
+	public void atras(ActionEvent a) {
 		this.controladorDescripcionProveedorMProducto.ocultarVentana();
 		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
@@ -612,6 +615,11 @@ public class ControladorModificarMProducto {
 				+ this.maestroProductoEnTablaProducto.get(filaSeleccionada).getIdMaestroProducto();
 		String fecha = obtenerFechaDeHoy();
 
+		String descripcionAntiguo = "" + this.maestroProductoEnTablaProducto.get(filaSeleccionada).getDescripcion();
+		String descripcionNuevo = "" + this.maestroProductoEnTablaProducto.get(filaSeleccionada).getDescripcion();
+		String proveedorAntiguo = "" + this.maestroProductoEnTablaProducto.get(filaSeleccionada).getIdProveedor();
+		String prpobeedorNuevo = "" + this.maestroProductoEnTablaProducto.get(filaSeleccionada).getIdProveedor();
+
 		String precioCostoAntiguo = ""
 				+ this.maestroProductoEnTablaProductosModificar.get(filaSeleccionada).getPrecioCosto();
 		String precioCostoNuevo = this.ventanaModificarMProducto.getTxtActualizarPrecioCosto().getText();
@@ -637,10 +645,10 @@ public class ControladorModificarMProducto {
 		String DiasParaReponerNuevo = "" + this.ventanaModificarMProducto.getTxtActualizarDiasParaResponder().getText();
 
 		HistorialCambioMProductoDTO nuevoHistorial = new HistorialCambioMProductoDTO(0, idSucursal, idEmpleado,
-				idMaestroProducto, fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo,
-				precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo,
-				PuntoRepositorioNuevo, CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo,
-				DiasParaReponerNuevo);
+				idMaestroProducto, fecha, descripcionAntiguo, descripcionNuevo, proveedorAntiguo, prpobeedorNuevo,
+				precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioNuevo,
+				CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo, DiasParaReponerNuevo);
 
 		this.historialCambioMProducto.insert(nuevoHistorial);
 
@@ -720,15 +728,12 @@ public class ControladorModificarMProducto {
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
 
-			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
-			Double precioCosto = bdCosto.doubleValue();
+			BigDecimal precioCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMayorista = bdMayorista.doubleValue();
+			BigDecimal precioMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMinorista = bdMinorista.doubleValue();
-
+			BigDecimal precioMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
+			
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
@@ -754,14 +759,11 @@ public class ControladorModificarMProducto {
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
 
-			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
-			Double precioCosto = bdCosto.doubleValue();
+			BigDecimal precioCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMayorista = bdMayorista.doubleValue();
+			BigDecimal precioMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMinorista = bdMinorista.doubleValue();
+			BigDecimal precioMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
 
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
