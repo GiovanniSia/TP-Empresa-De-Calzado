@@ -193,7 +193,7 @@ public class ProcesarCompraVirtual {
 		if(!esDatoStringValido(compraVirtual.getNombre())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El nombre no es valido \n";
 		}
-		if(!esDatoStringValido(compraVirtual.getCUIL()) || compraVirtual.getCUIL().length() != 11 || compraVirtual.getCUIL().matches("[0-9]{11}")) {
+		if(!esDatoStringValido(compraVirtual.getCUIL()) || compraVirtual.getCUIL().length() != 11 || !compraVirtual.getCUIL().matches("[0-9]{11}")) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CUIL no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getApellido())) {
@@ -700,7 +700,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
-				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
@@ -710,7 +710,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
-				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsaasdasdas", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
@@ -738,7 +738,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1994);
 		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
-				"Cubilla", "1231312319987654", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
@@ -774,8 +774,9 @@ public class ProcesarCompraVirtual {
 		JsonListaCompraVirtual.guardarLista(compras);
 		//ProcesarCompraVirtual.RutinaProcesarCompra();
 		*/
-		ProcesarCompraVirtual a = new ProcesarCompraVirtual();
-		a.RutinaProcesarCompra(ConfiguracionBD.getInstance());
+		
+		//ProcesarCompraVirtual a = new ProcesarCompraVirtual();
+		//a.RutinaProcesarCompra(ConfiguracionBD.getInstance());
 	}
 
 }
