@@ -66,7 +66,7 @@ public class ProcesarCompraVirtual {
 				}
 			}
 		};
-		timer.scheduleAtFixedRate(tarea, 0, tiempo);
+		timer.scheduleAtFixedRate(tarea, tiempo, tiempo);
 	}
 	
 	TimerTask tarea;
@@ -94,7 +94,7 @@ public class ProcesarCompraVirtual {
 				}
 			}
 		};
-		timer.scheduleAtFixedRate(tarea, 0, tiempo);
+		timer.scheduleAtFixedRate(tarea, tiempo, tiempo);
 		
 	}
 	
