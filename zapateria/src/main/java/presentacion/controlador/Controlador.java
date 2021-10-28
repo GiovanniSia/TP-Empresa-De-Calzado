@@ -294,6 +294,10 @@ public class Controlador implements ActionListener {
 	}
 
 	public void pasarAConfig(ActionEvent a) {
+		
+		if(this.controladorTareasAutomatizadas.ventanaYaFueInicializada()) {
+			return;
+		}
 		this.ventanaTareasAutomatizadas.show();
 		this.controladorTareasAutomatizadas.inicializar();
 	}

@@ -111,4 +111,10 @@ public class ControladorTareasAutomatizadas {
 		
 	}
 	
+	public boolean ventanaYaFueInicializada() {
+		return this.ventanaTareasAutomatizadas.getFrame().isShowing();
+	}
+	
+	
+	
 }

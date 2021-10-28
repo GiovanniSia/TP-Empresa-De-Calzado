@@ -673,4 +673,10 @@ public class ControladorRealizarVenta {
 			}
 		});
 	}	
+	
+	
+	public boolean ventanaYaFueInicializada() {
+		return this.ventanaRealizarVenta.getFrame().isShowing();
+	}
+	
 }

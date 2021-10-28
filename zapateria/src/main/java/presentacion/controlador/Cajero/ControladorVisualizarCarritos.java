@@ -279,6 +279,11 @@ public class ControladorVisualizarCarritos {
 		
 		}
 		
+		if(this.controladorRealizarVenta.ventanaYaFueInicializada()) {
+			JOptionPane.showMessageDialog(null, "Ya se esta cobrando una venta");
+			return;
+		}
+		
 		//si selecciona que si devuelve un 0, no un 1, y la x un -1
 		if(resp==0) {
 			CarritoDTO carrito = this.carritosEnTabla.get(filaSeleccionada);

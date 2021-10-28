@@ -23,7 +23,8 @@ import javax.swing.SpinnerDateModel;
 public class VentanaTareasAutomatizadas {
 
 	private JFrame frame;
-	
+
+
 	private JComboBox<String> comboBoxPedidosDias;
 	private JSpinner spinnerPedidosHora;	
 	private JSpinner spinnerTolerancia;
@@ -227,6 +228,9 @@ public class VentanaTareasAutomatizadas {
 	public JButton getBtnRegresar() {
 		return btnRegresar;
 	}
-
+	
+	public JFrame getFrame() {
+		return frame;
+	}
 }
 

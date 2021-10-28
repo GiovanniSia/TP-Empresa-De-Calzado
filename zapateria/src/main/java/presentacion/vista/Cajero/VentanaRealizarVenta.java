@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 public class VentanaRealizarVenta {
 
 	private JFrame frame;
+
 	private final JPanel panel = new JPanel();
 	
 	private JTable tableMedioPago;
@@ -427,4 +428,8 @@ public class VentanaRealizarVenta {
 	public JLabel getLblDescuentoDescontado() {
 		return lblDescuentoDescontado;
 	}
+	public JFrame getFrame() {
+		return frame;
+	}
+
 }
