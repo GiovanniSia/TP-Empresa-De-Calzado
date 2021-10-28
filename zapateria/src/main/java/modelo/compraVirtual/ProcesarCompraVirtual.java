@@ -440,8 +440,8 @@ public class ProcesarCompraVirtual {
 	private static void registrarCompraVirtual(CompraVirtualDTO compraVirtual) {
 		String nroFactura = generarFacturaCompraVirtual(compraVirtual);
 		registrarIngreso(compraVirtual, nroFactura);
-		ReporteFactura reporte = new ReporteFactura(nroFactura);
-		reporte.mostrar();
+//		ReporteFactura reporte = new ReporteFactura(nroFactura);
+//		reporte.mostrar();
 	}
 
 	private static void registrarIngreso(CompraVirtualDTO compraVirtual, String nroFactura) {

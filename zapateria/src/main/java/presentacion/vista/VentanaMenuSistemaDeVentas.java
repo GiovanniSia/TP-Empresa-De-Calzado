@@ -54,6 +54,8 @@ public class VentanaMenuSistemaDeVentas {
 	private JLabel lblNewLabel_5;
 	private JButton btnConfig;
 
+	private JLabel lblNombreSucursal;
+	
 //	private JButton btnConfig;
 
 
@@ -120,11 +122,11 @@ public class VentanaMenuSistemaDeVentas {
 		lblNewLabel_4.setBounds(693, 0, 68, 50);
 		panel_1.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("NombreSucursal");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(760, 0, 177, 50);
-		panel_1.add(lblNewLabel_1_1);
+		lblNombreSucursal = new JLabel("NombreSucursal");
+		lblNombreSucursal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNombreSucursal.setBounds(760, 0, 177, 50);
+		panel_1.add(lblNombreSucursal);
 		
 		btnArmarVenta = new JButton("Armar Venta");
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
@@ -391,5 +393,11 @@ public class VentanaMenuSistemaDeVentas {
 
 	public JButton getBtnVerComprasVirtuales() {
 		return btnVerComprasVirtuales;
+	}
+	
+
+
+	public JLabel getLblNombreSucursal() {
+		return lblNombreSucursal;
 	}
 }
