@@ -202,7 +202,7 @@ public class VentanaIngresosCaja extends JFrame {
 		lblAtras.setBounds(96, 97, 44, 50);
 		panel_2.add(lblAtras);
 		
-		lblRecargar = new JLabel("Recargar");
+		lblRecargar = new JLabel("Ingresar");
 		lblRecargar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblRecargar.setBounds(373, 98, 76, 50);
 		panel_2.add(lblRecargar);

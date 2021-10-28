@@ -154,9 +154,9 @@ public class VentanaEgresoCaja extends JFrame {
 		lblNewLabel_2_1.setBounds(272, 83, 130, 22);
 		contentPane.add(lblNewLabel_2_1);
 
-		lblAS = new JLabel("Nro. Legajo:");
+		lblAS = new JLabel("N\u00B0 Legajo:");
 		lblAS.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblAS.setBounds(219, 143, 99, 18);
+		lblAS.setBounds(219, 143, 58, 18);
 		contentPane.add(lblAS);
 
 		txtFieldAS = new JTextField();
@@ -171,7 +171,7 @@ public class VentanaEgresoCaja extends JFrame {
 				}
 			}
 		});
-		txtFieldAS.setBounds(272, 143, 130, 20);
+		txtFieldAS.setBounds(282, 143, 110, 20);
 		contentPane.add(txtFieldAS);
 		txtFieldAS.setColumns(10);
 
@@ -248,7 +248,7 @@ public class VentanaEgresoCaja extends JFrame {
 				}
 			}
 		});
-		txtFieldNC.setBounds(287, 143, 130, 20);
+		txtFieldNC.setBounds(287, 143, 99, 20);
 		contentPane.add(txtFieldNC);
 		txtFieldNC.setColumns(10);
 		
