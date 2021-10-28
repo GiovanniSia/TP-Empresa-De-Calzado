@@ -2,6 +2,8 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.ParseException;
 
 import javax.swing.JOptionPane;
 
@@ -14,6 +16,7 @@ import modelo.DetalleCarrito;
 import modelo.DetalleFactura;
 import modelo.Egresos;
 import modelo.Empleado;
+import modelo.EnviarCorreosAProveedoresAutomatico;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
@@ -271,10 +274,10 @@ public class Controlador implements ActionListener {
 		
 		//Ver pedidos a prov
 		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
-		
+
 //		try {
 //			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
-//		} catch (ParseException e) {
+//		}catch (IOException | ParseException e) {
 //			e.printStackTrace();
 //		}
 	}

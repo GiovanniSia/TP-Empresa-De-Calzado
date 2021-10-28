@@ -39,7 +39,22 @@ import dto.ProveedorDTO;
 import modelo.compraVirtual.ProcesarCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 
-public class EnviarCorreosAProveedoresAutomatico {
+public class EnviarCorreosAProveedoresAutomatico extends Thread{
+	
+	public void run() {
+		ConfiguracionBD config = ConfiguracionBD.getInstance();
+		try {
+			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException, IOException {
 		
 		boolean yaFueSeteado = false;
@@ -56,7 +71,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		Timer timer = new Timer();
 		
 		TimerTask tarea = new TimerTask() {
-	
+			
 			@Override
 			public void run() {
 				//Enviar mails
@@ -75,64 +90,90 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //				e.printStackTrace();
 //			} 	
 //		}
-		
+		Date fe;
 		ProcesarCompraVirtual procesoDeCompraVirtual = new ProcesarCompraVirtual();
 		procesoDeCompraVirtual.RutinaProcesarCompra(config);
 		while(true) {
 			
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy"); 
-			String fecha = dtf.format(LocalDateTime.now());
+//			System.out.println("deberia andar el while :(");
 			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			String fecha = dtf.format(LocalDateTime.now());
+	
 			SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = inFormat.parse(fecha);
 			SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
-			String d = outFormat.format(date); 
-			
-			String cadenaNormalize = Normalizer.normalize(d, Normalizer.Form.NFD);   
+			String d = outFormat.format(date);
+	
+			String cadenaNormalize = Normalizer.normalize(d, Normalizer.Form.NFD);
 			String dia = cadenaNormalize.replaceAll("[^\\p{ASCII}]", "");
-			
-			//goal devuelve el dia actual
-			
-		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		    String horaActual = tf.format(LocalDateTime.now());
-			
-			
-			System.out.println("El dia y hora segun el properties: "+diaDeEnvio +" - "+ horaProperties+"\nEl dia y hora actual: "+dia+" - "+horaActual);
-		    
-			if(dia.equals(diaDeEnvio) && !yaFueSeteado) {
-//				System.out.println("entro a ver si hoy es el dia: "+dia+" - "+diaDeEnvio);
-				//SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE ENVIE
-				Date fe;
+	
+			// goal devuelve el dia actual
+	
+			DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+			String horaActual = tf.format(LocalDateTime.now());
+	
+			System.out.println("El dia y hora segun el properties: " + diaDeEnvio + " - " + horaProperties
+					+ "\nEl dia y hora actual: " + dia + " - " + horaActual+"\nYa fue seteado: "+yaFueSeteado);
+	
+			if (dia.equals(diaDeEnvio) && !yaFueSeteado) {
+//					System.out.println("entro a ver si hoy es el dia: "+dia+" - "+diaDeEnvio);
+				// SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE
+				// ENVIE
+
 				try {
-					fe = establecerFechaParaElTimer(dia,horaProperties);
+					fe = establecerFechaParaElTimer(dia, horaProperties);
+					timer.cancel();
+					timer = new Timer();
+					tarea = new TimerTask() {
+						
+						@Override
+						public void run() {
+							//Enviar mails
+							enviarMails();
+							System.out.println("se ejecuta el timer");
+								
+						}
+					};
+					
 					timer.schedule(tarea, fe);
-					yaFueSeteado=true;
+					System.out.println("se reestablece el timer");
+					yaFueSeteado = true;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-			}else {
-				if(!dia.equals(diaDeEnvio)) {
-					yaFueSeteado=false;
+	
+			} else {
+				if (!dia.equals(diaDeEnvio)) {
+					yaFueSeteado = false;
 				}
-				
+	
 			}
+			
+			
+			
 			try {
-				if(seCambioElProperties()) {
+				if (seCambioElProperties()) {
 					diaDeEnvio = config.getValue("DiaDeEnvio");
 					horaProperties = config.getValue("HoraDeEnvio");
-					System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
+//					System.out.println("dia de envio: " + diaDeEnvio + "\nhora de envio: " + horaProperties);
 					procesoDeCompraVirtual.cambioConfig(config);
+					yaFueSeteado = false;
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-			
+				
+				
 			
 		}
 	}
 	
+	public void reiniciarTimer() {
+		
+	}
+
+
 	@SuppressWarnings("deprecation")
 	private static Date establecerFechaParaElTimer(String NombreDia,String hora) {
 		Calendar fecha = new GregorianCalendar();
@@ -144,7 +185,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		int h = Integer.parseInt(hora.substring(0, 2));
 		int min = Integer.parseInt(hora.substring(3, 5));
 		int seg = Integer.parseInt(hora.substring(6, 8));
-//		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
+		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
 		return new Date(anio,mes,diaActual,h,min,seg);//fecha de hoy 21/10/21
 	}
 	
@@ -169,8 +210,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //			enviarMail(prov,pedidosDeProv);
 			if(pedidosDeProv.size()!=0) {
 //				System.out.println("se envia el mail");
-				imprimirMail(pedidosDeProv);
-//				enviarMail(prov,pedidosDeProv);
+//				imprimirMail(pedidosDeProv);
+				enviarMail(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
 				System.out.println("se envia el mail!!");
 			}
@@ -217,8 +258,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 
 			String correoRemitente = "subelza150@gmail.com";
 			String contrasenia = "";
-			String correoReceptor = "sebastianx3600@gmail.com";
-			String asunto = "Prueba";
+			String correoReceptor = "subelza150@gmail.com";
+			String asunto = "Pedido de Reposicion";
 			
 			MimeMessage message = new MimeMessage(session);
 
