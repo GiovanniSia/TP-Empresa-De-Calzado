@@ -89,7 +89,7 @@ public class VentanaAsignarProductoAProveedor {
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(150, 10, 1115, 839);
+		frame.setBounds(150, 10, 1221, 610);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
@@ -140,100 +140,96 @@ public class VentanaAsignarProductoAProveedor {
 				return false;
 			}
 		};
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(248, 248, 255));
-		panel_2.setBounds(0, 0, 1110, 810);
-		frame.getContentPane().add(panel_2);
-		
-		JPanel panel = new JPanel();
-		panel_2.add(panel);
-		panel.setBackground(new Color(248, 248, 255));
-		//		panel.setBounds(10, 0, 1126, 705);
-		//		frame.getContentPane().add(panel);
-				panel.setLayout(null);
-				panel.setPreferredSize(new Dimension(1100,800));
-				JLabel lblAsignarProductoAProv = new JLabel("Asignar Producto a un proveedor");
-				lblAsignarProductoAProv.setFont(new Font("Segoe UI", Font.BOLD, 22));
-				lblAsignarProductoAProv.setBounds(10, 56, 1080, 46);
-				//		frame.getContentPane().add(lblAsignarProductoAProv);
-						panel.add(lblAsignarProductoAProv);
-						
-						JLabel lblNewLabel = new JLabel("Proveedor elegido");
-						lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-						lblNewLabel.setBounds(10, 113, 560, 30);
-						//		frame.getContentPane().add(lblNewLabel);
-								panel.add(lblNewLabel);
-								
-								JLabel lblProductosDelProveedor = new JLabel("Productos del proveedor");
-								lblProductosDelProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-								lblProductosDelProveedor.setBounds(10, 469, 231, 30);
-								//		frame.getContentPane().add(lblProductosDelProveedor);
-										panel.add(lblProductosDelProveedor);
-										
-										JLabel lblListaDeProductos = new JLabel("Lista de Productos de la fabrica");
-										lblListaDeProductos.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-										lblListaDeProductos.setBounds(10, 215, 322, 30);
-										//		frame.getContentPane().add(lblListaDeProductos);
-												panel.add(lblListaDeProductos);
-												JScrollPane scrollPaneProvElegido = new JScrollPane(this.tableProvElegido,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-												scrollPaneProvElegido.setBounds(10, 138, 1068, 50);
-												
-												tableProvElegido = new JTable(modelTablaProvElegido);
-												tableProvElegido.setBackground(Color.WHITE);
-												tableProvElegido.setBounds(10, 106, 1116, 97);
-												tableProvElegido.getTableHeader().setReorderingAllowed(false) ;
-												scrollPaneProvElegido.setViewportView(tableProvElegido);
-												//		frame.getContentPane().add(scrollPaneProvElegido);
-														panel.add(scrollPaneProvElegido);
-														JScrollPane scrollPaneProdDeProv = new JScrollPane(this.tableProdDeProv,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-														scrollPaneProdDeProv.setBounds(10, 506, 1068, 208);
-														
-														tableProdDeProv = new JTable(modelTablaProdDeProv);
-														tableProdDeProv.setBounds(10, 252, 1116, 208);
-														tableProdDeProv.getTableHeader().setReorderingAllowed(false) ;
-														scrollPaneProdDeProv.setViewportView(tableProdDeProv);
-														//		frame.getContentPane().add(scrollPaneProdDeProv);
-																panel.add(scrollPaneProdDeProv);
-																
-																		
-																		JScrollPane scrollPaneTodosLosProd = new JScrollPane(this.tableTodosLosProd,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-																		scrollPaneTodosLosProd.setBounds(10, 290, 1068, 168);
-																		
-																		tableTodosLosProd = new JTable(modelTablaProductos);
-																		tableTodosLosProd.setBounds(10, 535, 1126, 168);
-																		tableTodosLosProd.getTableHeader().setReorderingAllowed(false) ;
-																		scrollPaneTodosLosProd.setViewportView(tableTodosLosProd);
-																		//		frame.getContentPane().add(scrollPaneTodosLosProd);
-																				panel.add(scrollPaneTodosLosProd);
-																				
-																				JLabel lblNewLabel_1 = new JLabel("Filtrar por:");
-																				lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-																				lblNewLabel_1.setBounds(10, 256, 96, 25);
-																				//		frame.getContentPane().add(lblNewLabel_1);
-																						panel.add(lblNewLabel_1);
-																								
-																								textNombre = new JTextField();
-																								textNombre.setBounds(116, 260, 132, 19);
-																								//		frame.getContentPane().add(textNombre);
-																										panel.add(textNombre);
-																										textNombre.setColumns(10);
-																										
-																										btnAgregar = new JButton("");
-																										btnAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-																										btnAgregar.setBounds(1028, 229, 50, 50);
-																										cambiarIconoBotones(btnAgregar,  "plus.png");
-																										//		frame.getContentPane().add(btnAgregar);
-																												panel.add(btnAgregar);
-																												
+	    														
+	    														JPanel panel = new JPanel();
+	    														panel.setBounds(0, 0, 1205, 571);
+	    														frame.getContentPane().add(panel);
+	    														panel.setBackground(new Color(248, 248, 255));
+	    														//		panel.setBounds(10, 0, 1126, 705);
+	    														//		frame.getContentPane().add(panel);
+	    																panel.setLayout(null);
+	    																panel.setPreferredSize(new Dimension(1279,600));
+	    																JLabel lblAsignarProductoAProv = new JLabel("Asignar Producto a un proveedor");
+	    																lblAsignarProductoAProv.setFont(new Font("Segoe UI", Font.BOLD, 22));
+	    																lblAsignarProductoAProv.setBounds(10, 56, 1080, 46);
+	    																//		frame.getContentPane().add(lblAsignarProductoAProv);
+	    																		panel.add(lblAsignarProductoAProv);
+	    																		
+	    																		JLabel lblNewLabel = new JLabel("Proveedor elegido");
+	    																		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+	    																		lblNewLabel.setBounds(10, 97, 560, 46);
+	    																		//		frame.getContentPane().add(lblNewLabel);
+	    																				panel.add(lblNewLabel);
+	    																				
+	    																				JLabel lblProductosDelProveedor = new JLabel("Productos del proveedor");
+	    																				lblProductosDelProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+	    																				lblProductosDelProveedor.setBounds(10, 366, 348, 30);
+	    																				//		frame.getContentPane().add(lblProductosDelProveedor);
+	    																						panel.add(lblProductosDelProveedor);
+	    																						
+	    																						JLabel lblListaDeProductos = new JLabel("Lista de Productos");
+	    																						lblListaDeProductos.setFont(new Font("Segoe UI", Font.PLAIN, 17));
+	    																						lblListaDeProductos.setBounds(498, 109, 322, 30);
+	    																						//		frame.getContentPane().add(lblListaDeProductos);
+	    																								panel.add(lblListaDeProductos);
+	    																								JScrollPane scrollPaneProvElegido = new JScrollPane(this.tableProvElegido,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    																								scrollPaneProvElegido.setBounds(10, 138, 470, 50);
+	    																								
+	    																								tableProvElegido = new JTable(modelTablaProvElegido);
+	    																								tableProvElegido.setBackground(Color.WHITE);
+	    																								tableProvElegido.setBounds(10, 106, 1116, 97);
+	    																								tableProvElegido.getTableHeader().setReorderingAllowed(false) ;
+	    																								scrollPaneProvElegido.setViewportView(tableProvElegido);
+	    																								//		frame.getContentPane().add(scrollPaneProvElegido);
+	    																										panel.add(scrollPaneProvElegido);
+	    																										JScrollPane scrollPaneProdDeProv = new JScrollPane(this.tableProdDeProv,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    																										scrollPaneProdDeProv.setBounds(10, 395, 1185, 168);
+	    																										
+	    																										tableProdDeProv = new JTable(modelTablaProdDeProv);
+	    																										tableProdDeProv.setBounds(10, 252, 1116, 208);
+	    																										tableProdDeProv.getTableHeader().setReorderingAllowed(false) ;
+	    																										scrollPaneProdDeProv.setViewportView(tableProdDeProv);
+	    																										//		frame.getContentPane().add(scrollPaneProdDeProv);
+	    																												panel.add(scrollPaneProdDeProv);
+	    																												
+	    																														
+	    																														JScrollPane scrollPaneTodosLosProd = new JScrollPane(this.tableTodosLosProd,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    																														scrollPaneTodosLosProd.setBounds(498, 184, 698, 168);
+	    																														
+	    																														tableTodosLosProd = new JTable(modelTablaProductos);
+	    																														tableTodosLosProd.setBounds(10, 535, 1126, 168);
+	    																														tableTodosLosProd.getTableHeader().setReorderingAllowed(false) ;
+	    																														scrollPaneTodosLosProd.setViewportView(tableTodosLosProd);
+	    																														//		frame.getContentPane().add(scrollPaneTodosLosProd);
+	    																																panel.add(scrollPaneTodosLosProd);
+	    																																
+	    																																JLabel lblNewLabel_1 = new JLabel("Filtrar por:");
+	    																																lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+	    																																lblNewLabel_1.setBounds(498, 150, 96, 25);
+	    																																//		frame.getContentPane().add(lblNewLabel_1);
+	    																																		panel.add(lblNewLabel_1);
+	    																																		
+	    																																		textNombre = new JTextField();
+	    																																		textNombre.setBounds(604, 154, 132, 19);
+	    																																		//		frame.getContentPane().add(textNombre);
+	    																																				panel.add(textNombre);
+	    																																				textNombre.setColumns(10);
+	    																																				
+	    																																				btnAgregar = new JButton("");
+	    																																				btnAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+	    																																				btnAgregar.setBounds(1116, 123, 50, 50);
+	    																																				cambiarIconoBotones(btnAgregar,  "plus.png");
+	    																																				//		frame.getContentPane().add(btnAgregar);
+	    																																						panel.add(btnAgregar);
+	    																																						
 	    btnQuitar = new JButton("Quitar");
 	    btnQuitar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-	    btnQuitar.setBounds(951, 471, 126, 25);
+	    btnQuitar.setBounds(1070, 359, 126, 25);
 	    //		frame.getContentPane().add(btnQuitar);
 	    		panel.add(btnQuitar);
 	    		
 	    		btnSalir = new JButton("");
-	    		btnSalir.setBounds(116, 725, 60, 60);
+	    		btnSalir.setBounds(182, 257, 60, 60);
 	    		cambiarIconoBotones(btnSalir,  "back2.png");
 	    		//		frame.getContentPane().add(btnSalir);
 	    				panel.add(btnSalir);
@@ -247,7 +243,7 @@ public class VentanaAsignarProductoAProveedor {
                 }
             }
         });
-	    				textPrecioVenta.setBounds(801, 260, 96, 19);
+	    				textPrecioVenta.setBounds(889, 154, 96, 19);
 	    				//		frame.getContentPane().add(textPrecioVenta);
 	    						panel.add(textPrecioVenta);
 	    						textPrecioVenta.setColumns(10);
@@ -262,32 +258,32 @@ public class VentanaAsignarProductoAProveedor {
             }
         });
 	    						textCantPorLote.setColumns(10);
-	    						textCantPorLote.setBounds(922, 259, 96, 19);
+	    						textCantPorLote.setBounds(1010, 153, 96, 19);
 	    						//		frame.getContentPane().add(textCantPorLote);
 	    								panel.add(textCantPorLote);
 	    								
 	    								JLabel lblPrecioVenta = new JLabel("Precio Venta");
 	    								lblPrecioVenta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-	    								lblPrecioVenta.setBounds(801, 236, 89, 13);
+	    								lblPrecioVenta.setBounds(889, 130, 89, 13);
 	    								//		frame.getContentPane().add(lblPrecioVenta);
 	    										panel.add(lblPrecioVenta);
 	    										
 	    										JLabel lblCantidadPorLote = new JLabel("Cantidad por lote");
 	    										lblCantidadPorLote.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-	    										lblCantidadPorLote.setBounds(922, 236, 96, 13);
+	    										lblCantidadPorLote.setBounds(1010, 130, 96, 13);
 	    										//		frame.getContentPane().add(lblCantidadPorLote);
 	    												panel.add(lblCantidadPorLote);
 	    												
 	    												btnModificarCantidadPorLote = new JButton("Modificar Cantidad por Lote");
 	    												btnModificarCantidadPorLote.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-	    												btnModificarCantidadPorLote.setBounds(667, 471, 274, 25);
+	    												btnModificarCantidadPorLote.setBounds(786, 359, 274, 25);
 	    												//		frame.getContentPane().add(btnModificarCantidadPorLote);
 	    														panel.add(btnModificarCantidadPorLote);
 	    														
 	    														JPanel panel_1 = new JPanel();
 	    														panel_1.setLayout(null);
 	    														panel_1.setBackground(new Color(153, 204, 255));
-	    														panel_1.setBounds(0, 0, 1090, 50);
+	    														panel_1.setBounds(0, 0, 1269, 50);
 	    														panel.add(panel_1);
 	    														
 	    														JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
@@ -298,12 +294,12 @@ public class VentanaAsignarProductoAProveedor {
 	    														
 	    														JLabel lblDescripcion = new JLabel("Descripcion");
 	    														lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-	    														lblDescripcion.setBounds(116, 247, 89, 13);
+	    														lblDescripcion.setBounds(604, 141, 89, 13);
 	    														panel.add(lblDescripcion);
 	    														
 	    														JLabel lblAtras = new JLabel("Atras");
 	    														lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-	    														lblAtras.setBounds(186, 725, 231, 60);
+	    														lblAtras.setBounds(252, 257, 50, 60);
 	    														panel.add(lblAtras);
 
 	}

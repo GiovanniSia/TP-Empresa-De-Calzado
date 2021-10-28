@@ -68,7 +68,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		panel.setLayout(null);
 
 		spHistorialCambiosMProducto = new JScrollPane();
-		spHistorialCambiosMProducto.setBounds(10, 11, 1254, 167);
+		spHistorialCambiosMProducto.setBounds(0, 11, 1264, 167);
 		panel.add(spHistorialCambiosMProducto);
 
 		modelhistorialCambioMProducto = new DefaultTableModel(null, nombreColumnas) {

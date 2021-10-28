@@ -152,7 +152,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 
 		lblTItulo = new JLabel("Cambiar Descripcion y Proveedor de Producto");
 		lblTItulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblTItulo.setBounds(10, 55, 469, 30);
+		lblTItulo.setBounds(10, 55, 492, 30);
 		frame.getContentPane().add(lblTItulo);
 		
 		panel = new JPanel();

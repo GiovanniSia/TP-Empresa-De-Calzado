@@ -127,7 +127,7 @@ public class ControladorTareasAutomatizadas {
 			config.writeValue("CompraVirtualTolerancia", toleranciaComprasVirtuales+"");
 			config.writeValue("CompraVirtualMinutosProceso", minutosComprasVirtuales);
 			
-			JOptionPane.showMessageDialog(null, "Datos actualizados correctamente", "Actualizacion", JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(null, "Datos actualizados correctamente", "Actualizacion", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

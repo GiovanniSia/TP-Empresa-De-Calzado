@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class VentanaMenuSistemaDeVentas {
 
@@ -89,7 +90,7 @@ public class VentanaMenuSistemaDeVentas {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 822, 724);
+		frame.setBounds(100, 100, 962, 529);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Zapateria Argento - Sistema de Ventas");
 		frame.getContentPane().setLayout(null);
@@ -98,13 +99,13 @@ public class VentanaMenuSistemaDeVentas {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 0, 806, 684);
+		panel.setBounds(0, 0, 946, 491);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 808, 50);
+		panel_1.setBounds(0, 0, 1084, 50);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -116,49 +117,55 @@ public class VentanaMenuSistemaDeVentas {
 		
 		lblNewLabel_4 = new JLabel("Sucursal:");
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblNewLabel_4.setBounds(565, 0, 109, 50);
+		lblNewLabel_4.setBounds(693, 0, 68, 50);
 		panel_1.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("NombreSucursal");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel_1_1.setBounds(760, 0, 177, 50);
+		panel_1.add(lblNewLabel_1_1);
 		
 		btnArmarVenta = new JButton("Armar Venta");
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnArmarVenta.setBounds(53, 133, 282, 41);
+		btnArmarVenta.setBounds(10, 86, 282, 41);
 		panel.add(btnArmarVenta);
 		
 		btnCobrarVenta = new JButton("Cobrar Venta");
 		btnCobrarVenta.setForeground(new Color(51, 102, 153));
 		btnCobrarVenta.setBackground(new Color(51, 102, 204));
 		btnCobrarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnCobrarVenta.setBounds(53, 221, 282, 41);
+		btnCobrarVenta.setBounds(10, 174, 282, 41);
 		panel.add(btnCobrarVenta);
 		
 		btnCotizaciones = new JButton("Cotizaciones");
 		btnCotizaciones.setForeground(new Color(51, 102, 153));
 		btnCotizaciones.setBackground(new Color(51, 102, 204));
 		btnCotizaciones.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnCotizaciones.setBounds(449, 133, 282, 41);
+		btnCotizaciones.setBounds(332, 86, 282, 41);
 		panel.add(btnCotizaciones);
 		
 		btnEgresoCaja = new JButton("Egreso de Caja");
 		btnEgresoCaja.setForeground(new Color(51, 102, 153));
 		btnEgresoCaja.setBackground(new Color(51, 102, 204));
 		btnEgresoCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnEgresoCaja.setBounds(53, 322, 282, 41);
+		btnEgresoCaja.setBounds(10, 275, 282, 41);
 		panel.add(btnEgresoCaja);
 		
 		btnIngresoCaja = new JButton("Ingreso de Caja");
 		btnIngresoCaja.setForeground(new Color(51, 102, 153));
 		btnIngresoCaja.setBackground(new Color(51, 102, 204));
 		btnIngresoCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnIngresoCaja.setBounds(53, 273, 282, 41);
+		btnIngresoCaja.setBounds(10, 226, 282, 41);
 		panel.add(btnIngresoCaja);
 		
 		btnCierreCaja = new JButton("Cierre de Caja");
 		btnCierreCaja.setForeground(new Color(51, 102, 153));
 		btnCierreCaja.setBackground(new Color(51, 102, 204));
 		btnCierreCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnCierreCaja.setBounds(53, 374, 282, 41);
+		btnCierreCaja.setBounds(10, 327, 282, 41);
 		panel.add(btnCierreCaja);
 		
 
@@ -166,14 +173,14 @@ public class VentanaMenuSistemaDeVentas {
 		btnModPrecioUnitario.setForeground(new Color(51, 102, 153));
 		btnModPrecioUnitario.setBackground(new Color(51, 102, 204));
 		btnModPrecioUnitario.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnModPrecioUnitario.setBounds(449, 303, 282, 41);
+		btnModPrecioUnitario.setBounds(332, 256, 282, 41);
 
 		panel.add(btnModPrecioUnitario);
 		
 		btnRegresar = new JButton("");
 
 		btnRegresar.setBackground(new Color(248, 248, 255));
-		btnRegresar.setBounds(53, 469, 55, 50);
+		btnRegresar.setBounds(91, 407, 60, 60);
 		cambiarIconoBotones(btnRegresar,  "back2.png");
 
 		panel.add(btnRegresar);
@@ -182,7 +189,7 @@ public class VentanaMenuSistemaDeVentas {
 		btnGenerarOrdenDe.setForeground(new Color(51, 102, 153));
 		btnGenerarOrdenDe.setBackground(new Color(51, 102, 204));
 		btnGenerarOrdenDe.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnGenerarOrdenDe.setBounds(449, 374, 282, 41);
+		btnGenerarOrdenDe.setBounds(332, 327, 282, 41);
 		panel.add(btnGenerarOrdenDe);
 		
 
@@ -190,14 +197,14 @@ public class VentanaMenuSistemaDeVentas {
 		btnRegistrarUnCliente.setForeground(new Color(51, 102, 153));
 		btnRegistrarUnCliente.setBackground(new Color(51, 102, 204));
 		btnRegistrarUnCliente.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnRegistrarUnCliente.setBounds(449, 185, 282, 41);
+		btnRegistrarUnCliente.setBounds(332, 138, 282, 41);
 		panel.add(btnRegistrarUnCliente);
 		
 		btnIngresarProductoNuevo = new JButton("Ingresar Producto Nuevo");
 		btnIngresarProductoNuevo.setForeground(new Color(51, 102, 153));
 		btnIngresarProductoNuevo.setBackground(new Color(51, 102, 204));
 		btnIngresarProductoNuevo.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnIngresarProductoNuevo.setBounds(449, 254, 282, 41);
+		btnIngresarProductoNuevo.setBounds(332, 207, 282, 41);
 		panel.add(btnIngresarProductoNuevo);
 		
 
@@ -205,10 +212,10 @@ public class VentanaMenuSistemaDeVentas {
 		btnVerProveedores.setForeground(new Color(51, 102, 153));
 		btnVerProveedores.setBackground(new Color(51, 102, 204));
 		btnVerProveedores.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnVerProveedores.setBounds(449, 478, 282, 41);
+		btnVerProveedores.setBounds(655, 138, 282, 41);
 		panel.add(btnVerProveedores);
 		
-		btnVerPedidosA = new JButton("Ver Pedidos a Proveedores");
+		btnVerPedidosA = new JButton("Pedidos a Proveedores");
 		btnVerPedidosA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -216,67 +223,77 @@ public class VentanaMenuSistemaDeVentas {
 		btnVerPedidosA.setForeground(new Color(51, 102, 153));
 		btnVerPedidosA.setBackground(new Color(51, 102, 204));
 		btnVerPedidosA.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnVerPedidosA.setBounds(449, 426, 282, 41);
+		btnVerPedidosA.setBounds(655, 86, 282, 41);
 		panel.add(btnVerPedidosA);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(53, 185, 282, 6);
+		separator.setBounds(10, 138, 282, 6);
 		panel.add(separator);
 		
 		lblNewLabel_1 = new JLabel("Vendedor");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblNewLabel_1.setBounds(53, 108, 55, 14);
+		lblNewLabel_1.setBounds(10, 61, 282, 14);
 		panel.add(lblNewLabel_1);
 		
 
 		lblNewLabel_2 = new JLabel("Cajero");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblNewLabel_2.setBounds(53, 196, 55, 14);
+		lblNewLabel_2.setBounds(10, 149, 282, 14);
 		panel.add(lblNewLabel_2);
 		
 		lblNewLabel_3 = new JLabel("Supervisor / Gerente");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblNewLabel_3.setBounds(449, 108, 109, 14);
+		lblNewLabel_3.setBounds(332, 61, 605, 14);
 		panel.add(lblNewLabel_3);
 		
 		separator_1 = new JSeparator();
-		separator_1.setBounds(449, 237, 282, 6);
+		separator_1.setBounds(332, 190, 282, 6);
 		panel.add(separator_1);
 		
 		separator_2 = new JSeparator();
-		separator_2.setBounds(449, 357, 282, 6);
+		separator_2.setBounds(332, 310, 282, 6);
 		panel.add(separator_2);
 		
 		lblNewLabel_5 = new JLabel("Atr\u00E1s");
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_5.setBounds(138, 469, 55, 50);
+		lblNewLabel_5.setBounds(165, 407, 36, 60);
 		panel.add(lblNewLabel_5);
 		
-		btnConfig = new JButton("");
-		btnConfig.setBounds(741, 58, 55, 41);
+		btnConfig = new JButton("Tareas Autom\u00E1ticas");
+		btnConfig.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnConfig.setForeground(new Color(51, 102, 153));
+		btnConfig.setBackground(new Color(51, 102, 204));
+		btnConfig.setBounds(655, 327, 282, 41);
 		panel.add(btnConfig);
 		
 		JSeparator separator_1_1 = new JSeparator();
-		separator_1_1.setBounds(449, 530, 282, 6);
+		separator_1_1.setBounds(655, 190, 282, 6);
 		panel.add(separator_1_1);
 		
-		btnVerReporteRanking = new JButton("Ranking de ventas");
+		btnVerReporteRanking = new JButton("Ranking de Ventas");
 		btnVerReporteRanking.setForeground(new Color(51, 102, 153));
-		btnVerReporteRanking.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerReporteRanking.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerReporteRanking.setBackground(new Color(51, 102, 204));
-		btnVerReporteRanking.setBounds(449, 547, 282, 41);
+		btnVerReporteRanking.setBounds(655, 207, 282, 41);
 		panel.add(btnVerReporteRanking);
 		
-		btnVerComprasVirtuales = new JButton("Compras virtuales");
+		btnVerComprasVirtuales = new JButton("Compras Virtuales");
 		btnVerComprasVirtuales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		btnVerComprasVirtuales.setForeground(new Color(51, 102, 153));
-		btnVerComprasVirtuales.setFont(new Font("Oxygen", Font.BOLD, 20));
+		btnVerComprasVirtuales.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerComprasVirtuales.setBackground(new Color(51, 102, 204));
-		btnVerComprasVirtuales.setBounds(449, 599, 282, 41);
+		btnVerComprasVirtuales.setBounds(655, 259, 282, 41);
 		panel.add(btnVerComprasVirtuales);
+		
+		JSeparator separator_2_1 = new JSeparator();
+		separator_2_1.setBounds(655, 310, 282, 6);
+		panel.add(separator_2_1);
 
 	}
 	
@@ -375,5 +392,4 @@ public class VentanaMenuSistemaDeVentas {
 	public JButton getBtnVerComprasVirtuales() {
 		return btnVerComprasVirtuales;
 	}
-
 }
