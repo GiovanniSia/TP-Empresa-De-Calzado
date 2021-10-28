@@ -210,8 +210,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //			enviarMail(prov,pedidosDeProv);
 			if(pedidosDeProv.size()!=0) {
 //				System.out.println("se envia el mail");
-				imprimirMail(pedidosDeProv);
-//				enviarMail(prov,pedidosDeProv);
+//				imprimirMail(pedidosDeProv);
+				enviarMail(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
 				System.out.println("se envia el mail!!");
 			}
@@ -239,12 +239,13 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		System.out.println("el msj: \n"+mensaje);
 	}
 	
+	//se recibe un proveedor con todos sus pedidos
 	private static void enviarMail(ProveedorDTO proveedor,ArrayList<PedidosPendientesDTO> pedidosDeProv) {
 		try {
 			
 			String mensaje="";
 			for(PedidosPendientesDTO p: pedidosDeProv) {
-				mensaje = mensaje + p.getNombreMaestroProducto() + " - "+p.getCantidad()+ "\n";
+				mensaje = mensaje +"Nombre de Producto: "+ p.getNombreMaestroProducto() + "\nCantidad: "+p.getCantidad()+"\nUnidad de medida: "+p.getUnidadMedida()+"\n";
 			}
 			
 			Properties props = new Properties();
@@ -256,9 +257,9 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 //			props.put("mail.debug", "true");
 			Session session = Session.getDefaultInstance(props);
 
-			String correoRemitente = "subelza150@gmail.com";
-			String contrasenia = "";
-			String correoReceptor = "subelza150@gmail.com";
+			String correoRemitente = "zapateriaargento198@gmail.com";
+			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
+			String correoReceptor = proveedor.getCorreo();
 			String asunto = "Pedido de Reposicion";
 			
 			MimeMessage message = new MimeMessage(session);
