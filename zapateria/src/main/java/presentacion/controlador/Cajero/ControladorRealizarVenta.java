@@ -154,7 +154,10 @@ public class ControladorRealizarVenta {
 		this.ventanaRealizarVenta.getComboBoxMetodoPago().removeAllItems();
 		this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem("Sin seleccionar");
 		for(MedioPagoDTO m: this.listamediosDePago) {
-			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
+			if(!m.getIdMoneda().equals("PV")) {
+				this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
+			}
+			
 		}
 	}
 	
