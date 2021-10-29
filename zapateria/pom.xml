@@ -91,7 +91,7 @@
 		<dependency>
     		<groupId>com.sun.mail</groupId>
     		<artifactId>javax.mail</artifactId>
-    		<version>1.5.2</version>
+    		<version>1.6.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.toedter/jcalendar -->
