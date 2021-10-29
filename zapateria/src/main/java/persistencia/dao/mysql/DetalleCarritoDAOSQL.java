@@ -90,7 +90,7 @@ public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 		int idProducto = resultSet.getInt("idProducto");
 		int idStock = resultSet.getInt("idStock");
 		int cant = resultSet.getInt("cantidad");
-		double precio = resultSet.getInt("precio");
+		double precio = resultSet.getDouble("precio");
 		
 		return new DetalleCarritoDTO(id,idCarrito,idProducto,idStock,cant, precio);
 	}
