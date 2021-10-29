@@ -76,7 +76,9 @@ public class ControladorVisualizarCarritos {
 	}
 	
 	public void inicializar() {
-
+		
+		this.controladorRealizarVenta.inicializar();
+		
 		this.listaCarritos = this.carrito.readAll();
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
@@ -291,7 +293,8 @@ public class ControladorVisualizarCarritos {
 
 //			this.ventanaVisualizarCarritos.cerrar();
 			this.controladorRealizarVenta.establecerCarritoACobrar(carrito,this.detalleCarritoEnTabla,client);
-			this.controladorRealizarVenta.inicializar();
+//			this.controladorRealizarVenta.inicializar();
+			this.controladorRealizarVenta.llenarDatosDeCarrito();
 			this.controladorRealizarVenta.mostrarVentana();
 
 		}

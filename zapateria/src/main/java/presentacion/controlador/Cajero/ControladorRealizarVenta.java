@@ -109,10 +109,12 @@ public class ControladorRealizarVenta {
 	}
 	
 	
-	public void inicializar() {		
+	public void inicializar() {	
+//		vaciarDatosPrevios();
+		
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listamediosDePago = this.medioPago.readAll();
-		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
+
 		this.ventanaRealizarVenta.getBtnAgregarMedioPago().addActionListener(a -> agregarMedioDePago(a));
 		this.ventanaRealizarVenta.getBtnQuitarMedioPago().addActionListener(a -> quitarMedioPago(a));
 		this.ventanaRealizarVenta.getBtnFinalizarVenta().addActionListener(a -> registrarPago(a));
@@ -124,14 +126,20 @@ public class ControladorRealizarVenta {
 			}
 		});
 		
-		this.totalAPagar=carritoACobrar.getTotal();
-		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
-		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+tpgr);
+
 
 		validarTeclado();
 		llenarCbMedioPago();
 
 		
+	}
+	
+	public void llenarDatosDeCarrito() {
+		
+		this.totalAPagarSinDescuento=this.carritoACobrar.getTotal();
+		this.totalAPagar=carritoACobrar.getTotal();
+		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
+		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+tpgr);
 	}
 	
 	public void mostrarVentana() {
@@ -143,6 +151,7 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void llenarCbMedioPago() {
+		this.ventanaRealizarVenta.getComboBoxMetodoPago().removeAllItems();
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
 		}
@@ -420,8 +429,9 @@ public class ControladorRealizarVenta {
 				reporte.mostrar();
 			}
 			this.ventanaRealizarVenta.cerrar();
+			vaciarDatosPrevios();
 			this.controladorVisualizarCarritos.actualizarVentana();
-
+			
 			
 		}else {
 			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
@@ -429,6 +439,9 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void cancelarPago(ActionEvent a) {
+		
+		vaciarDatosPrevios();
+		
 		this.ventanaRealizarVenta.cerrar();
 		
 	}
@@ -677,6 +690,26 @@ public class ControladorRealizarVenta {
 	
 	public boolean ventanaYaFueInicializada() {
 		return this.ventanaRealizarVenta.getFrame().isShowing();
+	}
+
+	
+	public void vaciarDatosPrevios() {
+		this.ventanaRealizarVenta.getModelTablaMedioPago().setRowCount(0);//borrar datos de la tabla
+		this.ventanaRealizarVenta.getModelTablaMedioPago().setColumnCount(0);
+		this.ventanaRealizarVenta.getModelTablaMedioPago().setColumnIdentifiers(this.ventanaRealizarVenta.getNombreColumnasMedioPago());
+		
+		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);//se borran los futuros ingresos, es decir los medios de pagos
+		this.totalAPagar= 0;
+		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
+		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+tpgr);
+		
+		this.cantidadUsadaCC=0;
+		this.totalPagado=0;
+		this.totalAPagar= 0;
+		this.totalAPagarAux = 0;
+		
+		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+0);
+		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+0);
 	}
 	
 }
