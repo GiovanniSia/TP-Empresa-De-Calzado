@@ -152,7 +152,7 @@ public class ControladorRealizarVenta {
 	
 	public void llenarCbMedioPago() {
 		this.ventanaRealizarVenta.getComboBoxMetodoPago().removeAllItems();
-		this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem("Sin seleccinar");
+		this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem("Sin seleccionar");
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
 		}
