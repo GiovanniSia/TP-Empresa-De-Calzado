@@ -152,6 +152,7 @@ public class ControladorRealizarVenta {
 	
 	public void llenarCbMedioPago() {
 		this.ventanaRealizarVenta.getComboBoxMetodoPago().removeAllItems();
+		this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem("Sin seleccinar");
 		for(MedioPagoDTO m: this.listamediosDePago) {
 			this.ventanaRealizarVenta.getComboBoxMetodoPago().addItem(m.getDescripcion());
 		}
@@ -708,8 +709,11 @@ public class ControladorRealizarVenta {
 		this.totalAPagar= 0;
 		this.totalAPagarAux = 0;
 		
+		this.ventanaRealizarVenta.getTextNumOperacion().setText("");
+		this.ventanaRealizarVenta.getTextCantidad().setText("");
 		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText(""+0);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText(""+0);
+		this.ventanaRealizarVenta.getTextDescuento().setText("");
 	}
 	
 }
