@@ -728,15 +728,12 @@ public class ControladorModificarMProducto {
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
 
-			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
-			Double precioCosto = bdCosto.doubleValue();
+			BigDecimal precioCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMayorista = bdMayorista.doubleValue();
+			BigDecimal precioMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMinorista = bdMinorista.doubleValue();
-
+			BigDecimal precioMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
+			
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();
@@ -761,15 +758,12 @@ public class ControladorModificarMProducto {
 			String descripcion = mp.getDescripcion();
 			int idProveedor = mp.getIdProveedor();
 			String talle = mp.getTalle();
-			
-			BigDecimal bdCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
-			Double precioCosto = bdCosto.doubleValue();
 
-			BigDecimal bdMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMayorista = bdMayorista.doubleValue();
+			BigDecimal precioCosto = new BigDecimal(mp.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 
-			BigDecimal bdMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-			Double precioMinorista = bdMinorista.doubleValue();
+			BigDecimal precioMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
+
+			BigDecimal precioMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
 
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
