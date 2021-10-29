@@ -256,7 +256,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 			props.setProperty("mail.smtp.starttls.enable", "true");
 			props.setProperty("mail.smtp.port", "587");
 			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.ssl.trust", "*");
+			props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
 //			props.put("mail.debug", "true");
 			Session session = Session.getDefaultInstance(props);
 
