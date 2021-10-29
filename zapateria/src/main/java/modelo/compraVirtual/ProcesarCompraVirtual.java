@@ -689,7 +689,7 @@ public class ProcesarCompraVirtual {
 		
 		ArrayList<CompraVirtualDTO> compras = new ArrayList<CompraVirtualDTO>();
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
-		detalle.put(1, 5);
+		detalle.put(1, 5);	//Compra con cliente ya registrado
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
 				//"Mayorista",
@@ -698,7 +698,7 @@ public class ProcesarCompraVirtual {
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
-		detalle.put(2, 3);
+		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
@@ -708,7 +708,7 @@ public class ProcesarCompraVirtual {
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
-		detalle.put(2, 3);
+		detalle.put(2, 3);	//Compra repetida
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
@@ -720,7 +720,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);
-		detalle.put(19, 10);
+		detalle.put(19, 10);	//id producto invalida, paga invalida
 		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
@@ -729,6 +729,7 @@ public class ProcesarCompraVirtual {
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
 		
+		//Multiples datos invalidos
 		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
 				"asd", "", null, 
 				"", "", "Argentina",
@@ -743,37 +744,39 @@ public class ProcesarCompraVirtual {
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd5);
-		JsonListaCompraVirtual.guardarLista(compras);
-		
-		
-		/*
-		detalle = new HashMap<Integer,Integer>();
-		detalle.put(1, 1959);
-		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 13713000, 9, "Vicentino",
-				"Reboredo", "223004", "pepeptS@mgail.com", 
-				"1002", "201", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
-		compras.add(cvd5);
 		
 		detalle = new HashMap<Integer,Integer>();
-		detalle.put(2, 1965);
-		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 1, 15720000, 9, "Vicentino",
-				"Reboredo", "223004", "pepeptS@mgail.com", 
-				"1002", "201", "Argentina",
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Sucursal invalida
+		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd6);
 		
 		detalle = new HashMap<Integer,Integer>();
-		detalle.put(2, 1965);
-		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 1, 30, 9, "Jose",
-				"Jos", "1236543", "pepeptS@mgail.com", 
-				"1002", "201", "Argentina",
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//CUIL INVALIDA
+		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Cliente",
+				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667");
 		compras.add(cvd7);
 		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Datos de ubicacion insuficientes
+		CompraVirtualDTO cvd8 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
+				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"Buenos Aires", "Tortuguitas", "");
+		compras.add(cvd8);
+		
 		JsonListaCompraVirtual.guardarLista(compras);
 		//ProcesarCompraVirtual.RutinaProcesarCompra();
-		*/
 		
 		//ProcesarCompraVirtual a = new ProcesarCompraVirtual();
 		//a.RutinaProcesarCompra(ConfiguracionBD.getInstance());
