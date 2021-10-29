@@ -122,5 +122,68 @@
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
     "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 9,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "20125964343",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 1,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Cliente",
+    "Apellido": "no cuil",
+    "CUIL": "1234567891234",
+    "CorreoElectronico": "miraMiCuil@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 9,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Cliente",
+    "Apellido": "no cuil",
+    "CUIL": "1234567891234",
+    "CorreoElectronico": "miraMiCuil@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": ""
   }
 ]

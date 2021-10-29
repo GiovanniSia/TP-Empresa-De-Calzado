@@ -529,8 +529,20 @@ insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
 
-
-
-
 INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");
 INSERT INTO sucursales VALUES(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines");
+
+insert into sucursales values(2,'asd','calle','altura','pvcia','localidad','ARG','123','grand borg');
+insert into sucursales values(3,'asd','calle','altura','pvcia','localidad','ARG','123','Don torcuachino');
+insert into sucursales values(4,'asd','calle','altura','pvcia','localidad','ARG','123','El tata');
+insert into ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',1000);
+insert into ingresos values (2,2,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
+insert into ingresos values (3,3,'2021-10-16','12:20','VT',2,'A','aaaa','USD',100,3,'',300);
+
+insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','A00',1,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into zapateria.empleados values (2, 512,'JUAN','VENDEDOR','JUAN@GMAIL.COM','Vendedor','1234');
+insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','A00',1,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into zapateria.empleados values (3, 523,'JOAQUIN','ADOLFO','Joaquin123@GMAIL.COM','Vendedor','1234');
+insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','A00',1,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into zapateria.empleados values (4, 153,'fERNANDO','Lel','Fer@GMAIL.COM','Vendedor','1234');
+insert into zapateria.empleados values (5, 153541,'IVO','ROBOTNIK','empresasEggman@GMAIL.COM','Vendedor','1234');
