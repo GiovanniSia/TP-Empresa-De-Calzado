@@ -428,6 +428,7 @@ INSERT INTO medioPago values ("USD","Dolar",180);
 INSERT INTO medioPago values ("TCV","Tarjeta Credito VISA",1);
 INSERT INTO medioPago values ("MPA","Mercado Pago",1);
 INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
+INSERT INTO medioPago values ("PV","Portal Virtual",1);
 
 INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020,1500,2,"M",200,"Activo",36,100);
 INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","N",200 ,8000 ,4000,2   ,4,"XL",200,"Activo",10,100);
