@@ -712,8 +712,8 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"Calle falsaasdasdas", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"", "", "",
+				"", "", "");
 		compras.add(cvd22);
 		
 		
@@ -741,8 +741,8 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
-				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Otra Calle falsa", "1423", "Argentina",
+				"Buenos Aires", "Grand Bourg", "1669");
 		compras.add(cvd5);
 		
 		detalle = new HashMap<Integer,Integer>();

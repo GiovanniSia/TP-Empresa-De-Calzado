@@ -54,12 +54,12 @@
     "CorreoElectronico": "sebastianx3600@gmail.com",
     "ImpuestoAFIP": "CF",
     "Estado": "Activo",
-    "Calle": "Calle falsaasdasdas",
-    "Altura": "5421",
-    "Pais": "Argentina",
-    "Provincia": "Buenos Aires",
-    "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "Calle": "",
+    "Altura": "",
+    "Pais": "",
+    "Provincia": "",
+    "Localidad": "",
+    "CodPostal": ""
   },
   {
     "compra": {
@@ -116,12 +116,12 @@
     "CorreoElectronico": "sebastianx3600@gmail.com",
     "ImpuestoAFIP": "CF",
     "Estado": "Activo",
-    "Calle": "Calle falsa",
-    "Altura": "5421",
+    "Calle": "Otra Calle falsa",
+    "Altura": "1423",
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
-    "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "Localidad": "Grand Bourg",
+    "CodPostal": "1669"
   },
   {
     "compra": {
