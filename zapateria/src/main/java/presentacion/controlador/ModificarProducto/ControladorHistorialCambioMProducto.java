@@ -104,6 +104,12 @@ public class ControladorHistorialCambioMProducto {
 			String codProducto = hcmp.getIdMaestroProducto();
 			String fecha = hcmp.getFecha();
 
+			String descripcionAntiguo = hcmp.getDescripcionAntiguo();
+			String descripcionNuevo = hcmp.getDescripcionNuevo();
+			String proveedorAntiguo = hcmp.getProveedorAntiguo();
+			String proveedorNuevo = hcmp.getProveedorNuevo();
+			
+			
 			String precioCostoAntiguo = hcmp.getPrecioCostoAntiguo();
 			String precioCostoNuevo = hcmp.getPrecioCostoNuevo();
 
@@ -122,7 +128,7 @@ public class ControladorHistorialCambioMProducto {
 			String DiasParaReponerAntiguo = hcmp.getDiasParaReponerAntiguo();
 			String DiasParaReponerNuevo = hcmp.getDiasParaReponerNuevo();
 
-			Object[] fila = { codEmpleado, codSucursal, codProducto, fecha, precioCostoAntiguo, precioCostoNuevo,
+			Object[] fila = { codEmpleado, codSucursal, codProducto, fecha,descripcionAntiguo,descripcionNuevo,proveedorAntiguo,proveedorNuevo, precioCostoAntiguo, precioCostoNuevo,
 					precioMayoristaAntiguo, precioMayoristaNuevo, precioMinoristaAntiguo, precioMinoristaNuevo,
 					PuntoRepositorioAntiguo, PuntoRepositorioNuevo, CantidadAReponerAntiguo, CantidadAReponerNuevo,
 					DiasParaReponerAntiguo, DiasParaReponerNuevo };
