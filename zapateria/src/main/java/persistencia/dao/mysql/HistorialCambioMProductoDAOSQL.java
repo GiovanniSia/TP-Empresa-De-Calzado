@@ -10,11 +10,18 @@ import java.util.List;
 import dto.HistorialCambioMProductoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
+/*
+ `DescripcionAntiguo` varchar(45) NOT NULL,
+  `DescripcionNuevo` varchar(45) NOT NULL,
+  `ProveedorAntiguo` varchar(45) NOT NULL,
+  `ProveedorNuevo` varchar(45) NOT NULL,
 
+
+*/
 public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoDAO {
-	private static final String insert = "INSERT INTO historialCambioMProducto VALUES(?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO historialCambioMProducto VALUES(?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM historialCambioMProducto WHERE IdHistorialCambioMProducto = ?";
-	private static final String update = "UPDATE historialCambioMProducto set IdSucursal=? IdEmpleado=?, IdMaestroProducto=?, Fecha=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=?, PuntoRepositorioAntiguo=?,PuntoRepositorioNuevo=?, CantidadAReponerAntiguo=?,CantidadAReponerNuevo=?,DiasParaReponerAntiguo=?,DiasParaReponerNuevo=?  where IdHistorialCambioMProducto=?";
+	private static final String update = "UPDATE historialCambioMProducto set IdSucursal=? IdEmpleado=?, IdMaestroProducto=?, Fecha=?, DescripcionAntiguo=?,DescripcionNuevo=?,ProveedorAntiguo=?,ProveedorNuevo=?, PrecioCostoAntiguo=?, PrecioCostoNuevo=?, PrecioMayoristaAntiguo=?, PrecioMayoristaNuevo=?, PrecioMinoristaAntiguo=?, PrecioMinoristaNuevo=?, PuntoRepositorioAntiguo=?,PuntoRepositorioNuevo=?, CantidadAReponerAntiguo=?,CantidadAReponerNuevo=?,DiasParaReponerAntiguo=?,DiasParaReponerNuevo=?  where IdHistorialCambioMProducto=?";
 	private static final String readall = "SELECT * FROM historialCambioMProducto";
 
 	@Override
@@ -30,24 +37,30 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 			statement.setString(3, historialCambiMProducto.getIdEmpleado());
 			statement.setString(4, historialCambiMProducto.getIdMaestroProducto());
 			statement.setString(5, historialCambiMProducto.getFecha());
+			
+			statement.setString(6, historialCambiMProducto.getDescripcionAntiguo());
+			statement.setString(7, historialCambiMProducto.getDescripcionNuevo());
 
-			statement.setString(6, historialCambiMProducto.getPrecioCostoAntiguo());
-			statement.setString(7, historialCambiMProducto.getPrecioCostoNuevo());
+			statement.setString(8, historialCambiMProducto.getProveedorAntiguo());
+			statement.setString(9, historialCambiMProducto.getProveedorNuevo());
+			
+			statement.setString(10, historialCambiMProducto.getPrecioCostoAntiguo());
+			statement.setString(11, historialCambiMProducto.getPrecioCostoNuevo());
 
-			statement.setString(8, historialCambiMProducto.getPrecioMayoristaAntiguo());
-			statement.setString(9, historialCambiMProducto.getPrecioMayoristaNuevo());
+			statement.setString(12, historialCambiMProducto.getPrecioMayoristaAntiguo());
+			statement.setString(13, historialCambiMProducto.getPrecioMayoristaNuevo());
 
-			statement.setString(10, historialCambiMProducto.getPrecioMinoristaAntiguo());
-			statement.setString(11, historialCambiMProducto.getPrecioMinoristaNuevo());
+			statement.setString(14, historialCambiMProducto.getPrecioMinoristaAntiguo());
+			statement.setString(15, historialCambiMProducto.getPrecioMinoristaNuevo());
 
-			statement.setString(12, historialCambiMProducto.getPuntoRepositorioAntiguo());
-			statement.setString(13, historialCambiMProducto.getPuntoRepositorioNuevo());
+			statement.setString(16, historialCambiMProducto.getPuntoRepositorioAntiguo());
+			statement.setString(17, historialCambiMProducto.getPuntoRepositorioNuevo());
 
-			statement.setString(14, historialCambiMProducto.getCantidadAReponerAntiguo());
-			statement.setString(15, historialCambiMProducto.getCantidadAReponerNuevo());
+			statement.setString(18, historialCambiMProducto.getCantidadAReponerAntiguo());
+			statement.setString(19, historialCambiMProducto.getCantidadAReponerNuevo());
 
-			statement.setString(16, historialCambiMProducto.getDiasParaReponerAntiguo());
-			statement.setString(17, historialCambiMProducto.getDiasParaReponerNuevo());
+			statement.setString(20, historialCambiMProducto.getDiasParaReponerAntiguo());
+			statement.setString(21, historialCambiMProducto.getDiasParaReponerNuevo());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -97,25 +110,31 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 			statement.setString(3, historialCambioMProducto_nuevo.getIdMaestroProducto());
 			statement.setString(4, historialCambioMProducto_nuevo.getFecha());
 
-			statement.setString(5, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
-			statement.setString(6, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
+			statement.setString(5, historialCambioMProducto_nuevo.getDescripcionAntiguo());
+			statement.setString(6, historialCambioMProducto_nuevo.getDescripcionNuevo());
 
-			statement.setString(7, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
-			statement.setString(8, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
+			statement.setString(7, historialCambioMProducto_nuevo.getProveedorAntiguo());
+			statement.setString(8, historialCambioMProducto_nuevo.getProveedorNuevo());
+			
+			statement.setString(9, historialCambioMProducto_nuevo.getPrecioCostoAntiguo());
+			statement.setString(10, historialCambioMProducto_nuevo.getPrecioCostoNuevo());
 
-			statement.setString(9, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
-			statement.setString(10, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
+			statement.setString(11, historialCambioMProducto_nuevo.getPrecioMayoristaAntiguo());
+			statement.setString(12, historialCambioMProducto_nuevo.getPrecioMayoristaNuevo());
 
-			statement.setString(11, historialCambioMProducto_nuevo.getPuntoRepositorioAntiguo());
-			statement.setString(12, historialCambioMProducto_nuevo.getPuntoRepositorioNuevo());
+			statement.setString(13, historialCambioMProducto_nuevo.getPrecioMinoristaAntiguo());
+			statement.setString(14, historialCambioMProducto_nuevo.getPrecioMinoristaNuevo());
 
-			statement.setString(13, historialCambioMProducto_nuevo.getCantidadAReponerAntiguo());
-			statement.setString(14, historialCambioMProducto_nuevo.getCantidadAReponerNuevo());
+			statement.setString(15, historialCambioMProducto_nuevo.getPuntoRepositorioAntiguo());
+			statement.setString(16, historialCambioMProducto_nuevo.getPuntoRepositorioNuevo());
 
-			statement.setString(15, historialCambioMProducto_nuevo.getDiasParaReponerAntiguo());
-			statement.setString(16, historialCambioMProducto_nuevo.getDiasParaReponerNuevo());
+			statement.setString(17, historialCambioMProducto_nuevo.getCantidadAReponerAntiguo());
+			statement.setString(18, historialCambioMProducto_nuevo.getCantidadAReponerNuevo());
 
-			statement.setInt(17, id_historialCambioMProducto_a_actualizar);
+			statement.setString(19, historialCambioMProducto_nuevo.getDiasParaReponerAntiguo());
+			statement.setString(20, historialCambioMProducto_nuevo.getDiasParaReponerNuevo());
+
+			statement.setInt(21, id_historialCambioMProducto_a_actualizar);
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -152,6 +171,11 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		String idMaestroProducto = resultSet.getString("IdMaestroProducto");
 		String fecha = resultSet.getString("Fecha");
 
+		String descripcionAntiguo =resultSet.getString("DescripcionAntiguo");
+		String descripcionNuevo=resultSet.getString("DescripcionNuevo");
+		String proveedorAntiguo=resultSet.getString("ProveedorAntiguo");
+		String proveedorNuevo=resultSet.getString("ProveedorNuevo");
+		
 		String precioCostoAntiguo = resultSet.getString("PrecioCostoAntiguo");
 		String precioCostoNuevo = resultSet.getString("PrecioCostoNuevo");
 
@@ -171,7 +195,7 @@ public class HistorialCambioMProductoDAOSQL implements HistorialCambioMProductoD
 		String DiasParaReponerNuevo = resultSet.getString("DiasParaReponerNuevo");
 
 		return new HistorialCambioMProductoDTO(idHistorialCambioProducto, idSucursal, idEmpleado, idMaestroProducto,
-				fecha, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
+				fecha,descripcionAntiguo,descripcionNuevo,proveedorAntiguo,proveedorNuevo, precioCostoAntiguo, precioCostoNuevo, precioMayoristaAntiguo, precioMayoristaNuevo,
 				precioMinoristaAntiguo, precioMinoristaNuevo, PuntoRepositorioAntiguo, PuntoRepositorioNuevo,
 				CantidadAReponerAntiguo, CantidadAReponerNuevo, DiasParaReponerAntiguo, DiasParaReponerNuevo);
 	}
