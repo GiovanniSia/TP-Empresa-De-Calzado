@@ -69,17 +69,17 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		} 	
 		System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
 		Timer timer = new Timer();
-		
-		TimerTask tarea = new TimerTask() {
-			
-			@Override
-			public void run() {
-				//Enviar mails
-				enviarMails();
-				System.out.println("se ejecuta el timer");
-					
-			}
-		};
+//		
+//		TimerTask tarea = new TimerTask() {
+//			
+//			@Override
+//			public void run() {
+//				//Enviar mails
+//				enviarMails();
+//				System.out.println("se ejecuta el timer");
+//					
+//			}
+//		};
 		
 		
 //		if(huboCambiosEnFichero()) {
@@ -122,10 +122,11 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 				// ENVIE
 
 				try {
+					yaFueSeteado = true;
 					fe = establecerFechaParaElTimer(dia, horaProperties);
-					timer.cancel();
+//					timer.cancel();
 					timer = new Timer();
-					tarea = new TimerTask() {
+					TimerTask tarea = new TimerTask() {
 						
 						@Override
 						public void run() {
@@ -138,13 +139,14 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 					
 					timer.schedule(tarea, fe);
 					System.out.println("se reestablece el timer");
-					yaFueSeteado = true;
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 	
 			} else {
 				if (!dia.equals(diaDeEnvio)) {
+					timer.cancel();
 					yaFueSeteado = false;
 				}
 	
@@ -196,15 +198,16 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		
 		List<PedidosPendientesDTO> todosLosPedidos = new ArrayList<PedidosPendientesDTO>();
 		PedidosPendientes pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
-		todosLosPedidos = pedidosPendientes.readAll();
+		
 		
 		ArrayList<PedidosPendientesDTO> pedidosDeProv = new ArrayList<PedidosPendientesDTO>(); 
 		for(ProveedorDTO prov: todosLosProveedores) {
+			todosLosPedidos = pedidosPendientes.readAll();
 			for(PedidosPendientesDTO pedido: todosLosPedidos) {
 //				System.out.println("Prov: "+prov.getNombre()+" - "+prov.getId()+"\nPedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getIdProveedor());
 				if(prov.getId() == pedido.getIdProveedor() && pedido.getEstado().equals("En espera")) {
 					pedidosDeProv.add(pedido);
-//					
+					System.out.println("se añade el pedido para el prov: "+prov.getId());
 				}	
 			}
 //			enviarMail(prov,pedidosDeProv);
