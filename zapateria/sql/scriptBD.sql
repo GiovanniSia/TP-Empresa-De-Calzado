@@ -533,4 +533,4 @@ insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 
 
 INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero","1234");
-INSERT INTO sucursales VALUES(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","PAPU");
+INSERT INTO sucursales VALUES(1, "FABRICA", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines");
