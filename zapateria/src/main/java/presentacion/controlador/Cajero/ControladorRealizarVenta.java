@@ -394,6 +394,10 @@ public class ControladorRealizarVenta {
 	}
 	
 	public void registrarPago(ActionEvent a) {		
+		if(this.listaDeIngresosARegistrar.size()==0) {
+			JOptionPane.showMessageDialog(null, "No se puede completar el pago. No hay ingresos que registrar");
+			return;
+		}
 		if((this.totalPagado+this.descuento)>=this.carritoACobrar.getTotal()) {
 			
 			for(DetalleCarritoDTO det: detalleCarritoACobrar) {
