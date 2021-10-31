@@ -48,7 +48,9 @@ public class ControladorTareasAutomatizadas {
 	
 
 	
-	private void llenarCbCorreosProv() {		
+	private void llenarCbCorreosProv() {
+		this.ventanaTareasAutomatizadas.getComboBoxPedidosDias().removeAllItems();
+		this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().removeAllItems();
 		String[] dias = {"Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"};
 		for(int i=0; i < dias.length; i++) {
 			this.ventanaTareasAutomatizadas.getComboBoxPedidosDias().addItem(dias[i]);

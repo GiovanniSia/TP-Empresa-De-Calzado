@@ -67,36 +67,12 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 	
-		System.out.println("dia de envio: "+diaDeEnvio+"\nhora de envio: "+horaProperties);
 		Timer timer = new Timer();
-//		
-//		TimerTask tarea = new TimerTask() {
-//			
-//			@Override
-//			public void run() {
-//				//Enviar mails
-//				enviarMails();
-//				System.out.println("se ejecuta el timer");
-//					
-//			}
-//		};
-		
-		
-//		if(huboCambiosEnFichero()) {
-//			try {
-//				diaDeEnvio = config.getValue("DiaDeEnvio");
-//				horaProperties = config.getValue("HoraDeEnvio");
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			} 	
-//		}
+
 		Date fe;
 		ProcesarCompraVirtual procesoDeCompraVirtual = new ProcesarCompraVirtual();
 		procesoDeCompraVirtual.RutinaProcesarCompra(config);
-		while(true) {
-			
-//			System.out.println("deberia andar el while :(");
-			
+		while(true) {			
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String fecha = dtf.format(LocalDateTime.now());
 	
@@ -108,23 +84,14 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 			String cadenaNormalize = Normalizer.normalize(d, Normalizer.Form.NFD);
 			String dia = cadenaNormalize.replaceAll("[^\\p{ASCII}]", "");
 	
-			// goal devuelve el dia actual
-	
-			DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
-			String horaActual = tf.format(LocalDateTime.now());
-	
-			System.out.println("El dia y hora segun el properties: " + diaDeEnvio + " - " + horaProperties
-					+ "\nEl dia y hora actual: " + dia + " - " + horaActual+"\nYa fue seteado: "+yaFueSeteado);
-	
-			if (dia.equals(diaDeEnvio) && !yaFueSeteado) {
-//					System.out.println("entro a ver si hoy es el dia: "+dia+" - "+diaDeEnvio);
-				// SI HOY ES EL DIA EN QUE SE ENVIA, ENTONCES SE PREPARA EL TIMER PARA QUE SE
-				// ENVIE
+//			DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+//			String horaActual = tf.format(LocalDateTime.now());
 
+			if (dia.equals(diaDeEnvio) && !yaFueSeteado) {
 				try {
 					yaFueSeteado = true;
 					fe = establecerFechaParaElTimer(dia, horaProperties);
-//					timer.cancel();
+					timer.cancel();
 					timer = new Timer();
 					TimerTask tarea = new TimerTask() {
 						
@@ -138,7 +105,6 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 					};
 					
 					timer.schedule(tarea, fe);
-					System.out.println("se reestablece el timer");
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -152,13 +118,10 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 	
 			}
 			
-			
-			
 			try {
 				if (seCambioElProperties()) {
 					diaDeEnvio = config.getValue("DiaDeEnvio");
 					horaProperties = config.getValue("HoraDeEnvio");
-//					System.out.println("dia de envio: " + diaDeEnvio + "\nhora de envio: " + horaProperties);
 					procesoDeCompraVirtual.cambioConfig(config);
 					yaFueSeteado = false;
 				}
@@ -171,10 +134,6 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		}
 	}
 	
-	public void reiniciarTimer() {
-		
-	}
-
 
 	@SuppressWarnings("deprecation")
 	private static Date establecerFechaParaElTimer(String NombreDia,String hora) {
@@ -204,15 +163,12 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 		for(ProveedorDTO prov: todosLosProveedores) {
 			todosLosPedidos = pedidosPendientes.readAll();
 			for(PedidosPendientesDTO pedido: todosLosPedidos) {
-//				System.out.println("Prov: "+prov.getNombre()+" - "+prov.getId()+"\nPedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getIdProveedor());
 				if(prov.getId() == pedido.getIdProveedor() && pedido.getEstado().equals("En espera")) {
 					pedidosDeProv.add(pedido);
 					System.out.println("se añade el pedido para el prov: "+prov.getId());
 				}	
 			}
-//			enviarMail(prov,pedidosDeProv);
 			if(pedidosDeProv.size()!=0) {
-//				System.out.println("se envia el mail");
 //				imprimirMail(pedidosDeProv);
 				enviarMail(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
