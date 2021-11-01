@@ -17,7 +17,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Bella Vista",
-    "CodPostal": "1661"
+    "CodPostal": "1661",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -38,7 +39,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -59,7 +61,8 @@
     "Pais": "",
     "Provincia": "",
     "Localidad": "",
-    "CodPostal": ""
+    "CodPostal": "",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -81,7 +84,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -101,7 +105,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -121,7 +126,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Grand Bourg",
-    "CodPostal": "1669"
+    "CodPostal": "1669",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -142,7 +148,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -163,7 +170,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -184,7 +192,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": ""
+    "CodPostal": "",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -205,6 +214,7 @@
     "Pais": "",
     "Provincia": "",
     "Localidad": "Tortuguitas",
-    "CodPostal": "asda"
+    "CodPostal": "asda",
+    "nroTelefono": ""
   }
 ]

@@ -46,6 +46,10 @@ public class CodigoErrorComprasVirtuales {
 		return "ERROR-063";
 	}
 	
+	public static String getCodigoErrorNroTelefono() {
+		return "ERROR-998";
+	}
+	
 	public static String getCodigoErrorSucursalNoValida() {
 		return "ERROR-4-8-15-16-23-42";
 	}

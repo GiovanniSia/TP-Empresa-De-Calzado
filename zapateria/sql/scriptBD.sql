@@ -406,6 +406,7 @@ CREATE TABLE `RechazoCompraVirtual`
 	`Localidad` varchar(45) NOT NULL,
 	`CodPostal` varchar(45) NOT NULL,
 	`Motivo` TEXT NOT NULL,
+    `Telefono` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
 );
 

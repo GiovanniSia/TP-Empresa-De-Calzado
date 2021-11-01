@@ -232,6 +232,10 @@ public class ProcesarCompraVirtual {
 		if(!esDatoStringValido(compraVirtual.getCodPostal())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El codigo postal no es valido \n";
 		}
+		
+		if(!esDatoStringValido(compraVirtual.getNroTelefono())) {
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNroTelefono()+" El numero telefonico no es valido \n";
+		}
 		/* por si lo quiero booleando
 		boolean ret = true;
 		ret = ret && esPagoValido(compraVirtual.getPago());
@@ -703,7 +707,7 @@ public class ProcesarCompraVirtual {
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
 				//"Mayorista",
-				"1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+				"1002","201","Argentina","Buenos Aires","Bella Vista","1661","02320-1234");
 		compras.add(cvd);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -713,7 +717,7 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd2);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -723,7 +727,7 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"", "", "",
-				"", "", "");
+				"", "", "","02320-1234");
 		compras.add(cvd22);
 		
 		
@@ -735,7 +739,7 @@ public class ProcesarCompraVirtual {
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
 				"", "", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
 		
@@ -743,7 +747,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
 				"asd", "", null, 
 				"", "", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd4);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -752,7 +756,7 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Otra Calle falsa", "1423", "Argentina",
-				"Buenos Aires", "Grand Bourg", "1669");
+				"Buenos Aires", "Grand Bourg", "1669","02320-1234");
 		compras.add(cvd5);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -762,7 +766,7 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd6);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -772,7 +776,7 @@ public class ProcesarCompraVirtual {
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd7);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -782,7 +786,7 @@ public class ProcesarCompraVirtual {
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "");
+				"Buenos Aires", "Tortuguitas", "","02320-1234");
 		compras.add(cvd8);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -791,7 +795,7 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				"Calle falsa", "5421", "",
-				"", "Tortuguitas", "asda");
+				"", "Tortuguitas", "asda","");
 		compras.add(cvd9);
 		
 		JsonListaCompraVirtual.guardarLista(compras);

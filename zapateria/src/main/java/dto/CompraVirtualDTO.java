@@ -23,12 +23,13 @@ public class CompraVirtualDTO {
 	String Provincia;
 	String Localidad;
 	String CodPostal;
+	String nroTelefono;
 	
 	public CompraVirtualDTO(HashMap<Integer, Integer> compra, int idSucursal, double pago, int idCliente, String nombre,
 			String apellido, String cUIL, String correoElectronico,
 			//String tipoCliente,
 			String calle, String altura, String pais,
-			String provincia, String localidad, String codPostal) {
+			String provincia, String localidad, String codPostal, String nroTelefono) {
 		super();
 		this.compra = compra;
 		this.idSucursal = idSucursal;
@@ -47,6 +48,8 @@ public class CompraVirtualDTO {
 		Provincia = provincia;
 		Localidad = localidad;
 		CodPostal = codPostal;
+		
+		this.nroTelefono = nroTelefono;
 	}
 
 	public void agregarUnaCompra(int idProducto, int cantidad) {
@@ -200,6 +203,14 @@ public class CompraVirtualDTO {
 
 	public void setCodPostal(String codPostal) {
 		CodPostal = codPostal;
+	}
+
+	public String getNroTelefono() {
+		return nroTelefono;
+	}
+
+	public void setNroTelefono(String nroTelefono) {
+		this.nroTelefono = nroTelefono;
 	}
 	
 

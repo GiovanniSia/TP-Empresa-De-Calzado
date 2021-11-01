@@ -474,6 +474,8 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ventanaRechazo.getLblSucursal().setText(rechazoSeleccionado.getIdSucursal()+"");
 		ventanaRechazo.getTextPane().setText(rechazoSeleccionado.getMotivo());
 		
+		ventanaRechazo.getLblTelefono().setText(rechazoSeleccionado.getTelefono());
+		
 		mostrarDetalleRechazo(rechazoSeleccionado);
 		ventanaRechazo.mostrarVentana();
 	}

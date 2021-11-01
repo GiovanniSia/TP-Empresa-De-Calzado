@@ -55,12 +55,13 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 		String Localidad = resultSet.getString("Localidad");
 		String CodPostal = resultSet.getString("CodPostal");
 		String motivo = resultSet.getString("Motivo");
+		String telefono = resultSet.getString("Telefono");
 		return new RechazoCompraVirtualDTO(Id,Hora,Fecha,idSucursal,pago,Nombre,Apellido,CUIL,CorreoElectronico,
 				//TipoCliente,
-				ImpuestoAFIP, Estado, Calle, Altura, Pais, Provincia, Localidad, CodPostal, motivo);
+				ImpuestoAFIP, Estado, Calle, Altura, Pais, Provincia, Localidad, CodPostal, motivo, telefono);
 	}
 	
-	private static final String insertRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtual VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String insertRechazoCompraVirtual = "INSERT INTO RechazoCompraVirtual VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public boolean insertRechazoCompraVirtualDAOSQL(CompraVirtualDTO compra, String motivo) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -95,6 +96,7 @@ public class RechazoCompraVirtualDAOSQL implements RechazoCompraVirtualDAO {
 			statement.setString(16, seguroNoNull(compra.getLocalidad()));
 			statement.setString(17, seguroNoNull(compra.getCodPostal()));
 			statement.setString(18, seguroNoNull(motivo));
+			statement.setString(19, seguroNoNull(compra.getNroTelefono()));
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();

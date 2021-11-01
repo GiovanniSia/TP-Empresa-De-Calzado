@@ -65,6 +65,8 @@ public class VentanaVerDetalleRechazo extends JFrame {
 	private JTable tabla;
 	private JLabel lblNewLabel_16;
 	private JPanel panel_1;
+	
+	private JLabel lblTelefono;
 
 	public VentanaVerDetalleRechazo() {
 		initialize();
@@ -95,7 +97,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		
 		textPane = new JTextPane();
 		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		textPane.setBounds(10, 344, 476, 148);
+		textPane.setBounds(10, 376, 476, 116);
 		panel.add(textPane);
 		
 		btnSalir = new JButton("");
@@ -275,7 +277,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 241, 476, 92);
+		spCliente.setBounds(10, 273, 476, 92);
 		
 		spCliente.setViewportView(tabla);
 		panel.add(spCliente);
@@ -284,6 +286,16 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		lblNewLabel_16.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_16.setBounds(137, 503, 46, 50);
 		panel.add(lblNewLabel_16);
+		
+		JLabel lblNewLabel_7_1 = new JLabel("Nro telefonico");
+		lblNewLabel_7_1.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		lblNewLabel_7_1.setBounds(10, 241, 103, 14);
+		panel.add(lblNewLabel_7_1);
+		
+		lblTelefono = new JLabel("New label");
+		lblTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		lblTelefono.setBounds(123, 241, 363, 14);
+		panel.add(lblTelefono);
 		
 		lblNewLabel = new JLabel("Detalle rechazo");
 		lblNewLabel.setBounds(10, 21, 324, 32);
@@ -408,5 +420,9 @@ public class VentanaVerDetalleRechazo extends JFrame {
 
 	public String[] getNombreColumnasTablaPrincipal() {
 		return nombreColumnasTablaPrincipal;
+	}
+
+	public JLabel getLblTelefono() {
+		return lblTelefono;
 	}
 }
