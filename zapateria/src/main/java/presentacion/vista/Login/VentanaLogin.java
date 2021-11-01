@@ -1,4 +1,4 @@
-package presentacion.vista;
+package presentacion.vista.Login;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -91,6 +91,7 @@ public class VentanaLogin extends JFrame {
 		panel_1.add(lblContrasenia);
 
 		txtFieldCorreo = new JTextField();
+		txtFieldCorreo.setText("michelle@gmail.com");
 		txtFieldCorreo.setBorder(null);
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override

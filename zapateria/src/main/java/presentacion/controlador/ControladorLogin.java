@@ -12,7 +12,7 @@ import inicioSesion.sucursalProperties;
 import modelo.Empleado;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.vista.VentanaLogin;
+import presentacion.vista.Login.VentanaLogin;
 
 public class ControladorLogin {
 	private Controlador controlador;
