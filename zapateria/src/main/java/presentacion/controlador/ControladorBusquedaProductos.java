@@ -70,7 +70,6 @@ public class ControladorBusquedaProductos {
 	}
 
 	public void inicializar() {
-		System.out.println("se inicializa el buscar prod");
 		this.listaStock = this.stock.readAll();
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		//estos dos se guardan en la aplicacion no lo obtenemos de la bd

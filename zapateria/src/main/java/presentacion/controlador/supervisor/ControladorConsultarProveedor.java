@@ -132,9 +132,8 @@ public class ControladorConsultarProveedor {
 			String id = ""+p.getId();
 			String nombre = p.getNombre();
 			String correo = p.getCorreo();
-			String limiteCred = ""+p.getLimiteCredito();
 			String credDisp =""+p.getCreditoDisponible();
-			String[] filas= {id,nombre,correo,limiteCred,credDisp};
+			String[] filas= {id,nombre,correo,credDisp};
 			this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
 		}
 	}
@@ -146,7 +145,6 @@ public class ControladorConsultarProveedor {
 			return;
 		}
 		ProveedorDTO proveedorElegido = this.todosLosProveedores.get(filaSeleccionada);
-		System.out.println("proveedor Elegido:"+proveedorElegido.getId()+" - "+proveedorElegido.getNombre());
 		this.controladorAltaProducto.establecerProveedorElegido(proveedorElegido);
 		
 		this.ventanaConsultarProveedores.cerrar();
@@ -168,24 +166,5 @@ public class ControladorConsultarProveedor {
 		
 		
 	}
-//	
-//	public static void main (String[] args) {
-//		Proveedor p = new Proveedor(new DAOSQLFactory());
-//		ProductoDeProveedor pr = new ProductoDeProveedor(new DAOSQLFactory());
-//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-//		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
-//		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
-//		
-//		ControladorAsignarProductoAProveedor c = new ControladorAsignarProductoAProveedor(maestroProducto,proveedor,productoDeProveedor);
-//		ControladorConsultarProveedor contro = new ControladorConsultarProveedor(p,pr);
-//		
-//		contro.setControladorAsignarProductoAProveedor(c);
-//		c.setControladorConsultarProveedor(contro);
-//		
-//		contro.inicializar();
-//		contro.mostrarVentana();
-//		
-//		
-//	}
 	
 }

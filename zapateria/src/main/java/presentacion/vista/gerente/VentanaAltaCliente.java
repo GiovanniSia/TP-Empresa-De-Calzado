@@ -54,6 +54,8 @@ public class VentanaAltaCliente {
 	private JComboBox<String> comboBoxPais;
 	private JButton btnUbicacion;
 	
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -89,7 +91,7 @@ public class VentanaAltaCliente {
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(500, 100, 685, 527);
+		frame.setBounds(500, 100, 682, 527);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un cliente");
@@ -343,7 +345,7 @@ public class VentanaAltaCliente {
 		btnUbicacion.setBounds(496, 459, 157, 21);
 		frame.getContentPane().add(btnUbicacion);
 		
-		comboBoxPais = new JComboBox();
+		comboBoxPais = new JComboBox<String>();
 		comboBoxPais.setBounds(451, 109, 202, 23);
 		frame.getContentPane().add(comboBoxPais);
 		
@@ -354,6 +356,7 @@ public class VentanaAltaCliente {
 		comboBoxLocalidad = new JComboBox<String>();
 		comboBoxLocalidad.setBounds(451, 192, 202, 23);
 		frame.getContentPane().add(comboBoxLocalidad);
+
 	}
 	
 	public void show() {

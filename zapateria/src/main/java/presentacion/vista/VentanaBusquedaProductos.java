@@ -233,11 +233,8 @@ public class VentanaBusquedaProductos {
 
 			@Override
 			public boolean isCellEditable(int filas, int columnas) {	
-				if(columnas == 5) {
-					return true;
-				}else {
-					return false;
-				}
+				return false;
+				
 			}
 		};
 		

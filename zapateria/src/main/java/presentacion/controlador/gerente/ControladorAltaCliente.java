@@ -21,10 +21,19 @@ import modelo.Provincia;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaAltaCliente;
+import presentacion.vista.gerente.VentanaEditarLocalidad;
+import presentacion.vista.gerente.VentanaEditarPais;
+import presentacion.vista.gerente.VentanaEditarProvincia;
 
 public class ControladorAltaCliente {
 	
 	VentanaAltaCliente ventanaAltaCliente;
+	
+	
+	ControladorEditarPais controladorEditarPais;
+	VentanaEditarPais ventanaEditarPais;
+	VentanaEditarProvincia ventanaEditarProvincia;
+	VentanaEditarLocalidad ventanaEditarLocalidad;
 	
 	Cliente cliente;
 	ArrayList<ClienteDTO> listaClientes;
@@ -57,7 +66,10 @@ public class ControladorAltaCliente {
 		this.localidadEnComboBox = new ArrayList<LocalidadDTO>();
 		
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
-
+		
+		this.ventanaEditarPais = new VentanaEditarPais();
+		this.ventanaEditarProvincia = new VentanaEditarProvincia();
+		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
 		
 	}
 	
@@ -74,7 +86,7 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
 		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
 		
-
+		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
 		
 		
 		cargarComboBoxes();
@@ -101,8 +113,6 @@ public class ControladorAltaCliente {
 		
 	}
 	
-
-
 	public void mostrarVentana() {
 		this.ventanaAltaCliente.show();
 	}
@@ -407,7 +417,6 @@ public class ControladorAltaCliente {
 		if (paisSeleccionado == null) {
 			return;
 		}
-		System.out.println("pais selec: "+paisSeleccionado.getNombrePais()+" id: "+paisSeleccionado.getIdPais());
 		
 		llenarCbProv(paisSeleccionado.getIdPais());
 		
@@ -428,7 +437,6 @@ public class ControladorAltaCliente {
 		if(this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem() == null || this.provEnComboBox.size()==0) {
 			return;
 		}
-		System.out.println("longit de provEnCb: "+this.provEnComboBox.size()+"\nindice selec: "+this.ventanaAltaCliente.getComboBoxProvincia().getSelectedIndex());
 		
 		ProvinciaDTO provincia = this.provEnComboBox.get(this.ventanaAltaCliente.getComboBoxProvincia().getSelectedIndex());
 		if (provincia == null) {
@@ -482,4 +490,28 @@ public class ControladorAltaCliente {
 		return localidades;
 	}
 
+	public void pasarAEditarUbicacion(ActionEvent a) {
+		int seleccion = JOptionPane.showOptionDialog(
+				   null,
+				   "Que desea editar?", 
+				   "Editar Ubicacion",
+				   JOptionPane.YES_NO_CANCEL_OPTION,
+				   JOptionPane.QUESTION_MESSAGE,
+				   null,    // null para icono por defecto.
+				   new Object[] { "Paises", "Provincias", "Localidades" },   // null para YES, NO y CANCEL
+				   "opcion 1");
+		
+		if(seleccion==0) {
+			this.controladorEditarPais = new ControladorEditarPais(this.pais,this.ventanaEditarPais);
+			this.controladorEditarPais.inicializar();
+			this.controladorEditarPais.mostrarVentana();
+		}
+		if (seleccion == 1) {
+
+		}
+		if (seleccion == 2) {
+
+		}
+		
+	}
 }

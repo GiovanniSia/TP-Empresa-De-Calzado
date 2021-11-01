@@ -334,14 +334,16 @@ public class ControladorAsignarProductoAProveedor {
 	    	try {
 	    		resp=JOptionPane.showInputDialog("Ingrese la nueva cantidad de productos por lote");
 	    		if(resp==null) {
-	    			System.out.println("el valor de la resp fue null");
 	    			repetir=false;
 	    			
 	    		}else {
-	    			System.out.println("el valor nuevo: "+valorNuevo);
 	    			valorNuevo = Integer.parseInt(resp);
-
-		            repetir = false;
+	    			if(valorNuevo>0) {
+	    				repetir = false;
+	    			}else {
+	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
+	    			}
+		            
 	    		}
 	    	 }
 	    	 catch(HeadlessException | NumberFormatException e) {
@@ -350,7 +352,6 @@ public class ControladorAsignarProductoAProveedor {
 //	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
 	         }
 	    }
-	    System.out.println("la resp: "+resp+" el valor nuevo: "+valorNuevo);
 	    if(resp==null && valorNuevo==0) {
 	    	return;
 	    }
@@ -365,15 +366,5 @@ public class ControladorAsignarProductoAProveedor {
 		llenarTablaProductosDelProveedor();
 	    
 	}
-	
-//	public static void main(String[] args) {
-//		MaestroProducto maestroProducto = new MaestroProducto(new DAOSQLFactory());
-//		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
-//		ProductoDeProveedor productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
-//		ControladorAsignarProductoAProveedor c = new ControladorAsignarProductoAProveedor(maestroProducto,proveedor,productoDeProveedor);
-//		c.establecerProveedorElegido(new ProveedorDTO(1,"Naik","naik@gmail.com",20000,10000));
-//		c.inicializar();
-//		c.mostrarVentana();
-//	}
 	
 }
