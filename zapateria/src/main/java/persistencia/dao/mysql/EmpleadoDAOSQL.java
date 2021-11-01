@@ -11,14 +11,15 @@ import dto.EmpleadoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.EmpleadoDAO;
 
-public class EmpleadoDAOSQL implements EmpleadoDAO{
-	
+public class EmpleadoDAOSQL implements EmpleadoDAO {
+
 	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
 	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
 	private static final String readall = "SELECT * FROM empleados";
 	private static final String select = "SELECT * FROM empleados WHERE IdEmpleado=?";
-	
+	private static final String selectUser = "SELECT * FROM empleados where CorreoElectronico=? and Contra=(aes_ENCRYPT(?,'AES'))";
+
 	@Override
 	public boolean insert(EmpleadoDTO empleado) {
 		PreparedStatement statement;
@@ -26,7 +27,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		boolean isInsertExitoso = false;
 		try {
 			statement = conexion.prepareStatement(insert);
-			
+
 			statement.setInt(1, empleado.getIdEmpleado());
 			statement.setString(2, empleado.getCUIL());
 			statement.setString(3, empleado.getNombre());
@@ -34,7 +35,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 			statement.setString(5, empleado.getCorreoElectronico());
 			statement.setString(6, empleado.getTipoEmpleado());
 			statement.setString(7, empleado.getContra());
-			
+
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
@@ -50,6 +51,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 
 		return isInsertExitoso;
 	}
+
 	@Override
 	public boolean delete(EmpleadoDTO empleado_a_eliminar) {
 		PreparedStatement statement;
@@ -67,6 +69,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		}
 		return isdeleteExitoso;
 	}
+
 	@Override
 	public boolean update(int id_empleado_a_actualizar, EmpleadoDTO empleado_nuevo) {
 		PreparedStatement statement;
@@ -74,7 +77,6 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		boolean isUpdateExitoso = false;
 		try {
 			statement = conexion.prepareStatement(update);
-
 
 			statement.setString(1, empleado_nuevo.getCUIL());
 			statement.setString(2, empleado_nuevo.getNombre());
@@ -94,6 +96,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		}
 		return isUpdateExitoso;
 	}
+
 	@Override
 	public List<EmpleadoDTO> readAll() {
 		PreparedStatement statement;
@@ -111,8 +114,9 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		}
 		return empleados;
 	}
+
 	private EmpleadoDTO getEmpleadoDTO(ResultSet resultSet) throws SQLException {
-		
+
 		int idEmpleado = resultSet.getInt("IdEmpleado");
 		String CUIL = resultSet.getString("CUIL");
 		String nombre = resultSet.getString("Nombre");
@@ -122,8 +126,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		String contrasenia = resultSet.getString("Contra");
 		return new EmpleadoDTO(idEmpleado, CUIL, nombre, apellido, correo, tipoEmpleado, contrasenia);
 	}
-	
-	
+
 	@Override
 	public EmpleadoDTO selectEmpleado(int idEmpleado) {
 		PreparedStatement statement;
@@ -132,14 +135,36 @@ public class EmpleadoDAOSQL implements EmpleadoDAO{
 		Conexion conexion = Conexion.getConexion();
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(select);
-			statement.setInt(1,idEmpleado);
+			statement.setInt(1, idEmpleado);
 			resultSet = statement.executeQuery();
-			if(resultSet.next()) {
+			if (resultSet.next()) {
 				empleado = getEmpleadoDTO(resultSet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return empleado;
+	}
+
+	public EmpleadoDTO selectUser(String correo, String contra) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		EmpleadoDTO empleado = null;
+		Conexion conexion = Conexion.getConexion();
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(selectUser);
+			statement.setString(1, correo);
+			statement.setString(2, contra);
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				empleado = getEmpleadoDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return empleado;
 	}
 
