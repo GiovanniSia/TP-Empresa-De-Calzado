@@ -11,27 +11,27 @@ import java.util.Properties;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-public class inicioSesionProperties {
-	private Logger log = Logger.getLogger(inicioSesionProperties.class);
-	private static inicioSesionProperties INSTANCE;
+public class sucursalProperties {
+	private Logger log = Logger.getLogger(empleadoProperties.class);
+	private static sucursalProperties INSTANCE;
 	private Properties properties;
 
-	public static inicioSesionProperties getInstance() {
+	public static sucursalProperties getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new inicioSesionProperties();
+			INSTANCE = new sucursalProperties();
 		}
 
 		return INSTANCE;
 	}
 
-	private inicioSesionProperties() {
+	private sucursalProperties() {
 		BasicConfigurator.configure();
 		leerProperties();
 	}
 
 	public void guardar() {
 		try {
-			FileOutputStream fileOS = new FileOutputStream("inicioSesion/inicioSesion.properties");
+			FileOutputStream fileOS = new FileOutputStream("inicioSesion/sucursal.properties");
 			properties.store(fileOS, null);
 
 		} catch (Exception e) {
@@ -45,9 +45,9 @@ public class inicioSesionProperties {
 	private void leerProperties() {
 		this.properties = new Properties();
 		try {
-			properties.load(new FileInputStream("inicioSesion/inicioSesion.properties"));
+			properties.load(new FileInputStream("inicioSesion/sucursal.properties"));
 		} catch (IOException e) {
-			log.info("Creando nuevo archivo de inicio sesion");
+			log.info("Creando nuevo archivo de sucursal");
 			File folder = new File("inicioSesion");
 			if (!folder.exists()) {
 				folder.mkdir();
@@ -59,11 +59,11 @@ public class inicioSesionProperties {
 	}
 
 	public void writeValue(String key, String value) throws IOException {
-		FileInputStream in = new FileInputStream("inicioSesion/inicioSesion.properties");
+		FileInputStream in = new FileInputStream("inicioSesion/sucursal.properties");
 		properties.load(in);
 		in.close();
 
-		FileOutputStream out = new FileOutputStream("inicioSesion/inicioSesion.properties");
+		FileOutputStream out = new FileOutputStream("inicioSesion/sucursal.properties");
 		properties.setProperty(key, value);
 		properties.store(out, null);
 		out.close();
@@ -72,7 +72,7 @@ public class inicioSesionProperties {
 	public String getValue(String key) throws IOException {
 		InputStream inputStream = null;
 		try {
-			inputStream = new FileInputStream("inicioSesion/inicioSesion.properties");
+			inputStream = new FileInputStream("inicioSesion/sucursal.properties");
 			properties.load(inputStream);
 
 		} catch (FileNotFoundException e) {
@@ -84,19 +84,22 @@ public class inicioSesionProperties {
 		return properties.getProperty(key);
 	}
 
-	public void establecerPropertiesInicioSesion(String idEmpleado, String CUIL, String nombre, String apellido, String correoElectronico, String tipoEmpleado) {
+	public void establecerPropertiesSucursal(String IdSucursal,String Telefono,String Calle,String Altura,String Provincia,String Localidad,String Pais,String CodigoPostal,String Nombre) {
 		try {
-			writeValue("IdEmpleado",idEmpleado);
-			writeValue("CUIL",CUIL);
-			writeValue("Nombre",nombre);
-			writeValue("Apellido",apellido);
-			writeValue("CorreoElectronico",correoElectronico);
-			writeValue("TipoEmpleado",tipoEmpleado);
+			writeValue("IdSucursal",IdSucursal);
+			writeValue("Telefono",Telefono);
+			writeValue("Calle",Calle);
+			writeValue("Altura",Altura);
+			writeValue("Provincia",Provincia);
+			writeValue("Localidad",Localidad);	
+			writeValue("Pais",Pais);	
+			writeValue("CodigoPostal",CodigoPostal);	
+			writeValue("Nombre",Nombre);	
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
-
+	
 }

@@ -7,7 +7,8 @@ import javax.swing.JOptionPane;
 
 import dto.EmpleadoDTO;
 import dto.SucursalDTO;
-import inicioSesion.inicioSesionProperties;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.Empleado;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -24,7 +25,8 @@ public class ControladorLogin {
 
 	private SucursalDTO sucursalSeleccionada;
 	
-	private inicioSesionProperties inicioSesionProp;
+	private empleadoProperties empleadoProp;
+	private sucursalProperties sucursalProp;
 
 	public ControladorLogin() {
 		this.controlador = new Controlador();
@@ -41,6 +43,7 @@ public class ControladorLogin {
 		rellenarCombobox();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void rellenarCombobox() {
 		for (SucursalDTO s : sucursales) {
 			ventanaLogin.getCbSucursales().addItem(s.getNombre());
@@ -81,7 +84,7 @@ public class ControladorLogin {
 	}
 
 	public void iniciarZapateria() {
-		inicioSesionProp = inicioSesionProperties.getInstance();
+		empleadoProp = empleadoProperties.getInstance();
 		
 		String idEmpleado = ""+empleadoInicioSesion.getIdEmpleado();
 		String CUIL = empleadoInicioSesion.getCUIL();
@@ -90,7 +93,22 @@ public class ControladorLogin {
 		String correoElectronico = empleadoInicioSesion.getCorreoElectronico();
 		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
 		
-		inicioSesionProp.establecerPropertiesInicioSesion(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
+		empleadoProp.establecerPropertiesEmpleado(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
+		
+		
+		sucursalProp = sucursalProperties.getInstance();
+		
+		String IdSucursal =""+ sucursalSeleccionada.getIdSucursal();
+		String Telefono = sucursalSeleccionada.getTelefono();
+		String Calle = sucursalSeleccionada.getCalle();
+		String Altura = sucursalSeleccionada.getAltura();
+		String Provincia = sucursalSeleccionada.getProvincia();
+		String Localidad = sucursalSeleccionada.getLocalidad();
+		String Pais = sucursalSeleccionada.getPais();
+		String CodigoPostal = sucursalSeleccionada.getCodigoPostal();
+		String Nombre = sucursalSeleccionada.getNombre();
+		
+		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre);
 		
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
