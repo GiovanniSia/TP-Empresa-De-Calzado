@@ -96,7 +96,6 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxPais().addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				System.out.println("se ejecuta la escucha de cb pais");
 				actualizarCbUbicacionDadoPais(); 
 				
 			}
@@ -106,7 +105,6 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxProvincia().addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				System.out.println("se ejectua la escucha de prov");
 				actualizarCbUbicacionDadaProv(); 	
 			}
 		});

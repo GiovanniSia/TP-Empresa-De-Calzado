@@ -13,15 +13,15 @@ private PaisDAO pais;
 		this.pais = metodo_Persistencia.createPaisDAO();
 	}
 	
-	public void agregarPais(PaisDTO nuevoPais) {
-		this.pais.insert(nuevoPais);
+	public boolean insert(PaisDTO nuevoPais) {
+		return this.pais.insert(nuevoPais);
 	}
 	
-	public void borrarPais(PaisDTO Pais_a_eliminar) {
-		this.pais.delete(Pais_a_eliminar);
+	public boolean borrarPais(PaisDTO Pais_a_eliminar) {
+		return this.pais.delete(Pais_a_eliminar);
 	}
-	public void editarPais(PaisDTO Pais_a_editar,String nombreNuevo) {
-		this.pais.update(Pais_a_editar, nombreNuevo);
+	public boolean update(PaisDTO Pais_a_editar,String nombreNuevo) {
+		return this.pais.update(Pais_a_editar, nombreNuevo);
 	}
 	public List<PaisDTO> readAll(){
 		return this.pais.readAll();
