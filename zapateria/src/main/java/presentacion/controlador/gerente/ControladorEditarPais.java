@@ -19,13 +19,14 @@ public class ControladorEditarPais {
 	Pais pais;
 	
 	VentanaEditarPais ventanaEditarPais;
+	ControladorAltaCliente controladorAltaCliente;
 	
-	public ControladorEditarPais(Pais pais,VentanaEditarPais ventanaEditarPais) {
-		this.ventanaEditarPais = ventanaEditarPais;
+	public ControladorEditarPais(ControladorAltaCliente controladorAltaCliente,Pais pais ) {
+		this.ventanaEditarPais = new VentanaEditarPais();
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.pais = pais;
 //		this.ventanaEditarPais = new VentanaEditarPais();
-		
+		this.controladorAltaCliente = controladorAltaCliente;
 		this.ventanaEditarPais.getBtnAgregarPais().addActionListener(a -> agregarPais(a));
 		this.ventanaEditarPais.getBtnEditarPais().addActionListener(a -> editarPais(a));
 		this.ventanaEditarPais.getBtnEliminarPais().addActionListener(a -> borrarPais(a));
@@ -104,7 +105,8 @@ public class ControladorEditarPais {
 		
 		this.ventanaEditarPais.getTextPaisNuevo().setText("");
 		this.todosLosPaises = this.pais.readAll();
-		this.llenarTablaPaises();
+		llenarTablaPaises();
+		actualizarComboBoxesDeCliente();
 	}
 
 	public boolean yaExisteElPais(String nuevoPais) {
@@ -139,6 +141,7 @@ public class ControladorEditarPais {
 		
 		this.todosLosPaises = this.pais.readAll();
 		llenarTablaPaises();
+		actualizarComboBoxesDeCliente();
 	}
 	
 	public PaisDTO getPaisDeTabla(String nombrePais) {
@@ -175,8 +178,13 @@ public class ControladorEditarPais {
 		this.todosLosPaises = this.pais.readAll();
 		this.ventanaEditarPais.getTextPaisNuevo().setText("");
 		llenarTablaPaises();
+		actualizarComboBoxesDeCliente();
 	}
 	
+	
+	public void actualizarComboBoxesDeCliente() {
+		this.controladorAltaCliente.actualizarComboBoxes();
+	}
 	
 	public boolean ventanaYaEstaInicializada() {
 		return this.ventanaEditarPais.getFrame().isShowing();

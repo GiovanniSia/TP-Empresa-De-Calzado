@@ -342,7 +342,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(lblSaldoInicial_1);
 		
 		btnUbicacion = new JButton("Admin. Ubicacion");
-		btnUbicacion.setBounds(496, 459, 157, 21);
+		btnUbicacion.setBounds(537, 71, 116, 21);
 		frame.getContentPane().add(btnUbicacion);
 		
 		comboBoxPais = new JComboBox<String>();

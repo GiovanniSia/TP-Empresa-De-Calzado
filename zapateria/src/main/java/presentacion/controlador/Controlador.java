@@ -43,6 +43,7 @@ import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtua
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
+import presentacion.controlador.gerente.ControladorGestionarClientes;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
@@ -106,6 +107,7 @@ public class Controlador implements ActionListener {
 	ControladorRealizarVenta controladorRealizarVenta;
 	
 	//Controlador gerente
+	ControladorGestionarClientes controladorGestionarClientes;
 	ControladorAltaCliente controladorAltaCliente;
 	
 	//Controlador supervisor
@@ -246,8 +248,12 @@ public class Controlador implements ActionListener {
 		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
 		
 		
-		//Alta cliente
-		this.controladorAltaCliente = new ControladorAltaCliente(this,this.cliente,this.pais,this.provincia,this.localidad); 
+		//Gestionar Clientes
+		this.controladorGestionarClientes = new ControladorGestionarClientes(this,this.cliente);
+		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente,this.pais,this.provincia,this.localidad);
+		
+		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
+		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
 		
 		//Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);
@@ -285,8 +291,8 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
 		
 		
-		//Alta cliente
-		this.ventanaMenuSistemaDeVentas.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
+		//Gestionar Cliente
+		this.ventanaMenuSistemaDeVentas.getBtnRegistrarUnCliente().addActionListener(a -> pasarAGestionarClientes(a));
 		
 		
 		//Alta producto
@@ -455,10 +461,10 @@ public class Controlador implements ActionListener {
 	}
 	
 	
-	public void pasarARegistrarUnCliente(ActionEvent a ) {
+	public void pasarAGestionarClientes(ActionEvent a ) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
-		this.controladorAltaCliente.inicializar();
-		this.controladorAltaCliente.mostrarVentana();
+		this.controladorGestionarClientes.inicializar();
+		this.controladorGestionarClientes.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	

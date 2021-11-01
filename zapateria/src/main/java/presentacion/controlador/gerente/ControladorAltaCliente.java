@@ -33,6 +33,7 @@ public class ControladorAltaCliente {
 	ControladorEditarPais controladorEditarPais;
 	VentanaEditarPais ventanaEditarPais;
 	VentanaEditarProvincia ventanaEditarProvincia;
+	ControladorEditarProvincia controladorEditarProvincia;
 	VentanaEditarLocalidad ventanaEditarLocalidad;
 	
 	Cliente cliente;
@@ -47,14 +48,13 @@ public class ControladorAltaCliente {
 	ArrayList<LocalidadDTO> todasLasLocalidades;
 	ArrayList<ProvinciaDTO> provEnComboBox;
 	ArrayList<LocalidadDTO> localidadEnComboBox;
-	
-	
-	Controlador controlador;
-	
-	public ControladorAltaCliente(Controlador controlador,Cliente cliente, Pais pais, Provincia provincia, Localidad localidad) {
+
+	ControladorGestionarClientes controladorGestionarClientes;
+		
+	public ControladorAltaCliente(Cliente cliente, Pais pais, Provincia provincia, Localidad localidad) {
 		this.cliente=cliente;
 		this.listaClientes = new ArrayList<ClienteDTO>();
-		this.controlador= controlador;
+		
 		this.pais=pais;
 		this.provincia = provincia;
 		this.localidad = localidad;
@@ -68,10 +68,21 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
 		
 		this.ventanaEditarPais = new VentanaEditarPais();
+		
+		this.controladorEditarPais = new ControladorEditarPais(this,this.pais);
+		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia);
+		
+		
 		this.ventanaEditarProvincia = new VentanaEditarProvincia();
 		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
 		
 	}
+
+	public void setControladorGestionarClientes(ControladorGestionarClientes controladorGestionarClientes) {
+		this.controladorGestionarClientes = controladorGestionarClientes;
+	}
+	
+	
 	
 	public void inicializar() {
 		
@@ -117,8 +128,8 @@ public class ControladorAltaCliente {
 	
 	public void salir(ActionEvent a) {
 		this.ventanaAltaCliente.cerrar();
-		this.controlador.inicializar();
-		this.controlador.mostrarVentanaMenuDeSistemas();
+		this.controladorGestionarClientes.inicializar();
+		this.controladorGestionarClientes.mostrarVentana();
 	}
 
 	public void registrarCliente(ActionEvent a) {
@@ -307,6 +318,11 @@ public class ControladorAltaCliente {
 	
 	
 	public void cargarComboBoxes() {
+		this.ventanaAltaCliente.getComboBoxTipoCliente().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
 		
 		
 		
@@ -500,16 +516,34 @@ public class ControladorAltaCliente {
 				   "opcion 1");
 		
 		if(seleccion==0) {
-			this.controladorEditarPais = new ControladorEditarPais(this.pais,this.ventanaEditarPais);
+			if(this.controladorEditarPais.ventanaYaEstaInicializada()) {
+				System.out.println("la ventana edit pais ya esta inicializada");
+				return;
+			}
 			this.controladorEditarPais.inicializar();
 			this.controladorEditarPais.mostrarVentana();
 		}
+		
 		if (seleccion == 1) {
-
+			if(this.controladorEditarProvincia.ventanaYaFueInicializada()) {
+				System.out.println("la ventana edit prov ya esta inicializada");
+				return;
+			}
+			this.controladorEditarProvincia.inicializar();
+			this.controladorEditarProvincia.mostrarVentana();
 		}
 		if (seleccion == 2) {
 
 		}
 		
 	}
+	
+	
+	public void actualizarComboBoxes() {
+		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
+		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
+		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
+		cargarComboBoxes();
+	}
+	
 }

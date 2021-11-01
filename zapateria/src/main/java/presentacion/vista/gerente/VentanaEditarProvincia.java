@@ -9,10 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,8 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import dto.PaisDTO;
-import dto.ProvinciaDTO;
 import persistencia.conexion.Conexion;
 
 public class VentanaEditarProvincia extends JFrame{
@@ -35,14 +29,11 @@ public class VentanaEditarProvincia extends JFrame{
 	private JButton btnAgregar;
 	private JButton btnBorrar;
 	private JButton btnSalir;
-	private String[] nombreColumnasProvincia = { "Nombre", "Nombre Pais"};
-	private JLabel txtGestionar;
+	private String[] nombreColumnasProvincia = { "Pais", "Provincia"};
+	private JLabel lblGestionar;
 	private JLabel txtIdPais;
-	private JLabel txtIdProvincia;
-	private JComboBox TipoLocalidad;
-	private JTextField txtFieldNombreLocalidad;
-	private JTextField txtFieldId;
-	private String[] opciones = {"",""};
+	private JComboBox<String> ComboBoxLocalidades;
+	private JTextField txtNombreLocalidad;
 	private JButton btnEditar;
 	private DefaultTableModel modelProvincia;
 	private JTable tablaProvincia;
@@ -80,7 +71,7 @@ public class VentanaEditarProvincia extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int filaSeleccionada = tablaProvincia.rowAtPoint(e.getPoint());
-				txtFieldId.setText(tablaProvincia.getValueAt(filaSeleccionada, 0).toString());
+				txtNombreLocalidad.setText(tablaProvincia.getValueAt(filaSeleccionada, 0).toString());
 			}
 		});
 		tablaProvincia.getColumnModel().getColumn(0).setPreferredWidth(103);
@@ -117,40 +108,39 @@ public class VentanaEditarProvincia extends JFrame{
 		btnBorrar.setBounds(174, 198, 78, 23);
 		panel_1.add(btnBorrar);
 
-		txtGestionar = new JLabel("Gestionar localidades");
-		txtGestionar.setBounds(50, 10, 150, 30);
-		txtGestionar.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		panel_1.add(txtGestionar);
+		lblGestionar = new JLabel("Gestionar localidades");
+		lblGestionar.setBounds(50, 10, 180, 30);
+		lblGestionar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panel_1.add(lblGestionar);
 
-		TipoLocalidad = new JComboBox();
-		TipoLocalidad.setBounds(40, 110, 190, 20);
-		TipoLocalidad.setModel(new DefaultComboBoxModel(opciones));
-		panel_1.add(TipoLocalidad);
+		ComboBoxLocalidades = new JComboBox<String>();
+		ComboBoxLocalidades.setBounds(40, 110, 190, 20);
+		panel_1.add(ComboBoxLocalidades);
 		
 		txtIdPais = new JLabel("Nombre:");
 		txtIdPais.setBounds(40, 60, 70, 20);
 		txtIdPais.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(txtIdPais);
 		
-		txtFieldId = new JTextField();
-		txtFieldId.setBounds(130, 65, 100, 20);
-		txtFieldId.addKeyListener(new KeyAdapter() {
+		txtNombreLocalidad = new JTextField();
+		txtNombreLocalidad.setBounds(130, 65, 100, 20);
+		txtNombreLocalidad.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-                if(txtFieldId.getText().length()>=25) {
+                if(txtNombreLocalidad.getText().length()>=25) {
                     e.consume();
                 }
 			}
 		});
-		panel_1.add(txtFieldId);
+		panel_1.add(txtNombreLocalidad);
 		}
 	
-	public JComboBox getComboBox() {
-		return TipoLocalidad;
+	public JComboBox<String> getComboBox() {
+		return ComboBoxLocalidades;
 	}
 	
-	public JTextField getTxtFieldId() {
-		return txtFieldId;
+	public JTextField getTxtLocalidad() {
+		return txtNombreLocalidad;
 	}
 	
 	public JButton getBtnAgregar() {
@@ -201,7 +191,7 @@ public class VentanaEditarProvincia extends JFrame{
 	}
 	
 	public String obtenerSeleccion() {
-		String s = (String) TipoLocalidad.getSelectedItem();
+		String s = (String) ComboBoxLocalidades.getSelectedItem();
 		return s;
 	}
 
@@ -213,9 +203,9 @@ public class VentanaEditarProvincia extends JFrame{
 		return tablaProvincia;
 	}
 
-	public void limpiarTodosTxt() {
-		getTxtFieldId().setText(null);
-    	return;
+	public JFrame getFrame() {
+		return frame;
 	}
+
 }
 

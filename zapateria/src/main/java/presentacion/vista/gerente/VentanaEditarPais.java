@@ -72,7 +72,7 @@ public class VentanaEditarPais {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setTitle("Zapateria Argento - Editar Pais");
-		
+		frame.setLocationRelativeTo(null);	
 		
 		btnAgregarPais = new JButton("Agregar");
 		btnAgregarPais.setFont(new Font("Tahoma", Font.PLAIN, 9));

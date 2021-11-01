@@ -13,15 +13,15 @@ private ProvinciaDAO provincia;
 		this.provincia = metodo_Persistencia.createProvinciaDAO();
 	}
 	
-	public void agregarProvincia(ProvinciaDTO nuevaProvincia) {
-		this.provincia.insert(nuevaProvincia);
+	public boolean insert(ProvinciaDTO nuevaProvincia) {
+		return this.provincia.insert(nuevaProvincia);
 	}
 	
-	public void borrarProvincia(ProvinciaDTO Provincia_a_eliminar) {
-		this.provincia.delete(Provincia_a_eliminar);
+	public boolean delete(ProvinciaDTO Provincia_a_eliminar) {
+		return this.provincia.delete(Provincia_a_eliminar);
 	}
-	public void editarProvincia(String nombreProvincia,ProvinciaDTO Provincia_a_editar) {
-		this.provincia.edit(nombreProvincia,Provincia_a_editar);
+	public boolean update(String nombreProvincia,ProvinciaDTO Provincia_a_editar) {
+		return this.provincia.edit(nombreProvincia,Provincia_a_editar);
 	}
 	public List<ProvinciaDTO> readAll(){
 		return this.provincia.readAll();
