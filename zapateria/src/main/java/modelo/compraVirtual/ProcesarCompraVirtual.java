@@ -36,7 +36,6 @@ import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.reportes.ReporteFactura;
 
 public class ProcesarCompraVirtual {
 	
@@ -560,7 +559,8 @@ public class ProcesarCompraVirtual {
 		}
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
-		double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
+		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		//double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
 		//if(notaCredito != 0) {
 		//	registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
 		//}

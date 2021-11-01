@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 import dto.ClienteDTO;
 import dto.EgresosDTO;
 import dto.IngresosDTO;
+import dto.MotivoEgresoDTO;
 import dto.RechazoCompraVirtualDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 import modelo.Cliente;
@@ -28,10 +29,12 @@ import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.compraVirtual.CodigoErrorComprasVirtuales;
+import modelo.compraVirtual.MotivoEgreso;
 import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.reportes.ReporteFactura;
+import presentacion.reportes.ReporteNotaCredito;
 import presentacion.vista.compraVirtual.VentanaVerComprasVirtuales;
 import presentacion.vista.compraVirtual.VentanaVerDetalleRechazo;
 
@@ -410,6 +413,22 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	private void mostrarFactura(String nroFacturaCompleto) {
 		ReporteFactura factura = new ReporteFactura(nroFacturaCompleto);
 		factura.mostrar();
+		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return;
+		}
+		boolean deboMostrarNotaCredito = false;
+		MotivoEgreso modeloMotivoEgreso = new MotivoEgreso(new DAOSQLFactory());
+		List<MotivoEgresoDTO> egresos = modeloMotivoEgreso.readAll();
+		for(MotivoEgresoDTO e: egresos) {
+			if(e.getNroFacturaCompleto().equals(nroFacturaCompleto)) {
+				deboMostrarNotaCredito = true;
+			}
+		}
+		if(deboMostrarNotaCredito) {
+			ReporteNotaCredito notaCredito = new ReporteNotaCredito(nroFacturaCompleto);
+			notaCredito.mostrar();
+		}
 	}
 	
 	private void mostrarDatosRechazo(int indexRechazoSeleccionado) {
