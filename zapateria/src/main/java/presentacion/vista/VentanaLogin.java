@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
+import javax.swing.JSeparator;
 
 public class VentanaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -77,8 +78,10 @@ public class VentanaLogin extends JFrame {
 		panel_1.setLayout(null);
 
 		btnIniciarSesion = new JButton("Iniciar Sesion");
+		btnIniciarSesion.setForeground(Color.BLACK);
+		btnIniciarSesion.setBackground(Color.WHITE);
 		btnIniciarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnIniciarSesion.setBounds(151, 124, 145, 32);
+		btnIniciarSesion.setBounds(151, 124, 129, 32);
 		panel_1.add(btnIniciarSesion);
 
 		lblContrasenia = new JLabel("Contrase\u00F1a");
@@ -88,6 +91,7 @@ public class VentanaLogin extends JFrame {
 		panel_1.add(lblContrasenia);
 
 		txtFieldCorreo = new JTextField();
+		txtFieldCorreo.setBorder(null);
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -97,7 +101,7 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-		txtFieldCorreo.setBounds(160, 52, 120, 20);
+		txtFieldCorreo.setBounds(151, 52, 129, 20);
 		panel_1.add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 
@@ -108,6 +112,7 @@ public class VentanaLogin extends JFrame {
 		panel_1.add(lblCorreo);
 
 		txtFieldContra = new JPasswordField();
+		txtFieldContra.setBorder(null);
 		txtFieldContra.addKeyListener(new KeyAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -118,7 +123,7 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-		txtFieldContra.setBounds(160, 90, 120, 20);
+		txtFieldContra.setBounds(151, 90, 129, 20);
 		panel_1.add(txtFieldContra);
 		
 		JLabel lblSucursal = new JLabel("Sucursal");
@@ -128,8 +133,21 @@ public class VentanaLogin extends JFrame {
 		panel_1.add(lblSucursal);
 		
 		cbSucursales = new JComboBox();
-		cbSucursales.setBounds(160, 7, 120, 22);
+		cbSucursales.setBorder(null);
+		cbSucursales.setBounds(151, 7, 129, 22);
 		panel_1.add(cbSucursales);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBackground(Color.BLACK);
+		separator.setForeground(Color.BLACK);
+		separator.setBounds(151, 72, 129, 8);
+		panel_1.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(Color.BLACK);
+		separator_1.setBackground(Color.BLACK);
+		separator_1.setBounds(151, 110, 129, 8);
+		panel_1.add(separator_1);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
@@ -183,5 +201,4 @@ public class VentanaLogin extends JFrame {
 	public JComboBox getCbSucursales() {
 		return cbSucursales;
 	}
-	
 }
