@@ -415,6 +415,74 @@ CREATE TABLE `RechazoCompraVirtualDetalle`
   PRIMARY KEY (`Id`)
 );
 
+
+CREATE TABLE IF NOT EXISTS `paises`
+(
+    `idPais` int(11) NOT NULL AUTO_INCREMENT,
+    `nombrePais` varchar(45) DEFAULT NULL,
+    PRIMARY KEY (`idPais`)
+);
+
+CREATE TABLE IF NOT EXISTS `provincias`
+(
+    `idProvincia` int(11) NOT NULL AUTO_INCREMENT,
+    `nombreProvincia` varchar(45) DEFAULT NULL,
+    `idForeignPais` int(11) NOT NULL,
+    PRIMARY KEY (`idProvincia`)
+);
+
+ALTER TABLE `provincias` ADD FOREIGN KEY(`idForeignPais`) REFERENCES `paises`(`idPais`) ON DELETE CASCADE;
+
+CREATE TABLE IF NOT EXISTS `localidades`
+(
+    `idLocalidad` int(11) NOT NULL AUTO_INCREMENT,
+    `nombreLocalidad` varchar(45) DEFAULT NULL,
+    `idForeignProvincia` int(11) NOT NULL,
+    PRIMARY KEY (`idLocalidad`)
+);
+
+insert into paises values(1,"Argentina");
+INSERT INTO paises VALUES(2,"Brasil");
+INSERT INTO paises VALUES(3,"Chile");
+INSERT INTO paises VALUES(4,"Uruguay");
+
+insert into provincias values(1,"Buenos Aires",1);
+INSERT INTO provincias VALUES(2,"Capital Federal",1);
+INSERT INTO provincias VALUES(3,"Catamarca",1);
+INSERT INTO provincias VALUES(4,"Chaco",1);
+INSERT INTO provincias VALUES(5,"Chubut",1);
+INSERT INTO provincias VALUES(6,"Córdoba",1);
+INSERT INTO provincias VALUES(7,"Corrientes",1);
+INSERT INTO provincias VALUES(8,"Entre Ríos",1);
+INSERT INTO provincias VALUES(9,"Formosa",1);
+INSERT INTO provincias VALUES(10,"Jujuy",1);
+INSERT INTO provincias VALUES(11,"La Pampa",1);
+INSERT INTO provincias VALUES(12,"La Rioja",1);
+INSERT INTO provincias VALUES(13,"Mendoza",1);
+INSERT INTO provincias VALUES(14,"Neuquén",1);
+INSERT INTO provincias VALUES(15,"Río Negro",1);
+INSERT INTO provincias VALUES(16,"Salta",1);
+INSERT INTO provincias VALUES(17,"San Juan",1);
+INSERT INTO provincias VALUES(18,"San Luis",1);
+INSERT INTO provincias VALUES(19,"Santa Cruz",1);
+INSERT INTO provincias VALUES(20,"Santa Fe",1);
+INSERT INTO provincias VALUES(21,"Santiago del Estero",1);
+INSERT INTO provincias VALUES(22,"Tierra del Fuego",1);
+INSERT INTO provincias VALUES(23,"Tucumán",1);
+
+INSERT INTO provincias VALUES(24,"Artigas",4);
+INSERT INTO provincias VALUES(25,"Canelones",4);
+INSERT INTO provincias VALUES(26,"Cerro Largo",4);
+INSERT INTO provincias VALUES(27,"Colonia",4);
+INSERT INTO provincias VALUES(28,"Durazno",4);
+INSERT INTO provincias VALUES(29,"Montevideo",4);
+
+insert into localidades values(1,"Malvinas Argentinas",1);
+insert into localidades values(2,"Pilar",1);
+
+insert into localidades values(3,"Reducto",29);
+
+
 insert into tipoEgreso values("AS","Adelanto de sueldo");
 insert into tipoEgreso values("FA","Faltante");
 insert into tipoEgreso values("PP","Pago proveedor");
