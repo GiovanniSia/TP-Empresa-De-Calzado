@@ -520,6 +520,8 @@ public class ControladorAltaCliente {
 				System.out.println("la ventana edit pais ya esta inicializada");
 				return;
 			}
+			this.controladorEditarProvincia.cerrarVentana();
+			
 			this.controladorEditarPais.inicializar();
 			this.controladorEditarPais.mostrarVentana();
 		}
@@ -529,6 +531,7 @@ public class ControladorAltaCliente {
 				System.out.println("la ventana edit prov ya esta inicializada");
 				return;
 			}
+			this.controladorEditarPais.cerrarVentana();
 			this.controladorEditarProvincia.inicializar();
 			this.controladorEditarProvincia.mostrarVentana();
 		}

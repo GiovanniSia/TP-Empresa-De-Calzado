@@ -1,10 +1,15 @@
 package presentacion.controlador.gerente;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dto.PaisDTO;
 import dto.ProvinciaDTO;
@@ -40,13 +45,41 @@ public class ControladorEditarProvincia {
 		this.ventanaEditarProvincia = new VentanaEditarProvincia();
 		
 		this.ventanaEditarProvincia.getBtnAgregar().addActionListener(a -> agregarProvincia(a));
+		this.ventanaEditarProvincia.getBtnEditar().addActionListener(a -> editarProvincia(a));
 		this.ventanaEditarProvincia.getBtnSalir().addActionListener(a -> salir(a));
+		
+		this.ventanaEditarProvincia.getComboBox().addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				actualizarTabla(); 	
+			}
+		});
+		
+		this.ventanaEditarProvincia.getTablaProvincia().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSM = this.ventanaEditarProvincia.getTablaProvincia().getSelectionModel();
+		
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int filaSeleccionada = ventanaEditarProvincia.getTablaProvincia().getSelectedRow();
+				if (filaSeleccionada == -1) {
+					return;
+				}
+
+				String nombreProv = ventanaEditarProvincia.getModelProvincia().getValueAt(filaSeleccionada, 0).toString();
+				ventanaEditarProvincia.getTxtLocalidad().setText(nombreProv);
+			}
+			
+		});
+		
 	}
 	
 	public void inicializar() {
 		this.todosLosPaises = this.pais.readAll();
 		this.todosLasProvincias = this.provincia.readAll();
 		llenarComboBoxes();
+		llenarTablaPorDefecto();
 	}
 	
 	
@@ -82,10 +115,9 @@ public class ControladorEditarProvincia {
 		this.paisEnTabla = paisEnCb;
 		
 		for(ProvinciaDTO prov: this.todosLasProvincias) {
-			if(prov.getIdProvincia()== paisEnCb.getIdPais()) {
-				String nombrePais = paisEnCb.getNombrePais();
+			if(prov.getForeignPais()== paisEnCb.getIdPais()) {
 				String nombreProv = prov.getNombreProvincia();
-				String[] fila = {nombrePais,nombreProv};
+				String[] fila = {nombreProv};
 				this.ventanaEditarProvincia.getModelProvincia().addRow(fila);
 				this.provinciasEnTabla.add(prov);
 			}
@@ -128,110 +160,51 @@ public class ControladorEditarProvincia {
 		}
 		this.ventanaEditarProvincia.getTxtLocalidad().setText("");
 		this.todosLosPaises = this.pais.readAll();
-		actualizarVentana(paisSeleccionado);
+		actualizarTabla();
 		actualizarComboBoxesDeCliente();
 	}
 	
-/*
+
 	private void editarProvincia(ActionEvent w) {
-		int filaSeleccionada = this.ventanaProvincia.tablaProvinciaSeleccionada();
+		int filaSeleccionada = this.ventanaEditarProvincia.tablaProvinciaSeleccionada();
 
-		String nombreNuevo = (String) this.ventanaProvincia.getTxtFieldId().getText();
-
-		if (nombreNuevo.contentEquals("") || filaSeleccionada == -1) {
-			JOptionPane.showMessageDialog(null, "Campo nombre no debe estar vacio y se debe seleccionar una fila");
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar una provincia");
 			return;
 		}
+		
+		String nombreNuevo = this.ventanaEditarProvincia.getTxtLocalidad().getText().toString();
 
-		String paisElegido = (String) this.ventanaProvincia.getComboBox().getSelectedItem();
-		if (paisElegido == null) {
+		if (nombreNuevo.contentEquals("")) {
+			JOptionPane.showMessageDialog(null, "Campo nombre no debe estar vacio");
 			return;
 		}
-
-		PaisDTO PaisSeleccionado = getPaisDeTabla(paisElegido);
-
-		DefaultTableModel modelo = (DefaultTableModel) this.ventanaProvincia.getTablaProvincia().getModel();
-		String nombreProvincia = (String) modelo.getValueAt(filaSeleccionada, 0);
-
-		ProvinciaDTO provinciaEditar = getProvinciaDeTabla(nombreProvincia, PaisSeleccionado.getIdPais());
-		this.provincia.editarProvincia(nombreNuevo, provinciaEditar);
-		this.provinciaEnTabla = this.provincia.obtenerProvincia();
-
-		this.ventanaProvincia.limpiarTodosTxt();
-		this.llenarTablaProvincia(paisElegido);
-		this.refrescarComboBoxes();
-		return;
+				
+		ProvinciaDTO provincia = this.provinciasEnTabla.get(filaSeleccionada);
+				
+		boolean update = this.provincia.update(nombreNuevo, provincia);
+		if(!update) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "Ha ocurrido un error al actualizar la provincia");
+			return;
+		}
+		actualizarTabla();
+		actualizarComboBoxesDeCliente();
 	}
-
+	
+	
 	private void borrarProvincia(ActionEvent r) {
-		int filaSeleccionada = this.ventanaProvincia.getTablaProvincia().getSelectedRow();
+		int filaSeleccionada = this.ventanaEditarProvincia.getTablaProvincia().getSelectedRow();
 		if (filaSeleccionada == -1) {
 			JOptionPane.showMessageDialog(null, "Debes seleccionar al menos una fila");
 			return;
 		}
+		
+		String nombreProv = this.ventanaEditarProvincia.getTablaProvincia().getValueAt(filaSeleccionada, 0).toString();
+		
+		
 
-		String paisElegido = (String) this.ventanaProvincia.getComboBox().getSelectedItem();
-		if (paisElegido == null) {
-			return;
-		}
-
-		DefaultTableModel modelo = (DefaultTableModel) this.ventanaProvincia.getTablaProvincia().getModel();
-		PaisDTO PaisSeleccionado = getPaisDeTabla(paisElegido);
-		String nombreProvinciaBorrar = (String) modelo.getValueAt(filaSeleccionada, 0);
-
-		ProvinciaDTO provinciaElegida = getProvinciaDeTabla(nombreProvinciaBorrar, PaisSeleccionado.getIdPais());
-
-		for (int i = 0; i < this.provinciaEnTabla.size(); i++) {
-			if (this.provinciaEnTabla.get(i).equals(provinciaElegida)) {
-				this.provincia.borrarProvincia(this.provinciaEnTabla.get(i));
-			}
-		}
-
-		this.ventanaProvincia.limpiarTodosTxt();
-		this.provinciaEnTabla = this.provincia.obtenerProvincia();
-		this.llenarTablaProvincia(paisElegido);
-		this.refrescarComboBoxes();
-		return;
 	}
 
-	private void salirProvincia(ActionEvent t) {
-		this.refrescarComboBoxes();
-		this.ventanaProvincia.cerrarVentana();
-	}
-
-	public void actualizarTablaProvincia(ActionEvent t) {
-		String paisElegido = (String) this.ventanaProvincia.getComboBox().getSelectedItem();
-		if (paisElegido == null) {
-			return;
-		}
-		this.llenarTablaProvincia(paisElegido);
-	}
-
-	public void llenarTablaProvincia(String paisElegido) {
-		this.ventanaProvincia.getModelProvincia().setRowCount(0); // Para vaciar la tabla
-		this.ventanaProvincia.getModelProvincia().setColumnCount(0);
-		this.ventanaProvincia.getModelProvincia()
-				.setColumnIdentifiers(this.ventanaProvincia.getNombreColumnasProvincia());
-
-		PaisDTO paisReferenciado = getPaisDeTabla(paisElegido);
-
-		// Si el no hay paises
-		if (paisReferenciado == null) {
-			Object[] fila = { "", "", "" };
-			this.ventanaEditarLocalidad.getModelTabla().addRow(fila);
-			return;
-		}
-
-		for (ProvinciaDTO provincia : this.provinciaEnTabla) {
-			if (provincia.getForeignPais() == paisReferenciado.getIdPais()) {
-				Object[] fila = { provincia.getNombreProvincia(), paisElegido };
-				this.ventanaProvincia.getModelProvincia().addRow(fila);
-			}
-		}
-		return;
-	}
-	
-*/
 	public boolean yaExisteProvincia(PaisDTO pais,String nombreProvincia) {
 		for(PaisDTO p: this.todosLosPaises) {
 			for(ProvinciaDTO prov: this.todosLasProvincias) {
@@ -245,26 +218,35 @@ public class ControladorEditarProvincia {
 		return false;
 	}
 	
-	public void actualizarVentana(PaisDTO paisSeleccionado) {
+	public void actualizarTabla() {
+		
+		if(this.ventanaEditarProvincia.getComboBox().getSelectedIndex()==-1) {
+			System.out.println("item seleccionado -1");
+			return;
+		}
+		
 		this.ventanaEditarProvincia.getModelProvincia().setRowCount(0);//borrar datos de la tabla
 		this.ventanaEditarProvincia.getModelProvincia().setColumnCount(0);
 		this.ventanaEditarProvincia.getModelProvincia().setColumnIdentifiers(this.ventanaEditarProvincia.getNombreColumnasProvincia());
 		this.provinciasEnTabla.removeAll(this.provinciasEnTabla);
 		
+		String paisEnCb = this.ventanaEditarProvincia.getComboBox().getSelectedItem().toString();
+		PaisDTO pais = getPais(paisEnCb);
+		this.paisEnTabla = pais;
+		
 		this.todosLasProvincias = this.provincia.readAll();
 		
 		for(ProvinciaDTO prov: this.todosLasProvincias) {
 			if(prov.getForeignPais() == this.paisEnTabla.getIdPais()) {
-				String pais = this.paisEnTabla.getNombrePais();
 				String provincia = prov.getNombreProvincia();
-				String[] fila = {pais,provincia};
+				String[] fila = {provincia};
 				this.ventanaEditarProvincia.getModelProvincia().addRow(fila);
 				this.provinciasEnTabla.add(prov);
 			}
 		}
 		
 	}
-	
+
 	
 	public void actualizarComboBoxesDeCliente() {
 		this.controladorAltaCliente.actualizarComboBoxes();

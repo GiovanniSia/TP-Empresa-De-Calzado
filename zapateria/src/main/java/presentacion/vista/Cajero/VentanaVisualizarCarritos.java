@@ -134,6 +134,7 @@ public class VentanaVisualizarCarritos {
 		this.tableCarritos.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableCarritos.getColumnModel().getColumn(0).setResizable(false);
 		tableCarritos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		this.tableCarritos.getTableHeader().setReorderingAllowed(false);
 		scrollPaneTablaCarritos.setViewportView(tableCarritos);
 		
 		panelTablas.add(scrollPaneTablaCarritos);

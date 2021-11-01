@@ -98,7 +98,7 @@ public class VentanaGestionarClientes extends JFrame{
 		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
 		tablaClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaClientes.getColumnModel().getColumn(1).setResizable(false);
-
+		tablaClientes.getTableHeader().setReorderingAllowed(false);
 		spCliente.setViewportView(tablaClientes);
 
 		btnAtras = new JButton("");

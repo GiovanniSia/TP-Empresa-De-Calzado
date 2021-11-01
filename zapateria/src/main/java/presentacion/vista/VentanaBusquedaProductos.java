@@ -156,6 +156,7 @@ public class VentanaBusquedaProductos {
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setPreferredWidth(103);
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
 		tableProductosFiltrados.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		this.tableProductosFiltrados.getTableHeader().setReorderingAllowed(false);
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
 		panel.add(scrollPaneProductosFiltrados);

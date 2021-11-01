@@ -62,6 +62,7 @@ public class ControladorEditarPais {
 
 	public void mostrarVentana() {
 		this.ventanaEditarPais.show();
+		
 	}
 
 	public void salir(ActionEvent a) {
@@ -90,7 +91,7 @@ public class ControladorEditarPais {
 		if (nombrePaisNuevo.equals("")) {
 			JOptionPane.showMessageDialog(null, "Escriba el nombre del nuevo pais");
 			return;
-		}
+		}		
 		if (yaExisteElPais(nombrePaisNuevo)) {
 			JOptionPane.showMessageDialog(null, "Este pais ya existe!");
 			return;
@@ -155,6 +156,12 @@ public class ControladorEditarPais {
 	
 	public void editarPais(ActionEvent e) {
 		String nombreNuevo = this.ventanaEditarPais.getTextPaisNuevo().getText();
+		
+		if(nombreNuevo.equals("")) {
+			JOptionPane.showMessageDialog(null, "El nombre no puede ser vacio!");
+			return;	
+		}
+		
 		if (yaExisteElPais(nombreNuevo)) {
 			JOptionPane.showMessageDialog(null, "El pais ya existe!");
 			return;

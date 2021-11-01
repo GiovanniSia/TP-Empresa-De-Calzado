@@ -1,5 +1,6 @@
 package presentacion.vista.gerente;
 
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
+import java.awt.Color;
 
 public class VentanaEditarProvincia extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -29,7 +31,7 @@ public class VentanaEditarProvincia extends JFrame{
 	private JButton btnAgregar;
 	private JButton btnBorrar;
 	private JButton btnSalir;
-	private String[] nombreColumnasProvincia = { "Pais", "Provincia"};
+	private String[] nombreColumnasProvincia = {"Provincia"};
 	private JLabel lblGestionar;
 	private JLabel txtIdPais;
 	private JComboBox<String> ComboBoxLocalidades;
@@ -38,6 +40,19 @@ public class VentanaEditarProvincia extends JFrame{
 	private DefaultTableModel modelProvincia;
 	private JTable tablaProvincia;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaEditarProvincia window = new VentanaEditarProvincia();
+					window.show();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	public VentanaEditarProvincia() {
 		super();
 		initialize();
@@ -50,80 +65,61 @@ public class VentanaEditarProvincia extends JFrame{
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 532, 271);
+		frame.setBounds(100, 100, 375, 386);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		//frame.setLocationRelativeTo(null);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(252, 0, 271, 232);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
-
-		JScrollPane spProvincia = new JScrollPane();
-		spProvincia.setBounds(10, 11, 250, 182);
-		panel.add(spProvincia);
+		frame.setLocationRelativeTo(null);
 		
 		//Se crea la tabla
-		modelProvincia = new DefaultTableModel(null, nombreColumnasProvincia );
-		tablaProvincia = new JTable(modelProvincia);
-		tablaProvincia.addMouseListener(new MouseAdapter() {
+		modelProvincia = new DefaultTableModel(null, nombreColumnasProvincia ) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				int filaSeleccionada = tablaProvincia.rowAtPoint(e.getPoint());
-				txtNombreLocalidad.setText(tablaProvincia.getValueAt(filaSeleccionada, 0).toString());
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 5) {
+					return true;
+				} else {
+					return false;
+				}
 			}
-		});
-		tablaProvincia.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tablaProvincia.getColumnModel().getColumn(0).setResizable(false);
-		tablaProvincia.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaProvincia.getColumnModel().getColumn(1).setResizable(false);
-		tablaProvincia.getTableHeader().setReorderingAllowed(false);
-		spProvincia.setViewportView(tablaProvincia);
-		
-		btnSalir = new JButton("Salir");
-		btnSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-			}
-		});
-		
-		btnSalir.setBounds(150, 198, 89, 23);
-		panel.add(btnSalir);
+		};
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 0, 254, 232);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 0, 362, 349);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 198, 83, 23);
+		btnAgregar.setBounds(10, 316, 83, 23);
 		panel_1.add(btnAgregar);
 
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(100, 198, 70, 23);
+		btnEditar.setBounds(96, 316, 70, 23);
 		panel_1.add(btnEditar);
 
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(174, 198, 78, 23);
+		btnBorrar.setBounds(176, 316, 78, 23);
 		panel_1.add(btnBorrar);
 
 		lblGestionar = new JLabel("Gestionar localidades");
-		lblGestionar.setBounds(50, 10, 180, 30);
+		lblGestionar.setBackground(Color.LIGHT_GRAY);
+		lblGestionar.setForeground(Color.BLACK);
+		lblGestionar.setBounds(10, 10, 180, 30);
 		lblGestionar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		panel_1.add(lblGestionar);
 
 		ComboBoxLocalidades = new JComboBox<String>();
-		ComboBoxLocalidades.setBounds(40, 110, 190, 20);
+		ComboBoxLocalidades.setBounds(10, 50, 180, 20);
 		panel_1.add(ComboBoxLocalidades);
 		
 		txtIdPais = new JLabel("Nombre:");
-		txtIdPais.setBounds(40, 60, 70, 20);
+		txtIdPais.setBounds(235, 105, 70, 20);
 		txtIdPais.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel_1.add(txtIdPais);
 		
 		txtNombreLocalidad = new JTextField();
-		txtNombreLocalidad.setBounds(130, 65, 100, 20);
+		txtNombreLocalidad.setBounds(225, 135, 100, 20);
 		txtNombreLocalidad.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -133,6 +129,17 @@ public class VentanaEditarProvincia extends JFrame{
 			}
 		});
 		panel_1.add(txtNombreLocalidad);
+		
+		JScrollPane spProvincia = new JScrollPane();
+		spProvincia.setBounds(10, 80, 180, 214);
+		panel_1.add(spProvincia);
+		tablaProvincia = new JTable(modelProvincia);
+		tablaProvincia.getTableHeader().setReorderingAllowed(false);
+		spProvincia.setViewportView(tablaProvincia);
+
+		btnSalir = new JButton("Salir");
+		btnSalir.setBounds(264, 316, 89, 23);
+		panel_1.add(btnSalir);
 		}
 	
 	public JComboBox<String> getComboBox() {
