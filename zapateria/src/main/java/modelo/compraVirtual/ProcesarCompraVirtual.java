@@ -130,6 +130,7 @@ public class ProcesarCompraVirtual {
 				registrarCompraVirtual(compraVirtual);	//GENERA Y MUESTRA LAS FACTURAS
 			}
 		}
+		JsonListaCompraVirtual.pasarComoCompletada();
 	}
 
 	private static void registrarRechazo(CompraVirtualDTO compraVirtual,String motivoRechazo) {
