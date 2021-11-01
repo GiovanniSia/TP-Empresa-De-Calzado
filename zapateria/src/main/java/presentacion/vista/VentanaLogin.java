@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
+import javax.swing.JComboBox;
 
 public class VentanaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +33,10 @@ public class VentanaLogin extends JFrame {
 	private JTextField txtFieldCorreo;
 	private JButton btnIniciarSesion;
 	private JPasswordField txtFieldContra;
-
+	@SuppressWarnings("rawtypes")
+	private JComboBox cbSucursales;
+	
+	
 	public static void main(String[] args) {
 		VentanaLogin n = new VentanaLogin();
 		n.show();
@@ -42,6 +46,7 @@ public class VentanaLogin extends JFrame {
 		initialize();
 	}
 
+	@SuppressWarnings("rawtypes")
 	public void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -54,7 +59,8 @@ public class VentanaLogin extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 373, 243);
+		frame.setBounds(100, 100, 373, 282);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,20 +71,20 @@ public class VentanaLogin extends JFrame {
 		JPanel panel_1 = new JPanel();
 
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(10, 66, 335, 127);
+		panel_1.setBounds(10, 66, 335, 166);
 
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
 		btnIniciarSesion = new JButton("Iniciar Sesion");
 		btnIniciarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnIniciarSesion.setBounds(151, 85, 145, 32);
+		btnIniciarSesion.setBounds(151, 124, 145, 32);
 		panel_1.add(btnIniciarSesion);
 
 		lblContrasenia = new JLabel("Contrase\u00F1a");
 		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContrasenia.setBounds(36, 47, 120, 30);
+		lblContrasenia.setBounds(34, 83, 120, 30);
 		panel_1.add(lblContrasenia);
 
 		txtFieldCorreo = new JTextField();
@@ -91,14 +97,14 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-		txtFieldCorreo.setBounds(162, 16, 120, 20);
+		txtFieldCorreo.setBounds(160, 52, 120, 20);
 		panel_1.add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 
 		lblCorreo = new JLabel("Correo");
 		lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCorreo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCorreo.setBounds(49, 11, 120, 30);
+		lblCorreo.setBounds(34, 42, 120, 30);
 		panel_1.add(lblCorreo);
 
 		txtFieldContra = new JPasswordField();
@@ -112,8 +118,18 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-		txtFieldContra.setBounds(162, 54, 120, 20);
+		txtFieldContra.setBounds(160, 90, 120, 20);
 		panel_1.add(txtFieldContra);
+		
+		JLabel lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSucursal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblSucursal.setBounds(34, 1, 120, 30);
+		panel_1.add(lblSucursal);
+		
+		cbSucursales = new JComboBox();
+		cbSucursales.setBounds(160, 7, 120, 22);
+		panel_1.add(cbSucursales);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
@@ -162,6 +178,10 @@ public class VentanaLogin extends JFrame {
 
 	public JButton getBtnIniciarSesion() {
 		return btnIniciarSesion;
+	}
+	@SuppressWarnings("rawtypes")
+	public JComboBox getCbSucursales() {
+		return cbSucursales;
 	}
 	
 }
