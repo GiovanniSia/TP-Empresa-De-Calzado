@@ -237,6 +237,13 @@ CREATE TABLE `Egresos`
   PRIMARY KEY (`Id`)
 );
 
+CREATE TABLE `MotivoEgresos`
+(
+  `NroFacturaCompleta` varchar(45) NOT NULL,
+  `Motivo` TEXT NOT NULL,
+  PRIMARY KEY (`NroFacturaCompleta`)
+);
+
 CREATE TABLE `Caja`
 (
   `IdCaja` int(11) NOT NULL AUTO_INCREMENT,

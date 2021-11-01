@@ -20,6 +20,7 @@ import dto.EgresosDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
+import dto.MotivoEgresoDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
@@ -560,13 +561,13 @@ public class ProcesarCompraVirtual {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
 		double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
-		if(notaCredito != 0) {
-			registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
-		}
+		//if(notaCredito != 0) {
+		//	registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
+		//}
 		return nroFacturaCompleto;
 	}
 	
-	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal) {
+	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal, String motivo) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
@@ -579,10 +580,14 @@ public class ProcesarCompraVirtual {
 				Monto);
 		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
 		modeloEgreso.insert(egresoNuevo);
+		MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
+		modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,motivo));
+		
 	}
 
 	private static double registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
 		double retNotaCredito = 0.0;
+		String descripcionNotaCredito = "Por falta de stock: ";
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			int id=0;
 			int idProd = idProducto;
@@ -601,6 +606,7 @@ public class ProcesarCompraVirtual {
 			}
 			if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd) < cant) {
 				retNotaCredito += -(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)*precioVenta;
+				descripcionNotaCredito += ""+producto.getDescripcion()+"/"+producto.getTalle()+": x"+(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)+". ";
 				//cant = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd); 
 				//EN CASO DE QUE NO SE QUIERA MOSTRAR PRODUCTOS FANTASMAS EN LA FACTURA DESCOMENTAR EL DE ARRIBA
 			}
@@ -621,6 +627,9 @@ public class ProcesarCompraVirtual {
 			if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(), producto) && producto.getFabricado().equals("N")) {
 				PedidosPendientes.generarPedidoAutomatico(compraVirtual.getIdSucursal(),producto);
 			}
+		}
+		if(retNotaCredito != 0) {
+			registrarNotaCredito(retNotaCredito,factura.getNroFacturaCompleta(), compraVirtual.getIdSucursal(), descripcionNotaCredito);
 		}
 		return retNotaCredito;
 	}
