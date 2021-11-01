@@ -46,6 +46,7 @@ public class ControladorEditarProvincia {
 		
 		this.ventanaEditarProvincia.getBtnAgregar().addActionListener(a -> agregarProvincia(a));
 		this.ventanaEditarProvincia.getBtnEditar().addActionListener(a -> editarProvincia(a));
+		this.ventanaEditarProvincia.getBtnBorrar().addActionListener(a -> borrarProvincia(a));
 		this.ventanaEditarProvincia.getBtnSalir().addActionListener(a -> salir(a));
 		
 		this.ventanaEditarProvincia.getComboBox().addItemListener(new ItemListener() {
@@ -184,7 +185,7 @@ public class ControladorEditarProvincia {
 				
 		boolean update = this.provincia.update(nombreNuevo, provincia);
 		if(!update) {
-			JOptionPane.showMessageDialog(ventanaEditarProvincia, "Ha ocurrido un error al actualizar la provincia");
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar una nueva provincia", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		actualizarTabla();
@@ -199,10 +200,14 @@ public class ControladorEditarProvincia {
 			return;
 		}
 		
-		String nombreProv = this.ventanaEditarProvincia.getTablaProvincia().getValueAt(filaSeleccionada, 0).toString();
-		
-		
-
+		ProvinciaDTO prov = this.provinciasEnTabla.get(filaSeleccionada);
+		boolean delete = this.provincia.delete(prov);
+		if(!delete) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al borrar la provincia", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		actualizarTabla();
+		actualizarComboBoxesDeCliente();
 	}
 
 	public boolean yaExisteProvincia(PaisDTO pais,String nombreProvincia) {

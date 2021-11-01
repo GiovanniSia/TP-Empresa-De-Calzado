@@ -68,13 +68,16 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
 		
 		this.ventanaEditarPais = new VentanaEditarPais();
+		this.ventanaEditarProvincia = new VentanaEditarProvincia();
+		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
 		
 		this.controladorEditarPais = new ControladorEditarPais(this,this.pais);
 		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia);
 		
 		
-		this.ventanaEditarProvincia = new VentanaEditarProvincia();
-		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
+		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
+		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
+		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
 		
 	}
 
@@ -89,15 +92,9 @@ public class ControladorAltaCliente {
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
 		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
-		
-		
-
 		this.listaClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
 		
-		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
-		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
-		
-		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
+
 		
 		
 		cargarComboBoxes();
@@ -317,15 +314,7 @@ public class ControladorAltaCliente {
 	}
 	
 	
-	public void cargarComboBoxes() {
-		this.ventanaAltaCliente.getComboBoxTipoCliente().removeAllItems();
-		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().removeAllItems();
-		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
-		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
-		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
-		
-		
-		
+	public void cargarComboBoxes() {			
 		String[] tipoCliente = {"Mayorista","Minorista"};
 		String[] impuestoAFIP = {"Responsable Inscripto","Monotributista","Exento","Consumidor Final"};
 		
@@ -546,7 +535,19 @@ public class ControladorAltaCliente {
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
 		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
-		cargarComboBoxes();
+		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
+
+		
+
+		for(PaisDTO p: this.todosLosPaises) {
+			this.ventanaAltaCliente.getComboBoxPais().addItem(p.getNombrePais());
+		}
+		this.ventanaAltaCliente.getComboBoxPais().setSelectedIndex(0);
+		//los cb tienen una escucha que funciona cada vez que se modifica un cb. Por lo que si se modifica el cb pais, se
+		//ejecutará la escucha de llenarCbDadoPais. 
+
 	}
 	
 }
