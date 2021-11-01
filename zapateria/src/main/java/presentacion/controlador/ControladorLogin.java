@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import dto.EmpleadoDTO;
 import dto.SucursalDTO;
+import inicioSesion.inicioSesionProperties;
 import modelo.Empleado;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -22,6 +23,8 @@ public class ControladorLogin {
 	private Sucursal sucursal;
 
 	private SucursalDTO sucursalSeleccionada;
+	
+	private inicioSesionProperties inicioSesionProp;
 
 	public ControladorLogin() {
 		this.controlador = new Controlador();
@@ -78,6 +81,17 @@ public class ControladorLogin {
 	}
 
 	public void iniciarZapateria() {
+		inicioSesionProp = inicioSesionProperties.getInstance();
+		
+		String idEmpleado = ""+empleadoInicioSesion.getIdEmpleado();
+		String CUIL = empleadoInicioSesion.getCUIL();
+		String nombre = empleadoInicioSesion.getNombre();
+		String apellido = empleadoInicioSesion.getApellido();
+		String correoElectronico = empleadoInicioSesion.getCorreoElectronico();
+		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
+		
+		inicioSesionProp.establecerPropertiesInicioSesion(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
+		
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
 	}
