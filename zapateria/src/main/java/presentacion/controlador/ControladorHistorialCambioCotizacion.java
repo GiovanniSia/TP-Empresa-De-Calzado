@@ -165,11 +165,4 @@ public class ControladorHistorialCambioCotizacion {
 		this.llenarTabla(historialCambioMonedaEnTabla);
 	}
 
-
-	public static void main(String[] args) {
-		HistorialCambioMoneda modelo = new HistorialCambioMoneda(new DAOSQLFactory());
-		ControladorHistorialCambioCotizacion controlador = new ControladorHistorialCambioCotizacion(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
-	}
 }

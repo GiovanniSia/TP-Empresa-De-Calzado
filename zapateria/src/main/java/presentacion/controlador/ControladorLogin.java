@@ -65,9 +65,6 @@ public class ControladorLogin {
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correo, contra);
 
-//		System.out.println("Usuario Ingresado: " + empleado.selectUser(correo, contra).getCorreoElectronico()
-//				+ " Sucursal: " + sucursalSeleccionada.getNombre());
-
 		ocultarVentanaLogin();
 		iniciarZapateria();
 	}

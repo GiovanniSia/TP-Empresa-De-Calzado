@@ -1,6 +1,7 @@
 package presentacion.controlador.ModificarProducto;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.swing.JOptionPane;
 import dto.HistorialCambioMProductoDTO;
 import dto.MaestroProductoDTO;
 import dto.ProductoDeProveedorDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.HistorialCambioMProducto;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
@@ -17,8 +20,22 @@ import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.ModificarProducto.VentanaDescripcionProveedorMProducto;
 
 public class ControladorDescripcionProveedorMProducto {
-	static final String idSucursal = "1";
-	static final String idEmpleado = "1";
+	static String idSucursal = "";
+	static String idEmpleado = "";
+	public void obtenerDatosPropertiesSucursalEmpleado() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal =sucursalProp.getValue("IdSucursal");
+			
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			idEmpleado = empleadoProp.getValue("IdEmpleado");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	private VentanaDescripcionProveedorMProducto ventanaDescripcionProveedorMProducto;
 	private ProductoDeProveedor productoDeProveedor;
@@ -30,6 +47,7 @@ public class ControladorDescripcionProveedorMProducto {
 	private HistorialCambioMProducto historialCambioMProducto;
 
 	public ControladorDescripcionProveedorMProducto() {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaDescripcionProveedorMProducto = new VentanaDescripcionProveedorMProducto();
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());

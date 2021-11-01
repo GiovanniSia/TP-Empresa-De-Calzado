@@ -150,13 +150,14 @@ public class Controlador implements ActionListener {
 
 		this.proveedor = new Proveedor(new DAOSQLFactory());
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
-
+		
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 
 		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
 	}
 
 	public void inicializar() {
+		System.out.println("Sucursal "+idSucursal);
 		this.ventanaMenu = new VentanaMenu();
 		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
 

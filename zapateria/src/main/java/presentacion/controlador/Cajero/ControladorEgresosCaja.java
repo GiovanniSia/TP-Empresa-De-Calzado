@@ -1,6 +1,7 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,7 @@ import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
 import dto.PedidosPendientesDTO;
 import dto.TipoEgresosDTO;
+import inicioSesion.sucursalProperties;
 import modelo.Egresos;
 import modelo.Ingresos;
 import modelo.MedioPagoEgreso;
@@ -27,12 +29,20 @@ public class ControladorEgresosCaja {
 	private Egresos egresos;
 
 	PedidosPendientes pedidosPendientes;
-	List<PedidosPendientesDTO>	listaPedidosPendientes;
-	
+	List<PedidosPendientesDTO> listaPedidosPendientes;
+
 	private List<TipoEgresosDTO> listaTipoEgresos;
 	private TipoEgresos tipoEgresos;
 
-	private final int idSucursal = 1;
+	private int idSucursal = 0;
+	public void obtenerDatosPropertiesSucursalEmpleado() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private List<MedioPagoEgresoDTO> listaMedioPagoEgreso;
 	private MedioPagoEgreso medioPagoEgreso;
@@ -45,15 +55,17 @@ public class ControladorEgresosCaja {
 	private List<EgresosDTO> egresosEnTabla;
 
 	public ControladorEgresosCaja() {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 		this.egresos = new Egresos(new DAOSQLFactory());
 		this.ingresos = new Ingresos(new DAOSQLFactory());
 	}
-	
-	public ControladorEgresosCaja(Controlador controlador, Egresos egresos,PedidosPendientes pedidosPendientes) {
+
+	public ControladorEgresosCaja(Controlador controlador, Egresos egresos, PedidosPendientes pedidosPendientes) {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
 		this.egresos = egresos;
-		this.pedidosPendientes=pedidosPendientes;
+		this.pedidosPendientes = pedidosPendientes;
 		this.controlador = controlador;
 		this.listaPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 
@@ -145,7 +157,7 @@ public class ControladorEgresosCaja {
 	public void confirmarEgreso() {
 
 		if (validarCampos()) {
-			
+
 			String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 			if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {
 				String as = this.ventanaEgresoCaja.getTxtFieldAS().getText();
@@ -164,9 +176,9 @@ public class ControladorEgresosCaja {
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
 				ingresarEgreso(detalle);
-				
+
 				registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra));
-				
+
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
 		}
@@ -174,41 +186,44 @@ public class ControladorEgresosCaja {
 	}
 
 	private void registrarPedidoComoPagado(int ppNroOrdenCompra) {
-		for(PedidosPendientesDTO p: this.listaPedidosPendientes) {
-			if(p.getId()==ppNroOrdenCompra) {
+		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
+			if (p.getId() == ppNroOrdenCompra) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
 				double pagoRestante = p.getPrecioTotal() - pago;
-				
-				boolean update=true;
-				boolean updateTotal = true;
-				if(pagoRestante<=0) {
-					update = this.pedidosPendientes.cambiarEstado(p.getId(),"Pagado");
 
-					if(!update) {
-						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como completo el pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);
-					}else {
-						JOptionPane.showMessageDialog(null, "Se ha completado el pago del pedido: "+p.getId()+".\nPedido marcado como 'Pagado'", "Pago", JOptionPane.OK_OPTION);
+				boolean update = true;
+				boolean updateTotal = true;
+				if (pagoRestante <= 0) {
+					update = this.pedidosPendientes.cambiarEstado(p.getId(), "Pagado");
+
+					if (!update) {
+						JOptionPane.showMessageDialog(null,
+								"Ha ocurrido un error al marcar como completo el pedido: " + p.getId(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'",
+								"Pago", JOptionPane.OK_OPTION);
 					}
-					
-				}else {
+
+				} else {
 					updateTotal = this.pedidosPendientes.updateTotal(p.getId(), pagoRestante);
-					
-					if(!updateTotal) {
-						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el total del pedido: "+p.getId(), "Error", JOptionPane.ERROR_MESSAGE);	
-					}else {
-						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: "+p.getId()+".\nNuevo saldo: "+pagoRestante,"Pago", JOptionPane.OK_OPTION);
+
+					if (!updateTotal) {
+						JOptionPane.showMessageDialog(null,
+								"Ha ocurrido un error al actualizar el total del pedido: " + p.getId(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: " + p.getId()
+								+ ".\nNuevo saldo: " + pagoRestante, "Pago", JOptionPane.OK_OPTION);
 					}
 				}
-				
-				
-				
+
 				return;
 			}
 		}
 	}
-	
-	
-	
+
 	public boolean validarCampos() {
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String medioPagoSeleccionado = this.ventanaEgresoCaja.getMedioPagoSeleccionado();
@@ -355,10 +370,4 @@ public class ControladorEgresosCaja {
 		this.ventanaEgresoCaja.show();
 	}
 
-	public static void main(String[] args) {
-////		Egresos modelo = new Egresos(new DAOSQLFactory());
-//		ControladorEgresosCaja controlador = new ControladorEgresosCaja();
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
-	}
 }

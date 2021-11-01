@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import dto.HistorialCambioMonedaDTO;
 import dto.MedioPagoDTO;
+import inicioSesion.empleadoProperties;
 import modelo.HistorialCambioMoneda;
 import modelo.MedioPago;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -20,7 +22,17 @@ import presentacion.vista.VentanaModificarCotizacion;
 
 public class ControladorModificarCotizacion {
 
-	static final int idEmpleado = 1;
+	static int idEmpleado = 0;
+	public void obtenerDatosPropertiesEmpleado() {
+		try {
+			
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			idEmpleado = Integer.parseInt(empleadoProp.getValue("IdEmpleado"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private VentanaModificarCotizacion ventanaModificarCotizacion;
 	private MedioPago medioPago;
@@ -31,6 +43,7 @@ public class ControladorModificarCotizacion {
 	Controlador controlador;
 	
 	public ControladorModificarCotizacion(Controlador controlador,MedioPago medioPago) {
+		obtenerDatosPropertiesEmpleado();
 		this.ventanaModificarCotizacion = new VentanaModificarCotizacion();
 		this.medioPago = medioPago;
 		this.controlador=controlador;

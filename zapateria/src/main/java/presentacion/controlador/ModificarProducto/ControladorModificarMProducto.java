@@ -28,19 +28,6 @@ import presentacion.vista.ModificarProducto.VentanaModificarMProducto;
 public class ControladorModificarMProducto {
 	static String idSucursal = "";
 	static String idEmpleado = "";
-
-	private VentanaModificarMProducto ventanaModificarMProducto;
-	private MaestroProducto maestroProducto;
-	private HistorialCambioMProducto historialCambioMProducto;
-	private List<MaestroProductoDTO> maestroProductoEnTablaProducto;
-
-	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
-
-	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
-	private ControladorDescripcionProveedorMProducto controladorDescripcionProveedorMProducto;
-
-	Controlador controlador;
-
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -54,19 +41,33 @@ public class ControladorModificarMProducto {
 		}
 	}
 
+	private VentanaModificarMProducto ventanaModificarMProducto;
+	private MaestroProducto maestroProducto;
+	private HistorialCambioMProducto historialCambioMProducto;
+	private List<MaestroProductoDTO> maestroProductoEnTablaProducto;
+
+	private List<MaestroProductoDTO> maestroProductoEnTablaProductosModificar;
+
+	private ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
+	private ControladorDescripcionProveedorMProducto controladorDescripcionProveedorMProducto;
+
+	Controlador controlador;
+
+
 	public ControladorModificarMProducto() {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 	}
 
 	public ControladorModificarMProducto(Controlador controlador, MaestroProducto producto) {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		this.maestroProducto = producto;
 		this.controlador = controlador;
 	}
 
 	public void inicializar() {
-		obtenerDatosPropertiesSucursalEmpleado();
 		controladorDescripcionProveedorMProducto = new ControladorDescripcionProveedorMProducto();
 
 		HistorialCambioMProducto modelo = new HistorialCambioMProducto(new DAOSQLFactory());
