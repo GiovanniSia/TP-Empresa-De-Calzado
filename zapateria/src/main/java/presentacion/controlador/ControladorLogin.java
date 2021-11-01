@@ -29,7 +29,6 @@ public class ControladorLogin {
 	private sucursalProperties sucursalProp;
 
 	public ControladorLogin() {
-		this.controlador = new Controlador();
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.sucursal = new Sucursal(new DAOSQLFactory());
 
@@ -66,8 +65,8 @@ public class ControladorLogin {
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correo, contra);
 
-		System.out.println("Usuario Ingresado: " + empleado.selectUser(correo, contra).getCorreoElectronico()
-				+ " Sucursal: " + sucursalSeleccionada.getNombre());
+//		System.out.println("Usuario Ingresado: " + empleado.selectUser(correo, contra).getCorreoElectronico()
+//				+ " Sucursal: " + sucursalSeleccionada.getNombre());
 
 		ocultarVentanaLogin();
 		iniciarZapateria();
@@ -110,7 +109,8 @@ public class ControladorLogin {
 
 		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
 				CodigoPostal, Nombre);
-
+		
+		this.controlador = new Controlador();
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
 	}
