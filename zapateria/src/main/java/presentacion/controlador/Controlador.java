@@ -20,11 +20,14 @@ import modelo.Empleado;
 import modelo.EnviarCorreosAProveedoresAutomatico;
 import modelo.Factura;
 import modelo.Ingresos;
+import modelo.Localidad;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
+import modelo.Pais;
 import modelo.PedidosPendientes;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
+import modelo.Provincia;
 import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
@@ -136,6 +139,10 @@ public class Controlador implements ActionListener {
 	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
 	
 	
+	Pais pais;
+	Provincia provincia;
+	Localidad localidad;
+	
 //	public Controlador(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal, Cliente cliente) {
 //		this.maestroProducto = maestroProducto;
 //		this.stock = stock;
@@ -172,6 +179,10 @@ public class Controlador implements ActionListener {
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 		
 		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
+		
+		this.pais = new Pais(new DAOSQLFactory());
+		this.provincia = new Provincia(new DAOSQLFactory());
+		this.localidad = new Localidad(new DAOSQLFactory());
 	}
 	
 	
@@ -236,7 +247,7 @@ public class Controlador implements ActionListener {
 		
 		
 		//Alta cliente
-		this.controladorAltaCliente = new ControladorAltaCliente(this,this.cliente); 
+		this.controladorAltaCliente = new ControladorAltaCliente(this,this.cliente,this.pais,this.provincia,this.localidad); 
 		
 		//Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);

@@ -32,9 +32,6 @@ public class VentanaAltaCliente {
 	private JTextField textApellido;
 	private JTextField textCUIL;
 	private JTextField textCorreo;
-	private JTextField textPais;
-	private JTextField textProvincia;
-	private JTextField textLocalidad;
 	private JTextField textCalle;
 	private JTextField textAltura;
 	private JTextField textCodPostal;
@@ -51,7 +48,12 @@ public class VentanaAltaCliente {
 	private JLabel lblAtras;
 	private JLabel lblRegistrarCliente_1;
 	private JLabel lblSaldoInicial_1;
-
+	
+	private JComboBox<String> comboBoxLocalidad;
+	private JComboBox<String> comboBoxProvincia;
+	private JComboBox<String> comboBoxPais;
+	private JButton btnUbicacion;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -229,45 +231,6 @@ public class VentanaAltaCliente {
 		textCorreo.setBounds(128, 205, 195, 23);
 		frame.getContentPane().add(textCorreo);
 		
-		textPais = new JTextField();
-		textPais.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(textPais.getText().length()>=20) {
-                    e.consume();
-                }
-            }
-        });
-		textPais.setColumns(10);
-		textPais.setBounds(458, 114, 195, 23);
-		frame.getContentPane().add(textPais);
-		
-		textProvincia = new JTextField();
-		textProvincia.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(textProvincia.getText().length()>=20) {
-                    e.consume();
-                }
-            }
-        });
-		textProvincia.setColumns(10);
-		textProvincia.setBounds(458, 153, 195, 23);
-		frame.getContentPane().add(textProvincia);
-		
-		textLocalidad = new JTextField();
-		textLocalidad.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if(textLocalidad.getText().length()>=20) {
-                    e.consume();
-                }
-            }
-        });
-		textLocalidad.setColumns(10);
-		textLocalidad.setBounds(458, 192, 195, 23);
-		frame.getContentPane().add(textLocalidad);
-		
 		textCalle = new JTextField();
 		textCalle.addKeyListener(new KeyAdapter() {
             @Override
@@ -375,6 +338,22 @@ public class VentanaAltaCliente {
 		lblSaldoInicial_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblSaldoInicial_1.setBounds(128, 311, 21, 24);
 		frame.getContentPane().add(lblSaldoInicial_1);
+		
+		btnUbicacion = new JButton("Admin. Ubicacion");
+		btnUbicacion.setBounds(496, 459, 157, 21);
+		frame.getContentPane().add(btnUbicacion);
+		
+		comboBoxPais = new JComboBox();
+		comboBoxPais.setBounds(451, 109, 202, 23);
+		frame.getContentPane().add(comboBoxPais);
+		
+		comboBoxProvincia = new JComboBox<String>();
+		comboBoxProvincia.setBounds(451, 153, 202, 23);
+		frame.getContentPane().add(comboBoxProvincia);
+		
+		comboBoxLocalidad = new JComboBox<String>();
+		comboBoxLocalidad.setBounds(451, 192, 202, 23);
+		frame.getContentPane().add(comboBoxLocalidad);
 	}
 	
 	public void show() {
@@ -427,18 +406,6 @@ public class VentanaAltaCliente {
 		return textCorreo;
 	}
 
-	public JTextField getTextPais() {
-		return textPais;
-	}
-
-	public JTextField getTextProvincia() {
-		return textProvincia;
-	}
-
-	public JTextField getTextLocalidad() {
-		return textLocalidad;
-	}
-
 	public JTextField getTextCalle() {
 		return textCalle;
 	}
@@ -469,5 +436,23 @@ public class VentanaAltaCliente {
 	public JTextField getTextSaldoInicial() {
 		return textSaldoInicial;
 	}
+	
+	
+	
+	
+	public JComboBox<String> getComboBoxLocalidad() {
+		return comboBoxLocalidad;
+	}
 
+	public JComboBox<String> getComboBoxProvincia() {
+		return comboBoxProvincia;
+	}
+
+	public JComboBox<String> getComboBoxPais() {
+		return comboBoxPais;
+	}
+
+	public JButton getBtnUbicacion() {
+		return btnUbicacion;
+	}
 }

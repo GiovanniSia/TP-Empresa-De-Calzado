@@ -49,4 +49,9 @@ public interface DAOAbstractFactory {
 	public PedidosPendientesDAO createPedidosPendientesDAO();
 	
 	public RechazoCompraVirtualDAO createRechazoCompraVirtualDAO();
+	
+	public PaisDAO createPaisDAO();
+	public ProvinciaDAO createProvinciaDAO();
+	public LocalidadDAO createLocalidadDAO();
+	
 }
