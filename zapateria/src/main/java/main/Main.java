@@ -1,7 +1,7 @@
 package main;
 
 import modelo.EnviarCorreosAProveedoresAutomatico;
-import presentacion.controlador.ControladorLogin;
+import presentacion.controlador.Login.ControladorLogin;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package presentacion.controlador;
+package presentacion.controlador.Login;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -12,6 +12,7 @@ import inicioSesion.sucursalProperties;
 import modelo.Empleado;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.Login.VentanaLogin;
 
 public class ControladorLogin {

@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import persistencia.conexion.Conexion;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class VentanaGerente extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +27,14 @@ public class VentanaGerente extends JFrame {
 	
 	public void initialize() {
 		getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(0, 0, 434, 48);
+		getContentPane().add(panel);
+		
+		JLabel lblGerente = new JLabel("Gerente");
+		lblGerente.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		panel.add(lblGerente);
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
