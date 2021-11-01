@@ -120,6 +120,9 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			    });
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxCancelados());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorSucursal());
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorCorreo());
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorPais());
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorProvincia());
 		ventanaRechazo = new VentanaVerDetalleRechazo();
 		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
 		
@@ -205,8 +208,11 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	@SuppressWarnings("deprecation")
 	private List<IngresosDTO> recuperarComprasVirtuales(){
 		boolean errorSucursalSelected = this.ventanaPrincipal.getChckbxErrorSucursal().isSelected();
+		boolean errorCorreoSelected = this.ventanaPrincipal.getChckbxErrorCorreo().isSelected();
+		boolean errorPaisSelected = this.ventanaPrincipal.getChckbxErrorPais().isSelected();
+		boolean errorProvinciaSelected = this.ventanaPrincipal.getChckbxErrorProvincia().isSelected();
 		List<IngresosDTO> ret  = new ArrayList<IngresosDTO>();
-		if(!errorSucursalSelected) {
+		if(!errorSucursalSelected && !errorCorreoSelected && !errorPaisSelected && !errorProvinciaSelected) {
 			String nroOrden = this.ventanaPrincipal.getTextId().getText();
 			String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
 			String cuil = this.ventanaPrincipal.getTextCUIL().getText();
@@ -336,6 +342,9 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		String clienteString = this.ventanaPrincipal.getTextCliente().getText();
 		
 		boolean errorSucursalSelected = this.ventanaPrincipal.getChckbxErrorSucursal().isSelected();
+		boolean errorCorreoSelected = this.ventanaPrincipal.getChckbxErrorCorreo().isSelected();
+		boolean errorPaisSelected = this.ventanaPrincipal.getChckbxErrorPais().isSelected();
+		boolean errorProvinciaSelected = this.ventanaPrincipal.getChckbxErrorProvincia().isSelected();
 		for(RechazoCompraVirtualDTO r: todosRechazos) {
 			boolean deboAgregar = true;
 			deboAgregar = deboAgregar && r.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
@@ -370,6 +379,18 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			
 			if(errorSucursalSelected) {
 				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida().toLowerCase());
+			}
+			
+			if(errorCorreoSelected) {
+				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorCorreo().toLowerCase());
+			}
+			
+			if(errorPaisSelected) {
+				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorPais().toLowerCase());
+			}
+			
+			if(errorProvinciaSelected) {
+				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorProvincia().toLowerCase());
 			}
 			
 			if(deboAgregar) {

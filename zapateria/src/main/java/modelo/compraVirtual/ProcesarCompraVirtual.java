@@ -201,7 +201,7 @@ public class ProcesarCompraVirtual {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El apellido no es valido \n";
 		}
 		if(!esMailValido(compraVirtual.getCorreoElectronico())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CorreoElectronico no es valido \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorCorreo()+" El CorreoElectronico no es valido \n";
 		}
 		/*
 		if(!esTipoClienteValido(compraVirtual.getTipoCliente())) {
@@ -221,10 +221,10 @@ public class ProcesarCompraVirtual {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La altura no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getPais())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El pais no es valido \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPais()+" El pais no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getProvincia())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La provincia no es valida \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProvincia()+" La provincia no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getLocalidad())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La localidad no es valida \n";
@@ -784,6 +784,15 @@ public class ProcesarCompraVirtual {
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "");
 		compras.add(cvd8);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Datos de ubicacion insuficientes
+		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
+				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				"Calle falsa", "5421", "",
+				"", "Tortuguitas", "asda");
+		compras.add(cvd9);
 		
 		JsonListaCompraVirtual.guardarLista(compras);
 		//ProcesarCompraVirtual.RutinaProcesarCompra();

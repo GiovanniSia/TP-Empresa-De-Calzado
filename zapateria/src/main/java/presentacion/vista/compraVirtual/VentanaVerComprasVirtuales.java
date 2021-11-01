@@ -51,6 +51,10 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	
 	JCheckBox chckbxErrorSucursal;
 
+	JCheckBox chckbxErrorCorreo;
+	JCheckBox chckbxErrorPais;
+	JCheckBox chckbxErrorProvincia;
+
 	public VentanaVerComprasVirtuales() {
 		initialize();
 	}
@@ -190,8 +194,23 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		
 		chckbxErrorSucursal = new JCheckBox("Error/Sucursal");
 		chckbxErrorSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		chckbxErrorSucursal.setBounds(742, 36, 97, 23);
+		chckbxErrorSucursal.setBounds(742, 7, 97, 23);
 		panel.add(chckbxErrorSucursal);
+		
+		chckbxErrorCorreo = new JCheckBox("Error/Correo");
+		chckbxErrorCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		chckbxErrorCorreo.setBounds(742, 36, 97, 23);
+		panel.add(chckbxErrorCorreo);
+		
+		chckbxErrorPais = new JCheckBox("Error/Pais");
+		chckbxErrorPais.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		chckbxErrorPais.setBounds(856, 8, 97, 23);
+		panel.add(chckbxErrorPais);
+		
+		chckbxErrorProvincia = new JCheckBox("Error/Provincia");
+		chckbxErrorProvincia.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		chckbxErrorProvincia.setBounds(856, 36, 108, 23);
+		panel.add(chckbxErrorProvincia);
 		
 		lblNewLabel = new JLabel("Compras Virtuales");
 		lblNewLabel.setBounds(10, 63, 324, 32);
@@ -295,5 +314,17 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	
 	public JCheckBox getChckbxErrorSucursal() {
 		return chckbxErrorSucursal;
+	}
+	
+	public JCheckBox getChckbxErrorCorreo() {
+		return chckbxErrorCorreo;
+	}
+
+	public JCheckBox getChckbxErrorPais() {
+		return chckbxErrorPais;
+	}
+
+	public JCheckBox getChckbxErrorProvincia() {
+		return chckbxErrorProvincia;
 	}
 }

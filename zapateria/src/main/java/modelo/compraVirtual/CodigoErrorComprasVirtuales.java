@@ -34,6 +34,18 @@ public class CodigoErrorComprasVirtuales {
 		return "ERROR-071";
 	}
 	
+	public static String getCodigoErrorCorreo() {
+		return "ERROR-061";
+	}
+	
+	public static String getCodigoErrorPais() {
+		return "ERROR-062";
+	}
+	
+	public static String getCodigoErrorProvincia() {
+		return "ERROR-063";
+	}
+	
 	public static String getCodigoErrorSucursalNoValida() {
 		return "ERROR-4-8-15-16-23-42";
 	}

@@ -185,5 +185,26 @@
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
     "CodPostal": ""
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 9,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Cliente",
+    "Apellido": "no cuil",
+    "CUIL": "1234567891234",
+    "CorreoElectronico": "miraMiCuil@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "",
+    "Provincia": "",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "asda"
   }
 ]
