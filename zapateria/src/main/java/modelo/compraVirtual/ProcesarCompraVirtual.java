@@ -176,10 +176,10 @@ public class ProcesarCompraVirtual {
 			}
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+"No es posible vender uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
 				}
 				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+" No hay stock de uno de los productos \n";
 				}
 			}
 			return ret;
@@ -255,7 +255,7 @@ public class ProcesarCompraVirtual {
 					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
 				}
 				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+" No hay stock de uno de los productos \n";
 				}
 			}
 		}

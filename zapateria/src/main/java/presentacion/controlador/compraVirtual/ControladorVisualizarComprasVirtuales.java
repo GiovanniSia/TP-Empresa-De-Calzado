@@ -11,7 +11,10 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.swing.JCheckBox;
 import javax.swing.UIManager;
 
 import dto.ClienteDTO;
@@ -24,6 +27,7 @@ import modelo.DetalleFactura;
 import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
+import modelo.compraVirtual.CodigoErrorComprasVirtuales;
 import modelo.compraVirtual.RechazoCompraVirtual;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
@@ -111,7 +115,16 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			            refrescarTabla();
 			        }
 			    });
-		ventanaPrincipal.getChckbxCancelados().addMouseListener((MouseListener) new MouseListener() {
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxCancelados());
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorSucursal());
+		ventanaRechazo = new VentanaVerDetalleRechazo();
+		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
+		
+		ventanaPrincipal.getBtnSalir().addActionListener(r->cerrarTodoElControlador(r));
+	}
+	
+	private void agregarRefrescarTablaACheckBox(JCheckBox checkBox) {
+		checkBox.addMouseListener((MouseListener) new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -143,10 +156,6 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 				refrescarTabla();
 			}
 		});
-		ventanaRechazo = new VentanaVerDetalleRechazo();
-		ventanaRechazo.getBtnSalir().addActionListener(r->cerrarVentanaDetalle(r));
-		
-		ventanaPrincipal.getBtnSalir().addActionListener(r->cerrarTodoElControlador(r));
 	}
 	
 	private void cerrarTodoElControlador(ActionEvent r) {
@@ -192,49 +201,53 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	
 	@SuppressWarnings("deprecation")
 	private List<IngresosDTO> recuperarComprasVirtuales(){
-		String nroOrden = this.ventanaPrincipal.getTextId().getText();
-		String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
-		String cuil = this.ventanaPrincipal.getTextCUIL().getText();
-		String clienteString = this.ventanaPrincipal.getTextCliente().getText();
-		
+		boolean errorSucursalSelected = this.ventanaPrincipal.getChckbxErrorSucursal().isSelected();
 		List<IngresosDTO> ret  = new ArrayList<IngresosDTO>();
-		List<IngresosDTO> todasLosIngresos = this.modeloIngresos.readAll();
-		for(IngresosDTO ingreso: todasLosIngresos) {
-			if(ingreso.getMedioPago().equals("PV")) {
-				ClienteDTO cliente = getCliente(ingreso.getIdCliente());
-				
-				boolean deboAgregar = true;
-				deboAgregar = deboAgregar && cliente.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
-				String nombreCliente = cliente.getApellido()+", "+cliente.getNombre();
-				deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
-				deboAgregar = deboAgregar && (ingreso.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
-				deboAgregar = deboAgregar && (ingreso.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
-				
-				Date fechaPaso = new Date();
-				String[] fechaPasoString = palabrasPorBarra(ingreso.getFecha());
-				fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
-				fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
-				fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
-				
-				boolean cumpleDesde = false;
-				if(getFechaDesdeDate() != null) {
-					if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+		if(!errorSucursalSelected) {
+			String nroOrden = this.ventanaPrincipal.getTextId().getText();
+			String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
+			String cuil = this.ventanaPrincipal.getTextCUIL().getText();
+			String clienteString = this.ventanaPrincipal.getTextCliente().getText();
+			
+			
+			List<IngresosDTO> todasLosIngresos = this.modeloIngresos.readAll();
+			for(IngresosDTO ingreso: todasLosIngresos) {
+				if(ingreso.getMedioPago().equals("PV")) {
+					ClienteDTO cliente = getCliente(ingreso.getIdCliente());
+					
+					boolean deboAgregar = true;
+					deboAgregar = deboAgregar && cliente.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
+					String nombreCliente = cliente.getApellido()+", "+cliente.getNombre();
+					deboAgregar = deboAgregar && nombreCliente.toLowerCase().matches(".*"+ clienteString.toLowerCase() +".*");
+					deboAgregar = deboAgregar && (ingreso.getIdSucursal()+"").toLowerCase().matches(".*"+ sucursal +".*");
+					deboAgregar = deboAgregar && (ingreso.getId()+"").toLowerCase().matches(".*"+ nroOrden +".*");
+					
+					Date fechaPaso = new Date();
+					String[] fechaPasoString = palabrasPorBarra(ingreso.getFecha());
+					fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
+					fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
+					fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
+					
+					boolean cumpleDesde = false;
+					if(getFechaDesdeDate() != null) {
+						if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+							cumpleDesde = true;
+						}
+					}else {
 						cumpleDesde = true;
 					}
-				}else {
-					cumpleDesde = true;
-				}
-				boolean cumpleHasta = false;
-				if(getFechaDesdeHasta() != null) {
-					if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+					boolean cumpleHasta = false;
+					if(getFechaDesdeHasta() != null) {
+						if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+							cumpleHasta = true;
+						}
+					}else {
 						cumpleHasta = true;
 					}
-				}else {
-					cumpleHasta = true;
-				}
-				deboAgregar = deboAgregar && (cumpleDesde && cumpleHasta);
-				if(deboAgregar) {
-					ret.add(ingreso);
+					deboAgregar = deboAgregar && (cumpleDesde && cumpleHasta);
+					if(deboAgregar) {
+						ret.add(ingreso);
+					}
 				}
 			}
 		}
@@ -318,6 +331,8 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		String sucursal = this.ventanaPrincipal.getTextSucursal().getText();
 		String cuil = this.ventanaPrincipal.getTextCUIL().getText();
 		String clienteString = this.ventanaPrincipal.getTextCliente().getText();
+		
+		boolean errorSucursalSelected = this.ventanaPrincipal.getChckbxErrorSucursal().isSelected();
 		for(RechazoCompraVirtualDTO r: todosRechazos) {
 			boolean deboAgregar = true;
 			deboAgregar = deboAgregar && r.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
@@ -349,11 +364,34 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 				cumpleHasta = true;
 			}
 			deboAgregar = deboAgregar && (cumpleDesde && cumpleHasta);
+			
+			if(errorSucursalSelected) {
+				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorSucursalNoValida().toLowerCase());
+			}
+			
 			if(deboAgregar) {
 				ret.add(r);
 			}
 		}
 		return ret;
+	}
+	
+	private boolean tieneElTexto(String conjunto, String subConjunto) {
+		/*	//Esto funciona
+		boolean ret = false;
+		String[] lineas = conjunto.split("\n");
+		for(String linea: lineas) {
+			System.out.println(linea.split(" ")[0]);
+			ret = ret || ((linea.split(" ")[0]).equals(";"+subConjunto));
+			//if((linea.split(" ")[0]).equals(";"+subConjunto))
+			//	ret = true;
+		}
+		return ret;
+		*/
+		//return conjunto.toLowerCase().matches(".*"+subConjunto.toLowerCase()+".*");	//ESTO NO FUNCIONA
+		Pattern p = Pattern.compile(".*"+subConjunto+".*");
+		Matcher m = p.matcher(conjunto);
+		return m.find();
 	}
 	
 	private void botonVerDescripcion(ActionEvent a) {

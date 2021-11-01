@@ -48,6 +48,8 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
 	JCheckBox chckbxCancelados;
+	
+	JCheckBox chckbxErrorSucursal;
 
 	public VentanaVerComprasVirtuales() {
 		initialize();
@@ -173,7 +175,7 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		
 		chckbxCancelados = new JCheckBox("Cancelados");
 		chckbxCancelados.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		chckbxCancelados.setBounds(825, 35, 97, 23);
+		chckbxCancelados.setBounds(643, 35, 97, 23);
 		panel.add(chckbxCancelados);
 		
 		JLabel lblNewLabel_2 = new JLabel("Ver Descripcion");
@@ -185,6 +187,11 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_2_1.setBounds(220, 352, 123, 57);
 		panel.add(lblNewLabel_2_1);
+		
+		chckbxErrorSucursal = new JCheckBox("Error/Sucursal");
+		chckbxErrorSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		chckbxErrorSucursal.setBounds(742, 36, 97, 23);
+		panel.add(chckbxErrorSucursal);
 		
 		lblNewLabel = new JLabel("Compras Virtuales");
 		lblNewLabel.setBounds(10, 63, 324, 32);
@@ -284,5 +291,9 @@ public class VentanaVerComprasVirtuales extends JFrame {
 
 	public JCheckBox getChckbxCancelados() {
 		return chckbxCancelados;
+	}
+	
+	public JCheckBox getChckbxErrorSucursal() {
+		return chckbxErrorSucursal;
 	}
 }
