@@ -24,7 +24,7 @@ public class ControladorLogin {
 	private Sucursal sucursal;
 
 	private SucursalDTO sucursalSeleccionada;
-	
+
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
 
@@ -66,39 +66,39 @@ public class ControladorLogin {
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correo, contra);
 
-		System.out.println("Usuario Ingresado: " + empleado.selectUser(correo, contra).getCorreoElectronico() + " Sucursal: " + sucursalSeleccionada.getNombre());
+		System.out.println("Usuario Ingresado: " + empleado.selectUser(correo, contra).getCorreoElectronico()
+				+ " Sucursal: " + sucursalSeleccionada.getNombre());
 
 		ocultarVentanaLogin();
 		iniciarZapateria();
 	}
 
 	public SucursalDTO obtenerSucursalSleccionada() {
-		 String nombreSucursalSeleccionado = this.ventanaLogin.getCbSucursales().getSelectedItem().toString();
-		 SucursalDTO sucursalSeleccionada=null;	
-		 for (SucursalDTO s : sucursales) {
-				if(s.getNombre().equals(nombreSucursalSeleccionado)) {
-					sucursalSeleccionada = s;
-				}
+		String nombreSucursalSeleccionado = this.ventanaLogin.getCbSucursales().getSelectedItem().toString();
+		SucursalDTO sucursalSeleccionada = null;
+		for (SucursalDTO s : sucursales) {
+			if (s.getNombre().equals(nombreSucursalSeleccionado)) {
+				sucursalSeleccionada = s;
 			}
+		}
 		return sucursalSeleccionada;
 	}
 
 	public void iniciarZapateria() {
 		empleadoProp = empleadoProperties.getInstance();
-		
-		String idEmpleado = ""+empleadoInicioSesion.getIdEmpleado();
+
+		String idEmpleado = "" + empleadoInicioSesion.getIdEmpleado();
 		String CUIL = empleadoInicioSesion.getCUIL();
 		String nombre = empleadoInicioSesion.getNombre();
 		String apellido = empleadoInicioSesion.getApellido();
 		String correoElectronico = empleadoInicioSesion.getCorreoElectronico();
 		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
-		
+
 		empleadoProp.establecerPropertiesEmpleado(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
-		
-		
+
 		sucursalProp = sucursalProperties.getInstance();
-		
-		String IdSucursal =""+ sucursalSeleccionada.getIdSucursal();
+
+		String IdSucursal = "" + sucursalSeleccionada.getIdSucursal();
 		String Telefono = sucursalSeleccionada.getTelefono();
 		String Calle = sucursalSeleccionada.getCalle();
 		String Altura = sucursalSeleccionada.getAltura();
@@ -107,9 +107,10 @@ public class ControladorLogin {
 		String Pais = sucursalSeleccionada.getPais();
 		String CodigoPostal = sucursalSeleccionada.getCodigoPostal();
 		String Nombre = sucursalSeleccionada.getNombre();
-		
-		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre);
-		
+
+		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
+				CodigoPostal, Nombre);
+
 		controlador.inicializar();
 		controlador.mostrarVentanaMenu();
 	}
