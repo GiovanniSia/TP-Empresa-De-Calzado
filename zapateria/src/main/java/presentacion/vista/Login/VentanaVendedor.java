@@ -15,12 +15,15 @@ import javax.swing.border.EmptyBorder;
 import persistencia.conexion.Conexion;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class VentanaVendedor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
+	
+	private JButton btnArmarVenta;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -52,6 +55,18 @@ public class VentanaVendedor extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(10, 65, 476, 217);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		btnArmarVenta = new JButton("Armar Venta");
+		btnArmarVenta.setForeground(new Color(51, 102, 153));
+		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnArmarVenta.setBackground(new Color(51, 102, 204));
+		btnArmarVenta.setBounds(96, 11, 282, 41);
+		panel_1.add(btnArmarVenta);
 	}
 
 	public void show() {
@@ -80,4 +95,9 @@ public class VentanaVendedor extends JFrame {
 	public void mostrarVentana() {
 		this.show();
 	}
+
+	public JButton getBtnArmarVenta() {
+		return btnArmarVenta;
+	}
+	
 }

@@ -85,5 +85,4 @@ public class VentanaGerente extends JFrame {
 	public void mostrarVentana() {
 		this.show();
 	}
-
 }

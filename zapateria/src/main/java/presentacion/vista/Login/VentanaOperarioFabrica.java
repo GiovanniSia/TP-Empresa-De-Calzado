@@ -15,13 +15,16 @@ import javax.swing.border.EmptyBorder;
 import persistencia.conexion.Conexion;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class VentanaOperarioFabrica extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
-
+	private JButton btnOperatoriaDeFabrica;
+	
+	
 	public VentanaOperarioFabrica() {
 		this.initialize();
 	}
@@ -52,6 +55,20 @@ public class VentanaOperarioFabrica extends JFrame {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBounds(10, 66, 476, 216);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
+		btnOperatoriaDeFabrica.setToolTipText("");
+		btnOperatoriaDeFabrica.setOpaque(true);
+		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
+		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
+		btnOperatoriaDeFabrica.setBounds(71, 11, 323, 57);
+		panel_1.add(btnOperatoriaDeFabrica);
 	}
 
 	public void show() {
@@ -80,4 +97,9 @@ public class VentanaOperarioFabrica extends JFrame {
 	public void mostrarVentana() {
 		this.show();
 	}
+
+	public JButton getBtnOperatoriaDeFabrica() {
+		return btnOperatoriaDeFabrica;
+	}
+	
 }

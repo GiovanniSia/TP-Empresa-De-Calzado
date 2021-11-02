@@ -268,16 +268,17 @@ public class Controlador {
 		// VENTANAS
 
 		// Menu principal
-		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
-		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
+		
+		
+		
+		
+//		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
 
 		// VentanaMenu de sistemas
 		
 //		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
 		
 		this.ventanaMenuSistemaDeVentas.getBtnConfig().addActionListener(a -> pasarAConfig(a));
-		// armar Venta
-		this.ventanaMenuSistemaDeVentas.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
 
 		// cotizacion
 		this.ventanaMenuSistemaDeVentas.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
@@ -287,19 +288,19 @@ public class Controlador {
 				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
 
 		// CAJERO
-
-		// Cobrar Venta
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
-
-		// Ingreso caja
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
-
-		// Egreso
 		this.ventanaCajero.getBtnEgresoDeCaja().addActionListener(a -> pasarAEgresosCaja(a));
-
-		// Cierre de caja
 		this.ventanaCajero.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
 
+		// VENDEDOR
+		this.ventanaVendedor.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
+		
+		//OPERARIO DE FABRICA
+		this.ventanaOperarioFabrica.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
+		
+		
+		
 		// Generar ordenes de manufac
 		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
 
@@ -400,20 +401,8 @@ public class Controlador {
 		 mostrarVentanaPorTipoEmpleado();
 	}
 
-	public void mostrarVentanaMenuDeSistemas() {
-	
-		
-		
-		
-		
-		
-		
+	public void mostrarVentanaMenuDeSistemas() {	
 		mostrarVentanaPorTipoEmpleado();
-	
-	
-	
-	
-	
 	}
 
 //	public void regresarMenuPrincipal(ActionEvent a) {
