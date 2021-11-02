@@ -1,14 +1,13 @@
 package presentacion.controlador.gerente;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
 
 import dto.ClienteDTO;
 import dto.LocalidadDTO;
@@ -18,7 +17,6 @@ import modelo.Cliente;
 import modelo.Localidad;
 import modelo.Pais;
 import modelo.Provincia;
-import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaAltaCliente;
 import presentacion.vista.gerente.VentanaEditarLocalidad;
@@ -35,6 +33,7 @@ public class ControladorAltaCliente {
 	VentanaEditarProvincia ventanaEditarProvincia;
 	ControladorEditarProvincia controladorEditarProvincia;
 	VentanaEditarLocalidad ventanaEditarLocalidad;
+	ControladorEditarLocalidad controladorEditarLocalidad;
 	
 	Cliente cliente;
 	ArrayList<ClienteDTO> listaClientes;
@@ -65,21 +64,11 @@ public class ControladorAltaCliente {
 		this.todasLasLocalidades = new ArrayList<LocalidadDTO>();
 		this.provEnComboBox = new ArrayList<ProvinciaDTO>();
 		this.localidadEnComboBox = new ArrayList<LocalidadDTO>();
-		
-		this.ventanaAltaCliente = new VentanaAltaCliente(); 
-		
-		this.ventanaEditarPais = new VentanaEditarPais();
-		this.ventanaEditarProvincia = new VentanaEditarProvincia();
-		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
-		
+	
 		this.controladorEditarPais = new ControladorEditarPais(this,this.pais);
 		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia);
-		
-		
-		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
-		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
-		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
-		
+		this.controladorEditarLocalidad = new ControladorEditarLocalidad(this, this.pais, this.provincia, this.localidad);
+
 	}
 
 	public void setControladorGestionarClientes(ControladorGestionarClientes controladorGestionarClientes) {
@@ -92,33 +81,46 @@ public class ControladorAltaCliente {
 	
 	public void inicializar() {
 		
+		this.ventanaAltaCliente = new VentanaAltaCliente(); 
+		
+		this.ventanaEditarPais = new VentanaEditarPais();
+		this.ventanaEditarProvincia = new VentanaEditarProvincia();
+		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
+		
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
 		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
 		this.listaClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
-		
 
+		
+		this.ventanaAltaCliente.getComboBoxPais().addActionListener(a -> actualizarCbUbicacionDadoPais());
+		
+		this.ventanaAltaCliente.getComboBoxProvincia().addActionListener(a -> actualizarCbUbicacionDadaProv());
+		
+//		this.ventanaAltaCliente.getComboBoxPais().addItemListener(new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				System.out.println("se ejecuta la escucha de cb pais");
+//				actualizarCbUbicacionDadoPais(); 
+//				
+//			}
+//		});
+//		
+//		this.ventanaAltaCliente.getComboBoxProvincia().addItemListener(new ItemListener() {
+//			@Override
+//			public void itemStateChanged(ItemEvent e) {
+//				System.out.println("se ejecuta la escucha de cb localidad");
+//				actualizarCbUbicacionDadaProv(); 	
+//			}
+//		});
+		
+		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
+		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
+		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
 		
 		
 		cargarComboBoxes();
 		validarTeclado();
-
-
-		this.ventanaAltaCliente.getComboBoxPais().addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				actualizarCbUbicacionDadoPais(); 
-				
-			}
-		});
-		
-		this.ventanaAltaCliente.getComboBoxProvincia().addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				actualizarCbUbicacionDadaProv(); 	
-			}
-		});
-		
 	}
 
 	public void mostrarVentana() {
@@ -316,7 +318,8 @@ public class ControladorAltaCliente {
 	}
 	
 	
-	public void cargarComboBoxes() {			
+	public void cargarComboBoxes() {
+		
 		String[] tipoCliente = {"Mayorista","Minorista"};
 		String[] impuestoAFIP = {"Responsable Inscripto","Monotributista","Exento","Consumidor Final"};
 		
@@ -343,30 +346,30 @@ public class ControladorAltaCliente {
 		
 		
 		
-		if(this.todasLasProvincias.size()==0) {
-			return;
-		}
-		for(ProvinciaDTO prov: this.todasLasProvincias) {
-			if(paisEnCb.getIdPais()==prov.getForeignPais()) {
-				this.ventanaAltaCliente.getComboBoxProvincia().addItem(prov.getNombreProvincia());
-				this.provEnComboBox.add(prov);
-			}		
-		}
-		ProvinciaDTO provAux = this.provEnComboBox.get(0);
-		this.ventanaAltaCliente.getComboBoxProvincia().setSelectedIndex(0);
-		
-		
-		
-		if(this.todasLasLocalidades.size()==0) {
-			return;
-		}
-		for(LocalidadDTO l: this.todasLasLocalidades) {
-			if(provAux.getIdProvincia() == l.getIdForeignProvincia()) {
-				this.ventanaAltaCliente.getComboBoxLocalidad().addItem(l.getNombreLocalidad());
-				this.localidadEnComboBox.add(l);
-			}			
-		}
-		this.ventanaAltaCliente.getComboBoxLocalidad().setSelectedIndex(0);
+//		if(this.todasLasProvincias.size()==0) {
+//			return;
+//		}
+//		for(ProvinciaDTO prov: this.todasLasProvincias) {
+//			if(paisEnCb.getIdPais()==prov.getForeignPais()) {
+//				this.ventanaAltaCliente.getComboBoxProvincia().addItem(prov.getNombreProvincia());
+//				this.provEnComboBox.add(prov);
+//			}		
+//		}
+//		ProvinciaDTO provAux = this.provEnComboBox.get(0);
+//		this.ventanaAltaCliente.getComboBoxProvincia().setSelectedIndex(0);
+//		
+//		
+//		
+//		if(this.todasLasLocalidades.size()==0) {
+//			return;
+//		}
+//		for(LocalidadDTO l: this.todasLasLocalidades) {
+//			if(provAux.getIdProvincia() == l.getIdForeignProvincia()) {
+//				this.ventanaAltaCliente.getComboBoxLocalidad().addItem(l.getNombreLocalidad());
+//				this.localidadEnComboBox.add(l);
+//			}			
+//		}
+//		this.ventanaAltaCliente.getComboBoxLocalidad().setSelectedIndex(0);
 		
 		
 	}
@@ -407,15 +410,18 @@ public class ControladorAltaCliente {
 	}
 	
 	public void actualizarCbUbicacionDadoPais() {
+		
+		if(this.ventanaAltaCliente.getComboBoxPais().getSelectedItem() == null || this.ventanaAltaCliente.getComboBoxPais().getSelectedIndex()==-1) {
+			return;
+		}
+		System.out.println("se ejecuta la escucha de cb pais");
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.provEnComboBox.removeAll(this.provEnComboBox);
 		
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
 		this.localidadEnComboBox.removeAll(this.localidadEnComboBox);
 		
-		if(this.ventanaAltaCliente.getComboBoxPais().getSelectedItem() == null || this.ventanaAltaCliente.getComboBoxPais().getSelectedIndex()==-1) {
-			return;
-		}
+		
 		
 		PaisDTO paisSeleccionado =this.todosLosPaises.get(this.ventanaAltaCliente.getComboBoxPais().getSelectedIndex());
 
@@ -436,13 +442,13 @@ public class ControladorAltaCliente {
 	}
 
 	public void actualizarCbUbicacionDadaProv() {
-		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
-		this.localidadEnComboBox.removeAll(this.localidadEnComboBox);
-		
 		if(this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem() == null || this.provEnComboBox.size()==0) {
 			return;
 		}
-		
+		System.out.println("se ejecuta la escucha de cb localidad");
+		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
+		this.localidadEnComboBox.removeAll(this.localidadEnComboBox);
+				
 		ProvinciaDTO provincia = this.provEnComboBox.get(this.ventanaAltaCliente.getComboBoxProvincia().getSelectedIndex());
 		if (provincia == null) {
 			return;		
@@ -512,7 +518,7 @@ public class ControladorAltaCliente {
 				return;
 			}
 			this.controladorEditarProvincia.cerrarVentana();
-			
+			this.controladorEditarLocalidad.cerrarVentana();	
 			this.controladorEditarPais.inicializar();
 			this.controladorEditarPais.mostrarVentana();
 		}
@@ -523,11 +529,19 @@ public class ControladorAltaCliente {
 				return;
 			}
 			this.controladorEditarPais.cerrarVentana();
+			this.controladorEditarLocalidad.cerrarVentana();
 			this.controladorEditarProvincia.inicializar();
 			this.controladorEditarProvincia.mostrarVentana();
 		}
 		if (seleccion == 2) {
-
+			if(this.controladorEditarLocalidad.ventanaEstaInicializada()) {
+				return;
+			}
+			this.controladorEditarProvincia.cerrarVentana();
+			this.controladorEditarPais.cerrarVentana();
+			
+			this.controladorEditarLocalidad.inicializar();
+			this.controladorEditarLocalidad.mostrarVentana();
 		}
 		
 	}
@@ -540,12 +554,9 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
-
-		for(PaisDTO p: this.todosLosPaises) {
-			this.ventanaAltaCliente.getComboBoxPais().addItem(p.getNombrePais());
-			
-		}
-		this.ventanaAltaCliente.getComboBoxPais().setSelectedIndex(0);
+		
+		cargarComboBoxes();
+		
 		//los cb tienen una escucha que funciona cada vez que se modifica un cb. Por lo que si se modifica el cb pais, se
 		//ejecutará la escucha de llenarCbDadoPais >:(. 
 		

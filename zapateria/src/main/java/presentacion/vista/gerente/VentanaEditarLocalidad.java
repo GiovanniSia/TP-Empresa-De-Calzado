@@ -138,10 +138,10 @@ public class VentanaEditarLocalidad {
 		
 		table = new JTable(modelTabla);
 		
-		this.table.getColumnModel().getColumn(0).setPreferredWidth(103);
-		this.table.getColumnModel().getColumn(0).setResizable(false);
-		this.table.getColumnModel().getColumn(1).setPreferredWidth(100);
-		this.table.getColumnModel().getColumn(1).setResizable(false);
+//		this.table.getColumnModel().getColumn(0).setPreferredWidth(103);
+//		this.table.getColumnModel().getColumn(0).setResizable(false);
+//		this.table.getColumnModel().getColumn(1).setPreferredWidth(100);
+//		this.table.getColumnModel().getColumn(1).setResizable(false);
 		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 		

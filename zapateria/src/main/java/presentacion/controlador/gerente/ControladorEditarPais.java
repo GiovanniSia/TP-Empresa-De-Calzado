@@ -190,7 +190,6 @@ public class ControladorEditarPais {
 	
 	
 	public void actualizarComboBoxesDeCliente() {
-		System.out.println("se actualiza los cb");
 		this.controladorAltaCliente.actualizarComboBoxes();
 	}
 	
