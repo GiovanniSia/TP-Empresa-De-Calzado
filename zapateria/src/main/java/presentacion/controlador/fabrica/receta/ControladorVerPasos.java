@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import dto.PasoDTO;
 import modelo.ModeloPaso;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -17,6 +19,7 @@ public class ControladorVerPasos implements ActionListener {
 	VerPasos ventanaPrincipal;
 	ModeloPaso modeloPaso;
 	List<PasoDTO> pasosEnLista;
+	int[]filasSeleccionadas;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
@@ -36,7 +39,7 @@ public class ControladorVerPasos implements ActionListener {
 			}
 		});
 		ventanaPrincipal.getBtnAgregar().addActionListener(r-> agregarPaso(r));
-		ventanaPrincipal.getBtnEliminar().addActionListener(r-> eliminarPasos(r));
+		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
 	}
 
 	public void inicializar() {
@@ -99,15 +102,37 @@ public class ControladorVerPasos implements ActionListener {
 		refrescarTabla();
 	}
 	
-	private void eliminarPasos(ActionEvent r) {
+	private void botonEliminarPasos(ActionEvent r) {
 		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
 		if(filasSeleccionadas.length == 0) {
 			return;
 		}
-		for(int idTabla: ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()) {
+		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length > 1) {
+			abrirVentanaParaPreguntarEliminarPasos();
+			return;
+		}
+		eliminarPasosSeleccionados();
+		refrescarTabla();
+	}
+	
+	private void abrirVentanaParaPreguntarEliminarPasos() {
+		int res = JOptionPane.showConfirmDialog(null, "¿estas seguro que quiere eliminar "+filasSeleccionadas.length+" pasos?", "", JOptionPane.YES_NO_OPTION);
+        switch (res) {
+            case JOptionPane.YES_OPTION:
+            	eliminarPasosSeleccionados();
+        		refrescarTabla();
+        		break;
+            case JOptionPane.NO_OPTION:
+            	//JOptionPane.showMessageDialog(null, "No se eliminan");
+            	break;
+        }
+	}
+	
+	private void eliminarPasosSeleccionados() {
+		for(int idTabla: filasSeleccionadas) {
 			this.modeloPaso.delete(this.pasosEnLista.get(idTabla));
 		}
-		refrescarTabla();
 	}
 
 	@Override
