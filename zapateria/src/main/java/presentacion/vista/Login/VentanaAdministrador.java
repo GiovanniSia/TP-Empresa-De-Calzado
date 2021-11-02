@@ -1,6 +1,5 @@
 package presentacion.vista.Login;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 import persistencia.conexion.Conexion;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.CardLayout;
+import javax.swing.SwingConstants;
 
 public class VentanaAdministrador extends JFrame {
 
@@ -26,28 +27,31 @@ public class VentanaAdministrador extends JFrame {
 	}
 
 	public void initialize() {
-		getContentPane().setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 48);
-		getContentPane().add(panel);
-		
-		JLabel lblNewLabel = new JLabel("Administrador");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 27));
-		panel.add(lblNewLabel);
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 512, 332);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
+
+		JPanel panel = new JPanel();
+
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 0, 496, 55);
+
+		contentPane.add(panel);
+		panel.setLayout(new CardLayout(0, 0));
+		
+		JLabel lblNewLabel = new JLabel("Administrador");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblNewLabel, "name_5308677579600");
 	}
 
 	public void show() {
@@ -74,6 +78,6 @@ public class VentanaAdministrador extends JFrame {
 	}
 
 	public void mostrarVentana() {
-		this.setVisible(true);
+		this.show();
 	}
 }

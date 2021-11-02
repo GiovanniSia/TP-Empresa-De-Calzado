@@ -212,12 +212,12 @@ public class VentanaLogin extends JFrame {
 		this.frame.setVisible(true);
 	}
 
-	public void cerrar() {
+	public void cerrarVentana() {
 		frame.setVisible(false);
 	}
 
-	public void mostrar() {
-		frame.setVisible(true);
+	public void mostrarVentana() {
+		this.show();
 	}
 
 	public JTextField getTxtFieldCorreo() {
