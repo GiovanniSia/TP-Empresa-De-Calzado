@@ -7,17 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.CajaDTO;
 import dto.PasoDTO;
 import persistencia.conexion.Conexion;
+import persistencia.dao.interfaz.ModeloPasoDAO;
 
-public class ModeloPasoDAOSQL {
+public class ModeloPasoDAOSQL implements ModeloPasoDAO{
 	
 	private static final String insert = "INSERT INTO paso VALUES(?, ?)";
 	private static final String delete = "DELETE FROM paso WHERE IdPaso = ?";
 	private static final String readall = "SELECT * FROM paso";
 	
-	//@Override
+	@Override
 	public boolean insert(PasoDTO paso) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -41,7 +41,7 @@ public class ModeloPasoDAOSQL {
 		return isInsertExitoso;
 	}
 	
-	//@Override
+	@Override
 	public boolean delete(PasoDTO paso) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
@@ -59,7 +59,7 @@ public class ModeloPasoDAOSQL {
 		return isdeleteExitoso;
 	}
 	
-	//@Override
+	@Override
 	public List<PasoDTO> readAll() {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query

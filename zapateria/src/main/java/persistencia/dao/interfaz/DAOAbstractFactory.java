@@ -51,4 +51,6 @@ public interface DAOAbstractFactory {
 	public RechazoCompraVirtualDAO createRechazoCompraVirtualDAO();
 	
 	public MotivoEgresoDAO createMotivoEgresoDAO();
+	
+	public ModeloPasoDAO createModeloPasoDAO();
 }
