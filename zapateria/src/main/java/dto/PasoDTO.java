@@ -1,5 +1,6 @@
 package dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PasoDTO {
@@ -17,6 +18,14 @@ public class PasoDTO {
 		Descripcion = descripcion;
 		this.materiales = materiales;
 		this.cantidadUsada = cantidadUsada;
+	}
+	
+	public PasoDTO(int idPaso, String descripcion) {
+		super();
+		IdPaso = idPaso;
+		Descripcion = descripcion;
+		this.materiales = new ArrayList<MaestroProductoDTO>();
+		this.cantidadUsada = new ArrayList<Integer>();
 	}
 
 	public List<Integer> getCantidadUsada() {
