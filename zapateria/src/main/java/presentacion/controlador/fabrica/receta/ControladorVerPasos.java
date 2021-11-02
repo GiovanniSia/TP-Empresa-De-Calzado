@@ -36,6 +36,7 @@ public class ControladorVerPasos implements ActionListener {
 			}
 		});
 		ventanaPrincipal.getBtnAgregar().addActionListener(r-> agregarPaso(r));
+		ventanaPrincipal.getBtnEliminar().addActionListener(r-> eliminarPasos(r));
 	}
 
 	public void inicializar() {
@@ -95,6 +96,17 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar));
+		refrescarTabla();
+	}
+	
+	private void eliminarPasos(ActionEvent r) {
+		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return;
+		}
+		for(int idTabla: ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()) {
+			this.modeloPaso.delete(this.pasosEnLista.get(idTabla));
+		}
 		refrescarTabla();
 	}
 
