@@ -263,13 +263,6 @@ public class Controlador {
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
-		// ----------------------------------------------------------------------------------------------------------
-
-		// VENTANAS
-
-		// Menu principal
-		
-		
 		
 		
 //		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
@@ -278,15 +271,7 @@ public class Controlador {
 		
 //		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
 		
-		this.ventanaMenuSistemaDeVentas.getBtnConfig().addActionListener(a -> pasarAConfig(a));
-
-		// cotizacion
-		this.ventanaMenuSistemaDeVentas.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
-
-		// mod precioUnitario
-		this.ventanaMenuSistemaDeVentas.getBtnModPrecioUnitario()
-				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
-
+		// ----------------------------------------------------------------------------------------------------------
 		// CAJERO
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
@@ -298,29 +283,40 @@ public class Controlador {
 		
 		//OPERARIO DE FABRICA
 		this.ventanaOperarioFabrica.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
+		// ----------------------------------------------------------------------------------------------------------		
 		
 		
+		
+		
+		
+		// config
+		this.ventanaSupervisor.getBtnConfig().addActionListener(a -> pasarAConfig(a));
+
+		// cotizacion
+		this.ventanaSupervisor.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
+
+		// mod precioUnitario
+		this.ventanaSupervisor.getBtnModPrecioUnitario()
+				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
 		
 		// Generar ordenes de manufac
-		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
+		this.ventanaSupervisor.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
 
 		// Alta cliente
-		this.ventanaMenuSistemaDeVentas.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
+		this.ventanaSupervisor.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
 
 		// Alta producto
-		this.ventanaMenuSistemaDeVentas.getBtnIngresarProductoNuevo()
+		this.ventanaSupervisor.getBtnIngresarProductoNuevo()
 				.addActionListener(a -> pasarADarDeAltaProducto(a));
-		this.ventanaMenuSistemaDeVentas.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
+		this.ventanaSupervisor.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		// Consultar proveedores y asignarle un producto
 
 		// Ver pedidos a prov
-		this.ventanaMenuSistemaDeVentas.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
+		this.ventanaSupervisor.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 
-		this.ventanaMenuSistemaDeVentas.getBtnVerComprasVirtuales()
+		this.ventanaSupervisor.getBtnVerComprasVirtuales()
 				.addActionListener(a -> pasarAVerComprasVirtuales(a));
-		this.ventanaMenuSistemaDeVentas.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
-
-		// ----------------------------------------------------------------------------------------------------------
+		this.ventanaSupervisor.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
 
 		escribirNombreSucursal();
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
