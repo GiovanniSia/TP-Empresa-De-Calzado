@@ -554,3 +554,4 @@ insert into zapateria.empleados values (6, 4233,'CAMILA','ALFANO','camila@GMAIL.
 insert into zapateria.empleados values (7, 1773,'JOSSELYN','LLANOS','josselyn@GMAIL.COM','Supervisor de Fabrica',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (8, 1554,'MAXIMILIANO','SUNGARUNGA','maximiliano@GMAIL.COM','Operario de Fabrica',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (9, 2323,'MICHELLE','ROBI','michelle@GMAIL.COM','Administrador',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (10, 2323,'MATIAS','ROBI','matias@GMAIL.COM','Gerente',aes_encrypt('1234','AES'));

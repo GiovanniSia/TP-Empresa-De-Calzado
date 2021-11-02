@@ -18,60 +18,116 @@ import presentacion.vista.Login.VentanaLogin;
 public class ControladorLogin {
 	private VentanaLogin ventanaLogin;
 	private Empleado empleado;
-
 	private EmpleadoDTO empleadoInicioSesion;
 	private List<SucursalDTO> sucursales;
 	private Sucursal sucursal;
-
 	private SucursalDTO sucursalSeleccionada;
-
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
-
 	private Controlador controlador;
+
+	private ControladorAdministrador controladorAdministrador;
+	private ControladorCajero controladorCajero;
+	private ControladorGerente controladorGerente;
+	private ControladorOperarioFabrica controladorOperarioFabrica;
+	private ControladorSupervisor controladorSupervisor;
+	private ControladorSupervisorFabrica controladorSupervisorFabrica;
+	private ControladorVendedor controladorVendedor;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.sucursal = new Sucursal(new DAOSQLFactory());
-
 		this.ventanaLogin = new VentanaLogin();
 		this.sucursales = sucursal.readAll();
-
 	}
 
 	public void inicializar() {
-		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> validarUsuario(a));
+		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
 		rellenarCombobox();
 	}
 
+	private void iniciarSesion(ActionEvent a) {
+		if (inicioSesionValido()) {
+			iniciarZapateria();
+		}
+	}
+
+	private void iniciarZapateria() {
+		cerrarVentana();
+		establecerPropertiesEmpleado();
+		establecerPropertiesSucursal();
+		if (checkboxControladorActivo()) {
+			mostrarControlador();
+			return;
+		}
+		abrirVentanaPorTipoEmpleado();
+	}
+
+	public void abrirVentanaPorTipoEmpleado() {
+		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
+
+		if (tipoEmpleado.equals("Administrador")) {
+			controladorAdministrador = new ControladorAdministrador();
+			controladorAdministrador.inicializar();
+			controladorAdministrador.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Cajero")) {
+			controladorCajero = new ControladorCajero();
+			controladorCajero.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Vendedor")) {
+			controladorVendedor = new ControladorVendedor();
+			controladorVendedor.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Operario de Fabrica")) {
+			controladorOperarioFabrica = new ControladorOperarioFabrica();
+			controladorOperarioFabrica.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
+			controladorSupervisorFabrica = new ControladorSupervisorFabrica();
+			controladorSupervisorFabrica.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor")) {
+			controladorSupervisor = new ControladorSupervisor();
+			controladorSupervisor.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Gerente")) {
+			controladorGerente = new ControladorGerente();
+			controladorGerente.mostrarVentana();
+		}
+
+	}
+
 	@SuppressWarnings("unchecked")
-	public void rellenarCombobox() {
+	private void rellenarCombobox() {
 		for (SucursalDTO s : sucursales) {
 			ventanaLogin.getCbSucursales().addItem(s.getNombre());
 		}
 	}
 
 	@SuppressWarnings({ "deprecation" })
-	public void validarUsuario(ActionEvent a) {
-		String correo = this.ventanaLogin.getTxtFieldCorreo().getText();
-		String contra = this.ventanaLogin.getTxtFieldContra().getText();
-
-		if (empleado.selectUser(correo, contra) == null) {
-			JOptionPane.showMessageDialog(null, "Ingreso denegado, datos invalidos");
-			return;
+	public boolean inicioSesionValido() {
+		String correoElectronico = this.ventanaLogin.getTxtFieldCorreo().getText();
+		String clave = this.ventanaLogin.getTxtFieldContra().getText();
+		if (empleado.selectUser(correoElectronico, clave) == null) {
+			JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
+			return false;
 		}
 		JOptionPane.showMessageDialog(null,
-				"Ingreso exitoso, bienvenido " + empleado.selectUser(correo, contra).getTipoEmpleado());
+				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
 
 		sucursalSeleccionada = obtenerSucursalSleccionada();
-		empleadoInicioSesion = empleado.selectUser(correo, contra);
-
-		ocultarVentanaLogin();
-		iniciarZapateria();
-
+		empleadoInicioSesion = empleado.selectUser(correoElectronico, clave);
+		return true;
 	}
 
-	public SucursalDTO obtenerSucursalSleccionada() {
+	private SucursalDTO obtenerSucursalSleccionada() {
 		String nombreSucursalSeleccionado = this.ventanaLogin.getCbSucursales().getSelectedItem().toString();
 		SucursalDTO sucursalSeleccionada = null;
 		for (SucursalDTO s : sucursales) {
@@ -82,21 +138,17 @@ public class ControladorLogin {
 		return sucursalSeleccionada;
 	}
 
-	public void iniciarZapateria() {
-
-		establecerPropertiesEmpleado();
-		establecerPropertiesSucursal();
-
-		if (ventanaLogin.getCheckboxControlador().isSelected()) {
-			this.controlador = new Controlador();
-			controlador.inicializar();
-			controlador.mostrarVentanaMenu();
-			return;
-		}
-
+	private Boolean checkboxControladorActivo() {
+		return ventanaLogin.getCheckboxControlador().isSelected();
 	}
 
-	public void establecerPropertiesEmpleado() {
+	private void mostrarControlador() {
+		controlador = new Controlador();
+		controlador.inicializar();
+		controlador.mostrarVentanaMenu();
+	}
+
+	private void establecerPropertiesEmpleado() {
 		empleadoProp = empleadoProperties.getInstance();
 
 		String idEmpleado = "" + empleadoInicioSesion.getIdEmpleado();
@@ -109,7 +161,7 @@ public class ControladorLogin {
 		empleadoProp.establecerPropertiesEmpleado(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
 	}
 
-	public void establecerPropertiesSucursal() {
+	private void establecerPropertiesSucursal() {
 		sucursalProp = sucursalProperties.getInstance();
 
 		String IdSucursal = "" + sucursalSeleccionada.getIdSucursal();
@@ -126,12 +178,12 @@ public class ControladorLogin {
 				CodigoPostal, Nombre);
 	}
 
-	public void mostrarVentanaLogin() {
-		this.ventanaLogin.show();
+	public void mostrarVentana() {
+		this.ventanaLogin.mostrarVentana();
 	}
 
-	public void ocultarVentanaLogin() {
-		this.ventanaLogin.cerrar();
+	public void cerrarVentana() {
+		this.ventanaLogin.cerrarVentana();
 	}
 
 }

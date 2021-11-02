@@ -15,7 +15,7 @@ public class Main {
 		
 		ControladorLogin login = new ControladorLogin();
 		login.inicializar();
-		login.mostrarVentanaLogin();
+		login.mostrarVentana();
 	}
 	
 }
