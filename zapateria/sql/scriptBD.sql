@@ -240,8 +240,8 @@ CREATE TABLE `Egresos`
 CREATE TABLE `MotivoEgresos`
 (
   `NroFacturaCompleta` varchar(45) NOT NULL,
-  `Motivo` TEXT NOT NULL,
-  PRIMARY KEY (`NroFacturaCompleta`)
+  `Motivo` TEXT NOT NULL/*,
+  PRIMARY KEY (`NroFacturaCompleta`)*/
 );
 
 CREATE TABLE `Caja`

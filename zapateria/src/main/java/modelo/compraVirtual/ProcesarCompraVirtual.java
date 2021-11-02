@@ -585,13 +585,16 @@ public class ProcesarCompraVirtual {
 		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
 		modeloEgreso.insert(egresoNuevo);
 		MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
-		modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,motivo));
+		//modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,motivo));
+		for(String m: motivo.split(";")) {
+			modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,m));
+		}
 		
 	}
 
 	private static double registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
 		double retNotaCredito = 0.0;
-		String descripcionNotaCredito = "Por falta de stock: ";
+		String descripcionNotaCredito = "";
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			int id=0;
 			int idProd = idProducto;
@@ -610,7 +613,7 @@ public class ProcesarCompraVirtual {
 			}
 			if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd) < cant) {
 				retNotaCredito += -(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)*precioVenta;
-				descripcionNotaCredito += ""+producto.getDescripcion()+"/"+producto.getTalle()+": x"+(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)+". ";
+				descripcionNotaCredito += "Por falta de stock: "+producto.getDescripcion()+"/"+producto.getTalle()+": x "+-(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)+";";
 				//cant = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd); 
 				//EN CASO DE QUE NO SE QUIERA MOSTRAR PRODUCTOS FANTASMAS EN LA FACTURA DESCOMENTAR EL DE ARRIBA
 			}
@@ -782,7 +785,10 @@ public class ProcesarCompraVirtual {
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1994);
-		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
+		detalle.put(2, 2000);
+		//CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
+				CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880+8000000, 1, "Sebas",
+
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Otra Calle falsa", "1423", "Argentina",

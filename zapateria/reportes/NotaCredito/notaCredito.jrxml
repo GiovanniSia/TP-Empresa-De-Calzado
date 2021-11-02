@@ -330,16 +330,6 @@ AND moti.NroFacturaCompleta LIKE '$P!{NroFactura}']]>
 				<text><![CDATA[Categoría AFIP:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="286" y="135" width="154" height="25" uuid="01639161-9502-4b97-a28d-46a961e89616">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement>
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Detalle:]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="95" y="70" width="77" height="15" uuid="de9f3b3c-f03a-4df0-9ed4-dff5195f9664"/>
 				<text><![CDATA[E-mail:]]></text>
 			</staticText>
@@ -358,10 +348,6 @@ AND moti.NroFacturaCompleta LIKE '$P!{NroFactura}']]>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="88" y="205" width="182" height="14" uuid="1e3ecf1b-7dd8-4b91-8dd1-a9aa2af8df7e"/>
 				<textFieldExpression><![CDATA[$F{CorreoElectronico}]]></textFieldExpression>
-			</textField>
-			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="286" y="162" width="254" height="58" uuid="8f9e7986-4c2d-4210-8a8a-7f9a3c604da6"/>
-				<textFieldExpression><![CDATA[$F{Motivo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="310" y="30" width="48" height="16" uuid="feed9bb8-2ed7-4f15-bf20-d9435110d436"/>
@@ -421,6 +407,28 @@ AND moti.NroFacturaCompleta LIKE '$P!{NroFactura}']]>
 			</staticText>
 		</band>
 	</title>
+	<columnHeader>
+		<band height="32">
+			<staticText>
+				<reportElement x="0" y="5" width="154" height="25" uuid="b514bc04-6bd8-4fb2-a1f8-c9d25a49561e">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="10" y="1" width="538" height="20" uuid="8f9e7986-4c2d-4210-8a8a-7f9a3c604da6"/>
+				<textFieldExpression><![CDATA[$F{Motivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 	<columnFooter>
 		<band/>
 	</columnFooter>

@@ -176,10 +176,11 @@
   },
   {
     "compra": {
-      "1": 1994
+      "1": 1994,
+      "2": 2000
     },
     "idSucursal": 1,
-    "pago": 4027880.0,
+    "pago": 1.202788E7,
     "IdCliente": 1,
     "Nombre": "Sebas",
     "Apellido": "Cubilla",
