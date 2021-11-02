@@ -83,9 +83,13 @@ public class ControladorAltaCliente {
 		
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
 		
-		this.ventanaEditarPais = new VentanaEditarPais();
-		this.ventanaEditarProvincia = new VentanaEditarProvincia();
-		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
+//		this.ventanaEditarPais = new VentanaEditarPais();
+//		this.ventanaEditarProvincia = new VentanaEditarProvincia();
+//		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
+		
+		this.controladorEditarPais.inicializar();
+		this.controladorEditarProvincia.inicializar();
+		this.controladorEditarLocalidad.inicializar();
 		
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
@@ -341,7 +345,7 @@ public class ControladorAltaCliente {
 		for(PaisDTO p: this.todosLosPaises) {
 			this.ventanaAltaCliente.getComboBoxPais().addItem(p.getNombrePais());
 		}
-		PaisDTO paisEnCb = this.todosLosPaises.get(0);
+		
 		this.ventanaAltaCliente.getComboBoxPais().setSelectedIndex(0);
 		
 		

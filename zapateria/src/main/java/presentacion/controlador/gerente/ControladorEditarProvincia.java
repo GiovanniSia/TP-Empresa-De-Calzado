@@ -40,9 +40,13 @@ public class ControladorEditarProvincia {
 		
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.todosLasProvincias= new ArrayList<ProvinciaDTO>();
-		this.provinciasEnTabla = new ArrayList<ProvinciaDTO>();
-		
-		this.ventanaEditarProvincia = new VentanaEditarProvincia();
+		this.provinciasEnTabla = new ArrayList<ProvinciaDTO>();		
+	}
+	
+	public void inicializar() {
+		this.ventanaEditarProvincia = new VentanaEditarProvincia();	
+		this.todosLosPaises = this.pais.readAll();
+		this.todosLasProvincias = this.provincia.readAll();
 		
 		this.ventanaEditarProvincia.getBtnAgregar().addActionListener(a -> agregarProvincia(a));
 		this.ventanaEditarProvincia.getBtnEditar().addActionListener(a -> editarProvincia(a));
@@ -74,11 +78,6 @@ public class ControladorEditarProvincia {
 			
 		});
 		
-	}
-	
-	public void inicializar() {
-		this.todosLosPaises = this.pais.readAll();
-		this.todosLasProvincias = this.provincia.readAll();
 		llenarComboBoxes();
 		llenarTablaPorDefecto();
 	}
@@ -211,15 +210,14 @@ public class ControladorEditarProvincia {
 	}
 
 	public boolean yaExisteProvincia(PaisDTO pais,String nombreProvincia) {
-		for(PaisDTO p: this.todosLosPaises) {
-			for(ProvinciaDTO prov: this.todosLasProvincias) {
-				if(pais.getIdPais()==p.getIdPais() && p.getIdPais() == prov.getForeignPais()) {
-					if(prov.getNombreProvincia().equals(nombreProvincia)) {
-						return true;
-					}
+		for(ProvinciaDTO prov: this.todosLasProvincias) {
+			if(pais.getIdPais()==this.paisEnTabla.getIdPais() && this.paisEnTabla.getIdPais() == prov.getForeignPais()) {
+				if(prov.getNombreProvincia().equals(nombreProvincia)) {
+					return true;
 				}
 			}
 		}
+		
 		return false;
 	}
 	
@@ -258,6 +256,7 @@ public class ControladorEditarProvincia {
 	}
 
 	public boolean ventanaYaFueInicializada() {
+		if(this.ventanaEditarProvincia == null) return false;
 		return this.ventanaEditarProvincia.getFrame().isShowing();
 	}
 }

@@ -22,11 +22,22 @@ public class ControladorEditarPais {
 	ControladorAltaCliente controladorAltaCliente;
 	
 	public ControladorEditarPais(ControladorAltaCliente controladorAltaCliente,Pais pais ) {
-		this.ventanaEditarPais = new VentanaEditarPais();
+
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.pais = pais;
 //		this.ventanaEditarPais = new VentanaEditarPais();
+		
 		this.controladorAltaCliente = controladorAltaCliente;
+		
+	}
+	
+	
+	
+	public void inicializar() {
+		this.ventanaEditarPais = new VentanaEditarPais();
+		
+		this.todosLosPaises = this.pais.readAll();
+
 		this.ventanaEditarPais.getBtnAgregarPais().addActionListener(a -> agregarPais(a));
 		this.ventanaEditarPais.getBtnEditarPais().addActionListener(a -> editarPais(a));
 		this.ventanaEditarPais.getBtnEliminarPais().addActionListener(a -> borrarPais(a));
@@ -49,13 +60,6 @@ public class ControladorEditarPais {
 			}
 			
 		});
-		
-	}
-	
-	
-	
-	public void inicializar() {
-		this.todosLosPaises = this.pais.readAll();
 		
 		llenarTablaPaises();
 	}
@@ -194,6 +198,7 @@ public class ControladorEditarPais {
 	}
 	
 	public boolean ventanaYaEstaInicializada() {
+		if(this.ventanaEditarPais == null) return false;
 		return this.ventanaEditarPais.getFrame().isShowing();
 	}
 	
