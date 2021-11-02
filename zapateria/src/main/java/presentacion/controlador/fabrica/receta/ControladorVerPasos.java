@@ -10,6 +10,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.PasoDTO;
+import dto.PasoDeRecetaDTO;
+import dto.RecetaDTO;
+import modelo.Fabricacion;
 import modelo.ModeloPaso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.receta.VerPasos;
@@ -18,12 +21,14 @@ public class ControladorVerPasos implements ActionListener {
 	
 	VerPasos ventanaPrincipal;
 	ModeloPaso modeloPaso;
+	Fabricacion modeloFabricacion;
 	List<PasoDTO> pasosEnLista;
 	int[]filasSeleccionadas;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
 		modeloPaso = new ModeloPaso(new DAOSQLFactory());
+		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		pasosEnLista = new ArrayList<PasoDTO>();
 		
 		ventanaPrincipal.getTextDescripcion().addKeyListener(new KeyAdapter() {
@@ -87,7 +92,6 @@ public class ControladorVerPasos implements ActionListener {
 	}
 	
 	private void agregarPaso(ActionEvent r) {
-		System.out.println("Entro en el boton");
 		String pasoAgregar = this.ventanaPrincipal.getTextDescripcionAgregar().getText();
 		if(pasoAgregar == null) {
 			return;
@@ -138,7 +142,20 @@ public class ControladorVerPasos implements ActionListener {
 	}
 	
 	private boolean sePuedeEliminarPaso(PasoDTO paso) {
-		return true;
+		boolean ret = true;
+		List<RecetaDTO> todasLasRecetas = this.modeloFabricacion.readAllReceta();
+		for(RecetaDTO r: todasLasRecetas) {
+			List<PasoDeRecetaDTO> todosLosPasos = this.modeloFabricacion.readAllPasosFromOneReceta(r.getIdReceta());
+			for(PasoDeRecetaDTO p: todosLosPasos) {
+				ret = ret && p.getPasosDTO().getIdPaso() != paso.getIdPaso();
+				if(p.getPasosDTO().getIdPaso() == paso.getIdPaso()) {
+					System.out.println("No se puede eliminar poque el paso: "+paso.getDescripcion()+" es usado en "+r.getDescripcion()+" en el paso "+p.getNroOrden());
+					//return false;
+				}
+			}
+		}
+		//return true;
+		return ret;
 	}
 
 	@Override
