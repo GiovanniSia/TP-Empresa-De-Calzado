@@ -53,5 +53,19 @@ public class CodigoErrorComprasVirtuales {
 	public static String getCodigoErrorSucursalNoValida() {
 		return "ERROR-4-8-15-16-23-42";
 	}
+	
+	public static String[] erroresInvalidantes() {
+		String[] ret = new String[] {getCodigoErrorNoStock(),
+				getCodigoErrorProductoNoValido(),
+				getCodigoErrorProductoNoDisponible(),
+				getCodigoErrorDatosClienteNuevoNoValido(),
+				getCodigoErrorPagaInsuficiente(),
+				getCodigoErrorPagaNoValido(),
+				getCodigoErrorUbicacionNoValido(),
+				getCodigoErrorNroTelefono()
+				//,getCodigoErrorSucursalNoValida()
+				};
+		return ret;
+	}
 
 }

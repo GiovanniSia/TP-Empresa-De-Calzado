@@ -345,6 +345,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		boolean errorCorreoSelected = this.ventanaPrincipal.getChckbxErrorCorreo().isSelected();
 		boolean errorPaisSelected = this.ventanaPrincipal.getChckbxErrorPais().isSelected();
 		boolean errorProvinciaSelected = this.ventanaPrincipal.getChckbxErrorProvincia().isSelected();
+		boolean buscarValidos = errorSucursalSelected || errorCorreoSelected || errorPaisSelected || errorProvinciaSelected;
 		for(RechazoCompraVirtualDTO r: todosRechazos) {
 			boolean deboAgregar = true;
 			deboAgregar = deboAgregar && r.getCUIL().toLowerCase().matches(".*"+ cuil +".*");
@@ -391,6 +392,12 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			
 			if(errorProvinciaSelected) {
 				deboAgregar = deboAgregar && tieneElTexto(r.getMotivo().toLowerCase(), CodigoErrorComprasVirtuales.getCodigoErrorProvincia().toLowerCase());
+			}
+			
+			if(buscarValidos) {
+				for(String erroresInvalidantes: CodigoErrorComprasVirtuales.erroresInvalidantes()) {
+					deboAgregar = deboAgregar && !tieneElTexto(r.getMotivo().toLowerCase(), erroresInvalidantes.toLowerCase());
+				}
 			}
 			
 			if(deboAgregar) {

@@ -581,7 +581,7 @@ public class ProcesarCompraVirtual {
 		String Detalle = nroFacturaCompleta;
 		double Monto = notaCredito;
 		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgreso, tipo, Detalle,
-				Monto);
+				-Monto);
 		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
 		modeloEgreso.insert(egresoNuevo);
 		MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
@@ -713,6 +713,36 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd22);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd23 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd23);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd24 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "",
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd24);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
@@ -723,12 +753,12 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra repetida
-		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd222 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"", "", "",
 				"", "", "","02320-1234");
-		compras.add(cvd22);
+		compras.add(cvd222);
 		
 		
 		detalle = new HashMap<Integer,Integer>();
