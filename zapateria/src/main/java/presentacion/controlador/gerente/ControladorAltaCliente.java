@@ -39,6 +39,7 @@ public class ControladorAltaCliente {
 	Cliente cliente;
 	ArrayList<ClienteDTO> listaClientes;
 	
+	ClienteDTO clienteSeteado;
 	
 	Pais pais;
 	Provincia provincia;
@@ -85,7 +86,9 @@ public class ControladorAltaCliente {
 		this.controladorGestionarClientes = controladorGestionarClientes;
 	}
 	
-	
+	public void setCliente(ClienteDTO cliente) {
+		this.clienteSeteado = cliente;
+	}
 	
 	public void inicializar() {
 		
@@ -109,7 +112,6 @@ public class ControladorAltaCliente {
 			}
 		});
 		
-		
 		this.ventanaAltaCliente.getComboBoxProvincia().addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -118,7 +120,7 @@ public class ControladorAltaCliente {
 		});
 		
 	}
-	
+
 	public void mostrarVentana() {
 		this.ventanaAltaCliente.show();
 	}
@@ -531,7 +533,7 @@ public class ControladorAltaCliente {
 	}
 	
 	
-	public void actualizarComboBoxes() {
+	public void actualizarComboBoxes() {	
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
 		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
@@ -539,15 +541,15 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
 
-		
-
 		for(PaisDTO p: this.todosLosPaises) {
 			this.ventanaAltaCliente.getComboBoxPais().addItem(p.getNombrePais());
+			
 		}
 		this.ventanaAltaCliente.getComboBoxPais().setSelectedIndex(0);
 		//los cb tienen una escucha que funciona cada vez que se modifica un cb. Por lo que si se modifica el cb pais, se
-		//ejecutará la escucha de llenarCbDadoPais. 
-
+		//ejecutará la escucha de llenarCbDadoPais >:(. 
+		
+		
 	}
 	
 }

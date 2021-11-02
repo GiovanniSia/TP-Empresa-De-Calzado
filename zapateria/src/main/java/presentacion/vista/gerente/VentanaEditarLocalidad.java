@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
@@ -29,7 +30,7 @@ public class VentanaEditarLocalidad {
 	private JTable table;
 	private DefaultTableModel modelTabla;
 
-	private String[] nombreColumnas = { "Pais", "Provincia", "Localidad" };
+	private String[] nombreColumnas = {"Localidad" };
 
 	private JLabel lblNuevaLocalidad;
 	private JLabel lblPaises;
@@ -167,6 +168,10 @@ public class VentanaEditarLocalidad {
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners())
+	    {
+			this.frame.removeWindowListener(listener);
+	    }
 		this.frame.addWindowListener(new WindowAdapter() 
 		{
 			@Override
@@ -227,5 +232,10 @@ public class VentanaEditarLocalidad {
 
 	public JButton getBtnSalirLocalidad() {
 		return btnSalirLocalidad;
+	}
+	
+
+	public JFrame getFrame() {
+		return frame;
 	}
 }
