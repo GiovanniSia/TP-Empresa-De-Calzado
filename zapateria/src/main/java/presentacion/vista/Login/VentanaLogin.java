@@ -39,6 +39,7 @@ public class VentanaLogin extends JFrame {
 	private JComboBox cbSucursales;
 	
 	private JCheckBox checkboxControlador;
+	private JLabel lblNewLabel_1;
 
 	public static void main(String[] args) {
 		VentanaLogin n = new VentanaLogin();
@@ -99,7 +100,7 @@ public class VentanaLogin extends JFrame {
 		txtFieldCorreo = new JTextField();
 		txtFieldCorreo.setBounds(155, 51, 129, 20);
 		panel_1.add(txtFieldCorreo);
-		txtFieldCorreo.setText("michelle@gmail.com");
+		txtFieldCorreo.setText("@gmail.com");
 		txtFieldCorreo.setBorder(null);
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override
@@ -168,6 +169,10 @@ public class VentanaLogin extends JFrame {
 		checkboxControlador = new JCheckBox("Activar Controlador");
 		checkboxControlador.setBounds(23, 123, 129, 23);
 		panel_1.add(checkboxControlador);
+		
+		lblNewLabel_1 = new JLabel("Clave: 1234");
+		lblNewLabel_1.setBounds(318, 152, 112, 14);
+		panel_1.add(lblNewLabel_1);
 		txtFieldContra.addKeyListener(new KeyAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
