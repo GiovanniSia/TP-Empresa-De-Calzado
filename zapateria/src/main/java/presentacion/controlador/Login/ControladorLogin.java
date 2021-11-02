@@ -25,7 +25,6 @@ public class ControladorLogin {
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
-
 	private ControladorAdministrador controladorAdministrador;
 	private ControladorCajero controladorCajero;
 	private ControladorGerente controladorGerente;
@@ -63,7 +62,7 @@ public class ControladorLogin {
 		abrirVentanaPorTipoEmpleado();
 	}
 
-	public void abrirVentanaPorTipoEmpleado() {
+	private void abrirVentanaPorTipoEmpleado() {
 		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
 
 		if (tipoEmpleado.equals("Administrador")) {
@@ -112,7 +111,7 @@ public class ControladorLogin {
 	}
 
 	@SuppressWarnings({ "deprecation" })
-	public boolean inicioSesionValido() {
+	private boolean inicioSesionValido() {
 		String correoElectronico = this.ventanaLogin.getTxtFieldCorreo().getText();
 		String clave = this.ventanaLogin.getTxtFieldContra().getText();
 		if (empleado.selectUser(correoElectronico, clave) == null) {
