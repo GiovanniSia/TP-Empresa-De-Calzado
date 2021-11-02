@@ -25,13 +25,6 @@ public class ControladorLogin {
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
-	private ControladorAdministrador controladorAdministrador;
-	private ControladorCajero controladorCajero;
-	private ControladorGerente controladorGerente;
-	private ControladorOperarioFabrica controladorOperarioFabrica;
-	private ControladorSupervisor controladorSupervisor;
-	private ControladorSupervisorFabrica controladorSupervisorFabrica;
-	private ControladorVendedor controladorVendedor;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -54,53 +47,8 @@ public class ControladorLogin {
 	private void iniciarZapateria() {
 		cerrarVentana();
 		establecerPropertiesEmpleado();
-		establecerPropertiesSucursal();
-		if (checkboxControladorActivo()) {
-			mostrarControlador();
-			return;
-		}
-		abrirVentanaPorTipoEmpleado();
-	}
-
-	private void abrirVentanaPorTipoEmpleado() {
-		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
-
-		if (tipoEmpleado.equals("Administrador")) {
-			controladorAdministrador = new ControladorAdministrador();
-			controladorAdministrador.inicializar();
-			controladorAdministrador.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Cajero")) {
-			controladorCajero = new ControladorCajero();
-			controladorCajero.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Vendedor")) {
-			controladorVendedor = new ControladorVendedor();
-			controladorVendedor.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Operario de Fabrica")) {
-			controladorOperarioFabrica = new ControladorOperarioFabrica();
-			controladorOperarioFabrica.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
-			controladorSupervisorFabrica = new ControladorSupervisorFabrica();
-			controladorSupervisorFabrica.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Supervisor")) {
-			controladorSupervisor = new ControladorSupervisor();
-			controladorSupervisor.mostrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Gerente")) {
-			controladorGerente = new ControladorGerente();
-			controladorGerente.mostrarVentana();
-		}
-
+		establecerPropertiesSucursal();	
+		mostrarControlador();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -137,14 +85,10 @@ public class ControladorLogin {
 		return sucursalSeleccionada;
 	}
 
-	private Boolean checkboxControladorActivo() {
-		return ventanaLogin.getCheckboxControlador().isSelected();
-	}
-
 	private void mostrarControlador() {
 		controlador = new Controlador();
 		controlador.inicializar();
-		controlador.mostrarVentanaMenu();
+		controlador.mostrarVentanaPorTipoEmpleado();
 	}
 
 	private void establecerPropertiesEmpleado() {

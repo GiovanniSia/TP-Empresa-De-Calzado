@@ -1,11 +1,11 @@
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import dto.SucursalDTO;
+import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
 import modelo.Caja;
 import modelo.Carrito;
@@ -45,14 +45,26 @@ import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
 import presentacion.vista.VentanaTareasAutomatizadas;
+import presentacion.vista.Login.VentanaAdministrador;
+import presentacion.vista.Login.VentanaCajero;
+import presentacion.vista.Login.VentanaGerente;
+import presentacion.vista.Login.VentanaOperarioFabrica;
+import presentacion.vista.Login.VentanaSupervisor;
+import presentacion.vista.Login.VentanaSupervisorFabrica;
+import presentacion.vista.Login.VentanaVendedor;
 
-public class Controlador implements ActionListener {
+public class Controlador {
 
 	private int idSucursal = 0;
+	private String tipoEmpleado = "";
+
 	public void obtenerDatosPropertiesSucursal() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
 			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -124,6 +136,19 @@ public class Controlador implements ActionListener {
 	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
 	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
 
+	// ----------------------------------------------------------------------------------------------------------
+
+	// Ventanas TIPO EMPLEADO
+	VentanaAdministrador ventanaAdministrador;
+	VentanaCajero ventanaCajero; // YA TIENE SUS BOTONES
+	VentanaGerente ventanaGerente;
+	VentanaOperarioFabrica ventanaOperarioFabrica;
+	VentanaSupervisor ventanaSupervisor;
+	VentanaSupervisorFabrica ventanaSupervisorFabrica;
+	VentanaVendedor ventanaVendedor;
+
+	// ----------------------------------------------------------------------------------------------------------
+
 	// Coso para el properties
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
 
@@ -150,20 +175,29 @@ public class Controlador implements ActionListener {
 
 		this.proveedor = new Proveedor(new DAOSQLFactory());
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
-		
+
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 
 		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
 	}
 
 	public void inicializar() {
+		// ----------------------------------------------------------------------------------------------------------
+		// Inicializo ventanas
+
 		this.ventanaMenu = new VentanaMenu();
 		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
-
 		this.ventanaTareasAutomatizadas = new VentanaTareasAutomatizadas();
 
-//		this.ventanaBusquedaCliente= new VentanaBusquedaCliente();
-//		this.vistaBusquedaProducto = new VentanaBusquedaProductos();
+		this.ventanaAdministrador = new VentanaAdministrador();
+		this.ventanaCajero = new VentanaCajero();
+		this.ventanaGerente = new VentanaGerente();
+		this.ventanaOperarioFabrica = new VentanaOperarioFabrica();
+		this.ventanaSupervisor = new VentanaSupervisor();
+		this.ventanaSupervisorFabrica = new VentanaSupervisorFabrica();
+		this.ventanaVendedor = new VentanaVendedor();
+
+		// ----------------------------------------------------------------------------------------------------------
 
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
@@ -229,16 +263,21 @@ public class Controlador implements ActionListener {
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
+		// ----------------------------------------------------------------------------------------------------------
+
+		// VENTANAS
+
 		// Menu principal
 		this.ventanaMenu.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
 
 		// VentanaMenu de sistemas
-		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
+		
+//		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
+		
 		this.ventanaMenuSistemaDeVentas.getBtnConfig().addActionListener(a -> pasarAConfig(a));
 		// armar Venta
 		this.ventanaMenuSistemaDeVentas.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
-		this.ventanaMenuSistemaDeVentas.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 
 		// cotizacion
 		this.ventanaMenuSistemaDeVentas.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
@@ -247,14 +286,19 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnModPrecioUnitario()
 				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
 
+		// CAJERO
+
+		// Cobrar Venta
+		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
+
 		// Ingreso caja
-		this.ventanaMenuSistemaDeVentas.getBtnIngresoCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
+		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
 
 		// Egreso
-		this.ventanaMenuSistemaDeVentas.getBtnEgresoCaja().addActionListener(a -> pasarAEgresosCaja(a));
+		this.ventanaCajero.getBtnEgresoDeCaja().addActionListener(a -> pasarAEgresosCaja(a));
 
 		// Cierre de caja
-		this.ventanaMenuSistemaDeVentas.getBtnCierreCaja().addActionListener(a -> pasarACierreDeCaja(a));
+		this.ventanaCajero.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
 
 		// Generar ordenes de manufac
 		this.ventanaMenuSistemaDeVentas.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
@@ -274,13 +318,73 @@ public class Controlador implements ActionListener {
 		this.ventanaMenuSistemaDeVentas.getBtnVerComprasVirtuales()
 				.addActionListener(a -> pasarAVerComprasVirtuales(a));
 		this.ventanaMenuSistemaDeVentas.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
-//		try {
-//			EnviarCorreosAProveedoresAutomatico.verificarEnvioDeMailsAutomatico(config);
-//		}catch (IOException | ParseException e) {
-//			e.printStackTrace();
-//		}
+
+		// ----------------------------------------------------------------------------------------------------------
+
 		escribirNombreSucursal();
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
+	}
+
+	public void mostrarVentanaPorTipoEmpleado() {
+		if (tipoEmpleado.equals("Administrador")) {
+			ventanaAdministrador.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Cajero")) {
+			ventanaCajero.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Vendedor")) {
+			ventanaVendedor.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Operario de Fabrica")) {
+			ventanaOperarioFabrica.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
+			ventanaSupervisorFabrica.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor")) {
+			ventanaSupervisor.mostrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Gerente")) {
+			ventanaGerente.mostrarVentana();
+		}
+
+	}
+	
+	public void ocultarVentanaPorTipoEmpleado() {
+		if (tipoEmpleado.equals("Administrador")) {
+			ventanaAdministrador.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Cajero")) {
+			ventanaCajero.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Vendedor")) {
+			ventanaVendedor.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Operario de Fabrica")) {
+			ventanaOperarioFabrica.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
+			ventanaSupervisorFabrica.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Supervisor")) {
+			ventanaSupervisor.cerrarVentana();
+		}
+
+		if (tipoEmpleado.equals("Gerente")) {
+			ventanaGerente.cerrarVentana();
+		}
+
 	}
 
 	public void escribirNombreSucursal() {
@@ -293,18 +397,30 @@ public class Controlador implements ActionListener {
 	}
 
 	public void mostrarVentanaMenu() {
-		this.ventanaMenu.show();
+		 mostrarVentanaPorTipoEmpleado();
 	}
 
 	public void mostrarVentanaMenuDeSistemas() {
-		this.ventanaMenuSistemaDeVentas.show();
+	
+		
+		
+		
+		
+		
+		
+		mostrarVentanaPorTipoEmpleado();
+	
+	
+	
+	
+	
 	}
 
-	public void regresarMenuPrincipal(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
-		this.ventanaMenu.show();
-		this.ventanaTareasAutomatizadas.cerrar();
-	}
+//	public void regresarMenuPrincipal(ActionEvent a) {
+//		this.ventanaMenuSistemaDeVentas.cerrar();
+//		 mostrarVentanaPorTipoEmpleado();
+//		this.ventanaTareasAutomatizadas.cerrar();
+//	}
 
 	public void pasarAConfig(ActionEvent a) {
 
@@ -316,7 +432,7 @@ public class Controlador implements ActionListener {
 	}
 
 	public void iniciarSistemaOperatoriaFabrica(ActionEvent a) {
-		this.ventanaMenu.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.reControladorOperario.inicializar();
 		this.reControladorOperario.mostrarVentana();
 
@@ -352,7 +468,7 @@ public class Controlador implements ActionListener {
 
 	// Cotizacion
 	public void pasarACotizaciones(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorModificarCotizacion.inicializar();
 		this.controladorModificarCotizacion.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -360,7 +476,7 @@ public class Controlador implements ActionListener {
 
 	// Mod precio unitario
 	public void pasarAModificarPrecioUnitario(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorModificarMProducto.inicializar();
 		this.controladorModificarMProducto.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -373,7 +489,7 @@ public class Controlador implements ActionListener {
 			return;
 		}
 
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorIngresosCaja.inicializar();
 		this.controladorIngresosCaja.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -386,7 +502,7 @@ public class Controlador implements ActionListener {
 			return;
 		}
 
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorEgresosCaja.inicializar();
 		this.controladorEgresosCaja.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -404,7 +520,7 @@ public class Controlador implements ActionListener {
 			return;
 		}
 
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorCierreCaja.inicializar();
 		this.controladorCierreCaja.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -412,14 +528,14 @@ public class Controlador implements ActionListener {
 
 	// Generar ord de manuf
 	public void pasarAGenerarOrdenManufac(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorGenerarOrdenesManufactura.inicializar();
 		this.controladorGenerarOrdenesManufactura.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarARegistrarUnCliente(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorAltaCliente.inicializar();
 		this.controladorAltaCliente.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -427,14 +543,14 @@ public class Controlador implements ActionListener {
 
 	// Supervisor
 	public void pasarADarDeAltaProducto(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorAltaProducto.inicializar();
 		this.controladorAltaProducto.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAConsultarProveedores(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -442,25 +558,20 @@ public class Controlador implements ActionListener {
 
 	// Ver pedidos a proveedor
 	public void pasarAVerPedidosAProveedor(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorVerPedidosAProveedor.inicializar();
 		this.controladorVerPedidosAProveedor.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAVerComprasVirtuales(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorVisualizarComprasVirtuales.inicializar();
 	}
 
 	private void pasarAVerRanking(ActionEvent a) {
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorReporteRankingVentaXSucursal.inicializar();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
 	}
 
 }
