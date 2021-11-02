@@ -118,7 +118,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			            refrescarTabla();
 			        }
 			    });
-		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxCancelados());
+		checkBoxCanceladoGeneral(ventanaPrincipal.getChckbxCancelados());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorSucursal());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorCorreo());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorPais());
@@ -164,6 +164,44 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		});
 	}
 	
+	private void checkBoxCanceladoGeneral(JCheckBox checkBox) {
+		checkBox.addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				if(!ventanaPrincipal.getChckbxCancelados().isSelected()) {
+					setearFalseCheckErrores();
+				}
+				refrescarTabla();
+			}
+		});
+	}
+	
 	private void cerrarTodoElControlador(ActionEvent r) {
 		this.ventanaPrincipal.cerrar();
 		this.ventanaRechazo.cerrar();
@@ -185,6 +223,8 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		ingresosEnLista = recuperarComprasVirtuales();
 		llenarTablaConIngresos(ingresosEnLista);
 		
+		verificarCanceladosPorCkeckDeError();
+		
 		if(ventanaPrincipal.getChckbxCancelados().isSelected()) {
 			rechazosEnLista = recuperarRechazos();
 			llenarTablaConRechazos(rechazosEnLista);
@@ -192,6 +232,23 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			rechazosEnLista = new ArrayList<RechazoCompraVirtualDTO>();
 		}
 		
+	}
+
+	private void verificarCanceladosPorCkeckDeError() {
+		boolean errorSucursalSelected = this.ventanaPrincipal.getChckbxErrorSucursal().isSelected();
+		boolean errorCorreoSelected = this.ventanaPrincipal.getChckbxErrorCorreo().isSelected();
+		boolean errorPaisSelected = this.ventanaPrincipal.getChckbxErrorPais().isSelected();
+		boolean errorProvinciaSelected = this.ventanaPrincipal.getChckbxErrorProvincia().isSelected();
+		boolean buscarValidos = errorSucursalSelected || errorCorreoSelected || errorPaisSelected || errorProvinciaSelected;
+		if(buscarValidos)
+			this.ventanaPrincipal.getChckbxCancelados().setSelected(true);
+	}
+	
+	private void setearFalseCheckErrores() {
+		this.ventanaPrincipal.getChckbxErrorSucursal().setSelected(false);
+		this.ventanaPrincipal.getChckbxErrorCorreo().setSelected(false);
+		this.ventanaPrincipal.getChckbxErrorPais().setSelected(false);
+		this.ventanaPrincipal.getChckbxErrorProvincia().setSelected(false);
 	}
 
 	private void vaciarTablaPrincipal() {
