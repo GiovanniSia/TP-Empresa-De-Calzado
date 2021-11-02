@@ -157,7 +157,6 @@ public class Controlador implements ActionListener {
 	}
 
 	public void inicializar() {
-		System.out.println("Sucursal "+idSucursal);
 		this.ventanaMenu = new VentanaMenu();
 		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
 

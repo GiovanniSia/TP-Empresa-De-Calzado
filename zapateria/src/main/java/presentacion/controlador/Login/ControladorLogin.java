@@ -16,7 +16,6 @@ import presentacion.controlador.Controlador;
 import presentacion.vista.Login.VentanaLogin;
 
 public class ControladorLogin {
-	private Controlador controlador;
 	private VentanaLogin ventanaLogin;
 	private Empleado empleado;
 
@@ -28,6 +27,8 @@ public class ControladorLogin {
 
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
+
+	private Controlador controlador;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -59,15 +60,15 @@ public class ControladorLogin {
 			JOptionPane.showMessageDialog(null, "Ingreso denegado, datos invalidos");
 			return;
 		}
-
 		JOptionPane.showMessageDialog(null,
-				"Ingreso exitoso, bienvenido " + empleado.selectUser(correo, contra).getNombre());
+				"Ingreso exitoso, bienvenido " + empleado.selectUser(correo, contra).getTipoEmpleado());
 
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correo, contra);
 
 		ocultarVentanaLogin();
 		iniciarZapateria();
+
 	}
 
 	public SucursalDTO obtenerSucursalSleccionada() {
@@ -82,6 +83,20 @@ public class ControladorLogin {
 	}
 
 	public void iniciarZapateria() {
+
+		establecerPropertiesEmpleado();
+		establecerPropertiesSucursal();
+
+		if (ventanaLogin.getCheckboxControlador().isSelected()) {
+			this.controlador = new Controlador();
+			controlador.inicializar();
+			controlador.mostrarVentanaMenu();
+			return;
+		}
+
+	}
+
+	public void establecerPropertiesEmpleado() {
 		empleadoProp = empleadoProperties.getInstance();
 
 		String idEmpleado = "" + empleadoInicioSesion.getIdEmpleado();
@@ -92,7 +107,9 @@ public class ControladorLogin {
 		String tipoEmpleado = empleadoInicioSesion.getTipoEmpleado();
 
 		empleadoProp.establecerPropertiesEmpleado(idEmpleado, CUIL, nombre, apellido, correoElectronico, tipoEmpleado);
+	}
 
+	public void establecerPropertiesSucursal() {
 		sucursalProp = sucursalProperties.getInstance();
 
 		String IdSucursal = "" + sucursalSeleccionada.getIdSucursal();
@@ -107,10 +124,6 @@ public class ControladorLogin {
 
 		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
 				CodigoPostal, Nombre);
-		
-		this.controlador = new Controlador();
-		controlador.inicializar();
-		controlador.mostrarVentanaMenu();
 	}
 
 	public void mostrarVentanaLogin() {
