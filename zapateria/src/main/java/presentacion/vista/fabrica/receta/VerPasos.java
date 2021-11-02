@@ -225,7 +225,7 @@ public class VerPasos extends JFrame {
 		return tabla;
 	}
 
-	public DefaultTableModel getModelOrdenes() {
+	public DefaultTableModel getModelPasos() {
 		return modelOrdenes;
 	}
 
@@ -247,5 +247,25 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnSalir() {
 		return btnSalir;
+	}
+
+	public JButton getBtnSeleccionarProceso() {
+		return btnSeleccionarProceso;
+	}
+
+	public JTextField getTextDescripcion() {
+		return textDescripcion;
+	}
+
+	public JTextField getTextDescripcionAgregar() {
+		return textDescripcionAgregar;
+	}
+
+	public JButton getBtnAgregar() {
+		return btnAgregar;
+	}
+
+	public JButton getBtnEliminar() {
+		return btnEliminar;
 	}
 }
