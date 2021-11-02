@@ -21,6 +21,7 @@ import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
+import javax.swing.JCheckBox;
 
 public class VentanaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +38,8 @@ public class VentanaLogin extends JFrame {
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbSucursales;
 	
-	
+	private JCheckBox checkboxControlador;
+
 	public static void main(String[] args) {
 		VentanaLogin n = new VentanaLogin();
 		n.show();
@@ -60,8 +62,8 @@ public class VentanaLogin extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 373, 282);
-		
+		frame.setBounds(100, 100, 476, 282);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -72,25 +74,31 @@ public class VentanaLogin extends JFrame {
 		JPanel panel_1 = new JPanel();
 
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(10, 66, 335, 166);
+		panel_1.setBounds(10, 66, 440, 166);
 
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		btnIniciarSesion = new JButton("Iniciar Sesion");
-		btnIniciarSesion.setForeground(Color.BLACK);
-		btnIniciarSesion.setBackground(Color.WHITE);
-		btnIniciarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnIniciarSesion.setBounds(151, 124, 129, 32);
-		panel_1.add(btnIniciarSesion);
+		JSeparator separator = new JSeparator();
+		separator.setBackground(Color.BLACK);
+		separator.setForeground(Color.BLACK);
+		separator.setBounds(155, 70, 129, 14);
+		panel_1.add(separator);
 
-		lblContrasenia = new JLabel("Contrase\u00F1a");
-		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
-		lblContrasenia.setBounds(34, 83, 120, 30);
-		panel_1.add(lblContrasenia);
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(Color.BLACK);
+		separator_1.setBackground(Color.BLACK);
+		separator_1.setBounds(155, 108, 129, 14);
+		panel_1.add(separator_1);
+
+		cbSucursales = new JComboBox();
+		cbSucursales.setBounds(155, 6, 129, 22);
+		panel_1.add(cbSucursales);
+		cbSucursales.setBorder(null);
 
 		txtFieldCorreo = new JTextField();
+		txtFieldCorreo.setBounds(155, 51, 129, 20);
+		panel_1.add(txtFieldCorreo);
 		txtFieldCorreo.setText("michelle@gmail.com");
 		txtFieldCorreo.setBorder(null);
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
@@ -101,19 +109,65 @@ public class VentanaLogin extends JFrame {
 				}
 			}
 		});
-
-		txtFieldCorreo.setBounds(151, 52, 129, 20);
-		panel_1.add(txtFieldCorreo);
 		txtFieldCorreo.setColumns(10);
 
+		txtFieldContra = new JPasswordField();
+		txtFieldContra.setBounds(155, 89, 129, 20);
+		panel_1.add(txtFieldContra);
+		txtFieldContra.setBorder(null);
+
+		btnIniciarSesion = new JButton("Iniciar Sesion");
+		btnIniciarSesion.setBounds(155, 123, 129, 32);
+		panel_1.add(btnIniciarSesion);
+		btnIniciarSesion.setForeground(Color.BLACK);
+		btnIniciarSesion.setBackground(Color.WHITE);
+		btnIniciarSesion.setFont(new Font("Tahoma", Font.PLAIN, 13));
+
+		lblContrasenia = new JLabel("Contrase\u00F1a");
+		lblContrasenia.setBounds(38, 82, 120, 30);
+		panel_1.add(lblContrasenia);
+		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblContrasenia.setHorizontalAlignment(SwingConstants.CENTER);
+
 		lblCorreo = new JLabel("Correo");
+		lblCorreo.setBounds(38, 41, 120, 30);
+		panel_1.add(lblCorreo);
 		lblCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCorreo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCorreo.setBounds(34, 42, 120, 30);
-		panel_1.add(lblCorreo);
 
-		txtFieldContra = new JPasswordField();
-		txtFieldContra.setBorder(null);
+		JLabel lblSucursal = new JLabel("Sucursal");
+		lblSucursal.setBounds(38, 0, 120, 30);
+		panel_1.add(lblSucursal);
+		lblSucursal.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSucursal.setFont(new Font("Tahoma", Font.PLAIN, 16));
+
+		JLabel lblNewLabel = new JLabel("pepe@ Cajero");
+		lblNewLabel.setBounds(318, 6, 112, 14);
+		panel_1.add(lblNewLabel);
+
+		JLabel lblJuangmailcomVendedor = new JLabel("juan@ Vendedor");
+		lblJuangmailcomVendedor.setBounds(318, 31, 112, 14);
+		panel_1.add(lblJuangmailcomVendedor);
+
+		JLabel lblCamilaVendedor = new JLabel("camila@ Supervisor");
+		lblCamilaVendedor.setBounds(318, 54, 112, 14);
+		panel_1.add(lblCamilaVendedor);
+
+		JLabel lblMichelleAdmin = new JLabel("michelle@ Admin");
+		lblMichelleAdmin.setBounds(318, 130, 112, 14);
+		panel_1.add(lblMichelleAdmin);
+
+		JLabel lblSupervisorf = new JLabel("josselyn@ SupervisorF");
+		lblSupervisorf.setBounds(318, 107, 112, 14);
+		panel_1.add(lblSupervisorf);
+
+		JLabel lblMaximilianoCajero = new JLabel("maximiliano@ OperarioF");
+		lblMaximilianoCajero.setBounds(318, 82, 112, 14);
+		panel_1.add(lblMaximilianoCajero);
+		
+		checkboxControlador = new JCheckBox("Activar Controlador");
+		checkboxControlador.setBounds(23, 123, 129, 23);
+		panel_1.add(checkboxControlador);
 		txtFieldContra.addKeyListener(new KeyAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -124,35 +178,9 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 
-		txtFieldContra.setBounds(151, 90, 129, 20);
-		panel_1.add(txtFieldContra);
-		
-		JLabel lblSucursal = new JLabel("Sucursal");
-		lblSucursal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSucursal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSucursal.setBounds(34, 1, 120, 30);
-		panel_1.add(lblSucursal);
-		
-		cbSucursales = new JComboBox();
-		cbSucursales.setBorder(null);
-		cbSucursales.setBounds(151, 7, 129, 22);
-		panel_1.add(cbSucursales);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBackground(Color.BLACK);
-		separator.setForeground(Color.BLACK);
-		separator.setBounds(151, 72, 129, 8);
-		panel_1.add(separator);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(Color.BLACK);
-		separator_1.setBackground(Color.BLACK);
-		separator_1.setBounds(151, 110, 129, 8);
-		panel_1.add(separator_1);
-
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setBounds(10, 11, 337, 44);
+		panel_2.setBounds(10, 11, 440, 44);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -198,8 +226,14 @@ public class VentanaLogin extends JFrame {
 	public JButton getBtnIniciarSesion() {
 		return btnIniciarSesion;
 	}
+
 	@SuppressWarnings("rawtypes")
 	public JComboBox getCbSucursales() {
 		return cbSucursales;
 	}
+
+	public JCheckBox getCheckboxControlador() {
+		return checkboxControlador;
+	}
+	
 }
