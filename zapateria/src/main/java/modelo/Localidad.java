@@ -13,14 +13,14 @@ private LocalidadDAO localidad;
 		this.localidad = metodo_Persistencia.createLocalidadDAO();
 	}
 	
-	public boolean agregarLocalidad(LocalidadDTO nuevaLocalidad) {
+	public boolean insert(LocalidadDTO nuevaLocalidad) {
 		return this.localidad.insert(nuevaLocalidad);
 	}
 	
-	public boolean borrarLocalidad(LocalidadDTO Localidad_a_eliminar) {
+	public boolean delete(LocalidadDTO Localidad_a_eliminar) {
 		return this.localidad.delete(Localidad_a_eliminar);
 	}
-	public boolean editarLocalidad(LocalidadDTO Localidad_a_editar,String nuevoNombre) {
+	public boolean update(LocalidadDTO Localidad_a_editar,String nuevoNombre) {
 		return this.localidad.update(Localidad_a_editar,nuevoNombre);
 	}
 	public List<LocalidadDTO> readAll(){

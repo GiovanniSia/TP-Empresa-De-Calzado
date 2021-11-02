@@ -54,7 +54,7 @@ public class ControladorEditarLocalidad {
 		this.todasLasProvincias = this.provincia.readAll();
 		this.todasLasLocalidades = this.localidad.readAll();
 		this.ventanaEditarLocalidad.getBtnAgregarLocalidad().addActionListener(a -> agregarLocalidad());
-		
+		this.ventanaEditarLocalidad.getBtnBorrarLocalidad().addActionListener(a -> borrarLocalidad());
 		
 		escribirComboBoxes();
 		actualizarTabla();
@@ -151,7 +151,7 @@ public class ControladorEditarLocalidad {
 		this.ventanaEditarLocalidad.getModelTabla().setRowCount(0);
 		this.ventanaEditarLocalidad.getModelTabla().setColumnCount(0);
 		this.ventanaEditarLocalidad.getModelTabla().setColumnIdentifiers(this.ventanaEditarLocalidad.getNombreColumnas());
-		
+		this.localidadesEnTabla.removeAll(this.localidadesEnTabla);
 		// Si no hay paises
 		if (this.paisSeleccionado == null) {
 			Object[] fila = {""};
@@ -175,6 +175,7 @@ public class ControladorEditarLocalidad {
 				Object[] fila = {localidad.getNombreLocalidad() };
 				this.ventanaEditarLocalidad.getModelTabla().addRow(fila);
 				cantLoc++;
+				this.localidadesEnTabla.add(localidad);
 			}
 
 		}
@@ -274,7 +275,7 @@ public class ControladorEditarLocalidad {
 		}
 		LocalidadDTO nuevaLocalidad = new LocalidadDTO(0, nombreLocalidadNueva, this.provinciaSeleccionada.getIdProvincia());
 
-		boolean insert = this.localidad.agregarLocalidad(nuevaLocalidad);
+		boolean insert = this.localidad.insert(nuevaLocalidad);
 		if(!insert) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar una nueva localidad");
 			return;		
@@ -288,6 +289,101 @@ public class ControladorEditarLocalidad {
 	}
 
 	
+	public void borrarLocalidad() {
+		int filaSeleccionada = this.ventanaEditarLocalidad.getTable().getSelectedRow();
+
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione una localidad de la tabla para borrar");
+			return;
+		}
+
+		// Obtenemos toda la tabla con sus datos
+
+	
+		String nombreLocalidadBorrar = this.ventanaEditarLocalidad.getModelTabla().getValueAt(filaSeleccionada, 0).toString();
+
+		if (this.provinciaSeleccionada == null) {
+			JOptionPane.showMessageDialog(null, "El pais no tiene provincias ni localidad para borrar");
+			return;
+		}
+		if (nombreLocalidadBorrar.equals("")) {
+			JOptionPane.showMessageDialog(null, "La provincia seleccionada no tiene localidades para borrar");
+			return;
+		}
+		// Obtenemos los obj
+
+		LocalidadDTO loca = null;
+
+		for (LocalidadDTO localidad : this.todasLasLocalidades) {
+			if (localidad.getIdForeignProvincia() == this.provinciaSeleccionada.getIdProvincia()
+					&& this.provinciaSeleccionada.getForeignPais() == this.paisSeleccionado.getIdPais()
+					&& localidad.getNombreLocalidad().equals(nombreLocalidadBorrar)) {
+				loca = localidad;
+			}
+		}
+
+		for (int i = 0; i < this.localidadesEnTabla.size(); i++) {
+			if (this.localidadesEnTabla.get(i).equals(loca)) {
+				this.localidad.delete(this.localidadesEnTabla.get(i));
+			}
+		}
+		this.todasLasLocalidades = this.localidad.readAll();
+	
+		actualizarTabla();
+		actualizarComboBoxesDeCliente();
+	}
+	
+	
+	public void editarLocalidad(ActionEvent a) {
+		int filaSeleccionada = this.ventanaEditarLocalidad.getTable().getSelectedRow();
+
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Por favor seleccione una localidad de la fila para editar");
+			return;
+		}
+		DefaultTableModel modelo = (DefaultTableModel) this.ventanaEditarLocalidad.getTable().getModel();
+		PaisDTO paisSeleccionado = obtenerPaisDeTablaLocalidad(filaSeleccionada);
+		ProvinciaDTO provinciaSeleccionada = obtenerProvinciaDeTablaLocalidad(filaSeleccionada,
+				paisSeleccionado.getIdPais());
+		String nombreLocalidadBorrar = (String) modelo.getValueAt(filaSeleccionada, 2);
+		String provinciaEnTabla = (String) modelo.getValueAt(filaSeleccionada, 1);
+
+		if (provinciaEnTabla.equals("")) {
+			JOptionPane.showMessageDialog(null, "El pais no tiene provincias!");
+			return;
+		}
+		if (nombreLocalidadBorrar.equals("")) {
+			JOptionPane.showMessageDialog(null, "La provincia no tiene localidades!");
+			return;
+		}
+
+		String nuevoNombre = this.ventanaEditarLocalidad.getTxtNuevaLocalidad().getText();
+		
+		//Verificamos si ya existe esa provincia con ese nuevo nombre
+		ProvinciaDTO provincia = getProvinciaDeTabla(provinciaEnTabla, paisSeleccionado.getIdPais());		
+		if(yaExisteLocalidad(provincia, nuevoNombre)) {
+			JOptionPane.showMessageDialog(null, "Ya existe una localidad con ese nombre!");
+			return;
+		}
+		
+			
+		for (LocalidadDTO loc : this.localidadEnTabla) {
+			if (loc.getNombreLocalidad().equals(nombreLocalidadBorrar)
+					&& loc.getIdForeignProvincia() == provinciaSeleccionada.getIdProvincia()
+					&& provinciaSeleccionada.getForeignPais() == paisSeleccionado.getIdPais()) {
+				this.localidad.editarLocalidad(loc, nuevoNombre);
+			}
+		}
+
+		this.localidadEnTabla = this.localidad.obtenerLocalidades();
+		String paisElegido = (String) this.ventanaEditarLocalidad.getComboBoxPaises().getSelectedItem();
+		String provElegida = (String) this.ventanaEditarLocalidad.getComboProvincias().getSelectedItem();
+
+		this.localidadEnTabla = this.localidad.obtenerLocalidades();
+		this.llenarTablaEditarLocalidad(paisElegido, provElegida);
+		this.escribirComboBoxesAgregar();
+
+	}
 	
 	
 	public void actualizarComboBoxesDeCliente() {
