@@ -131,8 +131,14 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void eliminarPasosSeleccionados() {
 		for(int idTabla: filasSeleccionadas) {
-			this.modeloPaso.delete(this.pasosEnLista.get(idTabla));
+			if(sePuedeEliminarPaso(this.pasosEnLista.get(idTabla))) {
+				this.modeloPaso.delete(this.pasosEnLista.get(idTabla));
+			}
 		}
+	}
+	
+	private boolean sePuedeEliminarPaso(PasoDTO paso) {
+		return true;
 	}
 
 	@Override
