@@ -71,7 +71,7 @@ public class Controlador {
 	private Proveedor proveedor;
 	private ProductoDeProveedor productoDeProveedor;
 	private PedidosPendientes pedidosPendientes;
-	
+
 	// Controladores
 	private ControladorBusquedaCliente controladorBusquedaCliente;
 	private ControladorBusquedaProductos controladorBusquedaProducto;
@@ -122,7 +122,7 @@ public class Controlador {
 
 	public Controlador() {
 		obtenerDatosPropertiesSucursal();
-		
+
 		this.cliente = new Cliente(new DAOSQLFactory());
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.stock = new Stock(new DAOSQLFactory());
@@ -160,11 +160,11 @@ public class Controlador {
 		this.ventanaVendedor = new VentanaVendedor();
 
 		// ----------------------------------------------------------------------------------------------------------
-	
+
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
 		// Config
-		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this,config);
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
 
 		// armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
@@ -224,59 +224,70 @@ public class Controlador {
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
-		// ----------------------------------------------------------------------------------------------------------	
+		// ----------------------------------------------------------------------------------------------------------
+
+		escucharBotonesVentanaCajero();
+
+		escucharBotonesVentanaVendedor();
+
+		escucharBotonesVentanaOperatoriaDeFabrica();
 		
-		// CAJERO
+		escucharBotonesVentanaSupervisor();
+
+		escucharBotonesVentanaAdministrativo();
+		
+		escucharBotonesVentanaGerente();
+		
+		escucharBotonesVentanaSupervisorFabrica();
+
+		// ----------------------------------------------------------------------------------------------------------
+
+		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
+	}
+
+	public void escucharBotonesVentanaCajero() {
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
 		this.ventanaCajero.getBtnEgresoDeCaja().addActionListener(a -> pasarAEgresosCaja(a));
 		this.ventanaCajero.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
 		this.ventanaCajero.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+	}
 
-		// VENDEDOR
+	public void escucharBotonesVentanaVendedor() {
 		this.ventanaVendedor.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
 		this.ventanaVendedor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+	}
 
-		// OPERARIO DE FABRICA
+	public void escucharBotonesVentanaOperatoriaDeFabrica() {
 		this.ventanaOperarioFabrica.getBtnOperatoriaDeFabrica()
 				.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaOperarioFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-		// config
+	}
+
+	public void escucharBotonesVentanaSupervisor() {
 		this.ventanaSupervisor.getBtnConfig().addActionListener(a -> pasarAConfig(a));
-
-		// cotizacion
 		this.ventanaSupervisor.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
-
-		// mod precioUnitario
 		this.ventanaSupervisor.getBtnModPrecioUnitario().addActionListener(a -> pasarAModificarPrecioUnitario(a));
-
-		// Generar ordenes de manufac
 		this.ventanaSupervisor.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
-
-		// Alta cliente
 		this.ventanaSupervisor.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
-
-		// Alta producto
 		this.ventanaSupervisor.getBtnIngresarProductoNuevo().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaSupervisor.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
-		// Consultar proveedores y asignarle un producto
-
-		// Ver pedidos a prov
 		this.ventanaSupervisor.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
-
 		this.ventanaSupervisor.getBtnVerComprasVirtuales().addActionListener(a -> pasarAVerComprasVirtuales(a));
 		this.ventanaSupervisor.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
-
 		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-
+	}
+	
+	public void escucharBotonesVentanaAdministrativo() {
 		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+	}
+	
+	public void escucharBotonesVentanaGerente() {
 		this.ventanaGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-		this.ventanaOperarioFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+	}
+	
+	public void escucharBotonesVentanaSupervisorFabrica() {
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-		
-		// ----------------------------------------------------------------------------------------------------------
-		
-		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
 	
 	public void obtenerDatosPropertiesSucursal() {
@@ -397,7 +408,7 @@ public class Controlador {
 		}
 		cerrarTodasLasVentanas();
 		this.controladorIngresosCaja.inicializar();
-		this.controladorIngresosCaja.mostrarVentana();	
+		this.controladorIngresosCaja.mostrarVentana();
 	}
 
 	// Egreso
