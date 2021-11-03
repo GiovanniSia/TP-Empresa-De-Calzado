@@ -25,10 +25,10 @@ import java.awt.event.WindowEvent;
 
 public class VentanaGestionarClientes extends JFrame{
 	private static final long serialVersionUID = 1L;
-	
+
 	private JFrame frame;
 	private String[] nombreColumnas = { "Cod. Cliente", "Nombre", "Apellido", "CUIL", "Correo Electronico",
-			"Limite Credito", "Credito Disponible", "Estado" };
+			"Limite Credito", "Credito Disponible","Tipo Cliente","AFIP", "Estado","Calle","Altura","Pais","Provincia","Localidad","CodPostal"};
 	private JLabel lblNombre;
 	private JTextField txtFieldNombre;
 	private DefaultTableModel modelCliente;
@@ -60,7 +60,7 @@ public class VentanaGestionarClientes extends JFrame{
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 822, 450);
+		frame.setBounds(100, 100, 1100, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -68,12 +68,12 @@ public class VentanaGestionarClientes extends JFrame{
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 191, 806, 224);
+		panel.setBounds(0, 191, 1076, 224);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 11, 776, 145);
+		spCliente.setBounds(10, 11, 1056, 145);
 		spCliente.setBackground(new Color(248, 248, 255));
 		panel.add(spCliente);
 
@@ -112,17 +112,17 @@ public class VentanaGestionarClientes extends JFrame{
 		panel.add(lblAtrs);
 		
 		btnAgregarCliente = new JButton("Agregar Cliente");
-		btnAgregarCliente.setBounds(165, 166, 106, 48);
+		btnAgregarCliente.setBounds(271, 166, 106, 48);
 		panel.add(btnAgregarCliente);
 		
 		btnEditarCliente = new JButton("Editar Cliente");
-		btnEditarCliente.setBounds(300, 166, 106, 48);
+		btnEditarCliente.setBounds(512, 165, 106, 48);
 		panel.add(btnEditarCliente);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 95, 806, 95);
+		panel_1.setBounds(0, 95, 1076, 95);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -176,7 +176,7 @@ public class VentanaGestionarClientes extends JFrame{
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 806, 50);
+		panel_2.setBounds(0, 0, 1076, 50);
 		frame.getContentPane().add(panel_2);
 
 		lblNewLabel = new JLabel("Zapateria Argento");

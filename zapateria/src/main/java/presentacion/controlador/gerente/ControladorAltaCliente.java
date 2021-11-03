@@ -149,7 +149,9 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getTextCorreo().setText(this.clienteSeteado.getCorreo());
 		
 		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedItem(this.clienteSeteado.getTipoCliente());
-		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(this.clienteSeteado.getImpuestoAFIP());
+		
+		String impuestoAFIP = obtenerNombreCategoria(clienteAEditar);
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(impuestoAFIP);
 		
 		this.ventanaAltaCliente.getTextSaldoInicial().setText(""+this.clienteSeteado.getCreditoDisponible());
 		
@@ -165,6 +167,23 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
 	}
 	
+	public String obtenerNombreCategoria(ClienteDTO cliente) {
+		String tipo = cliente.getImpuestoAFIP();
+		if (tipo.equals("RI")) {
+			return "Responsable Inscripto";
+		}
+		if (tipo.equals("M")) {
+			return "Monotributista";
+		}
+		if (tipo.equals("CF")) {
+			return "Consumidor Final";
+		}
+		if (tipo.equals("E")) {
+			return "Exento";
+		}
+		return "Categoria no encontrada en el sistema";
+	}
+	
 	public void editarCliente(ActionEvent a) {
 		ClienteDTO clienteActualizado = obtenerClienteDeVista();
 		boolean update = this.cliente.update(this.clienteSeteado.getIdCliente(), clienteActualizado);
@@ -172,7 +191,7 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		salirEditar();
 	}
 	
@@ -377,8 +396,8 @@ public class ControladorAltaCliente {
 	
 	public void cargarComboBoxes() {
 		
-		String[] tipoCliente = {"Mayorista","Minorista"};
-		String[] impuestoAFIP = {"Responsable Inscripto","Monotributista","Exento","Consumidor Final"};
+		String[] tipoCliente = {"Sin seleccionar","Mayorista","Minorista"};
+		String[] impuestoAFIP = {"Sin seleccionar","Responsable Inscripto","Monotributista","Exento","Consumidor Final"};
 		
 		for(int i=0; i<tipoCliente.length;i++) {
 			this.ventanaAltaCliente.getComboBoxTipoCliente().addItem(tipoCliente[i]);

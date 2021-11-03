@@ -1,7 +1,11 @@
 package presentacion.controlador.Login;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -34,10 +38,20 @@ public class ControladorLogin {
 	}
 
 	public void inicializar() {
-		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
-		rellenarCombobox();
+		if(yaSeInicioSesion()) {
+			mostrarControlador();
+		}else {
+			mostrarMenu();
+		}
+		
 	}
 
+	public void mostrarMenu() {
+		mostrarVentana();
+		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
+		rellenarCombobox();		
+	}
+	
 	private void iniciarSesion(ActionEvent a) {
 		if (inicioSesionValido()) {
 			iniciarZapateria();
@@ -131,4 +145,15 @@ public class ControladorLogin {
 		this.ventanaLogin.cerrarVentana();
 	}
 
+	public boolean yaSeInicioSesion() {
+		Properties prop = new Properties();
+		try {
+			prop.load(new FileInputStream("inicioSesion/empleado.properties"));
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+
+	}
+	
 }

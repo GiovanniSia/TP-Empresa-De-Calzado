@@ -629,7 +629,7 @@ public class ControladorRealizarVenta {
 			return "Consumidor Final";
 		}
 		if (tipo.equals("E")) {
-			return "Excento";
+			return "Exento";
 		}
 		return "Categoria no encontrada en el sistema";
 	}

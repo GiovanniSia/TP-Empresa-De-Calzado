@@ -3,6 +3,7 @@ package presentacion.controlador.gerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,14 +139,27 @@ public class ControladorGestionarClientes {
 		String apellido = c.getApellido();
 		String CUIL = c.getCUIL();
 		String correo = c.getCorreo();
-		double limiteCredito = c.getLimiteCredito();
-		double creditoDisponible = c.getCreditoDisponible();
+		
+		double limiteCredit = c.getLimiteCredito();
+		BigDecimal limiteCredito = new BigDecimal(limiteCredit);
+		
+		double creditoDisponibl = c.getCreditoDisponible();
+		BigDecimal creditoDisponible = new BigDecimal(creditoDisponibl);
+		
+		String tipoCliente = c.getTipoCliente();
+		String afip = c.getImpuestoAFIP();
 		String estado = c.getEstado();
-		if (!estado.equals("Inactivo")) {
-			Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,	estado };
-			this.ventanaGestionarClientes.getModelCliente().addRow(fila);
-			this.clienteEnTabla.add(c);
-		}
+		String calle = c.getCalle();
+		String altura = c.getAltura();
+		String pais = c.getPais();
+		String prov = c.getProvincia();
+		String local = c.getLocalidad();
+		String codPostal = c.getCodPostal();
+		
+		Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,tipoCliente,afip,estado,calle,altura,pais,prov,local,codPostal };
+		this.ventanaGestionarClientes.getModelCliente().addRow(fila);
+		this.clienteEnTabla.add(c);
+		
 	}
 	
 	

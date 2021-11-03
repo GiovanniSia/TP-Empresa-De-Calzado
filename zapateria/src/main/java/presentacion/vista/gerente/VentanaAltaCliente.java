@@ -284,12 +284,10 @@ public class VentanaAltaCliente {
 		
 		comboBoxImpuestoAFIP = new JComboBox<String>();
 		comboBoxImpuestoAFIP.setBounds(128, 278, 195, 23);
-		this.comboBoxImpuestoAFIP.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxImpuestoAFIP);
 		
 		comboBoxTipoCliente = new JComboBox<String>();
 		comboBoxTipoCliente.setBounds(128, 247, 195, 23);
-		this.comboBoxTipoCliente.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipoCliente);
 		
 		textSaldoInicial = new JTextField();

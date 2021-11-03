@@ -1,6 +1,7 @@
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import dto.SucursalDTO;
@@ -365,7 +366,8 @@ public class Controlador {
 
 	public void cerrarSesion(ActionEvent a) {
 		cerrarTodasLasVentanas();
-		controladorLogin.mostrarVentana();
+        controladorLogin.mostrarMenu();
+        controladorLogin.mostrarVentana();
 	}
 
 	public void cerrarTodasLasVentanas() {
