@@ -16,4 +16,6 @@ public interface EmpleadoDAO {
 	public List<EmpleadoDTO> readAll();
 	
 	public EmpleadoDTO selectEmpleado(int idEmpleado);
+	
+	public EmpleadoDTO selectUser(String correo, String contra);
 }

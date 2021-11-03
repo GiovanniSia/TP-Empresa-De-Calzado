@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.MaestroProductoDTO;
-import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;

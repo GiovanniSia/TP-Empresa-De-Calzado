@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import dto.MaestroProductoDTO;
 import dto.StockDTO;
+import inicioSesion.sucursalProperties;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
@@ -18,8 +20,20 @@ import presentacion.vista.generarOrdenesManufactura.VentanaGenerarOrdenManufactu
 
 public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
-	private static final int idSucursal = 1;
+	private static int idSucursal = 1;
 //	private static final int idEmpleado = 1;
+	public void obtenerDatosPropertiesSucursal() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	private ArrayList<MaestroProductoDTO> productosEnLista;
 	
@@ -28,7 +42,7 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	Controlador controlador;
 	
 	public ControladorGenerarOrdenesManufactura(Controlador controlador) {
-		
+		obtenerDatosPropertiesSucursal();
 		ventana = new VentanaGenerarOrdenManufactura();
 		productosEnLista = new ArrayList<MaestroProductoDTO>();
 		this.controlador = controlador;
@@ -36,6 +50,7 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	
 	public void inicializar() {
+		
 		ventana.getTextId().addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

@@ -34,4 +34,8 @@ public class Empleado {
 	public EmpleadoDTO selectEmpleado(int idEmpleado) {
 		return this.empleado.selectEmpleado(idEmpleado);
 	}
+	
+	public EmpleadoDTO selectUser(String correo, String contra) {
+		return this.empleado.selectUser(correo, contra);
+	}
 }

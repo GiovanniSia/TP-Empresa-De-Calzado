@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -42,13 +43,12 @@ public class VentanaIngresosCaja extends JFrame {
 	private JButton btnRealizarIngreso;
 	private JLabel lblAtras;
 	private JLabel lblRecargar;
-	
-	
+
 	public static void main(String[] args) {
 		VentanaIngresosCaja n = new VentanaIngresosCaja();
 		n.show();
 	}
-	
+
 	public VentanaIngresosCaja() {
 		initialize();
 	}
@@ -56,10 +56,10 @@ public class VentanaIngresosCaja extends JFrame {
 	public void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -72,8 +72,7 @@ public class VentanaIngresosCaja extends JFrame {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
-		
-		
+
 		JPanel panel_1 = new JPanel();
 
 		panel_1.setBackground(new Color(248, 248, 255));
@@ -81,47 +80,46 @@ public class VentanaIngresosCaja extends JFrame {
 
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("Ingresos de Caja");
 
+		JLabel lblNewLabel_1 = new JLabel("Ingresos de Caja");
 
 		lblNewLabel_1.setBackground(new Color(248, 248, 255));
 		lblNewLabel_1.setBounds(34, 5, 176, 56);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		panel_1.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Estado de la Caja:");
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(207, 22, 142, 14);
 		panel_1.add(lblNewLabel_2);
-		
+
 		lblActualizarEstadoCaja = new JLabel("Sin estado");
 		lblActualizarEstadoCaja.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarEstadoCaja.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarEstadoCaja.setBounds(207, 47, 142, 14);
 		panel_1.add(lblActualizarEstadoCaja);
-		
+
 		lblSaldoActual = new JLabel("Saldo actual:");
 		lblSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 
 		lblSaldoActual.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSaldoActual.setBounds(344, 22, 142, 14);
 		panel_1.add(lblSaldoActual);
-		
+
 		lblActualizarSaldoActual = new JLabel("$0");
 		lblActualizarSaldoActual.setHorizontalAlignment(SwingConstants.CENTER);
 
 		lblActualizarSaldoActual.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarSaldoActual.setBounds(344, 47, 142, 14);
 		panel_1.add(lblActualizarSaldoActual);
-		
+
 		lblActualizarFechaHoy = new JLabel("");
 		lblActualizarFechaHoy.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblActualizarFechaHoy.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActualizarFechaHoy.setBounds(287, 5, 125, 14);
 		panel_1.add(lblActualizarFechaHoy);
-		
+
 		JPanel panel_2 = new JPanel();
 
 		panel_2.setBorder(null);
@@ -130,23 +128,22 @@ public class VentanaIngresosCaja extends JFrame {
 
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
-		
-		lblIngresoSaldoInicial = new JLabel("Ingresar saldo inicial:");
 
+		lblIngresoSaldoInicial = new JLabel("Ingresar saldo inicial:");
 
 		lblIngresoSaldoInicial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblIngresoSaldoInicial.setBounds(70, 11, 171, 32);
 
 		panel_2.add(lblIngresoSaldoInicial);
-		
+
 		txtFieldIngresoSaldoInicial = new JTextField();
 		txtFieldIngresoSaldoInicial.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
-				
-				boolean numeros = key >=48 && key<=57;
-				if(txtFieldIngresoSaldoInicial.getText().length()>=9 || !numeros) {
+
+				boolean numeros = key >= 48 && key <= 57;
+				if (txtFieldIngresoSaldoInicial.getText().length() >= 9 || !numeros) {
 					e.consume();
 				}
 			}
@@ -156,107 +153,104 @@ public class VentanaIngresosCaja extends JFrame {
 
 		panel_2.add(txtFieldIngresoSaldoInicial);
 		txtFieldIngresoSaldoInicial.setColumns(10);
-		
-		lblRegarcaSaldo = new JLabel("Ingresar recarga de saldo:");
 
+		lblRegarcaSaldo = new JLabel("Ingresar recarga de saldo:");
 
 		lblRegarcaSaldo.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblRegarcaSaldo.setBounds(36, 54, 205, 32);
 
 		panel_2.add(lblRegarcaSaldo);
-		
+
 		txtFieldRecargaSaldo = new JTextField();
 		txtFieldRecargaSaldo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
-				
-				boolean numeros = key >=48 && key<=57;
-				if(txtFieldRecargaSaldo.getText().length()>=9 || !numeros) {
+
+				boolean numeros = key >= 48 && key <= 57;
+				if (txtFieldRecargaSaldo.getText().length() >= 9 || !numeros) {
 					e.consume();
 				}
 			}
 		});
 
-
 		txtFieldRecargaSaldo.setColumns(10);
 		txtFieldRecargaSaldo.setBounds(313, 59, 136, 28);
 		panel_2.add(txtFieldRecargaSaldo);
-		
+
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
 		btnAtras.setBounds(36, 97, 50, 50);
 		panel_2.add(btnAtras);
-		cambiarIconoBotones(btnAtras,  "back2.png");
-		
+		cambiarIconoBotones(btnAtras, "back2.png");
+
 		btnRealizarIngreso = new JButton("");
 		btnRealizarIngreso.setBackground(new Color(248, 248, 255));
 		btnRealizarIngreso.setBounds(313, 98, 50, 50);
 
-
 		panel_2.add(btnRealizarIngreso);
-		cambiarIconoBotones(btnRealizarIngreso,  "cashier2.png");
-		
+		cambiarIconoBotones(btnRealizarIngreso, "cashier2.png");
+
 		lblAtras = new JLabel("Atras");
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAtras.setBounds(96, 97, 44, 50);
 		panel_2.add(lblAtras);
-		
+
 		lblRecargar = new JLabel("Ingresar");
 		lblRecargar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblRecargar.setBounds(373, 98, 76, 50);
 		panel_2.add(lblRecargar);
-		
 
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(153, 204, 255));
 		panel.setBounds(0, 1, 496, 50);
 		contentPane.add(panel);
-		
+
 		lblNewLabel = new JLabel("Zapateria Argento");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblNewLabel.setBounds(10, 0, 421, 50);
 		panel.add(lblNewLabel);
-		
+
 		lblNewLabel_3 = new JLabel("Sucursal:");
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		lblNewLabel_3.setBounds(565, 22, 109, 14);
 		panel.add(lblNewLabel_3);
 	}
-	
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 
 	}
 
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.frame.addWindowListener(new WindowAdapter() 
-		{
+		for (WindowListener listener : this.frame.getWindowListeners()) {
+			this.frame.removeWindowListener(listener);
+		}
+		this.frame.addWindowListener(new WindowAdapter() {
 			@Override
-		    public void windowClosing(WindowEvent e) {
-		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estas seguro que quieres salir?", 
-		             "Advertencia", JOptionPane.YES_NO_OPTION,
-		             JOptionPane.QUESTION_MESSAGE, null, null, null);
-		        if (confirm == 0) {
-		        	Conexion.getConexion().cerrarConexion();
-		           System.exit(0);
-		        }
-		    }
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "¿Estás seguro que quieres salir?", "Advertencia",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					Conexion.getConexion().cerrarConexion();
+					System.exit(0);
+				}
+			}
 		});
 		this.frame.setVisible(true);
 	}
-	
+
 	public void limpiarCampos() {
 		txtFieldIngresoSaldoInicial.setText(null);
 		txtFieldRecargaSaldo.setText(null);
 	}
-	
+
 	public void cerrar() {
 		limpiarCampos();
 		frame.setVisible(false);
@@ -266,11 +260,12 @@ public class VentanaIngresosCaja extends JFrame {
 		this.lblSaldoActual.setVisible(true);
 		this.lblActualizarSaldoActual.setVisible(true);
 	}
+
 	public void ocultarSaldoActual() {
 		this.lblSaldoActual.setVisible(false);
 		this.lblActualizarSaldoActual.setVisible(false);
 	}
-	
+
 	public JLabel getLblActualizarSaldoActual() {
 		return lblActualizarSaldoActual;
 	}
@@ -282,11 +277,11 @@ public class VentanaIngresosCaja extends JFrame {
 	public JLabel getLblActualizarFechaHoy() {
 		return lblActualizarFechaHoy;
 	}
-	
+
 	public void mostrarHoraHoy() {
 		this.lblActualizarFechaHoy.setVisible(true);
 	}
-	
+
 	public void ocultarHoraHoy() {
 		this.lblActualizarFechaHoy.setVisible(false);
 	}
@@ -304,23 +299,23 @@ public class VentanaIngresosCaja extends JFrame {
 		txtFieldIngresoSaldoInicial.setVisible(true);
 		ocultarIngresarRecargaSaldo();
 	}
-	
+
 	public void ocultarIngresarSaldoInicial() {
 		lblIngresoSaldoInicial.setVisible(false);
 		txtFieldIngresoSaldoInicial.setVisible(false);
 	}
-	
+
 	public void mostrarIngresarRecargaSaldo() {
 		lblRegarcaSaldo.setVisible(true);
 		txtFieldRecargaSaldo.setVisible(true);
 		ocultarIngresarSaldoInicial();
 	}
-	
+
 	public void ocultarIngresarRecargaSaldo() {
 		lblRegarcaSaldo.setVisible(false);
-		txtFieldRecargaSaldo.setVisible(false);		
+		txtFieldRecargaSaldo.setVisible(false);
 	}
-	
+
 	public JTextField getTxtFieldIngresoSaldoInicial() {
 		return txtFieldIngresoSaldoInicial;
 	}

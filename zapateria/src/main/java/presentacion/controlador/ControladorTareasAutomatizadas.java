@@ -15,27 +15,26 @@ public class ControladorTareasAutomatizadas {
 
 	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
 	ConfiguracionBD config;
+	Controlador controlador;
 	
-	public ControladorTareasAutomatizadas(VentanaTareasAutomatizadas ventanaTareasAutomatizadas,ConfiguracionBD config) {
-		this.ventanaTareasAutomatizadas = ventanaTareasAutomatizadas;
+	public ControladorTareasAutomatizadas(Controlador controlador,ConfiguracionBD config) {
+		this.ventanaTareasAutomatizadas = new VentanaTareasAutomatizadas();
+		
+		
 		this.config=config;
 		this.ventanaTareasAutomatizadas.getBtnRegresar().addActionListener(a -> salir(a));
-		
+		this.controlador = controlador;
 		this.ventanaTareasAutomatizadas.getBtnActualizar().addActionListener(a -> actualizarValores(a));
 	}
 	
 	public void inicializar() {
-		
-		
-		
 		llenarCbCorreosProv();
-		setParametros();
-		
-		
+		setParametros();				
 	}
 
 	private void salir(ActionEvent a) {
 		this.ventanaTareasAutomatizadas.cerrar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void mostrarVentana() {

@@ -1,6 +1,7 @@
 package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import dto.EmpleadoDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoDTO;
 import dto.MedioPagoEgresoDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.Caja;
 import modelo.Egresos;
 import modelo.Empleado;
@@ -31,9 +34,21 @@ import presentacion.vista.Cajero.VentanaCierreCaja;
 
 public class ControladorCierreCaja {
 
-	private static final int idEmpleado = 1;
-	private static final int idSucursal = 1;
-
+	private static int idEmpleado = 0;
+	private static int idSucursal = 0;
+	public void obtenerDatosPropertiesSucursalEmpleado() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+			
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			idEmpleado = Integer.parseInt(empleadoProp.getValue("IdEmpleado"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private VentanaCierreCaja ventanaCierreCaja;
 
 	private Ingresos ingresos;
@@ -48,6 +63,7 @@ public class ControladorCierreCaja {
 
 	public ControladorCierreCaja(Controlador controlador, Caja caja, Ingresos ingresos, Egresos egresos,
 			Empleado empleado) {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaCierreCaja = new VentanaCierreCaja();
 		this.caja = caja;
 		this.ingresos = ingresos;

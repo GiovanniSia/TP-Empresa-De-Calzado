@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import javax.swing.JTable;
 
 import dto.HistorialCambioMProductoDTO;
 import dto.MaestroProductoDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.HistorialCambioMProducto;
 import modelo.MaestroProducto;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -23,8 +26,20 @@ import presentacion.controlador.Controlador;
 import presentacion.vista.ModificarProducto.VentanaModificarMProducto;
 
 public class ControladorModificarMProducto {
-	static final String idSucursal = "1";
-	static final String idEmpleado = "1";
+	static String idSucursal = "";
+	static String idEmpleado = "";
+	public void obtenerDatosPropertiesSucursalEmpleado() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = sucursalProp.getValue("IdSucursal");
+			
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			idEmpleado = empleadoProp.getValue("IdEmpleado");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private VentanaModificarMProducto ventanaModificarMProducto;
 	private MaestroProducto maestroProducto;
@@ -38,18 +53,15 @@ public class ControladorModificarMProducto {
 
 	Controlador controlador;
 
-	public static void main(String[] args) {
-		ControladorModificarMProducto a = new ControladorModificarMProducto();
-		a.inicializar();
-		a.mostrarVentana();
-	}
 
 	public ControladorModificarMProducto() {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 	}
 
 	public ControladorModificarMProducto(Controlador controlador, MaestroProducto producto) {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaModificarMProducto = new VentanaModificarMProducto();
 		this.maestroProducto = producto;
 		this.controlador = controlador;
@@ -438,7 +450,6 @@ public class ControladorModificarMProducto {
 		this.controladorDescripcionProveedorMProducto.ocultarVentana();
 		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -733,7 +744,7 @@ public class ControladorModificarMProducto {
 			BigDecimal precioMayorista = new BigDecimal(mp.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 
 			BigDecimal precioMinorista = new BigDecimal(mp.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-			
+
 			int puntoRepositorio = mp.getPuntoRepositorio();
 			int cantidadAReponer = mp.getCantidadAReponer();
 			int diasParaReponer = mp.getDiasParaReponer();

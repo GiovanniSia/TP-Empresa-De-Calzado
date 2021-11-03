@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -150,9 +151,9 @@ public class ControladorHistorialCambioCotizacion {
 			String fecha = hcm.getFecha();
 			String hora = hcm.getHora();
 			double tasaConversionAntigu = hcm.getTasaConversionAntigua();
-			BigDecimal tasaConversionAntigua = new BigDecimal(tasaConversionAntigu);
+			BigDecimal tasaConversionAntigua = new BigDecimal(tasaConversionAntigu).setScale(2, RoundingMode.HALF_UP);
 			double tasaConversionNuev = hcm.getTasaConversionNueva();
-			BigDecimal tasaConversionNueva = new BigDecimal(tasaConversionNuev);
+			BigDecimal tasaConversionNueva = new BigDecimal(tasaConversionNuev).setScale(2, RoundingMode.HALF_UP);
 
 			Object[] fila = { idMoneda, descripcion, idEmpleado, fecha, hora, tasaConversionAntigua,
 					tasaConversionNueva };
@@ -165,11 +166,4 @@ public class ControladorHistorialCambioCotizacion {
 		this.llenarTabla(historialCambioMonedaEnTabla);
 	}
 
-
-	public static void main(String[] args) {
-		HistorialCambioMoneda modelo = new HistorialCambioMoneda(new DAOSQLFactory());
-		ControladorHistorialCambioCotizacion controlador = new ControladorHistorialCambioCotizacion(modelo);
-		controlador.inicializar();
-		controlador.mostrarVentana();
-	}
 }

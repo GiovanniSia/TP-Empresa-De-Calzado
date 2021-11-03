@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
+import inicioSesion.empleadoProperties;
 import modelo.Fabricacion;
 import modelo.HistorialPaso;
 import modelo.MaestroProducto;
@@ -43,9 +45,25 @@ import presentacion.vista.fabrica.fecha;
 import modelo.generarOrdenesFabricacion;
 public class ReControladorOperario implements ActionListener {
 	
-	static final EmpleadoDTO empleadoDeMuestra = new EmpleadoDTO(1, "13138413", "Gabriel", "Perez", "Fulanito@gmail.com",
-			"Operario", "360123");
-
+	static EmpleadoDTO empleadoDeMuestra;
+	
+	public void obtenerDatosPropertiesEmpleado() {
+		try {
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			int idEmpleado = Integer.parseInt(empleadoProp.getValue("IdEmpleado"));
+			String CUIL = empleadoProp.getValue("CUIL");
+			String nombre = empleadoProp.getValue("Nombre");
+			String apellido = empleadoProp.getValue("Apellido");
+			String correo = empleadoProp.getValue("CorreoElectronico");
+			String tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
+			String contra = "";
+			empleadoDeMuestra = new EmpleadoDTO(idEmpleado, CUIL, nombre, apellido, correo, tipoEmpleado, contra);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	static final String error = "[HiperLink error]";
 	static final String stringQueDescribeLosTrabajosListosPeroEstanEnEsperaParaEnviar = "En envio";
 	
@@ -99,6 +117,8 @@ public class ReControladorOperario implements ActionListener {
 	SucursalDTO fabrica;
 	//public ReControladorOperario(Controlador controlador,SucursalDTO fabrica, EmpleadoDTO empleado) {
 	public ReControladorOperario(Controlador controlador,SucursalDTO fabrica) {
+		obtenerDatosPropertiesEmpleado();
+		
 		this.empleado = empleadoDeMuestra;
 		this.fabrica = fabrica;
 		idFabrica = fabrica.getIdSucursal();
@@ -122,6 +142,7 @@ public class ReControladorOperario implements ActionListener {
 	}
 
 	public void inicializar() {
+		
 		ventanaPrincipal.getBtnTrabajarPedido().addActionListener(r->trabajarSeleccionado(r));
 		ventanaPrincipal.getTextProducto().addKeyListener(new KeyAdapter() {
 			@Override
