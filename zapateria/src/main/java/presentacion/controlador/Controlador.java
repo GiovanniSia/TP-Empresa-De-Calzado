@@ -31,7 +31,6 @@ import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.Login.ControladorLogin;
-import presentacion.controlador.ModificarProducto.ControladorHistorialCambioMProducto;
 import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
 import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtuales;
 import presentacion.controlador.fabrica.ReControladorOperario;
@@ -42,9 +41,6 @@ import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
-import presentacion.vista.VentanaMenu;
-import presentacion.vista.VentanaMenuSistemaDeVentas;
-import presentacion.vista.VentanaTareasAutomatizadas;
 import presentacion.vista.Login.VentanaAdministrador;
 import presentacion.vista.Login.VentanaCajero;
 import presentacion.vista.Login.VentanaGerente;
@@ -58,89 +54,75 @@ public class Controlador {
 	private int idSucursal = 0;
 	private String tipoEmpleado = "";
 
-	SucursalDTO sucursalObj;
-
-	MaestroProducto maestroProducto;
-	Stock stock;
-	Sucursal sucursal;
-	Cliente cliente;
-
-	MedioPago medioPago;
-	Caja caja;
-
-	Ingresos ingresos;
-	Egresos egresos;
-	Empleado empleado;
-
-	Carrito carrito;
-	DetalleCarrito detalleCarrito;
-
-	Factura factura;
-	DetalleFactura detalleFactura;
-
-	Proveedor proveedor;
-	ProductoDeProveedor productoDeProveedor;
-
-	PedidosPendientes pedidosPendientes;
+	private SucursalDTO sucursalObj;
+	private MaestroProducto maestroProducto;
+	private Stock stock;
+	private Sucursal sucursal;
+	private Cliente cliente;
+	private MedioPago medioPago;
+	private Caja caja;
+	private Ingresos ingresos;
+	private Egresos egresos;
+	private Empleado empleado;
+	private Carrito carrito;
+	private DetalleCarrito detalleCarrito;
+	private Factura factura;
+	private DetalleFactura detalleFactura;
+	private Proveedor proveedor;
+	private ProductoDeProveedor productoDeProveedor;
+	private PedidosPendientes pedidosPendientes;
+	
 	// Controladores
-	ControladorBusquedaCliente controladorBusquedaCliente;
-	ControladorBusquedaProductos controladorBusquedaProducto;
+	private ControladorBusquedaCliente controladorBusquedaCliente;
+	private ControladorBusquedaProductos controladorBusquedaProducto;
 
-	ControladorHistorialCambioCotizacion controladorHistorialCambioCotizacion;
-	ControladorHistorialCambioMProducto controladorHistorialCambioMProducto;
+	private ControladorModificarCotizacion controladorModificarCotizacion;
+	private ControladorModificarMProducto controladorModificarMProducto;
 
-	ControladorModificarCotizacion controladorModificarCotizacion;
-	ControladorModificarMProducto controladorModificarMProducto;
+	private ControladorEgresosCaja controladorEgresosCaja;
 
-	ControladorEgresosCaja controladorEgresosCaja;
+	private ReControladorOperario reControladorOperario;
 
-	ReControladorOperario reControladorOperario;
-
-	ControladorGenerarOrdenesManufactura controladorGenerarOrdenesManufactura;
+	private ControladorGenerarOrdenesManufactura controladorGenerarOrdenesManufactura;
 
 	// Controlador cajero
-	ControladorCierreCaja controladorCierreCaja;
-	ControladorIngresosCaja controladorIngresosCaja;
-	ControladorVisualizarCarritos controladorVisualizarCarritos;
-	ControladorRealizarVenta controladorRealizarVenta;
+	private ControladorCierreCaja controladorCierreCaja;
+	private ControladorIngresosCaja controladorIngresosCaja;
+	private ControladorVisualizarCarritos controladorVisualizarCarritos;
+	private ControladorRealizarVenta controladorRealizarVenta;
 
 	// Controlador gerente
-	ControladorAltaCliente controladorAltaCliente;
+	private ControladorAltaCliente controladorAltaCliente;
 
 	// Controlador supervisor
-	ControladorAltaProducto controladorAltaProducto;
-	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
-	ControladorConsultarProveedor controladorConsultarProveedor;
+	private ControladorAltaProducto controladorAltaProducto;
+	private ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
+	private ControladorConsultarProveedor controladorConsultarProveedor;
 
 	// Ver pedidos pendientes
-	ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
+	private ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
 
-	ControladorVisualizarComprasVirtuales controladorVisualizarComprasVirtuales;
-	ControladorReporteRankingVentaXSucursal controladorReporteRankingVentaXSucursal;
+	private ControladorVisualizarComprasVirtuales controladorVisualizarComprasVirtuales;
+	private ControladorReporteRankingVentaXSucursal controladorReporteRankingVentaXSucursal;
 
-	VentanaMenu ventanaMenu;
-	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
+	private ControladorTareasAutomatizadas controladorTareasAutomatizadas;
 
-	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
-	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
+	private ControladorLogin controladorLogin;
 
-	// Ventanas TIPO EMPLEADO
-	VentanaAdministrador ventanaAdministrador;
-	VentanaCajero ventanaCajero; // YA TIENE SUS BOTONES
-	VentanaGerente ventanaGerente;
-	VentanaOperarioFabrica ventanaOperarioFabrica;
-	VentanaSupervisor ventanaSupervisor;
-	VentanaSupervisorFabrica ventanaSupervisorFabrica;
-	VentanaVendedor ventanaVendedor;
+	private VentanaAdministrador ventanaAdministrador;
+	private VentanaCajero ventanaCajero;
+	private VentanaGerente ventanaGerente;
+	private VentanaOperarioFabrica ventanaOperarioFabrica;
+	private VentanaSupervisor ventanaSupervisor;
+	private VentanaSupervisorFabrica ventanaSupervisorFabrica;
+	private VentanaVendedor ventanaVendedor;
 
-	ControladorLogin controladorLogin;
-
-	// Coso para el properties
+	// Configuracion (properties)
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
 
 	public Controlador() {
 		obtenerDatosPropertiesSucursal();
-
+		
 		this.cliente = new Cliente(new DAOSQLFactory());
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		this.stock = new Stock(new DAOSQLFactory());
@@ -162,14 +144,12 @@ public class Controlador {
 		this.proveedor = new Proveedor(new DAOSQLFactory());
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 
-		this.sucursalObj = this.sucursal.select(this.idSucursal);
-
 		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
+
+		this.sucursalObj = this.sucursal.select(this.idSucursal);
 	}
 
 	public void inicializar() {
-
-		this.ventanaTareasAutomatizadas = new VentanaTareasAutomatizadas();
 
 		this.ventanaAdministrador = new VentanaAdministrador();
 		this.ventanaCajero = new VentanaCajero();
@@ -184,8 +164,7 @@ public class Controlador {
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
 		// Config
-		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this,this.ventanaTareasAutomatizadas,
-				config);
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this,config);
 
 		// armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
@@ -358,7 +337,6 @@ public class Controlador {
 		this.ventanaGerente.cerrarVentana();
 		this.ventanaOperarioFabrica.cerrarVentana();
 		this.ventanaSupervisorFabrica.cerrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAConfig(ActionEvent a) {
@@ -366,8 +344,8 @@ public class Controlador {
 			return;
 		}
 		cerrarTodasLasVentanas();
-		this.ventanaTareasAutomatizadas.show();
 		this.controladorTareasAutomatizadas.inicializar();
+		this.controladorTareasAutomatizadas.mostrarVentana();
 	}
 
 	public void iniciarSistemaOperatoriaFabrica(ActionEvent a) {
