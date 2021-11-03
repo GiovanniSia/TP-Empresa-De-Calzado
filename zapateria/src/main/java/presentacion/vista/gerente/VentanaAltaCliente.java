@@ -57,6 +57,12 @@ public class VentanaAltaCliente {
 	private JComboBox<String> comboBoxPais;
 	private JButton btnUbicacion;
 	
+	private JLabel lblLimiteDeCredito;
+	private JTextField textLimiteCredito;
+	private JLabel lblEstado;
+	private JComboBox<String> comboBoxEstado;	
+	
+	
 	
 	
 	/**
@@ -213,7 +219,7 @@ public class VentanaAltaCliente {
 		textCUIL.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textCUIL.getText().length()>=12) {
+                if(textCUIL.getText().length()>=11) {
                     e.consume();
                 }
             }
@@ -364,9 +370,34 @@ public class VentanaAltaCliente {
 		btnRegistrar.setVisible(false);
 		
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(238, 394, 85, 60);
+		btnEditar.setBounds(241, 394, 85, 60);
 		frame.getContentPane().add(btnEditar);
 		btnEditar.setVisible(false);
+		
+		textLimiteCredito = new JTextField();
+		textLimiteCredito.setColumns(10);
+		textLimiteCredito.setBounds(158, 346, 165, 23);
+		frame.getContentPane().add(textLimiteCredito);
+		textLimiteCredito.setVisible(false);
+		
+		lblLimiteDeCredito = new JLabel("Limite de credito");
+		lblLimiteDeCredito.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLimiteDeCredito.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblLimiteDeCredito.setBounds(10, 345, 108, 24);
+		frame.getContentPane().add(lblLimiteDeCredito);
+		lblLimiteDeCredito.setVisible(false);
+		
+		comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.setBounds(458, 347, 195, 23);
+		frame.getContentPane().add(comboBoxEstado);
+		comboBoxEstado.setVisible(false);
+		
+		lblEstado = new JLabel("Estado");
+		lblEstado.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEstado.setBounds(386, 347, 116, 24);
+		frame.getContentPane().add(lblEstado);
+		lblEstado.setVisible(false);
 	}
 	
 	public void show() {
@@ -480,5 +511,19 @@ public class VentanaAltaCliente {
 		return lblRegistrarCliente;
 	}
 
-	
+	public JLabel getLblLimiteDeCredito() {
+		return lblLimiteDeCredito;
+	}
+
+	public JTextField getTextLimiteCredito() {
+		return textLimiteCredito;
+	}
+
+	public JLabel getLblEstado() {
+		return lblEstado;
+	}
+
+	public JComboBox<String> getComboBoxEstado() {
+		return comboBoxEstado;
+	}
 }

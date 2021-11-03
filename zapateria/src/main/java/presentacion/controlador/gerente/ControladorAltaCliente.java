@@ -131,6 +131,10 @@ public class ControladorAltaCliente {
 	
 	public void mostrarVentanaEditar() {
 		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
+		this.ventanaAltaCliente.getLblLimiteDeCredito().setVisible(true);
+		this.ventanaAltaCliente.getTextLimiteCredito().setVisible(true);
+		this.ventanaAltaCliente.getLblEstado().setVisible(true);
+		this.ventanaAltaCliente.getComboBoxEstado().setVisible(true);
 		this.ventanaAltaCliente.show();
 	}
 	
@@ -164,7 +168,8 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getTextAltura().setText(""+this.clienteSeteado.getAltura());
 		this.ventanaAltaCliente.getTextCodPostal().setText(""+this.clienteSeteado.getCodPostal());
 		
-		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
+		this.ventanaAltaCliente.getTextLimiteCredito().setText(""+this.clienteSeteado.getLimiteCredito());
+		this.ventanaAltaCliente.getComboBoxEstado().setSelectedItem(this.clienteSeteado.getEstado());
 	}
 	
 	public String obtenerNombreCategoria(ClienteDTO cliente) {
@@ -185,7 +190,13 @@ public class ControladorAltaCliente {
 	}
 	
 	public void editarCliente(ActionEvent a) {
+		if(!todosLosCamposSonValidos()) {
+			return;	
+		}
+	
 		ClienteDTO clienteActualizado = obtenerClienteDeVista();
+		clienteActualizado.setEstado(this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString());
+		System.out.println("Nuevo estado: "+clienteActualizado.getEstado());	
 		boolean update = this.cliente.update(this.clienteSeteado.getIdCliente(), clienteActualizado);
 		if(!update) {
 			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
@@ -231,7 +242,7 @@ public class ControladorAltaCliente {
 		double limiteCredito = Double.parseDouble(this.ventanaAltaCliente.getTextSaldoInicial().getText());
 		double creditoDisp = limiteCredito;
 		String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
-		String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
+		String impuestoAFIP = getIdItemImpuestoAFIP(this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem().toString());
 		String estado = "Activo";
 		String calle = this.ventanaAltaCliente.getTextCalle().getText();
 		String altura = this.ventanaAltaCliente.getTextAltura().getText();
@@ -295,18 +306,18 @@ public class ControladorAltaCliente {
 		
 		
 		
-		String pais = this.ventanaAltaCliente.getComboBoxPais().getSelectedItem().toString();
-		if(pais.equals("Sin seleccionar")) {
+		String pais =(String) this.ventanaAltaCliente.getComboBoxPais().getSelectedItem();
+		if(pais==null) {
 			JOptionPane.showMessageDialog(null, "El pais no puede ser vacio");
 			return false;
 		}
-		String prov = this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem().toString();
-		if(prov.equals("")) {
+		String prov = (String)this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem();
+		if(prov==null) {
 			JOptionPane.showMessageDialog(null, "La provincia no puede ser vacia");
 			return false;
 		}
-		String localida = this.ventanaAltaCliente.getComboBoxLocalidad().getSelectedItem().toString();
-		if(localida.equals("")) {
+		String localida =(String) this.ventanaAltaCliente.getComboBoxLocalidad().getSelectedItem();
+		if(localida == null) {
 			JOptionPane.showMessageDialog(null, "La localidad no puede ser vacia");
 			return false;
 		}
@@ -325,6 +336,26 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "El cod postal no puede ser vacio");
 			return false;
 		}
+		
+		//si se esta editando
+		if(this.clienteSeteado!=null) {
+			String estadoSeleccionado = this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString();
+			String limiteDeCredito = this.ventanaAltaCliente.getTextLimiteCredito().getText();
+					
+			if(estadoSeleccionado.equals("Sin seleccionar")) {
+				JOptionPane.showMessageDialog(null, "Debe seleccionar un estado", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			if(limiteDeCredito.equals("")||Double.parseDouble(limiteDeCredito)<=0) {
+				JOptionPane.showMessageDialog(null, "El limite de credito es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			if(Double.parseDouble(limiteDeCredito)<Double.parseDouble(saldoInicial)) {
+				JOptionPane.showMessageDialog(null, "El saldo no puede ser mayor al limite de credito", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;	
+			}
+		}
+		
 		
 		return true;
 		
@@ -391,6 +422,13 @@ public class ControladorAltaCliente {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
 		});
+		
+		this.ventanaAltaCliente.getTextLimiteCredito().addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		});
+		
 	}
 	
 	
@@ -406,6 +444,10 @@ public class ControladorAltaCliente {
 			this.ventanaAltaCliente.getComboBoxImpuestoAFIP().addItem(impuestoAFIP[i]);
 		}	
 		
+		String[] estado = {"Activo","Incativo","Moroso"};
+		for(int i=0; i<estado.length; i++) {
+			this.ventanaAltaCliente.getComboBoxEstado().addItem(estado[i]);
+		}
 		
 		
 		//COMBO BOXES PARA UBICACION
@@ -634,6 +676,8 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
+		
+		this.ventanaAltaCliente.getComboBoxEstado().removeAllItems();
 		
 		cargarComboBoxes();
 		
