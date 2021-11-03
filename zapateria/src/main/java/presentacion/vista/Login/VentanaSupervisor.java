@@ -22,9 +22,9 @@ public class VentanaSupervisor extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
-	private JButton btnRegistrarUnCliente;
+	private JButton btnGestionarClientes;
 	private JButton btnCotizaciones;
-	private JButton btnIngresarProductoNuevo;
+	private JButton btnGestionarProductos;
 	private JButton btnModPrecioUnitario;
 	private JButton btnGenerarOrdenDe;
 	private JButton btnConfig;
@@ -65,12 +65,12 @@ public class VentanaSupervisor extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
 
-		btnRegistrarUnCliente = new JButton("Registrar un Cliente");
-		btnRegistrarUnCliente.setForeground(new Color(51, 102, 153));
-		btnRegistrarUnCliente.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnRegistrarUnCliente.setBackground(new Color(51, 102, 204));
-		btnRegistrarUnCliente.setBounds(20, 118, 282, 41);
-		contentPane.add(btnRegistrarUnCliente);
+		btnGestionarClientes = new JButton("Gestionar Clientes");
+		btnGestionarClientes.setForeground(new Color(51, 102, 153));
+		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarClientes.setBackground(new Color(51, 102, 204));
+		btnGestionarClientes.setBounds(20, 118, 282, 41);
+		contentPane.add(btnGestionarClientes);
 
 		btnCotizaciones = new JButton("Cotizaciones");
 		btnCotizaciones.setForeground(new Color(51, 102, 153));
@@ -79,12 +79,12 @@ public class VentanaSupervisor extends JFrame {
 		btnCotizaciones.setBounds(20, 66, 282, 41);
 		contentPane.add(btnCotizaciones);
 
-		btnIngresarProductoNuevo = new JButton("Ingresar Producto Nuevo");
-		btnIngresarProductoNuevo.setForeground(new Color(51, 102, 153));
-		btnIngresarProductoNuevo.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnIngresarProductoNuevo.setBackground(new Color(51, 102, 204));
-		btnIngresarProductoNuevo.setBounds(20, 187, 282, 41);
-		contentPane.add(btnIngresarProductoNuevo);
+		btnGestionarProductos = new JButton("Gestionar Productos");
+		btnGestionarProductos.setForeground(new Color(51, 102, 153));
+		btnGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarProductos.setBackground(new Color(51, 102, 204));
+		btnGestionarProductos.setBounds(20, 187, 282, 41);
+		contentPane.add(btnGestionarProductos);
 
 		btnModPrecioUnitario = new JButton("Modificar Producto");
 		btnModPrecioUnitario.setForeground(new Color(51, 102, 153));
@@ -172,16 +172,16 @@ public class VentanaSupervisor extends JFrame {
 		this.show();
 	}
 
-	public JButton getBtnRegistrarUnCliente() {
-		return btnRegistrarUnCliente;
+	public JButton getBtnGestionarClientes() {
+		return btnGestionarClientes;
 	}
 
 	public JButton getBtnCotizaciones() {
 		return btnCotizaciones;
 	}
 
-	public JButton getBtnIngresarProductoNuevo() {
-		return btnIngresarProductoNuevo;
+	public JButton getBtnGestionarProductos() {
+		return btnGestionarProductos;
 	}
 
 	public JButton getBtnModPrecioUnitario() {

@@ -31,8 +31,17 @@ public class ControladorGestionarClientes {
 		
 		this.todosLosClientes = new ArrayList<ClienteDTO>();
 		this.clienteEnTabla = new ArrayList<ClienteDTO>();
-		
+				
+	}
+
+	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
+		this.controladorAltaCliente = controladorAltaCliente;
+	}
+	
+	public void inicializar() {
 		this.ventanaGestionarClientes = new VentanaGestionarClientes();
+		this.todosLosClientes = this.cliente.readAll();
+		
 		
 		this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 		this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
@@ -67,15 +76,8 @@ public class ControladorGestionarClientes {
 				realizarBusqueda();
 			}
 		});
-
-	}
-
-	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
-		this.controladorAltaCliente = controladorAltaCliente;
-	}
-	
-	public void inicializar() {
-		this.todosLosClientes = this.cliente.readAll();
+		
+		
 		llenarTablaCompleta();	
 		
 		validarTeclado();
