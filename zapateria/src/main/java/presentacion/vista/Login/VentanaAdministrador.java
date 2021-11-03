@@ -15,12 +15,14 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.CardLayout;
 import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 public class VentanaAdministrador extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
+	private JButton btnCerrarSesion;
 
 	public VentanaAdministrador() {
 		this.initialize();
@@ -47,11 +49,20 @@ public class VentanaAdministrador extends JFrame {
 
 		contentPane.add(panel);
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		JLabel lblNewLabel = new JLabel("Administrador");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
+
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setOpaque(true);
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(10, 243, 156, 39);
+		contentPane.add(btnCerrarSesion);
 	}
 
 	public void show() {
@@ -80,4 +91,9 @@ public class VentanaAdministrador extends JFrame {
 	public void mostrarVentana() {
 		this.show();
 	}
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
+	}
+
 }

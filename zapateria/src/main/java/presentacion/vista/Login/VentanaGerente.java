@@ -15,17 +15,18 @@ import javax.swing.border.EmptyBorder;
 import persistencia.conexion.Conexion;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class VentanaGerente extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
+	private JButton btnCerrarSesion;
 
-	
 	public VentanaGerente() {
 		this.initialize();
 	}
-	
+
 	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
@@ -47,37 +48,42 @@ public class VentanaGerente extends JFrame {
 
 		contentPane.add(panel);
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		JLabel lblNewLabel = new JLabel("Gerente");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
-		
+
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setOpaque(true);
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(10, 243, 156, 39);
+		contentPane.add(btnCerrarSesion);
+
 	}
-	
+
 	public void show() {
-        this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        for (WindowListener listener : this.frame.getWindowListeners())
-        {
-            this.frame.removeWindowListener(listener);
-        }
-        this.frame.addWindowListener(new WindowAdapter() 
-        {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showOptionDialog(
-                     null, "¿Estás seguro que quieres salir?", 
-                     "Advertencia", JOptionPane.YES_NO_OPTION,
-                     JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (confirm == 0) {
-                    Conexion.getConexion().cerrarConexion();
-                   System.exit(0);
-                }
-            }
-        });
-        this.frame.setVisible(true);
-    }
-	
+		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners()) {
+			this.frame.removeWindowListener(listener);
+		}
+		this.frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "¿Estás seguro que quieres salir?", "Advertencia",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					Conexion.getConexion().cerrarConexion();
+					System.exit(0);
+				}
+			}
+		});
+		this.frame.setVisible(true);
+	}
+
 	public void cerrarVentana() {
 		frame.setVisible(false);
 	}
@@ -85,4 +91,9 @@ public class VentanaGerente extends JFrame {
 	public void mostrarVentana() {
 		this.show();
 	}
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
+	}
+
 }

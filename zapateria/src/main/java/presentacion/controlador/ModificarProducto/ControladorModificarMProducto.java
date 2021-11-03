@@ -450,7 +450,6 @@ public class ControladorModificarMProducto {
 		this.controladorDescripcionProveedorMProducto.ocultarVentana();
 		this.controladorHistorialCambioMProducto.ocultarVentana();
 		this.ventanaModificarMProducto.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 

@@ -19,11 +19,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-
 import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 import javax.swing.border.LineBorder;
 
 public class VentanaLogin extends JFrame {
@@ -37,7 +35,6 @@ public class VentanaLogin extends JFrame {
 	private JPasswordField txtFieldContra;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbSucursales;
-	private JCheckBox checkboxControlador;
 	private JLabel lblNewLabel_1;
 	private JLabel lblZapateriaArgento;
 
@@ -64,7 +61,9 @@ public class VentanaLogin extends JFrame {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 808, 635);
-
+		
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/zapas.png")).getImage());
+	
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,7 +91,6 @@ public class VentanaLogin extends JFrame {
 		txtFieldCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldCorreo.setBounds(140, 54, 129, 29);
 		panel_1.add(txtFieldCorreo);
-		txtFieldCorreo.setText("@gmail.com");
 		txtFieldCorreo.setBorder(null);
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override
@@ -139,73 +137,76 @@ public class VentanaLogin extends JFrame {
 				}
 			}
 		});
+
+		btnIniciarSesion = new JButton("");
+		btnIniciarSesion.setBounds(358, 264, 60, 60);
+		contentPane.add(btnIniciarSesion);
+		btnIniciarSesion.setForeground(Color.BLACK);
+		btnIniciarSesion.setBackground(Color.WHITE);
+		btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		cambiarIconoBotones(btnIniciarSesion, "login.png");
+
+		lblZapateriaArgento = new JLabel("");
+		lblZapateriaArgento.setBackground(new Color(0, 102, 204));
+		lblZapateriaArgento.setVerticalAlignment(SwingConstants.TOP);
+		lblZapateriaArgento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblZapateriaArgento.setForeground(new Color(0, 102, 204));
+		lblZapateriaArgento.setFont(new Font("Segoe UI", Font.BOLD, 54));
+		lblZapateriaArgento.setBounds(167, 448, 451, 121);
+		cambiarIconoLabel(lblZapateriaArgento, "argentoshoes.png");
+
+		contentPane.add(lblZapateriaArgento);
+
+		JLabel lblNewLabel = new JLabel("pepe@ Cajero");
+		lblNewLabel.setBounds(659, 384, 112, 14);
+		contentPane.add(lblNewLabel);
+
+		JLabel lblJuangmailcomVendedor = new JLabel("juan@ Vendedor");
+		lblJuangmailcomVendedor.setBounds(659, 409, 112, 14);
+		contentPane.add(lblJuangmailcomVendedor);
+
+		JLabel lblCamilaVendedor = new JLabel("camila@ Supervisor");
+		lblCamilaVendedor.setBounds(659, 432, 112, 14);
+		contentPane.add(lblCamilaVendedor);
+
+		JLabel lblMaximilianoCajero = new JLabel("maximiliano@ OperarioF");
+		lblMaximilianoCajero.setBounds(659, 460, 123, 14);
+		contentPane.add(lblMaximilianoCajero);
+
+		JLabel lblSupervisorf = new JLabel("josselyn@ SupervisorF");
+		lblSupervisorf.setBounds(659, 485, 112, 14);
+		contentPane.add(lblSupervisorf);
+
+		JLabel lblMichelleAdmin = new JLabel("michelle@ Admin");
+		lblMichelleAdmin.setBounds(659, 508, 112, 14);
+		contentPane.add(lblMichelleAdmin);
 		
-				btnIniciarSesion = new JButton("");
-				btnIniciarSesion.setBounds(358, 264, 60, 60);
-				contentPane.add(btnIniciarSesion);
-				btnIniciarSesion.setForeground(Color.BLACK);
-				btnIniciarSesion.setBackground(Color.WHITE);
-				btnIniciarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-				cambiarIconoBotones(btnIniciarSesion, "login.png");
-				
-				lblZapateriaArgento = new JLabel("");
-				lblZapateriaArgento.setBackground(new Color(0, 102, 204));
-				lblZapateriaArgento.setVerticalAlignment(SwingConstants.TOP);
-				lblZapateriaArgento.setHorizontalAlignment(SwingConstants.CENTER);
-				lblZapateriaArgento.setForeground(new Color(0, 102, 204));
-				lblZapateriaArgento.setFont(new Font("Segoe UI", Font.BOLD, 54));
-				lblZapateriaArgento.setBounds(167, 448, 451, 121);
-				cambiarIconoLabel(lblZapateriaArgento, "argentoshoes.png");
-				
-				contentPane.add(lblZapateriaArgento);
-				
-						JLabel lblNewLabel = new JLabel("pepe@ Cajero");
-						lblNewLabel.setBounds(659, 399, 112, 14);
-						contentPane.add(lblNewLabel);
-						
-								JLabel lblJuangmailcomVendedor = new JLabel("juan@ Vendedor");
-								lblJuangmailcomVendedor.setBounds(659, 424, 112, 14);
-								contentPane.add(lblJuangmailcomVendedor);
-								
-										JLabel lblCamilaVendedor = new JLabel("camila@ Supervisor");
-										lblCamilaVendedor.setBounds(659, 447, 112, 14);
-										contentPane.add(lblCamilaVendedor);
-										
-												JLabel lblMaximilianoCajero = new JLabel("maximiliano@ OperarioF");
-												lblMaximilianoCajero.setBounds(659, 475, 112, 14);
-												contentPane.add(lblMaximilianoCajero);
-												
-														JLabel lblSupervisorf = new JLabel("josselyn@ SupervisorF");
-														lblSupervisorf.setBounds(659, 500, 112, 14);
-														contentPane.add(lblSupervisorf);
-														
-																JLabel lblMichelleAdmin = new JLabel("michelle@ Admin");
-																lblMichelleAdmin.setBounds(659, 523, 112, 14);
-																contentPane.add(lblMichelleAdmin);
-																
-																lblNewLabel_1 = new JLabel("Clave: 1234");
-																lblNewLabel_1.setBounds(659, 545, 112, 14);
-																contentPane.add(lblNewLabel_1);
-																
-																checkboxControlador = new JCheckBox("Activar Controlador");
-																checkboxControlador.setBounds(657, 566, 129, 23);
-																contentPane.add(checkboxControlador);
-																
-																JLabel lblNewLabel_2 = new JLabel("");
-																lblNewLabel_2.setBounds(0, 0, 800, 600);
-																contentPane.add(lblNewLabel_2);
-																cambiarIconoLabel(lblNewLabel_2, "foto.png");
+		JLabel lblMatiasGerente = new JLabel("matias@ Gerente");
+		lblMatiasGerente.setBounds(659, 530, 112, 14);
+		contentPane.add(lblMatiasGerente);
+
+		lblNewLabel_1 = new JLabel("Clave: 1234");
+		lblNewLabel_1.setBounds(659, 555, 112, 14);
+		contentPane.add(lblNewLabel_1);
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(0, 0, 800, 600);
+		contentPane.add(lblNewLabel_2);
+		cambiarIconoLabel(lblNewLabel_2, "foto.png");
 
 	}
-	
+
 	public void cambiarIconoLabel(JLabel label, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
 		label.setIcon(Icono);
 	}
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 
 	}
@@ -224,6 +225,11 @@ public class VentanaLogin extends JFrame {
 			}
 		});
 		this.frame.setVisible(true);
+	}
+	
+	public void limpiarCampos() {
+		this.txtFieldCorreo.setText(null);
+		this.txtFieldContra.setText(null);
 	}
 
 	public void cerrarVentana() {
@@ -251,7 +257,4 @@ public class VentanaLogin extends JFrame {
 		return cbSucursales;
 	}
 
-	public JCheckBox getCheckboxControlador() {
-		return checkboxControlador;
-	}
 }

@@ -23,7 +23,7 @@ public class VentanaOperarioFabrica extends JFrame {
 	private JPanel contentPane;
 	private JFrame frame;
 	private JButton btnOperatoriaDeFabrica;
-	
+	private JButton btnCerrarSesion;
 	
 	public VentanaOperarioFabrica() {
 		this.initialize();
@@ -69,6 +69,15 @@ public class VentanaOperarioFabrica extends JFrame {
 		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
 		btnOperatoriaDeFabrica.setBounds(71, 11, 323, 57);
 		panel_1.add(btnOperatoriaDeFabrica);
+		
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setOpaque(true);
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(0, 177, 156, 39);
+		panel_1.add(btnCerrarSesion);
 	}
 
 	public void show() {
@@ -100,6 +109,10 @@ public class VentanaOperarioFabrica extends JFrame {
 
 	public JButton getBtnOperatoriaDeFabrica() {
 		return btnOperatoriaDeFabrica;
+	}
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
 	}
 	
 }

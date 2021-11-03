@@ -31,6 +31,7 @@ import presentacion.controlador.Cajero.ControladorEgresosCaja;
 import presentacion.controlador.Cajero.ControladorIngresosCaja;
 import presentacion.controlador.Cajero.ControladorRealizarVenta;
 import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
+import presentacion.controlador.Login.ControladorLogin;
 import presentacion.controlador.ModificarProducto.ControladorHistorialCambioMProducto;
 import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
 import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtuales;
@@ -136,8 +137,6 @@ public class Controlador {
 	VentanaTareasAutomatizadas ventanaTareasAutomatizadas;
 	ControladorTareasAutomatizadas controladorTareasAutomatizadas;
 
-	// ----------------------------------------------------------------------------------------------------------
-
 	// Ventanas TIPO EMPLEADO
 	VentanaAdministrador ventanaAdministrador;
 	VentanaCajero ventanaCajero; // YA TIENE SUS BOTONES
@@ -147,7 +146,7 @@ public class Controlador {
 	VentanaSupervisorFabrica ventanaSupervisorFabrica;
 	VentanaVendedor ventanaVendedor;
 
-	// ----------------------------------------------------------------------------------------------------------
+	ControladorLogin controladorLogin;
 
 	// Coso para el properties
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
@@ -263,32 +262,29 @@ public class Controlador {
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
-		
-		
 //		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
 
 		// VentanaMenu de sistemas
-		
+
 //		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
-		
+
 		// ----------------------------------------------------------------------------------------------------------
+
 		// CAJERO
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
 		this.ventanaCajero.getBtnEgresoDeCaja().addActionListener(a -> pasarAEgresosCaja(a));
 		this.ventanaCajero.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
+		this.ventanaCajero.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 
 		// VENDEDOR
 		this.ventanaVendedor.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
-		
-		//OPERARIO DE FABRICA
-		this.ventanaOperarioFabrica.getBtnOperatoriaDeFabrica().addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
-		// ----------------------------------------------------------------------------------------------------------		
-		
-		
-		
-		
-		
+		this.ventanaVendedor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+
+		// OPERARIO DE FABRICA
+		this.ventanaOperarioFabrica.getBtnOperatoriaDeFabrica()
+				.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
+		this.ventanaOperarioFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		// config
 		this.ventanaSupervisor.getBtnConfig().addActionListener(a -> pasarAConfig(a));
 
@@ -296,9 +292,8 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
 
 		// mod precioUnitario
-		this.ventanaSupervisor.getBtnModPrecioUnitario()
-				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
-		
+		this.ventanaSupervisor.getBtnModPrecioUnitario().addActionListener(a -> pasarAModificarPrecioUnitario(a));
+
 		// Generar ordenes de manufac
 		this.ventanaSupervisor.getBtnGenerarOrdenDe().addActionListener(a -> pasarAGenerarOrdenManufac(a));
 
@@ -306,24 +301,28 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnRegistrarUnCliente().addActionListener(a -> pasarARegistrarUnCliente(a));
 
 		// Alta producto
-		this.ventanaSupervisor.getBtnIngresarProductoNuevo()
-				.addActionListener(a -> pasarADarDeAltaProducto(a));
+		this.ventanaSupervisor.getBtnIngresarProductoNuevo().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaSupervisor.getBtnVerProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		// Consultar proveedores y asignarle un producto
 
 		// Ver pedidos a prov
 		this.ventanaSupervisor.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 
-		this.ventanaSupervisor.getBtnVerComprasVirtuales()
-				.addActionListener(a -> pasarAVerComprasVirtuales(a));
+		this.ventanaSupervisor.getBtnVerComprasVirtuales().addActionListener(a -> pasarAVerComprasVirtuales(a));
 		this.ventanaSupervisor.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
 
+		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+
+		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		this.ventanaGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		this.ventanaOperarioFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		escribirNombreSucursal();
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
 
 	public void mostrarVentanaPorTipoEmpleado() {
-		if (tipoEmpleado.equals("Administrador")) {
+		if (tipoEmpleado.equals("Administrativo")) {
 			ventanaAdministrador.mostrarVentana();
 		}
 
@@ -350,11 +349,10 @@ public class Controlador {
 		if (tipoEmpleado.equals("Gerente")) {
 			ventanaGerente.mostrarVentana();
 		}
-
 	}
-	
+
 	public void ocultarVentanaPorTipoEmpleado() {
-		if (tipoEmpleado.equals("Administrador")) {
+		if (tipoEmpleado.equals("Administrativo")) {
 			ventanaAdministrador.cerrarVentana();
 		}
 
@@ -394,24 +392,75 @@ public class Controlador {
 	}
 
 	public void mostrarVentanaMenu() {
-		 mostrarVentanaPorTipoEmpleado();
-	}
-
-	public void mostrarVentanaMenuDeSistemas() {	
 		mostrarVentanaPorTipoEmpleado();
 	}
 
-//	public void regresarMenuPrincipal(ActionEvent a) {
-//		this.ventanaMenuSistemaDeVentas.cerrar();
-//		 mostrarVentanaPorTipoEmpleado();
-//		this.ventanaTareasAutomatizadas.cerrar();
-//	}
+	public void mostrarVentanaMenuDeSistemas() {
+		mostrarVentanaPorTipoEmpleado();
+	}
+
+	public void cerrarSesion(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		ocultarVentanaPorTipoEmpleado();
+		controladorLogin.mostrarVentana();
+		this.ventanaTareasAutomatizadas.cerrar();
+	}
+
+	public void cerrarTodasLasVentanas() {
+
+		this.ventanaCajero.cerrarVentana();
+		this.ventanaCajero.cerrarVentana();
+		this.ventanaCajero.cerrarVentana();
+		this.ventanaCajero.cerrarVentana();
+		this.ventanaCajero.cerrarVentana();
+
+		// VENDEDOR
+		this.ventanaVendedor.cerrarVentana();
+		this.ventanaVendedor.cerrarVentana();
+
+		// OPERARIO DE FABRICA
+		this.ventanaOperarioFabrica.cerrarVentana();
+		this.ventanaOperarioFabrica.cerrarVentana();
+		// config
+		this.ventanaSupervisor.cerrarVentana();
+
+		// cotizacion
+		this.ventanaSupervisor.cerrarVentana();
+
+		// mod precioUnitario
+		this.ventanaSupervisor.cerrarVentana();
+
+		// Generar ordenes de manufac
+		this.ventanaSupervisor.cerrarVentana();
+
+		// Alta cliente
+		this.ventanaSupervisor.cerrarVentana();
+
+		// Alta producto
+		this.ventanaSupervisor.cerrarVentana();
+		this.ventanaSupervisor.cerrarVentana();
+		// Consultar proveedores y asignarle un producto
+
+		// Ver pedidos a prov
+		this.ventanaSupervisor.cerrarVentana();
+
+		this.ventanaSupervisor.cerrarVentana();
+		this.ventanaSupervisor.cerrarVentana();
+
+		this.ventanaSupervisor.cerrarVentana();
+
+		this.ventanaAdministrador.cerrarVentana();
+		this.ventanaGerente.cerrarVentana();
+		this.ventanaOperarioFabrica.cerrarVentana();
+		this.ventanaSupervisorFabrica.cerrarVentana();
+
+	}
 
 	public void pasarAConfig(ActionEvent a) {
-
 		if (this.controladorTareasAutomatizadas.ventanaYaFueInicializada()) {
 			return;
 		}
+		ocultarVentanaPorTipoEmpleado();
 		this.ventanaTareasAutomatizadas.show();
 		this.controladorTareasAutomatizadas.inicializar();
 	}
@@ -423,17 +472,12 @@ public class Controlador {
 
 	}
 
-	public void iniciarSistemaDeVentas(ActionEvent a) {
-		this.ventanaMenu.cerrar();
-		this.ventanaMenuSistemaDeVentas.show();
-	}
-
 	public void pasarAArmarVenta(ActionEvent a) {
 		if (!this.controladorIngresosCaja.estaCajaAbierta()) {
 			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
 			return;
 		}
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		controladorBusquedaCliente.inicializar();
 		this.controladorBusquedaCliente.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -445,7 +489,7 @@ public class Controlador {
 			return;
 		}
 
-		this.ventanaMenuSistemaDeVentas.cerrar();
+		ocultarVentanaPorTipoEmpleado();
 		this.controladorVisualizarCarritos.inicializar();
 		this.controladorVisualizarCarritos.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
@@ -557,6 +601,10 @@ public class Controlador {
 	private void pasarAVerRanking(ActionEvent a) {
 		ocultarVentanaPorTipoEmpleado();
 		this.controladorReporteRankingVentaXSucursal.inicializar();
+	}
+
+	public void setControladorLogin(ControladorLogin controladorLogin) {
+		this.controladorLogin = controladorLogin;
 	}
 
 }

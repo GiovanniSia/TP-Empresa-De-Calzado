@@ -22,8 +22,8 @@ public class VentanaVendedor extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
-	
 	private JButton btnArmarVenta;
+	private JButton btnCerrarSesion;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -50,23 +50,32 @@ public class VentanaVendedor extends JFrame {
 
 		contentPane.add(panel);
 		panel.setLayout(new CardLayout(0, 0));
-		
+
 		JLabel lblNewLabel = new JLabel("Vendedor");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblNewLabel, "name_5308677579600");
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(10, 65, 476, 217);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
-		
+
 		btnArmarVenta = new JButton("Armar Venta");
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
 		btnArmarVenta.setBounds(96, 11, 282, 41);
 		panel_1.add(btnArmarVenta);
+
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setOpaque(true);
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(0, 178, 156, 39);
+		panel_1.add(btnCerrarSesion);
 	}
 
 	public void show() {
@@ -99,5 +108,9 @@ public class VentanaVendedor extends JFrame {
 	public JButton getBtnArmarVenta() {
 		return btnArmarVenta;
 	}
-	
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
+	}
+
 }

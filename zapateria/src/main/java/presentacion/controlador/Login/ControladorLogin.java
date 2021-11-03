@@ -88,6 +88,8 @@ public class ControladorLogin {
 	private void mostrarControlador() {
 		controlador = new Controlador();
 		controlador.inicializar();
+		controlador.setControladorLogin(this);
+		ventanaLogin.limpiarCampos();
 		controlador.mostrarVentanaPorTipoEmpleado();
 	}
 

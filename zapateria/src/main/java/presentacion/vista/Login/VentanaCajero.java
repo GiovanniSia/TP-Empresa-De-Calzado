@@ -25,6 +25,7 @@ public class VentanaCajero extends JFrame {
 	private JButton btnEgresoDeCaja;
 	private JButton btnCierreDeCaja;
 	private JButton btnCobrarVenta;
+	private JButton btnCerrarSesion;
 
 	public VentanaCajero() {
 		this.initialize();
@@ -64,23 +65,32 @@ public class VentanaCajero extends JFrame {
 
 		btnIngresoDeCaja = new JButton("Ingreso de Caja");
 		btnIngresoDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnIngresoDeCaja.setBounds(153, 11, 178, 39);
+		btnIngresoDeCaja.setBounds(172, 11, 178, 39);
 		panel_1.add(btnIngresoDeCaja);
 
 		btnEgresoDeCaja = new JButton("Egreso de Caja");
 		btnEgresoDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnEgresoDeCaja.setBounds(153, 61, 178, 39);
+		btnEgresoDeCaja.setBounds(172, 61, 178, 39);
 		panel_1.add(btnEgresoDeCaja);
 
 		btnCierreDeCaja = new JButton("Cierre de Caja");
 		btnCierreDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCierreDeCaja.setBounds(153, 111, 178, 39);
+		btnCierreDeCaja.setBounds(172, 111, 178, 39);
 		panel_1.add(btnCierreDeCaja);
 
 		btnCobrarVenta = new JButton("Cobrar Venta");
 		btnCobrarVenta.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCobrarVenta.setBounds(153, 161, 178, 39);
+		btnCobrarVenta.setBounds(172, 161, 178, 39);
 		panel_1.add(btnCobrarVenta);
+
+		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setOpaque(true);
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(0, 177, 156, 39);
+		panel_1.add(btnCerrarSesion);
 	}
 
 	public void show() {
@@ -124,6 +134,10 @@ public class VentanaCajero extends JFrame {
 
 	public JButton getBtnCobrarVenta() {
 		return btnCobrarVenta;
+	}
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
 	}
 
 }
