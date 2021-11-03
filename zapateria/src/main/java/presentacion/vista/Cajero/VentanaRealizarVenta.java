@@ -12,6 +12,8 @@ import java.awt.Image;
 //import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import persistencia.conexion.Conexion;
@@ -338,6 +340,10 @@ public class VentanaRealizarVenta {
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners())
+	    {
+			this.frame.removeWindowListener(listener);
+	    }
 		this.frame.addWindowListener(new WindowAdapter() 
 		{
 			@Override

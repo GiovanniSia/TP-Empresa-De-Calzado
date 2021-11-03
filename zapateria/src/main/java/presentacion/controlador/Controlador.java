@@ -49,6 +49,7 @@ import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
+import presentacion.controlador.supervisor.ControladorGestionarProductos;
 
 import presentacion.vista.VentanaMenu;
 import presentacion.vista.VentanaMenuSistemaDeVentas;
@@ -111,7 +112,7 @@ public class Controlador implements ActionListener {
 	ControladorAltaCliente controladorAltaCliente;
 	
 	//Controlador supervisor
-	ControladorAltaProducto controladorAltaProducto;
+	ControladorGestionarProductos controladorGestionarProductos;
 	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
 	ControladorConsultarProveedor controladorConsultarProveedor;
 	
@@ -216,7 +217,7 @@ public class Controlador implements ActionListener {
 		
 		
 		//Supervisor
-		this.controladorAltaProducto = new ControladorAltaProducto(this,this.maestroProducto, this.proveedor, this.productoDeProveedor);
+		this.controladorGestionarProductos = new ControladorGestionarProductos();
 		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
 		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this,this.proveedor, this.productoDeProveedor);
 		
@@ -471,7 +472,7 @@ public class Controlador implements ActionListener {
 	//Supervisor
 	public void pasarADarDeAltaProducto(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
-		this.controladorAltaProducto.inicializar();
+		this..inicializar();
 		this.controladorAltaProducto.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}

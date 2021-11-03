@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -372,6 +373,10 @@ public class VentanaAltaCliente {
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners())
+	    {
+			this.frame.removeWindowListener(listener);
+	    }
 		this.frame.addWindowListener(new WindowAdapter() 
 		{
 			@Override

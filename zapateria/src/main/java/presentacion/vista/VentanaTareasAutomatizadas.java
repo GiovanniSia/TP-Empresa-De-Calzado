@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -197,6 +199,10 @@ public class VentanaTareasAutomatizadas {
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners())
+	    {
+			this.frame.removeWindowListener(listener);
+	    }
 		this.frame.addWindowListener(new WindowAdapter() 
 		{
 			@Override
