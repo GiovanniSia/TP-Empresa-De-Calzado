@@ -1,5 +1,7 @@
 package presentacion.controlador.gerente;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,7 @@ import modelo.Cliente;
 import modelo.Localidad;
 import modelo.Pais;
 import modelo.Provincia;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaEditarLocalidad;
 
 public class ControladorEditarLocalidad {
@@ -86,7 +89,7 @@ public class ControladorEditarLocalidad {
 			
 		});
 		
-		
+		validarTeclado();
 		escribirComboBoxes();
 		actualizarTabla();
 		escucharComboBoxes();
@@ -458,7 +461,11 @@ public class ControladorEditarLocalidad {
 		}return true;
 	}
 	
-	
-	
-	
+	public void validarTeclado() {
+		this.ventanaEditarLocalidad.getTxtNuevaLocalidad().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+	}
 }

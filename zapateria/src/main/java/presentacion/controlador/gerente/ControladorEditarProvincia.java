@@ -3,6 +3,8 @@ package presentacion.controlador.gerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import dto.ProvinciaDTO;
 import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaEditarProvincia;
 
 public class ControladorEditarProvincia {
@@ -80,7 +83,7 @@ public class ControladorEditarProvincia {
 			}
 			
 		});
-		
+		validarTeclado();
 		llenarComboBoxes();
 		llenarTablaPorDefecto();
 	}
@@ -298,6 +301,15 @@ public class ControladorEditarProvincia {
 				return false;
 			}
 		}return true;
+	}
+	
+	public void validarTeclado() {
+
+		this.ventanaEditarProvincia.getTxtLocalidad().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
 	}
 	
 }

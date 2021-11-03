@@ -1,6 +1,8 @@
 package presentacion.controlador.gerente;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import dto.ClienteDTO;
 import dto.PaisDTO;
 import modelo.Cliente;
 import modelo.Pais;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaEditarPais;
 
 public class ControladorEditarPais {
@@ -64,7 +67,7 @@ public class ControladorEditarPais {
 			}
 			
 		});
-		
+		validarTeclado();
 		llenarTablaPaises();
 	}
 
@@ -239,6 +242,15 @@ public class ControladorEditarPais {
 			}
 			
 		}
+	}
+	
+	public void validarTeclado() {
+
+		this.ventanaEditarPais.getTextPaisNuevo().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
 	}
 	
 }
