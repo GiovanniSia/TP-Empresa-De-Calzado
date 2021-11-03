@@ -112,7 +112,9 @@ public class Controlador implements ActionListener {
 	ControladorAltaCliente controladorAltaCliente;
 	
 	//Controlador supervisor
+	
 	ControladorGestionarProductos controladorGestionarProductos;
+	ControladorAltaProducto controladorAltaProducto;
 	ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
 	ControladorConsultarProveedor controladorConsultarProveedor;
 	
@@ -217,14 +219,20 @@ public class Controlador implements ActionListener {
 		
 		
 		//Supervisor
-		this.controladorGestionarProductos = new ControladorGestionarProductos();
-		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
+		//GestionarProductos
+		this.controladorGestionarProductos = new ControladorGestionarProductos(this,this.maestroProducto,this.stock);
+		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor, this.productoDeProveedor);
 		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this,this.proveedor, this.productoDeProveedor);
 		
-		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
-		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
-		
 		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
+		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
+		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
+		
+		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
+
+		
+		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+		
 		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		
 		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
@@ -472,8 +480,8 @@ public class Controlador implements ActionListener {
 	//Supervisor
 	public void pasarADarDeAltaProducto(ActionEvent a) {
 		this.ventanaMenuSistemaDeVentas.cerrar();
-		this..inicializar();
-		this.controladorAltaProducto.mostrarVentana();
+		this.controladorGestionarProductos.inicializar();
+		this.controladorGestionarProductos.mostrarVentana();
 		this.ventanaTareasAutomatizadas.cerrar();
 	}
 	

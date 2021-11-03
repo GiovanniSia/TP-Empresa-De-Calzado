@@ -31,6 +31,7 @@ public class ControladorGestionarProductos {
 	VentanaGestionarProductos ventanaGestionarProductos;
 	
 	Controlador controlador;
+	ControladorAltaProducto controladorAltaProducto;
 	
 	public ControladorGestionarProductos(Controlador controlador,MaestroProducto maestroProducto,Stock stock) {
 		this.maestroProducto = maestroProducto;
@@ -43,7 +44,7 @@ public class ControladorGestionarProductos {
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
 		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 		
-		
+		this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
 		this.ventanaGestionarProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
 		
 		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
@@ -60,7 +61,14 @@ public class ControladorGestionarProductos {
 		});
 	}
 	
+
+	public void setControladorAltaProducto(ControladorAltaProducto controladorAltaProducto) {
+		this.controladorAltaProducto = controladorAltaProducto;
+	}
+	
 	public void inicializar() {
+		this.todosLosProductos = this.maestroProducto.readAll();
+		this.todoElStock = this.stock.readAll();
 		escribirTablaCompleta();
 		validarTeclado();
 	}
@@ -74,6 +82,12 @@ public class ControladorGestionarProductos {
 		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 
+	}
+	
+	public void pasarAAgregarProducto(ActionEvent a) {
+		this.ventanaGestionarProductos.cerrar();
+		this.controladorAltaProducto.inicializar();
+		this.controladorAltaProducto.mostrarVentana();
 	}
 	
 	public void realizarBusqueda() {				
@@ -101,6 +115,9 @@ public class ControladorGestionarProductos {
 	}
 	
 	public void escribirTabla(List<MaestroProductoDTO> productosAproximados) {
+		this.ventanaGestionarProductos.getModelProductos().setRowCount(0);//borrar datos de la tabla
+		this.ventanaGestionarProductos.getModelProductos().setColumnCount(0);
+		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
 		for(StockDTO s: this.todoElStock) {
 			for(MaestroProductoDTO m: productosAproximados) {

@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import dto.ClienteDTO;
 import modelo.Cliente;
 import presentacion.controlador.Controlador;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaGestionarClientes;
 
 public class ControladorGestionarClientes {
@@ -76,6 +77,9 @@ public class ControladorGestionarClientes {
 	public void inicializar() {
 		this.todosLosClientes = this.cliente.readAll();
 		llenarTablaCompleta();	
+		
+		validarTeclado();
+		
 		
 	}
 	
@@ -169,5 +173,31 @@ public class ControladorGestionarClientes {
 		this.controladorAltaCliente.mostrarVentanaEditar();		
 	}
 	
-	
+	public void validarTeclado() {
+		
+		this.ventanaGestionarClientes.getTxtFieldCodCliente().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+		
+		this.ventanaGestionarClientes.getTxtFieldNombre().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+		
+		this.ventanaGestionarClientes.getTxtFieldApellido().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasYEspacios(e);
+			}
+		}));
+		
+		this.ventanaGestionarClientes.getTxtFieldCUIL().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+		
+	}
 }

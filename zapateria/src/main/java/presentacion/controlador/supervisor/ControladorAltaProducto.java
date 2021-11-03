@@ -33,28 +33,35 @@ public class ControladorAltaProducto {
 
 	ProveedorDTO proveedorElegido;
 	ControladorConsultarProveedor controladorConsultarProveedor;
-	Controlador controlador;
+	ControladorGestionarProductos controladorGestionarProductos;
 	
-	public ControladorAltaProducto(Controlador controlador,MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
+
+	
+	
+	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor = proveedor;
 		this.productoDeProveedor = productoDeProveedor;
 
-		this.ventanaAltaProducto = new VentanaAltaProducto();
+
 		
 		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
 		
-		this.controlador = controlador;
 	}
 	
 	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
 		this.controladorConsultarProveedor=controladorConsultarProveedor;
 	}
 	
+	public void setControladorGestionarProductos(ControladorGestionarProductos controladorGestionarProductos) {
+		this.controladorGestionarProductos = controladorGestionarProductos;
+	}
+	
+	
 	public void inicializar() {
-
+		this.ventanaAltaProducto = new VentanaAltaProducto();
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
 		
@@ -86,8 +93,8 @@ public class ControladorAltaProducto {
 	
 	public void salir(ActionEvent a ) {
 		this.ventanaAltaProducto.cerrar();
-		this.controlador.inicializar();
-		this.controlador.mostrarVentanaMenuDeSistemas();
+		this.controladorGestionarProductos.inicializar();
+		this.controladorGestionarProductos.mostrarVentana();
 	}
 	
 	public void llenarCb() {
