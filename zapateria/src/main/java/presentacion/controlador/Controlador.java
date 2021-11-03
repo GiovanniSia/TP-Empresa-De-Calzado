@@ -2,7 +2,6 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.List;
 import javax.swing.JOptionPane;
 import dto.SucursalDTO;
 import inicioSesion.empleadoProperties;
@@ -58,18 +57,6 @@ public class Controlador {
 
 	private int idSucursal = 0;
 	private String tipoEmpleado = "";
-
-	public void obtenerDatosPropertiesSucursal() {
-		try {
-			sucursalProperties sucursalProp = sucursalProperties.getInstance();
-			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
-
-			empleadoProperties empleadoProp = empleadoProperties.getInstance();
-			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	SucursalDTO sucursalObj;
 
@@ -181,11 +168,7 @@ public class Controlador {
 	}
 
 	public void inicializar() {
-		// ----------------------------------------------------------------------------------------------------------
-		// Inicializo ventanas
 
-		this.ventanaMenu = new VentanaMenu();
-		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas();
 		this.ventanaTareasAutomatizadas = new VentanaTareasAutomatizadas();
 
 		this.ventanaAdministrador = new VentanaAdministrador();
@@ -197,11 +180,11 @@ public class Controlador {
 		this.ventanaVendedor = new VentanaVendedor();
 
 		// ----------------------------------------------------------------------------------------------------------
-
+	
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
 		// Config
-		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this.ventanaTareasAutomatizadas,
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this,this.ventanaTareasAutomatizadas,
 				config);
 
 		// armar Venta
@@ -262,14 +245,8 @@ public class Controlador {
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
-//		this.ventanaMenu.getBtnSistemaDeVentas().addActionListener(a -> iniciarSistemaDeVentas(a));
-
-		// VentanaMenu de sistemas
-
-//		this.ventanaMenuSistemaDeVentas.getBtnRegresar().addActionListener(a -> regresarMenuPrincipal(a));
-
-		// ----------------------------------------------------------------------------------------------------------
-
+		// ----------------------------------------------------------------------------------------------------------	
+		
 		// CAJERO
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
@@ -317,77 +294,45 @@ public class Controlador {
 		this.ventanaGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		this.ventanaOperarioFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-		escribirNombreSucursal();
+		
+		// ----------------------------------------------------------------------------------------------------------
+		
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
+	}
+	
+	public void obtenerDatosPropertiesSucursal() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void mostrarVentanaPorTipoEmpleado() {
 		if (tipoEmpleado.equals("Administrativo")) {
 			ventanaAdministrador.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Cajero")) {
 			ventanaCajero.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Vendedor")) {
 			ventanaVendedor.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Operario de Fabrica")) {
 			ventanaOperarioFabrica.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
 			ventanaSupervisorFabrica.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Supervisor")) {
 			ventanaSupervisor.mostrarVentana();
 		}
-
 		if (tipoEmpleado.equals("Gerente")) {
 			ventanaGerente.mostrarVentana();
-		}
-	}
-
-	public void ocultarVentanaPorTipoEmpleado() {
-		if (tipoEmpleado.equals("Administrativo")) {
-			ventanaAdministrador.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Cajero")) {
-			ventanaCajero.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Vendedor")) {
-			ventanaVendedor.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Operario de Fabrica")) {
-			ventanaOperarioFabrica.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
-			ventanaSupervisorFabrica.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Supervisor")) {
-			ventanaSupervisor.cerrarVentana();
-		}
-
-		if (tipoEmpleado.equals("Gerente")) {
-			ventanaGerente.cerrarVentana();
-		}
-
-	}
-
-	public void escribirNombreSucursal() {
-		List<SucursalDTO> sucursales = this.sucursal.readAll();
-		for (SucursalDTO s : sucursales) {
-			if (s.getIdSucursal() == this.idSucursal) {
-				this.ventanaMenuSistemaDeVentas.getLblNombreSucursal().setText(s.getNombre());
-			}
 		}
 	}
 
@@ -401,72 +346,32 @@ public class Controlador {
 
 	public void cerrarSesion(ActionEvent a) {
 		cerrarTodasLasVentanas();
-		ocultarVentanaPorTipoEmpleado();
 		controladorLogin.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void cerrarTodasLasVentanas() {
-
 		this.ventanaCajero.cerrarVentana();
-		this.ventanaCajero.cerrarVentana();
-		this.ventanaCajero.cerrarVentana();
-		this.ventanaCajero.cerrarVentana();
-		this.ventanaCajero.cerrarVentana();
-
-		// VENDEDOR
 		this.ventanaVendedor.cerrarVentana();
-		this.ventanaVendedor.cerrarVentana();
-
-		// OPERARIO DE FABRICA
 		this.ventanaOperarioFabrica.cerrarVentana();
-		this.ventanaOperarioFabrica.cerrarVentana();
-		// config
 		this.ventanaSupervisor.cerrarVentana();
-
-		// cotizacion
-		this.ventanaSupervisor.cerrarVentana();
-
-		// mod precioUnitario
-		this.ventanaSupervisor.cerrarVentana();
-
-		// Generar ordenes de manufac
-		this.ventanaSupervisor.cerrarVentana();
-
-		// Alta cliente
-		this.ventanaSupervisor.cerrarVentana();
-
-		// Alta producto
-		this.ventanaSupervisor.cerrarVentana();
-		this.ventanaSupervisor.cerrarVentana();
-		// Consultar proveedores y asignarle un producto
-
-		// Ver pedidos a prov
-		this.ventanaSupervisor.cerrarVentana();
-
-		this.ventanaSupervisor.cerrarVentana();
-		this.ventanaSupervisor.cerrarVentana();
-
-		this.ventanaSupervisor.cerrarVentana();
-
 		this.ventanaAdministrador.cerrarVentana();
 		this.ventanaGerente.cerrarVentana();
 		this.ventanaOperarioFabrica.cerrarVentana();
 		this.ventanaSupervisorFabrica.cerrarVentana();
-
+		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAConfig(ActionEvent a) {
 		if (this.controladorTareasAutomatizadas.ventanaYaFueInicializada()) {
 			return;
 		}
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.ventanaTareasAutomatizadas.show();
 		this.controladorTareasAutomatizadas.inicializar();
 	}
 
 	public void iniciarSistemaOperatoriaFabrica(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.reControladorOperario.inicializar();
 		this.reControladorOperario.mostrarVentana();
 
@@ -477,10 +382,9 @@ public class Controlador {
 			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
 			return;
 		}
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		controladorBusquedaCliente.inicializar();
 		this.controladorBusquedaCliente.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarACobrarVenta(ActionEvent a) {
@@ -488,27 +392,23 @@ public class Controlador {
 			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
 			return;
 		}
-
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorVisualizarCarritos.inicializar();
 		this.controladorVisualizarCarritos.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Cotizacion
 	public void pasarACotizaciones(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorModificarCotizacion.inicializar();
 		this.controladorModificarCotizacion.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Mod precio unitario
 	public void pasarAModificarPrecioUnitario(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorModificarMProducto.inicializar();
 		this.controladorModificarMProducto.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Ingreso de caja
@@ -517,11 +417,9 @@ public class Controlador {
 			JOptionPane.showMessageDialog(null, "La caja ya fue cerrada");
 			return;
 		}
-
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorIngresosCaja.inicializar();
-		this.controladorIngresosCaja.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
+		this.controladorIngresosCaja.mostrarVentana();	
 	}
 
 	// Egreso
@@ -530,11 +428,9 @@ public class Controlador {
 			JOptionPane.showMessageDialog(null, "La caja no esta abierta");
 			return;
 		}
-
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorEgresosCaja.inicializar();
 		this.controladorEgresosCaja.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Cierre de caja
@@ -548,58 +444,51 @@ public class Controlador {
 			JOptionPane.showMessageDialog(null, "La caja ya fue cerrada");
 			return;
 		}
-
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorCierreCaja.inicializar();
 		this.controladorCierreCaja.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Generar ord de manuf
 	public void pasarAGenerarOrdenManufac(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorGenerarOrdenesManufactura.inicializar();
 		this.controladorGenerarOrdenesManufactura.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarARegistrarUnCliente(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorAltaCliente.inicializar();
 		this.controladorAltaCliente.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Supervisor
 	public void pasarADarDeAltaProducto(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorAltaProducto.inicializar();
 		this.controladorAltaProducto.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAConsultarProveedores(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	// Ver pedidos a proveedor
 	public void pasarAVerPedidosAProveedor(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorVerPedidosAProveedor.inicializar();
 		this.controladorVerPedidosAProveedor.mostrarVentana();
-		this.ventanaTareasAutomatizadas.cerrar();
 	}
 
 	public void pasarAVerComprasVirtuales(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorVisualizarComprasVirtuales.inicializar();
 	}
 
 	private void pasarAVerRanking(ActionEvent a) {
-		ocultarVentanaPorTipoEmpleado();
+		cerrarTodasLasVentanas();
 		this.controladorReporteRankingVentaXSucursal.inicializar();
 	}
 
