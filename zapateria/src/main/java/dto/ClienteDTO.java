@@ -64,12 +64,6 @@ public class ClienteDTO {
 		return CUIL;
 	}
 
-
-	public String getCorreo() {
-		return CorreoElectronico;
-	}
-
-
 	public double getLimiteCredito() {
 		return LimiteCredito;
 	}
@@ -124,7 +118,7 @@ public class ClienteDTO {
 		return CodPostal;
 	}	
 	
-	public String getCorreoElectronico() {
+	public String getCorreo() {
 		return CorreoElectronico;
 	}
 

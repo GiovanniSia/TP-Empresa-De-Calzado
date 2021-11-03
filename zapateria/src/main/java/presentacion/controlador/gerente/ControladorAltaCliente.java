@@ -74,11 +74,7 @@ public class ControladorAltaCliente {
 	public void setControladorGestionarClientes(ControladorGestionarClientes controladorGestionarClientes) {
 		this.controladorGestionarClientes = controladorGestionarClientes;
 	}
-	
-	public void setCliente(ClienteDTO cliente) {
-		this.clienteSeteado = cliente;
-	}
-	
+		
 	public void inicializar() {
 		
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
@@ -121,13 +117,20 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
 		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
 		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
-		
+		this.ventanaAltaCliente.getBtnEditar().addActionListener(a -> editarCliente(a));
 		
 		cargarComboBoxes();
 		validarTeclado();
 	}
 
 	public void mostrarVentana() {
+		this.ventanaAltaCliente.getLblRegistrarCliente().setVisible(true);
+		this.ventanaAltaCliente.getBtnRegistrar().setVisible(true);
+		this.ventanaAltaCliente.show();
+	}
+	
+	public void mostrarVentanaEditar() {
+		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
 		this.ventanaAltaCliente.show();
 	}
 	
@@ -137,27 +140,56 @@ public class ControladorAltaCliente {
 		this.controladorGestionarClientes.mostrarVentana();
 	}
 
+	public void setearDatosDeCliente(ClienteDTO clienteAEditar) {
+		this.clienteSeteado = clienteAEditar;
+		
+		this.ventanaAltaCliente.getTextNombre().setText(this.clienteSeteado.getNombre());
+		this.ventanaAltaCliente.getTextApellido().setText(this.clienteSeteado.getApellido());
+		this.ventanaAltaCliente.getTextCUIL().setText(this.clienteSeteado.getCUIL());
+		this.ventanaAltaCliente.getTextCorreo().setText(this.clienteSeteado.getCorreo());
+		
+		this.ventanaAltaCliente.getComboBoxTipoCliente().setSelectedItem(this.clienteSeteado.getTipoCliente());
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(this.clienteSeteado.getImpuestoAFIP());
+		
+		this.ventanaAltaCliente.getTextSaldoInicial().setText(""+this.clienteSeteado.getCreditoDisponible());
+		
+		
+		this.ventanaAltaCliente.getComboBoxPais().setSelectedItem(this.clienteSeteado.getPais());
+		this.ventanaAltaCliente.getComboBoxProvincia().setSelectedItem(this.clienteSeteado.getProvincia());
+		this.ventanaAltaCliente.getComboBoxLocalidad().setSelectedItem(this.clienteSeteado.getLocalidad());
+		
+		this.ventanaAltaCliente.getTextCalle().setText(""+this.clienteSeteado.getCalle());
+		this.ventanaAltaCliente.getTextAltura().setText(""+this.clienteSeteado.getAltura());
+		this.ventanaAltaCliente.getTextCodPostal().setText(""+this.clienteSeteado.getCodPostal());
+		
+		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
+	}
+	
+	public void editarCliente(ActionEvent a) {
+		ClienteDTO clienteActualizado = obtenerClienteDeVista();
+		boolean update = this.cliente.update(this.clienteSeteado.getIdCliente(), clienteActualizado);
+		if(!update) {
+			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Error", JOptionPane.ERROR_MESSAGE);
+		salirEditar();
+	}
+	
+	public void salirEditar() {
+		this.ventanaAltaCliente.getBtnEditar().setVisible(false);
+		this.ventanaAltaCliente.cerrar();
+		this.controladorGestionarClientes.inicializar();
+		this.controladorGestionarClientes.mostrarVentana();
+
+	}
+	
+	
 	public void registrarCliente(ActionEvent a) {
 		
 		if(todosLosCamposSonValidos()) {
-			
-			String nombre = this.ventanaAltaCliente.getTextNombre().getText();
-			String apellido = this.ventanaAltaCliente.getTextApellido().getText();
-			String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
-			String mail = this.ventanaAltaCliente.getTextCorreo().getText();
-			double limiteCredito = Double.parseDouble(this.ventanaAltaCliente.getTextSaldoInicial().getText());
-			double creditoDisp = limiteCredito;
-			String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
-			String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
-			String estado = "Activo";
-			String calle = this.ventanaAltaCliente.getTextCalle().getText();
-			String altura = this.ventanaAltaCliente.getTextAltura().getText();
-			String pais = this.ventanaAltaCliente.getComboBoxPais().getSelectedItem().toString();
-			String prov = this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem().toString();
-			String localida = this.ventanaAltaCliente.getComboBoxLocalidad().getSelectedItem().toString();
-			String codPostal = this.ventanaAltaCliente.getTextCodPostal().getText();
-			
-			ClienteDTO cliente = new ClienteDTO(0,nombre,apellido,CUIL,mail,limiteCredito,creditoDisp,tipoCliente,impuestoAFIP,estado,calle,altura,pais,prov,localida,codPostal);
+			ClienteDTO cliente = obtenerClienteDeVista();
+
 			 if(clienteYaExiste()){
 				 JOptionPane.showMessageDialog(null, "El cliente ya existe en el sistema");
 				 return;
@@ -170,6 +202,27 @@ public class ControladorAltaCliente {
 			
 		}
 	}	
+	
+	
+	public ClienteDTO obtenerClienteDeVista() {
+		String nombre = this.ventanaAltaCliente.getTextNombre().getText();
+		String apellido = this.ventanaAltaCliente.getTextApellido().getText();
+		String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
+		String mail = this.ventanaAltaCliente.getTextCorreo().getText();
+		double limiteCredito = Double.parseDouble(this.ventanaAltaCliente.getTextSaldoInicial().getText());
+		double creditoDisp = limiteCredito;
+		String tipoCliente =(String) this.ventanaAltaCliente.getComboBoxTipoCliente().getSelectedItem();
+		String impuestoAFIP = getIdItemImpuestoAFIP((String) this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem());
+		String estado = "Activo";
+		String calle = this.ventanaAltaCliente.getTextCalle().getText();
+		String altura = this.ventanaAltaCliente.getTextAltura().getText();
+		String pais = this.ventanaAltaCliente.getComboBoxPais().getSelectedItem().toString();
+		String prov = this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem().toString();
+		String localida = this.ventanaAltaCliente.getComboBoxLocalidad().getSelectedItem().toString();
+		String codPostal = this.ventanaAltaCliente.getTextCodPostal().getText();
+		
+		return new ClienteDTO(0,nombre,apellido,CUIL,mail,limiteCredito,creditoDisp,tipoCliente,impuestoAFIP,estado,calle,altura,pais,prov,localida,codPostal);
+	}
 	
 	public boolean clienteYaExiste() {
 		this.listaClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();

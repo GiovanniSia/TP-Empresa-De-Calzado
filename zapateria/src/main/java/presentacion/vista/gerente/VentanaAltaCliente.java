@@ -39,6 +39,7 @@ public class VentanaAltaCliente {
 	
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
+	private JButton btnEditar;
 
 	private JComboBox<String> comboBoxImpuestoAFIP;
 	private JComboBox<String> comboBoxTipoCliente;
@@ -46,7 +47,8 @@ public class VentanaAltaCliente {
 	private JPanel panel;
 	private JLabel lblNewLabel;
 	private JLabel lblAtras;
-	private JLabel lblRegistrarCliente_1;
+	private JLabel lblRegistrarCliente;
+
 	private JLabel lblSaldoInicial_1;
 	
 	private JComboBox<String> comboBoxLocalidad;
@@ -97,11 +99,11 @@ public class VentanaAltaCliente {
 		frame.setTitle("Zapateria Argento - Registrar un cliente");
 		frame.setResizable(false);
 		
-		JLabel lblRegistrarCliente = new JLabel("Registrar Cliente");
-		lblRegistrarCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblRegistrarCliente.setHorizontalAlignment(SwingConstants.LEFT);
-		lblRegistrarCliente.setBounds(10, 51, 393, 50);
-		frame.getContentPane().add(lblRegistrarCliente);
+//		JLabel lblRegistrarCliente = new JLabel("Registrar Cliente");
+//		lblRegistrarCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
+//		lblRegistrarCliente.setHorizontalAlignment(SwingConstants.LEFT);
+//		lblRegistrarCliente.setBounds(10, 51, 393, 50);
+//		frame.getContentPane().add(lblRegistrarCliente);
 		
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
@@ -272,10 +274,7 @@ public class VentanaAltaCliente {
 		textCodPostal.setBounds(458, 313, 137, 23);
 		frame.getContentPane().add(textCodPostal);
 		
-		btnRegistrar = new JButton("");
-		btnRegistrar.setBounds(358, 394, 60, 60);
-		cambiarIconoBotones(btnRegistrar,  "registrar.png");
-		frame.getContentPane().add(btnRegistrar);
+		
 		
 		btnCancelar = new JButton("");
 		btnCancelar.setBounds(101, 394, 60, 60);
@@ -328,13 +327,7 @@ public class VentanaAltaCliente {
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAtras.setBounds(171, 394, 60, 60);
 		frame.getContentPane().add(lblAtras);
-		
-		lblRegistrarCliente_1 = new JLabel("Registrar Cliente");
-		lblRegistrarCliente_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblRegistrarCliente_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblRegistrarCliente_1.setBounds(428, 394, 137, 60);
-		frame.getContentPane().add(lblRegistrarCliente_1);
-		
+				
 		lblSaldoInicial_1 = new JLabel("$");
 		lblSaldoInicial_1.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblSaldoInicial_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -356,7 +349,25 @@ public class VentanaAltaCliente {
 		comboBoxLocalidad = new JComboBox<String>();
 		comboBoxLocalidad.setBounds(451, 192, 202, 23);
 		frame.getContentPane().add(comboBoxLocalidad);
-
+		
+		
+		lblRegistrarCliente = new JLabel("Registrar Cliente");
+		lblRegistrarCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRegistrarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblRegistrarCliente.setBounds(428, 394, 137, 60);
+		frame.getContentPane().add(lblRegistrarCliente);
+		lblRegistrarCliente.setVisible(false);
+		
+		btnRegistrar = new JButton("");
+		btnRegistrar.setBounds(358, 394, 60, 60);
+		cambiarIconoBotones(btnRegistrar,  "registrar.png");
+		frame.getContentPane().add(btnRegistrar);
+		btnRegistrar.setVisible(false);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(238, 394, 85, 60);
+		frame.getContentPane().add(btnEditar);
+		btnEditar.setVisible(false);
 	}
 	
 	public void show() {
@@ -458,4 +469,13 @@ public class VentanaAltaCliente {
 	public JButton getBtnUbicacion() {
 		return btnUbicacion;
 	}
+	
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
+	public JLabel getLblRegistrarCliente() {
+		return lblRegistrarCliente;
+	}
+
+	
 }

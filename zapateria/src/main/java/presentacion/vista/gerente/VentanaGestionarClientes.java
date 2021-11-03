@@ -47,7 +47,6 @@ public class VentanaGestionarClientes extends JFrame{
 	private JLabel lblAtrs;
 	private JButton btnAgregarCliente;
 	private JButton btnEditarCliente;
-	private JButton btnBorrarCliente;
 
 	public VentanaGestionarClientes() {
 		initialize();
@@ -119,10 +118,6 @@ public class VentanaGestionarClientes extends JFrame{
 		btnEditarCliente = new JButton("Editar Cliente");
 		btnEditarCliente.setBounds(300, 166, 106, 48);
 		panel.add(btnEditarCliente);
-		
-		btnBorrarCliente = new JButton("Borrar Cliente");
-		btnBorrarCliente.setBounds(440, 166, 106, 48);
-		panel.add(btnBorrarCliente);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
@@ -275,10 +270,6 @@ public class VentanaGestionarClientes extends JFrame{
 
 	public JButton getBtnEditarCliente() {
 		return btnEditarCliente;
-	}
-
-	public JButton getBtnBorrarCliente() {
-		return btnBorrarCliente;
 	}
 
 }

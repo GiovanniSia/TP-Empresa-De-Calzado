@@ -26,6 +26,7 @@ public class ControladorGestionarClientes {
 		this.ventanaGestionarClientes = new VentanaGestionarClientes();
 		
 		this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
+		this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
 		this.ventanaGestionarClientes.getBtnAtras().addActionListener(a -> salir(a));
 	}
 
@@ -89,5 +90,19 @@ public class ControladorGestionarClientes {
 		
 	}
 
+	public void pasarAEditarCliente(ActionEvent a) {
+		int filaSeleccionada = this.ventanaGestionarClientes.getTablaClientes().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "Error", JOptionPane.OK_OPTION);
+			return;
+		}
+		ClienteDTO clienteSeleccionado = this.todosLosClientes.get(filaSeleccionada);
+		
+		this.ventanaGestionarClientes.cerrar();
+		this.controladorAltaCliente.inicializar();
+		this.controladorAltaCliente.setearDatosDeCliente(clienteSeleccionado);
+		this.controladorAltaCliente.mostrarVentanaEditar();		
+	}
+	
 	
 }
