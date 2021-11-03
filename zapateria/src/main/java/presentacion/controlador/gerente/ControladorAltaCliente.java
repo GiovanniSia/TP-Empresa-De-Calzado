@@ -65,9 +65,9 @@ public class ControladorAltaCliente {
 		this.provEnComboBox = new ArrayList<ProvinciaDTO>();
 		this.localidadEnComboBox = new ArrayList<LocalidadDTO>();
 	
-		this.controladorEditarPais = new ControladorEditarPais(this,this.pais);
-		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia);
-		this.controladorEditarLocalidad = new ControladorEditarLocalidad(this, this.pais, this.provincia, this.localidad);
+		this.controladorEditarPais = new ControladorEditarPais(this,this.pais,this.cliente);
+		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia,this.cliente);
+		this.controladorEditarLocalidad = new ControladorEditarLocalidad(this, this.pais, this.provincia, this.localidad,this.cliente);
 
 	}
 
@@ -418,7 +418,7 @@ public class ControladorAltaCliente {
 		if(this.ventanaAltaCliente.getComboBoxPais().getSelectedItem() == null || this.ventanaAltaCliente.getComboBoxPais().getSelectedIndex()==-1) {
 			return;
 		}
-		System.out.println("se ejecuta la escucha de cb pais");
+//		System.out.println("se ejecuta la escucha de cb pais");
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.provEnComboBox.removeAll(this.provEnComboBox);
 		
@@ -449,7 +449,7 @@ public class ControladorAltaCliente {
 		if(this.ventanaAltaCliente.getComboBoxProvincia().getSelectedItem() == null || this.provEnComboBox.size()==0) {
 			return;
 		}
-		System.out.println("se ejecuta la escucha de cb localidad");
+//		System.out.println("se ejecuta la escucha de cb localidad");
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
 		this.localidadEnComboBox.removeAll(this.localidadEnComboBox);
 				
@@ -555,6 +555,10 @@ public class ControladorAltaCliente {
 		this.todosLosPaises = (ArrayList<PaisDTO>) this.pais.readAll();
 		this.todasLasProvincias = (ArrayList<ProvinciaDTO>) this.provincia.readAll();
 		this.todasLasLocalidades = (ArrayList<LocalidadDTO>) this.localidad.readAll();
+		
+		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().removeAllItems();
+		this.ventanaAltaCliente.getComboBoxTipoCliente().removeAllItems();
+		
 		this.ventanaAltaCliente.getComboBoxPais().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxProvincia().removeAllItems();
 		this.ventanaAltaCliente.getComboBoxLocalidad().removeAllItems();
@@ -563,8 +567,6 @@ public class ControladorAltaCliente {
 		
 		//los cb tienen una escucha que funciona cada vez que se modifica un cb. Por lo que si se modifica el cb pais, se
 		//ejecutará la escucha de llenarCbDadoPais >:(. 
-		
-		
-	}
-	
+
+	}	
 }

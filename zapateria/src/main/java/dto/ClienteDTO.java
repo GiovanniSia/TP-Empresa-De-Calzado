@@ -1,7 +1,7 @@
 package dto;
 
 public class ClienteDTO {
-
+	
 	int IdCliente;
 	String Nombre;
 	String Apellido;
@@ -122,5 +122,66 @@ public class ClienteDTO {
 
 	public String getCodPostal() {
 		return CodPostal;
+	}	
+	
+	public String getCorreoElectronico() {
+		return CorreoElectronico;
 	}
+
+	public void setCorreoElectronico(String correoElectronico) {
+		CorreoElectronico = correoElectronico;
+	}
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
+	}
+
+	public void setApellido(String apellido) {
+		Apellido = apellido;
+	}
+
+	public void setLimiteCredito(double limiteCredito) {
+		LimiteCredito = limiteCredito;
+	}
+
+	public void setCreditoDisponible(double creditoDisponible) {
+		CreditoDisponible = creditoDisponible;
+	}
+
+	public void setTipoCliente(String tipoCliente) {
+		TipoCliente = tipoCliente;
+	}
+
+	public void setImpuestoAFIP(String impuestoAFIP) {
+		ImpuestoAFIP = impuestoAFIP;
+	}
+
+	public void setEstado(String estado) {
+		Estado = estado;
+	}
+
+	public void setCalle(String calle) {
+		Calle = calle;
+	}
+	public void setAltura(String altura) {
+		Altura = altura;
+	}
+
+	public void setPais(String pais) {
+		Pais = pais;
+	}
+
+	public void setProvincia(String provincia) {
+		Provincia = provincia;
+	}
+
+	public void setLocalidad(String localidad) {
+		Localidad = localidad;
+	}
+
+	public void setCodPostal(String codPostal) {
+		CodPostal = codPostal;
+	}
+
+
 }

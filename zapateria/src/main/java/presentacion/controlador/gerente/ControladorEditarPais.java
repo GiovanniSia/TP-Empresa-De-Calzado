@@ -9,7 +9,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.ClienteDTO;
 import dto.PaisDTO;
+import modelo.Cliente;
 import modelo.Pais;
 import presentacion.vista.gerente.VentanaEditarPais;
 
@@ -18,11 +20,13 @@ public class ControladorEditarPais {
 	List<PaisDTO> todosLosPaises;
 	Pais pais;
 	
+	Cliente cliente;
+	
 	VentanaEditarPais ventanaEditarPais;
 	ControladorAltaCliente controladorAltaCliente;
 	
-	public ControladorEditarPais(ControladorAltaCliente controladorAltaCliente,Pais pais ) {
-
+	public ControladorEditarPais(ControladorAltaCliente controladorAltaCliente,Pais pais,Cliente cliente) {
+		this.cliente = cliente;
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.pais = pais;
 //		this.ventanaEditarPais = new VentanaEditarPais();
@@ -107,10 +111,10 @@ public class ControladorEditarPais {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al insertar el nuevo pais");
 			return;			
 		}
-		
 		this.ventanaEditarPais.getTextPaisNuevo().setText("");
 		this.todosLosPaises = this.pais.readAll();
 		llenarTablaPaises();
+		JOptionPane.showMessageDialog(null, "Pais añadido con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 
@@ -135,6 +139,12 @@ public class ControladorEditarPais {
 
 		PaisDTO paisElegido = getPaisDeTabla(nombrePaisBorrar);
 		
+		
+		if(!noTieneNingunClienteAsignado(paisElegido)) {
+			JOptionPane.showMessageDialog(null, "No se puede borrar el pais ya que existe un cliente que tiene asignado este pasi", "Error", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		
 		boolean borrar = this.pais.borrarPais(paisElegido);
 		
 		if(!borrar) {
@@ -146,6 +156,7 @@ public class ControladorEditarPais {
 		
 		this.todosLosPaises = this.pais.readAll();
 		llenarTablaPaises();
+		JOptionPane.showMessageDialog(null, "Pais eliminado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 	
@@ -179,16 +190,19 @@ public class ControladorEditarPais {
 		String nombrePais = this.ventanaEditarPais.getModelTabla().getValueAt(filaSeleccionada, 0).toString();
 
 		PaisDTO paisEditar = getPaisDeTabla(nombrePais);
+				
 		boolean update = this.pais.update(paisEditar, nombreNuevo);
 		
 		if(!update) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al editar el pais");
 			return;			
 		}
+		actualizarDatosClientes(paisEditar,nombreNuevo);
 		
 		this.todosLosPaises = this.pais.readAll();
 		this.ventanaEditarPais.getTextPaisNuevo().setText("");
 		llenarTablaPaises();
+		JOptionPane.showMessageDialog(null, "Pais actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 	
@@ -200,6 +214,31 @@ public class ControladorEditarPais {
 	public boolean ventanaYaEstaInicializada() {
 		if(this.ventanaEditarPais == null) return false;
 		return this.ventanaEditarPais.getFrame().isShowing();
+	}
+	
+	
+	public boolean noTieneNingunClienteAsignado(PaisDTO pais) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getPais().equals(pais.getNombrePais())) {
+				return false; 
+			}
+		}return true;
+	}
+	
+	public void actualizarDatosClientes(PaisDTO pais,String nombreNuevo) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getPais().equals(pais.getNombrePais())) {
+				c.setPais(nombreNuevo);
+				boolean update = this.cliente.update(c.getIdCliente(),c);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Error al actualizar el pais de clientes ", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			}
+			
+		}
 	}
 	
 }

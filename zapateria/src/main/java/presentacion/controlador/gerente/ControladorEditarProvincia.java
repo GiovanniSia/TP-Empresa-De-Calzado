@@ -11,8 +11,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.ClienteDTO;
 import dto.PaisDTO;
 import dto.ProvinciaDTO;
+import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
 import presentacion.vista.gerente.VentanaEditarProvincia;
@@ -21,7 +23,7 @@ public class ControladorEditarProvincia {
 
 	Pais pais;
 	Provincia provincia;
-	
+	Cliente cliente;
 	
 	VentanaEditarProvincia ventanaEditarProvincia;
 	
@@ -33,7 +35,8 @@ public class ControladorEditarProvincia {
 	
 	ControladorAltaCliente controladorAltaCliente;
 	
-	public ControladorEditarProvincia(ControladorAltaCliente controladorAltaCliente,Pais pais,Provincia provincia) {
+	public ControladorEditarProvincia(ControladorAltaCliente controladorAltaCliente,Pais pais,Provincia provincia,Cliente cliente) {
+		this.cliente = cliente;
 		this.pais = pais;
 		this.provincia = provincia;
 		this.controladorAltaCliente = controladorAltaCliente;
@@ -161,6 +164,7 @@ public class ControladorEditarProvincia {
 		this.ventanaEditarProvincia.getTxtLocalidad().setText("");
 		this.todosLosPaises = this.pais.readAll();
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Provincia agregada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 	
@@ -181,13 +185,18 @@ public class ControladorEditarProvincia {
 		}
 				
 		ProvinciaDTO provincia = this.provinciasEnTabla.get(filaSeleccionada);
-				
+		
 		boolean update = this.provincia.update(nombreNuevo, provincia);
 		if(!update) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar una nueva provincia", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		actualizarDatosDeClientes(provincia,nombreNuevo);
+		
+		this.todosLasProvincias = this.provincia.readAll();
+		this.ventanaEditarProvincia.getTxtLocalidad().setText("");
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Provincia actualizada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 	
@@ -200,12 +209,19 @@ public class ControladorEditarProvincia {
 		}
 		
 		ProvinciaDTO prov = this.provinciasEnTabla.get(filaSeleccionada);
+		
+		if(!noTieneClienteAsignado(prov)) {
+			JOptionPane.showMessageDialog(null, "No se puede borrar la provincia ya que existe al menos un cliente con esta provincia asignada", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		boolean delete = this.provincia.delete(prov);
 		if(!delete) {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al borrar la provincia", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Provincia borrada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 
@@ -259,4 +275,29 @@ public class ControladorEditarProvincia {
 		if(this.ventanaEditarProvincia == null) return false;
 		return this.ventanaEditarProvincia.getFrame().isShowing();
 	}
+	
+	public void actualizarDatosDeClientes(ProvinciaDTO prov,String nombreNuevo) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getProvincia().equals(prov.getNombreProvincia()) && c.getPais().equals(this.paisEnTabla.getNombrePais())) {
+				c.setProvincia(nombreNuevo);
+				boolean update = this.cliente.update(c.getIdCliente(), c);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Error al actualizar la provincia de clientes ", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+			}
+		}
+	}
+
+	public boolean noTieneClienteAsignado(ProvinciaDTO prov) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getProvincia().equals(prov.getNombreProvincia()) && c.getPais().equals(this.paisEnTabla.getNombrePais())) {
+				return false;
+			}
+		}return true;
+	}
+	
 }

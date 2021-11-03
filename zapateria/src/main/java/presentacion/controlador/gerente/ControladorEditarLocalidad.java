@@ -8,9 +8,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.ClienteDTO;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
 import dto.ProvinciaDTO;
+import modelo.Cliente;
 import modelo.Localidad;
 import modelo.Pais;
 import modelo.Provincia;
@@ -21,6 +23,8 @@ public class ControladorEditarLocalidad {
 	Pais pais;
 	Provincia provincia;
 	Localidad localidad;
+	
+	Cliente cliente;
 	
 	List<PaisDTO> todosLosPaises;
 	List<ProvinciaDTO> todasLasProvincias;
@@ -34,7 +38,8 @@ public class ControladorEditarLocalidad {
 	
 	ControladorAltaCliente controladorAltaCliente;
 	
-	public ControladorEditarLocalidad(ControladorAltaCliente controladorAltaCliente, Pais pais, Provincia provincia, Localidad localidad) {
+	public ControladorEditarLocalidad(ControladorAltaCliente controladorAltaCliente, Pais pais, Provincia provincia, Localidad localidad,Cliente cliente) {
+		this.cliente = cliente;
 		this.pais = pais;
 		this.provincia = provincia;
 		this.localidad = localidad;
@@ -306,6 +311,7 @@ public class ControladorEditarLocalidad {
 
 		actualizarComboBoxProv();
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Localidad insertada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 
@@ -333,28 +339,23 @@ public class ControladorEditarLocalidad {
 		}
 		// Obtenemos los obj
 
-		LocalidadDTO loca = null;
+		LocalidadDTO loca = this.localidadesEnTabla.get(filaSeleccionada);
 
-		for (LocalidadDTO localidad : this.todasLasLocalidades) {
-			if (localidad.getIdForeignProvincia() == this.provinciaSeleccionada.getIdProvincia()
-					&& this.provinciaSeleccionada.getForeignPais() == this.paisSeleccionado.getIdPais()
-					&& localidad.getNombreLocalidad().equals(nombreLocalidadBorrar)) {
-				loca = localidad;
-			}
+		if(!noTieneClienteAsignado(loca)) {
+			JOptionPane.showMessageDialog(null, "La localidad tiene al menos un cliente asignado!, no se puede borrar.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
-
-		for (int i = 0; i < this.localidadesEnTabla.size(); i++) {
-			if (this.localidadesEnTabla.get(i).equals(loca)) {
-				boolean delete = this.localidad.delete(this.localidadesEnTabla.get(i));
-				if(!delete) {
-					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al borrar la localidad", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
+		
+		boolean delete = this.localidad.delete(loca);
+		if(!delete) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al borrar la localidad", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
+		
 		this.todasLasLocalidades = this.localidad.readAll();
 		this.ventanaEditarLocalidad.getTxtNuevaLocalidad().setText("");
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Localidad eliminada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 	}
 	
@@ -386,21 +387,30 @@ public class ControladorEditarLocalidad {
 			return;
 		}
 		
-			
-		for (LocalidadDTO loc : this.localidadesEnTabla) {
-			if (loc.getNombreLocalidad().equals(nombreLocalidadEditar)
-					&& loc.getIdForeignProvincia() == provinciaSeleccionada.getIdProvincia()) {
-				boolean update = this.localidad.update(loc, nuevoNombre);
-				if(!update) {
-					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar editar la localidad", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
+		LocalidadDTO loc = this.localidadesEnTabla.get(filaSeleccionada);
+		
+		boolean update = this.localidad.update(loc, nuevoNombre);
+		if(!update) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar editar la localidad", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
+		actualizarDatosClientes(loc,nuevoNombre);
+		
+//		for (LocalidadDTO loc : this.localidadesEnTabla) {
+//			if (loc.getNombreLocalidad().equals(nombreLocalidadEditar)
+//					&& loc.getIdForeignProvincia() == provinciaSeleccionada.getIdProvincia()) {
+//				boolean update = this.localidad.update(loc, nuevoNombre);
+//				if(!update) {
+//					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al agregar editar la localidad", "Error", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//			}
+//		}
 
 		this.todasLasLocalidades = this.localidad.readAll();
 		this.ventanaEditarLocalidad.getTxtNuevaLocalidad().setText("");
 		actualizarTabla();
+		JOptionPane.showMessageDialog(null, "Localidad eliminada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		actualizarComboBoxesDeCliente();
 
 	}
@@ -422,4 +432,33 @@ public class ControladorEditarLocalidad {
 		if(this.ventanaEditarLocalidad == null) return false;
 		return this.ventanaEditarLocalidad.getFrame().isShowing();
 	}
+	
+	public void actualizarDatosClientes(LocalidadDTO localidad, String nombreNuevo) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getLocalidad().equals(localidad.getNombreLocalidad()) && c.getProvincia().equals(this.provinciaSeleccionada.getNombreProvincia()) && c.getPais().equals(this.paisSeleccionado.getNombrePais())) {
+				c.setLocalidad(nombreNuevo);
+				boolean update = this.cliente.update(c.getIdCliente(), c);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Error al actualizar la localidad de clientes ", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+			}
+		}
+	}
+	
+	
+	public boolean noTieneClienteAsignado(LocalidadDTO localidad) {
+		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
+		for(ClienteDTO c: todosLosClientes) {
+			if(c.getLocalidad().equals(localidad.getNombreLocalidad()) && c.getProvincia().equals(this.provinciaSeleccionada.getNombreProvincia()) && c.getPais().equals(this.paisSeleccionado.getNombrePais())) {
+				return false;
+			}
+		}return true;
+	}
+	
+	
+	
+	
 }

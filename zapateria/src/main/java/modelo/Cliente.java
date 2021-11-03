@@ -13,16 +13,16 @@ public class Cliente {
 		this.cliente = metodo_persistencia.createClienteDAO();
 	}
 
-	public void insert(ClienteDTO cliente) {
-		this.cliente.insert(cliente);
+	public boolean insert(ClienteDTO cliente) {
+		return this.cliente.insert(cliente);
 	}
 
-	public void delete(ClienteDTO cliente_a_eliminar) {
-		this.cliente.delete(cliente_a_eliminar);
+	public boolean delete(ClienteDTO cliente_a_eliminar) {
+		return this.cliente.delete(cliente_a_eliminar);
 	}
 
-	public void update(int id_cliente_a_actualizar, ClienteDTO cliente_nuevo) {
-		this.cliente.update(id_cliente_a_actualizar, cliente_nuevo);
+	public boolean update(int id_cliente_a_actualizar, ClienteDTO cliente_nuevo) {
+		return this.cliente.update(id_cliente_a_actualizar, cliente_nuevo);
 	}
 
 	public List<ClienteDTO> readAll() {
