@@ -1,6 +1,9 @@
 package presentacion.controlador.gerente;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -17,17 +20,53 @@ public class ControladorGestionarClientes {
 	Cliente cliente;
 	List<ClienteDTO> todosLosClientes;
 	
+	List<ClienteDTO> clienteEnTabla;
+	
 	ControladorAltaCliente controladorAltaCliente;
 	Controlador controlador;
 	public ControladorGestionarClientes(Controlador controlador,Cliente cliente) {		
 		this.controlador = controlador;
 		this.cliente = cliente;
 		
+		this.todosLosClientes = new ArrayList<ClienteDTO>();
+		this.clienteEnTabla = new ArrayList<ClienteDTO>();
+		
 		this.ventanaGestionarClientes = new VentanaGestionarClientes();
 		
 		this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 		this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
 		this.ventanaGestionarClientes.getBtnAtras().addActionListener(a -> salir(a));
+		
+		
+		// TextField
+		this.ventanaGestionarClientes.getTxtFieldCodCliente().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+
+		this.ventanaGestionarClientes.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+
+		this.ventanaGestionarClientes.getTxtFieldApellido().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+
+		this.ventanaGestionarClientes.getTxtFieldCUIL().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+
 	}
 
 	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
@@ -36,7 +75,7 @@ public class ControladorGestionarClientes {
 	
 	public void inicializar() {
 		this.todosLosClientes = this.cliente.readAll();
-		llenarTabla();	
+		llenarTablaCompleta();	
 		
 	}
 	
@@ -54,28 +93,54 @@ public class ControladorGestionarClientes {
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
-	public void llenarTabla() {
+	public void llenarTablaCompleta() {
 		this.ventanaGestionarClientes.getModelCliente().setRowCount(0);//borrar datos de la tabla
 		this.ventanaGestionarClientes.getModelCliente().setColumnCount(0);
 		this.ventanaGestionarClientes.getModelCliente().setColumnIdentifiers(this.ventanaGestionarClientes.getNombreColumnas());
+		this.clienteEnTabla.removeAll(this.clienteEnTabla);
 		
 		for (ClienteDTO c : this.todosLosClientes) {
-			int codCliente = c.getIdCliente();
-			String nombre = c.getNombre();
-			String apellido = c.getApellido();
-			String CUIL = c.getCUIL();
-			String correo = c.getCorreo();
-			double limiteCredito = c.getLimiteCredito();
-			double creditoDisponible = c.getCreditoDisponible();
-			String estado = c.getEstado();
-			if (!estado.equals("Inactivo")) {
-				Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,	estado };
-				this.ventanaGestionarClientes.getModelCliente().addRow(fila);
-			}
+			agregarATabla(c);
 		}
 		
 	}
 
+	
+	public void realizarBusqueda() {
+		String txtcodCliente = this.ventanaGestionarClientes.getTxtFieldCodCliente().getText();
+		String txtNombre = this.ventanaGestionarClientes.getTxtFieldNombre().getText();
+		String txtApellido = this.ventanaGestionarClientes.getTxtFieldApellido().getText();
+		String txtCUIL = this.ventanaGestionarClientes.getTxtFieldCUIL().getText();
+		List<ClienteDTO> clienteAproximados = this.cliente.getClienteAproximado("IdCliente", txtcodCliente, "Nombre",txtNombre, "Apellido", txtApellido, "CUIL", txtCUIL, null, null);
+		llenarTablaAprox(clienteAproximados);
+	}
+	
+	public void llenarTablaAprox(List<ClienteDTO> clienteEnTabla) {		
+		this.ventanaGestionarClientes.getModelCliente().setRowCount(0);
+		this.ventanaGestionarClientes.getModelCliente().setColumnCount(0);
+		this.ventanaGestionarClientes.getModelCliente().setColumnIdentifiers(this.ventanaGestionarClientes.getNombreColumnas());
+		this.clienteEnTabla.removeAll(this.clienteEnTabla);
+		
+		for (ClienteDTO c : clienteEnTabla) {
+			agregarATabla(c);
+		}
+	}
+	
+	public void agregarATabla(ClienteDTO c) {
+		int codCliente = c.getIdCliente();
+		String nombre = c.getNombre();
+		String apellido = c.getApellido();
+		String CUIL = c.getCUIL();
+		String correo = c.getCorreo();
+		double limiteCredito = c.getLimiteCredito();
+		double creditoDisponible = c.getCreditoDisponible();
+		String estado = c.getEstado();
+		if (!estado.equals("Inactivo")) {
+			Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,	estado };
+			this.ventanaGestionarClientes.getModelCliente().addRow(fila);
+			this.clienteEnTabla.add(c);
+		}
+	}
 	
 	
 	public void pasarAAgregarCliente(ActionEvent a) {
@@ -96,7 +161,7 @@ public class ControladorGestionarClientes {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un cliente", "Error", JOptionPane.OK_OPTION);
 			return;
 		}
-		ClienteDTO clienteSeleccionado = this.todosLosClientes.get(filaSeleccionada);
+		ClienteDTO clienteSeleccionado = this.clienteEnTabla.get(filaSeleccionada);
 		
 		this.ventanaGestionarClientes.cerrar();
 		this.controladorAltaCliente.inicializar();
