@@ -1,5 +1,6 @@
 package presentacion.controlador.supervisor;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -72,6 +73,8 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getBtnElegirProveedor().addActionListener(a -> pasarAElegirProveedor(a));
 		this.ventanaAltaProducto.getBtnBorrarProveedor().addActionListener(a -> borrarProveedor(a));
 
+		this.ventanaAltaProducto.getBtnAniadirUnidadMedida().addActionListener(a -> aniadirUnidadMedida());
+		this.ventanaAltaProducto.getChckbxNumerico().addActionListener(a -> filtrarTallePorNumero());
 		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
 
 		
@@ -106,20 +109,42 @@ public class ControladorAltaProducto {
 		for(int i=0; i<cbFabricado.length;i++) {
 			this.ventanaAltaProducto.getComboBoxFabricado().addItem(cbFabricado[i]);
 		}
-		
-		
-//		for(ProveedorDTO p: this.todosLosProveedores) {
-//			this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().addItem(p.getNombre());
-//		}
-		
+
 		String[] estado = {"Activo","Inactivo","Suspendido"};
 		for(int i=0; i<estado.length;i++) {
 			this.ventanaAltaProducto.getComboBoxEstado().addItem(estado[i]);
 		}
 		
+		String[] unidadesDeMedida = {"Sin seleccionar","Unidad","Par","Pack X3","Pack X4","Pack X5","Pack X6","Pack X7"};
+		for(int i=0; i<unidadesDeMedida.length; i++) {
+			this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(unidadesDeMedida[i]);
+		}
+		
+		
+		String[] talle = {"XS","S","M","L","XL","XXL"};
+		for(int i=0; i<talle.length; i++) {
+			this.ventanaAltaProducto.getComboBoxTalle().addItem(talle[i]);
+		}
+		
 	}
 	
-	
+	public void filtrarTallePorNumero() {
+		this.ventanaAltaProducto.getComboBoxTalle().removeAllItems();
+		
+		if(this.ventanaAltaProducto.getChckbxNumerico().isSelected()) {
+			//15 al 50
+			for(int i=1; i<=50; i++) {
+				this.ventanaAltaProducto.getComboBoxTalle().addItem(""+i);
+			}	
+		}else {
+			String[] talle = {"XS","S","M","L","XL","XXL"};
+			for(int i=0; i<talle.length; i++) {
+				this.ventanaAltaProducto.getComboBoxTalle().addItem(talle[i]);
+			}
+		}
+		
+		
+	}
 	
 	public boolean todosLosCamposSonCorrectos() {
 		String descripcion = this.ventanaAltaProducto.getTextDescripcion().getText();
@@ -157,18 +182,19 @@ public class ControladorAltaProducto {
 			JOptionPane.showMessageDialog(null, "Debe establecer un punto de reposicion minimo");
 			return false;
 		}
-		//EL PRODUCTO PUEDE NO TENER UN PROVEEDOR PREFERENCIADO
 		
-		String talle = this.ventanaAltaProducto.getTextTalle().getText();
-		if(talle.equals("")) {
-			JOptionPane.showMessageDialog(null, "Debe establecer un talle para el producto");
+		String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
+		if(talle.equals("Sin seleccionar")) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un talle");
 			return false;
 		}
-		String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
-		if(unidadMedida.equals("")) {
-			JOptionPane.showMessageDialog(null, "Debe establecer una unidad de medida");
+		
+		String unidadMedida = this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getSelectedItem().toString();
+		if(unidadMedida.equals("Sin seleccionar")) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar una unidad de medida");
 			return false;
 		}
+		
 		String estado =(String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 		if(estado.equals("Sin seleccionar")) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un estado para el producto");
@@ -228,17 +254,7 @@ public class ControladorAltaProducto {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
 		}));
-//		this.ventanaAltaProducto.getTextTalle().addKeyListener((new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidadorTeclado.ac(e);
-//			}
-//		}));
-		this.ventanaAltaProducto.getTextUnidadMedida().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
-			}
-		}));
-		
+
 		this.ventanaAltaProducto.getTextCantidadAReponer().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
@@ -275,8 +291,8 @@ public class ControladorAltaProducto {
 			
 			int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
 			int proveedor = obtenerProveedor();
-			String talle = this.ventanaAltaProducto.getTextTalle().getText();
-			String unidadMedida = this.ventanaAltaProducto.getTextUnidadMedida().getText();
+			String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
+			String unidadMedida = this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getSelectedItem().toString();
 			String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
 			int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
 			int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
@@ -351,8 +367,8 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getTextPrecioMinorista().setText("");
 		this.ventanaAltaProducto.getTextPuntoRepMinimo().setText("");
 //		this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().setSelectedIndex(0);
-		this.ventanaAltaProducto.getTextTalle().setText("");
-		this.ventanaAltaProducto.getTextUnidadMedida().setText("");
+//		this.ventanaAltaProducto.getTextTalle().setText("");
+		this.ventanaAltaProducto.getComboBoxUnidadDeMedida().setSelectedItem(0);
 		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(0);
 		this.ventanaAltaProducto.getTextCantidadAReponer().setText("");
 		this.ventanaAltaProducto.getTextDiasParaReponer().setText("");
@@ -370,4 +386,29 @@ public class ControladorAltaProducto {
 		this.proveedorElegido=null;
 		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
 	}
+	
+	public void aniadirUnidadMedida() {
+		String resp=null;
+		boolean repetir = true;
+	    while (repetir) {
+	    	
+	    	try {
+	    		//si la resp es null, se eligio cancelar
+	    		resp=JOptionPane.showInputDialog("Ingrese la nueva unidad de medida");
+	    		if(resp==null) {
+	    			repetir=false;
+	    			
+	    		}else {
+	    			repetir = false;        
+	    		}
+	    	 }
+	    	 catch(HeadlessException | NumberFormatException e) {
+	    		    		 
+	    		 JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
+	         }
+	    }
+	    this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(resp);
+	}
+	
 }

@@ -16,11 +16,11 @@ import javax.swing.UIManager;
 import persistencia.conexion.Conexion;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
 
 public class VentanaAltaProducto {
 
@@ -32,8 +32,6 @@ public class VentanaAltaProducto {
 	private JTextField textPrecioMayorista;
 	private JTextField textPrecioMinorista;
 	private JTextField textPuntoRepMinimo;
-	private JTextField textTalle;
-	private JTextField textUnidadMedida;
 	private JTextField textDiasParaReponer;
 	private JTextField textCantidadAReponer;
 
@@ -52,7 +50,11 @@ public class VentanaAltaProducto {
 	private JLabel lblNewLabel_2;
 	private JLabel lblAtras;
 	private JLabel lblRegistrarProducto;
-
+	private JComboBox<String> comboBoxUnidadDeMedida;
+	
+	private JComboBox<String> comboBoxTalle;
+	private JButton btnAniadirUnidadMedida;
+	private JCheckBox chckbxNumerico;
 	/**
 	 * Launch the application.
 	 */
@@ -221,7 +223,7 @@ public class VentanaAltaProducto {
 		textPuntoRepMinimo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textPuntoRepMinimo.getText().length() >= 8) {
+				if (textPuntoRepMinimo.getText().length() >= 3) {
 					e.consume();
 				}
 			}
@@ -230,26 +232,12 @@ public class VentanaAltaProducto {
 		textPuntoRepMinimo.setBounds(178, 336, 178, 25);
 		frame.getContentPane().add(textPuntoRepMinimo);
 
-		textTalle = new JTextField();
-		textTalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		textTalle.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (textTalle.getText().length() >= 10) {
-					e.consume();
-				}
-			}
-		});
-		textTalle.setColumns(10);
-		textTalle.setBounds(178, 427, 178, 19);
-		frame.getContentPane().add(textTalle);
-
 		textCantidadAReponer = new JTextField();
 		textCantidadAReponer.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textCantidadAReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCantidadAReponer.getText().length() >= 8) {
+				if (textCantidadAReponer.getText().length() >= 3) {
 					e.consume();
 				}
 			}
@@ -263,7 +251,7 @@ public class VentanaAltaProducto {
 		textDiasParaReponer.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textDiasParaReponer.getText().length() >= 8) {
+				if (textDiasParaReponer.getText().length() >= 3) {
 					e.consume();
 				}
 			}
@@ -271,20 +259,6 @@ public class VentanaAltaProducto {
 		textDiasParaReponer.setColumns(10);
 		textDiasParaReponer.setBounds(178, 543, 178, 19);
 		frame.getContentPane().add(textDiasParaReponer);
-
-		textUnidadMedida = new JTextField();
-		textUnidadMedida.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		textUnidadMedida.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (textUnidadMedida.getText().length() >= 15) {
-					e.consume();
-				}
-			}
-		});
-		textUnidadMedida.setColumns(10);
-		textUnidadMedida.setBounds(178, 456, 178, 19);
-		frame.getContentPane().add(textUnidadMedida);
 
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(30, 597, 60, 60);
@@ -315,9 +289,9 @@ public class VentanaAltaProducto {
 		comboBoxTipo.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipo);
 
-		lblCantidadAReponer = new JLabel("Cantidad a reponer");
+		lblCantidadAReponer = new JLabel("Cantidad a reponer (por lote)");
 		lblCantidadAReponer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblCantidadAReponer.setBounds(20, 515, 148, 19);
+		lblCantidadAReponer.setBounds(20, 515, 156, 19);
 		frame.getContentPane().add(lblCantidadAReponer);
 
 		btnElegirProveedor = new JButton("Elegir proveedor");
@@ -356,6 +330,24 @@ public class VentanaAltaProducto {
 		lblRegistrarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblRegistrarProducto.setBounds(258, 596, 137, 60);
 		frame.getContentPane().add(lblRegistrarProducto);
+		
+		comboBoxUnidadDeMedida = new JComboBox<String>();
+		comboBoxUnidadDeMedida.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		comboBoxUnidadDeMedida.setBounds(178, 458, 93, 19);
+		frame.getContentPane().add(comboBoxUnidadDeMedida);
+		
+		comboBoxTalle = new JComboBox<String>();
+		comboBoxTalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		comboBoxTalle.setBounds(178, 427, 93, 19);
+		frame.getContentPane().add(comboBoxTalle);
+		
+		chckbxNumerico = new JCheckBox("Numerico");
+		chckbxNumerico.setBounds(277, 427, 93, 21);
+		frame.getContentPane().add(chckbxNumerico);
+		
+		btnAniadirUnidadMedida = new JButton("Otros...");
+		btnAniadirUnidadMedida.setBounds(281, 458, 85, 21);
+		frame.getContentPane().add(btnAniadirUnidadMedida);
 	}
 
 	public void show() {
@@ -402,14 +394,6 @@ public class VentanaAltaProducto {
 
 	public JTextField getTextPuntoRepMinimo() {
 		return textPuntoRepMinimo;
-	}
-
-	public JTextField getTextTalle() {
-		return textTalle;
-	}
-
-	public JTextField getTextUnidadMedida() {
-		return textUnidadMedida;
 	}
 
 	public JTextField getTextDiasParaReponer() {
@@ -459,4 +443,20 @@ public class VentanaAltaProducto {
 	public JFrame getFrame() {
 		return frame;
 	}
+
+	public JComboBox<String> getComboBoxUnidadDeMedida() {
+		return comboBoxUnidadDeMedida;
+	}
+	public JComboBox<String> getComboBoxTalle() {
+		return comboBoxTalle;
+	}
+
+	public JButton getBtnAniadirUnidadMedida() {
+		return btnAniadirUnidadMedida;
+	}
+
+	public JCheckBox getChckbxNumerico() {
+		return chckbxNumerico;
+	}
+
 }
