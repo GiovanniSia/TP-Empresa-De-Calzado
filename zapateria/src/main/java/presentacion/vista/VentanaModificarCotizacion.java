@@ -23,6 +23,7 @@ import persistencia.conexion.Conexion;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.border.MatteBorder;
 
 public class VentanaModificarCotizacion extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -40,16 +41,16 @@ public class VentanaModificarCotizacion extends JFrame {
 	private JTextField txtFiltroDescripcion;
 	private JTextField txtActualizarTasaConvercion;
 	private JButton btnActualizarCotizacion;
-	private JButton btnVerHistorialDeCambios;
-	private JButton btnAtras;
 	private JPanel panel_1;
 	private JTextField textFiltroCodMoneda;
 	private JLabel lblCodMoneda;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JLabel lblActualizar;
-	private JLabel lblAtras;
-	private JLabel lblHistorialDeCambios;
+	private JPanel panel_2;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JButton btnAtras;
+	private JButton btnVerHistorialDeCambios;
 
 	public static void main(String[] args) {
 		VentanaModificarCotizacion v = new VentanaModificarCotizacion();
@@ -69,14 +70,14 @@ public class VentanaModificarCotizacion extends JFrame {
 
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 517, 551);
+		frame.setBounds(100, 100, 517, 570);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.getContentPane().setLayout(null);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 162, 501, 350);
+		panel.setBounds(0, 172, 501, 270);
+		panel.setBackground(new Color(255, 255, 255, 180));
 		frame.getContentPane().add(panel);
 		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
@@ -105,12 +106,6 @@ public class VentanaModificarCotizacion extends JFrame {
 		tablaMedioPago.getColumnModel().getColumn(1).setResizable(false);
 
 		spMedioPago.setViewportView(tablaMedioPago);
-
-		btnAtras = new JButton("");
-		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnAtras.setBounds(25, 272, 50, 50);
-		cambiarIconoBotones(btnAtras,  "back2.png");
-		panel.add(btnAtras);
 
 		lblActualizarDescripcion = new JLabel("Descripci\u00F3n");
 		lblActualizarDescripcion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -148,31 +143,15 @@ public class VentanaModificarCotizacion extends JFrame {
 		lblDatosModificables.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblDatosModificables.setBounds(10, 167, 307, 14);
 		panel.add(lblDatosModificables);
-
-		btnVerHistorialDeCambios = new JButton("");
-		btnVerHistorialDeCambios.setBounds(266, 272, 50, 50);
-		cambiarIconoBotones(btnVerHistorialDeCambios,  "history.png");
-		panel.add(btnVerHistorialDeCambios);
-		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		
 		lblActualizar = new JLabel("Actualizar");
 		lblActualizar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblActualizar.setBounds(371, 199, 86, 50);
 		panel.add(lblActualizar);
-		
-		lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(85, 272, 50, 50);
-		panel.add(lblAtras);
-		
-		lblHistorialDeCambios = new JLabel("Historial de Cambios");
-		lblHistorialDeCambios.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblHistorialDeCambios.setBounds(326, 272, 151, 50);
-		panel.add(lblHistorialDeCambios);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 86, 501, 415);
+		panel_1.setBounds(0, 96, 501, 75);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -203,21 +182,69 @@ public class VentanaModificarCotizacion extends JFrame {
 		panel_1.add(lblCodMoneda);
 
 		lblModificarCotizacion = new JLabel("Modificar Cotizaci\u00F3n");
+		lblModificarCotizacion.setBounds(10, 50, 222, 53);
 		lblModificarCotizacion.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblModificarCotizacion.setBounds(10, 50, 222, 36);
 		frame.getContentPane().add(lblModificarCotizacion);
 		
 		panel_2 = new JPanel();
+		panel_2.setBounds(0, 0, 501, 53);
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 501, 50);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(279, 5, 59, 19);
 		panel_2.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("Empleado:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(279, 23, 59, 19);
+		panel_2.add(lblNewLabel_1);
+		
+		btnAtras = new JButton("");
+		btnAtras.setBounds(26, 453, 60, 60);
+		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		cambiarIconoBotones(btnAtras, "back2.png");
+		frame.getContentPane().add(btnAtras);
+		
+		JLabel lblAtras = new JLabel("Atras");
+		lblAtras.setBounds(96, 453, 50, 60);
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		frame.getContentPane().add(lblAtras);
+		
+		btnVerHistorialDeCambios = new JButton("");
+		btnVerHistorialDeCambios.setBounds(253, 454, 60, 60);
+		btnVerHistorialDeCambios.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		cambiarIconoBotones(btnVerHistorialDeCambios, "history.png");
+		frame.getContentPane().add(btnVerHistorialDeCambios);
+		
+		JLabel lblHistorialDeCambios = new JLabel("Historial de Cambios");
+		lblHistorialDeCambios.setBounds(327, 454, 151, 60);
+		lblHistorialDeCambios.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		frame.getContentPane().add(lblHistorialDeCambios);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 800, 600);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
+	}
+
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
@@ -301,5 +328,4 @@ public class VentanaModificarCotizacion extends JFrame {
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
-
 }

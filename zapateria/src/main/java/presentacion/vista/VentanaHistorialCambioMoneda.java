@@ -19,6 +19,7 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 public class VentanaHistorialCambioMoneda extends JFrame {
 
@@ -42,9 +43,11 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 	private JDateChooser fechaHasta;
 	private JButton btnFiltrarFechas;
 	private JButton btnReiniciarTabla;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JLabel lblVolver;
+	private JPanel panel_2;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 	
 	public static void main(String[] args) {
 		VentanaHistorialCambioMoneda v = new VentanaHistorialCambioMoneda();
@@ -64,14 +67,14 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 765, 470);
+		frame.setBounds(100, 100, 765, 495);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 186, 749, 245);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 186, 749, 185);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -101,19 +104,8 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 
 		spHistorialCambioMoneda.setViewportView(tablaHistorialCambioMoneda);
 
-		btnVolverAModificarConversion = new JButton("");
-		btnVolverAModificarConversion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnVolverAModificarConversion.setBounds(86, 181, 50, 50);
-		cambiarIconoBotones(btnVolverAModificarConversion,  "back2.png");
-		panel.add(btnVolverAModificarConversion);
-		
-		lblVolver = new JLabel("Volver");
-		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblVolver.setBounds(146, 181, 70, 50);
-		panel.add(lblVolver);
-
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		panel_1.setBounds(0, 96, 749, 93);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -180,23 +172,60 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		lblHistorialCotizacion.setBounds(10, 47, 397, 50);
 		frame.getContentPane().add(lblHistorialCotizacion);
 		
-		panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 749, 50);
-		frame.getContentPane().add(panel_2);
-		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
-		panel_2.add(lblNewLabel);
+				btnVolverAModificarConversion = new JButton("");
+				btnVolverAModificarConversion.setBounds(85, 382, 60, 60);
+				frame.getContentPane().add(btnVolverAModificarConversion);
+				btnVolverAModificarConversion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				cambiarIconoBotones(btnVolverAModificarConversion,  "back2.png");
+				
+				lblVolver = new JLabel("Volver");
+				lblVolver.setBounds(155, 382, 70, 60);
+				frame.getContentPane().add(lblVolver);
+				lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+				
+				panel_2 = new JPanel();
+				panel_2.setLayout(null);
+				panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+				panel_2.setBackground(new Color(153, 204, 255));
+				panel_2.setBounds(0, 0, 749, 53);
+				frame.getContentPane().add(panel_2);
+				
+				lblLogo = new JLabel("");
+				lblLogo.setForeground(Color.WHITE);
+				lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+				lblLogo.setBounds(10, 5, 165, 42);
+				cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+				panel_2.add(lblLogo);
+				
+				lblNewLabel = new JLabel("Sucursal:");
+				lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+				lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+				lblNewLabel.setBounds(539, 23, 59, 19);
+				panel_2.add(lblNewLabel);
+				
+				lblNewLabel_1 = new JLabel("Empleado:");
+				lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+				lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+				lblNewLabel_1.setBounds(345, 23, 59, 19);
+				panel_2.add(lblNewLabel_1);
+			
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(0, 24, 800, 600);
+				cambiarIconoLabel(lblFondo, "fondo.png");
+				frame.getContentPane().add(lblFondo);
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JButton getBtnReiniciarTabla() {

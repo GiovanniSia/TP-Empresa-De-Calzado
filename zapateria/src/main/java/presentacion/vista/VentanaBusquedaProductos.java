@@ -27,6 +27,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 public class VentanaBusquedaProductos {
 
@@ -76,8 +77,6 @@ public class VentanaBusquedaProductos {
 	private JSpinner spinnerProductos;
 	private JSpinner spinnerPrecioDesde;
 	private JSpinner spinnerPrecioHasta;
-	private JPanel panel_1;
-	private JLabel lblNewLabel_1;
 	private JButton btnAtras;
 	private JLabel lblNewLabel_2;
 	/**
@@ -128,7 +127,7 @@ public class VentanaBusquedaProductos {
 		frame.setLocationRelativeTo(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(245, 255, 250));
+		panel.setBackground(new Color(245, 255, 250, 180));
 		panel.setBorder(null);
 		panel.setBounds(10, 96, 919, 419);
 		frame.getContentPane().add(panel);
@@ -208,17 +207,15 @@ public class VentanaBusquedaProductos {
 		btnArmarVenta = new JButton("");
 		btnArmarVenta.setForeground(Color.WHITE);
 		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
-		btnArmarVenta.setBounds(508, 522, 93, 63);
+		btnArmarVenta.setBounds(599, 526, 60, 60);
 		frame.getContentPane().add(btnArmarVenta);
-
-		btnArmarVenta.setBounds(719, 526, 72, 63);
 		cambiarIconoBotones(btnArmarVenta,  "cash.png");
 		frame.getContentPane().add(btnArmarVenta);
 		
 		
 		lblValorTotal = new JLabel("$0");
 		lblValorTotal.setForeground(new Color(0, 100, 0));
-		lblValorTotal.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		lblValorTotal.setBounds(776, 370, 133, 39);
 		panel.add(lblValorTotal);
 		
@@ -325,13 +322,13 @@ public class VentanaBusquedaProductos {
 		panel.add(lblCarrito);
 		
 		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		lblSubtitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblSubtitulo.setBounds(10, 57, 195, 41);
 		frame.getContentPane().add(lblSubtitulo);
 		
 		JLabel lblNewLabel = new JLabel("Confirmar pedido");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblNewLabel.setBounds(536, 526, 173, 63);
+		lblNewLabel.setBounds(669, 526, 173, 60);
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
@@ -356,21 +353,9 @@ public class VentanaBusquedaProductos {
 		spinnerPrecioHasta.setBounds(310, 137, 47, 19);
 		panel.add(spinnerPrecioHasta);
 		
-		panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 937, 50);
-		frame.getContentPane().add(panel_1);
-		
-		lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 421, 50);
-		panel_1.add(lblNewLabel_1);
-		
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(81, 526, 65, 63);
+		btnAtras.setBounds(81, 526, 60, 60);
 		frame.getContentPane().add(btnAtras);
 		cambiarIconoBotones(btnAtras,  "back2.png");
 		
@@ -378,7 +363,37 @@ public class VentanaBusquedaProductos {
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_2.setBounds(150, 526, 55, 63);
 		frame.getContentPane().add(lblNewLabel_2);
-		//
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 937, 53);
+		frame.getContentPane().add(panel_2);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JLabel lblNewLabel_1 = new JLabel("Sucursal:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(735, 23, 59, 19);
+		panel_2.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Empleado:");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1.setBounds(541, 23, 59, 19);
+		panel_2.add(lblNewLabel_1_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 960, 720);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 	
 	
@@ -410,6 +425,13 @@ public class VentanaBusquedaProductos {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JTextField getTxtNombreProducto() {

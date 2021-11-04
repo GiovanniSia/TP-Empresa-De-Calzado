@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import persistencia.conexion.Conexion;
 
 import java.awt.Color;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 
 public class VentanaVerDetalleRechazo extends JFrame {
 
@@ -77,15 +79,15 @@ public class VentanaVerDetalleRechazo extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 515, 667);
+		frame.setBounds(100, 100, 515, 688);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 64, 496, 564);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 64, 496, 505);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -96,12 +98,8 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		textPane = new JTextPane();
 		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPane.setBounds(10, 344, 476, 148);
+		textPane.setBorder(new LineBorder(new Color(128, 128, 128)));
 		panel.add(textPane);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(77, 503, 50, 50);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
 		
 		JLabel lblNewLabel_1 = new JLabel("Fecha");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 11));
@@ -280,11 +278,6 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		spCliente.setViewportView(tabla);
 		panel.add(spCliente);
 		
-		lblNewLabel_16 = new JLabel("Volver");
-		lblNewLabel_16.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_16.setBounds(137, 503, 46, 50);
-		panel.add(lblNewLabel_16);
-		
 		lblNewLabel = new JLabel("Detalle rechazo");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
@@ -295,12 +288,34 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		panel_1.setBackground(new Color(153, 204, 255));
 		panel_1.setBounds(0, 0, 499, 10);
 		frame.getContentPane().add(panel_1);
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(75, 580, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+		lblNewLabel_16 = new JLabel("Volver");
+		lblNewLabel_16.setBounds(144, 580, 46, 60);
+		frame.getContentPane().add(lblNewLabel_16);
+		lblNewLabel_16.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(-104, -26, 900, 675);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

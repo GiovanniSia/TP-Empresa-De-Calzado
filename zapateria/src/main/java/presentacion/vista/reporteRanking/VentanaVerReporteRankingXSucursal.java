@@ -46,14 +46,14 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 379, 310);
+		frame.setBounds(100, 100, 379, 318);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 64, 363, 196);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 64, 363, 139);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -62,7 +62,7 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnVerDescripcion.setBounds(20, 66, 57, 57);
+		btnVerDescripcion.setBounds(20, 66, 60, 60);
 		cambiarIconoBotones(btnVerDescripcion,  "report.png");
 		panel.add(btnVerDescripcion);
 
@@ -85,15 +85,9 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		panel.add(lblFechaHasta);
 		
 		btnVerReporteVendedores = new JButton("");
-		btnVerReporteVendedores.setBounds(194, 66, 57, 57);
+		btnVerReporteVendedores.setBounds(194, 66, 60, 60);
 		cambiarIconoBotones(btnVerReporteVendedores,  "report2.png");
 		panel.add(btnVerReporteVendedores);
-		
-		btnRegresar = new JButton("");
-		btnRegresar.setBackground(new Color(248, 248, 255));
-		btnRegresar.setBounds(20, 134, 60, 60);
-		cambiarIconoBotones(btnRegresar,  "back2.png");
-		panel.add(btnRegresar);
 		
 		lblXSucursal = new JLabel("X Sucursal");
 		lblXSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -105,11 +99,6 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		lblFechaDesde_2.setBounds(261, 66, 97, 57);
 		panel.add(lblFechaDesde_2);
 		
-		lblVolver = new JLabel("Volver");
-		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblVolver.setBounds(87, 137, 97, 57);
-		panel.add(lblVolver);
-		
 		lblNewLabel = new JLabel("Ver Ranking de Ventas");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
@@ -120,6 +109,22 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		panel_1.setBackground(new Color(153, 204, 255));
 		panel_1.setBounds(0, 1, 363, 9);
 		frame.getContentPane().add(panel_1);
+		
+		btnRegresar = new JButton("");
+		btnRegresar.setBounds(117, 214, 60, 60);
+		frame.getContentPane().add(btnRegresar);
+		btnRegresar.setBackground(new Color(248, 248, 255));
+		cambiarIconoBotones(btnRegresar,  "back2.png");
+		
+		lblVolver = new JLabel("Volver");
+		lblVolver.setBounds(184, 214, 51, 60);
+		frame.getContentPane().add(lblVolver);
+		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(-104, -26, 900, 675);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 	
 
@@ -154,6 +159,13 @@ public class VentanaVerReporteRankingXSucursal extends JFrame {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JButton getBtnVerDescripcion() {
