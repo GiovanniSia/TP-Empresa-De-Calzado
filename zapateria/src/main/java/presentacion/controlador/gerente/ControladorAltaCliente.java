@@ -501,15 +501,18 @@ public class ControladorAltaCliente {
 	
 	public String getIdItemImpuestoAFIP(String descr) {
 		if(descr.equals("Responsable Inscripto")) {
-			return "RI";
+			return "RI"; 
 		}
 		if(descr.equals("Monotributista")) {
 			return "M";
 		}
+		if(descr.equals("Consumidor Final")) {
+			return "CF";
+		}
 		if(descr.equals("Exento")) {
 			return "E";
 		}
-		return "";
+		return "";		
 	}
 	
 	
