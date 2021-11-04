@@ -125,6 +125,7 @@ public class ControladorAltaCliente {
 	}
 
 	public void mostrarVentana() {
+		this.clienteSeteado=null;
 		this.ventanaAltaCliente.getLblRegistrarCliente().setVisible(true);
 		this.ventanaAltaCliente.getBtnRegistrar().setVisible(true);
 		this.ventanaAltaCliente.show();
