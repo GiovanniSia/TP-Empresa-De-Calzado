@@ -9,6 +9,7 @@ import dto.EmpleadoDTO;
 import modelo.Empleado;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
+import presentacion.vista.gestionarEmpleados.VentanaAgregarEmpleados;
 import presentacion.vista.gestionarEmpleados.VentanaGestionarEmpleados;
 
 public class ControladorGestionarEmpleados {
@@ -76,26 +77,29 @@ public class ControladorGestionarEmpleados {
 				"CUIL", txtCUIL,"TipoEmpleado", tipoEmpleado);
 		llenarTabla(empleadosFiltro);
 	}
-	
-	public void atras(ActionEvent a) {
-//		this.controladorHistorialCambioCotizacion.ocultarVentana();
-//		this.ventanaModificarCotizacion.cerrar();
-//		this.controlador.mostrarVentanaMenuDeSistemas();
-
-	}
 
 	public void agregar(ActionEvent v) {
+	
 	}
 
 	public void verHistorial(ActionEvent v) {
+
 	}
 
 	public void actualizar(ActionEvent p) {
+
 	}
 
 	public void mostrarVentana() {
 		this.ventanaGestionarEmpleados.show();
 		this.refrescarTabla();
+	}
+
+	public void atras(ActionEvent a) {
+//		this.controladorHistorialCambioCotizacion.ocultarVentana();
+//		this.ventanaModificarCotizacion.cerrar();
+//		this.controlador.mostrarVentanaMenuDeSistemas();
+
 	}
 	
 	@SuppressWarnings("unchecked")
