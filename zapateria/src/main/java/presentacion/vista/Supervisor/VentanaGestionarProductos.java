@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	
 	private JFrame frame;
 
-	private String[] nombreColumnas = {"Id","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
+	private String[] nombreColumnas = {"Id Producto","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
 	private JLabel lblNombre;
 	private JTextField txtFieldNombre;
 	private DefaultTableModel modelProductos;
@@ -70,7 +70,7 @@ private static final long serialVersionUID = 1L;
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 932, 450);
+		frame.setBounds(100, 100, 932, 589);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -78,14 +78,14 @@ private static final long serialVersionUID = 1L;
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 191, 908, 224);
+		panel.setBounds(0, 191, 908, 351);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spProductos = new JScrollPane();
-		spProductos.setBounds(10, 11, 888, 145);
+		spProductos.setBounds(10, 11, 898, 270);
 		spProductos.setBackground(new Color(248, 248, 255));
-		panel.add(spProductos);
+
 
 		modelProductos = new DefaultTableModel(null, nombreColumnas) {
 			private static final long serialVersionUID = 1L;
@@ -103,26 +103,52 @@ private static final long serialVersionUID = 1L;
 		tablaProductos = new JTable(modelProductos);
 		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
-		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tablaProductos.getColumnModel().getColumn(0).setResizable(false);
-		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaProductos.getColumnModel().getColumn(1).setResizable(false);
+		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(120);
+		tablaProductos.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tablaProductos.getColumnModel().getColumn(3).setPreferredWidth(70);
+		tablaProductos.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(7).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(8).setPreferredWidth(80);
+		tablaProductos.getColumnModel().getColumn(9).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(10).setPreferredWidth(120);
+		tablaProductos.getColumnModel().getColumn(11).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(12).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(13).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(14).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(15).setPreferredWidth(100);
+		
+		
+		
+//		tablaProductos.getColumnModel().getColumn(0).setResizable(false);
+//		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
+//		tablaProductos.getColumnModel().getColumn(1).setResizable(false);
+		
+		
+		
 		tablaProductos.getTableHeader().setReorderingAllowed(false);
 		spProductos.setViewportView(tablaProductos);
-
+		tablaProductos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaProductos.doLayout();
+		
+		panel.add(spProductos);
+		
+		
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(20, 163, 55, 50);
+		btnAtras.setBounds(10, 291, 55, 50);
 		panel.add(btnAtras);
 		cambiarIconoBotones(btnAtras, "back2.png");
 
 		lblAtrs = new JLabel("Atras");
 		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtrs.setBounds(85, 163, 70, 50);
+		lblAtrs.setBounds(84, 291, 70, 50);
 		panel.add(lblAtrs);
 		
 		btnAgregarProducto = new JButton("Agregar Producto");
-		btnAgregarProducto.setBounds(165, 166, 132, 48);
+		btnAgregarProducto.setBounds(164, 293, 132, 48);
 		panel.add(btnAgregarProducto);
 
 		JPanel panel_1 = new JPanel();

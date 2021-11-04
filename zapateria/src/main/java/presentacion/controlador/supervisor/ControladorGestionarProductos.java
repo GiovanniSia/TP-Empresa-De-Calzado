@@ -1,11 +1,16 @@
 package presentacion.controlador.supervisor;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import dto.MaestroProductoDTO;
 import dto.StockDTO;
@@ -60,7 +65,7 @@ public class ControladorGestionarProductos {
 			}
 		});
 		
-		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> mostrarProductosSinStock(a));
+		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
 		
 	}
 	
@@ -92,33 +97,7 @@ public class ControladorGestionarProductos {
 		this.controladorAltaProducto.inicializar();
 		this.controladorAltaProducto.mostrarVentana();
 	}
-	
-	
-	public void mostrarProductosSinStock(ActionEvent a) {
-		if(this.ventanaGestionarProductos.getChckbxProdSinStock().isSelected()) {
-			agregarProductosSinStock();
-		}else {
-			quitarProductosSinStock();
-		}
-	}
-	
-	public void agregarProductosSinStock() {
-		for(MaestroProductoDTO m: this.todosLosProductos) {
-			boolean tieneStock = false;
-			for(StockDTO s: this.todoElStock) {
-				tieneStock = tieneStock || m.getIdMaestroProducto() == s.getIdProducto();		
-			}
-			if(!tieneStock) {
-				agregarATabla(null,m);
-			}
-		}
-	}
-	
-	public void quitarProductosSinStock() {
-		realizarBusqueda();
-	}
-	
-	
+		
 	public void realizarBusqueda() {				
 		String txtNombre = this.ventanaGestionarProductos.getTxtFieldNombre().getText();
 		String txtTalle = this.ventanaGestionarProductos.getTextTalle().getText(); 
@@ -137,7 +116,6 @@ public class ControladorGestionarProductos {
 			for(MaestroProductoDTO m: this.todosLosProductos) {
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
 					agregarATabla(s,m);
-					productosEnTabla.add(m);
 				}
 			}
 		}
@@ -148,15 +126,27 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos.getModelProductos().setColumnCount(0);
 		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
-		for(StockDTO s: this.todoElStock) {
-			for(MaestroProductoDTO m: productosAproximados) {
+		
+		for(MaestroProductoDTO m: productosAproximados) {
+			boolean tieneStock = false;
+			for(StockDTO s: this.todoElStock){
+				
+				tieneStock = tieneStock || m.getIdMaestroProducto() == s.getIdProducto();		
+				
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
 					agregarATabla(s,m);
-					productosEnTabla.add(m);
+
 				}
+				//si tiene stock entonces ya se agrego
+			}	
+			
+			if(!tieneStock && this.ventanaGestionarProductos.getChckbxProdSinStock().isSelected()) {
+				agregarATabla(null,m);
 			}
+			tieneStock=false;
 		}
 	}
+	
 	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
 		int id = m.getIdMaestroProducto();
 		String nombre=m.getDescripcion();
@@ -195,15 +185,45 @@ public class ControladorGestionarProductos {
 		
 		Object[] fila = { id,nombre,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep,stockDisp,codLote};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
+		productosEnTabla.add(m);
+		
+		verificarCambiarColorAEstaFila();
+		
+		
 	}
 	
-	
+	private void verificarCambiarColorAEstaFila() {
+		this.ventanaGestionarProductos.getTablaProductos().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table,
+		            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+				//al parecer el row toma la ultima fila agregada
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+		        int status = (int) table.getModel().getValueAt(row,14);
+		        if(status<=0) {
+		        	setBackground(Color.red);
+		        	setForeground(Color.WHITE);	
+		        }else {
+		        	setBackground(table.getBackground());
+		        	setForeground(Color.BLACK);
+		        }
+		        return this;
+		    }   
+		});
+	}
 	
 	
 	public void validarTeclado() {
 		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasYEspacios(e);
+				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
 			}
 		}));
 		this.ventanaGestionarProductos.getTextTalle().addKeyListener((new KeyAdapter() {

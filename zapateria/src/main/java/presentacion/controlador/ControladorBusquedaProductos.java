@@ -1,5 +1,7 @@
 package presentacion.controlador;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,12 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import dto.CarritoDTO;
 import dto.ClienteDTO;
@@ -253,11 +257,42 @@ public class ControladorBusquedaProductos {
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre, talle, precio, stockDisp, codLote };
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
+		verificarCambiarColorAEstaFila();
 	}
 
 	public boolean esAptoParaVender(StockDTO s, MaestroProductoDTO m) {
 		return m.getEstado().equals("Activo") && m.getTipo().equals("PT");
 	}
+	
+	private void verificarCambiarColorAEstaFila() {
+		this.vistaBusquedaProductos.getTable().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public Component getTableCellRendererComponent(JTable table,
+		            Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+//		        int fila = ventanaGestionarProductos.getModelProductos().getRowCount()-1;
+
+		        int status = (int) table.getModel().getValueAt(row,3);
+		        if(status<=0) {
+		        	setBackground(Color.red);
+		        	setForeground(Color.WHITE);	
+		        }else {
+		        	setBackground(table.getBackground());
+		        	setForeground(Color.BLACK);
+		        }
+		        
+		        return this;
+		    }   
+		});
+	}
+	
+	
 
 	// Carrito
 
