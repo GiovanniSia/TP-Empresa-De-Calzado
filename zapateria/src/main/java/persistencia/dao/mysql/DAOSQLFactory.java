@@ -21,6 +21,7 @@ import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
 import persistencia.dao.interfaz.ProductoDeProveedorDAO;
 import persistencia.dao.interfaz.ProveedorDAO;
+import persistencia.dao.interfaz.RecetaDAO;
 import persistencia.dao.interfaz.RechazoCompraVirtualDAO;
 import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
@@ -151,4 +152,8 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 		return new ModeloPasoDAOSQL();
 	}
 	
+	@Override 
+	public RecetaDAO createModeloRecetaDAO() {
+		return new RecetaDAOSQL();
+	}
 }

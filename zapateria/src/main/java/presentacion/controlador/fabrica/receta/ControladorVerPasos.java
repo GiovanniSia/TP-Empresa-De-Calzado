@@ -19,6 +19,7 @@ import dto.RecetaDTO;
 import modelo.Fabricacion;
 import modelo.MaestroProducto;
 import modelo.ModeloPaso;
+import modelo.Receta;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.receta.VerPasos;
 
@@ -28,6 +29,7 @@ public class ControladorVerPasos implements ActionListener {
 	ModeloPaso modeloPaso;
 	Fabricacion modeloFabricacion;
 	MaestroProducto modeloMaestroProducto;
+	Receta modeloReceta;
 	
 	List<PasoDTO> pasosEnLista;
 	int[]filasSeleccionadas;
@@ -43,6 +45,7 @@ public class ControladorVerPasos implements ActionListener {
 		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
 		modeloMaestroProducto = new MaestroProducto(new DAOSQLFactory());
 		pasosEnLista = new ArrayList<PasoDTO>();
+		modeloReceta = new Receta(new DAOSQLFactory());
 		
 		ventanaPrincipal.getTextDescripcion().addKeyListener(new KeyAdapter() {
 			@Override
@@ -297,6 +300,20 @@ public class ControladorVerPasos implements ActionListener {
 		pasosRecetaEnLista.add(new PasoDeRecetaDTO(0,this.recetaSeleccionada.getIdReceta(),pasosRecetaEnLista.size()+1,this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(), this.pasosEnLista.get(filasSeleccionadas[0])));
 		reiniciarTablaPasosReceta();
 		llenarTablaPasosReceta(pasosRecetaEnLista);
+	}
+	
+	private void darDeAltaReceta(ActionEvent e) {
+		if(this.recetaSeleccionada == null) {
+			return;
+		}
+		if(this.pasosRecetaEnLista == null) {
+			return;
+		}
+		if(this.pasosRecetaEnLista.size() == 0){
+			return;
+		}/*
+		this.modeloReceta.insertReceta(recetaSeleccionada);
+		this.modeloReceta.insertPasosReceta(pasosRecetaEnLista);*/
 	}
 
 	@Override
