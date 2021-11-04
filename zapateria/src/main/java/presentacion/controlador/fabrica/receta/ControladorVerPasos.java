@@ -217,6 +217,7 @@ public class ControladorVerPasos implements ActionListener {
 	private void llenarTablaPasosReceta() {
 		reiniciarTablaPasosReceta();
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
+			recetaSeleccionada = null;
 			return;
 		}
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == 0) {
