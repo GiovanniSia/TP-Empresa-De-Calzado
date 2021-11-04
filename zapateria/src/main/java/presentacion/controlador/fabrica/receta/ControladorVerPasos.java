@@ -25,6 +25,8 @@ public class ControladorVerPasos implements ActionListener {
 	List<PasoDTO> pasosEnLista;
 	int[]filasSeleccionadas;
 	
+	List<RecetaDTO> recetasEnComboBox;
+	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
 		modeloPaso = new ModeloPaso(new DAOSQLFactory());
@@ -48,6 +50,7 @@ public class ControladorVerPasos implements ActionListener {
 	}
 
 	public void inicializar() {
+		refrescarComboBoxReceta();
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
 	}
@@ -157,6 +160,30 @@ public class ControladorVerPasos implements ActionListener {
 		//return true;
 		return ret;
 	}
+	
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	//	RECETAS
+	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
+	private void refrescarComboBoxReceta() {
+		recetasEnComboBox = new ArrayList<RecetaDTO>();
+		recetasEnComboBox = recuperarRecetas();
+		llenarComboBoxReceta(recetasEnComboBox);
+	}
+	
+	private List<RecetaDTO> recuperarRecetas(){
+		return this.modeloFabricacion.readAllReceta();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void llenarComboBoxReceta(List<RecetaDTO> recetas) {
+		this.ventanaPrincipal.getComboBoxReceta().removeAllItems();
+		this.ventanaPrincipal.getComboBoxReceta().addItem("Nueva receta");
+		for(RecetaDTO r: recetas) {
+			this.ventanaPrincipal.getComboBoxReceta().addItem(r.getDescripcion());
+		}
+	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

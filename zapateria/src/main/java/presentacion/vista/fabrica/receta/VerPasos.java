@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 
 public class VerPasos extends JFrame {
 
@@ -31,8 +32,6 @@ public class VerPasos extends JFrame {
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JScrollPane spCliente;
-
-	private JButton btnSeleccionarProceso;
 	private JLabel lblNewLabel;
 	private JLabel lblId;
 	private JTextField textId;
@@ -40,13 +39,16 @@ public class VerPasos extends JFrame {
 	JTextField textDescripcion;
 
 	private JButton btnSalir;
-	private JLabel lblSeleccionarProceso;
 	private JTextField textDescripcionAgregar;
 	private JLabel lblSucursal_1;
 	private JButton btnAgregar;
 	private JLabel lblAgregar;
 	private JButton btnEliminar;
 	private JLabel lblEliminar;
+	private JTextField textFieldReceta;
+	
+	JComboBox comboBoxReceta;
+	JComboBox comboBoxIngredientes;
 	
 
 	public VerPasos() {
@@ -60,19 +62,19 @@ public class VerPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 693, 556);
+		frame.setBounds(100, 100, 736, 556);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 93, 673, 424);
+		panel.setBounds(0, 93, 710, 424);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 69, 427, 159);
+		spCliente.setBounds(10, 81, 267, 147);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
@@ -92,15 +94,6 @@ public class VerPasos extends JFrame {
 		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spCliente.setViewportView(tabla);
-
-		btnSeleccionarProceso = new JButton("");
-		btnSeleccionarProceso.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnSeleccionarProceso.setBounds(180, 352, 60, 60);
-		cambiarIconoBotones(btnSeleccionarProceso,  "right.png");
-		panel.add(btnSeleccionarProceso);
 		
 		lblId = new JLabel("Id");
 		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -115,13 +108,13 @@ public class VerPasos extends JFrame {
 		
 		lblSucursal = new JLabel("Descripcion");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(222, 11, 75, 14);
+		lblSucursal.setBounds(95, 11, 75, 14);
 		panel.add(lblSucursal);
 		
 		textDescripcion = new JTextField();
 		textDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textDescripcion.setColumns(10);
-		textDescripcion.setBounds(222, 38, 215, 20);
+		textDescripcion.setBounds(95, 36, 75, 20);
 		panel.add(textDescripcion);
 		
 		btnSalir = new JButton("");
@@ -134,15 +127,10 @@ public class VerPasos extends JFrame {
 		lblAtras.setBounds(80, 352, 90, 60);
 		panel.add(lblAtras);
 		
-		lblSeleccionarProceso = new JLabel("Seleccionar Proceso");
-		lblSeleccionarProceso.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblSeleccionarProceso.setBounds(250, 352, 138, 60);
-		panel.add(lblSeleccionarProceso);
-		
 		textDescripcionAgregar = new JTextField();
 		textDescripcionAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textDescripcionAgregar.setColumns(10);
-		textDescripcionAgregar.setBounds(10, 268, 215, 20);
+		textDescripcionAgregar.setBounds(10, 268, 107, 20);
 		panel.add(textDescripcionAgregar);
 		
 		lblSucursal_1 = new JLabel("Descripcion");
@@ -151,22 +139,56 @@ public class VerPasos extends JFrame {
 		panel.add(lblSucursal_1);
 		
 		btnAgregar = new JButton("");
-		btnAgregar.setBounds(237, 239, 60, 60);
+		btnAgregar.setBounds(127, 239, 60, 60);
 		panel.add(btnAgregar);
 		
 		lblAgregar = new JLabel("Agregar");
 		lblAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAgregar.setBounds(307, 239, 138, 60);
+		lblAgregar.setBounds(197, 239, 80, 60);
 		panel.add(lblAgregar);
 		
 		btnEliminar = new JButton("");
-		btnEliminar.setBounds(447, 69, 60, 60);
+		btnEliminar.setBounds(180, 11, 60, 60);
 		panel.add(btnEliminar);
 		
 		lblEliminar = new JLabel("Eliminar");
 		lblEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblEliminar.setBounds(517, 69, 138, 60);
+		lblEliminar.setBounds(250, 11, 75, 60);
 		panel.add(lblEliminar);
+		
+		comboBoxReceta = new JComboBox();
+		comboBoxReceta.setBounds(361, 36, 138, 22);
+		panel.add(comboBoxReceta);
+		
+		JScrollPane spCliente_1 = new JScrollPane();
+		spCliente_1.setBounds(361, 81, 138, 147);
+		panel.add(spCliente_1);
+		
+		JScrollPane spCliente_1_1 = new JScrollPane();
+		spCliente_1_1.setBounds(548, 81, 138, 147);
+		panel.add(spCliente_1_1);
+		
+		JButton btnAgregar_1 = new JButton("");
+		btnAgregar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnAgregar_1.setBounds(361, 268, 60, 60);
+		panel.add(btnAgregar_1);
+		
+		textFieldReceta = new JTextField();
+		textFieldReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textFieldReceta.setColumns(10);
+		textFieldReceta.setBounds(361, 239, 138, 20);
+		panel.add(textFieldReceta);
+		
+		comboBoxIngredientes = new JComboBox();
+		comboBoxIngredientes.setBounds(548, 239, 138, 22);
+		panel.add(comboBoxIngredientes);
+		
+		JButton btnAgregar_1_1 = new JButton("");
+		btnAgregar_1_1.setBounds(548, 268, 60, 60);
+		panel.add(btnAgregar_1_1);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -216,8 +238,6 @@ public class VerPasos extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
-		boton.setIcon(Icono);
 	}
 	
 	
@@ -233,10 +253,6 @@ public class VerPasos extends JFrame {
 		return nombreColumnas;
 	}
 
-	public JButton getBtnTrabajarPedido() {
-		return btnSeleccionarProceso;
-	}
-
 	public JTextField getTextId() {
 		return textId;
 	}
@@ -247,10 +263,6 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnSalir() {
 		return btnSalir;
-	}
-
-	public JButton getBtnSeleccionarProceso() {
-		return btnSeleccionarProceso;
 	}
 
 	public JTextField getTextDescripcion() {
@@ -267,5 +279,19 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnEliminar() {
 		return btnEliminar;
+	}
+
+	public JTextField getTextFieldReceta() {
+		return textFieldReceta;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public JComboBox getComboBoxReceta() {
+		return comboBoxReceta;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public JComboBox getComboBoxIngredientes() {
+		return comboBoxIngredientes;
 	}
 }
