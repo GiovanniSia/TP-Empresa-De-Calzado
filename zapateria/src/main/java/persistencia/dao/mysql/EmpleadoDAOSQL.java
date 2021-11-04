@@ -16,7 +16,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO {
 	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
 	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
-	private static final String readall = "SELECT * FROM empleados";
+	private static final String readall = "select IdEmpleado,cuil,nombre,apellido,correoelectronico,tipoempleado,(aes_decrypt(contra,'AES')) Contra from empleados";
 	private static final String select = "SELECT * FROM empleados WHERE IdEmpleado=?";
 	private static final String selectUser = "SELECT * FROM empleados where CorreoElectronico=? and Contra=(aes_ENCRYPT(?,'AES'))";
 
@@ -167,5 +167,29 @@ public class EmpleadoDAOSQL implements EmpleadoDAO {
 
 		return empleado;
 	}
+	
+	public List<EmpleadoDTO> getFiltrarPor(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+
+		String sel = "SELECT IdEmpleado,cuil,nombre,apellido,correoelectronico,tipoempleado,(aes_decrypt(contra,'AES')) Contra FROM empleados WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + " AND " + nombreColumna3 + " LIKE '%"
+				+ txtAprox3 + "%'";
+
+		ArrayList<EmpleadoDTO> empleados = new ArrayList<EmpleadoDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				empleados.add(getEmpleadoDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return empleados;
+	}
+	
 
 }
