@@ -12,10 +12,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import modelo.Fabricacion;
+import modelo.MaestroProducto;
 import modelo.ModeloPaso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.receta.VerPasos;
@@ -25,17 +27,21 @@ public class ControladorVerPasos implements ActionListener {
 	VerPasos ventanaPrincipal;
 	ModeloPaso modeloPaso;
 	Fabricacion modeloFabricacion;
+	MaestroProducto modeloMaestroProducto;
+	
 	List<PasoDTO> pasosEnLista;
 	int[]filasSeleccionadas;
 	
 	List<RecetaDTO> recetasEnComboBox;
 	RecetaDTO recetaSeleccionada = new RecetaDTO(0,0, "");
 	List<PasoDeRecetaDTO> pasosRecetaEnLista;
+	List<MaestroProductoDTO> ingredientesEnLista;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
 		modeloPaso = new ModeloPaso(new DAOSQLFactory());
 		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
+		modeloMaestroProducto = new MaestroProducto(new DAOSQLFactory());
 		pasosEnLista = new ArrayList<PasoDTO>();
 		
 		ventanaPrincipal.getTextDescripcion().addKeyListener(new KeyAdapter() {
@@ -68,6 +74,7 @@ public class ControladorVerPasos implements ActionListener {
 		refrescarComboBoxReceta();
 		llenarTablaPasosReceta();
 		refrescarTablaIngredientes();
+		llenarComboBoxIngredientes();
 		
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
@@ -263,6 +270,19 @@ public class ControladorVerPasos implements ActionListener {
 		ventanaPrincipal.getModelIngredientes().setRowCount(0);
 		ventanaPrincipal.getModelIngredientes().setColumnCount(0);
 		ventanaPrincipal.getModelIngredientes().setColumnIdentifiers(ventanaPrincipal.getNombreColumnasIngredientes());
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void llenarComboBoxIngredientes() {
+		this.ventanaPrincipal.getComboBoxIngredientes().removeAllItems();
+		List<MaestroProductoDTO> todosProductos = this.modeloMaestroProducto.readAll();
+		ingredientesEnLista = new ArrayList<MaestroProductoDTO>();
+		for(MaestroProductoDTO mp: todosProductos) {
+			if(mp.getTipo().toLowerCase().equals("mp")) {
+				this.ventanaPrincipal.getComboBoxIngredientes().addItem(mp.getDescripcion());
+				ingredientesEnLista.add(mp);
+			}
+		}
 	}
 
 	@Override
