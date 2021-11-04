@@ -449,7 +449,7 @@ public class ControladorAltaCliente {
 			this.ventanaAltaCliente.getComboBoxImpuestoAFIP().addItem(impuestoAFIP[i]);
 		}	
 		
-		String[] estado = {"Activo","Incativo","Moroso"};
+		String[] estado = {"Activo","Inactivo","Moroso"};
 		for(int i=0; i<estado.length; i++) {
 			this.ventanaAltaCliente.getComboBoxEstado().addItem(estado[i]);
 		}

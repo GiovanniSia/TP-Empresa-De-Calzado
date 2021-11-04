@@ -97,14 +97,19 @@ public class ControladorConsultarProveedor {
 		
 //		"Nombre","Correo","Limite de crédito","Credito disponible"
 		for(ProveedorDTO p: proveedoresAprox) {
-			String nombre = p.getNombre();
-			String correo = p.getCorreo();
-			String limiteCred = ""+p.getLimiteCredito();
-			String credDisp =""+p.getCreditoDisponible();
-			String[] filas= {nombre,correo,limiteCred,credDisp};
-			this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
+			agregarATabla(p);
 		}
 		
+	}
+	
+	
+	public void agregarATabla(ProveedorDTO p) {
+		String id = ""+p.getId();
+		String nombre = p.getNombre();
+		String correo = p.getCorreo();
+		String credDisp =""+p.getCreditoDisponible();
+		String[] filas= {id,nombre,correo,credDisp};
+		this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
 	}
 	
 	public void mostrarVentanaParaAltaProducto() {
@@ -129,12 +134,7 @@ public class ControladorConsultarProveedor {
 		
 //		"Nombre","Correo","Limite de crédito","Credito disponible"
 		for(ProveedorDTO p: this.todosLosProveedores) {
-			String id = ""+p.getId();
-			String nombre = p.getNombre();
-			String correo = p.getCorreo();
-			String credDisp =""+p.getCreditoDisponible();
-			String[] filas= {id,nombre,correo,credDisp};
-			this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
+			agregarATabla(p);
 		}
 	}
 	
