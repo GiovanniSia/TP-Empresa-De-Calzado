@@ -59,6 +59,9 @@ public class ControladorGestionarProductos {
 				realizarBusqueda();
 			}
 		});
+		
+		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> mostrarProductosSinStock(a));
+		
 	}
 	
 
@@ -89,6 +92,32 @@ public class ControladorGestionarProductos {
 		this.controladorAltaProducto.inicializar();
 		this.controladorAltaProducto.mostrarVentana();
 	}
+	
+	
+	public void mostrarProductosSinStock(ActionEvent a) {
+		if(this.ventanaGestionarProductos.getChckbxProdSinStock().isSelected()) {
+			agregarProductosSinStock();
+		}else {
+			quitarProductosSinStock();
+		}
+	}
+	
+	public void agregarProductosSinStock() {
+		for(MaestroProductoDTO m: this.todosLosProductos) {
+			boolean tieneStock = false;
+			for(StockDTO s: this.todoElStock) {
+				tieneStock = tieneStock || m.getIdMaestroProducto() == s.getIdProducto();		
+			}
+			if(!tieneStock) {
+				agregarATabla(null,m);
+			}
+		}
+	}
+	
+	public void quitarProductosSinStock() {
+		realizarBusqueda();
+	}
+	
 	
 	public void realizarBusqueda() {				
 		String txtNombre = this.ventanaGestionarProductos.getTxtFieldNombre().getText();
@@ -154,9 +183,17 @@ public class ControladorGestionarProductos {
 		int cantARep = m.getCantidadAReponer();
 		int diasARep = m.getDiasParaReponer();
 
-		int stockDisp = s.getStockDisponible();
-//		String codLote = s.getCodigoLote();
-		Object[] fila = { id,nombre,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep,stockDisp};
+		int stockDisp;
+		String codLote;
+		if(s!=null) {
+			stockDisp = s.getStockDisponible();
+			codLote = s.getCodigoLote();	
+		}else {
+			stockDisp = 0;
+			codLote = "Sin asignar";
+		}
+		
+		Object[] fila = { id,nombre,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep,stockDisp,codLote};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
 	}
 	

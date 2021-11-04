@@ -82,6 +82,48 @@ public class ControladorAltaProducto {
 		validarTeclado();
 	}
 
+	
+	public void validarTeclado() {
+
+		this.ventanaAltaProducto.getTextDescripcion().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
+			}
+		}));
+		this.ventanaAltaProducto.getTextCosto().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
+			}
+		}));
+		this.ventanaAltaProducto.getTextPrecioMinorista().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
+			}
+		}));
+		this.ventanaAltaProducto.getTextPrecioMayorista().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
+			}
+		}));
+		this.ventanaAltaProducto.getTextPuntoRepMinimo().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+
+		this.ventanaAltaProducto.getTextCantidadAReponer().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+		this.ventanaAltaProducto.getTextDiasParaReponer().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+	}
+	
+	
 	public void mostrarVentana() {
 		this.ventanaAltaProducto.show();
 	}
@@ -195,7 +237,7 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		
-		String estado =(String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
+		String estado =(String) this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
 		if(estado.equals("Sin seleccionar")) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un estado para el producto");
 			return false;
@@ -225,49 +267,6 @@ public class ControladorAltaProducto {
 		
 		return true;
 	}
-	
-	
-	public void validarTeclado() {
-
-		this.ventanaAltaProducto.getTextDescripcion().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
-			}
-		}));
-		this.ventanaAltaProducto.getTextCosto().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
-			}
-		}));
-		this.ventanaAltaProducto.getTextPrecioMinorista().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
-			}
-		}));
-		this.ventanaAltaProducto.getTextPrecioMayorista().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumerosYpuntos(e);
-			}
-		}));
-		this.ventanaAltaProducto.getTextPuntoRepMinimo().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
-			}
-		}));
-
-		this.ventanaAltaProducto.getTextCantidadAReponer().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
-			}
-		}));
-		this.ventanaAltaProducto.getTextDiasParaReponer().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
-			}
-		}));
-	}
-	
-	
 	
 	public void agregarProducto(ActionEvent a ) {
 		if(todosLosCamposSonCorrectos()) {
@@ -397,18 +396,21 @@ public class ControladorAltaProducto {
 	    		resp=JOptionPane.showInputDialog("Ingrese la nueva unidad de medida");
 	    		if(resp==null) {
 	    			repetir=false;
-	    			
 	    		}else {
-	    			repetir = false;        
+	    			if(resp.equals("")) {
+	    				JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion", JOptionPane.OK_OPTION);	    				
+	    			}else {
+	    				this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(resp);
+		    			repetir = false;        
+	    			}
 	    		}
 	    	 }
 	    	 catch(HeadlessException | NumberFormatException e) {
-	    		    		 
 	    		 JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-//	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
 	         }
 	    }
-	    this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(resp);
+	    
+	    
 	}
 	
 }

@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
+import javax.swing.JCheckBox;
 
 public class VentanaGestionarProductos extends JFrame {
 
@@ -26,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	
 	private JFrame frame;
 
-	private String[] nombreColumnas = {"Id","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp"};
+	private String[] nombreColumnas = {"Id","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
 	private JLabel lblNombre;
 	private JTextField txtFieldNombre;
 	private DefaultTableModel modelProductos;
@@ -40,6 +41,9 @@ private static final long serialVersionUID = 1L;
 	private JLabel lblAtrs;
 	private JButton btnAgregarProducto;
 	private JTextField textTalle;
+
+	private JCheckBox chckbxProdSinStock;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -152,6 +156,10 @@ private static final long serialVersionUID = 1L;
 		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblTalle.setBounds(148, 35, 70, 20);
 		panel_1.add(lblTalle);
+		
+		chckbxProdSinStock = new JCheckBox("Productos sin stock asignado");
+		chckbxProdSinStock.setBounds(737, 64, 165, 21);
+		panel_1.add(chckbxProdSinStock);
 
 		lblGestionarProductos = new JLabel("Gestionar Productos");
 		lblGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -236,7 +244,10 @@ private static final long serialVersionUID = 1L;
 	public JTextField getTextTalle() {
 		return textTalle;
 	}
-
 	
+	
+	public JCheckBox getChckbxProdSinStock() {
+		return chckbxProdSinStock;
+	}
 }
 
