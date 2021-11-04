@@ -37,7 +37,8 @@ public class ControladorVerPasos implements ActionListener {
 	List<RecetaDTO> recetasEnComboBox;
 	RecetaDTO recetaSeleccionada = new RecetaDTO(0,0, "");
 	List<PasoDeRecetaDTO> pasosRecetaEnLista;
-	List<MaestroProductoDTO> ingredientesEnLista;
+	PasoDeRecetaDTO pasoDeRecetaSeleccionado;
+	List<MaestroProductoDTO> ingredientesEnComboBox;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
@@ -74,6 +75,7 @@ public class ControladorVerPasos implements ActionListener {
 		
 		this.ventanaPrincipal.getBtnAgregarPasoAReceta().addActionListener(r->incluirPaso(r));
 		this.ventanaPrincipal.getBtnReceta().addActionListener(r->darDeAltaReceta(r));
+		this.ventanaPrincipal.getBtnAgregarIngrediente().addActionListener(r->agregarIngrediente(r));
 	}
 
 	public void inicializar() {
@@ -255,17 +257,17 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		if(this.recetaSeleccionada.getIdReceta() == 0) {
-			return;
+			//return;	//ES NECESARIO TENERLO COMENTADO O SINO NO AGREGA INGREDIENTES NUEVO EN LA TABLA, NO SE VE
 		}
 		int filasSeleccionadas = ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
 		if(filasSeleccionadas == -1) {
 			return;
 		}
+		pasoDeRecetaSeleccionado = this.pasosRecetaEnLista.get(filasSeleccionadas);
 		llenarTablaIngredientes(this.pasosRecetaEnLista.get(filasSeleccionadas).getPasosDTO());
 	}
 	
 	private void llenarTablaIngredientes(PasoDTO pasosDTO) {
-		System.out.println("ENTRO");
 		for(int x = 0; x < pasosDTO.getMateriales().size(); x++) {
 			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), pasosDTO.getCantidadUsada().get(x)};
 			ventanaPrincipal.getModelIngredientes().addRow(agregar);
@@ -282,11 +284,11 @@ public class ControladorVerPasos implements ActionListener {
 	private void llenarComboBoxIngredientes() {
 		this.ventanaPrincipal.getComboBoxIngredientes().removeAllItems();
 		List<MaestroProductoDTO> todosProductos = this.modeloMaestroProducto.readAll();
-		ingredientesEnLista = new ArrayList<MaestroProductoDTO>();
+		ingredientesEnComboBox = new ArrayList<MaestroProductoDTO>();
 		for(MaestroProductoDTO mp: todosProductos) {
 			if(mp.getTipo().toLowerCase().equals("mp")) {
 				this.ventanaPrincipal.getComboBoxIngredientes().addItem(mp.getDescripcion());
-				ingredientesEnLista.add(mp);
+				ingredientesEnComboBox.add(mp);
 			}
 		}
 	}
@@ -297,8 +299,8 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
-		
-		pasosRecetaEnLista.add(new PasoDeRecetaDTO(0,this.recetaSeleccionada.getIdReceta(),pasosRecetaEnLista.size()+1,this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(), this.pasosEnLista.get(filasSeleccionadas[0])));
+		PasoDTO pasoIncluir = new PasoDTO(this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(),this.pasosEnLista.get(filasSeleccionadas[0]).getDescripcion());
+		pasosRecetaEnLista.add(new PasoDeRecetaDTO(0,this.recetaSeleccionada.getIdReceta(),pasosRecetaEnLista.size()+1,this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(), pasoIncluir));
 		reiniciarTablaPasosReceta();
 		llenarTablaPasosReceta(pasosRecetaEnLista);
 	}
@@ -316,6 +318,9 @@ public class ControladorVerPasos implements ActionListener {
 		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
 			return;
 		}
+		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() != 0 && this.recetaSeleccionada.getIdReceta() != 0) {
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
 		int idReceta = this.modeloFabricacion.readAllReceta().get(this.modeloFabricacion.readAllReceta().size()-1).getIdReceta();
@@ -326,6 +331,24 @@ public class ControladorVerPasos implements ActionListener {
 		
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(this.ventanaPrincipal.getComboBoxReceta().getItemCount()-1);
+	}
+	
+	private void agregarIngrediente(ActionEvent e) {
+		MaestroProductoDTO ingredienteSeleccionado = 
+				ingredientesEnComboBox.get(this.ventanaPrincipal.getComboBoxIngredientes().getSelectedIndex());
+		if(pasoDeRecetaSeleccionado == null) {
+			return;
+		}
+		if(this.recetaSeleccionada == null) {
+			return;
+		}
+		pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().add(ingredienteSeleccionado);
+		pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().add((Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+		/*
+		reiniciarTablaIngredientes();
+		this.llenarTablaIngredientes(pasoDeRecetaSeleccionado.getPasosDTO());
+		*/
+		this.refrescarTablaIngredientes();
 	}
 
 	@Override

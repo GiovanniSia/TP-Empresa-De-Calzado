@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
@@ -23,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JSpinner;
 
 public class VerPasos extends JFrame {
 
@@ -61,6 +64,9 @@ public class VerPasos extends JFrame {
 	private JTable tablaIngredientes;
 	private JButton btnAgregarPasoAReceta;
 	JButton btnReceta;
+	
+	JSpinner spinnerCantidadIngrediente;
+	JButton btnAgregarIngrediente;
 
 	public VerPasos() {
 		initialize();
@@ -224,13 +230,18 @@ public class VerPasos extends JFrame {
 		comboBoxIngredientes.setBounds(548, 239, 138, 22);
 		panel.add(comboBoxIngredientes);
 		
-		JButton btnAgregar_1_1 = new JButton("");
-		btnAgregar_1_1.setBounds(548, 268, 60, 60);
-		panel.add(btnAgregar_1_1);
+		btnAgregarIngrediente = new JButton("");
+		btnAgregarIngrediente.setBounds(548, 268, 60, 60);
+		panel.add(btnAgregarIngrediente);
 		
 		btnAgregarPasoAReceta = new JButton("");
 		btnAgregarPasoAReceta.setBounds(287, 127, 60, 60);
 		panel.add(btnAgregarPasoAReceta);
+		
+		SpinnerModel sm = new SpinnerNumberModel(1, 1, 100, 1);
+		spinnerCantidadIngrediente = new JSpinner(sm);
+		spinnerCantidadIngrediente.setBounds(618, 269, 68, 20);
+		panel.add(spinnerCantidadIngrediente);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -376,5 +387,13 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnReceta() {
 		return btnReceta;
+	}
+
+	public JSpinner getSpinnerCantidadIngrediente() {
+		return spinnerCantidadIngrediente;
+	}
+
+	public JButton getBtnAgregarIngrediente() {
+		return btnAgregarIngrediente;
 	}
 }
