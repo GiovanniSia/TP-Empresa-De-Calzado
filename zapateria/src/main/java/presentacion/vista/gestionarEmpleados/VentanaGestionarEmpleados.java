@@ -29,8 +29,7 @@ public class VentanaGestionarEmpleados extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Cod.Empleado", "CUIL", "Nombre", "Apellido", "CorreoElectronico", "TipoEmpleado",
-			"Clave" };
+	private String[] nombreColumnas = { "Cod.Empleado", "CUIL", "Nombre", "Apellido", "CorreoElectronico", "TipoEmpleado"};
 	private DefaultTableModel model;
 	private JTable tablaEmpleados;
 	private JButton btnAtras;

@@ -66,6 +66,12 @@ public class ControladorLogin {
 			JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
 			return false;
 		}
+		
+		if(empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Desempleado")) {
+			JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
+			return false;
+		}
+		
 		JOptionPane.showMessageDialog(null,
 				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
 

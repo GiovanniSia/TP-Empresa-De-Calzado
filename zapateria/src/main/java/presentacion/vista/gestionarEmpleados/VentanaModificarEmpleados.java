@@ -27,6 +27,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaModificarEmpleados extends JFrame {
 
@@ -39,7 +41,7 @@ public class VentanaModificarEmpleados extends JFrame {
 	private JTextField txtCorreoElectronico;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbTipoEmpleado;
-	private JButton btnAgregar;
+	private JButton btnActualizar;
 	private JButton btnAtras;
 	private JCheckBox checkboxCambiarClave;
 	private JLabel lblMostrarClaveNueva;
@@ -119,11 +121,11 @@ public class VentanaModificarEmpleados extends JFrame {
 		lblNewLabel_4.setBounds(70, 314, 38, 50);
 		contentPane.add(lblNewLabel_4);
 
-		btnAgregar = new JButton("");
-		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAgregar.setBounds(176, 314, 50, 50);
-		cambiarIconoBotones(btnAgregar, "update.png");
-		contentPane.add(btnAgregar);
+		btnActualizar = new JButton("");
+		btnActualizar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnActualizar.setBounds(176, 314, 50, 50);
+		cambiarIconoBotones(btnActualizar, "update.png");
+		contentPane.add(btnActualizar);
 
 		JLabel lblNewLabel_4_1 = new JLabel("Actualizar");
 		lblNewLabel_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -223,13 +225,23 @@ public class VentanaModificarEmpleados extends JFrame {
 		
 		txtClaveNueva = new JPasswordField();
 		txtClaveNueva.setBounds(177, 258, 116, 20);
+		txtClaveNueva.setEditable(false);
 		contentPane.add(txtClaveNueva);
 		
 		checkboxCambiarClave = new JCheckBox("Cambiar Clave");
+		checkboxCambiarClave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(checkboxCambiarClave.isSelected()) {
+					txtClaveNueva.setEditable(true);
+				}else {
+					txtClaveNueva.setEditable(false);
+					
+				}
+			}
+		});
 		checkboxCambiarClave.setBounds(176, 230, 116, 23);
 		contentPane.add(checkboxCambiarClave);
 		frame.setLocationRelativeTo(null);
-
 	}
 
 	public void show() {
@@ -286,8 +298,8 @@ public class VentanaModificarEmpleados extends JFrame {
 		return cbTipoEmpleado;
 	}
 
-	public JButton getBtnAgregar() {
-		return btnAgregar;
+	public JButton getBtnActualizar() {
+		return btnActualizar;
 	}
 
 	public JButton getBtnAtras() {

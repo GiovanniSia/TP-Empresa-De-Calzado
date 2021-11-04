@@ -5,23 +5,28 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import dto.EmpleadoDTO;
+import dto.MaestroProductoDTO;
 import modelo.Empleado;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.vista.gestionarEmpleados.VentanaGestionarEmpleados;
+
 public class ControladorGestionarEmpleados {
 
 	private VentanaGestionarEmpleados ventanaGestionarEmpleados;
 	private Empleado empleado;
 	private List<EmpleadoDTO> empleadosEnTabla;
-	private String[] estados = {"Cajero","Vendedor","Supervisor","Supervisor de Fabrica","Operario de Fabrica","Administrativo","Gerente"};
+	private String[] estados = { "Cajero", "Vendedor", "Supervisor", "Supervisor de Fabrica", "Operario de Fabrica",
+			"Administrativo", "Gerente" };
 	private ControladorAgregarEmpleados controladorAgregarEmpleados;
-	
+
 	private ControladorModificarEmpleados controladorModificarEmpelados;
-	
+
 	private Controlador controlador;
-	
+
 	public ControladorGestionarEmpleados() {
 		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -36,12 +41,14 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void inicializar() {
-		// Botones
+		this.controladorAgregarEmpleados.inicializar();
+		this.controladorModificarEmpelados.inicializar();
+		
 		this.ventanaGestionarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaGestionarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
 		this.ventanaGestionarEmpleados.getBtnModificar().addActionListener(c -> actualizar(c));
 		this.ventanaGestionarEmpleados.getBtnHistorialCambio().addActionListener(v -> verHistorial(v));
-		
+
 		rellenarCbTipoEmpleado();
 
 		// TextFiltos
@@ -58,7 +65,7 @@ public class ControladorGestionarEmpleados {
 				realizarBusqueda();
 			}
 		});
-		
+
 		this.ventanaGestionarEmpleados.getCbTipoEmpleado().addActionListener(a -> realizarBusqueda());
 
 	}
@@ -72,30 +79,39 @@ public class ControladorGestionarEmpleados {
 		String txtIdEmpleado = this.ventanaGestionarEmpleados.getTxtFiltroIdEmpleado().getText();
 		String txtCUIL = this.ventanaGestionarEmpleados.getTxtFiltroCUIL().getText();
 		String tipoEmpleado = this.ventanaGestionarEmpleados.getCbTipoEmpleado().getSelectedItem().toString();
-		if(tipoEmpleado.equals("Sin seleccionar")) {
-			tipoEmpleado="";
+		if (tipoEmpleado.equals("Sin seleccionar")) {
+			tipoEmpleado = "";
 		}
-		
-		List<EmpleadoDTO> empleadosFiltro = this.empleado.getFiltrarPor("IdEmpleado", txtIdEmpleado,
-				"CUIL", txtCUIL,"TipoEmpleado", tipoEmpleado);
+
+		List<EmpleadoDTO> empleadosFiltro = this.empleado.getFiltrarPor("IdEmpleado", txtIdEmpleado, "CUIL", txtCUIL,
+				"TipoEmpleado", tipoEmpleado);
 		llenarTabla(empleadosFiltro);
 	}
 
 	public void agregar(ActionEvent v) {
-		this.controladorAgregarEmpleados.inicializar();
 		this.controladorAgregarEmpleados.mostrarVentana();
 	}
 
 	public void verHistorial(ActionEvent v) {
-
 	}
 
 	public void actualizar(ActionEvent p) {
-		this.controladorModificarEmpelados.inicializar();
+		int filaSeleccionada = filaSeleccionadaTablaProducto();
+		if (filaSeleccionada == -1) {
+			JOptionPane.showMessageDialog(null, "Seleccione un empleado");
+			return;
+		}
+		EmpleadoDTO empleadoSeleccionado = this.empleadosEnTabla.get(filaSeleccionada);
+		controladorModificarEmpelados.setEmpleadoSeleccionado(empleadoSeleccionado);
+
 		this.controladorModificarEmpelados.mostrarVentana();
 	}
-	
-	public void cerrarTodasLasVentanas(){
+
+	public int filaSeleccionadaTablaProducto() {
+		return this.ventanaGestionarEmpleados.getTablaEmpleados().getSelectedRow();
+	}
+
+	public void cerrarTodasLasVentanas() {
 		this.controladorAgregarEmpleados.cerrarVentana();
 	}
 
@@ -107,10 +123,10 @@ public class ControladorGestionarEmpleados {
 	public void atras(ActionEvent a) {
 		cerrarTodasLasVentanas();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void rellenarCbTipoEmpleado() {
-		for(int i=0; i<estados.length; i++) {
+		for (int i = 0; i < estados.length; i++) {
 			this.ventanaGestionarEmpleados.getCbTipoEmpleado().addItem(estados[i]);
 		}
 	}
@@ -132,8 +148,7 @@ public class ControladorGestionarEmpleados {
 			String Apellido = m.getApellido();
 			String CorreoElectronico = m.getCorreoElectronico();
 			String TipoEmpleado = m.getTipoEmpleado();
-			String Contra = m.getContra();
-			Object[] fila = { IdEmpleado, CUIL, Nombre, Apellido, CorreoElectronico, TipoEmpleado, Contra };
+			Object[] fila = { IdEmpleado, CUIL, Nombre, Apellido, CorreoElectronico, TipoEmpleado };
 			this.ventanaGestionarEmpleados.getModel().addRow(fila);
 		}
 	}
