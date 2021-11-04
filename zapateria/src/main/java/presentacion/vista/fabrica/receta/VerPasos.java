@@ -54,6 +54,11 @@ public class VerPasos extends JFrame {
 	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
+	
+	JScrollPane spIngredientes;
+	private String[] nombreColumnasIngredientes = { "Producto","Cantidad"};
+	private DefaultTableModel modelIngredientes;
+	private JTable tablaIngredientes;
 
 	public VerPasos() {
 		initialize();
@@ -184,9 +189,20 @@ public class VerPasos extends JFrame {
 		tablaPasosReceta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		this.spPasosReceta.setViewportView(tablaPasosReceta);
 		
-		JScrollPane spCliente_1_1 = new JScrollPane();
-		spCliente_1_1.setBounds(548, 81, 138, 147);
-		panel.add(spCliente_1_1);
+		spIngredientes = new JScrollPane();
+		spIngredientes.setBounds(548, 81, 138, 147);
+		panel.add(spIngredientes);
+		this.modelIngredientes = new DefaultTableModel(null, this.nombreColumnasIngredientes){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+            	return false;
+            }
+        };
+		this.tablaIngredientes = new JTable(modelIngredientes);
+		tablaIngredientes.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		this.spIngredientes.setViewportView(tablaIngredientes);
 		
 		JButton btnAgregar_1 = new JButton("");
 		btnAgregar_1.addActionListener(new ActionListener() {
@@ -330,5 +346,21 @@ public class VerPasos extends JFrame {
 
 	public JTable getTablaPasosReceta() {
 		return tablaPasosReceta;
+	}
+	
+	public JScrollPane getSpIngredientes() {
+		return spIngredientes;
+	}
+
+	public String[] getNombreColumnasIngredientes() {
+		return nombreColumnasIngredientes;
+	}
+
+	public DefaultTableModel getModelIngredientes() {
+		return modelIngredientes;
+	}
+
+	public JTable getTablaIngredientes() {
+		return tablaIngredientes;
 	}
 }

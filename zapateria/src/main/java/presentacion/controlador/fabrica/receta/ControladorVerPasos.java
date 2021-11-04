@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -51,17 +54,27 @@ public class ControladorVerPasos implements ActionListener {
 		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
 		
 		ventanaPrincipal.getComboBoxReceta().addActionListener(r-> seleccionReceta(r));
+		ventanaPrincipal.getTablaPasosReceta().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSM = ventanaPrincipal.getTablaPasosReceta().getSelectionModel();
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				refrescarTablaIngredientes();
+			}
+		});
 	}
 
 	public void inicializar() {
 		refrescarComboBoxReceta();
+		llenarTablaPasosReceta();
+		refrescarTablaIngredientes();
+		
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
 	}
 	
 	private void refrescarTabla() {
 		reiniciarTablaTrabajos();
-		llenarTablaPasosReceta();
 		pasosEnLista = recuperarListaPasos();
 		llenarTablaConPasos(pasosEnLista);
 	}
@@ -220,6 +233,36 @@ public class ControladorVerPasos implements ActionListener {
 		ventanaPrincipal.getModelPasosReceta().setRowCount(0);
 		ventanaPrincipal.getModelPasosReceta().setColumnCount(0);
 		ventanaPrincipal.getModelPasosReceta().setColumnIdentifiers(ventanaPrincipal.getNombreColumnasPasosReceta());
+	}
+	
+	private void refrescarTablaIngredientes() {
+		reiniciarTablaIngredientes();
+		if(this.recetaSeleccionada == null) {
+			return;
+		}
+		
+		int filasSeleccionadas = ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		if(filasSeleccionadas == -1) {
+			return;
+		}
+		System.out.println(this.pasosRecetaEnLista.get(filasSeleccionadas).getPasosDTO().getDescripcion());
+		
+		llenarTablaIngredientes(this.pasosRecetaEnLista.get(filasSeleccionadas).getPasosDTO());
+		
+	}
+	
+	private void llenarTablaIngredientes(PasoDTO pasosDTO) {
+		System.out.println("ENTRO");
+		for(int x = 0; x < pasosDTO.getMateriales().size(); x++) {
+			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), pasosDTO.getCantidadUsada().get(x)};
+			ventanaPrincipal.getModelIngredientes().addRow(agregar);
+		}
+	}
+
+	private void reiniciarTablaIngredientes() {
+		ventanaPrincipal.getModelIngredientes().setRowCount(0);
+		ventanaPrincipal.getModelIngredientes().setColumnCount(0);
+		ventanaPrincipal.getModelIngredientes().setColumnIdentifiers(ventanaPrincipal.getNombreColumnasIngredientes());
 	}
 
 	@Override
