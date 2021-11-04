@@ -26,6 +26,8 @@ public class ControladorVerPasos implements ActionListener {
 	int[]filasSeleccionadas;
 	
 	List<RecetaDTO> recetasEnComboBox;
+	RecetaDTO recetaSeleccionada = new RecetaDTO(0,0, "");
+	List<PasoDeRecetaDTO> pasosRecetaEnLista;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
@@ -47,6 +49,8 @@ public class ControladorVerPasos implements ActionListener {
 		});
 		ventanaPrincipal.getBtnAgregar().addActionListener(r-> agregarPaso(r));
 		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
+		
+		ventanaPrincipal.getComboBoxReceta().addActionListener(r-> seleccionReceta(r));
 	}
 
 	public void inicializar() {
@@ -57,6 +61,7 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void refrescarTabla() {
 		reiniciarTablaTrabajos();
+		llenarTablaPasosReceta();
 		pasosEnLista = recuperarListaPasos();
 		llenarTablaConPasos(pasosEnLista);
 	}
@@ -184,6 +189,38 @@ public class ControladorVerPasos implements ActionListener {
 		}
 	}
 	
+	private void seleccionReceta(ActionEvent r) {
+		reiniciarTablaPasosReceta();
+		llenarTablaPasosReceta();
+	}
+	
+	private void llenarTablaPasosReceta() {
+		reiniciarTablaPasosReceta();
+		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
+			return;
+		}
+		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == 0) {
+			//Limpiar tabla
+			return;
+		}
+		recetaSeleccionada = this.recetasEnComboBox.get(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex()-1);
+		pasosRecetaEnLista = this.modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionada.getIdReceta());
+		llenarTablaPasosReceta(pasosRecetaEnLista);
+		this.ventanaPrincipal.getTextFieldReceta().setText(recetaSeleccionada.getDescripcion());
+	}
+	
+	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
+		for(PasoDeRecetaDTO p: pasos) {
+			Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion()};
+			this.ventanaPrincipal.getModelPasosReceta().addRow(agregar);
+		}
+	}
+
+	private void reiniciarTablaPasosReceta() {
+		ventanaPrincipal.getModelPasosReceta().setRowCount(0);
+		ventanaPrincipal.getModelPasosReceta().setColumnCount(0);
+		ventanaPrincipal.getModelPasosReceta().setColumnIdentifiers(ventanaPrincipal.getNombreColumnasPasosReceta());
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

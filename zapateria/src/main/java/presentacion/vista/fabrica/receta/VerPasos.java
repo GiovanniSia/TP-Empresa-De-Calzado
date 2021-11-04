@@ -50,6 +50,10 @@ public class VerPasos extends JFrame {
 	JComboBox comboBoxReceta;
 	JComboBox comboBoxIngredientes;
 	
+	JScrollPane spPasosReceta;
+	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion"};
+	private DefaultTableModel modelPasosReceta;
+	private JTable tablaPasosReceta;
 
 	public VerPasos() {
 		initialize();
@@ -157,12 +161,28 @@ public class VerPasos extends JFrame {
 		panel.add(lblEliminar);
 		
 		comboBoxReceta = new JComboBox();
-		comboBoxReceta.setBounds(361, 36, 138, 22);
+		comboBoxReceta.setBounds(361, 36, 177, 22);
 		panel.add(comboBoxReceta);
 		
-		JScrollPane spCliente_1 = new JScrollPane();
-		spCliente_1.setBounds(361, 81, 138, 147);
-		panel.add(spCliente_1);
+		spPasosReceta = new JScrollPane();
+		spPasosReceta.setBounds(361, 81, 177, 147);
+		panel.add(spPasosReceta);
+		this.modelPasosReceta = new DefaultTableModel(null, this.nombreColumnasPasosReceta){
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int filas, int columnas) {
+            	/*
+                if(columnas == 3) {
+                    return true;
+                }else {*/
+                    return false;
+                //}
+            }
+        };
+		this.tablaPasosReceta = new JTable(modelPasosReceta);
+		tablaPasosReceta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		this.spPasosReceta.setViewportView(tablaPasosReceta);
 		
 		JScrollPane spCliente_1_1 = new JScrollPane();
 		spCliente_1_1.setBounds(548, 81, 138, 147);
@@ -179,7 +199,7 @@ public class VerPasos extends JFrame {
 		textFieldReceta = new JTextField();
 		textFieldReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textFieldReceta.setColumns(10);
-		textFieldReceta.setBounds(361, 239, 138, 20);
+		textFieldReceta.setBounds(361, 239, 177, 20);
 		panel.add(textFieldReceta);
 		
 		comboBoxIngredientes = new JComboBox();
@@ -293,5 +313,22 @@ public class VerPasos extends JFrame {
 	@SuppressWarnings("rawtypes")
 	public JComboBox getComboBoxIngredientes() {
 		return comboBoxIngredientes;
+	}
+	
+
+	public JScrollPane getSpPasosReceta() {
+		return spPasosReceta;
+	}
+
+	public String[] getNombreColumnasPasosReceta() {
+		return nombreColumnasPasosReceta;
+	}
+
+	public DefaultTableModel getModelPasosReceta() {
+		return modelPasosReceta;
+	}
+
+	public JTable getTablaPasosReceta() {
+		return tablaPasosReceta;
 	}
 }
