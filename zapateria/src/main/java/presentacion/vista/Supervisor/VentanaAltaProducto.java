@@ -274,19 +274,16 @@ public class VentanaAltaProducto {
 		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		comboBoxEstado.setBounds(178, 485, 178, 19);
-		comboBoxEstado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxEstado);
 
 		comboBoxFabricado = new JComboBox<String>();
 		comboBoxFabricado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		comboBoxFabricado.setBounds(178, 173, 178, 25);
-		comboBoxFabricado.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxFabricado);
 
 		comboBoxTipo = new JComboBox<String>();
 		comboBoxTipo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		comboBoxTipo.setBounds(178, 133, 178, 25);
-		comboBoxTipo.addItem("Sin seleccionar");
 		frame.getContentPane().add(comboBoxTipo);
 
 		lblCantidadAReponer = new JLabel("Cantidad a reponer (por lote)");

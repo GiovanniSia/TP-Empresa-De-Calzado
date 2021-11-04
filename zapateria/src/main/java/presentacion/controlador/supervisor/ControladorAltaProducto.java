@@ -142,17 +142,17 @@ public class ControladorAltaProducto {
 	}
 	
 	public void llenarCb() {
-		String[] cbTipo = {"Producto Terminado","Materia Prima"};
+		String[] cbTipo = {"Sin seleccionar","Producto Terminado","Materia Prima"};
 		for(int i=0; i<cbTipo.length;i++) {
 			this.ventanaAltaProducto.getComboBoxTipo().addItem(cbTipo[i]);
 		}
 		
-		String[] cbFabricado = {"Si","No"};
+		String[] cbFabricado = {"Sin seleccionar","Si","No"};
 		for(int i=0; i<cbFabricado.length;i++) {
 			this.ventanaAltaProducto.getComboBoxFabricado().addItem(cbFabricado[i]);
 		}
 
-		String[] estado = {"Activo","Inactivo","Suspendido"};
+		String[] estado = {"Sin seleccionar","Activo","Inactivo","Suspendido"};
 		for(int i=0; i<estado.length;i++) {
 			this.ventanaAltaProducto.getComboBoxEstado().addItem(estado[i]);
 		}
@@ -163,7 +163,7 @@ public class ControladorAltaProducto {
 		}
 		
 		
-		String[] talle = {"XS","S","M","L","XL","XXL"};
+		String[] talle = {"Sin seleccionar","XS","S","M","L","XL","XXL"};
 		for(int i=0; i<talle.length; i++) {
 			this.ventanaAltaProducto.getComboBoxTalle().addItem(talle[i]);
 		}
@@ -172,6 +172,7 @@ public class ControladorAltaProducto {
 	
 	public void filtrarTallePorNumero() {
 		this.ventanaAltaProducto.getComboBoxTalle().removeAllItems();
+		this.ventanaAltaProducto.getComboBoxTalle().addItem("Sin seleccionar");
 		
 		if(this.ventanaAltaProducto.getChckbxNumerico().isSelected()) {
 			//15 al 50
@@ -205,22 +206,22 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		String costo = this.ventanaAltaProducto.getTextCosto().getText();
-		if(costo.equals("")) {
-			JOptionPane.showMessageDialog(null, "El costo de produccion no puede ser vacio");
+		if(costo.equals("") || Double.parseDouble(costo)<=0) {
+			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
 			return false;
 		}
 		String precioMayorista = this.ventanaAltaProducto.getTextPrecioMayorista().getText();
-		if(precioMayorista.equals("") && !tipo.equals("Materia Prima")) {
-			JOptionPane.showMessageDialog(null, "El precio mayorista no puede ser vacio");
+		if((precioMayorista.equals("") || Double.parseDouble(precioMayorista)<=0) && !tipo.equals("Materia Prima")) {
+			JOptionPane.showMessageDialog(null, "El precio mayorista es invalido");
 			return false;
 		}
 		String precioMinorista = this.ventanaAltaProducto.getTextPrecioMinorista().getText();
-		if(precioMinorista.equals("") && !tipo.equals("Materia Prima")) {
-			JOptionPane.showMessageDialog(null, "El precio minorista no puede ser vacio");
+		if((precioMinorista.equals("") || Double.parseDouble(precioMinorista)<=0) && !tipo.equals("Materia Prima")) {
+			JOptionPane.showMessageDialog(null, "El precio minorista es invalido");
 			return false;
 		}
 		String puntoRepMinimo = this.ventanaAltaProducto.getTextPuntoRepMinimo().getText();
-		if(puntoRepMinimo.equals("")) {
+		if(puntoRepMinimo.equals("") || Integer.parseInt(puntoRepMinimo)<=0) {
 			JOptionPane.showMessageDialog(null, "Debe establecer un punto de reposicion minimo");
 			return false;
 		}
@@ -244,12 +245,12 @@ public class ControladorAltaProducto {
 		}
 		
 		String cantARep = this.ventanaAltaProducto.getTextCantidadAReponer().getText();
-		if(cantARep.equals("")){
+		if(cantARep.equals("") || Integer.parseInt(cantARep)<=0){
 			JOptionPane.showMessageDialog(null, "Debe establecer una cantidad por defecto para reponer");
 			return false;
 		}
 		String diasRep = this.ventanaAltaProducto.getTextDiasParaReponer().getText();
-		if(diasRep.equals("")){
+		if(diasRep.equals("") || Integer.parseInt(diasRep)<=0){
 			JOptionPane.showMessageDialog(null, "Debe establecer una cantidad de dias para reponer");
 			return false;
 		}
