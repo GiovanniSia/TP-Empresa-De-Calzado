@@ -94,10 +94,28 @@ public class VentanaGestionarClientes extends JFrame{
 		tablaClientes.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
 		tablaClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaClientes.getColumnModel().getColumn(1).setResizable(false);
+		tablaClientes.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(7).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(8).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(9).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(10).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(11).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(12).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(13).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(14).setPreferredWidth(100);
+		tablaClientes.getColumnModel().getColumn(15).setPreferredWidth(100);
+		
+		
+//		tablaClientes.getColumnModel().getColumn(0).setResizable(false);
+
+//		tablaClientes.getColumnModel().getColumn(1).setResizable(false);
 		tablaClientes.getTableHeader().setReorderingAllowed(false);
+		tablaClientes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		spCliente.setViewportView(tablaClientes);
 
 		btnAtras = new JButton("");
