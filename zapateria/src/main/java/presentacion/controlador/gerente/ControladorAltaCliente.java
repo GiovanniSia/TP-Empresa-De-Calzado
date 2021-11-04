@@ -302,8 +302,8 @@ public class ControladorAltaCliente {
 			return false;
 		}
 		String saldoInicial = this.ventanaAltaCliente.getTextSaldoInicial().getText();
-		if(saldoInicial.equals("")) {
-			JOptionPane.showMessageDialog(null, "El saldo inicial no debe estar vacio");
+		if(saldoInicial.equals("") || Double.parseDouble(saldoInicial)<=0) {
+			JOptionPane.showMessageDialog(null, "El saldo inicial es incorrecto");
 			return false;
 		}
 		
@@ -351,7 +351,7 @@ public class ControladorAltaCliente {
 				JOptionPane.showMessageDialog(null, "Debe seleccionar un estado", "Error", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			if(limiteDeCredito.equals("")||Double.parseDouble(limiteDeCredito)<=0) {
+			if(limiteDeCredito.equals("") || Double.parseDouble(limiteDeCredito)<=0) {
 				JOptionPane.showMessageDialog(null, "El limite de credito es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}

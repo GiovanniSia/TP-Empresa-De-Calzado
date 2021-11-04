@@ -375,6 +375,14 @@ public class VentanaAltaCliente {
 		btnEditar.setVisible(false);
 		
 		textLimiteCredito = new JTextField();
+		textSaldoInicial.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textSaldoInicial.getText().length()>=15) {
+                    e.consume();
+                }
+            }
+        });		
 		textLimiteCredito.setColumns(10);
 		textLimiteCredito.setBounds(158, 346, 165, 23);
 		frame.getContentPane().add(textLimiteCredito);
