@@ -366,7 +366,7 @@ public class Controlador {
 
 	public void cerrarSesion(ActionEvent a) {
 		cerrarTodasLasVentanas();
-        controladorLogin.mostrarMenu();
+		controladorLogin.inicializar();
         controladorLogin.mostrarVentana();
 	}
 

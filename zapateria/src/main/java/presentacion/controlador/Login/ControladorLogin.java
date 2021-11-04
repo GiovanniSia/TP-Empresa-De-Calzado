@@ -1,11 +1,7 @@
 package presentacion.controlador.Login;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -33,25 +29,16 @@ public class ControladorLogin {
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.sucursal = new Sucursal(new DAOSQLFactory());
-		this.ventanaLogin = new VentanaLogin();
+
 		this.sucursales = sucursal.readAll();
 	}
 
 	public void inicializar() {
-		if(yaSeInicioSesion()) {
-			mostrarControlador();
-		}else {
-			mostrarMenu();
-		}
-		
+		this.ventanaLogin = new VentanaLogin();
+		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
+		rellenarCombobox();
 	}
 
-	public void mostrarMenu() {
-		mostrarVentana();
-		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
-		rellenarCombobox();		
-	}
-	
 	private void iniciarSesion(ActionEvent a) {
 		if (inicioSesionValido()) {
 			iniciarZapateria();
@@ -80,6 +67,12 @@ public class ControladorLogin {
 			JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
 			return false;
 		}
+		
+		if(empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Desempleado")) {
+			JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
+			return false;
+		}
+		
 		JOptionPane.showMessageDialog(null,
 				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
 
@@ -145,15 +138,4 @@ public class ControladorLogin {
 		this.ventanaLogin.cerrarVentana();
 	}
 
-	public boolean yaSeInicioSesion() {
-		Properties prop = new Properties();
-		try {
-			prop.load(new FileInputStream("inicioSesion/empleado.properties"));
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-
-	}
-	
 }
