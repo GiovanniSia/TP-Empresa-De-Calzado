@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.border.MatteBorder;
 
 public class VentanaIngresosCaja extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -37,12 +38,11 @@ public class VentanaIngresosCaja extends JFrame {
 	private JLabel lblActualizarSaldoActual;
 	private JLabel lblActualizarFechaHoy;
 	private JPanel panel;
+	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_3;
 	private JButton btnAtras;
 	private JButton btnRealizarIngreso;
-	private JLabel lblAtras;
-	private JLabel lblRecargar;
 
 	public static void main(String[] args) {
 		VentanaIngresosCaja n = new VentanaIngresosCaja();
@@ -65,7 +65,7 @@ public class VentanaIngresosCaja extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 512, 332);
+		frame.setBounds(100, 100, 512, 369);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +75,7 @@ public class VentanaIngresosCaja extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 
-		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		panel_1.setBounds(0, 62, 496, 72);
 
 		contentPane.add(panel_1);
@@ -123,8 +123,8 @@ public class VentanaIngresosCaja extends JFrame {
 		JPanel panel_2 = new JPanel();
 
 		panel_2.setBorder(null);
-		panel_2.setBackground(new Color(248, 248, 255));
-		panel_2.setBounds(0, 134, 496, 159);
+		panel_2.setBackground(new Color(255, 255, 255, 180));
+		panel_2.setBounds(0, 134, 496, 103);
 
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
@@ -177,54 +177,72 @@ public class VentanaIngresosCaja extends JFrame {
 		txtFieldRecargaSaldo.setColumns(10);
 		txtFieldRecargaSaldo.setBounds(313, 59, 136, 28);
 		panel_2.add(txtFieldRecargaSaldo);
-
-		btnAtras = new JButton("");
-		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(36, 97, 50, 50);
-		panel_2.add(btnAtras);
-		cambiarIconoBotones(btnAtras, "back2.png");
-
-		btnRealizarIngreso = new JButton("");
-		btnRealizarIngreso.setBackground(new Color(248, 248, 255));
-		btnRealizarIngreso.setBounds(313, 98, 50, 50);
-
-		panel_2.add(btnRealizarIngreso);
-		cambiarIconoBotones(btnRealizarIngreso, "cashier2.png");
-
-		lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(96, 97, 44, 50);
-		panel_2.add(lblAtras);
-
-		lblRecargar = new JLabel("Ingresar");
-		lblRecargar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblRecargar.setBounds(373, 98, 76, 50);
-		panel_2.add(lblRecargar);
-
+		
 		panel = new JPanel();
 		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 1, 496, 50);
+		panel.setBounds(0, 0, 496, 53);
 		contentPane.add(panel);
-
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(274, 5, 59, 19);
 		panel.add(lblNewLabel);
-
-		lblNewLabel_3 = new JLabel("Sucursal:");
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblNewLabel_3.setBounds(565, 22, 109, 14);
+		
+		lblNewLabel_3 = new JLabel("Empleado:");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_3.setBounds(274, 28, 59, 19);
 		panel.add(lblNewLabel_3);
+		
+		btnAtras = new JButton("");
+		btnAtras.setBackground(new Color(248, 248, 255));
+		btnAtras.setBounds(36, 248, 60, 60);
+		cambiarIconoBotones(btnAtras, "back2.png");
+		contentPane.add(btnAtras);
+		
+		JLabel lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(105, 248, 44, 60);
+		contentPane.add(lblAtras);
+		
+		btnRealizarIngreso = new JButton("");
+		btnRealizarIngreso.setBackground(new Color(248, 248, 255));
+		btnRealizarIngreso.setBounds(312, 248, 60, 60);
+		cambiarIconoBotones(btnRealizarIngreso, "cashier2.png");
+		contentPane.add(btnRealizarIngreso);
+		
+		JLabel lblRecargar = new JLabel("Ingresar");
+		lblRecargar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblRecargar.setBounds(384, 247, 76, 61);
+		contentPane.add(lblRecargar);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 53, 640, 480);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
 		ImageIcon Icono = new ImageIcon(
-				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
-		boton.setIcon(Icono);
-
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

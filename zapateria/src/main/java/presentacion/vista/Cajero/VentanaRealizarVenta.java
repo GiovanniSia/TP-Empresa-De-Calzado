@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 public class VentanaRealizarVenta {
 
@@ -99,7 +100,7 @@ public class VentanaRealizarVenta {
 		frame.setBounds(100, 100, 854, 573);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 0));
 		panel.setBounds(0, 0, 840, 534);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -112,7 +113,7 @@ public class VentanaRealizarVenta {
 		panel.add(lblNewLabel);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 248, 220));
+		panel_2.setBackground(new Color(255, 248, 220, 180));
 		panel_2.setBounds(10, 96, 820, 360);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
@@ -326,17 +327,50 @@ public class VentanaRealizarVenta {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 837, 50);
+		panel_1.setBounds(0, 0, 840, 53);
 		panel.add(panel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_2.setBounds(10, 0, 421, 50);
-		panel_1.add(lblNewLabel_2);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_1.add(lblLogo);
+		
+		JLabel lblNewLabel_1 = new JLabel("Sucursal:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(610, 23, 59, 19);
+		panel_1.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Empleado:");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1.setBounds(416, 23, 59, 19);
+		panel_1.add(lblNewLabel_1_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 53, 856, 642);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
+		
 	}
 	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
+	}
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -363,12 +397,7 @@ public class VentanaRealizarVenta {
 
 
 
-	public void cambiarIconoBotones(JButton boton, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
-		boton.setIcon(Icono);
 
-	}
 	
 	public void cerrar() {
 		frame.setVisible(false);

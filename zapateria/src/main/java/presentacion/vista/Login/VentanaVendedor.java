@@ -1,6 +1,5 @@
 package presentacion.vista.Login;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -9,13 +8,17 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaVendedor extends JFrame {
 
@@ -24,6 +27,11 @@ public class VentanaVendedor extends JFrame {
 	private JFrame frame;
 	private JButton btnArmarVenta;
 	private JButton btnCerrarSesion;
+	private JLabel lblNewLabel_1;
+	private JPanel panel;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_2;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -35,29 +43,44 @@ public class VentanaVendedor extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 512, 332);
+		frame.setBounds(100, 100, 736, 459);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
-
-		JPanel panel = new JPanel();
-
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 0, 496, 55);
-
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 719, 53);
 		contentPane.add(panel);
-		panel.setLayout(new CardLayout(0, 0));
-
-		JLabel lblNewLabel = new JLabel("Vendedor");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel, "name_5308677579600");
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(537, 28, 59, 19);
+		panel.add(lblNewLabel);
+		
+		lblNewLabel_2 = new JLabel("Empleado:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(343, 28, 59, 19);
+		panel.add(lblNewLabel_2);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 65, 476, 217);
+		panel_1.setBackground(new Color(255, 255, 255, 0));
+		panel_1.setBounds(10, 65, 700, 344);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -65,17 +88,40 @@ public class VentanaVendedor extends JFrame {
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
-		btnArmarVenta.setBounds(96, 11, 282, 41);
+		btnArmarVenta.setBounds(210, 139, 282, 41);
 		panel_1.add(btnArmarVenta);
 
-		btnCerrarSesion = new JButton("Cerrar Sesion");
+		btnCerrarSesion = new JButton("");
 		btnCerrarSesion.setToolTipText("");
-		btnCerrarSesion.setOpaque(true);
 		btnCerrarSesion.setForeground(new Color(51, 102, 153));
 		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnCerrarSesion.setBackground(new Color(51, 102, 204));
-		btnCerrarSesion.setBounds(0, 178, 156, 39);
+		btnCerrarSesion.setBounds(10, 273, 60, 60);
+		cambiarIconoBotones(btnCerrarSesion, "exit.png");
 		panel_1.add(btnCerrarSesion);
+		cambiarIconoBotones(btnCerrarSesion, "exit.png");
+		
+		lblNewLabel_1 = new JLabel("Cerrar Sesion");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(80, 273, 132, 60);
+		panel_1.add(lblNewLabel_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 720, 540);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {
@@ -112,5 +158,4 @@ public class VentanaVendedor extends JFrame {
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
 	}
-
 }
