@@ -9,21 +9,24 @@ import dto.EmpleadoDTO;
 import modelo.Empleado;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
-import presentacion.vista.gestionarEmpleados.VentanaAgregarEmpleados;
 import presentacion.vista.gestionarEmpleados.VentanaGestionarEmpleados;
-
 public class ControladorGestionarEmpleados {
 
 	private VentanaGestionarEmpleados ventanaGestionarEmpleados;
 	private Empleado empleado;
 	private List<EmpleadoDTO> empleadosEnTabla;
 	private String[] estados = {"Cajero","Vendedor","Supervisor","Supervisor de Fabrica","Operario de Fabrica","Administrativo","Gerente"};
+	private ControladorAgregarEmpleados controladorAgregarEmpleados;
 	
-	Controlador controlador;
-
+	private ControladorModificarEmpleados controladorModificarEmpelados;
+	
+	private Controlador controlador;
+	
 	public ControladorGestionarEmpleados() {
 		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
+		this.controladorAgregarEmpleados = new ControladorAgregarEmpleados(this);
+		this.controladorModificarEmpelados = new ControladorModificarEmpleados(this);
 	}
 
 	public ControladorGestionarEmpleados(Controlador controlador) {
@@ -79,7 +82,8 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void agregar(ActionEvent v) {
-	
+		this.controladorAgregarEmpleados.inicializar();
+		this.controladorAgregarEmpleados.mostrarVentana();
 	}
 
 	public void verHistorial(ActionEvent v) {
@@ -87,7 +91,12 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void actualizar(ActionEvent p) {
-
+		this.controladorModificarEmpelados.inicializar();
+		this.controladorModificarEmpelados.mostrarVentana();
+	}
+	
+	public void cerrarTodasLasVentanas(){
+		this.controladorAgregarEmpleados.cerrarVentana();
 	}
 
 	public void mostrarVentana() {
@@ -96,10 +105,7 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void atras(ActionEvent a) {
-//		this.controladorHistorialCambioCotizacion.ocultarVentana();
-//		this.ventanaModificarCotizacion.cerrar();
-//		this.controlador.mostrarVentanaMenuDeSistemas();
-
+		cerrarTodasLasVentanas();
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -24,6 +26,7 @@ import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.JPasswordField;
 
 public class VentanaAgregarEmpleados extends JFrame {
 
@@ -34,11 +37,14 @@ public class VentanaAgregarEmpleados extends JFrame {
 	private JTextField txtApellido;
 	private JTextField txtCUIL;
 	private JTextField txtCorreoElectronico;
-	private JTextField txtClave;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbTipoEmpleado;
 	private JButton btnAgregar;
 	private JButton btnAtras;
+	private JPasswordField txtClaveNueva;
+	private JPasswordField txtRepetirClave;
+	private JLabel lblMostrarClaveNueva;
+	private JLabel lblMostrarRepetirClave;
 
 	public static void main(String[] args) {
 		VentanaAgregarEmpleados a = new VentanaAgregarEmpleados();
@@ -62,12 +68,48 @@ public class VentanaAgregarEmpleados extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 306, 399);
+		frame.setBounds(100, 100, 323, 432);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		lblMostrarClaveNueva = new JLabel("");
+		lblMostrarClaveNueva.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				txtClaveNueva.setEchoChar((char) 0);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				txtClaveNueva.setEchoChar('\u25cf');
+			}
+		});
+
+		lblMostrarClaveNueva.setBorder(null);
+		lblMostrarClaveNueva.setBounds(285, 256, 15, 18);
+		cambiarIconoLabel(lblMostrarClaveNueva, "ojo.png");
+		contentPane.add(lblMostrarClaveNueva);
+
+		lblMostrarRepetirClave = new JLabel("");
+		lblMostrarRepetirClave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				txtRepetirClave.setEchoChar((char) 0);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				txtRepetirClave.setEchoChar('\u25cf');
+			}
+		});
+
+		lblMostrarRepetirClave.setBorder(null);
+		lblMostrarRepetirClave.setBounds(285, 306, 15, 18);
+		cambiarIconoLabel(lblMostrarRepetirClave, "ojo.png");
+		contentPane.add(lblMostrarRepetirClave);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -88,24 +130,24 @@ public class VentanaAgregarEmpleados extends JFrame {
 
 		btnAtras = new JButton("");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAtras.setBounds(10, 303, 50, 50);
+		btnAtras.setBounds(10, 337, 50, 50);
 		cambiarIconoBotones(btnAtras, "back2.png");
 		contentPane.add(btnAtras);
 
 		JLabel lblNewLabel_4 = new JLabel("Atras");
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(70, 303, 38, 50);
+		lblNewLabel_4.setBounds(70, 337, 38, 50);
 		contentPane.add(lblNewLabel_4);
 
 		btnAgregar = new JButton("");
 		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAgregar.setBounds(157, 303, 50, 50);
+		btnAgregar.setBounds(167, 337, 50, 50);
 		cambiarIconoBotones(btnAgregar, "plus.png");
 		contentPane.add(btnAgregar);
 
 		JLabel lblNewLabel_4_1 = new JLabel("Agregar");
 		lblNewLabel_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4_1.setBounds(216, 303, 64, 50);
+		lblNewLabel_4_1.setBounds(226, 337, 64, 50);
 		contentPane.add(lblNewLabel_4_1);
 
 		txtNombre = new JTextField();
@@ -183,16 +225,12 @@ public class VentanaAgregarEmpleados extends JFrame {
 		lblCuil_1.setBounds(167, 161, 133, 20);
 		contentPane.add(lblCuil_1);
 
-		txtClave = new JTextField();
-		txtClave.setBounds(164, 258, 116, 20);
-		contentPane.add(txtClave);
-
 		JLabel lblIdempleado_2 = new JLabel("Tipo Empleado");
 		lblIdempleado_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblIdempleado_2.setBounds(10, 231, 117, 20);
 		contentPane.add(lblIdempleado_2);
 
-		JLabel lblClave = new JLabel("Clave");
+		JLabel lblClave = new JLabel("Clave Nueva");
 		lblClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblClave.setBounds(167, 232, 114, 20);
 		contentPane.add(lblClave);
@@ -205,8 +243,21 @@ public class VentanaAgregarEmpleados extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBackground(Color.LIGHT_GRAY);
-		separator.setBounds(137, 98, 17, 192);
+		separator.setBounds(137, 98, 17, 228);
 		contentPane.add(separator);
+
+		JLabel lblRepetirClave = new JLabel("Repetir Clave");
+		lblRepetirClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblRepetirClave.setBounds(166, 282, 114, 20);
+		contentPane.add(lblRepetirClave);
+
+		txtRepetirClave = new JPasswordField();
+		txtRepetirClave.setBounds(164, 306, 116, 20);
+		contentPane.add(txtRepetirClave);
+
+		txtClaveNueva = new JPasswordField();
+		txtClaveNueva.setBounds(164, 256, 116, 20);
+		contentPane.add(txtClaveNueva);
 		frame.setLocationRelativeTo(null);
 
 	}
@@ -228,6 +279,13 @@ public class VentanaAgregarEmpleados extends JFrame {
 			}
 		});
 		this.frame.setVisible(true);
+	}
+
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
@@ -253,10 +311,6 @@ public class VentanaAgregarEmpleados extends JFrame {
 		return txtCorreoElectronico;
 	}
 
-	public JTextField getTxtClave() {
-		return txtClave;
-	}
-
 	@SuppressWarnings("rawtypes")
 	public JComboBox getCbTipoEmpleado() {
 		return cbTipoEmpleado;
@@ -268,6 +322,14 @@ public class VentanaAgregarEmpleados extends JFrame {
 
 	public JButton getBtnAtras() {
 		return btnAtras;
+	}
+
+	public JPasswordField getTxtClaveNueva() {
+		return txtClaveNueva;
+	}
+
+	public JPasswordField getTxtRepetirClave() {
+		return txtRepetirClave;
 	}
 
 	public void cerrarVentana() {

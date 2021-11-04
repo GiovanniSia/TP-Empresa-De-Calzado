@@ -13,7 +13,7 @@ import persistencia.dao.interfaz.EmpleadoDAO;
 
 public class EmpleadoDAOSQL implements EmpleadoDAO {
 
-	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO empleados VALUES(?, ?, ?, ?, ?, ?, aes_encrypt(?,'AES'))";
 	private static final String delete = "DELETE FROM empleados WHERE IdEmpleado = ?";
 	private static final String update = "UPDATE empleados set CUIL=?, Nombre=?, Apellido=?, CorreoElectronico=?, TipoEmpleado=?, Contra=? where IdEmpleado=?";
 	private static final String readall = "select IdEmpleado,cuil,nombre,apellido,correoelectronico,tipoempleado,(aes_decrypt(contra,'AES')) Contra from empleados";
