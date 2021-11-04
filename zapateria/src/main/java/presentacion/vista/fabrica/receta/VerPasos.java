@@ -51,7 +51,7 @@ public class VerPasos extends JFrame {
 	JComboBox comboBoxIngredientes;
 	
 	JScrollPane spPasosReceta;
-	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion"};
+	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
 	
@@ -59,6 +59,7 @@ public class VerPasos extends JFrame {
 	private String[] nombreColumnasIngredientes = { "Producto","Cantidad"};
 	private DefaultTableModel modelIngredientes;
 	private JTable tablaIngredientes;
+	private JButton btnAgregarPasoAReceta;
 
 	public VerPasos() {
 		initialize();
@@ -225,6 +226,10 @@ public class VerPasos extends JFrame {
 		JButton btnAgregar_1_1 = new JButton("");
 		btnAgregar_1_1.setBounds(548, 268, 60, 60);
 		panel.add(btnAgregar_1_1);
+		
+		btnAgregarPasoAReceta = new JButton("");
+		btnAgregarPasoAReceta.setBounds(287, 127, 60, 60);
+		panel.add(btnAgregarPasoAReceta);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -362,5 +367,9 @@ public class VerPasos extends JFrame {
 
 	public JTable getTablaIngredientes() {
 		return tablaIngredientes;
+	}
+
+	public JButton getBtnAgregarPasoAReceta() {
+		return btnAgregarPasoAReceta;
 	}
 }

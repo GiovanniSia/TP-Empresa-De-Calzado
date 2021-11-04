@@ -68,6 +68,8 @@ public class ControladorVerPasos implements ActionListener {
 				refrescarTablaIngredientes();
 			}
 		});
+		
+		this.ventanaPrincipal.getBtnAgregarPasoAReceta().addActionListener(r->incluirPaso(r));
 	}
 
 	public void inicializar() {
@@ -217,14 +219,14 @@ public class ControladorVerPasos implements ActionListener {
 	private void llenarTablaPasosReceta() {
 		reiniciarTablaPasosReceta();
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
-			recetaSeleccionada = null;
+			recetaSeleccionada = new RecetaDTO(0,0, "");
 			return;
 		}
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == 0) {
-			//Limpiar tabla
-			return;
+			recetaSeleccionada = new RecetaDTO(0,0, "");
+		}else {
+			recetaSeleccionada = this.recetasEnComboBox.get(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex()-1);
 		}
-		recetaSeleccionada = this.recetasEnComboBox.get(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex()-1);
 		pasosRecetaEnLista = this.modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionada.getIdReceta());
 		llenarTablaPasosReceta(pasosRecetaEnLista);
 		this.ventanaPrincipal.getTextFieldReceta().setText(recetaSeleccionada.getDescripcion());
@@ -232,7 +234,7 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
 		for(PasoDeRecetaDTO p: pasos) {
-			Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion()};
+			Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
 			this.ventanaPrincipal.getModelPasosReceta().addRow(agregar);
 		}
 	}
@@ -248,15 +250,14 @@ public class ControladorVerPasos implements ActionListener {
 		if(this.recetaSeleccionada == null) {
 			return;
 		}
-		
+		if(this.recetaSeleccionada.getIdReceta() == 0) {
+			return;
+		}
 		int filasSeleccionadas = ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
 		if(filasSeleccionadas == -1) {
 			return;
 		}
-		System.out.println(this.pasosRecetaEnLista.get(filasSeleccionadas).getPasosDTO().getDescripcion());
-		
 		llenarTablaIngredientes(this.pasosRecetaEnLista.get(filasSeleccionadas).getPasosDTO());
-		
 	}
 	
 	private void llenarTablaIngredientes(PasoDTO pasosDTO) {
@@ -284,6 +285,18 @@ public class ControladorVerPasos implements ActionListener {
 				ingredientesEnLista.add(mp);
 			}
 		}
+	}
+	
+	private void incluirPaso(ActionEvent e) {
+		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			return;
+		}
+		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		
+		pasosRecetaEnLista.add(new PasoDeRecetaDTO(0,this.recetaSeleccionada.getIdReceta(),pasosRecetaEnLista.size()+1,this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(), this.pasosEnLista.get(filasSeleccionadas[0])));
+		reiniciarTablaPasosReceta();
+		llenarTablaPasosReceta(pasosRecetaEnLista);
 	}
 
 	@Override
