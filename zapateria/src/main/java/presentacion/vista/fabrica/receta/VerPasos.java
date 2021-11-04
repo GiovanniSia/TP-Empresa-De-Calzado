@@ -60,6 +60,7 @@ public class VerPasos extends JFrame {
 	private DefaultTableModel modelIngredientes;
 	private JTable tablaIngredientes;
 	private JButton btnAgregarPasoAReceta;
+	JButton btnReceta;
 
 	public VerPasos() {
 		initialize();
@@ -205,13 +206,13 @@ public class VerPasos extends JFrame {
 		tablaIngredientes.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		this.spIngredientes.setViewportView(tablaIngredientes);
 		
-		JButton btnAgregar_1 = new JButton("");
-		btnAgregar_1.addActionListener(new ActionListener() {
+		btnReceta = new JButton("");
+		btnReceta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnAgregar_1.setBounds(361, 268, 60, 60);
-		panel.add(btnAgregar_1);
+		btnReceta.setBounds(361, 268, 60, 60);
+		panel.add(btnReceta);
 		
 		textFieldReceta = new JTextField();
 		textFieldReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -371,5 +372,9 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnAgregarPasoAReceta() {
 		return btnAgregarPasoAReceta;
+	}
+
+	public JButton getBtnReceta() {
+		return btnReceta;
 	}
 }

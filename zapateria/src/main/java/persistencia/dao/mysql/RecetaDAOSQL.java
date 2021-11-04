@@ -75,13 +75,14 @@ public class RecetaDAOSQL implements RecetaDAO {
 		return ret;
 	}
 	
+	private static String insertPasoNuevo = "insert into pasosreceta values(?,?,?,?);";
 	private boolean insertPasoReceta(PasoDeRecetaDTO paso) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
 		try
 		{
-			statement = conexion.prepareStatement(insertRecetaNueva);
+			statement = conexion.prepareStatement(insertPasoNuevo);
 			statement.setInt(1, paso.getIdPasoReceta());
 			statement.setInt(2, paso.getIdReceta());
 			statement.setInt(3, paso.getNroOrden());

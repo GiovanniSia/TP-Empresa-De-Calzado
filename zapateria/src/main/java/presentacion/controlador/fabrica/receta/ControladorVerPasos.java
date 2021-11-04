@@ -73,6 +73,7 @@ public class ControladorVerPasos implements ActionListener {
 		});
 		
 		this.ventanaPrincipal.getBtnAgregarPasoAReceta().addActionListener(r->incluirPaso(r));
+		this.ventanaPrincipal.getBtnReceta().addActionListener(r->darDeAltaReceta(r));
 	}
 
 	public void inicializar() {
@@ -311,9 +312,20 @@ public class ControladorVerPasos implements ActionListener {
 		}
 		if(this.pasosRecetaEnLista.size() == 0){
 			return;
-		}/*
+		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
+			return;
+		}
+		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
-		this.modeloReceta.insertPasosReceta(pasosRecetaEnLista);*/
+		int idReceta = this.modeloFabricacion.readAllReceta().get(this.modeloFabricacion.readAllReceta().size()-1).getIdReceta();
+		for(PasoDeRecetaDTO p : pasosRecetaEnLista) {
+			p.setIdReceta(idReceta);
+		}
+		this.modeloReceta.insertPasosReceta(pasosRecetaEnLista);
+		
+		this.refrescarComboBoxReceta();
+		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(this.ventanaPrincipal.getComboBoxReceta().getItemCount()-1);
 	}
 
 	@Override
