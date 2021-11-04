@@ -3,6 +3,7 @@ package presentacion.controlador.gerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +158,8 @@ public class ControladorAltaCliente {
 		String impuestoAFIP = obtenerNombreCategoria(clienteAEditar);
 		this.ventanaAltaCliente.getComboBoxImpuestoAFIP().setSelectedItem(impuestoAFIP);
 		
-		this.ventanaAltaCliente.getTextSaldoInicial().setText(""+this.clienteSeteado.getCreditoDisponible());
+		BigDecimal credDisp = new BigDecimal(this.clienteSeteado.getCreditoDisponible());
+		this.ventanaAltaCliente.getTextSaldoInicial().setText(""+credDisp);
 		
 		
 		this.ventanaAltaCliente.getComboBoxPais().setSelectedItem(this.clienteSeteado.getPais());
@@ -168,7 +170,8 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getTextAltura().setText(""+this.clienteSeteado.getAltura());
 		this.ventanaAltaCliente.getTextCodPostal().setText(""+this.clienteSeteado.getCodPostal());
 		
-		this.ventanaAltaCliente.getTextLimiteCredito().setText(""+this.clienteSeteado.getLimiteCredito());
+		BigDecimal limitCred = new BigDecimal(this.clienteSeteado.getLimiteCredito());
+		this.ventanaAltaCliente.getTextLimiteCredito().setText(""+limitCred);
 		this.ventanaAltaCliente.getComboBoxEstado().setSelectedItem(this.clienteSeteado.getEstado());
 	}
 	
@@ -207,6 +210,7 @@ public class ControladorAltaCliente {
 	}
 	
 	public void salirEditar() {
+		this.clienteSeteado=null;
 		this.ventanaAltaCliente.getBtnEditar().setVisible(false);
 		this.ventanaAltaCliente.cerrar();
 		this.controladorGestionarClientes.inicializar();

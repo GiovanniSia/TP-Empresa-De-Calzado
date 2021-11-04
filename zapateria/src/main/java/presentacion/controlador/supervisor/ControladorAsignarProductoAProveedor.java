@@ -251,6 +251,15 @@ public class ControladorAsignarProductoAProveedor {
 		double precioVenta = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextPrecioVenta().getText());
 		int cantPorLote = Integer.parseInt(this.ventanaAsignarProductoAProveedor.getTextCantPorLote().getText());
 		
+		if(precioVenta<=0) {
+	   		 JOptionPane.showMessageDialog(null, "El precio de venta no puede ser menor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+	   		 return;
+		}
+		if(cantPorLote<=0) {
+	   		 JOptionPane.showMessageDialog(null, "La cantidad de productos por lote no puede ser menor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+	   		 return;
+		}
+		
 		int idProveedor = this.proveedorElegido.getId();
 		int idProducto = productoSeleccionado.getIdMaestroProducto();
 		

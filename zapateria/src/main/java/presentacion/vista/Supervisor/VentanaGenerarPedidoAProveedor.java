@@ -20,32 +20,27 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 
-public class VentanaGestionarProductos extends JFrame {
-
-private static final long serialVersionUID = 1L;
+public class VentanaGenerarPedidoAProveedor extends JFrame{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private JFrame frame;
-
+	
 	private String[] nombreColumnas = {"Id","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp"};
-	private JLabel lblNombre;
-	private JTextField txtFieldNombre;
 	private DefaultTableModel modelProductos;
-	private JTable tablaProductos;
 	private JLabel lblFiltrarPor;
 	private JLabel lblGestionarProductos;
-	private JScrollPane spProductos;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
 	private JButton btnAtras;
 	private JLabel lblAtrs;
-	private JButton btnAgregarProducto;
-	private JTextField textTalle;
-
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaGestionarProductos window = new VentanaGestionarProductos();
+					VentanaGenerarPedidoAProveedor window = new VentanaGenerarPedidoAProveedor();
 					window.show();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +49,7 @@ private static final long serialVersionUID = 1L;
 		});
 	}
 	
-	public VentanaGestionarProductos() {
+	public VentanaGenerarPedidoAProveedor() {
 		initialize();
 	}
 
@@ -78,11 +73,6 @@ private static final long serialVersionUID = 1L;
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
-		spProductos = new JScrollPane();
-		spProductos.setBounds(10, 11, 888, 145);
-		spProductos.setBackground(new Color(248, 248, 255));
-		panel.add(spProductos);
-
 		modelProductos = new DefaultTableModel(null, nombreColumnas) {
 			private static final long serialVersionUID = 1L;
 
@@ -96,16 +86,6 @@ private static final long serialVersionUID = 1L;
 			}
 		};
 
-		tablaProductos = new JTable(modelProductos);
-		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-
-		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(103);
-		tablaProductos.getColumnModel().getColumn(0).setResizable(false);
-		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
-		tablaProductos.getColumnModel().getColumn(1).setResizable(false);
-		tablaProductos.getTableHeader().setReorderingAllowed(false);
-		spProductos.setViewportView(tablaProductos);
-
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
 		btnAtras.setBounds(20, 163, 55, 50);
@@ -116,10 +96,6 @@ private static final long serialVersionUID = 1L;
 		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAtrs.setBounds(85, 163, 70, 50);
 		panel.add(lblAtrs);
-		
-		btnAgregarProducto = new JButton("Agregar Producto");
-		btnAgregarProducto.setBounds(165, 166, 132, 48);
-		panel.add(btnAgregarProducto);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
@@ -128,32 +104,12 @@ private static final long serialVersionUID = 1L;
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
-		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(10, 35, 70, 20);
-		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		panel_1.add(lblNombre);
-
-		txtFieldNombre = new JTextField();
-
-		txtFieldNombre.setBounds(10, 65, 116, 20);
-		panel_1.add(txtFieldNombre);
-
 		lblFiltrarPor = new JLabel("Filtrar por:");
 		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 0, 70, 25);
 		panel_1.add(lblFiltrarPor);
-		
-		textTalle = new JTextField();
-		textTalle.setBounds(148, 65, 96, 19);
-		panel_1.add(textTalle);
-		textTalle.setColumns(10);
-		
-		JLabel lblTalle = new JLabel("Talle");
-		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblTalle.setBounds(148, 35, 70, 20);
-		panel_1.add(lblTalle);
 
-		lblGestionarProductos = new JLabel("Gestionar Productos");
+		lblGestionarProductos = new JLabel("Pedidos a Proveedores");
 		lblGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblGestionarProductos.setBounds(10, 52, 259, 43);
 		frame.getContentPane().add(lblGestionarProductos);
@@ -199,44 +155,5 @@ private static final long serialVersionUID = 1L;
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
-	
-	public JFrame getFrame() {
-		return frame;
-	}
 
-	public String[] getNombreColumnas() {
-		return nombreColumnas;
-	}
-
-	public JTextField getTxtFieldNombre() {
-		return txtFieldNombre;
-	}
-
-	public DefaultTableModel getModelProductos() {
-		return modelProductos;
-	}
-
-	public JTable getTablaProductos() {
-		return tablaProductos;
-	}
-
-	public JScrollPane getSpProductos() {
-		return spProductos;
-	}
-
-	public JButton getBtnAtras() {
-		return btnAtras;
-	}
-
-	public JButton getBtnAgregarProducto() {
-		return btnAgregarProducto;
-	}
-
-
-	public JTextField getTextTalle() {
-		return textTalle;
-	}
-
-	
 }
-

@@ -233,7 +233,7 @@ public class VentanaAltaCliente {
 		textCorreo.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textCorreo.getText().length()>=20) {
+                if(textCorreo.getText().length()>=30) {
                     e.consume();
                 }
             }
@@ -246,7 +246,7 @@ public class VentanaAltaCliente {
 		textCalle.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textCalle.getText().length()>=20) {
+                if(textCalle.getText().length()>=25) {
                     e.consume();
                 }
             }
