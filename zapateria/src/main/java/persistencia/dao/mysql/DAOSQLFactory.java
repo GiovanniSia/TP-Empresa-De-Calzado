@@ -15,12 +15,15 @@ import persistencia.dao.interfaz.TipoEgresosDAO;
 import persistencia.dao.interfaz.MaestroProductoDAO;
 import persistencia.dao.interfaz.MedioPagoDAO;
 import persistencia.dao.interfaz.MedioPagoEgresoDAO;
+import persistencia.dao.interfaz.ModeloPasoDAO;
+import persistencia.dao.interfaz.MotivoEgresoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.PaisDAO;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
 import persistencia.dao.interfaz.ProductoDeProveedorDAO;
 import persistencia.dao.interfaz.ProveedorDAO;
 import persistencia.dao.interfaz.ProvinciaDAO;
+import persistencia.dao.interfaz.RecetaDAO;
 import persistencia.dao.interfaz.RechazoCompraVirtualDAO;
 import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
@@ -157,4 +160,18 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 		return new LocalidadDAOSQL();
 	}
 	
+	@Override 
+	public MotivoEgresoDAO createMotivoEgresoDAO() {
+		return new MotivoEgresoDAOSQL();
+	}
+	
+	@Override 
+	public ModeloPasoDAO createModeloPasoDAO() {
+		return new ModeloPasoDAOSQL();
+	}
+	
+	@Override 
+	public RecetaDAO createModeloRecetaDAO() {
+		return new RecetaDAOSQL();
+	}
 }

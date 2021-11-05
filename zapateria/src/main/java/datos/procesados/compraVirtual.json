@@ -17,7 +17,74 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Bella Vista",
-    "CodPostal": "1661"
+    "CodPostal": "1661",
+    "nroTelefono": "02320-1234"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 1,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "20125964343",
+    "CorreoElectronico": "sebastianx3600@gmail",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 1,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "20125964343",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "Argentina",
+    "Provincia": "",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 1,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Sebas",
+    "Apellido": "Cubilla",
+    "CUIL": "20125964343",
+    "CorreoElectronico": "sebastianx3600@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "",
+    "Provincia": "Buenos Aires",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -38,7 +105,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -59,7 +127,8 @@
     "Pais": "",
     "Provincia": "",
     "Localidad": "",
-    "CodPostal": ""
+    "CodPostal": "",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -81,7 +150,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -101,14 +171,16 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
-      "1": 1994
+      "1": 1994,
+      "2": 2000
     },
     "idSucursal": 1,
-    "pago": 4027880.0,
+    "pago": 1.202788E7,
     "IdCliente": 1,
     "Nombre": "Sebas",
     "Apellido": "Cubilla",
@@ -121,7 +193,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Grand Bourg",
-    "CodPostal": "1669"
+    "CodPostal": "1669",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -142,7 +215,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -163,7 +237,8 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": "1667"
+    "CodPostal": "1667",
+    "nroTelefono": "02320-1234"
   },
   {
     "compra": {
@@ -184,6 +259,29 @@
     "Pais": "Argentina",
     "Provincia": "Buenos Aires",
     "Localidad": "Tortuguitas",
-    "CodPostal": ""
+    "CodPostal": "",
+    "nroTelefono": "02320-1234"
+  },
+  {
+    "compra": {
+      "1": 1,
+      "2": 3
+    },
+    "idSucursal": 9,
+    "pago": 14020.0,
+    "IdCliente": 1,
+    "Nombre": "Cliente",
+    "Apellido": "no cuil",
+    "CUIL": "1234567891234",
+    "CorreoElectronico": "miraMiCuil@gmail.com",
+    "ImpuestoAFIP": "CF",
+    "Estado": "Activo",
+    "Calle": "Calle falsa",
+    "Altura": "5421",
+    "Pais": "",
+    "Provincia": "",
+    "Localidad": "Tortuguitas",
+    "CodPostal": "asda",
+    "nroTelefono": ""
   }
 ]

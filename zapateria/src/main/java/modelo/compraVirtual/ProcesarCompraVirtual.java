@@ -20,6 +20,7 @@ import dto.EgresosDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
+import dto.MotivoEgresoDTO;
 import dto.RechazoCompraVirtualDetalleDTO;
 import dto.StockDTO;
 import dto.SucursalDTO;
@@ -35,7 +36,6 @@ import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
-import presentacion.reportes.ReporteFactura;
 
 public class ProcesarCompraVirtual {
 	
@@ -130,6 +130,7 @@ public class ProcesarCompraVirtual {
 				registrarCompraVirtual(compraVirtual);	//GENERA Y MUESTRA LAS FACTURAS
 			}
 		}
+		JsonListaCompraVirtual.pasarComoCompletada();
 	}
 
 	private static void registrarRechazo(CompraVirtualDTO compraVirtual,String motivoRechazo) {
@@ -176,10 +177,10 @@ public class ProcesarCompraVirtual {
 			}
 			for(int idProducto: compraVirtual.getCompra().keySet()) {
 				if(!sePuedeVenderElProducto(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+"No es posible vender uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
 				}
 				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+" No hay stock de uno de los productos \n";
 				}
 			}
 			return ret;
@@ -200,7 +201,7 @@ public class ProcesarCompraVirtual {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El apellido no es valido \n";
 		}
 		if(!esMailValido(compraVirtual.getCorreoElectronico())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorDatosClienteNuevoNoValido()+" El CorreoElectronico no es valido \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorCorreo()+" El CorreoElectronico no es valido \n";
 		}
 		/*
 		if(!esTipoClienteValido(compraVirtual.getTipoCliente())) {
@@ -220,16 +221,20 @@ public class ProcesarCompraVirtual {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La altura no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getPais())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El pais no es valido \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorPais()+" El pais no es valido \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getProvincia())) {
-			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La provincia no es valida \n";
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProvincia()+" La provincia no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getLocalidad())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" La localidad no es valida \n";
 		}
 		if(!esDatoStringValido(compraVirtual.getCodPostal())) {
 			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorUbicacionNoValido()+" El codigo postal no es valido \n";
+		}
+		
+		if(!esDatoStringValido(compraVirtual.getNroTelefono())) {
+			ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNroTelefono()+" El numero telefonico no es valido \n";
 		}
 		/* por si lo quiero booleando
 		boolean ret = true;
@@ -255,7 +260,7 @@ public class ProcesarCompraVirtual {
 					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorProductoNoValido()+" No es posible vender uno de los productos \n";
 				}
 				if(!hayAlgoDeStock(idProducto, compraVirtual.getIdSucursal(), compraVirtual.getCompra().get(idProducto))) {
-					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+"No hay stock de uno de los productos \n";
+					ret = ret + ";"+CodigoErrorComprasVirtuales.getCodigoErrorNoStock()+" No hay stock de uno de los productos \n";
 				}
 			}
 		}
@@ -558,14 +563,15 @@ public class ProcesarCompraVirtual {
 		}
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
-		double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
-		if(notaCredito != 0) {
-			registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
-		}
+		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		//double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
+		//if(notaCredito != 0) {
+		//	registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
+		//}
 		return nroFacturaCompleto;
 	}
 	
-	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal) {
+	private static void registrarNotaCredito(double notaCredito, String nroFacturaCompleta, int idSucursal, String motivo) {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
@@ -575,13 +581,20 @@ public class ProcesarCompraVirtual {
 		String Detalle = nroFacturaCompleta;
 		double Monto = notaCredito;
 		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgreso, tipo, Detalle,
-				Monto);
+				-Monto);
 		Egresos modeloEgreso = new Egresos(new DAOSQLFactory());
 		modeloEgreso.insert(egresoNuevo);
+		MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
+		//modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,motivo));
+		for(String m: motivo.split(";")) {
+			modeloMotivo.insert(new MotivoEgresoDTO(nroFacturaCompleta,m));
+		}
+		
 	}
 
 	private static double registrarDetallesFactura(FacturaDTO factura, CompraVirtualDTO compraVirtual) {
 		double retNotaCredito = 0.0;
+		String descripcionNotaCredito = "";
 		for(int idProducto: compraVirtual.getCompra().keySet()) {
 			int id=0;
 			int idProd = idProducto;
@@ -600,6 +613,7 @@ public class ProcesarCompraVirtual {
 			}
 			if(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd) < cant) {
 				retNotaCredito += -(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)*precioVenta;
+				descripcionNotaCredito += "Por falta de stock: "+producto.getDescripcion()+"/"+producto.getTalle()+": x "+-(generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd)-cant)+";";
 				//cant = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(),idProd); 
 				//EN CASO DE QUE NO SE QUIERA MOSTRAR PRODUCTOS FANTASMAS EN LA FACTURA DESCOMENTAR EL DE ARRIBA
 			}
@@ -620,6 +634,9 @@ public class ProcesarCompraVirtual {
 			if(generarOrdenesFabricacion.faltaStockDeUnProductoEnUnaSucursal(compraVirtual.getIdSucursal(), producto) && producto.getFabricado().equals("N")) {
 				PedidosPendientes.generarPedidoAutomatico(compraVirtual.getIdSucursal(),producto);
 			}
+		}
+		if(retNotaCredito != 0) {
+			registrarNotaCredito(retNotaCredito,factura.getNroFacturaCompleta(), compraVirtual.getIdSucursal(), descripcionNotaCredito);
 		}
 		return retNotaCredito;
 	}
@@ -693,8 +710,38 @@ public class ProcesarCompraVirtual {
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
 		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
 				//"Mayorista",
-				"1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+				"1002","201","Argentina","Buenos Aires","Bella Vista","1661","02320-1234");
 		compras.add(cvd);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd22);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd23 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "Argentina",
+				"", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd23);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Compra con cliente nuevo
+		CompraVirtualDTO cvd24 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				//"Minorista", 
+				"Calle falsa", "5421", "",
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
+		compras.add(cvd24);
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
@@ -703,18 +750,18 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd2);
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra repetida
-		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd222 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"", "", "",
-				"", "", "");
-		compras.add(cvd22);
+				"", "", "","02320-1234");
+		compras.add(cvd222);
 		
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -725,7 +772,7 @@ public class ProcesarCompraVirtual {
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
 				"", "", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd3);
 		JsonListaCompraVirtual.guardarLista(compras);
 		
@@ -733,16 +780,19 @@ public class ProcesarCompraVirtual {
 		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
 				"asd", "", null, 
 				"", "", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd4);
 		
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1994);
-		CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
+		detalle.put(2, 2000);
+		//CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
+				CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880+8000000, 1, "Sebas",
+
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Otra Calle falsa", "1423", "Argentina",
-				"Buenos Aires", "Grand Bourg", "1669");
+				"Buenos Aires", "Grand Bourg", "1669","02320-1234");
 		compras.add(cvd5);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -752,7 +802,7 @@ public class ProcesarCompraVirtual {
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd6);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -762,7 +812,7 @@ public class ProcesarCompraVirtual {
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "1667");
+				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
 		compras.add(cvd7);
 		
 		detalle = new HashMap<Integer,Integer>();
@@ -772,8 +822,17 @@ public class ProcesarCompraVirtual {
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
-				"Buenos Aires", "Tortuguitas", "");
+				"Buenos Aires", "Tortuguitas", "","02320-1234");
 		compras.add(cvd8);
+		
+		detalle = new HashMap<Integer,Integer>();
+		detalle.put(1, 1);
+		detalle.put(2, 3);	//Datos de ubicacion insuficientes
+		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
+				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				"Calle falsa", "5421", "",
+				"", "Tortuguitas", "asda","");
+		compras.add(cvd9);
 		
 		JsonListaCompraVirtual.guardarLista(compras);
 		//ProcesarCompraVirtual.RutinaProcesarCompra();
