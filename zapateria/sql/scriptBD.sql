@@ -35,6 +35,26 @@ CREATE TABLE `empleados`
   PRIMARY KEY (`IdEmpleado`)
 )ENGINE='InnoDB'DEFAULT CHARSET = LATIN1;
 
+CREATE TABLE `historialCambioEmpleados`
+(
+  `IdHistorialCambioEmpleados` int(11) NOT NULL AUTO_INCREMENT,
+  `IdEmpleadoResponsable` varchar(45) NOT NULL,
+  `Fecha` Date NOT NULL,
+  `IdSucursal` varchar(45) NOT NULL,
+  `IdEmpleado` varchar(45) NOT NULL,
+  `CUILAntiguo` varchar(45) NOT NULL,
+  `CUILNuevo` varchar(45) NOT NULL,
+  `NombreAntiguo` varchar(45) NOT NULL,
+  `NombreNuevo` varchar(45) NOT NULL,
+  `ApellidoAntiguo` varchar(45) NOT NULL,
+  `ApellidoNuevo` varchar(45) NOT NULL,
+  `CorreoElectronicoAntiguo` varchar(45) NOT NULL,
+  `CorreoElectronicoNuevo` varchar(45) NOT NULL,
+  `TipoEmpleadoAntiguo` varchar(45) NOT NULL,
+  `TipoEmpleadoNuevo` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdHistorialCambioEmpleados`)
+);
+
 CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,

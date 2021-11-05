@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.EmpleadoDTO;
-import dto.MaestroProductoDTO;
 import modelo.Empleado;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
