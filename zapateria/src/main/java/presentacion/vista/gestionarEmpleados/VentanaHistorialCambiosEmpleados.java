@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class VentanaHistorialCambiosEmpleados extends JFrame {
 

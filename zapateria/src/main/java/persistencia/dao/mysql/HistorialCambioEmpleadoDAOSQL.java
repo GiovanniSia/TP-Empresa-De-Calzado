@@ -80,10 +80,11 @@ public class HistorialCambioEmpleadoDAOSQL implements HistorialCambioEmpleadoDAO
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 
-		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
+		String sel = "SELECT * FROM historialCambioEmpleados WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
 				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + " AND " + nombreColumna3 + " LIKE '%"
 				+ txtAprox3 + "%'" + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
-
+		
+		System.out.println(sel);
 		ArrayList<HistorialCambioEmpleadoDTO> historialCambioEmpleado = new ArrayList<HistorialCambioEmpleadoDTO>();
 		Conexion conexion = Conexion.getConexion();
 		try {
