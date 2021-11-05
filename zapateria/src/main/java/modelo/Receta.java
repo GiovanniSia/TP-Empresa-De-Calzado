@@ -22,4 +22,8 @@ public class Receta {
 		return this.receta.insertPasosReceta(pasos);
 	}
 	
+	public boolean updateReceta(RecetaDTO receta, List<PasoDeRecetaDTO> pasos) {
+		return this.receta.updateReceta(receta, pasos);
+	}
+	
 }

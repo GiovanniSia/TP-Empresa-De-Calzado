@@ -72,6 +72,8 @@ public class VerPasos extends JFrame {
 	private JButton btnQuitarIngrediente;
 	private JButton btnSubirPaso;
 	private JButton btnBajarPaso;
+	
+	JButton btnActualizarReceta ;
 
 	public VerPasos() {
 		initialize();
@@ -267,6 +269,10 @@ public class VerPasos extends JFrame {
 		btnBajarPaso = new JButton("");
 		btnBajarPaso.setBounds(301, 211, 50, 50);
 		panel.add(btnBajarPaso);
+		
+		btnActualizarReceta = new JButton("Actua");
+		btnActualizarReceta.setBounds(431, 301, 60, 60);
+		panel.add(btnActualizarReceta);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -440,5 +446,9 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnBajarPaso() {
 		return btnBajarPaso;
+	}
+
+	public JButton getBtnActualizarReceta() {
+		return btnActualizarReceta;
 	}
 }

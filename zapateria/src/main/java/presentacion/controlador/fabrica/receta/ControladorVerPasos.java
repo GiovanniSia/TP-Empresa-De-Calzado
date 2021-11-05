@@ -81,6 +81,8 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnQuitarIngrediente().addActionListener(r->quitarIngrediente(r));
 		this.ventanaPrincipal.getBtnSubirPaso().addActionListener(r->subirPaso(r));
 		this.ventanaPrincipal.getBtnBajarPaso().addActionListener(r->bajarPaso(r));
+		
+		this.ventanaPrincipal.getBtnActualizarReceta().addActionListener(r->actualizarReceta(r));
 	}
 
 	public void inicializar() {
@@ -390,8 +392,11 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
-		corregirNroOrden(pasosRecetaEnLista.get(pasoSeleccionado-1).getNroOrden());
-		this.pasosRecetaEnLista.remove(pasoSeleccionado-1);
+		if(pasoSeleccionado < 0) {
+			return;
+		}
+		corregirNroOrden(pasosRecetaEnLista.get(pasoSeleccionado).getNroOrden());
+		this.pasosRecetaEnLista.remove(pasoSeleccionado);
 		this.reiniciarTablaPasosReceta();
 		this.llenarTablaPasosReceta(pasosRecetaEnLista);
 	}
@@ -456,6 +461,15 @@ public class ControladorVerPasos implements ActionListener {
 		pasosRecetaEnLista = listaActualizada;
 		this.reiniciarTablaPasosReceta();
 		this.llenarTablaPasosReceta(pasosRecetaEnLista);
+	}
+	
+	private void actualizarReceta(ActionEvent r) {
+		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() <= 0) {
+			return;
+		}
+		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
+		this.reiniciarTablaPasosReceta();
+		this.reiniciarTablaIngredientes();
 	}
 
 	@Override
