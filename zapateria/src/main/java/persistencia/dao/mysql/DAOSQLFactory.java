@@ -29,6 +29,7 @@ import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
+import persistencia.dao.interfaz.HistorialCambioEmpleadoDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
 import persistencia.dao.interfaz.HistorialPasoDAO;
@@ -158,6 +159,11 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public LocalidadDAO createLocalidadDAO() {
 		return new LocalidadDAOSQL();
+	}
+
+	@Override
+	public HistorialCambioEmpleadoDAO createHistorialCambioEmpleadoDAO() {
+		return new HistorialCambioEmpleadoDAOSQL();
 	}
 	
 	@Override 

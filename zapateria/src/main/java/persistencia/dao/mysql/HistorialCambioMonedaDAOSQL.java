@@ -34,8 +34,6 @@ public class HistorialCambioMonedaDAOSQL implements HistorialCambioMonedaDAO {
 			statement.setDouble(7, historialCambioMoneda.getTasaConversionAntigua());
 			statement.setDouble(8, historialCambioMoneda.getTasaConversionNueva());
 
-			System.out.println("No se " + historialCambioMoneda.getDescripcion());
-
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
