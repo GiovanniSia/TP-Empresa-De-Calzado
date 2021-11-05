@@ -2,26 +2,48 @@ package presentacion.vista.generarPedidoProveedor;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import persistencia.conexion.Conexion;
+
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTable;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 
 public class VentanaGenerarPedidoProveedor {
 
 	private JFrame frame;
+	private JLabel lblEmpleado ;
+	private JLabel lblSucursal;
+	private JTable tablaProducto;
+	private String[] nombreColumnasProducto = {"Id Producto","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
+	private DefaultTableModel modelProducto;
+	
+	private JTable tablaProveedores;
+	private DefaultTableModel modelProveedores;
+	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Credito Disponible","Precio Venta","Cant. Prod. X lote"};
 
+	private JRadioButton rdbtnProveedoresPref;
+	private JRadioButton rdbtnTodosLosProveedores;
+	private JSpinner spinnerCantARep;
+	private JButton btnGenerarPedido;
+	private JButton btnAtras;
 	/**
 	 * Launch the application.
 	 */
@@ -74,17 +96,17 @@ public class VentanaGenerarPedidoProveedor {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
 		
-		JLabel lblNewLabel_2 = new JLabel("Sucursal:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(537, 28, 59, 19);
-		panel_2.add(lblNewLabel_2);
+		lblSucursal = new JLabel("Sucursal:");
+		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSucursal.setBounds(537, 28, 59, 19);
+		panel_2.add(lblSucursal);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Empleado:");
-		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2_1.setBounds(343, 28, 59, 19);
-		panel_2.add(lblNewLabel_2_1);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(343, 28, 59, 19);
+		panel_2.add(lblEmpleado);
 		
 		JLabel lblNewLabel = new JLabel("Pedido a Proveedor");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -99,56 +121,140 @@ public class VentanaGenerarPedidoProveedor {
 		
 		JLabel lblNewLabel_1 = new JLabel("Producto Elegido:");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(21, 11, 124, 22);
+		lblNewLabel_1.setBounds(21, 11, 161, 22);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Elegir Proveedor");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1_1.setBounds(21, 67, 124, 22);
+		lblNewLabel_1_1.setBounds(21, 122, 124, 22);
 		panel.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Cantidad a Reponer");
 		lblNewLabel_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1_1_1.setBounds(21, 256, 149, 22);
+		lblNewLabel_1_1_1.setBounds(21, 314, 149, 22);
 		panel.add(lblNewLabel_1_1_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("(datos producto)");
 		lblNewLabel_3.setBounds(322, 18, 83, 14);
 		panel.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_3_1 = new JLabel("(aqu\u00ED ir\u00EDa la tabla de proveedores)");
-		lblNewLabel_3_1.setBounds(21, 97, 213, 14);
-		panel.add(lblNewLabel_3_1);
+		rdbtnProveedoresPref = new JRadioButton("Proveedores preferenciados");
+		rdbtnProveedoresPref.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		rdbtnProveedoresPref.setBounds(359, 124, 173, 23);
+		panel.add(rdbtnProveedoresPref);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Proveedores preferenciados");
-		rdbtnNewRadioButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		rdbtnNewRadioButton.setBounds(358, 70, 173, 23);
-		panel.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtnTodosLosProveedores = new JRadioButton("Todos los proveedores");
+		rdbtnTodosLosProveedores = new JRadioButton("Todos los proveedores");
 		rdbtnTodosLosProveedores.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		rdbtnTodosLosProveedores.setBounds(533, 70, 161, 23);
+		rdbtnTodosLosProveedores.setBounds(534, 124, 161, 23);
 		panel.add(rdbtnTodosLosProveedores);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(188, 256, 83, 22);
-		panel.add(spinner);
+		spinnerCantARep = new JSpinner();
+		spinnerCantARep.setBounds(180, 318, 83, 22);
+		panel.add(spinnerCantARep);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("(al menos 1 y hasta 999)");
-		lblNewLabel_3_2.setBounds(281, 256, 124, 14);
+		lblNewLabel_3_2.setBounds(273, 321, 124, 14);
 		panel.add(lblNewLabel_3_2);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("(elegir qu\u00E9 proveedores mostrar: los del producto o todos)");
-		lblNewLabel_3_1_1.setBounds(375, 50, 334, 14);
+		lblNewLabel_3_1_1.setBounds(375, 104, 334, 14);
 		panel.add(lblNewLabel_3_1_1);
 		
-		JButton btnNewButton = new JButton("Generar Pedido");
-		btnNewButton.setBounds(463, 481, 132, 23);
-		frame.getContentPane().add(btnNewButton);
 		
-		JButton btnAtras = new JButton("Atras");
+		btnGenerarPedido = new JButton("Generar Pedido");
+		btnGenerarPedido.setBounds(463, 481, 132, 23);
+		frame.getContentPane().add(btnGenerarPedido);
+		
+		btnAtras = new JButton("Atras");
 		btnAtras.setBounds(113, 481, 132, 23);
 		frame.getContentPane().add(btnAtras);
+		
+		
+		
+		JScrollPane scrollPaneProductoElegido = new JScrollPane();
+		scrollPaneProductoElegido.setBounds(21, 32, 688, 62);
+		
+		this.modelProducto = new DefaultTableModel(null,nombreColumnasProducto) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				return false;
+			}	
+		};
+		
+		tablaProducto = new JTable(modelProducto);
+		tablaProducto.setBounds(21, 32, 688, 62);
+		
+		tablaProducto.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaProducto.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaProducto.getColumnModel().getColumn(7).setPreferredWidth(130);
+		
+		scrollPaneProductoElegido.setViewportView(tablaProducto);
+		tablaProducto.getTableHeader().setReorderingAllowed(false);
+		tablaProducto.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaProducto.doLayout();
+		panel.add(scrollPaneProductoElegido);
+		
+
+////////////////////////////////////////////////////////////////////////
+		JScrollPane scrollPaneProveedores = new JScrollPane();
+		scrollPaneProveedores.setBounds(21, 154, 688, 150);
+		
+		this.modelProveedores = new DefaultTableModel(null,nombreColumnasProveedores) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				return false;
+			}	
+		};
+		
+		tablaProveedores = new JTable(modelProveedores);
+		tablaProveedores.setBounds(21, 154, 688, 150);
+		
+		tablaProveedores.getColumnModel().getColumn(3).setPreferredWidth(100);
+		
+		scrollPaneProveedores.setViewportView(tablaProveedores);
+		tablaProveedores.getTableHeader().setReorderingAllowed(false);
+//		tablaProveedores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaProveedores.doLayout();
+		
+		panel.add(scrollPaneProveedores);
+		
+		/*
+		spProductos = new JScrollPane();
+		spProductos.setBounds(10, 11, 898, 270);
+		spProductos.setBackground(new Color(248, 248, 255));
+
+
+		modelProductos = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 5) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		tablaProductos = new JTable(modelProductos);
+		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+
+		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+		
+		tablaProductos.getTableHeader().setReorderingAllowed(false);
+		spProductos.setViewportView(tablaProductos);
+		tablaProductos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaProductos.doLayout();
+		
+		panel.add(spProductos);
+		
+		*/
+		
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 48, 720, 540);
@@ -162,4 +268,31 @@ public class VentanaGenerarPedidoProveedor {
 				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
 		label.setIcon(Icono);
 	}
+	
+	public void show() {
+		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "¿Estas seguro que quieres salir?", "Advertencia",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					Conexion.getConexion().cerrarConexion();
+					System.exit(0);
+				}
+			}
+		});
+		this.frame.setVisible(true);
+	}
+
+	public void cerrar() {
+
+		frame.setVisible(false);
+	}
+
+	public void mostrarVentana() {
+		frame.setVisible(true);
+	}
+	
+	
 }

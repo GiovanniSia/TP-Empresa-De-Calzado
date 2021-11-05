@@ -43,6 +43,7 @@ private static final long serialVersionUID = 1L;
 	private JTextField textTalle;
 
 	private JCheckBox chckbxProdSinStock;
+	JButton btnGenerarPedido;
 
 
 	public static void main(String[] args) {
@@ -150,6 +151,10 @@ private static final long serialVersionUID = 1L;
 		btnAgregarProducto = new JButton("Agregar Producto");
 		btnAgregarProducto.setBounds(164, 293, 132, 48);
 		panel.add(btnAgregarProducto);
+		
+		btnGenerarPedido = new JButton("Generar Pedido");
+		btnGenerarPedido.setBounds(394, 293, 179, 48);
+		panel.add(btnGenerarPedido);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
@@ -274,6 +279,11 @@ private static final long serialVersionUID = 1L;
 	
 	public JCheckBox getChckbxProdSinStock() {
 		return chckbxProdSinStock;
+	}
+	
+
+	public JButton getBtnGenerarPedido() {
+		return btnGenerarPedido;
 	}
 }
 

@@ -13,6 +13,7 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
+import presentacion.controlador.supervisor.ControladorGenerarPedidoAProveedorManualmente;
 import presentacion.vista.gerente.VentanaGestionarClientes;
 
 public class ControladorGestionarClientes {
@@ -26,6 +27,9 @@ public class ControladorGestionarClientes {
 	
 	ControladorAltaCliente controladorAltaCliente;
 	Controlador controlador;
+	
+	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
+	
 	public ControladorGestionarClientes(Controlador controlador,Cliente cliente) {		
 		this.controlador = controlador;
 		this.cliente = cliente;

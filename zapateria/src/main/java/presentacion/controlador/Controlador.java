@@ -201,7 +201,7 @@ public class Controlador {
 		
 		//Supervisor
 		//GestionarProductos
-		this.controladorGestionarProductos = new ControladorGestionarProductos(this,this.maestroProducto,this.stock);
+//		this.controladorGestionarProductos = new ControladorGestionarProductos(this,this.maestroProducto,this.stock);
 		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor, this.productoDeProveedor);
 		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this,this.proveedor, this.productoDeProveedor);
 		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
