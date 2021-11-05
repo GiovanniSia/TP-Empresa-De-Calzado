@@ -78,6 +78,7 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnReceta().addActionListener(r->darDeAltaReceta(r));
 		this.ventanaPrincipal.getBtnAgregarIngrediente().addActionListener(r->agregarIngrediente(r));
 		this.ventanaPrincipal.getBtnQuitarPasoReceta().addActionListener(r->quitarPasoReceta(r));
+		this.ventanaPrincipal.getBtnQuitarIngrediente().addActionListener(r->quitarIngrediente(r));
 	}
 
 	public void inicializar() {
@@ -399,6 +400,17 @@ public class ControladorVerPasos implements ActionListener {
 				p.setNroOrden(p.getNroOrden()-1);
 			}
 		}
+	}
+	
+	private void quitarIngrediente(ActionEvent e) {
+		int ingredienteSeleccionadoTabla = this.ventanaPrincipal.getTablaIngredientes().getSelectedRow();
+		if(ingredienteSeleccionadoTabla<0) {
+			return;
+		}
+		this.pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().remove(ingredienteSeleccionadoTabla);
+		this.pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().remove(ingredienteSeleccionadoTabla);
+		this.reiniciarTablaIngredientes();
+		this.llenarTablaIngredientes(this.pasoDeRecetaSeleccionado.getPasosDTO());
 	}
 
 	@Override

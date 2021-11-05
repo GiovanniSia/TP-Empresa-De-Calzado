@@ -69,6 +69,7 @@ public class VerPasos extends JFrame {
 	JButton btnAgregarIngrediente;
 	JComboBox comboBoxProductos;
 	JButton btnQuitarPasoReceta;
+	private JButton btnQuitarIngrediente;
 
 	public VerPasos() {
 		initialize();
@@ -252,6 +253,10 @@ public class VerPasos extends JFrame {
 		btnQuitarPasoReceta = new JButton("");
 		btnQuitarPasoReceta.setBounds(361, 372, 60, 60);
 		panel.add(btnQuitarPasoReceta);
+		
+		btnQuitarIngrediente = new JButton("");
+		btnQuitarIngrediente.setBounds(548, 339, 60, 60);
+		panel.add(btnQuitarIngrediente);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -413,5 +418,9 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnQuitarPasoReceta() {
 		return btnQuitarPasoReceta;
+	}
+
+	public JButton getBtnQuitarIngrediente() {
+		return btnQuitarIngrediente;
 	}
 }
