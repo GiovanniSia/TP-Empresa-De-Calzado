@@ -23,6 +23,8 @@ public class ControladorGestionarEmpleados {
 	private ControladorAgregarEmpleados controladorAgregarEmpleados;
 
 	private ControladorModificarEmpleados controladorModificarEmpelados;
+	
+	private ControladorHistorialCambiosEmpleados controladorHistorialCambiosEmpleados;
 
 	private Controlador controlador;
 
@@ -31,17 +33,22 @@ public class ControladorGestionarEmpleados {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.controladorAgregarEmpleados = new ControladorAgregarEmpleados(this);
 		this.controladorModificarEmpelados = new ControladorModificarEmpleados(this);
+		this.controladorHistorialCambiosEmpleados = new ControladorHistorialCambiosEmpleados();
 	}
 
 	public ControladorGestionarEmpleados(Controlador controlador) {
 		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
+		this.controladorAgregarEmpleados = new ControladorAgregarEmpleados(this);
+		this.controladorModificarEmpelados = new ControladorModificarEmpleados(this);
+		this.controladorHistorialCambiosEmpleados = new ControladorHistorialCambiosEmpleados();
 		this.controlador = controlador;
 	}
 
 	public void inicializar() {
 		this.controladorAgregarEmpleados.inicializar();
 		this.controladorModificarEmpelados.inicializar();
+		this.controladorHistorialCambiosEmpleados.inicializar();
 		
 		this.ventanaGestionarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaGestionarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
@@ -92,6 +99,7 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void verHistorial(ActionEvent v) {
+		this.controladorHistorialCambiosEmpleados.mostrarVentana();	
 	}
 
 	public void actualizar(ActionEvent p) {
@@ -112,6 +120,8 @@ public class ControladorGestionarEmpleados {
 
 	public void cerrarTodasLasVentanas() {
 		this.controladorAgregarEmpleados.cerrarVentana();
+		this.controladorHistorialCambiosEmpleados.cerrarVentana();
+		this.controladorModificarEmpelados.cerrarVentana();
 	}
 
 	public void mostrarVentana() {

@@ -294,7 +294,7 @@ public class VentanaAgregarEmpleados extends JFrame {
 				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
-
+	
 	public JTextField getTxtNombre() {
 		return txtNombre;
 	}
@@ -330,6 +330,16 @@ public class VentanaAgregarEmpleados extends JFrame {
 
 	public JPasswordField getTxtRepetirClave() {
 		return txtRepetirClave;
+	}
+	
+	public void limpiarCampos() {
+		this.txtNombre.setText("");
+		this.txtApellido.setText("");
+		this.txtClaveNueva.setText("");
+		this.txtRepetirClave.setText("");
+		this.txtCUIL.setText("");
+		this.txtCorreoElectronico.setText("");
+		this.cbTipoEmpleado.setSelectedItem("Sin seleccionar");
 	}
 
 	public void cerrarVentana() {

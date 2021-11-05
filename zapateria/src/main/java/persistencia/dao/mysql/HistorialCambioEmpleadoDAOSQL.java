@@ -75,12 +75,14 @@ public class HistorialCambioEmpleadoDAOSQL implements HistorialCambioEmpleadoDAO
 
 	@Override
 	public List<HistorialCambioEmpleadoDTO> getFiltrarPor(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3) {
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3, String nombreColumna4,
+			String txtAprox4) {
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
 
 		String sel = "SELECT * FROM historialCambioMoneda WHERE " + nombreColumna1 + " like '%" + txtAprox1 + "%'"
-				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'";
+				+ " AND " + nombreColumna2 + " LIKE '%" + txtAprox2 + "%'" + " AND " + nombreColumna3 + " LIKE '%"
+				+ txtAprox3 + "%'" + " AND " + nombreColumna4 + " LIKE '%" + txtAprox4 + "%'";
 
 		ArrayList<HistorialCambioEmpleadoDTO> historialCambioEmpleado = new ArrayList<HistorialCambioEmpleadoDTO>();
 		Conexion conexion = Conexion.getConexion();
@@ -97,7 +99,7 @@ public class HistorialCambioEmpleadoDAOSQL implements HistorialCambioEmpleadoDAO
 	}
 
 	private HistorialCambioEmpleadoDTO getHistorialCambioEmpleadoDTO(ResultSet resultSet) throws SQLException {
-		
+
 		int IdHistorialCambioEmpleadosresultSet = resultSet.getInt("IdHistorialCambioEmpleados");
 		String IdEmpleadoResponsable = resultSet.getString("IdEmpleadoResponsable");
 		String Fecha = resultSet.getString("Fecha");

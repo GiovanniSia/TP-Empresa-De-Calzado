@@ -2,6 +2,7 @@ package presentacion.vista.gestionarEmpleados;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -16,10 +17,12 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
 
 public class VentanaHistorialCambiosEmpleados extends JFrame {
 
@@ -31,11 +34,14 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 			"CorreoElectronicoNuevo", "TipoEmpleadoAntiguo","TipoEmpleadoNuevo"};
 	private DefaultTableModel model;
 	private JTextField txtFiltroCodEmpleado;
-	private JTextField txtFiltroCUIL;
+	private JTextField txtFiltroCodSucursal;
 	private JTable tablaHistorialEmpleados;
-	private JTextField textField_2;
+	private JTextField txtFiltroCodEmpleadoResponsable;
 	private JButton btnAtras;
-	private JDateChooser fechaFiltro;
+	private JDateChooser dateFiltroFecha;
+	
+	private JCheckBox checkboxEmpleadosModificados;
+	private JCheckBox checkboxEmpleadosAgregados;
 	
 	public VentanaHistorialCambiosEmpleados() {
 		this.initialize();
@@ -80,6 +86,7 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 		btnAtras = new JButton("");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnAtras.setBounds(10, 390, 50, 50);
+		cambiarIconoBotones(btnAtras, "back2.png");
 		contentPane.add(btnAtras);
 		
 		JLabel lblNewLabel_4 = new JLabel("Atras");
@@ -126,22 +133,22 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 		lblCuil.setBounds(248, 132, 89, 20);
 		contentPane.add(lblCuil);
 		
-		txtFiltroCUIL = new JTextField();
-		txtFiltroCUIL.setBounds(245, 158, 92, 20);
-		contentPane.add(txtFiltroCUIL);
+		txtFiltroCodSucursal = new JTextField();
+		txtFiltroCodSucursal.setBounds(245, 158, 92, 20);
+		contentPane.add(txtFiltroCodSucursal);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(10, 158, 108, 20);
-		contentPane.add(textField_2);
+		txtFiltroCodEmpleadoResponsable = new JTextField();
+		txtFiltroCodEmpleadoResponsable.setBounds(10, 158, 108, 20);
+		contentPane.add(txtFiltroCodEmpleadoResponsable);
 		
-		JLabel lblCuil_1 = new JLabel("Empleado");
+		JLabel lblCuil_1 = new JLabel("Cod.Empleado");
 		lblCuil_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblCuil_1.setBounds(10, 119, 114, 20);
 		contentPane.add(lblCuil_1);
 		
-		fechaFiltro = new JDateChooser();
-		fechaFiltro.setBounds(127, 158, 108, 19);
-		contentPane.add(fechaFiltro);
+		dateFiltroFecha = new JDateChooser();
+		dateFiltroFecha.setBounds(127, 158, 108, 19);
+		contentPane.add(dateFiltroFecha);
 		
 		JLabel lblFecha = new JLabel("Fecha");
 		lblFecha.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -152,6 +159,34 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 		lblCuil_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblCuil_1_1.setBounds(10, 137, 114, 20);
 		contentPane.add(lblCuil_1_1);
+		
+		checkboxEmpleadosModificados = new JCheckBox("");
+		checkboxEmpleadosModificados.setBounds(563, 154, 21, 23);
+		contentPane.add(checkboxEmpleadosModificados);
+		
+		checkboxEmpleadosAgregados = new JCheckBox("");
+		checkboxEmpleadosAgregados.setBounds(454, 155, 21, 23);
+		contentPane.add(checkboxEmpleadosAgregados);
+		
+		JLabel lblCuil_1_1_1 = new JLabel("Agregados");
+		lblCuil_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblCuil_1_1_1.setBounds(481, 156, 114, 20);
+		contentPane.add(lblCuil_1_1_1);
+		
+		JLabel lblCuil_1_2 = new JLabel("Empleados");
+		lblCuil_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblCuil_1_2.setBounds(481, 138, 114, 20);
+		contentPane.add(lblCuil_1_2);
+		
+		JLabel lblCuil_1_1_2 = new JLabel("Modificados");
+		lblCuil_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblCuil_1_1_2.setBounds(590, 156, 114, 20);
+		contentPane.add(lblCuil_1_1_2);
+		
+		JLabel lblCuil_1_3 = new JLabel("Empleados");
+		lblCuil_1_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblCuil_1_3.setBounds(590, 138, 114, 20);
+		contentPane.add(lblCuil_1_3);
 		frame.setLocationRelativeTo(null);
 
 	}
@@ -174,7 +209,62 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 		});
 		this.frame.setVisible(true);
 	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	
+	public JCheckBox getCheckboxEmpleadosModificados() {
+		return checkboxEmpleadosModificados;
+	}
 
+	public JCheckBox getCheckboxEmpleadosAgregados() {
+		return checkboxEmpleadosAgregados;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+
+	public DefaultTableModel getModel() {
+		return model;
+	}
+
+	public JTextField getTxtFiltroCodEmpleado() {
+		return txtFiltroCodEmpleado;
+	}
+
+	public JTextField getTxtFiltroCodSucursal() {
+		return txtFiltroCodSucursal;
+	}
+
+	public JTable getTablaHistorialEmpleados() {
+		return tablaHistorialEmpleados;
+	}
+
+	public JTextField getTxtFiltroCodEmpleadoResponsable() {
+		return txtFiltroCodEmpleadoResponsable;
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
+	}
+
+	public JDateChooser getDateFiltroFecha() {
+		return dateFiltroFecha;
+	}
+
+	public void limpiarFiltros() {
+		txtFiltroCodEmpleado.setText("");
+		txtFiltroCodEmpleadoResponsable.setText("");
+		txtFiltroCodSucursal.setText("");
+		checkboxEmpleadosAgregados.setSelected(false);
+		checkboxEmpleadosModificados.setSelected(false);
+	}
+	
 	public void cerrarVentana() {
 		frame.setVisible(false);
 	}
