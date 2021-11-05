@@ -79,6 +79,7 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnAgregarIngrediente().addActionListener(r->agregarIngrediente(r));
 		this.ventanaPrincipal.getBtnQuitarPasoReceta().addActionListener(r->quitarPasoReceta(r));
 		this.ventanaPrincipal.getBtnQuitarIngrediente().addActionListener(r->quitarIngrediente(r));
+		this.ventanaPrincipal.getBtnSubirPaso().addActionListener(r->subirPaso(r));
 	}
 
 	public void inicializar() {
@@ -411,6 +412,35 @@ public class ControladorVerPasos implements ActionListener {
 		this.pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().remove(ingredienteSeleccionadoTabla);
 		this.reiniciarTablaIngredientes();
 		this.llenarTablaIngredientes(this.pasoDeRecetaSeleccionado.getPasosDTO());
+	}
+	
+	private void subirPaso(ActionEvent e) {
+		subirPaso();
+	}
+	
+	private void subirPaso() {
+		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		if(pasoSeleccionado < 0){
+			return;
+		}
+		if(pasoSeleccionado == 0) {
+			return;
+		}
+		List<PasoDeRecetaDTO> listaActualizada = new ArrayList<PasoDeRecetaDTO>();
+		for(int x = 0; x<pasosRecetaEnLista.size(); x++) {
+			if(pasoSeleccionado-1 == x) {
+				pasosRecetaEnLista.get(x).setNroOrden(x+1+1);
+				pasosRecetaEnLista.get(x+1).setNroOrden(x+1);
+				listaActualizada.add(pasosRecetaEnLista.get(x+1));
+				listaActualizada.add(pasosRecetaEnLista.get(x));
+				x++;
+			}else {
+				listaActualizada.add(pasosRecetaEnLista.get(x));
+			}
+		}
+		pasosRecetaEnLista = listaActualizada;
+		this.reiniciarTablaPasosReceta();
+		this.llenarTablaPasosReceta(pasosRecetaEnLista);
 	}
 
 	@Override

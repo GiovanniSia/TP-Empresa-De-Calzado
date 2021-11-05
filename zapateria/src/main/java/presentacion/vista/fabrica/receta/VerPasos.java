@@ -70,6 +70,8 @@ public class VerPasos extends JFrame {
 	JComboBox comboBoxProductos;
 	JButton btnQuitarPasoReceta;
 	private JButton btnQuitarIngrediente;
+	private JButton btnSubirPaso;
+	private JButton btnBajarPaso;
 
 	public VerPasos() {
 		initialize();
@@ -238,7 +240,7 @@ public class VerPasos extends JFrame {
 		panel.add(btnAgregarIngrediente);
 		
 		btnAgregarPasoAReceta = new JButton("");
-		btnAgregarPasoAReceta.setBounds(287, 127, 60, 60);
+		btnAgregarPasoAReceta.setBounds(291, 81, 60, 60);
 		panel.add(btnAgregarPasoAReceta);
 		
 		SpinnerModel sm = new SpinnerNumberModel(1, 1, 100, 1);
@@ -257,6 +259,14 @@ public class VerPasos extends JFrame {
 		btnQuitarIngrediente = new JButton("");
 		btnQuitarIngrediente.setBounds(548, 339, 60, 60);
 		panel.add(btnQuitarIngrediente);
+		
+		btnSubirPaso = new JButton("");
+		btnSubirPaso.setBounds(301, 150, 50, 50);
+		panel.add(btnSubirPaso);
+		
+		btnBajarPaso = new JButton("");
+		btnBajarPaso.setBounds(301, 211, 50, 50);
+		panel.add(btnBajarPaso);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -422,5 +432,13 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnQuitarIngrediente() {
 		return btnQuitarIngrediente;
+	}
+
+	public JButton getBtnSubirPaso() {
+		return btnSubirPaso;
+	}
+
+	public JButton getBtnBajarPaso() {
+		return btnBajarPaso;
 	}
 }
