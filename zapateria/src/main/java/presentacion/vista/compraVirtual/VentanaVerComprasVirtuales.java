@@ -23,6 +23,8 @@ import com.toedter.calendar.JDateChooser;
 import persistencia.conexion.Conexion;
 
 import javax.swing.JCheckBox;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaVerComprasVirtuales extends JFrame {
 
@@ -48,6 +50,10 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	JDateChooser fechaHasta;
 	JDateChooser fechaDesde;
 	JCheckBox chckbxCancelados;
+	private JPanel panel_1;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_1_1;
 
 	public VentanaVerComprasVirtuales() {
 		initialize();
@@ -60,15 +66,15 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 993, 565);
+		frame.setBounds(100, 100, 993, 584);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 106, 974, 420);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 106, 974, 354);
 		frame.getContentPane().add(panel);
 		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
@@ -94,15 +100,6 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		spCliente.setViewportView(tabla);
-
-		btnVerDescripcion = new JButton("");
-		btnVerDescripcion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVerDescripcion.setBounds(622, 352, 65, 59);
-		cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
-		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
 		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -136,11 +133,6 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		lblCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblCUIL.setBounds(180, 11, 46, 14);
 		panel.add(lblCUIL);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(130, 352, 65, 59);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
 		
 		textCliente = new JTextField();
 		textCliente.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -176,32 +168,65 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		chckbxCancelados.setBounds(825, 35, 97, 23);
 		panel.add(chckbxCancelados);
 		
-		JLabel lblNewLabel_2 = new JLabel("Ver Descripcion");
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(711, 352, 123, 57);
-		panel.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("Atras");
-		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_2_1.setBounds(220, 352, 123, 57);
-		panel.add(lblNewLabel_2_1);
-		
 		lblNewLabel = new JLabel("Compras Virtuales");
 		lblNewLabel.setBounds(10, 63, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 2, 974, 50);
-		frame.getContentPane().add(panel_2);
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 977, 53);
+		frame.getContentPane().add(panel_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 421, 50);
-		panel_2.add(lblNewLabel_1);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_1.add(lblLogo);
+		
+		lblNewLabel_1 = new JLabel("Sucursal:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(766, 23, 59, 19);
+		panel_1.add(lblNewLabel_1);
+		
+		lblNewLabel_1_1 = new JLabel("Empleado:");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1.setBounds(572, 23, 59, 19);
+		panel_1.add(lblNewLabel_1_1);
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(130, 471, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Atras");
+		lblNewLabel_2_1.setBounds(200, 471, 123, 60);
+		frame.getContentPane().add(lblNewLabel_2_1);
+		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+				btnVerDescripcion = new JButton("");
+				btnVerDescripcion.setBounds(622, 471, 60, 60);
+				frame.getContentPane().add(btnVerDescripcion);
+				btnVerDescripcion.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
+				
+				JLabel lblNewLabel_2 = new JLabel("Ver Descripcion");
+				lblNewLabel_2.setBounds(692, 471, 123, 60);
+				frame.getContentPane().add(lblNewLabel_2);
+				lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 1000, 750);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 
 	public void show() {
@@ -235,6 +260,13 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	

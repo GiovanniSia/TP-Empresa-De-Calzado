@@ -15,6 +15,8 @@ import javax.swing.UIManager;
 import persistencia.conexion.Conexion;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -23,6 +25,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.MatteBorder;
 
 public class VentanaTareasAutomatizadas {
 
@@ -33,7 +36,11 @@ public class VentanaTareasAutomatizadas {
 	private JSpinner spinnerPedidosHora;	
 	private JSpinner spinnerTolerancia;
 	private JComboBox<String> comboBoxFrecuenciaProcesamientoCompraVirtuales;
+
+
 	private JButton btnActualizar;
+
+
 	private JButton btnRegresar;
 	/**
 	 * Launch the application.
@@ -69,19 +76,24 @@ public class VentanaTareasAutomatizadas {
 		}
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 660, 589);
+		frame.setBounds(100, 100, 660, 533);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 0, 806, 550);
+		panel.setBackground(new Color(255, 255, 255, 0));
+		panel.setBounds(0, 0, 644, 503);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 800, 600);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
+		
 		JPanel panelParametros = new JPanel();
-		panelParametros.setBackground(new Color(248, 248, 255));
-		panelParametros.setBounds(10, 99, 626, 440);
+		panelParametros.setBackground(new Color(255, 255, 255, 180));
+		panelParametros.setBounds(10, 99, 626, 314);
 		panel.add(panelParametros);
 		panelParametros.setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -149,14 +161,6 @@ public class VentanaTareasAutomatizadas {
 		spinnerTolerancia.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		spinnerTolerancia.setBounds(227, 124, 60, 35);
 		panelParametros.add(spinnerTolerancia);
-		
-
-		
-		btnActualizar = new JButton("");
-		btnActualizar.setFont(new Font("Comic Sans MS", Font.PLAIN, 21));
-		btnActualizar.setBounds(356, 341, 60, 60);
-		cambiarIconoBotones(btnActualizar, "update.png");
-		panelParametros.add(btnActualizar);
 
 		comboBoxPedidosDias = new JComboBox<String>();
 		comboBoxPedidosDias.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -168,32 +172,54 @@ public class VentanaTareasAutomatizadas {
 		comboBoxFrecuenciaProcesamientoCompraVirtuales.setBounds(178, 246, 126, 25);
 		panelParametros.add(comboBoxFrecuenciaProcesamientoCompraVirtuales);
 		
-		btnRegresar = new JButton("");
-		btnRegresar.setBounds(84, 341, 60, 60);
-		cambiarIconoBotones(btnRegresar, "back2.png");
-		panelParametros.add(btnRegresar);
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 646, 53);
+		panel.add(panel_2);
 		
-		JLabel lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(151, 341, 109, 60);
-		panelParametros.add(lblAtras);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JLabel lblNewLabel_3 = new JLabel("Sucursal:");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_3.setBounds(460, 23, 59, 19);
+		panel_2.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Empleado:");
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_2.setBounds(266, 23, 59, 19);
+		panel_2.add(lblNewLabel_1_2);
+		
+		btnActualizar = new JButton("");
+		btnActualizar.setFont(new Font("Comic Sans MS", Font.PLAIN, 21));
+		btnActualizar.setBounds(369, 424, 60, 60);
+		cambiarIconoBotones(btnActualizar, "update.png");
+		panel.add(btnActualizar);
 		
 		JLabel lblActualizar = new JLabel("Actualizar");
 		lblActualizar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblActualizar.setBounds(426, 341, 109, 60);
-		panelParametros.add(lblActualizar);
+		lblActualizar.setBounds(439, 424, 109, 60);
+		panel.add(lblActualizar);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 650, 50);
-		panel.add(panel_1);
+		JLabel lblAtras = new JLabel("Atras");
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(164, 424, 109, 60);
+		panel.add(lblAtras);
 		
-		JLabel lblNewLabel_3 = new JLabel("Zapateria Argento");
-		lblNewLabel_3.setForeground(Color.WHITE);
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_3.setBounds(10, 0, 421, 50);
-		panel_1.add(lblNewLabel_3);
+		btnRegresar = new JButton("");
+		btnRegresar.setBounds(97, 424, 60, 60);
+		cambiarIconoBotones(btnRegresar, "back2.png");
+		panel.add(btnRegresar);
+		
+
 	}
 
 	
@@ -228,6 +254,13 @@ public class VentanaTareasAutomatizadas {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JComboBox<String> getComboBoxPedidosDias() {

@@ -62,7 +62,7 @@ public class VentanaLogin extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 808, 635);
 		
-		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/zapas.png")).getImage());
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 	
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));

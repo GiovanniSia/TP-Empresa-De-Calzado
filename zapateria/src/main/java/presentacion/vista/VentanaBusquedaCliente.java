@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import persistencia.conexion.Conexion;
 
 import java.awt.Color;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaBusquedaCliente extends JFrame {
 
@@ -40,11 +42,13 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JLabel lblElegirCliente;
 	private JScrollPane spCliente;
 	private JPanel panel_2;
+	private JLabel lblLogo;
 	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 	private JButton btnPasarAVenta;
+	private JLabel lblElegirProductos;
 	private JButton btnAtras;
 	private JLabel lblAtrs;
-	private JLabel lblElegirProductos;
 
 	public VentanaBusquedaCliente() {
 		initialize();
@@ -58,15 +62,37 @@ public class VentanaBusquedaCliente extends JFrame {
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 822, 450);
+		frame.setBounds(100, 100, 822, 495);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		
+		lblAtrs = new JLabel("Atras");
+		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtrs.setBounds(198, 369, 70, 60);
+		frame.getContentPane().add(lblAtrs);
+		
+		btnAtras = new JButton("");
+		btnAtras.setBackground(new Color(248, 248, 255));
+		btnAtras.setBounds(133, 369, 60, 60);
+		cambiarIconoBotones(btnAtras,  "back2.png");
+		frame.getContentPane().add(btnAtras);
+		
+		btnPasarAVenta = new JButton("");
+		btnPasarAVenta.setBackground(new Color(248, 248, 255));
+		btnPasarAVenta.setBounds(497, 369, 60, 60);
+		cambiarIconoBotones(btnPasarAVenta,  "carrito2.png");
+		frame.getContentPane().add(btnPasarAVenta);
+		
+		lblElegirProductos = new JLabel("Elegir Productos");
+		lblElegirProductos.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblElegirProductos.setBounds(562, 369, 119, 60);
+		frame.getContentPane().add(lblElegirProductos);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 191, 806, 224);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 191, 806, 167);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -96,32 +122,10 @@ public class VentanaBusquedaCliente extends JFrame {
 		tablaClientes.getColumnModel().getColumn(1).setResizable(false);
 		
 		spCliente.setViewportView(tablaClientes);
-		
-		btnPasarAVenta = new JButton("");
-		btnPasarAVenta.setBackground(new Color(248, 248, 255));
-		btnPasarAVenta.setBounds(478, 163, 55, 50);
-		panel.add(btnPasarAVenta);
-		cambiarIconoBotones(btnPasarAVenta,  "carrito2.png");
-		
-		btnAtras = new JButton("");
-		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(114, 163, 55, 50);
-		panel.add(btnAtras);
-		cambiarIconoBotones(btnAtras,  "back2.png");
-		
-		lblAtrs = new JLabel("Atras");
-		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtrs.setBounds(179, 163, 70, 50);
-		panel.add(lblAtrs);
-		
-		lblElegirProductos = new JLabel("Elegir Productos");
-		lblElegirProductos.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblElegirProductos.setBounds(543, 163, 119, 50);
-		panel.add(lblElegirProductos);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setForeground(new Color(248, 248, 255));
-		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setForeground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		panel_1.setBounds(0, 95, 806, 95);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -175,21 +179,47 @@ public class VentanaBusquedaCliente extends JFrame {
 		
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 806, 50);
+		panel_2.setBounds(0, 0, 806, 53);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(606, 23, 59, 19);
 		panel_2.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("Empleado:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(412, 23, 59, 19);
+		panel_2.add(lblNewLabel_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 854, 642);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

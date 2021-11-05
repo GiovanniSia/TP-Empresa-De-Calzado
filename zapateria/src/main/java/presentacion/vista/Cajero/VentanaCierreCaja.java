@@ -21,6 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 public class VentanaCierreCaja extends JFrame {
 
@@ -66,11 +67,12 @@ public class VentanaCierreCaja extends JFrame {
 	private JTable tablaMedioPagoEgresos;
 	private String[] nombreColumnasMedioPagoEgresos = { "M.Pago", "Descripcion", "Total", "Validar" };
 	private DefaultTableModel modelMedioPagoEgresos;
-	private JPanel panel;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JLabel lblCerrarCajaDe;
 	private JLabel lblAtras;
+	private JPanel panel;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
 
 	public VentanaCierreCaja() {
 		initialize();
@@ -103,7 +105,7 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.add(lblCajaDiariaDeSucursal);
 
 		panelIngresosEgresos = new JPanel();
-		panelIngresosEgresos.setBackground(new Color(248, 248, 255));
+		panelIngresosEgresos.setBackground(new Color(255, 255, 255, 180));
 		panelIngresosEgresos.setBounds(0, 94, 613, 520);
 		contentPane.add(panelIngresosEgresos);
 		panelIngresosEgresos.setLayout(null);
@@ -187,7 +189,7 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.add(lblFechaHoy);
 
 		panelMedioPagoTotales = new JPanel();
-		panelMedioPagoTotales.setBackground(new Color(248, 248, 255));
+		panelMedioPagoTotales.setBackground(new Color(255, 255, 255, 180));
 		panelMedioPagoTotales.setBounds(612, 94, 298, 520);
 		contentPane.add(panelMedioPagoTotales);
 		panelMedioPagoTotales.setLayout(null);
@@ -333,20 +335,34 @@ public class VentanaCierreCaja extends JFrame {
 		
 		panel = new JPanel();
 		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 910, 50);
+		panel.setBounds(0, 0, 910, 53);
 		contentPane.add(panel);
 		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(711, 28, 59, 19);
 		panel.add(lblNewLabel);
 		
-		lblNewLabel_1 = new JLabel("Sucursal:");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(565, 22, 109, 14);
+		lblNewLabel_1 = new JLabel("Empleado:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(517, 28, 59, 19);
 		panel.add(lblNewLabel_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 53, 960, 720);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 
 	}
 	
@@ -354,7 +370,13 @@ public class VentanaCierreCaja extends JFrame {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
-
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {
