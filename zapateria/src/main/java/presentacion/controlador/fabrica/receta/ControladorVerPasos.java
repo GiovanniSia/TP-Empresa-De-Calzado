@@ -467,9 +467,14 @@ public class ControladorVerPasos implements ActionListener {
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() <= 0) {
 			return;
 		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
+			return;
+		}
+		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
-		this.reiniciarTablaPasosReceta();
-		this.reiniciarTablaIngredientes();
+		int indiceSeleccionado = this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex();
+		this.refrescarComboBoxReceta();
+		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(indiceSeleccionado);
 	}
 
 	@Override
