@@ -39,6 +39,7 @@ public class ControladorVerPasos implements ActionListener {
 	List<PasoDeRecetaDTO> pasosRecetaEnLista;
 	PasoDeRecetaDTO pasoDeRecetaSeleccionado;
 	List<MaestroProductoDTO> ingredientesEnComboBox;
+	List<MaestroProductoDTO> productosTerminados;
 	
 	public ControladorVerPasos() {
 		ventanaPrincipal = new VerPasos();
@@ -83,6 +84,7 @@ public class ControladorVerPasos implements ActionListener {
 		llenarTablaPasosReceta();
 		refrescarTablaIngredientes();
 		llenarComboBoxIngredientes();
+		refrescarComboBoxProductosTerminados();
 		
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
@@ -236,6 +238,7 @@ public class ControladorVerPasos implements ActionListener {
 		pasosRecetaEnLista = this.modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionada.getIdReceta());
 		llenarTablaPasosReceta(pasosRecetaEnLista);
 		this.ventanaPrincipal.getTextFieldReceta().setText(recetaSeleccionada.getDescripcion());
+		this.ventanaPrincipal.getComboBoxProductos().setSelectedIndex(recetaSeleccionada.getIdProducto()-1);
 	}
 	
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
@@ -321,7 +324,11 @@ public class ControladorVerPasos implements ActionListener {
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() != 0 && this.recetaSeleccionada.getIdReceta() != 0) {
 			return;
 		}
+		if(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex() == -1) {
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
+		recetaSeleccionada.setIdProducto(this.productosTerminados.get(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex()).getIdMaestroProducto());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
 		int idReceta = this.modeloFabricacion.readAllReceta().get(this.modeloFabricacion.readAllReceta().size()-1).getIdReceta();
 		for(PasoDeRecetaDTO p : pasosRecetaEnLista) {
@@ -350,6 +357,18 @@ public class ControladorVerPasos implements ActionListener {
 		*/
 		this.refrescarTablaIngredientes();
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void refrescarComboBoxProductosTerminados() {
+		this.ventanaPrincipal.getComboBoxProductos().removeAllItems();
+		productosTerminados = new ArrayList<MaestroProductoDTO>();
+		for(MaestroProductoDTO mp: this.modeloMaestroProducto.readAll()) {
+			if(mp.getFabricado().equals("S") && mp.getTipo().equals("PT")) {
+				productosTerminados.add(mp);
+				this.ventanaPrincipal.getComboBoxProductos().addItem(mp.getDescripcion()+", "+mp.getTalle());
+			}
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -358,7 +377,7 @@ public class ControladorVerPasos implements ActionListener {
 	public static void main(String[] args) {
 		ControladorVerPasos controladorPasos = new ControladorVerPasos();
 		controladorPasos.inicializar();
-
+		
 	}
 
 }

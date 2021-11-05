@@ -67,6 +67,7 @@ public class VerPasos extends JFrame {
 	
 	JSpinner spinnerCantidadIngrediente;
 	JButton btnAgregarIngrediente;
+	JComboBox comboBoxProductos;
 
 	public VerPasos() {
 		initialize();
@@ -217,7 +218,7 @@ public class VerPasos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnReceta.setBounds(361, 268, 60, 60);
+		btnReceta.setBounds(361, 301, 60, 60);
 		panel.add(btnReceta);
 		
 		textFieldReceta = new JTextField();
@@ -242,6 +243,10 @@ public class VerPasos extends JFrame {
 		spinnerCantidadIngrediente = new JSpinner(sm);
 		spinnerCantidadIngrediente.setBounds(618, 269, 68, 20);
 		panel.add(spinnerCantidadIngrediente);
+		
+		comboBoxProductos = new JComboBox();
+		comboBoxProductos.setBounds(361, 268, 177, 22);
+		panel.add(comboBoxProductos);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -395,5 +400,9 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnAgregarIngrediente() {
 		return btnAgregarIngrediente;
+	}
+
+	public JComboBox getComboBoxProductos() {
+		return comboBoxProductos;
 	}
 }
