@@ -68,6 +68,7 @@ public class VerPasos extends JFrame {
 	JSpinner spinnerCantidadIngrediente;
 	JButton btnAgregarIngrediente;
 	JComboBox comboBoxProductos;
+	JButton btnQuitarPasoReceta;
 
 	public VerPasos() {
 		initialize();
@@ -80,14 +81,14 @@ public class VerPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 736, 556);
+		frame.setBounds(100, 100, 736, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 93, 710, 424);
+		panel.setBounds(0, 93, 710, 452);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -247,6 +248,10 @@ public class VerPasos extends JFrame {
 		comboBoxProductos = new JComboBox();
 		comboBoxProductos.setBounds(361, 268, 177, 22);
 		panel.add(comboBoxProductos);
+		
+		btnQuitarPasoReceta = new JButton("");
+		btnQuitarPasoReceta.setBounds(361, 372, 60, 60);
+		panel.add(btnQuitarPasoReceta);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -404,5 +409,9 @@ public class VerPasos extends JFrame {
 
 	public JComboBox getComboBoxProductos() {
 		return comboBoxProductos;
+	}
+
+	public JButton getBtnQuitarPasoReceta() {
+		return btnQuitarPasoReceta;
 	}
 }

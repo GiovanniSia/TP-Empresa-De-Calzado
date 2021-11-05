@@ -77,6 +77,7 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnAgregarPasoAReceta().addActionListener(r->incluirPaso(r));
 		this.ventanaPrincipal.getBtnReceta().addActionListener(r->darDeAltaReceta(r));
 		this.ventanaPrincipal.getBtnAgregarIngrediente().addActionListener(r->agregarIngrediente(r));
+		this.ventanaPrincipal.getBtnQuitarPasoReceta().addActionListener(r->quitarPasoReceta(r));
 	}
 
 	public void inicializar() {
@@ -366,6 +367,25 @@ public class ControladorVerPasos implements ActionListener {
 			if(mp.getFabricado().equals("S") && mp.getTipo().equals("PT")) {
 				productosTerminados.add(mp);
 				this.ventanaPrincipal.getComboBoxProductos().addItem(mp.getDescripcion()+", "+mp.getTalle());
+			}
+		}
+	}
+	
+	private void quitarPasoReceta(ActionEvent e) {
+		if(this.pasosRecetaEnLista.size()==0) {
+			return;
+		}
+		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		corregirNroOrden(pasosRecetaEnLista.get(pasoSeleccionado-1).getNroOrden());
+		this.pasosRecetaEnLista.remove(pasoSeleccionado-1);
+		this.reiniciarTablaPasosReceta();
+		this.llenarTablaPasosReceta(pasosRecetaEnLista);
+	}
+	
+	private void corregirNroOrden(int nroOrdenEliminado) {
+		for(PasoDeRecetaDTO p: pasosRecetaEnLista) {
+			if(p.getNroOrden() > nroOrdenEliminado) {
+				p.setNroOrden(p.getNroOrden()-1);
 			}
 		}
 	}
