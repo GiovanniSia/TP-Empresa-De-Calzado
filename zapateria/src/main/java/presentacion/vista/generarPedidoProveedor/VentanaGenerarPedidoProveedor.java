@@ -294,5 +294,61 @@ public class VentanaGenerarPedidoProveedor {
 		frame.setVisible(true);
 	}
 	
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JTable getTablaProducto() {
+		return tablaProducto;
+	}
+
+	public String[] getNombreColumnasProducto() {
+		return nombreColumnasProducto;
+	}
+
+	public DefaultTableModel getModelProducto() {
+		return modelProducto;
+	}
+
+	public JTable getTablaProveedores() {
+		return tablaProveedores;
+	}
+
+	public DefaultTableModel getModelProveedores() {
+		return modelProveedores;
+	}
+
+	public String[] getNombreColumnasProveedores() {
+		return nombreColumnasProveedores;
+	}
+
+	public JRadioButton getRdbtnProveedoresPref() {
+		return rdbtnProveedoresPref;
+	}
+
+	public JRadioButton getRdbtnTodosLosProveedores() {
+		return rdbtnTodosLosProveedores;
+	}
+
+	public JSpinner getSpinnerCantARep() {
+		return spinnerCantARep;
+	}
+
+	public JButton getBtnGenerarPedido() {
+		return btnGenerarPedido;
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
+	}
 	
 }

@@ -313,10 +313,10 @@ public class ControladorGestionarProductos {
 		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 		        
 		        if(isSelected) {    
-		        	if((int)table.getValueAt(row, 14) > 0) {
-		        		setBackground(Color.lightGray);
-			        	setForeground(Color.WHITE);	
-		        	}
+//		        	if((int)table.getValueAt(row, 14) > 0) {
+//		        		setBackground(Color.lightGray);
+//			        	setForeground(Color.WHITE);	
+//		        	}
 		        	
 		        }else {
 		        	if((int)table.getValueAt(row, 14) == 0) {
@@ -357,7 +357,15 @@ public class ControladorGestionarProductos {
 			JOptionPane.showMessageDialog(null, "El producto es propio. Imposible generar orden a proveedor", "Error", JOptionPane.OK_OPTION);
 			return;	
 		}
-		this.controladorGenerarPedidoAProveedorManualmente.setProductoElegido(productoSeleccionado);
+		StockDTO stockDeProd=null;
+		for(StockDTO s: this.todoElStock) {
+			if(s.getIdProducto() == productoSeleccionado.getIdMaestroProducto()) {
+				stockDeProd = s;
+			}
+		}
+		
+		
+		this.controladorGenerarPedidoAProveedorManualmente.setProductoElegido(productoSeleccionado,stockDeProd);
 		this.ventanaGestionarProductos.cerrar();
 		this.controladorGenerarPedidoAProveedorManualmente.inicializar();
 		this.controladorGenerarPedidoAProveedorManualmente.mostrarVentana();
@@ -375,7 +383,7 @@ public class ControladorGestionarProductos {
 		
 		ControladorAltaProducto alta = new ControladorAltaProducto(m, prov, prodProv); 
 		
-		ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(prov,stock,pedi);
+		ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(prov,stock,pedi, prodProv);
 		ControladorGestionarProductos g = new ControladorGestionarProductos(m, stock);
 		g.setControladorGenerarPedidoAProveedorManualmente(controladorGenerarPedidoAProveedorManualmente);
 		g.setControladorAltaProducto(alta);
