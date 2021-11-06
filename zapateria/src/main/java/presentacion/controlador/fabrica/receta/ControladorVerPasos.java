@@ -111,7 +111,8 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaConPasos(List<PasoDTO> pasosEnLista) {
 		for(PasoDTO p : pasosEnLista) {
-			Object[] agregar = {p.getIdPaso(), p.getDescripcion()};
+			//Object[] agregar = {p.getIdPaso(), p.getDescripcion()};
+			Object[] agregar = {p.getDescripcion()};
 			ventanaPrincipal.getModelPasos().addRow(agregar);
 		}
 	}
@@ -262,7 +263,8 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
 		for(PasoDeRecetaDTO p: pasos) {
-			Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
+			//Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
+			Object[] agregar = { p.getPasosDTO().getDescripcion(), p.getNroOrden()};
 			this.ventanaPrincipal.getModelPasosReceta().addRow(agregar);
 		}
 	}

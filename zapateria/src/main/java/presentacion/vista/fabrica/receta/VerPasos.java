@@ -31,7 +31,8 @@ public class VerPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Id paso","Descripcion"};
+	//private String[] nombreColumnas = { "Id paso","Descripcion"};
+	private String[] nombreColumnas = {"Descripcion"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JScrollPane spCliente;
@@ -54,7 +55,8 @@ public class VerPasos extends JFrame {
 	JComboBox comboBoxIngredientes;
 	
 	JScrollPane spPasosReceta;
-	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
+	//private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
+	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
 	
@@ -86,14 +88,14 @@ public class VerPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 736, 595);
+		frame.setBounds(100, 100, 838, 595);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 93, 710, 452);
+		panel.setBounds(0, 93, 812, 452);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -123,22 +125,24 @@ public class VerPasos extends JFrame {
 		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblId.setBounds(10, 11, 46, 14);
 		panel.add(lblId);
+		lblId.setVisible(false);
 		
 		textId = new JTextField();
 		textId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textId.setBounds(10, 36, 75, 20);
 		panel.add(textId);
 		textId.setColumns(10);
+		textId.setVisible(false);
 		
 		lblSucursal = new JLabel("Descripcion");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(95, 11, 75, 14);
+		lblSucursal.setBounds(10, 25, 160, 14);
 		panel.add(lblSucursal);
 		
 		textDescripcion = new JTextField();
 		textDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textDescripcion.setColumns(10);
-		textDescripcion.setBounds(95, 36, 75, 20);
+		textDescripcion.setBounds(10, 50, 160, 20);
 		panel.add(textDescripcion);
 		
 		btnSalir = new JButton("");
@@ -174,11 +178,13 @@ public class VerPasos extends JFrame {
 		btnEliminar = new JButton("");
 		btnEliminar.setBounds(180, 11, 60, 60);
 		panel.add(btnEliminar);
+		btnEliminar.setVisible(false);
 		
 		lblEliminar = new JLabel("Eliminar");
 		lblEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblEliminar.setBounds(250, 11, 75, 60);
 		panel.add(lblEliminar);
+		lblEliminar.setVisible(false);
 		
 		comboBoxReceta = new JComboBox();
 		comboBoxReceta.setBounds(361, 36, 177, 22);
@@ -205,7 +211,7 @@ public class VerPasos extends JFrame {
 		this.spPasosReceta.setViewportView(tablaPasosReceta);
 		
 		spIngredientes = new JScrollPane();
-		spIngredientes.setBounds(548, 81, 138, 147);
+		spIngredientes.setBounds(647, 81, 138, 147);
 		panel.add(spIngredientes);
 		this.modelIngredientes = new DefaultTableModel(null, this.nombreColumnasIngredientes){
             private static final long serialVersionUID = 1L;
@@ -234,11 +240,11 @@ public class VerPasos extends JFrame {
 		panel.add(textFieldReceta);
 		
 		comboBoxIngredientes = new JComboBox();
-		comboBoxIngredientes.setBounds(548, 239, 138, 22);
+		comboBoxIngredientes.setBounds(647, 239, 138, 22);
 		panel.add(comboBoxIngredientes);
 		
 		btnAgregarIngrediente = new JButton("");
-		btnAgregarIngrediente.setBounds(548, 268, 60, 60);
+		btnAgregarIngrediente.setBounds(647, 301, 60, 60);
 		panel.add(btnAgregarIngrediente);
 		
 		btnAgregarPasoAReceta = new JButton("");
@@ -247,7 +253,7 @@ public class VerPasos extends JFrame {
 		
 		SpinnerModel sm = new SpinnerNumberModel(1, 1, 100, 1);
 		spinnerCantidadIngrediente = new JSpinner(sm);
-		spinnerCantidadIngrediente.setBounds(618, 269, 68, 20);
+		spinnerCantidadIngrediente.setBounds(647, 269, 60, 20);
 		panel.add(spinnerCantidadIngrediente);
 		
 		comboBoxProductos = new JComboBox();
@@ -255,24 +261,44 @@ public class VerPasos extends JFrame {
 		panel.add(comboBoxProductos);
 		
 		btnQuitarPasoReceta = new JButton("");
-		btnQuitarPasoReceta.setBounds(361, 372, 60, 60);
+		btnQuitarPasoReceta.setBounds(291, 152, 60, 60);
 		panel.add(btnQuitarPasoReceta);
 		
 		btnQuitarIngrediente = new JButton("");
-		btnQuitarIngrediente.setBounds(548, 339, 60, 60);
+		btnQuitarIngrediente.setBounds(647, 11, 60, 60);
 		panel.add(btnQuitarIngrediente);
 		
 		btnSubirPaso = new JButton("");
-		btnSubirPaso.setBounds(301, 150, 50, 50);
+		btnSubirPaso.setBounds(548, 117, 50, 50);
 		panel.add(btnSubirPaso);
 		
 		btnBajarPaso = new JButton("");
-		btnBajarPaso.setBounds(301, 211, 50, 50);
+		btnBajarPaso.setBounds(548, 178, 50, 50);
 		panel.add(btnBajarPaso);
 		
-		btnActualizarReceta = new JButton("Actua");
-		btnActualizarReceta.setBounds(431, 301, 60, 60);
+		btnActualizarReceta = new JButton("");
+		btnActualizarReceta.setBounds(361, 372, 60, 60);
 		panel.add(btnActualizarReceta);
+		
+		JLabel lblQuitarMaterial = new JLabel("Quitar");
+		lblQuitarMaterial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblQuitarMaterial.setBounds(717, 12, 75, 60);
+		panel.add(lblQuitarMaterial);
+		
+		JLabel lblAgregar_1 = new JLabel("Agregar");
+		lblAgregar_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAgregar_1.setBounds(717, 301, 80, 60);
+		panel.add(lblAgregar_1);
+		
+		JLabel lblAgregar_1_1 = new JLabel("Agregar");
+		lblAgregar_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAgregar_1_1.setBounds(431, 301, 80, 60);
+		panel.add(lblAgregar_1_1);
+		
+		JLabel lblAgregar_1_1_1 = new JLabel("Modificar");
+		lblAgregar_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAgregar_1_1_1.setBounds(431, 372, 80, 60);
+		panel.add(lblAgregar_1_1_1);
 
 		
 		lblNewLabel = new JLabel("Pasos");
