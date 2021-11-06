@@ -105,7 +105,7 @@ private static final long serialVersionUID = 1L;
 		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 
 		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
-		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(120);
+		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(190);
 		tablaProductos.getColumnModel().getColumn(2).setPreferredWidth(30);
 		tablaProductos.getColumnModel().getColumn(3).setPreferredWidth(70);
 		tablaProductos.getColumnModel().getColumn(4).setPreferredWidth(100);
@@ -119,7 +119,7 @@ private static final long serialVersionUID = 1L;
 		tablaProductos.getColumnModel().getColumn(12).setPreferredWidth(100);
 		tablaProductos.getColumnModel().getColumn(13).setPreferredWidth(100);
 		tablaProductos.getColumnModel().getColumn(14).setPreferredWidth(100);
-		tablaProductos.getColumnModel().getColumn(15).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(15).setPreferredWidth(190);
 		
 		
 		

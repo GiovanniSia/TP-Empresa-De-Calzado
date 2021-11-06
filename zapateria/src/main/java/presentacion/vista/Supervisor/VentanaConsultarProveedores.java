@@ -187,6 +187,7 @@ public class VentanaConsultarProveedores {
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		this.frame.addWindowListener(new WindowAdapter() 
 		{
 			@Override

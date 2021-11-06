@@ -38,7 +38,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	
 	VentanaGenerarPedidoProveedor ventanaGenerarPedidoProveedor;
 	
-	
+	ControladorGestionarProductos controladorGestionarProductos;
 	
 	public ControladorGenerarPedidoAProveedorManualmente(Proveedor proveedor,Stock stock,PedidosPendientes pedidosPendientes,ProductoDeProveedor productoDeProveedor) {
 		this.proveedor=proveedor;
@@ -58,12 +58,20 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 
 		
 	}
+
+	public void setControladorGestionarProductos(ControladorGestionarProductos controladorGestionarProductos) {
+		this.controladorGestionarProductos = controladorGestionarProductos;
+	}
 	
 	public void inicializar() {
 		this.ventanaGenerarPedidoProveedor = new VentanaGenerarPedidoProveedor();
 		this.todosLosProveedores = this.proveedor.readAll();
 		this.todoElStock = this.stock.readAll();
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
+		this.todosLosProductosDeProveedor = this.productoDeProveedor.readAll();
+		
+		
+		this.ventanaGenerarPedidoProveedor.getBtnAtras().addActionListener(a -> atras());
 		
 		llenarTablaProductoElegido();
 		llenarTablaProveedores();
@@ -76,6 +84,12 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 
 	public void cerrarVentana() {
 		this.ventanaGenerarPedidoProveedor.cerrar();
+	}
+	
+	public void atras() {
+		this.ventanaGenerarPedidoProveedor.cerrar();
+		this.controladorGestionarProductos.inicializar();
+		this.controladorGestionarProductos.mostrarVentana();
 	}
 	
 	public void llenarTablaProductoElegido() {

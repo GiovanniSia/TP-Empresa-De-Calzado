@@ -36,6 +36,13 @@ public class ControladorConsultarProveedor {
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
 		this.controlador=controlador;
 	}
+	public ControladorConsultarProveedor(Proveedor proveedor,ProductoDeProveedor prodProveedor) {
+		this.proveedor = proveedor;
+		this.prodProveedor = prodProveedor;
+		
+		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
+	}
+	
 	
 	public void setControladorAltaProducto(ControladorAltaProducto controladorAltaProducto) {
 		this.controladorAltaProducto=controladorAltaProducto;

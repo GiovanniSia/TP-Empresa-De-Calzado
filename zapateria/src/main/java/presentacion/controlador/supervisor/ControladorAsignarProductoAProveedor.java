@@ -324,7 +324,7 @@ public class ControladorAsignarProductoAProveedor {
 	
 	public void salir(ActionEvent a) {
 		this.ventanaAsignarProductoAProveedor.cerrar();
-//		this.controladorConsultarProveedor.inicializar();
+		this.controladorConsultarProveedor.inicializar();
 		this.controladorConsultarProveedor.mostrarVentana();
 	}
 	

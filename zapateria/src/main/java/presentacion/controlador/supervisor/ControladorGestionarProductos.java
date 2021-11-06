@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.View;
 
 import dto.MaestroProductoDTO;
 import dto.StockDTO;
@@ -53,7 +56,7 @@ public class ControladorGestionarProductos {
 	
 	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
 	
-	/*
+	
 	public ControladorGestionarProductos(Controlador controlador,MaestroProducto maestroProducto,Stock stock) {
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
@@ -65,26 +68,10 @@ public class ControladorGestionarProductos {
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
 		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 		
-		this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
-		this.ventanaGestionarProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
-		
-		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				realizarBusqueda();
-			}
-		});
-		this.ventanaGestionarProductos.getTextTalle().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				realizarBusqueda();
-			}
-		});
-		
-		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
+
 		
 	}
-	*/
+	
 
 	public ControladorGestionarProductos(MaestroProducto maestroProducto,Stock stock) {
 		this.maestroProducto = maestroProducto;
@@ -93,7 +80,6 @@ public class ControladorGestionarProductos {
 		this.todoElStock = new ArrayList<StockDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
-		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 		
 		
 	}
@@ -111,8 +97,28 @@ public class ControladorGestionarProductos {
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todoElStock = this.stock.readAll();
 		
+
+		this.ventanaGestionarProductos = new VentanaGestionarProductos();
+		
 		this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
-//		this.ventanaGestionarProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
+		
+		this.ventanaGestionarProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
+		
+		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaGestionarProductos.getTextTalle().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		
+		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
+		
 		
 		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
 			@Override
@@ -143,10 +149,39 @@ public class ControladorGestionarProductos {
 
 		});
 		
-		
-		
-		
-		
+		this.ventanaGestionarProductos.getFrame().addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ventanaGestionarProductos.getTablaProductos().getSelectionModel().clearSelection();				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+				
 		escribirTablaCompleta();
 		validarTeclado();
 	}
@@ -182,8 +217,8 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos.getModelProductos().setColumnCount(0);
 		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
-		for(StockDTO s: this.todoElStock) {
-			for(MaestroProductoDTO m: this.todosLosProductos) {
+		for(MaestroProductoDTO m: this.todosLosProductos) {
+			for(StockDTO s: this.todoElStock) {
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
 					agregarATabla(s,m);
 				}
@@ -383,12 +418,19 @@ public class ControladorGestionarProductos {
 		
 		ControladorAltaProducto alta = new ControladorAltaProducto(m, prov, prodProv); 
 		
+		
+		
+		ControladorConsultarProveedor consultar = new ControladorConsultarProveedor(prov,prodProv);
+		
 		ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(prov,stock,pedi, prodProv);
 		ControladorGestionarProductos g = new ControladorGestionarProductos(m, stock);
 		g.setControladorGenerarPedidoAProveedorManualmente(controladorGenerarPedidoAProveedorManualmente);
 		g.setControladorAltaProducto(alta);
 		alta.setControladorGestionarProductos(g);
-		
+		alta.setControladorConsultarProveedor(consultar);
+		controladorGenerarPedidoAProveedorManualmente.setControladorGestionarProductos(g);
+		consultar.setControladorAltaProducto(alta);
+		consultar.setControladorAsignarProductoAProveedor(null);
 		g.inicializar();
 		g.mostrarVentana();
 	}

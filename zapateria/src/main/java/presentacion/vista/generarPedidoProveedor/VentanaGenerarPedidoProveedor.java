@@ -2,6 +2,8 @@ package presentacion.vista.generarPedidoProveedor;
 
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -21,6 +23,8 @@ import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JTable;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -44,6 +48,9 @@ public class VentanaGenerarPedidoProveedor {
 	private JSpinner spinnerCantARep;
 	private JButton btnGenerarPedido;
 	private JButton btnAtras;
+	
+	SpinnerModel spinnerModelCantARep;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -148,8 +155,19 @@ public class VentanaGenerarPedidoProveedor {
 		rdbtnTodosLosProveedores.setBounds(534, 124, 161, 23);
 		panel.add(rdbtnTodosLosProveedores);
 		
-		spinnerCantARep = new JSpinner();
+		
+		spinnerModelCantARep = new SpinnerNumberModel(1, 1, 999, 1); //default value,lower bound,upper bound,increment by
+		spinnerCantARep = new JSpinner(spinnerModelCantARep);
 		spinnerCantARep.setBounds(180, 318, 83, 22);
+//		spinnerCantARep.addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyTyped(KeyEvent e) {
+//				if ((int)spinnerCantARep.getValue() >= 15) {
+//					e.consume();
+//				}
+//			}
+//		});
+		
 		panel.add(spinnerCantARep);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("(al menos 1 y hasta 999)");
@@ -222,38 +240,7 @@ public class VentanaGenerarPedidoProveedor {
 		
 		panel.add(scrollPaneProveedores);
 		
-		/*
-		spProductos = new JScrollPane();
-		spProductos.setBounds(10, 11, 898, 270);
-		spProductos.setBackground(new Color(248, 248, 255));
-
-
-		modelProductos = new DefaultTableModel(null, nombreColumnas) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int filas, int columnas) {
-				if (columnas == 5) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		};
-
-		tablaProductos = new JTable(modelProductos);
-		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-
-		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
-		
-		tablaProductos.getTableHeader().setReorderingAllowed(false);
-		spProductos.setViewportView(tablaProductos);
-		tablaProductos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		tablaProductos.doLayout();
-		
-		panel.add(spProductos);
-		
-		*/
+	
 		
 		
 		JLabel lblFondo = new JLabel("");
