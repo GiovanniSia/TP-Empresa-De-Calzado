@@ -76,6 +76,7 @@ public class VerPasos extends JFrame {
 	private JButton btnBajarPaso;
 	
 	JButton btnActualizarReceta ;
+	private JLabel lblUnidadMedida;
 
 	public VerPasos() {
 		initialize();
@@ -299,6 +300,10 @@ public class VerPasos extends JFrame {
 		lblAgregar_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAgregar_1_1_1.setBounds(431, 372, 80, 60);
 		panel.add(lblAgregar_1_1_1);
+		
+		lblUnidadMedida = new JLabel("New label");
+		lblUnidadMedida.setBounds(712, 268, 90, 20);
+		panel.add(lblUnidadMedida);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -476,5 +481,9 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnActualizarReceta() {
 		return btnActualizarReceta;
+	}
+
+	public JLabel getLblUnidadMedida() {
+		return lblUnidadMedida;
 	}
 }

@@ -90,6 +90,17 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnBajarPaso().addActionListener(r->bajarPaso(r));
 		
 		this.ventanaPrincipal.getBtnActualizarReceta().addActionListener(r->actualizarReceta(r));
+		
+		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
+	}
+
+	private void seleccionIngrediente(ActionEvent r) {
+		int ingredienteActual = this.ventanaPrincipal.getComboBoxIngredientes().getSelectedIndex();
+		if(ingredienteActual<0 || ingredientesEnComboBox.size()==0) {
+			this.ventanaPrincipal.getLblUnidadMedida().setText("");
+			return;
+		}
+		this.ventanaPrincipal.getLblUnidadMedida().setText(this.ingredientesEnComboBox.get(ingredienteActual).getUnidadMedida());
 	}
 
 	public void inicializar() {
@@ -100,6 +111,7 @@ public class ControladorVerPasos implements ActionListener {
 		refrescarComboBoxProductosTerminados();
 		
 		refrescarTabla();
+		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
 		ventanaPrincipal.mostrarVentana();
 	}
 	
@@ -315,6 +327,7 @@ public class ControladorVerPasos implements ActionListener {
 				ingredientesEnComboBox.add(mp);
 			}
 		}
+		this.ventanaPrincipal.getComboBoxIngredientes().setSelectedIndex(0);
 	}
 	
 	private void incluirPaso(ActionEvent e) {
