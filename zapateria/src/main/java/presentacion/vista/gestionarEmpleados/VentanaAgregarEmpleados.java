@@ -27,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
+import javax.swing.border.MatteBorder;
 
 public class VentanaAgregarEmpleados extends JFrame {
 
@@ -68,89 +69,42 @@ public class VentanaAgregarEmpleados extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 323, 432);
+		frame.setBounds(100, 100, 323, 442);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblMostrarClaveNueva = new JLabel("");
-		lblMostrarClaveNueva.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtClaveNueva.setEchoChar((char) 0);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				txtClaveNueva.setEchoChar('\u25cf');
-			}
-		});
-
-		lblMostrarClaveNueva.setBorder(null);
-		lblMostrarClaveNueva.setBounds(285, 256, 15, 18);
-		cambiarIconoLabel(lblMostrarClaveNueva, "ojo.png");
-		contentPane.add(lblMostrarClaveNueva);
-
-		lblMostrarRepetirClave = new JLabel("");
-		lblMostrarRepetirClave.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				txtRepetirClave.setEchoChar((char) 0);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				txtRepetirClave.setEchoChar('\u25cf');
-			}
-		});
-
-		lblMostrarRepetirClave.setBorder(null);
-		lblMostrarRepetirClave.setBounds(285, 306, 15, 18);
-		cambiarIconoLabel(lblMostrarRepetirClave, "ojo.png");
-		contentPane.add(lblMostrarRepetirClave);
-
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 496, 50);
-		contentPane.add(panel);
-
-		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_2.setBounds(10, 0, 280, 50);
-		panel.add(lblNewLabel_2);
-
 		JLabel lblNewLabel_1 = new JLabel("Agregar Empleado Nuevo");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(10, 49, 280, 38);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblNewLabel_1.setBounds(10, 53, 280, 38);
 		contentPane.add(lblNewLabel_1);
 
 		btnAtras = new JButton("");
 		btnAtras.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAtras.setBounds(10, 337, 50, 50);
+		btnAtras.setBounds(26, 342, 50, 50);
 		cambiarIconoBotones(btnAtras, "back2.png");
 		contentPane.add(btnAtras);
 
 		JLabel lblNewLabel_4 = new JLabel("Atras");
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(70, 337, 38, 50);
+		lblNewLabel_4.setBounds(86, 342, 38, 50);
 		contentPane.add(lblNewLabel_4);
 
 		btnAgregar = new JButton("");
 		btnAgregar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnAgregar.setBounds(167, 337, 50, 50);
+		btnAgregar.setBounds(164, 342, 50, 50);
 		cambiarIconoBotones(btnAgregar, "plus.png");
 		contentPane.add(btnAgregar);
 
 		JLabel lblNewLabel_4_1 = new JLabel("Agregar");
 		lblNewLabel_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4_1.setBounds(226, 337, 64, 50);
+		lblNewLabel_4_1.setBounds(223, 342, 64, 50);
 		contentPane.add(lblNewLabel_4_1);
 
 		txtNombre = new JTextField();
+		txtNombre.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		txtNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -160,10 +114,11 @@ public class VentanaAgregarEmpleados extends JFrame {
 				}
 			}
 		});
-		txtNombre.setBounds(10, 127, 114, 20);
+		txtNombre.setBounds(10, 127, 116, 22);
 		contentPane.add(txtNombre);
 
 		txtApellido = new JTextField();
+		txtApellido.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		txtApellido.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -173,7 +128,7 @@ public class VentanaAgregarEmpleados extends JFrame {
 				}
 			}
 		});
-		txtApellido.setBounds(164, 128, 116, 20);
+		txtApellido.setBounds(164, 128, 116, 22);
 		contentPane.add(txtApellido);
 
 		JLabel lblIdempleado = new JLabel("Nombre");
@@ -183,10 +138,11 @@ public class VentanaAgregarEmpleados extends JFrame {
 
 		JLabel lblCuil = new JLabel("Apellido");
 		lblCuil.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblCuil.setBounds(167, 102, 114, 20);
+		lblCuil.setBounds(164, 102, 114, 20);
 		contentPane.add(lblCuil);
 
 		txtCUIL = new JTextField();
+		txtCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		txtCUIL.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -197,10 +153,11 @@ public class VentanaAgregarEmpleados extends JFrame {
 				}
 			}
 		});
-		txtCUIL.setBounds(10, 186, 114, 20);
+		txtCUIL.setBounds(10, 186, 116, 22);
 		contentPane.add(txtCUIL);
 
 		txtCorreoElectronico = new JTextField();
+		txtCorreoElectronico.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		txtCorreoElectronico.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -212,54 +169,129 @@ public class VentanaAgregarEmpleados extends JFrame {
 				}
 			}
 		});
-		txtCorreoElectronico.setBounds(164, 187, 116, 20);
+		txtCorreoElectronico.setBounds(164, 187, 116, 22);
 		contentPane.add(txtCorreoElectronico);
-
-		JLabel lblIdempleado_1 = new JLabel("CUIL");
-		lblIdempleado_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblIdempleado_1.setBounds(10, 160, 117, 20);
-		contentPane.add(lblIdempleado_1);
-
-		JLabel lblCuil_1 = new JLabel("Correo Electronico");
-		lblCuil_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblCuil_1.setBounds(167, 161, 133, 20);
-		contentPane.add(lblCuil_1);
-
-		JLabel lblIdempleado_2 = new JLabel("Tipo Empleado");
-		lblIdempleado_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblIdempleado_2.setBounds(10, 231, 117, 20);
-		contentPane.add(lblIdempleado_2);
-
-		JLabel lblClave = new JLabel("Clave Nueva");
-		lblClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblClave.setBounds(167, 232, 114, 20);
-		contentPane.add(lblClave);
-
-		cbTipoEmpleado = new JComboBox();
-		cbTipoEmpleado.setBounds(10, 256, 114, 22);
-		cbTipoEmpleado.addItem("Sin seleccionar");
-		contentPane.add(cbTipoEmpleado);
 
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBackground(Color.LIGHT_GRAY);
-		separator.setBounds(137, 98, 17, 228);
+		separator.setBounds(146, 96, 8, 235);
 		contentPane.add(separator);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 307, 53);
+		contentPane.add(panel_2);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 64, 42);
+		panel_2.add(lblLogo);
+		cambiarIconoLabel(lblLogo, "icono2.png");
+		
+		JLabel lblNewLabel_2_1 = new JLabel("Empleado:");
+		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2_1.setBounds(84, 28, 59, 19);
+		panel_2.add(lblNewLabel_2_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Sucursal:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(84, 5, 59, 19);
+		panel_2.add(lblNewLabel_2);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 96, 307, 235);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+				JLabel lblCuil_1 = new JLabel("Correo Electronico");
+				lblCuil_1.setBounds(164, 68, 133, 20);
+				panel.add(lblCuil_1);
+				lblCuil_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+				
+						JLabel lblIdempleado_1 = new JLabel("CUIL");
+						lblIdempleado_1.setBounds(10, 68, 117, 20);
+						panel.add(lblIdempleado_1);
+						lblIdempleado_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+						
+								txtRepetirClave = new JPasswordField();
+								txtRepetirClave.setBounds(164, 204, 116, 22);
+								panel.add(txtRepetirClave);
+								txtRepetirClave.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+								
+										JLabel lblRepetirClave = new JLabel("Repetir Clave");
+										lblRepetirClave.setBounds(164, 180, 114, 20);
+										panel.add(lblRepetirClave);
+										lblRepetirClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+										
+												txtClaveNueva = new JPasswordField();
+												txtClaveNueva.setBounds(164, 154, 116, 22);
+												panel.add(txtClaveNueva);
+												txtClaveNueva.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+												
+														JLabel lblClave = new JLabel("Clave Nueva");
+														lblClave.setBounds(164, 130, 114, 20);
+														panel.add(lblClave);
+														lblClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+														
+																lblMostrarClaveNueva = new JLabel("");
+																lblMostrarClaveNueva.setBounds(285, 154, 15, 18);
+																panel.add(lblMostrarClaveNueva);
+																lblMostrarClaveNueva.addMouseListener(new MouseAdapter() {
+																	@Override
+																	public void mouseEntered(MouseEvent e) {
+																		txtClaveNueva.setEchoChar((char) 0);
+																	}
 
-		JLabel lblRepetirClave = new JLabel("Repetir Clave");
-		lblRepetirClave.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblRepetirClave.setBounds(166, 282, 114, 20);
-		contentPane.add(lblRepetirClave);
+																	@Override
+																	public void mouseExited(MouseEvent e) {
+																		txtClaveNueva.setEchoChar('\u25cf');
+																	}
+																});
+																
+																		lblMostrarClaveNueva.setBorder(null);
+																		cambiarIconoLabel(lblMostrarClaveNueva, "ojo.png");
+																		
+																				lblMostrarRepetirClave = new JLabel("");
+																				lblMostrarRepetirClave.setBounds(285, 204, 15, 18);
+																				panel.add(lblMostrarRepetirClave);
+																				lblMostrarRepetirClave.addMouseListener(new MouseAdapter() {
+																					@Override
+																					public void mouseEntered(MouseEvent e) {
+																						txtRepetirClave.setEchoChar((char) 0);
+																					}
 
-		txtRepetirClave = new JPasswordField();
-		txtRepetirClave.setBounds(164, 306, 116, 20);
-		contentPane.add(txtRepetirClave);
-
-		txtClaveNueva = new JPasswordField();
-		txtClaveNueva.setBounds(164, 256, 116, 20);
-		contentPane.add(txtClaveNueva);
+																					@Override
+																					public void mouseExited(MouseEvent e) {
+																						txtRepetirClave.setEchoChar('\u25cf');
+																					}
+																				});
+																				
+																						lblMostrarRepetirClave.setBorder(null);
+																						cambiarIconoLabel(lblMostrarRepetirClave, "ojo.png");
+																						
+																								cbTipoEmpleado = new JComboBox();
+																								cbTipoEmpleado.setBounds(10, 154, 116, 22);
+																								panel.add(cbTipoEmpleado);
+																								cbTipoEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+																								cbTipoEmpleado.addItem("Sin seleccionar");
+																								
+																										JLabel lblIdempleado_2 = new JLabel("Tipo Empleado");
+																										lblIdempleado_2.setBounds(10, 130, 117, 20);
+																										panel.add(lblIdempleado_2);
+																										lblIdempleado_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		frame.setLocationRelativeTo(null);
 
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 48, 640, 480);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void show() {

@@ -29,6 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.MatteBorder;
 
 public class VentanaModificarEmpleados extends JFrame {
 
@@ -46,6 +47,11 @@ public class VentanaModificarEmpleados extends JFrame {
 	private JCheckBox checkboxCambiarClave;
 	private JLabel lblMostrarClaveNueva;
 	private JPasswordField txtClaveNueva;
+	private JPanel panel;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel;
+	private JPanel panel_1;
 
 	public static void main(String[] args) {
 		VentanaModificarEmpleados a = new VentanaModificarEmpleados();
@@ -93,21 +99,9 @@ public class VentanaModificarEmpleados extends JFrame {
 		cambiarIconoLabel(lblMostrarClaveNueva, "ojo.png");
 		contentPane.add(lblMostrarClaveNueva);
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 318, 50);
-		contentPane.add(panel);
-
-		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_2.setBounds(10, 0, 288, 50);
-		panel.add(lblNewLabel_2);
-
 		JLabel lblNewLabel_1 = new JLabel("Modificar Empleado");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblNewLabel_1.setBounds(10, 49, 280, 38);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblNewLabel_1.setBounds(10, 52, 280, 44);
 		contentPane.add(lblNewLabel_1);
 
 		btnAtras = new JButton("");
@@ -129,7 +123,7 @@ public class VentanaModificarEmpleados extends JFrame {
 
 		JLabel lblNewLabel_4_1 = new JLabel("Actualizar");
 		lblNewLabel_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4_1.setBounds(229, 314, 79, 50);
+		lblNewLabel_4_1.setBounds(233, 314, 75, 50);
 		contentPane.add(lblNewLabel_4_1);
 
 		txtNombre = new JTextField();
@@ -220,7 +214,7 @@ public class VentanaModificarEmpleados extends JFrame {
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		separator.setBackground(Color.LIGHT_GRAY);
-		separator.setBounds(155, 98, 11, 182);
+		separator.setBounds(155, 98, 11, 191);
 		contentPane.add(separator);
 		
 		txtClaveNueva = new JPasswordField();
@@ -229,6 +223,8 @@ public class VentanaModificarEmpleados extends JFrame {
 		contentPane.add(txtClaveNueva);
 		
 		checkboxCambiarClave = new JCheckBox("Cambiar Clave");
+		checkboxCambiarClave.setBackground(new Color(248, 248, 255));
+		checkboxCambiarClave.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		checkboxCambiarClave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(checkboxCambiarClave.isSelected()) {
@@ -241,7 +237,43 @@ public class VentanaModificarEmpleados extends JFrame {
 		});
 		checkboxCambiarClave.setBounds(176, 230, 116, 23);
 		contentPane.add(checkboxCambiarClave);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 318, 53);
+		contentPane.add(panel);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 64, 42);
+		cambiarIconoLabel(lblLogo, "icono2.png");
+		panel.add(lblLogo);
+		
+		lblNewLabel_2 = new JLabel("Empleado:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(100, 28, 59, 19);
+		panel.add(lblNewLabel_2);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(100, 5, 59, 19);
+		panel.add(lblNewLabel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBounds(0, 98, 318, 191);
+		contentPane.add(panel_1);
 		frame.setLocationRelativeTo(null);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 48, 640, 480);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void show() {
