@@ -96,7 +96,6 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
 			this.ventanaGenerarPedidoProveedor.getLblNombreSucursal().setText(sucursal);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -192,27 +191,6 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		this.proveedorEnTabla.removeAll(this.proveedorEnTabla);	
 	}
 	
-	
-	
-	
-//	public void alternarPorRadioButton() {
-//		if(this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected()) {
-//			this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(false);
-//			mostrarSoloProveedoresPreferenciados();
-//			return;
-//
-//		}
-//		if(this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected()) {
-//			this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().setSelected(false);
-//			llenarTablaProveedores();
-//			return;
-//			
-//		}
-//		if(!this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected() && !this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected()) {
-//			//esto no deberia pasar
-//		}
-//	}
-	
 	public void radioButtonTodosLosProveedoresSeleccionado() {
 		if(!this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected() && !this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected()) {
 			//si ambos estan deseleccionados entonces se vuelve a seleccionar el previo porque no pueden quedar sin seleccionar
@@ -238,13 +216,17 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	}
 	
 	public void mostrarSoloProveedoresPreferenciados() {
+		limpiarTablaProveedores();
 		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(false);
 		
 		for(ProveedorDTO p: this.todosLosProveedores) {
-			for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
-				if(prodProv.getIdProveedor() == p.getId() && prodProv.getIdMaestroProducto() == this.productoElegido.getIdMaestroProducto() &&
-						this.productoElegido.getIdProveedor() == p.getId()) {
-					agregarProveedorATabla(p,prodProv);
+			
+			if(p.getId() == this.productoElegido.getIdProveedor()) {
+				for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
+					if(prodProv.getIdMaestroProducto() == this.productoElegido.getIdMaestroProducto() && prodProv.getIdProveedor() == p.getId()) {
+						agregarProveedorATabla(p,prodProv);
+						return;
+					}
 				}
 			}
 		}

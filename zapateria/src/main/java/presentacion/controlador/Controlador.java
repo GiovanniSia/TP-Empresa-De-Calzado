@@ -45,6 +45,7 @@ import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSu
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorConsultarProveedor;
+import presentacion.controlador.supervisor.ControladorGenerarPedidoAProveedorManualmente;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.controlador.supervisor.ControladorGestionarProductos;
 import presentacion.vista.Login.VentanaAdministrador;
@@ -111,6 +112,8 @@ public class Controlador {
 	private ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
 	private ControladorConsultarProveedor controladorConsultarProveedor;
 
+	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
+	
 	// Ver pedidos pendientes
 	private ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
 
@@ -208,11 +211,15 @@ public class Controlador {
 		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
-		
+		this.controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(proveedor, stock, pedidosPendientes, productoDeProveedor); 
 		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
 
 		
+		this.controladorGenerarPedidoAProveedorManualmente.setControladorGestionarProductos(controladorGestionarProductos);
+		this.controladorGestionarProductos.setControladorGenerarPedidoAProveedorManualmente(controladorGenerarPedidoAProveedorManualmente);
+		
 		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+
 		
 		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 
