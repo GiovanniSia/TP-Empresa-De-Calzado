@@ -1,5 +1,6 @@
 package presentacion.controlador.supervisor;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,8 @@ import dto.PedidosPendientesDTO;
 import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import dto.StockDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.PedidosPendientes;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
@@ -75,8 +78,22 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		
 		llenarTablaProductoElegido();
 		llenarTablaProveedores();
+		llenarLabels();
 	}
 
+	public void llenarLabels() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+			String sucursal = sucu.getValue("Nombre");
+			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
+			this.ventanaGenerarPedidoProveedor.getLblNombreSucursal().setText(sucursal);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void mostrarVentana() {
 		this.ventanaGenerarPedidoProveedor.show();
@@ -161,5 +178,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		
 		
 	}
+
+	
 	
 }
