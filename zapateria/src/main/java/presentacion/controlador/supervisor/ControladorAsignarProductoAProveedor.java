@@ -157,16 +157,15 @@ public class ControladorAsignarProductoAProveedor {
 		this.todosLosProductoEnTabla.removeAll(this.todosLosProductoEnTabla);
 		
 		for(MaestroProductoDTO prod: this.todosLosProductos) {
-		
-			boolean deboAgregar=true;
+
+//			boolean deboAgregar=true;
+			boolean deboAgregar=productoTieneProveedorAsignado(prod);
+//			boolean prodEsProvistoPorEsteProv = true;
 			MaestroProductoDTO maestroProducto=prod;
-			for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
-
-
-			}
+			
+			
+			
 			deboAgregar = deboAgregar && prod.getFabricado().equals("N");
-//			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
@@ -189,7 +188,22 @@ public class ControladorAsignarProductoAProveedor {
 	
 	}
 	
-
+	public boolean productoTieneProveedorAsignado(MaestroProductoDTO prod) {
+		boolean deboAgregar=true;
+		boolean prodEsProvistoPorEsteProv = true;
+		for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
+			
+			//si al menos un pp pertenece al mp entonces no se agrega
+			deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
+			
+			if(!deboAgregar) {
+//				prodEsProvistoPorEsteProv  = prodEsProvistoPorEsteProv && p.getIdProveedor() == this.proveedorElegido.getId();
+				return deboAgregar || p.getIdProveedor() != this.proveedorElegido.getId();
+			}
+		}
+		return true;
+	}
+	
 	
 	//COrregir esta re mal
 	public void llenarTablaProductosDelProveedor() {
@@ -314,7 +328,7 @@ public class ControladorAsignarProductoAProveedor {
 	}
 	
 	public boolean yaExisteEnTabla(ProductoDeProveedorDTO p) {
-		for(ProductoDeProveedorDTO productoProv: this.listaProductosDeProveedor) {
+		for(ProductoDeProveedorDTO productoProv: this.productosDeProveedorEnTabla) {
 			if(productoProv.getIdMaestroProducto()==p.getIdMaestroProducto()) {
 				return true;
 			}

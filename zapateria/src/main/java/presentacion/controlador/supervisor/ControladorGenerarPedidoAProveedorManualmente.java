@@ -79,6 +79,12 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		llenarTablaProductoElegido();
 		llenarTablaProveedores();
 		llenarLabels();
+		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(true);
+		
+		this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().addActionListener(a -> radioButtonProveedorPreferenciadoSeleccionado());
+		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().addActionListener(a -> radioButtonTodosLosProveedoresSeleccionado());
+		
+		
 	}
 
 	public void llenarLabels() {
@@ -150,35 +156,98 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	
 	
 	public void llenarTablaProveedores() {
-		this.ventanaGenerarPedidoProveedor.getModelProveedores().setRowCount(0);// borrar datos de la tabla
-		this.ventanaGenerarPedidoProveedor.getModelProveedores().setColumnCount(0);
-		this.ventanaGenerarPedidoProveedor.getModelProveedores().setColumnIdentifiers(this.ventanaGenerarPedidoProveedor.getNombreColumnasProveedores());
-		this.proveedorEnTabla.removeAll(this.proveedorEnTabla);
+		limpiarTablaProveedores();
 		
 		for(ProveedorDTO p: this.todosLosProveedores) {
 			for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
 				if(prodProv.getIdProveedor() == p.getId() && prodProv.getIdMaestroProducto() == this.productoElegido.getIdMaestroProducto()) {
-					int id = p.getId();
-					String nombre = p.getNombre();
-					String correo = p.getCorreo();
-					
-					double credDisp = p.getCreditoDisponible();
-					BigDecimal creditoDisponible = new BigDecimal(credDisp);
-					
-					double precio = prodProv.getPrecioVenta();
-					BigDecimal precioVenta = new BigDecimal(precio);
-					
-					int cantProd = prodProv.getCantidadPorLote();
-					Object[] fila = {id,nombre,correo,creditoDisponible,precioVenta,cantProd};
-					this.ventanaGenerarPedidoProveedor.getModelProveedores().addRow(fila);
-					this.proveedorEnTabla.add(p);
+					agregarProveedorATabla(p,prodProv);
 				}
 			}
 		}
-		
-		
 	}
 
 	
+	public void agregarProveedorATabla(ProveedorDTO p,ProductoDeProveedorDTO prodProv) {
+		int id = p.getId();
+		String nombre = p.getNombre();
+		String correo = p.getCorreo();
+		
+		double credDisp = p.getCreditoDisponible();
+		BigDecimal creditoDisponible = new BigDecimal(credDisp);
+		
+		double precio = prodProv.getPrecioVenta();
+		BigDecimal precioVenta = new BigDecimal(precio);
+		
+		int cantProd = prodProv.getCantidadPorLote();
+		Object[] fila = {id,nombre,correo,creditoDisponible,precioVenta,cantProd};
+		this.ventanaGenerarPedidoProveedor.getModelProveedores().addRow(fila);
+		this.proveedorEnTabla.add(p);		
+	}
+	
+	public void limpiarTablaProveedores() {
+		this.ventanaGenerarPedidoProveedor.getModelProveedores().setRowCount(0);// borrar datos de la tabla
+		this.ventanaGenerarPedidoProveedor.getModelProveedores().setColumnCount(0);
+		this.ventanaGenerarPedidoProveedor.getModelProveedores().setColumnIdentifiers(this.ventanaGenerarPedidoProveedor.getNombreColumnasProveedores());
+		this.proveedorEnTabla.removeAll(this.proveedorEnTabla);	
+	}
+	
+	
+	
+	
+//	public void alternarPorRadioButton() {
+//		if(this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected()) {
+//			this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(false);
+//			mostrarSoloProveedoresPreferenciados();
+//			return;
+//
+//		}
+//		if(this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected()) {
+//			this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().setSelected(false);
+//			llenarTablaProveedores();
+//			return;
+//			
+//		}
+//		if(!this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected() && !this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected()) {
+//			//esto no deberia pasar
+//		}
+//	}
+	
+	public void radioButtonTodosLosProveedoresSeleccionado() {
+		if(!this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected() && !this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected()) {
+			//si ambos estan deseleccionados entonces se vuelve a seleccionar el previo porque no pueden quedar sin seleccionar
+			this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(true);
+			return;
+		}
+		
+		this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().setSelected(false);
+		llenarTablaProveedores();
+		return;
+	}
+	
+	public void radioButtonProveedorPreferenciadoSeleccionado() {
+		if(!this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().isSelected() && !this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().isSelected()) {
+			//si ambos estan deseleccionados entonces se vuelve a seleccionar el previo porque no pueden quedar sin seleccionar
+			this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().setSelected(true);
+			return;
+		}
+		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(false);
+		mostrarSoloProveedoresPreferenciados();
+		return;
+		
+	}
+	
+	public void mostrarSoloProveedoresPreferenciados() {
+		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(false);
+		
+		for(ProveedorDTO p: this.todosLosProveedores) {
+			for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
+				if(prodProv.getIdProveedor() == p.getId() && prodProv.getIdMaestroProducto() == this.productoElegido.getIdMaestroProducto() &&
+						this.productoElegido.getIdProveedor() == p.getId()) {
+					agregarProveedorATabla(p,prodProv);
+				}
+			}
+		}
+	}
 	
 }
