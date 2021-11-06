@@ -51,6 +51,14 @@ public class VentanaGenerarPedidoProveedor {
 	
 	SpinnerModel spinnerModelCantARep;
 	
+	private JTable tablaPedido;
+	private String[] nombreColumnasPedido = {"Unidad de Medida","Cantidad de lotes","Cantidad total","Precio Total"};
+	private DefaultTableModel modelPedido;	
+	private JButton btnSeleccionarProveedor;
+	
+	private JButton btnBorrarTablaPedido;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -134,7 +142,7 @@ public class VentanaGenerarPedidoProveedor {
 				
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
-		panel.setBounds(0, 106, 719, 364);
+		panel.setBounds(0, 106, 719, 384);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -145,32 +153,29 @@ public class VentanaGenerarPedidoProveedor {
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Elegir Proveedor");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1_1.setBounds(21, 122, 124, 22);
+		lblNewLabel_1_1.setBounds(31, 105, 124, 22);
 		panel.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Cantidad a Reponer");
+		JLabel lblNewLabel_1_1_1 = new JLabel("<html>Cantidad de lotes a Reponer<html>");
+		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1_1_1.setBounds(21, 314, 149, 22);
+		lblNewLabel_1_1_1.setBounds(21, 341, 151, 40);
 		panel.add(lblNewLabel_1_1_1);
-		
-		JLabel lblNewLabel_3 = new JLabel("(datos producto)");
-		lblNewLabel_3.setBounds(322, 18, 83, 14);
-		panel.add(lblNewLabel_3);
 		
 		rdbtnProveedoresPref = new JRadioButton("Proveedores preferenciados");
 		rdbtnProveedoresPref.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		rdbtnProveedoresPref.setBounds(359, 124, 173, 23);
+		rdbtnProveedoresPref.setBounds(357, 107, 173, 23);
 		panel.add(rdbtnProveedoresPref);
 		
 		rdbtnTodosLosProveedores = new JRadioButton("Todos los proveedores");
 		rdbtnTodosLosProveedores.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		rdbtnTodosLosProveedores.setBounds(534, 124, 161, 23);
+		rdbtnTodosLosProveedores.setBounds(532, 107, 161, 23);
 		panel.add(rdbtnTodosLosProveedores);
 		
 		
 		spinnerModelCantARep = new SpinnerNumberModel(1, 1, 999, 1); //default value,lower bound,upper bound,increment by
 		spinnerCantARep = new JSpinner(spinnerModelCantARep);
-		spinnerCantARep.setBounds(180, 318, 83, 22);
+		spinnerCantARep.setBounds(176, 345, 83, 22);
 //		spinnerCantARep.addKeyListener(new KeyAdapter() {
 //			@Override
 //			public void keyTyped(KeyEvent e) {
@@ -183,20 +188,16 @@ public class VentanaGenerarPedidoProveedor {
 		panel.add(spinnerCantARep);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("(al menos 1 y hasta 999)");
-		lblNewLabel_3_2.setBounds(273, 321, 124, 14);
+		lblNewLabel_3_2.setBounds(176, 367, 124, 14);
 		panel.add(lblNewLabel_3_2);
-		
-		JLabel lblNewLabel_3_1_1 = new JLabel("(elegir qu\u00E9 proveedores mostrar: los del producto o todos)");
-		lblNewLabel_3_1_1.setBounds(375, 104, 334, 14);
-		panel.add(lblNewLabel_3_1_1);
 		
 		
 		btnGenerarPedido = new JButton("Generar Pedido");
-		btnGenerarPedido.setBounds(463, 481, 132, 23);
+		btnGenerarPedido.setBounds(469, 500, 132, 23);
 		frame.getContentPane().add(btnGenerarPedido);
 		
 		btnAtras = new JButton("Atras");
-		btnAtras.setBounds(113, 481, 132, 23);
+		btnAtras.setBounds(106, 500, 132, 23);
 		frame.getContentPane().add(btnAtras);
 		
 		
@@ -229,7 +230,7 @@ public class VentanaGenerarPedidoProveedor {
 
 ////////////////////////////////////////////////////////////////////////
 		JScrollPane scrollPaneProveedores = new JScrollPane();
-		scrollPaneProveedores.setBounds(21, 154, 688, 150);
+		scrollPaneProveedores.setBounds(21, 137, 688, 150);
 		
 		this.modelProveedores = new DefaultTableModel(null,nombreColumnasProveedores) {
 			private static final long serialVersionUID = 1L;
@@ -252,6 +253,35 @@ public class VentanaGenerarPedidoProveedor {
 		
 		panel.add(scrollPaneProveedores);
 		
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		JScrollPane scrollPanePedido = new JScrollPane();
+		scrollPanePedido.setBounds(291, 321, 366, 53);
+		
+		this.modelPedido = new DefaultTableModel(null,nombreColumnasPedido) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				return false;
+			}	
+		}; 
+		tablaPedido = new JTable(modelPedido);
+		tablaPedido.setBounds(343, 321, 366, 53);
+		tablaPedido.getTableHeader().setReorderingAllowed(false);
+		scrollPanePedido.setViewportView(tablaPedido);
+		panel.add(scrollPanePedido);
+		
+		btnSeleccionarProveedor = new JButton("Seleccionar Proveedor");
+		btnSeleccionarProveedor.setBounds(21, 297, 181, 34);
+		panel.add(btnSeleccionarProveedor);
+		
+		btnBorrarTablaPedido = new JButton("");
+		btnBorrarTablaPedido.setBounds(667, 324, 42, 34);
+		cambiarIconoBotones(btnBorrarTablaPedido,  "trash.png");
+		panel.add(btnBorrarTablaPedido);
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		
 	
 		
 		
@@ -260,6 +290,13 @@ public class VentanaGenerarPedidoProveedor {
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}	
+	
 	
 	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
@@ -349,4 +386,29 @@ public class VentanaGenerarPedidoProveedor {
 	public JButton getBtnAtras() {
 		return btnAtras;
 	}
+	
+	public SpinnerModel getSpinnerModelCantARep() {
+		return spinnerModelCantARep;
+	}
+
+	public JTable getTablaPedido() {
+		return tablaPedido;
+	}
+
+	public String[] getNombreColumnasPedido() {
+		return nombreColumnasPedido;
+	}
+
+	public DefaultTableModel getModelPedido() {
+		return modelPedido;
+	}
+
+	public JButton getBtnSeleccionarProveedor() {
+		return btnSeleccionarProveedor;
+	}
+	
+	public JButton getBtnBorrarTablaPedido() {
+		return btnBorrarTablaPedido;
+	}
+	
 }
