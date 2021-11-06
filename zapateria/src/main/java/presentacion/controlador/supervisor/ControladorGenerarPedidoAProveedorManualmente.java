@@ -317,6 +317,15 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 			return;	
 		}
 		
+	    if(yaExisteUnPedidoParaEsteProducto(this.productoElegido,this.proveedorElegido)) {
+	    	// si selecciona que si devuelve un 0, no un 1, y la x un -1
+	    	int resp = JOptionPane.showConfirmDialog(null, "Ya existe un pedido de este producto para este proveedor!. \nGenerar igualmente?",
+	   		"Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    	if(resp==1 || resp==-1) {
+	    		return;
+	    	}
+	    }
+		
 		ProductoDeProveedorDTO prodProv = getProductoDeProveedor(this.proveedorElegido.getId(), this.productoElegido.getIdMaestroProducto());
 		
 		//Datos de pedido
@@ -347,14 +356,24 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    String horaCompleto = null;
 	    String unidadMedida = this.productoElegido.getUnidadMedida();
 	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
-	    
+		    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {
 	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar el pedido automatico para el prod: "+this.productoElegido.getDescripcion());
 	    }else {
 	    	JOptionPane.showMessageDialog(null, "Se ha generado un pedido para el Producto: '"+this.productoElegido.getDescripcion() +"' con exito");
 	    }
+	    this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		
+	}
+	
+	public boolean yaExisteUnPedidoParaEsteProducto(MaestroProductoDTO producto,ProveedorDTO prov) {
+		for(PedidosPendientesDTO pedido: this.todosLosPedidosPendientes) {
+			if(pedido.getIdMaestroProducto() == producto.getIdMaestroProducto() && prov.getId() == pedido.getIdProveedor()
+					&& (pedido.getEstado().equals("En espera") || pedido.getEstado().equals("Enviado")) ) {
+				return true;
+			}
+		}return false;
 	}
 	
 }
