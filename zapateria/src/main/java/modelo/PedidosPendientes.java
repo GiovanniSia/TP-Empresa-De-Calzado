@@ -94,12 +94,13 @@ public class PedidosPendientes {
 	    	    
 	    String estado = "En espera";
 	    int idSuc = idSucursal;
+	    int idEmpleado = 0; //como es un pedido auto, nadie genera este pedido
 	    String fechaEnvio = null;
 	    String horaEnvio = null;
 	    String fechaCompleto = null;
 	    String horaCompleto = null;
 	    String unidadMedida = producto.getUnidadMedida();
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 	    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {

@@ -27,6 +27,7 @@ import presentacion.vista.generarPedidoProveedor.VentanaGenerarPedidoProveedor;
 public class ControladorGenerarPedidoAProveedorManualmente {
 
 	int idSucursal;
+	int idEmpleado;
 	
 	ProveedorDTO proveedorElegido;
 	MaestroProductoDTO productoElegido;
@@ -110,6 +111,8 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		sucursalProperties sucu = sucursalProperties.getInstance();
 		try {
 			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
+			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
+			
 			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
 			String sucursal = sucu.getValue("Nombre");
 			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
@@ -343,7 +346,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    String fechaCompleto = null;
 	    String horaCompleto = null;
 	    String unidadMedida = this.productoElegido.getUnidadMedida();
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 	    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {
