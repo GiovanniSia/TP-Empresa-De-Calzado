@@ -44,7 +44,7 @@ private static final long serialVersionUID = 1L;
 
 	private JCheckBox chckbxProdSinStock;
 	JButton btnGenerarPedido;
-
+	JButton btnGenerarOrdenDeManufactura;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -155,6 +155,10 @@ private static final long serialVersionUID = 1L;
 		btnGenerarPedido = new JButton("Generar Pedido");
 		btnGenerarPedido.setBounds(394, 293, 179, 48);
 		panel.add(btnGenerarPedido);
+		
+		btnGenerarOrdenDeManufactura = new JButton("Generar Orden de manufactura");
+		btnGenerarOrdenDeManufactura.setBounds(733, 291, 175, 27);
+		panel.add(btnGenerarOrdenDeManufactura);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
@@ -285,5 +289,11 @@ private static final long serialVersionUID = 1L;
 	public JButton getBtnGenerarPedido() {
 		return btnGenerarPedido;
 	}
+	
+
+	public JButton getBtnGenerarOrdenDeManufactura() {
+		return btnGenerarOrdenDeManufactura;
+	}
+
 }
 

@@ -2,6 +2,7 @@ package presentacion.controlador.supervisor;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,6 +33,7 @@ import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import modelo.Provincia;
 import modelo.Stock;
+import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
@@ -181,7 +185,9 @@ public class ControladorGestionarProductos {
 			}
 			
 		});
-				
+
+		this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura().addActionListener(a -> generarOrdenDeManufactura());
+		
 		escribirTablaCompleta();
 		validarTeclado();
 	}
@@ -434,5 +440,65 @@ public class ControladorGestionarProductos {
 		g.inicializar();
 		g.mostrarVentana();
 	}
+
 	
+	
+	public void generarOrdenDeManufactura() {
+		int filaseleccionada = this.ventanaGestionarProductos.getTablaProductos().getSelectedRow();
+		if(filaseleccionada==-1) {
+			JOptionPane.showMessageDialog(ventanaGestionarProductos, "Debe seleccionar un producto");
+			return;
+		}
+		MaestroProductoDTO prodSeleccionado = this.productosEnTabla.get(filaseleccionada);
+		if(prodSeleccionado.getFabricado().equals("N")) {
+			JOptionPane.showMessageDialog(ventanaGestionarProductos, "El producto no se fabrica en la fabrica");
+			return;	
+		}
+		
+		boolean repetir=true;
+		String resp = null;
+	    while (repetir) {
+	    	
+	    	try {
+	    		//si la resp es null, se eligio cancelar
+	    		resp=JOptionPane.showInputDialog("Ingrese la cantidad de lotes. (Limite 999)");
+	    		if(resp==null) {
+	    			repetir=false;
+	    		}else {
+	    			if(resp.equals("")) {
+	    				JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion", JOptionPane.OK_OPTION);	    				
+	    			}else {
+	    				int cantidad = Integer.parseInt(resp);
+	    				if(cantidad>999) {
+	    					JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 999", "Informacion", JOptionPane.OK_OPTION);
+	    				}if(cantidad<=0) {
+	    					JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion", JOptionPane.OK_OPTION);
+	    				}
+	    				if(cantidad>0 && cantidad<999) {
+	    					generarPedido(prodSeleccionado,cantidad);
+	    		    		repetir = false;        	    	
+	    				}
+	    			}
+	    		}
+	    	 }
+	    	 catch(HeadlessException | NumberFormatException e) {
+	    		 JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+	         }
+	    }
+		
+		
+			
+		
+	}
+	
+	public void generarPedido(MaestroProductoDTO productoSeleccionado,int cantidad) {
+		productoSeleccionado.setCantidadAReponer(cantidad);
+		generarOrdenesFabricacion.crearOrdenFabricacion(idSucursal, productoSeleccionado);
+		mostrarMensajeEmergente("Orden generada exitosamente para el producto "+productoSeleccionado.getDescripcion());
+	}
+	
+	public void mostrarMensajeEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
+        return;
+	}
 }

@@ -47,6 +47,8 @@ public class VentanaGestionarClientes extends JFrame{
 	private JLabel lblAtrs;
 	private JButton btnAgregarCliente;
 	private JButton btnEditarCliente;
+	private JButton btnHistorialDeCambios;
+
 
 	public VentanaGestionarClientes() {
 		initialize();
@@ -136,6 +138,10 @@ public class VentanaGestionarClientes extends JFrame{
 		btnEditarCliente = new JButton("Editar Cliente");
 		btnEditarCliente.setBounds(512, 165, 106, 48);
 		panel.add(btnEditarCliente);
+		
+		btnHistorialDeCambios = new JButton("Ver Historial de cambios");
+		btnHistorialDeCambios.setBounds(648, 166, 152, 48);
+		panel.add(btnHistorialDeCambios);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
@@ -290,4 +296,7 @@ public class VentanaGestionarClientes extends JFrame{
 		return btnEditarCliente;
 	}
 
+	public JButton getBtnHistorialDeCambios() {
+		return btnHistorialDeCambios;
+	}
 }
