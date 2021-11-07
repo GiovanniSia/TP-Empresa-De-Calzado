@@ -281,6 +281,9 @@ public class ControladorVerPasos implements ActionListener {
 		}else {
 			this.ventanaPrincipal.getLblReceta().setText("Esta receta no esta en uso.");
 		}
+		if(this.recetaSeleccionada.getIdReceta()==0) {
+			this.ventanaPrincipal.getLblReceta().setText("");
+		}
 		
 	}
 	
