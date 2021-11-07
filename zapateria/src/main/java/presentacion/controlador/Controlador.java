@@ -212,9 +212,19 @@ public class Controlador {
 		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
 		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
 		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
+		// Registrar Venta
+				this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
+						maestroProducto, stock);
+				this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
+						this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
+						this.ingresos);
+				this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
+				this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+
 	}
 
 	public void inicializarControladoresVendedor() {
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
 		// armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
 		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock,
@@ -272,16 +282,8 @@ public class Controlador {
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
-
-		// Registrar Venta
-		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
-				maestroProducto, stock);
-		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
-				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
-				this.ingresos);
-		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
-		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
-
+		
+		
 		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto,
 				this.proveedor, this.productoDeProveedor);
 
