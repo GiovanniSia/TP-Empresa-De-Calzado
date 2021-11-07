@@ -177,9 +177,31 @@ public class VentanaAdministrador extends JFrame {
 		});
 		this.frame.setVisible(true);
 	}
+	
+	public JButton getBtnGestionarClientes() {
+		return btnGestionarClientes;
+	}
 
-	
-	
+	public JButton getBtnGestionarProductos() {
+		return btnGestionarProductos;
+	}
+
+	public JButton getBtnGestionarEmpleados() {
+		return btnGestionarEmpleados;
+	}
+
+	public JButton getBtnVerComprasVirtuales() {
+		return btnVerComprasVirtuales;
+	}
+
+	public JButton getBtnGenerarOrdenDeManufactura() {
+		return btnGenerarOrdenDeManufactura;
+	}
+
+	public JButton getBtnPedidosAProveedores() {
+		return btnPedidosAProveedores;
+	}
+
 	public void cerrarVentana() {
 		frame.setVisible(false);
 	}

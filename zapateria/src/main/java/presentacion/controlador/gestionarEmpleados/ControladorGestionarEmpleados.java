@@ -27,35 +27,19 @@ public class ControladorGestionarEmpleados {
 	private ControladorHistorialCambiosEmpleados controladorHistorialCambiosEmpleados;
 
 	private Controlador controlador;
-	
-	public static void main(String[] args) {
-		ControladorGestionarEmpleados a = new ControladorGestionarEmpleados();
-		a.inicializar();
-		a.mostrarVentana();
-	}
-
-	public ControladorGestionarEmpleados() {
-		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
-		this.empleado = new Empleado(new DAOSQLFactory());
-		this.controladorAgregarEmpleados = new ControladorAgregarEmpleados(this);
-		this.controladorModificarEmpelados = new ControladorModificarEmpleados(this);
-		this.controladorHistorialCambiosEmpleados = new ControladorHistorialCambiosEmpleados();
-	}
 
 	public ControladorGestionarEmpleados(Controlador controlador) {
-		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.controladorAgregarEmpleados = new ControladorAgregarEmpleados(this);
 		this.controladorModificarEmpelados = new ControladorModificarEmpleados(this);
 		this.controladorHistorialCambiosEmpleados = new ControladorHistorialCambiosEmpleados();
+
 		this.controlador = controlador;
 	}
 
-	public void inicializar() {
-		this.controladorAgregarEmpleados.inicializar();
-		this.controladorModificarEmpelados.inicializar();
-		this.controladorHistorialCambiosEmpleados.inicializar();
-		
+	public void inicializar() {	
+		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
+
 		this.ventanaGestionarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaGestionarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
 		this.ventanaGestionarEmpleados.getBtnModificar().addActionListener(c -> actualizar(c));
@@ -101,10 +85,14 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void agregar(ActionEvent v) {
+		this.controladorAgregarEmpleados.inicializar();
 		this.controladorAgregarEmpleados.mostrarVentana();
 	}
 
 	public void verHistorial(ActionEvent v) {
+		this.controladorHistorialCambiosEmpleados.inicializar();
+		this.controladorHistorialCambiosEmpleados.setControladorGestionarEmpleados(this);
+		this.cerrarTodasLasVentanas();
 		this.controladorHistorialCambiosEmpleados.mostrarVentana();	
 	}
 
@@ -116,7 +104,7 @@ public class ControladorGestionarEmpleados {
 		}
 		EmpleadoDTO empleadoSeleccionado = this.empleadosEnTabla.get(filaSeleccionada);
 		controladorModificarEmpelados.setEmpleadoSeleccionado(empleadoSeleccionado);
-
+		this.controladorModificarEmpelados.inicializar();
 		this.controladorModificarEmpelados.mostrarVentana();
 	}
 
@@ -125,9 +113,15 @@ public class ControladorGestionarEmpleados {
 	}
 
 	public void cerrarTodasLasVentanas() {
+		this.cerrarVentana();
 		this.controladorAgregarEmpleados.cerrarVentana();
 		this.controladorHistorialCambiosEmpleados.cerrarVentana();
 		this.controladorModificarEmpelados.cerrarVentana();
+	}
+	
+	public void cerrarVentana() {
+		this.ventanaGestionarEmpleados.cerrarVentana();
+		this.ventanaGestionarEmpleados.limpiarCampos();
 	}
 
 	public void mostrarVentana() {
@@ -137,6 +131,7 @@ public class ControladorGestionarEmpleados {
 
 	public void atras(ActionEvent a) {
 		cerrarTodasLasVentanas();
+		controlador.mostrarVentanaMenu();		
 	}
 
 	@SuppressWarnings("unchecked")

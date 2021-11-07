@@ -42,6 +42,7 @@ import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrde
 import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.gerente.ControladorGestionarClientes;
 import presentacion.controlador.gerente.ControladorHistorialDeCambiosDeCliente;
+import presentacion.controlador.gestionarEmpleados.ControladorGestionarEmpleados;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
@@ -137,6 +138,7 @@ public class Controlador {
 	private VentanaSupervisor ventanaSupervisor;
 	private VentanaSupervisorFabrica ventanaSupervisorFabrica;
 	private VentanaVendedor ventanaVendedor;
+	private ControladorGestionarEmpleados controladorGestionarEmpleado;
 
 	// Configuracion (properties)
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
@@ -215,16 +217,18 @@ public class Controlador {
 
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
+	
+	
 
 	public void inicializarControladoresAdministrativos() {
-
+		this.controladorGestionarEmpleado = new ControladorGestionarEmpleados(this);  
 	}
 
 	public void inicializarControladoresCajero() {
 		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
 		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
-		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
 		// Registrar Venta
+		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
 				maestroProducto, stock);
 		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
@@ -329,6 +333,13 @@ public class Controlador {
 		
 	}
 
+	public void escucharBotonesVentanaAdministrativo() {
+		this.ventanaAdministrador.getBtnGestionarClientes().addActionListener(a -> pasarAGestionarClientes(a));
+		this.ventanaAdministrador.getBtnGestionarProductos().addActionListener(a -> pasarADarDeAltaProducto(a));
+		this.ventanaAdministrador.getBtnGestionarEmpleados().addActionListener(a -> pasarAGestionarEmpleado(a));		
+		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+	}
+
 	public void escucharBotonesVentanaCajero() {
 		this.ventanaCajero.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
 		this.ventanaCajero.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
@@ -362,9 +373,6 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 
-	public void escucharBotonesVentanaAdministrativo() {
-		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
-	}
 
 	public void escucharBotonesVentanaGerente() {
 		this.ventanaGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
@@ -464,6 +472,12 @@ public class Controlador {
 		this.reControladorOperario.mostrarVentana();
 
 	}
+	
+	public void pasarAGestionarEmpleado(ActionEvent a){
+		cerrarTodasLasVentanas();
+		this.controladorGestionarEmpleado.inicializar();
+		this.controladorGestionarEmpleado.mostrarVentana();
+	 }
 
 	public void pasarAArmarVenta(ActionEvent a) {
 		if (!this.controladorIngresosCaja.estaCajaAbierta()) {
