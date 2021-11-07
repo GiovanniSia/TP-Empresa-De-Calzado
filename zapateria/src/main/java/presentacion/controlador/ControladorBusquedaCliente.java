@@ -92,7 +92,6 @@ public class ControladorBusquedaCliente {
 	public void atras(ActionEvent a) {
 		this.ventanaBusquedaCliente.cerrar();
 		
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -168,13 +167,6 @@ public class ControladorBusquedaCliente {
 
 	public ClienteDTO getClienteSeleccionado() {
 		return this.clienteSeleccionado;
-	}
-
-	public static void main(String[] args) {
-//		Cliente c = new Cliente(new DAOSQLFactory());
-//		ControladorBusquedaCliente controlador = new ControladorBusquedaCliente(c);
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
 	}
 
 }

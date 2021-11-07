@@ -198,7 +198,6 @@ public class ControladorGestionarProductos {
 	
 	public void volverAtras(ActionEvent a) {
 		this.ventanaGestionarProductos.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 
 	}

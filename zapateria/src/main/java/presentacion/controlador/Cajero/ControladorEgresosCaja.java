@@ -323,7 +323,6 @@ public class ControladorEgresosCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaEgresoCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 

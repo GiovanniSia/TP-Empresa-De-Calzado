@@ -18,4 +18,7 @@ public interface EmpleadoDAO {
 	public EmpleadoDTO selectEmpleado(int idEmpleado);
 	
 	public EmpleadoDTO selectUser(String correo, String contra);
+	
+	public List<EmpleadoDTO> getFiltrarPor(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3);
 }

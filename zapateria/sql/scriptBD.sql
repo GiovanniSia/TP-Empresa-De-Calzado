@@ -73,6 +73,26 @@ CREATE TABLE `empleados`
   PRIMARY KEY (`IdEmpleado`)
 )ENGINE='InnoDB'DEFAULT CHARSET = LATIN1;
 
+CREATE TABLE `historialCambioEmpleados`
+(
+  `IdHistorialCambioEmpleados` int(11) NOT NULL AUTO_INCREMENT,
+  `IdEmpleadoResponsable` varchar(45) NOT NULL,
+  `Fecha` Date NOT NULL,
+  `IdSucursal` varchar(45) NOT NULL,
+  `IdEmpleado` varchar(45) NOT NULL,
+  `CUILAntiguo` varchar(45) NOT NULL,
+  `CUILNuevo` varchar(45) NOT NULL,
+  `NombreAntiguo` varchar(45) NOT NULL,
+  `NombreNuevo` varchar(45) NOT NULL,
+  `ApellidoAntiguo` varchar(45) NOT NULL,
+  `ApellidoNuevo` varchar(45) NOT NULL,
+  `CorreoElectronicoAntiguo` varchar(45) NOT NULL,
+  `CorreoElectronicoNuevo` varchar(45) NOT NULL,
+  `TipoEmpleadoAntiguo` varchar(45) NOT NULL,
+  `TipoEmpleadoNuevo` varchar(45) NOT NULL,
+  PRIMARY KEY (`IdHistorialCambioEmpleados`)
+);
+
 CREATE TABLE `historialCambioMoneda`
 (
   `IdCambioMoneda` int(11) NOT NULL AUTO_INCREMENT,
@@ -659,13 +679,13 @@ insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PE
 insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','B000022',2,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','B000031',3,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 
-INSERT INTO empleados VALUES(1,"123","PEPE","PEREZ","PEPE@GMAIL.COM","Cajero",aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (2, 512,'JUAN','VENDEDOR','JUAN@GMAIL.COM','Vendedor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (3, 523,'JOAQUIN','ADOLFO','Joaquin123@GMAIL.COM','Vendedor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (4, 153,'fERNANDO','Lel','Fer@GMAIL.COM','Vendedor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (5, 153541,'IVO','ROBOTNIK','empresasEggman@GMAIL.COM','Vendedor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (6, 4233,'CAMILA','ALFANO','camila@GMAIL.COM','Supervisor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (7, 1773,'JOSSELYN','LLANOS','josselyn@GMAIL.COM','Supervisor de Fabrica',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (8, 1554,'MAXIMILIANO','SUNGARUNGA','maximiliano@GMAIL.COM','Operario de Fabrica',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (9, 2323,'MICHELLE','ROBI','michelle@GMAIL.COM','Administrativo',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (10, 2323,'MATIAS','ROBI','matias@GMAIL.COM','Gerente',aes_encrypt('1234','AES'));
+INSERT INTO empleados VALUES(1,"123","Pepe","Perez","pepe@gmail.com","Cajero",aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (2, 512,'Juan','Vera','juan@gmail.com','Vendedor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (3, 523,'Joaquin','Adolfo','joaquin@gmail.com','Vendedor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (4, 153,'Fernando','Lel','fer@gmail.com','Vendedor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (5, 153541,'Ivo','Robotnik','ivo@gmail.com','Vendedor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (6, 4233,'Camila','Alfano','camila@gmail.com','Supervisor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (7, 1773,'Josselyn','Llanos','josselyn@gmail.com','Supervisor de Fabrica',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (8, 1554,'Maximiliano','Sungarunga','maximiliano@gmail.com','Operario de Fabrica',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (9, 2323,'Michelle','Robi','michelle@gmail.com','Administrativo',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (10, 2323,'Matias','Robi','matias@gmail.com','Gerente',aes_encrypt('1234','AES'));

@@ -38,4 +38,9 @@ public class Empleado {
 	public EmpleadoDTO selectUser(String correo, String contra) {
 		return this.empleado.selectUser(correo, contra);
 	}
+	
+	public List<EmpleadoDTO> getFiltrarPor(String nombreColumna1, String txtAprox1,
+			String nombreColumna2, String txtAprox2, String nombreColumna3, String txtAprox3){
+		return this.empleado.getFiltrarPor(nombreColumna1, txtAprox1, nombreColumna2, txtAprox2, nombreColumna3, txtAprox3);
+	}
 }

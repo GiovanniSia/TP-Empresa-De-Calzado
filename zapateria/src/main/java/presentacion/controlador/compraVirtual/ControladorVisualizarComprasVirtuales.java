@@ -205,7 +205,6 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 	private void cerrarTodoElControlador(ActionEvent r) {
 		this.ventanaPrincipal.cerrar();
 		this.ventanaRechazo.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 

@@ -109,7 +109,6 @@ public class ControladorModificarCotizacion {
 	public void atras(ActionEvent a) {
 		this.controladorHistorialCambioCotizacion.ocultarVentana();
 		this.ventanaModificarCotizacion.cerrar();
-//		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -257,12 +256,4 @@ public class ControladorModificarCotizacion {
 			this.ventanaModificarCotizacion.getModelProducto().addRow(fila);
 		}
 	}
-
-	public static void main(String[] args) {
-//		MedioPago modelo = new MedioPago(new DAOSQLFactory());
-//		ControladorModificarCotizacion controlador = new ControladorModificarCotizacion(modelo);
-//		controlador.inicializar();
-//		controlador.mostrarVentana();
-	}
-
 }

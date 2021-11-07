@@ -152,7 +152,6 @@ public class ControladorIngresosCaja {
 
 		ingresarPrimerIngreso();
 		this.ventanaIngresosCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -171,13 +170,11 @@ public class ControladorIngresosCaja {
 		}
 		ingresarRecarga();
 		this.ventanaIngresosCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void atras(ActionEvent a) {
 		this.ventanaIngresosCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 

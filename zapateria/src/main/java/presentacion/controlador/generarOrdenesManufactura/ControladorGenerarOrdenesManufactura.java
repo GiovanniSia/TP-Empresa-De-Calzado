@@ -22,6 +22,11 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	private static int idSucursal = 1;
 //	private static final int idEmpleado = 1;
+	
+	
+	
+	
+	
 	public void obtenerDatosPropertiesSucursal() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -40,6 +45,19 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	private VentanaGenerarOrdenManufactura ventana;
 	
 	Controlador controlador;
+	
+	
+	public static void main(String[] args) {
+		ControladorGenerarOrdenesManufactura a = new ControladorGenerarOrdenesManufactura();
+		a.inicializar();
+		a.mostrarVentana();
+	}
+	
+	public ControladorGenerarOrdenesManufactura() {
+		obtenerDatosPropertiesSucursal();
+		ventana = new VentanaGenerarOrdenManufactura();
+		productosEnLista = new ArrayList<MaestroProductoDTO>();
+	}
 	
 	public ControladorGenerarOrdenesManufactura(Controlador controlador) {
 		obtenerDatosPropertiesSucursal();
@@ -92,7 +110,6 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	public void salir(ActionEvent a) {
 		this.ventana.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	

@@ -199,20 +199,17 @@ public class ControladorCierreCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaCierreCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void cerrarCaja(ActionEvent a) {
 		this.ventanaCierreCaja.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void verHistorialDeCambios(ActionEvent v) {
 		HistorialCambioMoneda modelo = new HistorialCambioMoneda(new DAOSQLFactory());
 		ControladorHistorialCambioCotizacion controlador = new ControladorHistorialCambioCotizacion(modelo);
-		controlador.inicializar();
 		controlador.mostrarVentana();
 	}
 
