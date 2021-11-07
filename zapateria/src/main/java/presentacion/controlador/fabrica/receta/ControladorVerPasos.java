@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -112,6 +113,8 @@ public class ControladorVerPasos implements ActionListener {
 		
 		refrescarTabla();
 		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
+		
+		this.ventanaPrincipal.getLblReceta().setText("");
 		ventanaPrincipal.mostrarVentana();
 	}
 	
@@ -258,6 +261,7 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaPasosReceta() {
 		reiniciarTablaPasosReceta();
+		this.ventanaPrincipal.getLblReceta().setText("");
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
 			recetaSeleccionada = new RecetaDTO(0,0, "");
 			return;
@@ -271,6 +275,13 @@ public class ControladorVerPasos implements ActionListener {
 		llenarTablaPasosReceta(pasosRecetaEnLista);
 		this.ventanaPrincipal.getTextFieldReceta().setText(recetaSeleccionada.getDescripcion());
 		this.ventanaPrincipal.getComboBoxProductos().setSelectedIndex(recetaSeleccionada.getIdProducto()-1);
+		
+		if(this.estaEnUsoLaReceta(recetaSeleccionada)) {
+			this.ventanaPrincipal.getLblReceta().setText("Esta receta esta en uso.");
+		}else {
+			this.ventanaPrincipal.getLblReceta().setText("Esta receta no esta en uso.");
+		}
+		
 	}
 	
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
@@ -532,11 +543,24 @@ public class ControladorVerPasos implements ActionListener {
 			this.mostrarMensajeEmergente("El producto a fabricar no es valido.");
 			return;
 		}
+		if(estaEnUsoLaReceta(this.recetaSeleccionada)) {
+			this.mostrarMensajeEmergente("Esta receta esta actualmente esta en uso, no se puede modificar.");
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
 		int indiceSeleccionado = this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex();
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(indiceSeleccionado);
+	}
+
+	private boolean estaEnUsoLaReceta(RecetaDTO recetaAVerificar) {
+		boolean ret = true;
+		List<FabricacionesDTO> fabricacionesEnMarcha = this.modeloFabricacion.readAllFabricacionesEnMarcha("", "", "", "", "");
+		for(FabricacionesDTO f: fabricacionesEnMarcha) {
+			ret = ret && f.getIdReceta() != recetaAVerificar.getIdReceta();
+		}
+		return !ret;
 	}
 
 	@Override

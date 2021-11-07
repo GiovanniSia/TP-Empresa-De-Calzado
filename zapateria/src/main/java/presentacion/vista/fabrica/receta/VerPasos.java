@@ -77,6 +77,7 @@ public class VerPasos extends JFrame {
 	
 	JButton btnActualizarReceta ;
 	private JLabel lblUnidadMedida;
+	private JLabel lblReceta;
 
 	public VerPasos() {
 		initialize();
@@ -304,6 +305,10 @@ public class VerPasos extends JFrame {
 		lblUnidadMedida = new JLabel("New label");
 		lblUnidadMedida.setBounds(712, 268, 90, 20);
 		panel.add(lblUnidadMedida);
+		
+		lblReceta = new JLabel("New label");
+		lblReceta.setBounds(361, 12, 177, 20);
+		panel.add(lblReceta);
 
 		
 		lblNewLabel = new JLabel("Pasos");
@@ -485,5 +490,9 @@ public class VerPasos extends JFrame {
 
 	public JLabel getLblUnidadMedida() {
 		return lblUnidadMedida;
+	}
+
+	public JLabel getLblReceta() {
+		return lblReceta;
 	}
 }
