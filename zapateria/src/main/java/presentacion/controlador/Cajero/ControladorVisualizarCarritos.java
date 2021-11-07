@@ -331,7 +331,6 @@ public class ControladorVisualizarCarritos {
 
 	public void salir(ActionEvent a) {
 		this.ventanaVisualizarCarritos.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 		this.controladorRealizarVenta.cerrarVentana();
 	}

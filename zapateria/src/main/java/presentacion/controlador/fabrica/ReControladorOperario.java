@@ -254,7 +254,6 @@ public class ReControladorOperario implements ActionListener {
 	
 	public void salir(ActionEvent a) {
 		this.ventanaPrincipal.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenu();
 	}
 	

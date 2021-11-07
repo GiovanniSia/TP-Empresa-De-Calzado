@@ -1,7 +1,6 @@
 package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import dto.SucursalDTO;
@@ -81,7 +80,7 @@ public class Controlador {
 	private Pais pais;
 	private Provincia provincia;
 	private Localidad localidad;
-	
+
 	// Controladores
 	private ControladorBusquedaCliente controladorBusquedaCliente;
 	private ControladorBusquedaProductos controladorBusquedaProducto;
@@ -157,7 +156,7 @@ public class Controlador {
 		this.productoDeProveedor = new ProductoDeProveedor(new DAOSQLFactory());
 
 		this.pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
-		
+
 		this.pais = new Pais(new DAOSQLFactory());
 		this.provincia = new Provincia(new DAOSQLFactory());
 		this.localidad = new Localidad(new DAOSQLFactory());
@@ -166,28 +165,113 @@ public class Controlador {
 	}
 
 	public void inicializar() {
+		if (tipoEmpleado.equals("Administrativo")) {
+			this.ventanaAdministrador = new VentanaAdministrador();
+			inicializarControladoresAdministrativos();
+			escucharBotonesVentanaAdministrativo();
+		}
+		if (tipoEmpleado.equals("Cajero")) {
+			this.ventanaCajero = new VentanaCajero();
+			inicializarControladoresCajero();
+			escucharBotonesVentanaCajero();
+		}
+		if (tipoEmpleado.equals("Vendedor")) {
+			this.ventanaVendedor = new VentanaVendedor();
+			inicializarControladoresVendedor();
+			escucharBotonesVentanaVendedor();
+		}
+		if (tipoEmpleado.equals("Operario de Fabrica")) {
+			this.ventanaOperarioFabrica = new VentanaOperarioFabrica();
+			inicializarControladoresOperarioDeFabrica();
+			escucharBotonesVentanaOperatoriaDeFabrica();
+		}
+		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
+			this.ventanaSupervisorFabrica = new VentanaSupervisorFabrica();
+			inicializarControladoresSupervisorDeFabrica();
+			escucharBotonesVentanaSupervisorFabrica();
+		}
+		if (tipoEmpleado.equals("Supervisor")) {
+			this.ventanaSupervisor = new VentanaSupervisor();
+			inicializarControladoresSupervisor();
+			escucharBotonesVentanaSupervisor();
+		}
+		if (tipoEmpleado.equals("Gerente")) {
+			this.ventanaGerente = new VentanaGerente();
+			inicializarControladoresGerente();
+			escucharBotonesVentanaGerente();
+		}
 
-		this.ventanaAdministrador = new VentanaAdministrador();
-		this.ventanaCajero = new VentanaCajero();
-		this.ventanaGerente = new VentanaGerente();
-		this.ventanaOperarioFabrica = new VentanaOperarioFabrica();
-		this.ventanaSupervisor = new VentanaSupervisor();
-		this.ventanaSupervisorFabrica = new VentanaSupervisorFabrica();
-		this.ventanaVendedor = new VentanaVendedor();
+		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
+	}
 
-		// ----------------------------------------------------------------------------------------------------------
+	public void inicializarControladoresAdministrativos() {
 
-		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
+	}
 
-		// Config
-		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
+	public void inicializarControladoresCajero() {
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
+		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
+		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
+	}
 
+	public void inicializarControladoresVendedor() {
 		// armar Venta
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
 		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock,
 				this.sucursal, this.carrito, this.detalleCarrito);
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
+	}
+
+	public void inicializarControladoresOperarioDeFabrica() {
+
+	}
+
+	public void inicializarControladoresSupervisorDeFabrica() {
+
+	}
+
+	public void inicializarControladoresSupervisor() {
+		// Config
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
+		// cotizacion
+		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this, medioPago);
+
+		// mod precio unitario
+		this.controladorModificarMProducto = new ControladorModificarMProducto(this, this.maestroProducto);
+
+		// Generar ordenes de manufac
+		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
+
+		// Gestionar Clientes
+		this.controladorGestionarClientes = new ControladorGestionarClientes(this, this.cliente);
+		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia,
+				this.localidad);
+
+		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
+		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
+
+		// Ver pedidos a prov
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
+
+		// Alta cliente
+		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia,
+				this.localidad);
+
+		// Ver pedidos a prov
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
+		// Supervisor
+		// GestionarProductos
+		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
+		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
+				this.productoDeProveedor);
+		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this, this.proveedor,
+				this.productoDeProveedor);
+		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
+		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
+		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
+		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
+		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
 		// Registrar Venta
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
@@ -197,82 +281,23 @@ public class Controlador {
 				this.ingresos);
 		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
 		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
-		
-		
-		//Supervisor
-		//GestionarProductos
-		this.controladorGestionarProductos = new ControladorGestionarProductos(this,this.maestroProducto,this.stock);
-		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor, this.productoDeProveedor);
-		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this,this.proveedor, this.productoDeProveedor);
-		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
-		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
-		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
-		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
-		
-		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto, this.proveedor, this.productoDeProveedor);
 
-		
-		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
-		
+		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto,
+				this.proveedor, this.productoDeProveedor);
+
+		this.controladorConsultarProveedor
+				.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+
 		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 
 		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
 		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
 
-		// cotizacion
-		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this, medioPago);
+	
+	}
 
-		// mod precio unitario
-		this.controladorModificarMProducto = new ControladorModificarMProducto(this, this.maestroProducto);
+	public void inicializarControladoresGerente() {
 
-		// Ingreso Caja
-		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
-
-		// Egreso Caja
-		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
-
-		// Cierre Caja
-		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
-
-		// Generar ordenes de manufac
-		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
-		
-		
-		//Gestionar Clientes
-		this.controladorGestionarClientes = new ControladorGestionarClientes(this,this.cliente);
-		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente,this.pais,this.provincia,this.localidad);
-		
-		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
-		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
-		
-		//Ver pedidos a prov
-		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);
-		
-		// Alta cliente
-		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia, this.localidad);
-
-		// Ver pedidos a prov
-		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
-
-		// ----------------------------------------------------------------------------------------------------------
-
-		escucharBotonesVentanaCajero();
-
-		escucharBotonesVentanaVendedor();
-
-		escucharBotonesVentanaOperatoriaDeFabrica();
-		
-		escucharBotonesVentanaSupervisor();
-
-		escucharBotonesVentanaAdministrativo();
-		
-		escucharBotonesVentanaGerente();
-		
-		escucharBotonesVentanaSupervisorFabrica();
-
-		// ----------------------------------------------------------------------------------------------------------
-
-		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
 
 	public void escucharBotonesVentanaCajero() {
@@ -307,19 +332,19 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
 		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
-	
+
 	public void escucharBotonesVentanaAdministrativo() {
 		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
-	
+
 	public void escucharBotonesVentanaGerente() {
 		this.ventanaGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
-	
+
 	public void escucharBotonesVentanaSupervisorFabrica() {
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
-	
+
 	public void obtenerDatosPropertiesSucursal() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -367,18 +392,32 @@ public class Controlador {
 	public void cerrarSesion(ActionEvent a) {
 		cerrarTodasLasVentanas();
 		controladorLogin.inicializar();
-        controladorLogin.mostrarVentana();
+		controladorLogin.mostrarVentana();
 	}
 
 	public void cerrarTodasLasVentanas() {
-		this.ventanaCajero.cerrarVentana();
-		this.ventanaVendedor.cerrarVentana();
-		this.ventanaOperarioFabrica.cerrarVentana();
-		this.ventanaSupervisor.cerrarVentana();
-		this.ventanaAdministrador.cerrarVentana();
-		this.ventanaGerente.cerrarVentana();
-		this.ventanaOperarioFabrica.cerrarVentana();
-		this.ventanaSupervisorFabrica.cerrarVentana();
+		if (tipoEmpleado.equals("Administrativo")) {
+			ventanaAdministrador.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Cajero")) {
+			this.ventanaCajero.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Vendedor")) {
+			this.ventanaVendedor.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Operario de Fabrica")) {
+			this.ventanaOperarioFabrica.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
+			ventanaSupervisorFabrica.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Supervisor")) {
+			this.ventanaSupervisor.cerrarVentana();
+		}
+		if (tipoEmpleado.equals("Gerente")) {
+			ventanaGerente.cerrarVentana();
+		}
+
 	}
 
 	public void pasarAConfig(ActionEvent a) {
@@ -475,13 +514,12 @@ public class Controlador {
 		this.controladorGenerarOrdenesManufactura.inicializar();
 		this.controladorGenerarOrdenesManufactura.mostrarVentana();
 	}
-	
-	
-	public void pasarAGestionarClientes(ActionEvent a ) {
+
+	public void pasarAGestionarClientes(ActionEvent a) {
 		cerrarTodasLasVentanas();
 		this.controladorGestionarClientes.inicializar();
 		this.controladorGestionarClientes.mostrarVentana();
-	
+
 	}
 
 	// Supervisor

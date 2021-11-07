@@ -135,7 +135,6 @@ public class ControladorVerPedidosAProveedor {
 	
 	public void cerrarVentana() {
 		this.ventanaVerPedidosAProveedor.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	

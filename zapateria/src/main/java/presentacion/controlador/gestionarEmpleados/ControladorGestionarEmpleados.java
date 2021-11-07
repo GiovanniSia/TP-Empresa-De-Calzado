@@ -161,11 +161,4 @@ public class ControladorGestionarEmpleados {
 			this.ventanaGestionarEmpleados.getModel().addRow(fila);
 		}
 	}
-
-	public static void main(String[] args) {
-		ControladorGestionarEmpleados controlador = new ControladorGestionarEmpleados();
-		controlador.inicializar();
-		controlador.mostrarVentana();
-	}
-
 }

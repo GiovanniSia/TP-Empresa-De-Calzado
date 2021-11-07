@@ -76,7 +76,6 @@ public class ControladorConsultarProveedor {
 			this.ventanaConsultarProveedores.cerrar();
 		}else {
 			this.ventanaConsultarProveedores.cerrar();
-			this.controlador.inicializar();
 			this.controlador.mostrarVentanaMenuDeSistemas();
 		}
 		

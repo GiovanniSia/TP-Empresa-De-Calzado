@@ -52,7 +52,6 @@ public class ControladorReporteRankingVentaXSucursal {
 
 	private void cerrarVentana(ActionEvent r) {
 		ventana.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 

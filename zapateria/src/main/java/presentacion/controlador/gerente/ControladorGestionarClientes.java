@@ -96,7 +96,6 @@ public class ControladorGestionarClientes {
 	
 	public void salir(ActionEvent a) {
 		this.ventanaGestionarClientes.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	

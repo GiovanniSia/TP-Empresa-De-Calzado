@@ -92,7 +92,6 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 	
 	public void salir(ActionEvent a) {
 		this.ventana.cerrar();
-		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
