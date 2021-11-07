@@ -20,7 +20,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	
 	private static final String estadoActivoDeUnMaterial = "Activo";
 	private static final String readAllReceta = "SELECT * FROM recetas";
-	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso;";
+	private static final String readAllPasosFromOneReceta = "SELECT * FROM pasosReceta pr, paso p WHERE pr.IdReceta = ? AND pr.IdPaso = p.IdPaso ORDER BY pr.NroOrden;";
 	private static final String readAllMaterialesFromOnePaso = "SELECT * FROM materialesDePaso mdp, maestroProductos mp WHERE mdp.IdPaso = ? AND mdp.IdMaterial = mp.IdMaestroProducto;";
 	private static final String readAllCantidadMaterialesFromOnePaso = "SELECT * FROM materialesDePaso WHERE IdPaso = ? AND IdMaterial = ?;";
 	private static final String readOnePaso = "SELECT * FROM paso WHERE IdPaso = ?";

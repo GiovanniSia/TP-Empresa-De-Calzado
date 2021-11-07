@@ -9,9 +9,11 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import dto.FabricacionesDTO;
 import dto.MaestroProductoDTO;
 import dto.PasoDTO;
 import dto.PasoDeRecetaDTO;
@@ -39,8 +41,15 @@ public class ControladorVerPasos implements ActionListener {
 	List<PasoDeRecetaDTO> pasosRecetaEnLista;
 	PasoDeRecetaDTO pasoDeRecetaSeleccionado;
 	List<MaestroProductoDTO> ingredientesEnComboBox;
+	List<MaestroProductoDTO> productosTerminados;
 	
 	public ControladorVerPasos() {
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}catch(Exception e) {
+            System.out.println("Error setting native LAF: " + e);
+		}
+		
 		ventanaPrincipal = new VerPasos();
 		modeloPaso = new ModeloPaso(new DAOSQLFactory());
 		modeloFabricacion = new Fabricacion(new DAOSQLFactory());
@@ -54,14 +63,14 @@ public class ControladorVerPasos implements ActionListener {
 				refrescarTabla();
 			}
 		});
-		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				refrescarTabla();
-			}
-		});
+//		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				refrescarTabla();
+//			}
+//		});
 		ventanaPrincipal.getBtnAgregar().addActionListener(r-> agregarPaso(r));
-		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
+//		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
 		
 		ventanaPrincipal.getComboBoxReceta().addActionListener(r-> seleccionReceta(r));
 		ventanaPrincipal.getTablaPasosReceta().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -76,6 +85,23 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnAgregarPasoAReceta().addActionListener(r->incluirPaso(r));
 		this.ventanaPrincipal.getBtnReceta().addActionListener(r->darDeAltaReceta(r));
 		this.ventanaPrincipal.getBtnAgregarIngrediente().addActionListener(r->agregarIngrediente(r));
+		this.ventanaPrincipal.getBtnQuitarPasoReceta().addActionListener(r->quitarPasoReceta(r));
+		this.ventanaPrincipal.getBtnQuitarIngrediente().addActionListener(r->quitarIngrediente(r));
+		this.ventanaPrincipal.getBtnSubirPaso().addActionListener(r->subirPaso(r));
+		this.ventanaPrincipal.getBtnBajarPaso().addActionListener(r->bajarPaso(r));
+		
+		this.ventanaPrincipal.getBtnActualizarReceta().addActionListener(r->actualizarReceta(r));
+		
+		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
+	}
+
+	private void seleccionIngrediente(ActionEvent r) {
+		int ingredienteActual = this.ventanaPrincipal.getComboBoxIngredientes().getSelectedIndex();
+		if(ingredienteActual<0 || ingredientesEnComboBox.size()==0) {
+			this.ventanaPrincipal.getLblUnidadMedida().setText("");
+			return;
+		}
+		this.ventanaPrincipal.getLblUnidadMedida().setText(this.ingredientesEnComboBox.get(ingredienteActual).getUnidadMedida());
 	}
 
 	public void inicializar() {
@@ -83,8 +109,12 @@ public class ControladorVerPasos implements ActionListener {
 		llenarTablaPasosReceta();
 		refrescarTablaIngredientes();
 		llenarComboBoxIngredientes();
+		refrescarComboBoxProductosTerminados();
 		
 		refrescarTabla();
+		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
+		
+		this.ventanaPrincipal.getLblReceta().setText("");
 		ventanaPrincipal.mostrarVentana();
 	}
 	
@@ -96,7 +126,8 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaConPasos(List<PasoDTO> pasosEnLista) {
 		for(PasoDTO p : pasosEnLista) {
-			Object[] agregar = {p.getIdPaso(), p.getDescripcion()};
+			//Object[] agregar = {p.getIdPaso(), p.getDescripcion()};
+			Object[] agregar = {p.getDescripcion()};
 			ventanaPrincipal.getModelPasos().addRow(agregar);
 		}
 	}
@@ -104,13 +135,13 @@ public class ControladorVerPasos implements ActionListener {
 	private List<PasoDTO> recuperarListaPasos() {
 		List<PasoDTO> ret = new ArrayList<PasoDTO>();
 		List<PasoDTO> todosLosPasos = this.modeloPaso.readAll();
-		String idBuscar = this.ventanaPrincipal.getTextId().getText()+"";
+//		String idBuscar = this.ventanaPrincipal.getTextId().getText()+"";
 		String descripBuscar = this.ventanaPrincipal.getTextDescripcion().getText();
 		for(PasoDTO p: todosLosPasos) {
 			boolean deboAgregar = true;
-			if(!idBuscar.equals("")) {
-				deboAgregar = deboAgregar && (p.getIdPaso()+"").matches(".*"+idBuscar.toLowerCase()+".*");
-			}
+//			if(!idBuscar.equals("")) {
+//				deboAgregar = deboAgregar && (p.getIdPaso()+"").matches(".*"+idBuscar.toLowerCase()+".*");
+//			}
 			if(!descripBuscar.equals("")) {
 				deboAgregar = deboAgregar && p.getDescripcion().toLowerCase().matches(".*"+descripBuscar.toLowerCase()+".*");
 			}
@@ -130,12 +161,15 @@ public class ControladorVerPasos implements ActionListener {
 	private void agregarPaso(ActionEvent r) {
 		String pasoAgregar = this.ventanaPrincipal.getTextDescripcionAgregar().getText();
 		if(pasoAgregar == null) {
+			mostrarMensajeEmergente("No escribio un nombre de paso valido.");
 			return;
 		}
 		if(pasoAgregar.equals("")) {
+			mostrarMensajeEmergente("No escribio un nombre de paso valido.");
 			return;
 		}
 		if(pasoAgregar.length()>20) {
+			mostrarMensajeEmergente("El nombre del paso sobrepasa los 20 caracteres.");
 			return;
 		}
 		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar));
@@ -145,6 +179,7 @@ public class ControladorVerPasos implements ActionListener {
 	private void botonEliminarPasos(ActionEvent r) {
 		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
 		if(filasSeleccionadas.length == 0) {
+			mostrarMensajeEmergente("No se ha seleccionado ningun paso para eliminar.");
 			return;
 		}
 		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
@@ -173,6 +208,8 @@ public class ControladorVerPasos implements ActionListener {
 		for(int idTabla: filasSeleccionadas) {
 			if(sePuedeEliminarPaso(this.pasosEnLista.get(idTabla))) {
 				this.modeloPaso.delete(this.pasosEnLista.get(idTabla));
+			}else {
+				this.mostrarMensajeEmergente("No se puede eliminar "+this.pasosEnLista.get(idTabla).getDescripcion()+" porque esta en uso de una receta.");
 			}
 		}
 	}
@@ -224,6 +261,7 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaPasosReceta() {
 		reiniciarTablaPasosReceta();
+		this.ventanaPrincipal.getLblReceta().setText("");
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
 			recetaSeleccionada = new RecetaDTO(0,0, "");
 			return;
@@ -236,11 +274,23 @@ public class ControladorVerPasos implements ActionListener {
 		pasosRecetaEnLista = this.modeloFabricacion.readAllPasosFromOneReceta(recetaSeleccionada.getIdReceta());
 		llenarTablaPasosReceta(pasosRecetaEnLista);
 		this.ventanaPrincipal.getTextFieldReceta().setText(recetaSeleccionada.getDescripcion());
+		this.ventanaPrincipal.getComboBoxProductos().setSelectedIndex(recetaSeleccionada.getIdProducto()-1);
+		
+		if(this.estaEnUsoLaReceta(recetaSeleccionada)) {
+			this.ventanaPrincipal.getLblReceta().setText("Esta receta esta en uso.");
+		}else {
+			this.ventanaPrincipal.getLblReceta().setText("Esta receta no esta en uso.");
+		}
+		if(this.recetaSeleccionada.getIdReceta()==0) {
+			this.ventanaPrincipal.getLblReceta().setText("");
+		}
+		
 	}
 	
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
 		for(PasoDeRecetaDTO p: pasos) {
-			Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
+			//Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
+			Object[] agregar = { p.getPasosDTO().getDescripcion(), p.getNroOrden()};
 			this.ventanaPrincipal.getModelPasosReceta().addRow(agregar);
 		}
 	}
@@ -291,11 +341,13 @@ public class ControladorVerPasos implements ActionListener {
 				ingredientesEnComboBox.add(mp);
 			}
 		}
+		this.ventanaPrincipal.getComboBoxIngredientes().setSelectedIndex(0);
 	}
 	
 	private void incluirPaso(ActionEvent e) {
 		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
 		if(filasSeleccionadas.length == 0) {
+			this.mostrarMensajeEmergente("No se puede agregar el paso a la receta porque no se a seleccionado un paso.");
 			return;
 		}
 		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
@@ -307,21 +359,35 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void darDeAltaReceta(ActionEvent e) {
 		if(this.recetaSeleccionada == null) {
+			this.mostrarMensajeEmergente("La receta no es valida.");
 			return;
 		}
 		if(this.pasosRecetaEnLista == null) {
+			this.mostrarMensajeEmergente("Los pasos de la receta no son valida.");
 			return;
 		}
 		if(this.pasosRecetaEnLista.size() == 0){
+			this.mostrarMensajeEmergente("La receta no tiene pasos.");
 			return;
 		}
 		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
+			this.mostrarMensajeEmergente("El nombre de la receta no es valida.");
+			return;
+		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().length()>20) {
+			this.mostrarMensajeEmergente("El nombre de la receta supera los 20 letras.");
 			return;
 		}
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() != 0 && this.recetaSeleccionada.getIdReceta() != 0) {
+			this.mostrarMensajeEmergente("La receta no es nueva, fue modificada.");
+			return;
+		}
+		if(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex() == -1) {
+			this.mostrarMensajeEmergente("La receta debe crear un producto, no se a seleccionado que producto fabrica.");
 			return;
 		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
+		recetaSeleccionada.setIdProducto(this.productosTerminados.get(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex()).getIdMaestroProducto());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
 		int idReceta = this.modeloFabricacion.readAllReceta().get(this.modeloFabricacion.readAllReceta().size()-1).getIdReceta();
 		for(PasoDeRecetaDTO p : pasosRecetaEnLista) {
@@ -337,28 +403,182 @@ public class ControladorVerPasos implements ActionListener {
 		MaestroProductoDTO ingredienteSeleccionado = 
 				ingredientesEnComboBox.get(this.ventanaPrincipal.getComboBoxIngredientes().getSelectedIndex());
 		if(pasoDeRecetaSeleccionado == null) {
+			this.mostrarMensajeEmergente("No se a seleccionado un paso al que incluir el material.");
 			return;
 		}
 		if(this.recetaSeleccionada == null) {
+			this.mostrarMensajeEmergente("No hay receta valida.");
 			return;
 		}
-		pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().add(ingredienteSeleccionado);
-		pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().add((Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+		boolean yaEstaba = false;
+		for(int x = 0; x<pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().size();x++) {
+			MaestroProductoDTO m = pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().get(x);
+			yaEstaba = yaEstaba || m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto();
+			if(m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto()) {
+				//pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().remove(x);
+				pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().set(x, pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().get(x)+(Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+			}
+		}
+		if(!yaEstaba) {
+			pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().add(ingredienteSeleccionado);
+			pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().add((Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+		}
 		/*
 		reiniciarTablaIngredientes();
 		this.llenarTablaIngredientes(pasoDeRecetaSeleccionado.getPasosDTO());
 		*/
 		this.refrescarTablaIngredientes();
 	}
+	
+	@SuppressWarnings("unchecked")
+	private void refrescarComboBoxProductosTerminados() {
+		this.ventanaPrincipal.getComboBoxProductos().removeAllItems();
+		productosTerminados = new ArrayList<MaestroProductoDTO>();
+		for(MaestroProductoDTO mp: this.modeloMaestroProducto.readAll()) {
+			if(mp.getFabricado().equals("S") && mp.getTipo().equals("PT")) {
+				productosTerminados.add(mp);
+				this.ventanaPrincipal.getComboBoxProductos().addItem(mp.getDescripcion()+", "+mp.getTalle());
+			}
+		}
+	}
+	
+	private void quitarPasoReceta(ActionEvent e) {
+		if(this.pasosRecetaEnLista.size()==0) {
+			this.mostrarMensajeEmergente("No hay pasos para quitar.");
+			return;
+		}
+		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		if(pasoSeleccionado < 0) {
+			this.mostrarMensajeEmergente("No se a seleccionado ningun paso.");
+			return;
+		}
+		corregirNroOrden(pasosRecetaEnLista.get(pasoSeleccionado).getNroOrden());
+		this.pasosRecetaEnLista.remove(pasoSeleccionado);
+		this.reiniciarTablaPasosReceta();
+		this.llenarTablaPasosReceta(pasosRecetaEnLista);
+	}
+	
+	private void corregirNroOrden(int nroOrdenEliminado) {
+		for(PasoDeRecetaDTO p: pasosRecetaEnLista) {
+			if(p.getNroOrden() > nroOrdenEliminado) {
+				p.setNroOrden(p.getNroOrden()-1);
+			}
+		}
+	}
+	
+	private void quitarIngrediente(ActionEvent e) {
+		int ingredienteSeleccionadoTabla = this.ventanaPrincipal.getTablaIngredientes().getSelectedRow();
+		if(ingredienteSeleccionadoTabla<0) {
+			this.mostrarMensajeEmergente("No se a seleccionado ningun material para quitar.");
+			return;
+		}
+		this.pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().remove(ingredienteSeleccionadoTabla);
+		this.pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().remove(ingredienteSeleccionadoTabla);
+		this.reiniciarTablaIngredientes();
+		this.llenarTablaIngredientes(this.pasoDeRecetaSeleccionado.getPasosDTO());
+	}
+	
+	private void subirPaso(ActionEvent e) {
+		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		if(pasoSeleccionado < 0){
+			return;
+		}
+		if(pasoSeleccionado == 0) {
+			return;
+		}
+		subirPaso(pasoSeleccionado);
+	}
+	
+	private void bajarPaso(ActionEvent e) {
+		int pasoSeleccionado = this.ventanaPrincipal.getTablaPasosReceta().getSelectedRow();
+		if(pasoSeleccionado < 0){
+			return;
+		}
+		System.out.println(pasoSeleccionado);
+		System.out.println(this.pasosRecetaEnLista.size());
+		if(pasoSeleccionado+1 == this.pasosRecetaEnLista.size()) {
+			return;
+		}
+		subirPaso(pasoSeleccionado+1);
+	}
+	
+	private void subirPaso(int pasoSeleccionado) {
+		
+		List<PasoDeRecetaDTO> listaActualizada = new ArrayList<PasoDeRecetaDTO>();
+		for(int x = 0; x<pasosRecetaEnLista.size(); x++) {
+			if(pasoSeleccionado-1 == x) {
+				pasosRecetaEnLista.get(x).setNroOrden(x+1+1);
+				pasosRecetaEnLista.get(x+1).setNroOrden(x+1);
+				listaActualizada.add(pasosRecetaEnLista.get(x+1));
+				listaActualizada.add(pasosRecetaEnLista.get(x));
+				x++;
+			}else {
+				listaActualizada.add(pasosRecetaEnLista.get(x));
+			}
+		}
+		pasosRecetaEnLista = listaActualizada;
+		this.reiniciarTablaPasosReceta();
+		this.llenarTablaPasosReceta(pasosRecetaEnLista);
+	}
+	
+	private void actualizarReceta(ActionEvent r) {
+		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() <= 0) {
+			this.mostrarMensajeEmergente("No se a agregado la receta, es nueva, no se puede modificar.");
+			return;
+		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
+			this.mostrarMensajeEmergente("El nombre de la receta no es valido.");
+			return;
+		}
+		if(this.pasosRecetaEnLista.size() == 0) {
+			this.mostrarMensajeEmergente("La receta no tiene pasos.");
+			return;
+		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().equals("")) {
+			this.mostrarMensajeEmergente("El nombre de la receta no es valido.");
+			return;
+		}
+		if(this.ventanaPrincipal.getTextFieldReceta().getText().length()>20) {
+			this.mostrarMensajeEmergente("El nombre de la receta sobrepasa las 20 letas.");
+			return;
+		}
+		if(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex()<0) {
+			this.mostrarMensajeEmergente("El producto a fabricar no es valido.");
+			return;
+		}
+		if(estaEnUsoLaReceta(this.recetaSeleccionada)) {
+			this.mostrarMensajeEmergente("Esta receta esta actualmente esta en uso, no se puede modificar.");
+			return;
+		}
+		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
+		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
+		int indiceSeleccionado = this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex();
+		this.refrescarComboBoxReceta();
+		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(indiceSeleccionado);
+	}
+
+	private boolean estaEnUsoLaReceta(RecetaDTO recetaAVerificar) {
+		boolean ret = true;
+		List<FabricacionesDTO> fabricacionesEnMarcha = this.modeloFabricacion.readAllFabricacionesEnMarcha("", "", "", "", "");
+		for(FabricacionesDTO f: fabricacionesEnMarcha) {
+			ret = ret && f.getIdReceta() != recetaAVerificar.getIdReceta();
+		}
+		return !ret;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	}
+	
+	private void mostrarMensajeEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
+        return;
 	}
 
 	public static void main(String[] args) {
 		ControladorVerPasos controladorPasos = new ControladorVerPasos();
 		controladorPasos.inicializar();
-
+		
 	}
 
 }

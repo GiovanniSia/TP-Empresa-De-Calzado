@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.ClienteDTO;
+import dto.LocalidadDTO;
 import dto.PasoDeRecetaDTO;
 import dto.RecetaDTO;
 import persistencia.conexion.Conexion;
@@ -112,17 +114,24 @@ public class RecetaDAOSQL implements RecetaDAO {
 	}
 	
 	private static String insertIngredientePasoNuevo = "insert into materialesdepaso values(?,?,?,?);";
+	private static String insertPasoNuevoIngredientePasoNuevo = "insert into materialesdepaso values(?,?,?,(SELECT MAX(IdPasoReceta) FROM pasosreceta));";
 	private boolean insertIngredientesPaso(PasoDeRecetaDTO paso, int indiceMaterial) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
 		try
 		{
-			statement = conexion.prepareStatement(insertIngredientePasoNuevo);
+			if(paso.getIdPasoReceta() == 0) {
+				statement = conexion.prepareStatement(insertPasoNuevoIngredientePasoNuevo);
+			}else {
+				statement = conexion.prepareStatement(insertIngredientePasoNuevo);
+				statement.setInt(4, paso.getIdPasoReceta());
+			}
+			
 			statement.setInt(1, 0);
 			statement.setInt(2, paso.getPasosDTO().getMateriales().get(indiceMaterial).getIdMaestroProducto());
 			statement.setInt(3, paso.getPasosDTO().getCantidadUsada().get(indiceMaterial));
-			statement.setInt(4, paso.getIdPasoReceta());
+
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -164,5 +173,106 @@ public class RecetaDAOSQL implements RecetaDAO {
 		int id = resultSet.getInt("IdPasoReceta");
 		return id;
 	}
+	
+	private static final String update = "UPDATE recetas set Descripcion=?, IdProducto=? where IdReceta=?";
+	
+	@Override
+	public boolean updateReceta(RecetaDTO receta, List<PasoDeRecetaDTO> pasos) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(update);
 
+			statement.setString(1, receta.getDescripcion());
+			statement.setInt(2, receta.getIdProducto());
+			statement.setInt(3, receta.getIdReceta());
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(isUpdateExitoso) {
+			List<PasoDeRecetaDTO> pasosBorrar = (new FabricacionDAOSQL()).readAllPasosFromOneReceta(receta.getIdReceta());
+			for(PasoDeRecetaDTO p: pasosBorrar){
+				
+				List<Integer> listaId = readAllIdMaterialesOnePaso(p.getIdPasoReceta());
+				for(Integer id: listaId) {
+					deleteMaterialPaso(id);
+				}
+				deletePasoReceta(p);
+			}
+			insertPasosActualizadosReceta(pasos);
+		}
+		return isUpdateExitoso;
+	}
+	
+	private static final String deletePaso = "DELETE FROM pasosReceta WHERE IdPasoReceta = ?";
+	private boolean deletePasoReceta(PasoDeRecetaDTO pasoReceta) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isdeleteExitoso = false;
+		try {
+			statement = conexion.prepareStatement(deletePaso);
+			statement.setInt(1, pasoReceta.getIdPasoReceta());
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isdeleteExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isdeleteExitoso;
+	}
+	
+	private static final String deleteMaterial = "DELETE FROM materialesDePaso WHERE IdMaterialDePaso = ?";
+	private boolean deleteMaterialPaso(int id) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isdeleteExitoso = false;
+		try {
+			statement = conexion.prepareStatement(deleteMaterial);
+			statement.setInt(1, id);
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isdeleteExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isdeleteExitoso;
+	}
+	
+	private static final String readAllIdMaterialesOnePaso = "SELECT IdMaterialDePaso FROM materialesDePaso WHERE IdPaso=?";
+	private List<Integer> readAllIdMaterialesOnePaso(int idPasoReceta) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		ArrayList<Integer> recetas = new ArrayList<Integer>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readAllIdMaterialesOnePaso);
+			statement.setInt(1, idPasoReceta);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				recetas.add(resultSet.getInt("IdMaterialDePaso"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return recetas;
+	}
+	
+	public boolean insertPasosActualizadosReceta(List<PasoDeRecetaDTO> pasos) {
+		boolean ret = true;
+		for(PasoDeRecetaDTO p: pasos) {
+			ret = ret && insertPasoReceta(p);
+			for(int x = 0; x<p.getPasosDTO().getCantidadUsada().size(); x++) {
+				ret = ret && insertIngredientesPaso(p,x);
+			}
+		}
+		return ret;
+	}
 }

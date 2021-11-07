@@ -26,18 +26,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
 
 public class VerPasos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private String[] nombreColumnas = { "Id paso","Descripcion"};
+	//private String[] nombreColumnas = { "Id paso","Descripcion"};
+	private String[] nombreColumnas = {"Descripcion"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JScrollPane spCliente;
 	private JLabel lblNewLabel;
-	private JLabel lblId;
-	private JTextField textId;
 	private JLabel lblSucursal;
 	JTextField textDescripcion;
 
@@ -45,16 +47,14 @@ public class VerPasos extends JFrame {
 	private JTextField textDescripcionAgregar;
 	private JLabel lblSucursal_1;
 	private JButton btnAgregar;
-	private JLabel lblAgregar;
-	private JButton btnEliminar;
-	private JLabel lblEliminar;
 	private JTextField textFieldReceta;
 	
 	JComboBox comboBoxReceta;
 	JComboBox comboBoxIngredientes;
 	
 	JScrollPane spPasosReceta;
-	private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
+	//private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
+	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
 	
@@ -67,6 +67,30 @@ public class VerPasos extends JFrame {
 	
 	JSpinner spinnerCantidadIngrediente;
 	JButton btnAgregarIngrediente;
+	JComboBox comboBoxProductos;
+	JButton btnQuitarPasoReceta;
+	private JButton btnQuitarIngrediente;
+	private JButton btnSubirPaso;
+	private JButton btnBajarPaso;
+	
+	JButton btnActualizarReceta ;
+	private JLabel lblUnidadMedida;
+	private JLabel lblReceta;
+	private JPanel panel_1;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JSeparator separator_1;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JSeparator separator_2;
+	private JLabel lblSucursal_2;
+	private JLabel lblNewLabel_5;
+	private JButton btnEliminar;
+	private JTextField textId;
+	private JLabel lblProductoAsociado;
+	private JLabel lblNombre;
+	private JLabel lblNueva;
 
 	public VerPasos() {
 		initialize();
@@ -79,19 +103,19 @@ public class VerPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 736, 556);
+		frame.setBounds(100, 100, 848, 632);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 93, 710, 424);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(10, 104, 812, 409);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 81, 267, 147);
+		spCliente.setBounds(10, 114, 267, 147);
 		panel.add(spCliente);
 
 		modelOrdenes = new DefaultTableModel(null, nombreColumnas){
@@ -112,73 +136,42 @@ public class VerPasos extends JFrame {
 
 		spCliente.setViewportView(tabla);
 		
-		lblId = new JLabel("Id");
-		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblId.setBounds(10, 11, 46, 14);
-		panel.add(lblId);
-		
-		textId = new JTextField();
-		textId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		textId.setBounds(10, 36, 75, 20);
-		panel.add(textId);
-		textId.setColumns(10);
-		
-		lblSucursal = new JLabel("Descripcion");
+		lblSucursal = new JLabel("Filtrar por Descripcion");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(95, 11, 75, 14);
+		lblSucursal.setBounds(10, 53, 160, 20);
 		panel.add(lblSucursal);
 		
 		textDescripcion = new JTextField();
 		textDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textDescripcion.setColumns(10);
-		textDescripcion.setBounds(95, 36, 75, 20);
+		textDescripcion.setBounds(10, 80, 160, 27);
 		panel.add(textDescripcion);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(10, 352, 60, 60);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
-
-		JLabel lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(80, 352, 90, 60);
-		panel.add(lblAtras);
 		
 		textDescripcionAgregar = new JTextField();
 		textDescripcionAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textDescripcionAgregar.setColumns(10);
-		textDescripcionAgregar.setBounds(10, 268, 107, 20);
+		textDescripcionAgregar.setBounds(84, 302, 153, 30);
 		panel.add(textDescripcionAgregar);
 		
 		lblSucursal_1 = new JLabel("Descripcion");
 		lblSucursal_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal_1.setBounds(10, 249, 75, 14);
+		lblSucursal_1.setBounds(10, 302, 75, 30);
 		panel.add(lblSucursal_1);
 		
 		btnAgregar = new JButton("");
-		btnAgregar.setBounds(127, 239, 60, 60);
+		btnAgregar.setToolTipText("Agregar Paso a Lista");
+		btnAgregar.setBounds(247, 302, 30, 30);
+		cambiarIconoBotones(btnAgregar,  "arrowup.png");
+		
 		panel.add(btnAgregar);
 		
-		lblAgregar = new JLabel("Agregar");
-		lblAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAgregar.setBounds(197, 239, 80, 60);
-		panel.add(lblAgregar);
-		
-		btnEliminar = new JButton("");
-		btnEliminar.setBounds(180, 11, 60, 60);
-		panel.add(btnEliminar);
-		
-		lblEliminar = new JLabel("Eliminar");
-		lblEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblEliminar.setBounds(250, 11, 75, 60);
-		panel.add(lblEliminar);
-		
 		comboBoxReceta = new JComboBox();
-		comboBoxReceta.setBounds(361, 36, 177, 22);
+		comboBoxReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxReceta.setBounds(402, 31, 186, 27);
 		panel.add(comboBoxReceta);
 		
 		spPasosReceta = new JScrollPane();
-		spPasosReceta.setBounds(361, 81, 177, 147);
+		spPasosReceta.setBounds(361, 114, 177, 147);
 		panel.add(spPasosReceta);
 		this.modelPasosReceta = new DefaultTableModel(null, this.nombreColumnasPasosReceta){
             private static final long serialVersionUID = 1L;
@@ -198,7 +191,7 @@ public class VerPasos extends JFrame {
 		this.spPasosReceta.setViewportView(tablaPasosReceta);
 		
 		spIngredientes = new JScrollPane();
-		spIngredientes.setBounds(548, 81, 138, 147);
+		spIngredientes.setBounds(608, 49, 194, 212);
 		panel.add(spIngredientes);
 		this.modelIngredientes = new DefaultTableModel(null, this.nombreColumnasIngredientes){
             private static final long serialVersionUID = 1L;
@@ -217,49 +210,201 @@ public class VerPasos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnReceta.setBounds(361, 268, 60, 60);
+		btnReceta.setBounds(332, 320, 60, 60);
+		cambiarIconoBotones(btnReceta,  "listadd.png");
 		panel.add(btnReceta);
 		
 		textFieldReceta = new JTextField();
 		textFieldReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textFieldReceta.setColumns(10);
-		textFieldReceta.setBounds(361, 239, 177, 20);
+		textFieldReceta.setBounds(402, 80, 186, 27);
 		panel.add(textFieldReceta);
 		
 		comboBoxIngredientes = new JComboBox();
-		comboBoxIngredientes.setBounds(548, 239, 138, 22);
+		comboBoxIngredientes.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxIngredientes.setBounds(608, 321, 154, 30);
 		panel.add(comboBoxIngredientes);
 		
 		btnAgregarIngrediente = new JButton("");
-		btnAgregarIngrediente.setBounds(548, 268, 60, 60);
+		btnAgregarIngrediente.setToolTipText("Agregar");
+		btnAgregarIngrediente.setBounds(772, 321, 30, 30);
+		cambiarIconoBotones(btnAgregarIngrediente,  "plus2.png");
 		panel.add(btnAgregarIngrediente);
 		
 		btnAgregarPasoAReceta = new JButton("");
-		btnAgregarPasoAReceta.setBounds(287, 127, 60, 60);
+		btnAgregarPasoAReceta.setToolTipText("Agregar Paso a Receta");
+		btnAgregarPasoAReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnAgregarPasoAReceta.setBounds(289, 125, 60, 60);
+		cambiarIconoBotones(btnAgregarPasoAReceta,  "plus.png");
 		panel.add(btnAgregarPasoAReceta);
 		
 		SpinnerModel sm = new SpinnerNumberModel(1, 1, 100, 1);
 		spinnerCantidadIngrediente = new JSpinner(sm);
-		spinnerCantidadIngrediente.setBounds(618, 269, 68, 20);
+		spinnerCantidadIngrediente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		spinnerCantidadIngrediente.setBounds(608, 360, 52, 20);
 		panel.add(spinnerCantidadIngrediente);
+		
+		comboBoxProductos = new JComboBox();
+		comboBoxProductos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxProductos.setBounds(442, 276, 146, 27);
+		panel.add(comboBoxProductos);
+		
+		btnQuitarPasoReceta = new JButton("");
+		btnQuitarPasoReceta.setToolTipText("Quitar Paso de Receta");
+		btnQuitarPasoReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnQuitarPasoReceta.setBounds(289, 196, 60, 60);
+		cambiarIconoBotones(btnQuitarPasoReceta,  "minus.png");
+		panel.add(btnQuitarPasoReceta);
+		
+		btnQuitarIngrediente = new JButton("");
+		btnQuitarIngrediente.setBounds(772, 272, 30, 30);
+		cambiarIconoBotones(btnQuitarIngrediente,  "minus2.png");
+		panel.add(btnQuitarIngrediente);
+		
+		btnSubirPaso = new JButton("");
+		btnSubirPaso.setToolTipText("Mover Paso Seleccionado un lugar Arriba");
+		btnSubirPaso.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnSubirPaso.setBounds(548, 152, 40, 40);
+		cambiarIconoBotones(btnSubirPaso,  "up.png");
+		panel.add(btnSubirPaso);
+		
+		btnBajarPaso = new JButton("");
+		btnBajarPaso.setToolTipText("Mover Paso Seleccionado un lugar Abajo");
+		btnBajarPaso.setBounds(548, 192, 40, 40);
+		cambiarIconoBotones(btnBajarPaso,  "down.png");
+		panel.add(btnBajarPaso);
+		
+		btnActualizarReceta = new JButton("");
+		btnActualizarReceta.setBounds(456, 320, 60, 60);
+		cambiarIconoBotones(btnActualizarReceta,  "pencil.png");
+		panel.add(btnActualizarReceta);
+		
+		JLabel lblQuitarMaterial = new JLabel("Quitar seleccionado");
+		lblQuitarMaterial.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblQuitarMaterial.setBounds(608, 272, 154, 27);
+		panel.add(lblQuitarMaterial);
+		
+		JLabel lblAgregar_1_1 = new JLabel("<html>Agregar Nueva Receta</html>");
+		lblAgregar_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAgregar_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAgregar_1_1.setBounds(398, 321, 54, 59);
+		panel.add(lblAgregar_1_1);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(318, 267, 12, 128);
+		panel.add(separator);
+		
+		JLabel lblAgregar_1_1_1 = new JLabel("<html>Modificar Receta Existente</html>");
+		lblAgregar_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAgregar_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblAgregar_1_1_1.setBounds(522, 321, 69, 59);
+		panel.add(lblAgregar_1_1_1);
+		
+		lblUnidadMedida = new JLabel("New label");
+		lblUnidadMedida.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblUnidadMedida.setBounds(663, 360, 139, 20);
+		panel.add(lblUnidadMedida);
+		
+		lblReceta = new JLabel("New label");
+		lblReceta.setBounds(402, 54, 186, 20);
+		panel.add(lblReceta);
 
 		
-		lblNewLabel = new JLabel("Pasos");
-		lblNewLabel.setBounds(10, 49, 324, 44);
-		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setBounds(598, 12, 12, 383);
+		panel.add(separator_1);
 		
-		JPanel panel_1 = new JPanel();
+		lblNewLabel_3 = new JLabel("Ingredientes");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(598, 0, 214, 31);
+		panel.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("Receta");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(318, 0, 276, 31);
+		panel.add(lblNewLabel_4);
+		
+		separator_2 = new JSeparator();
+		separator_2.setOrientation(SwingConstants.VERTICAL);
+		separator_2.setBounds(318, 11, 12, 99);
+		panel.add(separator_2);
+		
+		lblSucursal_2 = new JLabel("Agregar Nuevo Paso");
+		lblSucursal_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSucursal_2.setBounds(10, 279, 117, 20);
+		panel.add(lblSucursal_2);
+		
+		lblNewLabel_5 = new JLabel("Pasos de Fabricacion");
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_5.setBounds(0, 0, 322, 31);
+		panel.add(lblNewLabel_5);
+		
+		lblProductoAsociado = new JLabel("Producto a fabricar");
+		lblProductoAsociado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblProductoAsociado.setBounds(332, 279, 106, 20);
+		panel.add(lblProductoAsociado);
+		
+		lblNombre = new JLabel("Existente");
+		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombre.setBounds(332, 32, 60, 24);
+		panel.add(lblNombre);
+		
+		lblNueva = new JLabel("Nueva");
+		lblNueva.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNueva.setBounds(332, 80, 60, 27);
+		panel.add(lblNueva);
+
+		
+		lblNewLabel = new JLabel("Editor de Recetas");
+		lblNewLabel.setBounds(10, 54, 324, 48);
+		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 0, 902, 50);
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 0, 832, 53);
 		frame.getContentPane().add(panel_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(new Color(30, 144, 255));
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 421, 50);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes.png");
+		panel_1.add(lblLogo);
+		
+		lblNewLabel_1 = new JLabel("F\u00E1brica");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(640, 28, 172, 19);
 		panel_1.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("Empleado:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(343, 28, 59, 19);
+		panel_1.add(lblNewLabel_2);
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(20, 524, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+				JLabel lblAtras = new JLabel("Atras");
+				lblAtras.setBounds(90, 524, 90, 60);
+				frame.getContentPane().add(lblAtras);
+				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+				
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(0, 30, 960, 720);
+				frame.getContentPane().add(lblFondo);
+				cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void show() {
@@ -291,6 +436,15 @@ public class VerPasos extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	
@@ -395,5 +549,37 @@ public class VerPasos extends JFrame {
 
 	public JButton getBtnAgregarIngrediente() {
 		return btnAgregarIngrediente;
+	}
+
+	public JComboBox getComboBoxProductos() {
+		return comboBoxProductos;
+	}
+
+	public JButton getBtnQuitarPasoReceta() {
+		return btnQuitarPasoReceta;
+	}
+
+	public JButton getBtnQuitarIngrediente() {
+		return btnQuitarIngrediente;
+	}
+
+	public JButton getBtnSubirPaso() {
+		return btnSubirPaso;
+	}
+
+	public JButton getBtnBajarPaso() {
+		return btnBajarPaso;
+	}
+
+	public JButton getBtnActualizarReceta() {
+		return btnActualizarReceta;
+	}
+
+	public JLabel getLblUnidadMedida() {
+		return lblUnidadMedida;
+	}
+
+	public JLabel getLblReceta() {
+		return lblReceta;
 	}
 }
