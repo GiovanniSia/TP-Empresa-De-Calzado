@@ -80,7 +80,7 @@ public class ControladorLogin {
 			return false;
 		}
 		
-		if(empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Desempleado")) {
+		if(empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Inactivo")) {
 			JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
 			return false;
 		}
