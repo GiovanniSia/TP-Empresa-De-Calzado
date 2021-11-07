@@ -27,6 +27,12 @@ public class ControladorGestionarEmpleados {
 	private ControladorHistorialCambiosEmpleados controladorHistorialCambiosEmpleados;
 
 	private Controlador controlador;
+	
+	public static void main(String[] args) {
+		ControladorGestionarEmpleados a = new ControladorGestionarEmpleados();
+		a.inicializar();
+		a.mostrarVentana();
+	}
 
 	public ControladorGestionarEmpleados() {
 		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();

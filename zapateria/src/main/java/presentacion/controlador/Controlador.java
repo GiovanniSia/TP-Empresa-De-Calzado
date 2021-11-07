@@ -213,13 +213,13 @@ public class Controlador {
 		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
 		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
 		// Registrar Venta
-				this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
-						maestroProducto, stock);
-				this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
-						this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
-						this.ingresos);
-				this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
-				this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
+				maestroProducto, stock);
+		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
+				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
+				this.ingresos);
+		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
+		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
 
 	}
 
@@ -282,8 +282,7 @@ public class Controlador {
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
-		
-		
+
 		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto,
 				this.proveedor, this.productoDeProveedor);
 
@@ -295,7 +294,6 @@ public class Controlador {
 		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
 		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
 
-	
 	}
 
 	public void inicializarControladoresGerente() {
