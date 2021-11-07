@@ -33,6 +33,8 @@ public class ControladorVerMateriales {
 		this.fabrica = fabrica;
 		asignarCodigoAText(ventanaPrincipal.getTextId());
 		asignarCodigoAText(ventanaPrincipal.gettextDescrip());
+		asignarCodigoAText(ventanaPrincipal.gettextTalle());
+		asignarCodigoAText(ventanaPrincipal.gettextUnidad());
 	}
 	
 	public void inicializar() {
@@ -88,6 +90,9 @@ public class ControladorVerMateriales {
 				boolean deboAgregar = true;
 				//deboAgregar= deboAgregar && mp.getDescripcion().toLowerCase().matches(".*"+descrText.toLowerCase()+".*");
 				deboAgregar = deboAgregar && matchea(mp.getDescripcion().toLowerCase(), descrText.toLowerCase());
+				deboAgregar = deboAgregar && matchea(mp.getIdMaestroProducto()+"".toLowerCase(), idText.toLowerCase());
+				deboAgregar = deboAgregar && matchea(mp.getTalle()+"".toLowerCase(), talle.toLowerCase());
+				deboAgregar = deboAgregar && matchea(mp.getUnidadMedida().toLowerCase(), unidad.toLowerCase());
 				if(deboAgregar)
 					ret.add(mp);
 			}
