@@ -44,8 +44,9 @@ import presentacion.controlador.gerente.ControladorGestionarClientes;
 import presentacion.controlador.gerente.ControladorHistorialDeCambiosDeCliente;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
+import presentacion.controlador.supervisor.ControladorAltaProveedor;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
-import presentacion.controlador.supervisor.ControladorConsultarProveedor;
+import presentacion.controlador.supervisor.ControladorGestionarProveedores;
 import presentacion.controlador.supervisor.ControladorGenerarPedidoAProveedorManualmente;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.controlador.supervisor.ControladorGestionarProductos;
@@ -116,8 +117,10 @@ public class Controlador {
 	private ControladorGestionarProductos controladorGestionarProductos;
 	private ControladorAltaProducto controladorAltaProducto;
 	private ControladorAsignarProductoAProveedor controladorAsignarProductoAProveedor;
-	private ControladorConsultarProveedor controladorConsultarProveedor;
-
+	private ControladorGestionarProveedores controladorConsultarProveedor;
+	private ControladorAltaProveedor controladorAltaProveedor;
+	
+	
 	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
 	
 	// Ver pedidos pendientes
@@ -274,6 +277,33 @@ public class Controlador {
 		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia,
 				this.localidad, historialCambioCliente);
 		
+		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
+		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
+		
+		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
+
+		
+		
+		// Ver pedidos a prov
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock, maestroProducto);
+		// Supervisor
+		// GestionarProductos
+		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
+		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
+				this.productoDeProveedor);
+		
+		
+		
+		this.controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(proveedor, stock, pedidosPendientes, productoDeProveedor);
+		
+		
+		////////////////////////////////////////////////////////////////////////////
+		//CONTROLADOR GESTIONAR PROVEEDORES
+		this.controladorAltaProveedor = new ControladorAltaProveedor(proveedor);
+		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto,this.proveedor, this.productoDeProveedor);
+		this.controladorConsultarProveedor = new ControladorGestionarProveedores(this, this.proveedor,this.productoDeProveedor);
+		
+		////////////////////////////////////////////////////////////////////////////
 		
 		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
 		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
@@ -287,40 +317,33 @@ public class Controlador {
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 		
 		
-		
-		
-		// Ver pedidos a prov
-		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock, maestroProducto);
-		// Supervisor
-		// GestionarProductos
-		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
-		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
-				this.productoDeProveedor);
-		this.controladorConsultarProveedor = new ControladorConsultarProveedor(this, this.proveedor,
-				this.productoDeProveedor);
-		
-		
-		this.controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(proveedor, stock, pedidosPendientes, productoDeProveedor);
-		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		//GESTIONAR PROVEEDORES		
+
 		this.controladorConsultarProveedor.setControladorAltaProducto(this.controladorAltaProducto);
+		this.controladorConsultarProveedor.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+		this.controladorConsultarProveedor.setControladorAltaProveedor(this.controladorAltaProveedor);
+		
+		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
+		
+		this.controladorAltaProveedor.setControladorGestionarProveedores(controladorConsultarProveedor);
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
 		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorConsultarProveedor);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.controladorGestionarProductos.setControladorGenerarPedidoAProveedorManualmente(controladorGenerarPedidoAProveedorManualmente);
 		this.controladorGenerarPedidoAProveedorManualmente.setControladorGestionarProductos(controladorGestionarProductos);
 		
-		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 
-		this.controladorAsignarProductoAProveedor = new ControladorAsignarProductoAProveedor(this.maestroProducto,
-				this.proveedor, this.productoDeProveedor);
 
-		this.controladorConsultarProveedor
-				.setControladorAsignarProductoAProveedor(this.controladorAsignarProductoAProveedor);
+		
 
-		this.controladorAsignarProductoAProveedor.setControladorConsultarProveedor(this.controladorConsultarProveedor);
+		
 
-		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
-		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
+
 
 	}
 

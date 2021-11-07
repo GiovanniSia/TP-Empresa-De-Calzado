@@ -12,16 +12,18 @@ import dto.ProveedorDTO;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import presentacion.controlador.Controlador;
-import presentacion.vista.Supervisor.VentanaConsultarProveedores;
+import presentacion.vista.Supervisor.VentanaGestionarProveedores;
 
-public class ControladorConsultarProveedor {
+public class ControladorGestionarProveedores {
 
 	Proveedor  proveedor;
 	ProductoDeProveedor prodProveedor;
 	
 	List<ProveedorDTO> todosLosProveedores;
 	
-	VentanaConsultarProveedores ventanaConsultarProveedores;
+	List<ProveedorDTO> proveedorEnTabla;
+	
+	VentanaGestionarProveedores ventanaConsultarProveedores;
 	
 	ControladorAltaProducto controladorAltaProducto;
 	
@@ -29,14 +31,17 @@ public class ControladorConsultarProveedor {
 	
 	Controlador controlador;
 	
-	public ControladorConsultarProveedor(Controlador controlador,Proveedor proveedor,ProductoDeProveedor prodProveedor) {
+	ControladorAltaProveedor controladorAltaProveedor;
+	
+	public ControladorGestionarProveedores(Controlador controlador,Proveedor proveedor,ProductoDeProveedor prodProveedor) {
 		this.proveedor = proveedor;
 		this.prodProveedor = prodProveedor;
 		
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
+		this.proveedorEnTabla = new ArrayList<ProveedorDTO>();
 		this.controlador=controlador;
 	}
-	public ControladorConsultarProveedor(Proveedor proveedor,ProductoDeProveedor prodProveedor) {
+	public ControladorGestionarProveedores(Proveedor proveedor,ProductoDeProveedor prodProveedor) {
 		this.proveedor = proveedor;
 		this.prodProveedor = prodProveedor;
 		
@@ -52,15 +57,19 @@ public class ControladorConsultarProveedor {
 		this.controladorAsignarProductoAProveedor=controladorAsignarProductoAProveedor;
 	}
 	
+	public void setControladorAltaProveedor(ControladorAltaProveedor controladorAltaProveedor) {
+		this.controladorAltaProveedor = controladorAltaProveedor;
+	}
+	
 	public void inicializar() {
-		this.ventanaConsultarProveedores = new VentanaConsultarProveedores();
+		this.ventanaConsultarProveedores = new VentanaGestionarProveedores();
 		
 		
 		//ESTE ES PARA DAR DE ALTA PROD
 		this.ventanaConsultarProveedores.getBtnSeleccionarProveedor().addActionListener(a -> seleccionarProveedor(a));
 		
 		//ESTE ES PARA ASIGNAR UN PROD AL PROV
-		this.ventanaConsultarProveedores.getBtnEditarProveedor().addActionListener(a -> pasarAAsignarProductoAProveedor(a));
+		this.ventanaConsultarProveedores.getBtnAsignarProdAProveedor().addActionListener(a -> pasarAAsignarProductoAProveedor(a));
 		
 		this.ventanaConsultarProveedores.getBtnRegresar().addActionListener(a -> cerrarVentanaParaAltaProd(a));
 		
@@ -71,6 +80,10 @@ public class ControladorConsultarProveedor {
 				filtrarBusqueda();
 			}
 		});
+		
+		this.ventanaConsultarProveedores.getBtnAniadir().addActionListener(a -> pasarAAgregarProveedor());
+	
+		this.ventanaConsultarProveedores.getBtnEditar().addActionListener(a -> pasarAEditarProveedor());
 		
 		this.todosLosProveedores = this.proveedor.readAll();
 		llenarTabla();
@@ -100,6 +113,7 @@ public class ControladorConsultarProveedor {
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setColumnCount(0);
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setColumnIdentifiers(this.ventanaConsultarProveedores.getNombreColumnasProveedores());
+		this.proveedorEnTabla.removeAll(this.proveedorEnTabla);
 		
 //		"Nombre","Correo","Limite de crédito","Credito disponible"
 		for(ProveedorDTO p: proveedoresAprox) {
@@ -113,9 +127,10 @@ public class ControladorConsultarProveedor {
 		String id = ""+p.getId();
 		String nombre = p.getNombre();
 		String correo = p.getCorreo();
-		String credDisp =""+p.getCreditoDisponible();
+		String credDisp =""+p.getLimiteCredito();
 		String[] filas= {id,nombre,correo,credDisp};
 		this.ventanaConsultarProveedores.getModelTablaProveedores().addRow(filas);
+		this.proveedorEnTabla.add(p);
 	}
 	
 	public void mostrarVentanaParaAltaProducto() {
@@ -124,12 +139,14 @@ public class ControladorConsultarProveedor {
 	}
 	
 	public void mostrarVentana() {
-		this.ventanaConsultarProveedores.getBtnEditarProveedor().setVisible(true);
+		this.ventanaConsultarProveedores.getBtnAsignarProdAProveedor().setVisible(true);
+		this.ventanaConsultarProveedores.getBtnAniadir().setVisible(true);
+		this.ventanaConsultarProveedores.getBtnEditar().setVisible(true);
 		this.ventanaConsultarProveedores.show();
 	}
 	
 	public void mostrarBotonEditar() {
-		this.ventanaConsultarProveedores.getBtnEditarProveedor().setVisible(true);
+		this.ventanaConsultarProveedores.getBtnAsignarProdAProveedor().setVisible(true);
 	}
 	
 	
@@ -137,7 +154,7 @@ public class ControladorConsultarProveedor {
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setColumnCount(0);
 		this.ventanaConsultarProveedores.getModelTablaProveedores().setColumnIdentifiers(this.ventanaConsultarProveedores.getNombreColumnasProveedores());
-		
+		this.proveedorEnTabla.removeAll(this.proveedorEnTabla);
 //		"Nombre","Correo","Limite de crédito","Credito disponible"
 		for(ProveedorDTO p: this.todosLosProveedores) {
 			agregarATabla(p);
@@ -170,6 +187,28 @@ public class ControladorConsultarProveedor {
 		this.controladorAsignarProductoAProveedor.inicializar();
 		this.controladorAsignarProductoAProveedor.mostrarVentana();
 		
+		
+	}
+
+	
+	public void pasarAAgregarProveedor() {
+		this.ventanaConsultarProveedores.cerrar();
+		this.controladorAltaProveedor.inicializar();
+		this.controladorAltaProveedor.mostrarVentanaRegistrar();
+	}
+
+	public void pasarAEditarProveedor() {
+		int filaSeleccionada = this.ventanaConsultarProveedores.getTable().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor");
+			return;
+		}
+		ProveedorDTO proveedorElegido = this.proveedorEnTabla.get(filaSeleccionada);
+		this.controladorAltaProveedor.setProveedorAEditar(proveedorElegido);
+		
+		this.ventanaConsultarProveedores.cerrar();
+		this.controladorAltaProveedor.inicializar();
+		this.controladorAltaProveedor.mostarVentanaEditar();
 		
 	}
 	

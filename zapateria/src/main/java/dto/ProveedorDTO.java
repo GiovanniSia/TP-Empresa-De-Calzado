@@ -6,15 +6,13 @@ public class ProveedorDTO {
 	String nombre;
 	String correo;
 	double limiteCredito;
-	double creditoDisponible;
 	
-	public ProveedorDTO(int id, String nombre, String correo, double limiteCredito, double creditoDisponible) {
+	public ProveedorDTO(int id, String nombre, String correo, double limiteCredito) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.correo = correo;
 		this.limiteCredito = limiteCredito;
-		this.creditoDisponible = creditoDisponible;
 	}
 	
 	
@@ -40,10 +38,5 @@ public class ProveedorDTO {
 		return limiteCredito;
 	}
 
-
-
-	public double getCreditoDisponible() {
-		return creditoDisponible;
-	}
 	
 }

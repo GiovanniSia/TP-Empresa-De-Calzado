@@ -41,7 +41,7 @@ public class VentanaGenerarPedidoProveedor {
 	
 	private JTable tablaProveedores;
 	private DefaultTableModel modelProveedores;
-	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Credito Disponible","Precio Venta","Cant. Prod. X lote"};
+	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Limite de Credito","Precio Venta","Cant. Prod. X lote"};
 
 	private JRadioButton rdbtnProveedoresPref;
 	private JRadioButton rdbtnTodosLosProveedores;

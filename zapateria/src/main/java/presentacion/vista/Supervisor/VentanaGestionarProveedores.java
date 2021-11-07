@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
-public class VentanaConsultarProveedores {
+public class VentanaGestionarProveedores {
 
 	private JFrame frame;
 
@@ -38,16 +38,19 @@ public class VentanaConsultarProveedores {
 	private JTable table;
 	private DefaultTableModel modelTablaProveedores;
 
-	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Credito disponible"};
+	private String[] nombreColumnasProveedores = {"Id","Nombre","Correo","Limite de credito"};
 	private JScrollPane scrollPane;
 	
 	private JButton btnSeleccionarProveedor;
-	private JButton btnEditarProveedor;
+	private JButton btnAsignarProdAProv;
 	private JPanel panel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblSeleccionarProveedor;
 	private JLabel lblAtras;
 	private JLabel lblAsignarProductoA;
+	
+	private JButton btnAniadir;
+	private JButton btnEditar;
 	
 	
 	/**
@@ -57,7 +60,7 @@ public class VentanaConsultarProveedores {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaConsultarProveedores window = new VentanaConsultarProveedores();
+					VentanaGestionarProveedores window = new VentanaGestionarProveedores();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,7 +72,7 @@ public class VentanaConsultarProveedores {
 	/**
 	 * Create the application.
 	 */
-	public VentanaConsultarProveedores() {
+	public VentanaGestionarProveedores() {
 		initialize();
 	}
 
@@ -144,15 +147,16 @@ public class VentanaConsultarProveedores {
 		frame.getContentPane().add(btnRegresar);
 		
 		btnSeleccionarProveedor = new JButton("");
-		btnSeleccionarProveedor.setBounds(225, 546, 60, 60);
+		btnSeleccionarProveedor.setBounds(143, 544, 60, 60);
 		frame.getContentPane().add(btnSeleccionarProveedor);
 		cambiarIconoBotones(btnSeleccionarProveedor,  "plus.png");
 		btnSeleccionarProveedor.setVisible(false);
 		
-		btnEditarProveedor = new JButton("");
-		btnEditarProveedor.setBounds(439, 546, 60, 60);
-		cambiarIconoBotones(btnEditarProveedor,  "plus.png");
-		frame.getContentPane().add(btnEditarProveedor);
+		btnAsignarProdAProv = new JButton("");
+		btnAsignarProdAProv.setBounds(439, 546, 60, 60);
+		cambiarIconoBotones(btnAsignarProdAProv,  "plus.png");
+		frame.getContentPane().add(btnAsignarProdAProv);
+		btnAsignarProdAProv.setVisible(false);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -168,7 +172,7 @@ public class VentanaConsultarProveedores {
 		
 		lblSeleccionarProveedor = new JLabel("Seleccionar Proveedor");
 		lblSeleccionarProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblSeleccionarProveedor.setBounds(295, 546, 134, 58);
+		lblSeleccionarProveedor.setBounds(213, 546, 204, 58);
 		frame.getContentPane().add(lblSeleccionarProveedor);
 		lblSeleccionarProveedor.setVisible(false);
 		
@@ -179,9 +183,18 @@ public class VentanaConsultarProveedores {
 		
 		lblAsignarProductoA = new JLabel("Asignar Producto a Proveedor");
 		lblAsignarProductoA.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblAsignarProductoA.setBounds(509, 546, 190, 58);
+		lblAsignarProductoA.setBounds(509, 546, 203, 58);
 		frame.getContentPane().add(lblAsignarProductoA);
-		btnEditarProveedor.setVisible(false);
+		
+		btnAniadir = new JButton("A\u00F1adir");
+		btnAniadir.setBounds(247, 550, 63, 54);
+		frame.getContentPane().add(btnAniadir);
+		btnAniadir.setVisible(false);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(349, 550, 63, 54);
+		frame.getContentPane().add(btnEditar);
+		btnEditar.setVisible(false);
 	}
 
 	
@@ -234,13 +247,53 @@ public class VentanaConsultarProveedores {
 		return btnSeleccionarProveedor;
 	}
 
-	public JButton getBtnEditarProveedor() {
-		return btnEditarProveedor;
+	public JButton getBtnAsignarProdAProveedor() {
+		return btnAsignarProdAProv;
 	}
 	public DefaultTableModel getModelTablaProveedores() {
 		return modelTablaProveedores;
 	}
 	public String[] getNombreColumnasProveedores() {
 		return nombreColumnasProveedores;
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public JLabel getLblNombre() {
+		return lblNombre;
+	}
+
+	public JButton getBtnAsignarProdAProv() {
+		return btnAsignarProdAProv;
+	}
+
+	public JLabel getLblNewLabel_1() {
+		return lblNewLabel_1;
+	}
+
+	public JLabel getLblSeleccionarProveedor() {
+		return lblSeleccionarProveedor;
+	}
+
+	public JLabel getLblAtras() {
+		return lblAtras;
+	}
+
+	public JLabel getLblAsignarProductoA() {
+		return lblAsignarProductoA;
+	}
+
+	public JButton getBtnAniadir() {
+		return btnAniadir;
+	}
+
+	public JButton getBtnEditar() {
+		return btnEditar;
 	}
 }

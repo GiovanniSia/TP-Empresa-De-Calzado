@@ -194,14 +194,14 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		String nombre = p.getNombre();
 		String correo = p.getCorreo();
 		
-		double credDisp = p.getCreditoDisponible();
-		BigDecimal creditoDisponible = new BigDecimal(credDisp);
+		double credDisp = p.getLimiteCredito();
+		BigDecimal limiteCredito = new BigDecimal(credDisp);
 		
 		double precio = prodProv.getPrecioVenta();
 		BigDecimal precioVenta = new BigDecimal(precio);
 		
 		int cantProd = prodProv.getCantidadPorLote();
-		Object[] fila = {id,nombre,correo,creditoDisponible,precioVenta,cantProd};
+		Object[] fila = {id,nombre,correo,limiteCredito,precioVenta,cantProd};
 		this.ventanaGenerarPedidoProveedor.getModelProveedores().addRow(fila);
 		this.proveedorEnTabla.add(p);		
 	}

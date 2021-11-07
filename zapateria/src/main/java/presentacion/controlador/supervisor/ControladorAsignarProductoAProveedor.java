@@ -34,7 +34,7 @@ public class ControladorAsignarProductoAProveedor {
 	List<ProductoDeProveedorDTO> productosDeProveedorEnTabla;
 	List<MaestroProductoDTO> todosLosProductoEnTabla;
 	
-	ControladorConsultarProveedor controladorConsultarProveedor;
+	ControladorGestionarProveedores controladorConsultarProveedor;
 	
 	public ControladorAsignarProductoAProveedor(MaestroProducto maestroProducto,Proveedor proveedor,ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
@@ -47,7 +47,7 @@ public class ControladorAsignarProductoAProveedor {
 		
 	}
 	
-	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
+	public void setControladorConsultarProveedor(ControladorGestionarProveedores controladorConsultarProveedor) {
 		this.controladorConsultarProveedor = controladorConsultarProveedor;
 	}
 	
@@ -144,8 +144,7 @@ public class ControladorAsignarProductoAProveedor {
 		String nombre = this.proveedorElegido.getNombre();
 		String correo = this.proveedorElegido.getCorreo();
 		String limiteCredito = ""+this.proveedorElegido.getLimiteCredito();
-		String crediDisp = ""+this.proveedorElegido.getCreditoDisponible();
-		String fila[] = {nombre,correo,limiteCredito,crediDisp};
+		String fila[] = {nombre,correo,limiteCredito};
 		this.ventanaAsignarProductoAProveedor.getModelTablaProvElegido().addRow(fila);
 				
 	}

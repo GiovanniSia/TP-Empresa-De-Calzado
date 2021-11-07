@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	
 	private JFrame frame;
 
-	private String[] nombreColumnas = {"Id Producto","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
+	private String[] nombreColumnas = {"Id Producto","Descripcion","Stock Disponible","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep."};
 	private JLabel lblNombre;
 	private JTextField txtFieldNombre;
 	private DefaultTableModel modelProductos;
@@ -41,8 +41,6 @@ private static final long serialVersionUID = 1L;
 	private JLabel lblAtrs;
 	private JButton btnAgregarProducto;
 	private JTextField textTalle;
-
-	private JCheckBox chckbxProdSinStock;
 	JButton btnGenerarPedido;
 	JButton btnGenerarOrdenDeManufactura;
 
@@ -119,7 +117,6 @@ private static final long serialVersionUID = 1L;
 		tablaProductos.getColumnModel().getColumn(12).setPreferredWidth(100);
 		tablaProductos.getColumnModel().getColumn(13).setPreferredWidth(100);
 		tablaProductos.getColumnModel().getColumn(14).setPreferredWidth(100);
-		tablaProductos.getColumnModel().getColumn(15).setPreferredWidth(190);
 		
 		
 		
@@ -140,8 +137,9 @@ private static final long serialVersionUID = 1L;
 		btnAtras = new JButton("");
 		btnAtras.setBackground(new Color(248, 248, 255));
 		btnAtras.setBounds(10, 291, 55, 50);
-		panel.add(btnAtras);
 		cambiarIconoBotones(btnAtras, "back2.png");
+		panel.add(btnAtras);
+		
 
 		lblAtrs = new JLabel("Atras");
 		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -191,10 +189,6 @@ private static final long serialVersionUID = 1L;
 		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblTalle.setBounds(148, 35, 70, 20);
 		panel_1.add(lblTalle);
-		
-		chckbxProdSinStock = new JCheckBox("Productos sin stock asignado");
-		chckbxProdSinStock.setBounds(737, 64, 165, 21);
-		panel_1.add(chckbxProdSinStock);
 
 		lblGestionarProductos = new JLabel("Gestionar Productos");
 		lblGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -279,12 +273,7 @@ private static final long serialVersionUID = 1L;
 	public JTextField getTextTalle() {
 		return textTalle;
 	}
-	
-	
-	public JCheckBox getChckbxProdSinStock() {
-		return chckbxProdSinStock;
-	}
-	
+
 
 	public JButton getBtnGenerarPedido() {
 		return btnGenerarPedido;

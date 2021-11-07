@@ -10,5 +10,7 @@ public interface ProveedorDAO {
 	
 	public List<ProveedorDTO> readAll();
 	
+	public boolean update(ProveedorDTO proveedor,int idProveedor);
+	
 	public List<ProveedorDTO> getProveedorAproximado(String nombreColumna,String txt);
 }

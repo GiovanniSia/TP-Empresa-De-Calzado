@@ -18,6 +18,10 @@ public class Proveedor {
 		return this.proveedor.insert(proveedor);
 	}
 
+	public boolean update(ProveedorDTO proveedor,int idProveedor) {
+		return this.proveedor.update(proveedor, idProveedor);
+	}
+	
 	public List<ProveedorDTO> readAll(){
 		return this.proveedor.readAll();
 	}

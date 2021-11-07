@@ -7,14 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.PaisDTO;
 import dto.ProveedorDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.ProveedorDAO;
 
 public class ProveedorDAOSQL implements ProveedorDAO{
 	
-	private static final String insert = "INSERT INTO proveedor VALUES(?,?,?,?,?)";
+	private static final String insert = "INSERT INTO proveedor VALUES(?,?,?,?)";
 	private static final String readAll = "SELECT * FROM proveedor";
+	private static final String update = "UPDATE proveedor SET Nombre=?, CorreoElectronico=?, LimiteCredito=? WHERE IdProveedor=?";
 	
 	@Override
 	public boolean insert(ProveedorDTO proveedor) {
@@ -28,7 +30,6 @@ public class ProveedorDAOSQL implements ProveedorDAO{
 			statement.setString(2, proveedor.getNombre());
 			statement.setString(3, proveedor.getCorreo());
 			statement.setDouble(4, proveedor.getLimiteCredito());
-			statement.setDouble(5, proveedor.getCreditoDisponible());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -46,6 +47,30 @@ public class ProveedorDAOSQL implements ProveedorDAO{
 		return isInsertExitoso;
 	}
 
+	@Override
+	public boolean update(ProveedorDTO proveedor,int idProveedor) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(update);
+
+			statement.setString(1, proveedor.getNombre());
+			statement.setString(2, proveedor.getCorreo());
+			statement.setDouble(3, proveedor.getLimiteCredito());
+			statement.setInt(4, idProveedor);
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
+	}
+	
+	
 	@Override
 	public List<ProveedorDTO> readAll() {
 		PreparedStatement statement;
@@ -69,8 +94,7 @@ public class ProveedorDAOSQL implements ProveedorDAO{
 		String nombre = resultSet.getString("Nombre");
 		String correo = resultSet.getString("CorreoElectronico");
 		double limiteCredito = resultSet.getDouble("LimiteCredito");
-		double creditoDisponible = resultSet.getDouble("CreditoDisponible");
-		return new ProveedorDTO(id,nombre,correo,limiteCredito,creditoDisponible);
+		return new ProveedorDTO(id,nombre,correo,limiteCredito);
 	}
 
 	@Override

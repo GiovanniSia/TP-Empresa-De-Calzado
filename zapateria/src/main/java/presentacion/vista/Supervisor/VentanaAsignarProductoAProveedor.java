@@ -34,7 +34,7 @@ public class VentanaAsignarProductoAProveedor {
 	
 	private JTable tableProvElegido;
 	private DefaultTableModel modelTablaProvElegido;
-	private String[] nombreColumnasProvElegido = {"Nombre","Correo","Limite de Credito","Credito disponible"};
+	private String[] nombreColumnasProvElegido = {"Nombre","Correo","Limite de Credito"};
 	
 	
 	private JTable tableProdDeProv;

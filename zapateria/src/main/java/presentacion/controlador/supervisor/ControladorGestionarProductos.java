@@ -120,9 +120,7 @@ public class ControladorGestionarProductos {
 				realizarBusqueda();
 			}
 		});
-		
-		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
-		
+			
 		
 		this.ventanaGestionarProductos.getTxtFieldNombre().addKeyListener(new KeyAdapter() {
 			@Override
@@ -137,7 +135,7 @@ public class ControladorGestionarProductos {
 			}
 		});
 		
-		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
+//		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
 		
 		this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
 		
@@ -213,7 +211,7 @@ public class ControladorGestionarProductos {
 		String txtTalle = this.ventanaGestionarProductos.getTextTalle().getText(); 
 		List<MaestroProductoDTO> productosAproximados = this.maestroProducto.getMaestroProductoAproximado("Descripcion",txtNombre,"Talle",txtTalle, null, null, null, null);
 
-		escribirTabla(productosAproximados);
+		escribirTablaFiltrada(productosAproximados);
 	}
 	
 	
@@ -223,41 +221,29 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
 		for(MaestroProductoDTO m: this.todosLosProductos) {
-			for(StockDTO s: this.todoElStock) {
-				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
-					agregarATabla(s,m);
-				}
-			}
+//			if(m.getTipo().equals("PT")) {
+				agregarATabla(m);	
+//			}
+				
+			
 		}
 	}
 	
-	public void escribirTabla(List<MaestroProductoDTO> productosAproximados) {
+	public void escribirTablaFiltrada(List<MaestroProductoDTO> productosAproximados) {
 		this.ventanaGestionarProductos.getModelProductos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaGestionarProductos.getModelProductos().setColumnCount(0);
 		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
 		
 		for(MaestroProductoDTO m: productosAproximados) {
-			boolean tieneStock = false;
-			for(StockDTO s: this.todoElStock){
-				
-				tieneStock = tieneStock || m.getIdMaestroProducto() == s.getIdProducto();		
-				
-				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal()) {
-					agregarATabla(s,m);
-
-				}
-				//si tiene stock entonces ya se agrego
-			}	
+//			if(m.getTipo().equals("PT")) {
+				agregarATabla(m);	
+//			}
 			
-			if(!tieneStock && this.ventanaGestionarProductos.getChckbxProdSinStock().isSelected()) {
-				agregarATabla(null,m);
-			}
-			tieneStock=false;
 		}
 	}
 	
-	public void agregarATabla(StockDTO s, MaestroProductoDTO m) {
+	public void agregarATabla(MaestroProductoDTO m) {
 		int id = m.getIdMaestroProducto();
 		String nombre=m.getDescripcion();
 		String tipo = m.getTipo();
@@ -282,24 +268,26 @@ public class ControladorGestionarProductos {
 		
 		int cantARep = m.getCantidadAReponer();
 		int diasARep = m.getDiasParaReponer();
-
-		int stockDisp;
-		String codLote;
-		if(s!=null) {
-			stockDisp = s.getStockDisponible();
-			codLote = s.getCodigoLote();	
-		}else {
-			stockDisp = 0;
-			codLote = "Sin asignar";
-		}
 		
-		Object[] fila = { id,nombre,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep,stockDisp,codLote};
+		int cantStockDisp = obtenerCantidadStockDisp(m);
+		
+		Object[] fila = { id,nombre,cantStockDisp,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
 		productosEnTabla.add(m);
 		
 		verificarCambiarColorAEstaFila();
 		
 		
+	}
+	
+	public int obtenerCantidadStockDisp(MaestroProductoDTO prod) {
+		int cant=0;
+		for(StockDTO s: this.todoElStock) {
+			if(s.getIdProducto() == prod.getIdMaestroProducto()) {
+				cant = cant + s.getStockDisponible();
+			}
+		}
+		return cant;
 	}
 	
 	private void verificarCambiarColorAEstaFila() {
@@ -316,7 +304,7 @@ public class ControladorGestionarProductos {
 				//al parecer el row toma la ultima fila agregada
 		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
-		        int status = (int) table.getModel().getValueAt(row,14);
+		        int status = (int) table.getModel().getValueAt(row,2);
 		        if(status<=0) {
 		        	setBackground(Color.red);
 		        	setForeground(Color.WHITE);	
@@ -359,7 +347,7 @@ public class ControladorGestionarProductos {
 //		        	}
 		        	
 		        }else {
-		        	if((int)table.getValueAt(row, 14) == 0) {
+		        	if((int)table.getValueAt(row, 2) == 0) {
 			        	setBackground(Color.red);
 			        	setForeground(Color.WHITE);	
 		        	}else {
@@ -425,7 +413,7 @@ public class ControladorGestionarProductos {
 		
 		
 		
-		ControladorConsultarProveedor consultar = new ControladorConsultarProveedor(prov,prodProv);
+		ControladorGestionarProveedores consultar = new ControladorGestionarProveedores(prov,prodProv);
 		
 		ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(prov,stock,pedi, prodProv);
 		ControladorGestionarProductos g = new ControladorGestionarProductos(m, stock);

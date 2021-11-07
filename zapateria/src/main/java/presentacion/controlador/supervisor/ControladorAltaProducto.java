@@ -32,7 +32,7 @@ public class ControladorAltaProducto {
 	
 
 	ProveedorDTO proveedorElegido;
-	ControladorConsultarProveedor controladorConsultarProveedor;
+	ControladorGestionarProveedores controladorConsultarProveedor;
 	ControladorGestionarProductos controladorGestionarProductos;
 	
 
@@ -51,7 +51,7 @@ public class ControladorAltaProducto {
 		
 	}
 	
-	public void setControladorConsultarProveedor(ControladorConsultarProveedor controladorConsultarProveedor) {
+	public void setControladorConsultarProveedor(ControladorGestionarProveedores controladorConsultarProveedor) {
 		this.controladorConsultarProveedor=controladorConsultarProveedor;
 	}
 	
