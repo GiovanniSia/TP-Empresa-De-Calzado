@@ -65,7 +65,7 @@ public class generarOrdenesFabricacion {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private static String crearCodigoLote(MaestroProductoDTO producto) {
+	public static String crearCodigoLote(MaestroProductoDTO producto) {
 		java.util.Date fechaActual = new java.util.Date();
 		fechaActual.setDate(fechaActual.getDate());
 		int dias = fechaActual.getDate();

@@ -14,6 +14,11 @@ public class Stock {
 		this.stock = metodo_persistencia.createStockDAO();
 	}
 
+	public boolean insert(StockDTO stock) {
+		return this.stock.insert(stock);
+	}
+	
+	
 	public List<StockDTO> readAll(){
 		return this.stock.readAll();
 	}

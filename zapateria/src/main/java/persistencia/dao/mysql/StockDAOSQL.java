@@ -10,11 +10,44 @@ import java.util.List;
 
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.StockDAO;
+import dto.OrdenFabricaDTO;
 import dto.StockDTO;
 
 public class StockDAOSQL implements StockDAO {
 	private static final String readall = "SELECT * FROM stock";
 	private static final String updateStock = "UPDATE stock set StockDisponible=? WHERE IdStock=?";
+
+	private static final String insert = "INSERT INTO stock VALUES(?, ?, ?, ?, ?)";
+	
+	@Override
+	public boolean insert(StockDTO stock) {
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isInsertExitoso = false;
+		try
+		{
+			statement = conexion.prepareStatement(insert);
+			statement.setInt(1, stock.getIdStock());
+			statement.setInt(2, stock.getIdSucursal());
+			statement.setInt(3, stock.getIdProducto());
+			statement.setString(4, stock.getCodigoLote());
+			statement.setInt(5, stock.getStockDisponible());
+			if(statement.executeUpdate() > 0)
+			{
+				conexion.commit();
+				isInsertExitoso = true;
+			}
+		}catch (SQLException e) 
+		{
+			e.printStackTrace();
+			try {
+				conexion.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		return isInsertExitoso;
+	}
 	
 	public List<StockDTO> readAll() {
 		PreparedStatement statement;
@@ -33,6 +66,8 @@ public class StockDAOSQL implements StockDAO {
 		return stock;
 	}
 
+	
+	
 	private StockDTO getStockDTO(ResultSet resultSet) throws SQLException {
 		int idStock = resultSet.getInt("IdStock");
 		int idSucursal = resultSet.getInt("IdSucursal");

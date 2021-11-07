@@ -265,13 +265,13 @@ public class Controlador {
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 		
 		//Ver pedidos a prov
-		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock,this.maestroProducto);
 		
 		// Alta cliente
 //		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia, this.localidad);
 
 		// Ver pedidos a prov
-		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
+//		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
 
 		// ----------------------------------------------------------------------------------------------------------
 

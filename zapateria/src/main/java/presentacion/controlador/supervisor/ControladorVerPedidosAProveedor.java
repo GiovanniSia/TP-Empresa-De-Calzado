@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,15 +19,24 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import dto.MaestroProductoDTO;
 import dto.PedidosPendientesDTO;
 import dto.StockDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
+import modelo.MaestroProducto;
 import modelo.PedidosPendientes;
 import modelo.Stock;
+import modelo.generarOrdenesFabricacion;
 import presentacion.controlador.Controlador;
 import presentacion.vista.Supervisor.VentanaVerPedidosAProveedores;
 
 public class ControladorVerPedidosAProveedor {
 
+	int idSucursal;
+	int idEmpleado;
+	
+	
 	PedidosPendientes pedidosPendientes;
 	
 	Stock stock;
@@ -34,21 +44,29 @@ public class ControladorVerPedidosAProveedor {
 	
 	List<PedidosPendientesDTO> todosLosPedidosPendientes;
 	List<PedidosPendientesDTO> pedidosPendientesEnTabla;
+
+	
+	MaestroProducto maestroProducto;
+	List<MaestroProductoDTO> todosLosProductos;
 	
 	VentanaVerPedidosAProveedores ventanaVerPedidosAProveedor;
 	
 	Controlador controlador;
 	
-	public ControladorVerPedidosAProveedor(Controlador controlador,PedidosPendientes pedidosPendientes, Stock stock) {
+	public ControladorVerPedidosAProveedor(Controlador controlador,PedidosPendientes pedidosPendientes, Stock stock,MaestroProducto maestroProducto) {
 		this.pedidosPendientes = pedidosPendientes;
 		this.todosLosPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 		this.pedidosPendientesEnTabla = new ArrayList<PedidosPendientesDTO>();
 		this.ventanaVerPedidosAProveedor = new VentanaVerPedidosAProveedores();
+		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
+		this.maestroProducto = maestroProducto;
+		
 		this.stock = stock;
 		this.controlador=controlador;
 	}
 	
 	public void inicializar() {
+		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		
@@ -119,9 +137,25 @@ public class ControladorVerPedidosAProveedor {
 		
 		this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().addActionListener(a -> realizarBusqueda(a));
 		
+		setearDatosDeProperties();
 		llenarComboBoxes();
 		llenarTablaCompleta();
 	}
+	
+	public void setearDatosDeProperties() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
+			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	public void realizarBusqueda(ActionEvent a) {
 		realizarBusqueda();
@@ -315,9 +349,9 @@ public class ControladorVerPedidosAProveedor {
 	    String hora = tf.format(LocalDateTime.now());
 		
 	    
-		StockDTO stockDeProd = getStock(pedidoSeleccionado.getIdMaestroProducto());
+		int cantidadDeStockDisp = getStockDisponible(pedidoSeleccionado.getIdMaestroProducto());
 		
-		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+stockDeProd.getStockDisponible()+" -> Stock actualizado: "+(stockDeProd.getStockDisponible()+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+cantidadDeStockDisp+" -> Stock actualizado: "+(cantidadDeStockDisp+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if(resp==0) {
 			boolean update = this.pedidosPendientes.finalizarPedido("Recibido", fecha, hora, pedidoSeleccionado.getId());
@@ -326,15 +360,26 @@ public class ControladorVerPedidosAProveedor {
 				JOptionPane.showMessageDialog(null, "Pedido marcado como recibido con exito");
 			}else {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al marcar como recibido el pedido");
+				return;
 			}
 			
-			int nuevaCant = stockDeProd.getStockDisponible() + pedidoSeleccionado.getCantidad();
+			MaestroProductoDTO producto = getMaestroProductoDePedido(pedidoSeleccionado.getIdMaestroProducto());
 			
-			boolean descontarStock = this.stock.actualizarStock(stockDeProd.getIdStock(), nuevaCant);
-			if(!descontarStock) {
-				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al reponer el stock", "Error", JOptionPane.ERROR_MESSAGE);
+			int idStock=0;
+			int idSucursal = this.idSucursal;
+			int idProd = producto.getIdMaestroProducto();
+			String codLote = generarOrdenesFabricacion.crearCodigoLote(producto);
+			int stockDisp = pedidoSeleccionado.getCantidad();
+
+			
+			StockDTO nuevoStock = new StockDTO(idStock,idSucursal,idProd,codLote,stockDisp);
+			
+			boolean insert = this.stock.insert(nuevoStock);
+			if(!insert) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar dar de alta un stock nuevo");				
+			}else {
+				JOptionPane.showMessageDialog(null, "Se ha creado un nuevo stock en el sistema con el codigo: "+nuevoStock.getCodigoLote());
 			}
-			
 		}
 		
 		
@@ -343,14 +388,26 @@ public class ControladorVerPedidosAProveedor {
 		
 	}
 	
-	public StockDTO getStock(int idProducto) {
+	private MaestroProductoDTO getMaestroProductoDePedido(int idMaestroProducto) {
+		for(MaestroProductoDTO p: this.todosLosProductos) {
+			if(p.getIdMaestroProducto() == idMaestroProducto) {
+				return p;
+			}
+		}return null;
+	}
+
+	public int getStockDisponible(int idProducto) {
+		int cant=0;
 		for(StockDTO s: this.listaStock) {
+			//si ese stock tiene este producto asociado
 			if(s.getIdProducto()==idProducto) {
-				return s;
+				cant = cant+s.getStockDisponible();
 			}
 		}
-		return null;
+		return cant;
 	}
+	
+	
 	
 	
 	public void llenarComboBoxes() {
