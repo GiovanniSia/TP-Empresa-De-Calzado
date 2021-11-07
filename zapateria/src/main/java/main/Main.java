@@ -8,11 +8,9 @@ public class Main {
 	public static void main(String[] args){
 		Thread envio = new EnviarCorreosAProveedoresAutomatico();
 		envio.start();
-		
 		ControladorLogin login = new ControladorLogin();
 		login.inicializar();
-		login.mostrarVentana();
-
+		login.mostrarVentana();		
 	}
 	
 }

@@ -27,6 +27,7 @@ CREATE TABLE `HistorialDeCambiosCliente`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdEmpleado` varchar(45) NOT NULL,
+  `IdCliente` varchar(45) NOT NULL,
   `Fecha` DATE NOT NULL,
   `NombreAntiguo` varchar(45) NOT NULL,
   `NombreNuevo` varchar(45) NOT NULL,
