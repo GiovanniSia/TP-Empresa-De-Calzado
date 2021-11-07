@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.MaestroProductoDTO;
+import dto.StockDTO;
+import dto.SucursalDTO;
 import modelo.MaestroProducto;
+import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.fabrica.VentanaVerMateriales;
 
@@ -12,14 +15,18 @@ public class ControladorVerMateriales {
 	
 	VentanaVerMateriales ventanaPrincipal;
 	
+	Stock modeloStock;
 	MaestroProducto modeloMaestroProducto;
 	
 	List<MaestroProductoDTO> ingredientesEnLista;
 	
-	public ControladorVerMateriales() {
+	SucursalDTO fabrica;
+	
+	public ControladorVerMateriales(SucursalDTO fabrica) {
 		modeloMaestroProducto = new MaestroProducto(new DAOSQLFactory());
-		
+		modeloStock = new Stock(new DAOSQLFactory());
 		ventanaPrincipal = new VentanaVerMateriales();
+		this.fabrica = fabrica;
 	}
 	
 	public void inicializar() {
@@ -46,8 +53,9 @@ public class ControladorVerMateriales {
 		String descripcionMostrar = mp.getDescripcion();
 		String talleMostrar = mp.getTalle();
 		String unidadMedida = mp.getUnidadMedida();
+		String cantidadDisponible = getCantidadEnStockDeMaterial(mp)+"";
 		//"Id", "Descripcion", "Talle", "Unidad medida", "Cantidad Actual"
-		Object[] agregar = {idMostrar, descripcionMostrar, talleMostrar, unidadMedida};
+		Object[] agregar = {idMostrar, descripcionMostrar, talleMostrar, unidadMedida, cantidadDisponible};
 		return agregar;
 	}
 
@@ -67,9 +75,20 @@ public class ControladorVerMateriales {
 		ventanaPrincipal.getModelOrdenes().setColumnCount(0);
 		ventanaPrincipal.getModelOrdenes().setColumnIdentifiers(ventanaPrincipal.getNombreColumnas());
 	}
+	
+	private int getCantidadEnStockDeMaterial(MaestroProductoDTO ingrediente) {
+		int cantidadTotalDisponible = 0;
+		List<StockDTO> todoElStock = modeloStock.readAll();
+		for(StockDTO s: todoElStock) {
+			if(s.getIdProducto() == ingrediente.getIdMaestroProducto() && s.getIdSucursal() == this.fabrica.getIdSucursal()) {
+				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();
+			}
+		}
+		return cantidadTotalDisponible;
+	}
 
 	public static void main(String[] args) {
-		ControladorVerMateriales conVerMat = new ControladorVerMateriales();
+		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","",""));
 		conVerMat.inicializar();
 	}
 }
