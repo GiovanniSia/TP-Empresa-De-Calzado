@@ -30,6 +30,8 @@ public class ControladorGestionarClientes {
 	
 	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
 	
+	ControladorHistorialDeCambiosDeCliente controladorHistorialDeCambiosDeCliente;
+	
 	public ControladorGestionarClientes(Controlador controlador,Cliente cliente) {		
 		this.controlador = controlador;
 		this.cliente = cliente;
@@ -42,6 +44,10 @@ public class ControladorGestionarClientes {
 	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
 		this.controladorAltaCliente = controladorAltaCliente;
 	}
+
+	public void setControladorHistorialDeCambiosDeCliente(ControladorHistorialDeCambiosDeCliente controladorHistorialDeCambiosDeCliente) {
+		this.controladorHistorialDeCambiosDeCliente = controladorHistorialDeCambiosDeCliente;
+	}
 	
 	public void inicializar() {
 		this.ventanaGestionarClientes = new VentanaGestionarClientes();
@@ -51,6 +57,7 @@ public class ControladorGestionarClientes {
 		this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 		this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
 		this.ventanaGestionarClientes.getBtnAtras().addActionListener(a -> salir(a));
+		this.ventanaGestionarClientes.getBtnHistorialDeCambios().addActionListener(a -> pasarAHistorialDeClientes());
 		
 		
 		// TextField
@@ -220,4 +227,12 @@ public class ControladorGestionarClientes {
 		}));
 		
 	}
+	
+	public void pasarAHistorialDeClientes() {
+		this.ventanaGestionarClientes.cerrar();
+		this.controladorHistorialDeCambiosDeCliente.inicializar();
+		this.controladorHistorialDeCambiosDeCliente.mostrarVentana();
+		
+	}
+	
 }

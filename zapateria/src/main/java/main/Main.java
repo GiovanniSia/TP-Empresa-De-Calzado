@@ -12,6 +12,7 @@ public class Main {
 		ControladorLogin login = new ControladorLogin();
 		login.inicializar();
 		login.mostrarVentana();
+
 	}
 	
 }

@@ -25,6 +25,7 @@ import persistencia.conexion.Conexion;
 
 public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private static final long serialVersionUID = 1L;
+	
 	private JFrame frame;
 	
 	private String[] nombreColumnas = {"Id empleado","Fecha Modificacion","Id cliente","Nombre anterior","Nombre nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
@@ -213,7 +214,73 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+
+	public DefaultTableModel getModelhistorialCambioCliente() {
+		return modelhistorialCambioCliente;
+	}
+
+	public JTable getTablaHistorialCambioCliente() {
+		return tablaHistorialCambioCliente;
+	}
+
+	public JLabel getLblCodEmpleado() {
+		return lblCodEmpleado;
+	}
+
+	public JLabel getLblFiltrarPor() {
+		return lblFiltrarPor;
+	}
+
+	public JLabel getLblHistorialCambioCliente() {
+		return lblHistorialCambioCliente;
+	}
+
+	public JScrollPane getSpHistorialCambioCliente() {
+		return spHistorialCambioCliente;
+	}
+
+	public JTextField getTxtFiltroCodEmpleado() {
+		return txtFiltroCodEmpleado;
+	}
+
+	public JButton getBtnVolverAModificarProducto() {
+		return btnVolverAModificarProducto;
+	}
+
+	public JPanel getPanel_1() {
+		return panel_1;
+	}
+
+	public JTextField getTxtFiltroCodSucursal() {
+		return txtFiltroCodSucursal;
+	}
+
+	public JPanel getPanel_2() {
+		return panel_2;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public JLabel getLblVolver() {
+		return lblVolver;
+	}
+
+	public JTextField getTextFieldIdCliente() {
+		return textFieldIdCliente;
+	}
+
 }
-
-
-

@@ -3,7 +3,10 @@ package presentacion.controlador.gerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +14,14 @@ import javax.swing.JOptionPane;
 
 
 import dto.ClienteDTO;
+import dto.HistorialCambioClienteDTO;
 import dto.LocalidadDTO;
 import dto.PaisDTO;
 import dto.ProvinciaDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.Cliente;
+import modelo.HistorialCambioCliente;
 import modelo.Localidad;
 import modelo.Pais;
 import modelo.Provincia;
@@ -25,6 +32,9 @@ import presentacion.vista.gerente.VentanaEditarPais;
 import presentacion.vista.gerente.VentanaEditarProvincia;
 
 public class ControladorAltaCliente {
+	
+	int idSucursal;
+	int idEmpleado;
 	
 	VentanaAltaCliente ventanaAltaCliente;
 	
@@ -51,14 +61,18 @@ public class ControladorAltaCliente {
 	ArrayList<LocalidadDTO> localidadEnComboBox;
 
 	ControladorGestionarClientes controladorGestionarClientes;
-		
-	public ControladorAltaCliente(Cliente cliente, Pais pais, Provincia provincia, Localidad localidad) {
+
+	HistorialCambioCliente historialCambioCliente;
+	
+	public ControladorAltaCliente(Cliente cliente, Pais pais, Provincia provincia, Localidad localidad,HistorialCambioCliente historialCambioCliente) {
 		this.cliente=cliente;
 		this.listaClientes = new ArrayList<ClienteDTO>();
 		
 		this.pais=pais;
 		this.provincia = provincia;
 		this.localidad = localidad;
+
+		this.historialCambioCliente = historialCambioCliente; 
 		
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.todasLasProvincias = new ArrayList<ProvinciaDTO>();
@@ -77,6 +91,7 @@ public class ControladorAltaCliente {
 	}
 		
 	public void inicializar() {
+		setearDatosDeProperties();
 		
 		this.ventanaAltaCliente = new VentanaAltaCliente(); 
 		
@@ -124,6 +139,18 @@ public class ControladorAltaCliente {
 		validarTeclado();
 	}
 
+	public void setearDatosDeProperties() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
+			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void mostrarVentana() {
 		this.clienteSeteado=null;
 		this.ventanaAltaCliente.getLblRegistrarCliente().setVisible(true);
@@ -200,13 +227,16 @@ public class ControladorAltaCliente {
 	
 		ClienteDTO clienteActualizado = obtenerClienteDeVista();
 		clienteActualizado.setEstado(this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString());
-		System.out.println("Nuevo estado: "+clienteActualizado.getEstado());	
+		System.out.println("Nuevo estado: "+clienteActualizado.getEstado());
+		
+		guadarHistorialDeCambioDeCliente(this.clienteSeteado,clienteActualizado);
+		
 		boolean update = this.cliente.update(this.clienteSeteado.getIdCliente(), clienteActualizado);
 		if(!update) {
 			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);		
 		salirEditar();
 	}
 	
@@ -217,6 +247,67 @@ public class ControladorAltaCliente {
 		this.controladorGestionarClientes.inicializar();
 		this.controladorGestionarClientes.mostrarVentana();
 
+	}
+	
+	public void guadarHistorialDeCambioDeCliente(ClienteDTO clienteSeteado,ClienteDTO clienteActualizado) {
+		int id = 0;
+		int idEmpleado = this.idEmpleado;
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		String fecha = dtf.format(LocalDateTime.now());
+		
+		String nombreAntiguo = clienteSeteado.getNombre();
+		String nombreNuevo = clienteActualizado.getNombre();
+		
+		String apellidoAntiguo= clienteSeteado.getApellido();
+		String apellidoNuevo = clienteActualizado.getApellido();
+		
+		String CUILAntiguo = clienteSeteado.getCUIL();
+		String CUILNuevo = clienteActualizado.getCUIL();
+		
+		String correoAntiguo = clienteSeteado.getCorreo();
+		String correoNuevo = clienteActualizado.getCorreo();
+		
+		double limiteCreditoAntiguo = clienteSeteado.getLimiteCredito();
+		double limiteCreditoNuevo = clienteActualizado.getLimiteCredito();
+		
+		double creditoDisponibleAntiguo = clienteSeteado.getCreditoDisponible();
+		double creditoDisponibleNuevo = clienteActualizado.getCreditoDisponible();
+		
+		String tipoClienteAntiguo = clienteSeteado.getTipoCliente();
+		String tipoClienteNuevo = clienteActualizado.getTipoCliente();
+		
+		String impuestoAFIPAntiguo = clienteSeteado.getImpuestoAFIP();
+		String impuestoAFIPNuevo = clienteActualizado.getImpuestoAFIP();
+		
+		String estadoAntiguo = clienteSeteado.getEstado();
+		String estadoNuevo = clienteActualizado.getEstado();
+		
+		String calleAntiguo = clienteSeteado.getCalle();
+		String calleNuevo = clienteActualizado.getCalle();
+		
+		String alturaAntiguo = clienteSeteado.getAltura();
+		String alturaNuevo = clienteActualizado.getAltura();
+		
+		String paisAntiguo = clienteSeteado.getPais();
+		String paisNuevo = clienteActualizado.getPais();
+		
+		String provinciaAntiguo = clienteSeteado.getProvincia();
+		String provinciaNuevo = clienteActualizado.getProvincia();
+		
+		String localidadAntiguo = clienteSeteado.getLocalidad();
+		String localidadNuevo = clienteActualizado.getLocalidad();
+		
+		String codPostalAntiguo = clienteSeteado.getCodPostal();
+		String codPostalNuevo = clienteActualizado.getCodPostal();
+		
+		HistorialCambioClienteDTO historial = new HistorialCambioClienteDTO(id,idEmpleado,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
+		
+		boolean insert = this.historialCambioCliente.insert(historial);
+		if(!insert) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "Ha ocurrido un error al insertar el cambio en el historial");
+		}
+		
 	}
 	
 	

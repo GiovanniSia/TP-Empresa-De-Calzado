@@ -14,7 +14,7 @@ public interface HistorialCambioClienteDAO {
 
 	public List<HistorialCambioClienteDTO> readAll();
 	
-	public List<HistorialCambioClienteDTO> getCajaAproximado(String nombreColumna1, String txtAprox1,
+	public List<HistorialCambioClienteDTO> getHistorialCambioClienteAproximado(String nombreColumna1, String txtAprox1,
 			String nombreColumna2, String txtAprox2);
 
 }

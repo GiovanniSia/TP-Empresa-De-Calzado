@@ -28,18 +28,6 @@ public class CajaDAOSQL implements CajaDAO {
 		try {
 			statement = conexion.prepareStatement(insert);
 
-			/*
-			  `IdSucursal` int(11) NOT NULL AUTO_INCREMENT,
-  `Fecha` DATE NOT NULL,
-  `Hora` TIME NOT NULL,
-  `Apertura` int(11) NOT NULL,
-  `Cierre` int(11) NOT NULL,	
-  `AperturaNombre` varchar(45) NOT NULL,
-  `CierreNombre` varchar(45) NOT NULL,
-  `AuditApertura` TIME NOT NULL,
-  `AuditCierre` TIME NOT NULL,
-			
-			*/
 			statement.setInt(1, caja.getIdCaja());
 			statement.setInt(2, caja.getIdSucursal());
 			statement.setString(3, caja.getFecha());

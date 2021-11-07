@@ -23,6 +23,44 @@ CREATE TABLE `clientes`
   PRIMARY KEY (`IdCliente`)
 );
 
+CREATE TABLE `HistorialDeCambiosCliente`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdEmpleado` varchar(45) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `NombreAntiguo` varchar(45) NOT NULL,
+  `NombreNuevo` varchar(45) NOT NULL,
+  `ApellidoAntiguo` varchar(45) NOT NULL,
+  `ApellidoNuevo` varchar(45) NOT NULL,
+  `CUILAntiguo` varchar(45) NOT NULL,
+  `CUILNuevo` varchar(45) NOT NULL,
+  `CorreoElectronicoAntiguo` varchar(45) NOT NULL,
+  `CorreoElectronicoNuevo` varchar(45) NOT NULL,
+  `LimiteCreditoAntiguo` double(45,2) NOT NULL,
+  `LimiteCreditoNuevo` double(45,2) NOT NULL,
+  `CreditoDisponibleAntiguo` double(45,2) NOT NULL,
+  `CreditoDisponibleNuevo` double(45,2) NOT NULL,
+  `TipoClienteAntiguo` varchar(45) NOT NULL,
+  `TipoClienteNuevo` varchar(45) NOT NULL,
+  `ImpuestoAFIPAntiguo` varchar(45) NOT NULL,
+  `ImpuestoAFIPNuevo` varchar(45) NOT NULL,
+  `EstadoAntiguo` varchar(45) NOT NULL,
+  `EstadoNuevo` varchar(45) NOT NULL,
+  `CalleAntiguo` varchar(45) NOT NULL,
+  `CalleNuevo` varchar(45) NOT NULL,
+  `AlturaAntiguo` varchar(45) NOT NULL,
+  `AlturaNuevo` varchar(45) NOT NULL,
+  `PaisAntiguo` varchar(45) NOT NULL,
+  `PaisNuevo` varchar(45) NOT NULL,
+  `ProvinciaAntiguo` varchar(45) NOT NULL,
+  `ProvinciaNuevo` varchar(45) NOT NULL,
+  `LocalidadAntiguo` varchar(45) NOT NULL,
+  `LocalidadNuevo` varchar(45) NOT NULL,
+  `CodPostalAntiguo` varchar(45) NOT NULL,
+  `CodPostalNuevo` varchar(45) NOT NULL,
+  PRIMARY KEY(`Id`)
+);
+
 CREATE TABLE `empleados`
 (
   `IdEmpleado` int(11) NOT NULL AUTO_INCREMENT,
@@ -377,6 +415,7 @@ CREATE TABLE `PedidosPendientes`
     `PrecioTotal` double(45,2) NOT NULL,
     `Estado` varchar(45) NOT NULL,
     `IdSucursal` int(11) NOT NULL,
+    `IdEmpleado` int(11) NOT NULL,
     `FechaEnvioMail` Date DEFAULT NULL,
     `HoraEnvioMail` TIME DEFAULT NULL,
 	`FechaCompleto` Date DEFAULT NULL,

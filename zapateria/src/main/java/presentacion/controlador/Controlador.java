@@ -16,6 +16,7 @@ import modelo.DetalleFactura;
 import modelo.Egresos;
 import modelo.Empleado;
 import modelo.Factura;
+import modelo.HistorialCambioCliente;
 import modelo.Ingresos;
 import modelo.Localidad;
 import modelo.MaestroProducto;
@@ -41,6 +42,7 @@ import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.gerente.ControladorGestionarClientes;
+import presentacion.controlador.gerente.ControladorHistorialDeCambiosDeCliente;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
@@ -83,6 +85,8 @@ public class Controlador {
 	private Provincia provincia;
 	private Localidad localidad;
 	
+	HistorialCambioCliente historialCambioCliente;
+	
 	// Controladores
 	private ControladorBusquedaCliente controladorBusquedaCliente;
 	private ControladorBusquedaProductos controladorBusquedaProducto;
@@ -105,6 +109,8 @@ public class Controlador {
 	// Controlador gerente
 	private ControladorGestionarClientes controladorGestionarClientes;
 	private ControladorAltaCliente controladorAltaCliente;
+	private ControladorHistorialDeCambiosDeCliente controladorHistorialDeCambiosDeCliente;
+	
 
 	// Controlador supervisor
 	private ControladorGestionarProductos controladorGestionarProductos;
@@ -165,6 +171,8 @@ public class Controlador {
 		this.provincia = new Provincia(new DAOSQLFactory());
 		this.localidad = new Localidad(new DAOSQLFactory());
 
+		this.historialCambioCliente = new HistorialCambioCliente(new DAOSQLFactory());
+		
 		this.sucursalObj = this.sucursal.select(this.idSucursal);
 	}
 
@@ -247,16 +255,20 @@ public class Controlador {
 		
 		//Gestionar Clientes
 		this.controladorGestionarClientes = new ControladorGestionarClientes(this,this.cliente);
-		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente,this.pais,this.provincia,this.localidad);
+		this.controladorHistorialDeCambiosDeCliente = new ControladorHistorialDeCambiosDeCliente(historialCambioCliente);
+		
+		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente,this.pais,this.provincia,this.localidad,this.historialCambioCliente);
 		
 		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
 		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
+		this.controladorGestionarClientes.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);;
+		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 		
 		//Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this,pedidosPendientes,stock);
 		
 		// Alta cliente
-		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia, this.localidad);
+//		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia, this.localidad);
 
 		// Ver pedidos a prov
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock);
