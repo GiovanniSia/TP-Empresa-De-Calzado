@@ -229,10 +229,6 @@ public class VentanaVerMateriales extends JFrame {
 	public JTextField getTextPasoActual() {
 		return textPasoActual;
 	}
-
-	public JTextField getTextEstado() {
-		return textEstado;
-	}
 	
 	public JCheckBox getChckbxCancelados() {
 		return chckbxCancelados;
