@@ -26,25 +26,7 @@ import persistencia.conexion.Conexion;
 public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	/*
-	 
-	   `IdCliente` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombre` varchar(45) NOT NULL,
-  `Apellido` varchar(45) NOT NULL,
-  `CUIL` varchar(45) NOT NULL,
-  `CorreoElectronico` varchar(45) NOT NULL,
-  `LimiteCredito` double(45,2) NOT NULL,
-  `CreditoDisponible` double(45,2) NOT NULL,
-  `TipoCliente` varchar(45) NOT NULL,
-  `ImpuestoAFIP` varchar(45) NOT NULL,
-  `Estado` varchar(45) NOT NULL,
-  `Calle` varchar(45) NOT NULL,
-  `Altura` varchar(45) NOT NULL,
-  `Pais` varchar(45) NOT NULL,
-  `Provincia` varchar(45) NOT NULL,
-  `Localidad` varchar(45) NOT NULL,
-  `CodPostal` varchar(45) NOT NULL,	 
-	 */
+	
 	private String[] nombreColumnas = {"Id empleado","Fecha Modificacion","Id cliente","Nombre anterior","Nombre nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
 	private DefaultTableModel modelhistorialCambioCliente;
 	private JTable tablaHistorialCambioCliente;

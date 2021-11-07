@@ -59,4 +59,6 @@ public interface DAOAbstractFactory {
 	public ModeloPasoDAO createModeloPasoDAO();
 	
 	public RecetaDAO createModeloRecetaDAO();
+	
+	public HistorialCambioClienteDAO createHistorialCambioClienteDAO();
 }

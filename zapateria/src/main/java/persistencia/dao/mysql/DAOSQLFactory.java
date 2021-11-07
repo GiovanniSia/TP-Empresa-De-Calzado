@@ -29,6 +29,7 @@ import persistencia.dao.interfaz.DetalleCarritoDAO;
 import persistencia.dao.interfaz.DetalleFacturaDAO;
 import persistencia.dao.interfaz.StockDAO;
 import persistencia.dao.interfaz.FacturaDAO;
+import persistencia.dao.interfaz.HistorialCambioClienteDAO;
 import persistencia.dao.interfaz.HistorialCambioMProductoDAO;
 import persistencia.dao.interfaz.HistorialCambioMonedaDAO;
 import persistencia.dao.interfaz.HistorialPasoDAO;
@@ -173,5 +174,10 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override 
 	public RecetaDAO createModeloRecetaDAO() {
 		return new RecetaDAOSQL();
+	}
+
+	@Override
+	public HistorialCambioClienteDAO createHistorialCambioClienteDAO() {
+		return new HistorialCambioClienteDAOSQL();
 	}
 }
