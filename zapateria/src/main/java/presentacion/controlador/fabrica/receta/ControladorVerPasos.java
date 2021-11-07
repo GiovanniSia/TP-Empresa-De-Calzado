@@ -62,14 +62,14 @@ public class ControladorVerPasos implements ActionListener {
 				refrescarTabla();
 			}
 		});
-		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				refrescarTabla();
-			}
-		});
+//		ventanaPrincipal.getTextId().addKeyListener(new KeyAdapter() {
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				refrescarTabla();
+//			}
+//		});
 		ventanaPrincipal.getBtnAgregar().addActionListener(r-> agregarPaso(r));
-		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
+//		ventanaPrincipal.getBtnEliminar().addActionListener(r-> botonEliminarPasos(r));
 		
 		ventanaPrincipal.getComboBoxReceta().addActionListener(r-> seleccionReceta(r));
 		ventanaPrincipal.getTablaPasosReceta().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -132,13 +132,13 @@ public class ControladorVerPasos implements ActionListener {
 	private List<PasoDTO> recuperarListaPasos() {
 		List<PasoDTO> ret = new ArrayList<PasoDTO>();
 		List<PasoDTO> todosLosPasos = this.modeloPaso.readAll();
-		String idBuscar = this.ventanaPrincipal.getTextId().getText()+"";
+//		String idBuscar = this.ventanaPrincipal.getTextId().getText()+"";
 		String descripBuscar = this.ventanaPrincipal.getTextDescripcion().getText();
 		for(PasoDTO p: todosLosPasos) {
 			boolean deboAgregar = true;
-			if(!idBuscar.equals("")) {
-				deboAgregar = deboAgregar && (p.getIdPaso()+"").matches(".*"+idBuscar.toLowerCase()+".*");
-			}
+//			if(!idBuscar.equals("")) {
+//				deboAgregar = deboAgregar && (p.getIdPaso()+"").matches(".*"+idBuscar.toLowerCase()+".*");
+//			}
 			if(!descripBuscar.equals("")) {
 				deboAgregar = deboAgregar && p.getDescripcion().toLowerCase().matches(".*"+descripBuscar.toLowerCase()+".*");
 			}
