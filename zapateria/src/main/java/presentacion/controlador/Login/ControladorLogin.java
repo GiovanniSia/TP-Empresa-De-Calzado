@@ -1,6 +1,7 @@
 package presentacion.controlador.Login;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -25,11 +26,11 @@ public class ControladorLogin {
 	private empleadoProperties empleadoProp;
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
+	private String mail;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.sucursal = new Sucursal(new DAOSQLFactory());
-
 		this.sucursales = sucursal.readAll();
 	}
 
@@ -37,8 +38,19 @@ public class ControladorLogin {
 		this.ventanaLogin = new VentanaLogin();
 		this.ventanaLogin.getBtnIniciarSesion().addActionListener(a -> iniciarSesion(a));
 		rellenarCombobox();
+		obtenerDatosPropertiesMail();
+		this.ventanaLogin.getTxtFieldCorreo().setText(mail);
 	}
 
+	public void obtenerDatosPropertiesMail() {
+		try {
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			mail = empleadoProp.getValue("CorreoElectronico");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void iniciarSesion(ActionEvent a) {
 		if (inicioSesionValido()) {
 			iniciarZapateria();
