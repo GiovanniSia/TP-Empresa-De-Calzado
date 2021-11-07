@@ -2,9 +2,12 @@ package presentacion.controlador.fabrica;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 import dto.MaestroProductoDTO;
@@ -35,20 +38,12 @@ public class ControladorVerMateriales {
 		asignarCodigoAText(ventanaPrincipal.gettextDescrip());
 		asignarCodigoAText(ventanaPrincipal.gettextTalle());
 		asignarCodigoAText(ventanaPrincipal.gettextUnidad());
+		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxCancelados());
 	}
 	
 	public void inicializar() {
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
-	}
-	
-	private void asignarCodigoAText(JTextField text) {
-		text.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				refrescarTabla();
-			}
-		});
 	}
 	
 	private void refrescarTabla() {
@@ -84,6 +79,7 @@ public class ControladorVerMateriales {
 		String descrText = obtenerTexto(this.ventanaPrincipal.gettextDescrip());
 		String talle = obtenerTexto(this.ventanaPrincipal.gettextTalle());
 		String unidad = obtenerTexto(this.ventanaPrincipal.gettextUnidad());
+		boolean riesgoStock = this.ventanaPrincipal.getChckbxCancelados().isSelected();
 		obtenerTexto(this.ventanaPrincipal.getTextId());
 		for(MaestroProductoDTO mp: todosProductos) {
 			if(mp.getTipo().toLowerCase().equals("mp")) {
@@ -93,6 +89,9 @@ public class ControladorVerMateriales {
 				deboAgregar = deboAgregar && matchea(mp.getIdMaestroProducto()+"".toLowerCase(), idText.toLowerCase());
 				deboAgregar = deboAgregar && matchea(mp.getTalle()+"".toLowerCase(), talle.toLowerCase());
 				deboAgregar = deboAgregar && matchea(mp.getUnidadMedida().toLowerCase(), unidad.toLowerCase());
+				if(riesgoStock) {
+					deboAgregar = deboAgregar && getCantidadEnStockDeMaterial(mp)<mp.getPuntoRepositorio();
+				}
 				if(deboAgregar)
 					ret.add(mp);
 			}
@@ -123,6 +122,50 @@ public class ControladorVerMateriales {
 			}
 		}
 		return cantidadTotalDisponible;
+	}
+	
+	private void asignarCodigoAText(JTextField text) {
+		text.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
+	}
+	
+	private void agregarRefrescarTablaACheckBox(JCheckBox checkBox) {
+		checkBox.addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				refrescarTabla();
+			}
+		});
 	}
 
 	public static void main(String[] args) {

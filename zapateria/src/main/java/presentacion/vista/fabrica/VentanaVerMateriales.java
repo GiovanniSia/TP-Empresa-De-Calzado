@@ -41,7 +41,7 @@ public class VentanaVerMateriales extends JFrame {
 
 	private JButton btnSalir;
 	private JTextField textUnidad;
-	private JCheckBox chckbxCancelados;
+	private JCheckBox chckbxRiesgo;
 	
 
 	public VentanaVerMateriales() {
@@ -137,10 +137,10 @@ public class VentanaVerMateriales extends JFrame {
 		lblPaso.setBounds(265, 11, 46, 14);
 		panel.add(lblPaso);
 		
-		chckbxCancelados = new JCheckBox("Ver cancelados");
-		chckbxCancelados.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		chckbxCancelados.setBounds(679, 35, 111, 23);
-		panel.add(chckbxCancelados);
+		chckbxRiesgo = new JCheckBox("Riesgo Stock");
+		chckbxRiesgo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		chckbxRiesgo.setBounds(679, 35, 111, 23);
+		panel.add(chckbxRiesgo);
 
 		JLabel lblAtras = new JLabel("Atras");
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -231,6 +231,6 @@ public class VentanaVerMateriales extends JFrame {
 	}
 	
 	public JCheckBox getChckbxCancelados() {
-		return chckbxCancelados;
+		return chckbxRiesgo;
 	}
 }
