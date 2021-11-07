@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import dto.HistorialCambioClienteDTO;
+import dto.MaestroProductoDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.HistorialCambioClienteDAO;
 
 public class HistorialCambioClienteDAOSQL implements HistorialCambioClienteDAO{
 
-	private static final String insert = "INSERT INTO HistorialDeCambiosCliente VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String insert = "INSERT INTO HistorialDeCambiosCliente VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String delete = "DELETE FROM HistorialDeCambiosCliente WHERE Id = ?";
 	private static final String readall = "SELECT * FROM HistorialDeCambiosCliente";
 	
@@ -26,37 +27,38 @@ public class HistorialCambioClienteDAOSQL implements HistorialCambioClienteDAO{
 	
 			statement.setInt(1, historialCambioCliente.getId());
 			statement.setInt(2, historialCambioCliente.getIdEmpleado());
-			statement.setString(3, historialCambioCliente.getFecha());
-			statement.setString(4, historialCambioCliente.getNombreAntiguo());
-			statement.setString(5, historialCambioCliente.getNombreNuevo());
-			statement.setString(6, historialCambioCliente.getApellidoAntiguo());
-			statement.setString(7, historialCambioCliente.getApellidoNuevo());
-			statement.setString(8, historialCambioCliente.getCUILAntiguo());
-			statement.setString(9, historialCambioCliente.getCUILNuevo());
-			statement.setString(10, historialCambioCliente.getCorreoAntiguo());
-			statement.setString(11, historialCambioCliente.getCorreoNuevo());
-			statement.setDouble(12, historialCambioCliente.getLimiteCreditoAntiguo());
-			statement.setDouble(13, historialCambioCliente.getLimiteCreditoNuevo());
-			statement.setDouble(14, historialCambioCliente.getCreditoDisponibleAntiguo());
-			statement.setDouble(15, historialCambioCliente.getCreditoDisponibleNuevo());
-			statement.setString(16, historialCambioCliente.getTipoClienteAntiguo());
-			statement.setString(17, historialCambioCliente.getTipoClienteNuevo());
-			statement.setString(18, historialCambioCliente.getImpuestoAFIPAntiguo());
-			statement.setString(19, historialCambioCliente.getImpuestoAFIPNuevo());
-			statement.setString(20, historialCambioCliente.getEstadoAntiguo());
-			statement.setString(21, historialCambioCliente.getEstadoNuevo());
-			statement.setString(22, historialCambioCliente.getCalleAntiguo());
-			statement.setString(23, historialCambioCliente.getCalleNuevo());
-			statement.setString(24, historialCambioCliente.getAlturaAntiguo());
-			statement.setString(25, historialCambioCliente.getAlturaNuevo());
-			statement.setString(26, historialCambioCliente.getPaisAntiguo());
-			statement.setString(27, historialCambioCliente.getPaisNuevo());
-			statement.setString(28, historialCambioCliente.getProvinciaAntiguo());
-			statement.setString(29, historialCambioCliente.getProvinciaNuevo());
-			statement.setString(30, historialCambioCliente.getLocalidadAntiguo());
-			statement.setString(31, historialCambioCliente.getLocalidadNuevo());
-			statement.setString(32, historialCambioCliente.getCodPostalAntiguo());
-			statement.setString(33, historialCambioCliente.getCodPostalNuevo());
+			statement.setInt(3, historialCambioCliente.getIdCliente());
+			statement.setString(4, historialCambioCliente.getFecha());
+			statement.setString(5, historialCambioCliente.getNombreAntiguo());
+			statement.setString(6, historialCambioCliente.getNombreNuevo());
+			statement.setString(7, historialCambioCliente.getApellidoAntiguo());
+			statement.setString(8, historialCambioCliente.getApellidoNuevo());
+			statement.setString(9, historialCambioCliente.getCUILAntiguo());
+			statement.setString(10, historialCambioCliente.getCUILNuevo());
+			statement.setString(11, historialCambioCliente.getCorreoAntiguo());
+			statement.setString(12, historialCambioCliente.getCorreoNuevo());
+			statement.setDouble(13, historialCambioCliente.getLimiteCreditoAntiguo());
+			statement.setDouble(14, historialCambioCliente.getLimiteCreditoNuevo());
+			statement.setDouble(15, historialCambioCliente.getCreditoDisponibleAntiguo());
+			statement.setDouble(16, historialCambioCliente.getCreditoDisponibleNuevo());
+			statement.setString(17, historialCambioCliente.getTipoClienteAntiguo());
+			statement.setString(18, historialCambioCliente.getTipoClienteNuevo());
+			statement.setString(19, historialCambioCliente.getImpuestoAFIPAntiguo());
+			statement.setString(20, historialCambioCliente.getImpuestoAFIPNuevo());
+			statement.setString(21, historialCambioCliente.getEstadoAntiguo());
+			statement.setString(22, historialCambioCliente.getEstadoNuevo());
+			statement.setString(23, historialCambioCliente.getCalleAntiguo());
+			statement.setString(24, historialCambioCliente.getCalleNuevo());
+			statement.setString(25, historialCambioCliente.getAlturaAntiguo());
+			statement.setString(26, historialCambioCliente.getAlturaNuevo());
+			statement.setString(27, historialCambioCliente.getPaisAntiguo());
+			statement.setString(28, historialCambioCliente.getPaisNuevo());
+			statement.setString(29, historialCambioCliente.getProvinciaAntiguo());
+			statement.setString(30, historialCambioCliente.getProvinciaNuevo());
+			statement.setString(31, historialCambioCliente.getLocalidadAntiguo());
+			statement.setString(32, historialCambioCliente.getLocalidadNuevo());
+			statement.setString(33, historialCambioCliente.getCodPostalAntiguo());
+			statement.setString(34, historialCambioCliente.getCodPostalNuevo());
 			
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -108,6 +110,7 @@ public class HistorialCambioClienteDAOSQL implements HistorialCambioClienteDAO{
 	private HistorialCambioClienteDTO getHistorialCambioClienteDTO(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("Id");
 		int idEmpleado = resultSet.getInt("IdEmpleado");
+		int idCliente = resultSet.getInt("IdCliente");
 		String fecha = resultSet.getString("Fecha");
 		
 		String nombreAntiguo = resultSet.getString("NombreAntiguo");
@@ -155,15 +158,47 @@ public class HistorialCambioClienteDAOSQL implements HistorialCambioClienteDAO{
 		String codPostalAntiguo = resultSet.getString("CodPostalAntiguo");
 		String codPostalNuevo = resultSet.getString("CodPostalNuevo");
 		
-		return new HistorialCambioClienteDTO(id,idEmpleado,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
+		return new HistorialCambioClienteDTO(id,idEmpleado,idCliente,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
 	}
 	
 	
 	@Override
-	public List<HistorialCambioClienteDTO> getHistorialCambioClienteAproximado(String nombreColumna1, String txtAprox1,
-			String nombreColumna2, String txtAprox2) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<HistorialCambioClienteDTO> obtenerListaFiltrada(String nombreColumna1,String txt1,String nombreColumna2,String txt2,String nombreColumna3,String txt3,String nombreColumna4,String txt4,String nombreColumna5,String txt5) {
+	
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String sel = "SELECT * FROM HistorialDeCambiosCliente";
+		
+		if(nombreColumna1!=null && txt1!=null) {
+			sel = sel +" WHERE "+nombreColumna1 + " LIKE '%"+txt1 +"%'";
+		}
+		
+		if (nombreColumna2 != null && txt2 != null) {
+			sel = sel + " AND " + nombreColumna2 + " LIKE '%" + txt2 + "%'";
+		}
+
+		if (nombreColumna3 != null && txt3 != null) {
+			sel = sel + " AND " + nombreColumna3 + " LIKE '%" + txt3 + "%'";			
+		}
+		if (nombreColumna4 != null && txt4 != null) {
+			sel = sel + " AND " + nombreColumna4 + " LIKE '%" + txt4 + "%'";			
+		}
+		if (nombreColumna5 != null && txt5 != null) {
+			sel = sel + " AND " + nombreColumna5 + " LIKE '%" + txt5 + "%'";			
+		}
+		
+		ArrayList<HistorialCambioClienteDTO> lista = new ArrayList<HistorialCambioClienteDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				lista.add(getHistorialCambioClienteDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
 	}
 
 }

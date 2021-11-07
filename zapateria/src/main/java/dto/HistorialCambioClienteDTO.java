@@ -1,15 +1,14 @@
 package dto;
 
 public class HistorialCambioClienteDTO {
-	int Id;
-	int IdEmpleado;
+	int Id,IdEmpleado,IdCliente;
 	String fecha;
 	String nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo;
 	double limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo;
 	String tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo;
 	
 	
-	public HistorialCambioClienteDTO(int id, int idEmpleado, String fecha, String nombreAntiguo, String nombreNuevo,
+	public HistorialCambioClienteDTO(int id, int idEmpleado,int idCliente, String fecha, String nombreAntiguo, String nombreNuevo,
 			String apellidoAntiguo, String apellidoNuevo, String cUILAntiguo, String cUILNuevo, String correoAntiguo,
 			String correoNuevo, double limiteCreditoAntiguo, double limiteCreditoNuevo, double creditoDisponibleAntiguo,
 			double creditoDisponibleNuevo, String tipoClienteAntiguo, String tipoClienteNuevo,
@@ -20,6 +19,7 @@ public class HistorialCambioClienteDTO {
 		super();
 		Id = id;
 		IdEmpleado = idEmpleado;
+		IdCliente = idCliente;
 		this.fecha = fecha;
 		this.nombreAntiguo = nombreAntiguo;
 		this.nombreNuevo = nombreNuevo;
@@ -59,6 +59,10 @@ public class HistorialCambioClienteDTO {
 	public int getIdEmpleado() {
 		return IdEmpleado;
 	}
+	public int getIdCliente() {
+		return IdCliente;
+	}
+	
 	public String getFecha() {
 		return fecha;
 	}

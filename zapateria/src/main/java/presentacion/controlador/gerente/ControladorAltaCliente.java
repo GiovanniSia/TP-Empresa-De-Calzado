@@ -252,7 +252,7 @@ public class ControladorAltaCliente {
 	public void guadarHistorialDeCambioDeCliente(ClienteDTO clienteSeteado,ClienteDTO clienteActualizado) {
 		int id = 0;
 		int idEmpleado = this.idEmpleado;
-		
+		int idCliente = this.clienteSeteado.getIdCliente();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
 		
@@ -301,7 +301,7 @@ public class ControladorAltaCliente {
 		String codPostalAntiguo = clienteSeteado.getCodPostal();
 		String codPostalNuevo = clienteActualizado.getCodPostal();
 		
-		HistorialCambioClienteDTO historial = new HistorialCambioClienteDTO(id,idEmpleado,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
+		HistorialCambioClienteDTO historial = new HistorialCambioClienteDTO(id,idEmpleado,idCliente,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
 		
 		boolean insert = this.historialCambioCliente.insert(historial);
 		if(!insert) {

@@ -1,7 +1,14 @@
 package presentacion.controlador.gerente;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import dto.HistorialCambioClienteDTO;
@@ -11,7 +18,7 @@ import presentacion.vista.gerente.VentanaHistorialDeCambiosCliente;
 public class ControladorHistorialDeCambiosDeCliente {
 	
 	HistorialCambioCliente historialDeCambiosCliente;
-	VentanaHistorialDeCambiosCliente ventanahistorialDeCambiosCliente; 
+	VentanaHistorialDeCambiosCliente ventanaHistorialDeCambiosCliente; 
 	
 	List<HistorialCambioClienteDTO> listaHistorialCambioCliente;
 	
@@ -27,26 +34,65 @@ public class ControladorHistorialDeCambiosDeCliente {
 	}
 	
 	public void inicializar() {
-		this.ventanahistorialDeCambiosCliente = new VentanaHistorialDeCambiosCliente();
+		this.ventanaHistorialDeCambiosCliente = new VentanaHistorialDeCambiosCliente();
 		this.listaHistorialCambioCliente = this.historialDeCambiosCliente.readAll();
 		
-		this.ventanahistorialDeCambiosCliente.getBtnVolverAModificarProducto().addActionListener(a -> salir());
+		this.ventanaHistorialDeCambiosCliente.getBtnVolverAModificarProducto().addActionListener(a -> salir());
+		
+		
+		
+		this.ventanaHistorialDeCambiosCliente.getTextFieldIdCliente().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaHistorialDeCambiosCliente.getTextFieldIdCliente().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaHistorialDeCambiosCliente.getTextNombreCliente().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		this.ventanaHistorialDeCambiosCliente.getTextCUIL().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				realizarBusqueda();
+			}
+		});
+		
+		this.ventanaHistorialDeCambiosCliente.getDateChooserFechaMod().addPropertyChangeListener(
+				new PropertyChangeListener() {
+
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						System.out.println("valor del datochooser: "+ventanaHistorialDeCambiosCliente.getDateChooserFechaMod().getDate());
+						realizarBusqueda();
+					}
+			});
+		
+		this.ventanaHistorialDeCambiosCliente.getBtnBorrarFiltroFecha().addActionListener(a -> borrarFiltroFecha());
 		
 		llenarTabla();
 	}
 
 	public void mostrarVentana() {
-		this.ventanahistorialDeCambiosCliente.show();
+		this.ventanaHistorialDeCambiosCliente.show();
 	}
 	
 	public void cerrarVentana() {
-		this.ventanahistorialDeCambiosCliente.cerrar();
+		this.ventanaHistorialDeCambiosCliente.cerrar();
 	}
 	
 	public void llenarTabla() {
-		this.ventanahistorialDeCambiosCliente.getModelhistorialCambioCliente().setRowCount(0);// borrar datos de la tabla
-		this.ventanahistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnCount(0);
-		this.ventanahistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnIdentifiers(this.ventanahistorialDeCambiosCliente.getNombreColumnas());
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setRowCount(0);// borrar datos de la tabla
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnCount(0);
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnIdentifiers(this.ventanaHistorialDeCambiosCliente.getNombreColumnas());
 		
 		for(HistorialCambioClienteDTO h : this.listaHistorialCambioCliente) {
 			agregarATabla(h);
@@ -55,7 +101,7 @@ public class ControladorHistorialDeCambiosDeCliente {
 	}
 
 	public void agregarATabla(HistorialCambioClienteDTO h) {
-		int id = h.getId();
+		int idCliente = h.getIdCliente();
 		int idEmpleado = h.getIdEmpleado();
 		 
 		String fecha = h.getFecha();
@@ -112,15 +158,49 @@ public class ControladorHistorialDeCambiosDeCliente {
 		String codPostalAntiguo = h.getCodPostalAntiguo();
 		String codPostalNuevo = h.getCodPostalNuevo();
 		
-		Object[] fila = {id,idEmpleado,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo};
+		Object[] fila = {idCliente,idEmpleado,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo};
 		
-		this.ventanahistorialDeCambiosCliente.getModelhistorialCambioCliente().addRow(fila);
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().addRow(fila);
 	}
 
 	public void salir() {
-		this.ventanahistorialDeCambiosCliente.cerrar();
+		this.ventanaHistorialDeCambiosCliente.cerrar();
 		this.controladorGestionarClientes.inicializar();
 		this.controladorGestionarClientes.mostrarVentana();
+	}
+	
+	public void realizarBusqueda() {
+		String idEmpleado = this.ventanaHistorialDeCambiosCliente.getTxtCodEmpleado().getText();
+		String idCliente = this.ventanaHistorialDeCambiosCliente.getTextFieldIdCliente().getText();
+		String nombreCliente = this.ventanaHistorialDeCambiosCliente.getTextNombreCliente().getText();
+		String CUILCliente = this.ventanaHistorialDeCambiosCliente.getTextCUIL().getText();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date fech = this.ventanaHistorialDeCambiosCliente.getDateChooserFechaMod().getDate();
+		
+		String fecha = null;
+        if (fech != null) {
+            fecha = dateFormat.format(fech);
+        }
+        
+        ArrayList<HistorialCambioClienteDTO> listaFiltrada = (ArrayList<HistorialCambioClienteDTO>) this.historialDeCambiosCliente.obtenerListaFiltrada("IdEmpleado", idEmpleado, "IdCliente", idCliente, "NombreNuevo", nombreCliente, "CUILNuevo", CUILCliente, "Fecha", fecha);
+        
+        llenarTablaFiltrada(listaFiltrada);
+        
+	}
+	
+	public void llenarTablaFiltrada(ArrayList<HistorialCambioClienteDTO> lista) {
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setRowCount(0);// borrar datos de la tabla
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnCount(0);
+		this.ventanaHistorialDeCambiosCliente.getModelhistorialCambioCliente().setColumnIdentifiers(this.ventanaHistorialDeCambiosCliente.getNombreColumnas());
+		
+		for(HistorialCambioClienteDTO h : lista) {
+			agregarATabla(h);
+		}
+	}
+
+	public void borrarFiltroFecha() {
+		this.ventanaHistorialDeCambiosCliente.getDateChooserFechaMod().setDate(null);
 	}
 	
 }

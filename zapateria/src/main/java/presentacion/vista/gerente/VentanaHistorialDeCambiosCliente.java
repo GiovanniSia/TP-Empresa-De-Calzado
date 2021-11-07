@@ -22,13 +22,14 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
+import com.toedter.calendar.JDateChooser;
 
 public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	private JFrame frame;
 	
-	private String[] nombreColumnas = {"Id empleado","Fecha Modificacion","Id cliente","Nombre anterior","Nombre nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
+	private String[] nombreColumnas = {"Id cliente","Id empleado","Fecha Modificacion","Nombre anterior","Nombre nuevo","Apellido anterior","Apellido nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
 	private DefaultTableModel modelhistorialCambioCliente;
 	private JTable tablaHistorialCambioCliente;
 	private JLabel lblCodEmpleado;
@@ -36,15 +37,21 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private JLabel lblHistorialCambioCliente;
 
 	private JScrollPane spHistorialCambioCliente;
-	private JTextField txtFiltroCodEmpleado;
 	private JButton btnVolverAModificarProducto;
 
 	private JPanel panel_1;
-	private JTextField txtFiltroCodSucursal;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
 	private JLabel lblVolver;
+	
+	private JTextField txtCodEmpleado;
 	private JTextField textFieldIdCliente;
+	private JDateChooser dateChooserFechaMod;
+	private JTextField textNombreCliente;
+	private JTextField textCUIL;
+
+	private JButton btnBorrarFiltroFecha;
+
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -128,9 +135,9 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
-		JLabel lblFecha = new JLabel("Fecha");
+		JLabel lblFecha = new JLabel("Fecha Modificacion");
 		lblFecha.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblFecha.setBounds(386, 36, 70, 20);
+		lblFecha.setBounds(486, 36, 122, 20);
 		panel_1.add(lblFecha);
 
 		lblCodEmpleado = new JLabel("Cod. Empleado");
@@ -138,32 +145,52 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		lblCodEmpleado.setBounds(10, 36, 117, 20);
 		panel_1.add(lblCodEmpleado);
 
-		txtFiltroCodEmpleado = new JTextField();
-		txtFiltroCodEmpleado.setBounds(10, 56, 114, 20);
-		panel_1.add(txtFiltroCodEmpleado);
+		txtCodEmpleado = new JTextField();
+		txtCodEmpleado.setBounds(10, 56, 55, 20);
+		panel_1.add(txtCodEmpleado);
 
 		lblFiltrarPor = new JLabel("Filtrar por:");
 		lblFiltrarPor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblFiltrarPor.setBounds(10, 0, 70, 32);
 		panel_1.add(lblFiltrarPor);
 		
-		JLabel lblCodSucursal = new JLabel("Cod. Sucursal");
-		lblCodSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblCodSucursal.setBounds(137, 36, 114, 20);
-		panel_1.add(lblCodSucursal);
-		
-		txtFiltroCodSucursal = new JTextField();
-		txtFiltroCodSucursal.setBounds(134, 56, 84, 20);
-		panel_1.add(txtFiltroCodSucursal);
-		
 		JLabel lblIdCliente = new JLabel("Id Cliente");
 		lblIdCliente.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblIdCliente.setBounds(224, 36, 117, 20);
+		lblIdCliente.setBounds(134, 36, 59, 20);
 		panel_1.add(lblIdCliente);
 		
 		textFieldIdCliente = new JTextField();
-		textFieldIdCliente.setBounds(224, 56, 84, 20);
+		textFieldIdCliente.setBounds(134, 56, 59, 20);
 		panel_1.add(textFieldIdCliente);
+		
+		dateChooserFechaMod = new JDateChooser();
+		dateChooserFechaMod.setBounds(517, 56, 70, 19);
+		panel_1.add(dateChooserFechaMod);
+		
+		textNombreCliente = new JTextField();
+		textNombreCliente.setBounds(225, 56, 85, 20);
+		panel_1.add(textNombreCliente);
+		textNombreCliente.setColumns(10);
+		
+		JLabel lblNombreCliente = new JLabel("Nombre Cliente");
+		lblNombreCliente.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNombreCliente.setBounds(222, 36, 107, 20);
+		panel_1.add(lblNombreCliente);
+		
+		textCUIL = new JTextField();
+		textCUIL.setColumns(10);
+		textCUIL.setBounds(339, 56, 85, 20);
+		panel_1.add(textCUIL);
+		
+		JLabel lblCuilCliente = new JLabel("CUIL cliente");
+		lblCuilCliente.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblCuilCliente.setBounds(339, 36, 107, 20);
+		panel_1.add(lblCuilCliente);
+		
+		btnBorrarFiltroFecha = new JButton("");
+		btnBorrarFiltroFecha.setBounds(598, 50, 26, 26);
+		cambiarIconoBotones(btnBorrarFiltroFecha,  "trash.png");
+		panel_1.add(btnBorrarFiltroFecha);
 
 		lblHistorialCambioCliente = new JLabel("Historial de Cambios de Clilentes");
 		lblHistorialCambioCliente.setBackground(new Color(248, 248, 255));
@@ -252,7 +279,7 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	}
 
 	public JTextField getTxtFiltroCodEmpleado() {
-		return txtFiltroCodEmpleado;
+		return txtCodEmpleado;
 	}
 
 	public JButton getBtnVolverAModificarProducto() {
@@ -263,9 +290,6 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		return panel_1;
 	}
 
-	public JTextField getTxtFiltroCodSucursal() {
-		return txtFiltroCodSucursal;
-	}
 
 	public JPanel getPanel_2() {
 		return panel_2;
@@ -278,9 +302,29 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	public JLabel getLblVolver() {
 		return lblVolver;
 	}
+	
+	public JTextField getTxtCodEmpleado() {
+		return txtCodEmpleado;
+	}
 
 	public JTextField getTextFieldIdCliente() {
 		return textFieldIdCliente;
 	}
 
+	public JDateChooser getDateChooserFechaMod() {
+		return dateChooserFechaMod;
+	}
+
+	public JTextField getTextNombreCliente() {
+		return textNombreCliente;
+	}
+
+	public JTextField getTextCUIL() {
+		return textCUIL;
+	}
+	
+
+	public JButton getBtnBorrarFiltroFecha() {
+		return btnBorrarFiltroFecha;
+	}
 }
