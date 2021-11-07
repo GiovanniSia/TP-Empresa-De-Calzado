@@ -34,13 +34,13 @@ public class VentanaVerMateriales extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblId;
 	private JTextField textId;
-	private JLabel lblSucursal;
-	private JTextField textProducto;
+	private JLabel lblDescrip;
+	private JTextField textTalle;
 	private JLabel lblProducto;
-	JTextField textSucursal;
+	JTextField textDescrip;
 
 	private JButton btnSalir;
-	private JTextField textPasoActual;
+	private JTextField textUnidad;
 	private JCheckBox chckbxCancelados;
 	
 
@@ -99,24 +99,24 @@ public class VentanaVerMateriales extends JFrame {
 		panel.add(textId);
 		textId.setColumns(10);
 		
-		lblSucursal = new JLabel("Sucursal");
-		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(95, 11, 46, 14);
-		panel.add(lblSucursal);
+		lblDescrip = new JLabel("Descripcion");
+		lblDescrip.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblDescrip.setBounds(95, 11, 75, 14);
+		panel.add(lblDescrip);
 		
-		textSucursal = new JTextField();
-		textSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		textSucursal.setColumns(10);
-		textSucursal.setBounds(95, 36, 75, 20);
-		panel.add(textSucursal);
+		textDescrip = new JTextField();
+		textDescrip.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textDescrip.setColumns(10);
+		textDescrip.setBounds(95, 36, 75, 20);
+		panel.add(textDescrip);
 		
-		textProducto = new JTextField();
-		textProducto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		textProducto.setColumns(10);
-		textProducto.setBounds(180, 36, 75, 20);
-		panel.add(textProducto);
+		textTalle = new JTextField();
+		textTalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textTalle.setColumns(10);
+		textTalle.setBounds(180, 36, 75, 20);
+		panel.add(textTalle);
 		
-		lblProducto = new JLabel("Producto");
+		lblProducto = new JLabel("Talle");
 		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblProducto.setBounds(180, 11, 60, 14);
 		panel.add(lblProducto);
@@ -126,13 +126,13 @@ public class VentanaVerMateriales extends JFrame {
 		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
-		textPasoActual = new JTextField();
-		textPasoActual.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		textPasoActual.setColumns(10);
-		textPasoActual.setBounds(265, 36, 75, 20);
-		panel.add(textPasoActual);
+		textUnidad = new JTextField();
+		textUnidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textUnidad.setColumns(10);
+		textUnidad.setBounds(265, 36, 75, 20);
+		panel.add(textUnidad);
 		
-		JLabel lblPaso = new JLabel("Paso");
+		JLabel lblPaso = new JLabel("Unidad");
 		lblPaso.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblPaso.setBounds(265, 11, 46, 14);
 		panel.add(lblPaso);
@@ -214,20 +214,20 @@ public class VentanaVerMateriales extends JFrame {
 		return textId;
 	}
 
-	public JTextField getTextProducto() {
-		return textProducto;
+	public JTextField gettextTalle() {
+		return textTalle;
 	}
 
-	public JTextField getTextSucursal() {
-		return textSucursal;
+	public JTextField gettextDescrip() {
+		return textDescrip;
 	}
 	
 	public JButton getBtnSalir() {
 		return btnSalir;
 	}
 
-	public JTextField getTextPasoActual() {
-		return textPasoActual;
+	public JTextField gettextUnidad() {
+		return textUnidad;
 	}
 	
 	public JCheckBox getChckbxCancelados() {

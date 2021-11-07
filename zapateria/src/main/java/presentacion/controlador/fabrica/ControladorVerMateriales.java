@@ -1,7 +1,11 @@
 package presentacion.controlador.fabrica;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JTextField;
 
 import dto.MaestroProductoDTO;
 import dto.StockDTO;
@@ -27,11 +31,22 @@ public class ControladorVerMateriales {
 		modeloStock = new Stock(new DAOSQLFactory());
 		ventanaPrincipal = new VentanaVerMateriales();
 		this.fabrica = fabrica;
+		asignarCodigoAText(ventanaPrincipal.getTextId());
+		asignarCodigoAText(ventanaPrincipal.gettextDescrip());
 	}
 	
 	public void inicializar() {
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
+	}
+	
+	private void asignarCodigoAText(JTextField text) {
+		text.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
 	}
 	
 	private void refrescarTabla() {
@@ -62,12 +77,30 @@ public class ControladorVerMateriales {
 	private List<MaestroProductoDTO> recuperarIngredientes(){
 		List<MaestroProductoDTO> todosProductos = this.modeloMaestroProducto.readAll();
 		List<MaestroProductoDTO> ret = new ArrayList<MaestroProductoDTO>();
+		
+		String idText = obtenerTexto(this.ventanaPrincipal.getTextId());
+		String descrText = obtenerTexto(this.ventanaPrincipal.gettextDescrip());
+		String talle = obtenerTexto(this.ventanaPrincipal.gettextTalle());
+		String unidad = obtenerTexto(this.ventanaPrincipal.gettextUnidad());
+		obtenerTexto(this.ventanaPrincipal.getTextId());
 		for(MaestroProductoDTO mp: todosProductos) {
 			if(mp.getTipo().toLowerCase().equals("mp")) {
-				ret.add(mp);
+				boolean deboAgregar = true;
+				//deboAgregar= deboAgregar && mp.getDescripcion().toLowerCase().matches(".*"+descrText.toLowerCase()+".*");
+				deboAgregar = deboAgregar && matchea(mp.getDescripcion().toLowerCase(), descrText.toLowerCase());
+				if(deboAgregar)
+					ret.add(mp);
 			}
 		}
 		return ret;
+	}
+	
+	private boolean matchea(String conjunto, String subConjunto) {
+		return conjunto.matches(".*"+subConjunto+".*");
+	}
+	
+	private String obtenerTexto(JTextField text) {
+		return text.getText();
 	}
 	
 	private void reiniciarTablaIngredientes() {
