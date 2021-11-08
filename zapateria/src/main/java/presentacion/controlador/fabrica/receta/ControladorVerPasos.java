@@ -239,6 +239,10 @@ public class ControladorVerPasos implements ActionListener {
 			mostrarMensajeEmergente("No se ha seleccionado ningun paso para eliminar.");
 			return;
 		}
+		if(estaEstePasoEnUso(this.pasosEnLista.get(filasSeleccionadas[0]))) {
+			mostrarMensajeEmergente("Este paso esta en uso en una receta.");
+			return;
+		}
 		if(this.pasosEnLista.get(filasSeleccionadas[0]).getEstado().toLowerCase().equals("activo")) {
 			this.pasosEnLista.get(filasSeleccionadas[0]).setEstado("Inactivo");
 		}else {
@@ -249,10 +253,28 @@ public class ControladorVerPasos implements ActionListener {
 		refrescarTablaPasosReceta();
 	}
 	
+	private boolean estaEstePasoEnUso(PasoDTO pasoDTO) {
+		boolean ret = false;
+		List<FabricacionesDTO> fabricacionesEnMarcha = this.modeloFabricacion.readAllFabricacionesEnMarcha("", "", "", "", "");
+		for(FabricacionesDTO f: fabricacionesEnMarcha) {
+			List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(f.getIdReceta());
+			ret = ret || estaPasoEnLista(pasoDTO, pasos);
+		}
+		return ret;
+	}
+	
+	private boolean estaPasoEnLista(PasoDTO pasoDTO, List<PasoDeRecetaDTO> pasos) {
+		boolean ret = false;
+		for(PasoDeRecetaDTO p: pasos) {
+			ret = ret || p.getIdPaso() == pasoDTO.getIdPaso();
+		}
+		return ret;
+	}
+	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	//	RECETAS
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-	
+
 	private void refrescarComboBoxReceta() {
 		recetasEnComboBox = new ArrayList<RecetaDTO>();
 		recetasEnComboBox = recuperarRecetas();
