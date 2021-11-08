@@ -42,6 +42,7 @@ public class VentanaDashboardGerente {
 	private JButton btnVerPedidosA;
 	private JButton btnCotizaciones;
 	private JButton btnCerrarSesion;
+	private JButton btnHistorialFabrica;
 
 	/**
 	 * Launch the application.
@@ -182,6 +183,13 @@ public class VentanaDashboardGerente {
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(80, 633, 132, 60);
 		panel.add(lblNewLabel_1);
+		
+		btnHistorialFabrica = new JButton("Gestion Fabrica");
+		btnHistorialFabrica.setForeground(new Color(51, 102, 153));
+		btnHistorialFabrica.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnHistorialFabrica.setBackground(new Color(51, 102, 204));
+		btnHistorialFabrica.setBounds(10, 189, 282, 41);
+		panel.add(btnHistorialFabrica);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
@@ -335,6 +343,8 @@ public class VentanaDashboardGerente {
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
 	}
-	
-	
+
+	public JButton getBtnHistorialFabrica() {
+		return btnHistorialFabrica;
+	}
 }

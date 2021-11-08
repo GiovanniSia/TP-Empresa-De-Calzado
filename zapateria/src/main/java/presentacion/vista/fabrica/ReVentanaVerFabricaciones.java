@@ -52,6 +52,8 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JButton btnVerHistorialPasos;
 	private JLabel lblSeleccionarProceso;
 	
+	private JLabel lblHistorial;
+	
 
 	public ReVentanaVerFabricaciones() {
 		initialize();
@@ -207,7 +209,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		lblSeleccionarProceso.setBounds(630, 352, 138, 60);
 		panel.add(lblSeleccionarProceso);
 		
-		JLabel lblHistorial = new JLabel("Historial");
+		lblHistorial = new JLabel("Historial");
 		lblHistorial.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblHistorial.setBounds(410, 352, 90, 60);
 		panel.add(lblHistorial);
@@ -327,5 +329,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JButton getBtnVerHistorialPasos() {
 		return btnVerHistorialPasos;
+	}
+
+	public JLabel getLblHistorial() {
+		return lblHistorial;
 	}
 }

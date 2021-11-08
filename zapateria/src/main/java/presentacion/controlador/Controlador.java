@@ -37,6 +37,7 @@ import presentacion.controlador.Cajero.ControladorVisualizarCarritos;
 import presentacion.controlador.Login.ControladorLogin;
 import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
 import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtuales;
+import presentacion.controlador.fabrica.ControladorHistorialPasos;
 import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
@@ -487,6 +488,9 @@ public class Controlador {
 				maestroProducto);
 		// cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this, medioPago);
+		
+		//Historial fabricacion
+		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
@@ -548,6 +552,9 @@ public class Controlador {
 		this.ventanaDashboardGerente.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		this.ventanaDashboardGerente.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
 		this.ventanaDashboardGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));	
+		
+		this.ventanaDashboardGerente.getBtnHistorialFabrica()
+		.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 	}
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
@@ -646,6 +653,12 @@ public class Controlador {
 		this.reControladorOperario.inicializar();
 		this.reControladorOperario.mostrarVentana();
 
+	}
+	
+	public void iniciarVerHistorialFabrica(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		ControladorHistorialPasos con = new ControladorHistorialPasos(this, null);
+		con.inicializar();
 	}
 
 	public void pasarAGestionarEmpleado(ActionEvent a) {
