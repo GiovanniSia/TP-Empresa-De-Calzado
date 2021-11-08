@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import org.jfree.chart.ChartFactory;
@@ -15,6 +16,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import persistencia.conexion.Conexion;
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,11 +25,23 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.event.ActionEvent;
 
 public class VentanaDashboardGerente {
 
 	private JFrame frame;
+	private JButton btnGestionarProductos;
+	private JButton btnModPrecioUnitario;
+	private JButton btnGestionarClientes;
+	private JButton btnGestionarEmpleados;
+	private JButton btnVerReporteRanking;
+	private JButton btnTareasAutomaticas;
+	private JButton btnVerPedidosA;
+	private JButton btnCotizaciones;
+	private JButton btnCerrarSesion;
 
 	/**
 	 * Launch the application.
@@ -62,7 +77,7 @@ public class VentanaDashboardGerente {
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(67, 73, 86));
-		frame.setBounds(100, 100, 1185, 700);
+		frame.setBounds(100, 100, 1044, 743);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
@@ -77,7 +92,7 @@ public class VentanaDashboardGerente {
 		frame.getContentPane().add(lblRankingDeVentas_2);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 340, 661);
+		panel.setBounds(0, 0, 340, 704);
 		panel.setBackground(new Color(248, 248, 255));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -97,6 +112,76 @@ public class VentanaDashboardGerente {
 		lblNombreGerente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNombreGerente.setBounds(121, 156, 199, 22);
 		panel.add(lblNombreGerente);
+		
+		btnGestionarProductos = new JButton("Gestionar Productos");
+		btnGestionarProductos.setForeground(new Color(51, 102, 153));
+		btnGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarProductos.setBackground(new Color(51, 102, 204));
+		btnGestionarProductos.setBounds(27, 212, 282, 41);
+		panel.add(btnGestionarProductos);
+		
+		btnModPrecioUnitario = new JButton("Modificar Precios Masivos");
+		btnModPrecioUnitario.setForeground(new Color(51, 102, 153));
+		btnModPrecioUnitario.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnModPrecioUnitario.setBackground(new Color(51, 102, 204));
+		btnModPrecioUnitario.setBounds(27, 264, 282, 41);
+		panel.add(btnModPrecioUnitario);
+		
+		btnGestionarClientes = new JButton("Gestionar Clientes");
+		btnGestionarClientes.setForeground(new Color(51, 102, 153));
+		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarClientes.setBackground(new Color(51, 102, 204));
+		btnGestionarClientes.setBounds(27, 316, 282, 41);
+		panel.add(btnGestionarClientes);
+		
+		btnGestionarEmpleados = new JButton("Gestionar Empleados");
+		btnGestionarEmpleados.setForeground(new Color(51, 102, 153));
+		btnGestionarEmpleados.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarEmpleados.setBackground(new Color(51, 102, 204));
+		btnGestionarEmpleados.setBounds(27, 368, 282, 41);
+		panel.add(btnGestionarEmpleados);
+		
+		btnVerReporteRanking = new JButton("Ranking de Ventas");
+		btnVerReporteRanking.setForeground(new Color(51, 102, 153));
+		btnVerReporteRanking.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerReporteRanking.setBackground(new Color(51, 102, 204));
+		btnVerReporteRanking.setBounds(27, 420, 282, 41);
+		panel.add(btnVerReporteRanking);
+		
+		btnTareasAutomaticas = new JButton("Tareas Automaticas");
+		btnTareasAutomaticas.setForeground(new Color(51, 102, 153));
+		btnTareasAutomaticas.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnTareasAutomaticas.setBackground(new Color(51, 102, 204));
+		btnTareasAutomaticas.setBounds(27, 472, 282, 41);
+		panel.add(btnTareasAutomaticas);
+		
+		btnVerPedidosA = new JButton("Pedidos a Proveedores");
+		btnVerPedidosA.setForeground(new Color(51, 102, 153));
+		btnVerPedidosA.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerPedidosA.setBackground(new Color(51, 102, 204));
+		btnVerPedidosA.setBounds(27, 524, 282, 41);
+		panel.add(btnVerPedidosA);
+		
+		btnCotizaciones = new JButton("Cotizaciones");
+		btnCotizaciones.setForeground(new Color(51, 102, 153));
+		btnCotizaciones.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnCotizaciones.setBackground(new Color(51, 102, 204));
+		btnCotizaciones.setBounds(27, 576, 282, 41);
+		panel.add(btnCotizaciones);
+		
+		btnCerrarSesion = new JButton("");
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		btnCerrarSesion.setBounds(10, 633, 60, 60);
+		cambiarIconoBotones(btnCerrarSesion, "exit.png");
+		panel.add(btnCerrarSesion);
+		
+		JLabel lblNewLabel_1 = new JLabel("Cerrar Sesion");
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1.setBounds(80, 633, 132, 60);
+		panel.add(lblNewLabel_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
@@ -187,4 +272,69 @@ public class VentanaDashboardGerente {
 				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
 		label.setIcon(Icono);
 	}
+
+	public void show() {
+		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		for (WindowListener listener : this.frame.getWindowListeners()) {
+			this.frame.removeWindowListener(listener);
+		}
+		this.frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "¿Estás seguro que quieres salir?", "Advertencia",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					Conexion.getConexion().cerrarConexion();
+					System.exit(0);
+				}
+			}
+		});
+		this.frame.setVisible(true);
+	}
+
+	public void cerrarVentana() {
+		frame.setVisible(false);
+	}
+
+	public void mostrarVentana() {
+		this.show();
+	}
+	
+	public JButton getBtnGestionarProductos() {
+		return btnGestionarProductos;
+	}
+
+	public JButton getBtnModPrecioMasivo() {
+		return btnModPrecioUnitario;
+	}
+
+	public JButton getBtnGestionarClientes() {
+		return btnGestionarClientes;
+	}
+
+	public JButton getBtnGestionarEmpleados() {
+		return btnGestionarEmpleados;
+	}
+
+	public JButton getBtnVerReporteRanking() {
+		return btnVerReporteRanking;
+	}
+
+	public JButton getBtnTareasAutomaticas() {
+		return btnTareasAutomaticas;
+	}
+
+	public JButton getBtnVerPedidosA() {
+		return btnVerPedidosA;
+	}
+
+	public JButton getBtnCotizaciones() {
+		return btnCotizaciones;
+	}
+
+	public JButton getBtnCerrarSesion() {
+		return btnCerrarSesion;
+	}
+	
+	
 }

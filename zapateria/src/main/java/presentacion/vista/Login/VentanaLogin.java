@@ -84,7 +84,6 @@ public class VentanaLogin extends JFrame {
 		cbSucursales = new JComboBox();
 		cbSucursales.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		cbSucursales.setBounds(140, 11, 129, 29);
-		cbSucursales.addItem("Sin especificar");
 		panel_1.add(cbSucursales);
 		cbSucursales.setBorder(null);
 
