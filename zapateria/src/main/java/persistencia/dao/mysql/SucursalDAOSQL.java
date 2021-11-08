@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import dto.SucursalDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.SucursalDAO;
@@ -151,5 +150,31 @@ public class SucursalDAOSQL implements SucursalDAO{
 		}
 		return sucursal;
 	}
+
+	@Override
+	public List<SucursalDTO> obtenerListaFiltrada(String nombreColumna1, String txt1) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+
+		String sel = "SELECT * FROM sucursales";
+
+		if (nombreColumna1 != null && txt1 != null) {
+			sel = sel + " WHERE " + nombreColumna1 + " LIKE '%" + txt1 + "%'";
+		}
+			
+		ArrayList<SucursalDTO> sucu = new ArrayList<SucursalDTO>();
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(sel);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				sucu.add(getSucursalDTO(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sucu;
+	}
+	
 	
 }

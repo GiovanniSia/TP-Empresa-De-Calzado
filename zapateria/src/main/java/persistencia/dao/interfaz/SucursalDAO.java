@@ -16,4 +16,6 @@ public interface SucursalDAO {
 	public List<SucursalDTO> readAll();
 	
 	public SucursalDTO select(int idSucursal);
+	
+	public List<SucursalDTO> obtenerListaFiltrada(String nombreColumna1, String txt1);
 }

@@ -33,4 +33,9 @@ public class Sucursal {
 	public SucursalDTO select(int idSucursal) {
 		return this.sucursal.select(idSucursal);
 	}
+	
+	public List<SucursalDTO> obtenerListaFiltrada(String nombreColumna1, String txt1){
+		return this.sucursal.obtenerListaFiltrada(nombreColumna1,txt1);
+	}
+	
 }
