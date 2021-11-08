@@ -227,9 +227,6 @@ public class Controlador {
 		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(this, pedidosPendientes, stock,
 				maestroProducto);
 
-		// Generar ordenes de manufac
-		this.controladorGenerarOrdenesManufactura = new ControladorGenerarOrdenesManufactura(this);
-
 		// Gestionar Empleado
 		this.controladorGestionarEmpleado = new ControladorGestionarEmpleados(this);
 
@@ -244,6 +241,9 @@ public class Controlador {
 		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia,
 				this.localidad, historialCambioCliente);
 
+		// mod precio unitario
+		this.controladorModificarMProducto = new ControladorModificarMProducto(this, this.maestroProducto);
+		
 		// GestionarProductos
 		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
 		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
@@ -266,7 +266,8 @@ public class Controlador {
 		// Set Gestionar Clientes
 		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
 		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
-		this.controladorGestionarClientes.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
+		this.controladorGestionarClientes
+				.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 
 	}
@@ -298,7 +299,7 @@ public class Controlador {
 				this.sucursal, this.carrito, this.detalleCarrito);
 		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
 		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
-	
+
 		// Gestionar Clientes
 		this.controladorGestionarClientes = new ControladorGestionarClientes(this, this.cliente);
 		this.controladorAltaCliente = new ControladorAltaCliente(this.cliente, this.pais, this.provincia,
@@ -332,10 +333,10 @@ public class Controlador {
 		// Set Gestionar Clientes
 		this.controladorAltaCliente.setControladorGestionarClientes(this.controladorGestionarClientes);
 		this.controladorGestionarClientes.setControladorAltaCliente(this.controladorAltaCliente);
-		this.controladorGestionarClientes.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
+		this.controladorGestionarClientes
+				.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 
-	
 	}
 
 	public void inicializarControladoresOperarioDeFabrica() {
@@ -349,7 +350,7 @@ public class Controlador {
 	public void inicializarControladoresSupervisor() {
 		// Config
 		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
-		
+
 		// cotizacion
 		this.controladorModificarCotizacion = new ControladorModificarCotizacion(this, medioPago);
 
@@ -424,12 +425,11 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
+		this.ventanaAdministrador.getBtnModificacionMasivaDePrecios().addActionListener(a -> pasarAModificarPrecioUnitario(a));
 		this.ventanaAdministrador.getBtnGestionarClientes().addActionListener(a -> pasarAGestionarClientes(a));
 		this.ventanaAdministrador.getBtnGestionarProductos().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaAdministrador.getBtnGestionarEmpleados().addActionListener(a -> pasarAGestionarEmpleado(a));
 		this.ventanaAdministrador.getBtnPedidosAProveedores().addActionListener(a -> pasarAVerPedidosAProveedor(a));
-		this.ventanaAdministrador.getBtnGenerarOrdenDeManufactura()
-				.addActionListener(a -> pasarAGenerarOrdenManufac(a));
 		this.ventanaAdministrador.getBtnVerComprasVirtuales().addActionListener(a -> pasarAVerComprasVirtuales(a));
 		this.ventanaAdministrador.getBtnTareasAutomaticas().addActionListener(a -> pasarAConfig(a));
 		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
@@ -476,10 +476,7 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
-		
-		
-		
-		
+
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 

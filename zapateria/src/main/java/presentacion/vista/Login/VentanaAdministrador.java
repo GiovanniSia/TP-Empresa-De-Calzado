@@ -35,9 +35,9 @@ public class VentanaAdministrador extends JFrame {
 	private JButton btnGestionarProductos;
 	private JButton btnGestionarEmpleados;
 	private JButton btnVerComprasVirtuales;
-	private JButton btnGenerarOrdenDeManufactura;
 	private JButton btnPedidosAProveedores;
 	private JButton btnTareasAutomaticas;
+	private JButton btnModificacionMasivaDePrecios;
 
 	public VentanaAdministrador() {
 		this.initialize();
@@ -57,6 +57,13 @@ public class VentanaAdministrador extends JFrame {
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
+		btnModificacionMasivaDePrecios = new JButton("Modificacion Masiva De Precios");
+		btnModificacionMasivaDePrecios.setForeground(new Color(51, 102, 153));
+		btnModificacionMasivaDePrecios.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnModificacionMasivaDePrecios.setBackground(new Color(51, 102, 204));
+		btnModificacionMasivaDePrecios.setBounds(210, 116, 364, 41);
+		contentPane.add(btnModificacionMasivaDePrecios);
 		
 		btnTareasAutomaticas = new JButton("Tareas Automaticas");
 		btnTareasAutomaticas.setForeground(new Color(51, 102, 153));
@@ -109,7 +116,7 @@ public class VentanaAdministrador extends JFrame {
 		btnGestionarClientes.setForeground(new Color(51, 102, 153));
 		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarClientes.setBackground(new Color(51, 102, 204));
-		btnGestionarClientes.setBounds(255, 116, 282, 41);
+		btnGestionarClientes.setBounds(255, 168, 282, 41);
 		contentPane.add(btnGestionarClientes);
 
 		btnGestionarProductos = new JButton("Gestionar Productos");
@@ -123,7 +130,7 @@ public class VentanaAdministrador extends JFrame {
 		btnGestionarEmpleados.setForeground(new Color(51, 102, 153));
 		btnGestionarEmpleados.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarEmpleados.setBackground(new Color(51, 102, 204));
-		btnGestionarEmpleados.setBounds(255, 168, 282, 41);
+		btnGestionarEmpleados.setBounds(255, 220, 282, 41);
 		contentPane.add(btnGestionarEmpleados);
 
 		btnVerComprasVirtuales = new JButton("Ver Compras Virtuales");
@@ -133,18 +140,11 @@ public class VentanaAdministrador extends JFrame {
 		btnVerComprasVirtuales.setBounds(255, 324, 282, 41);
 		contentPane.add(btnVerComprasVirtuales);
 
-		btnGenerarOrdenDeManufactura = new JButton("Generar Orden de Manufactura");
-		btnGenerarOrdenDeManufactura.setForeground(new Color(51, 102, 153));
-		btnGenerarOrdenDeManufactura.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnGenerarOrdenDeManufactura.setBackground(new Color(51, 102, 204));
-		btnGenerarOrdenDeManufactura.setBounds(225, 272, 339, 41);
-		contentPane.add(btnGenerarOrdenDeManufactura);
-
 		btnPedidosAProveedores = new JButton("Pedidos a Proveedores");
 		btnPedidosAProveedores.setForeground(new Color(51, 102, 153));
 		btnPedidosAProveedores.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnPedidosAProveedores.setBackground(new Color(51, 102, 204));
-		btnPedidosAProveedores.setBounds(255, 220, 282, 41);
+		btnPedidosAProveedores.setBounds(255, 272, 282, 41);
 		contentPane.add(btnPedidosAProveedores);
 
 		JLabel lblFondo = new JLabel("");
@@ -186,6 +186,10 @@ public class VentanaAdministrador extends JFrame {
 		this.frame.setVisible(true);
 	}
 	
+	public JButton getBtnModificacionMasivaDePrecios() {
+		return btnModificacionMasivaDePrecios;
+	}
+
 	public JButton getBtnGestionarClientes() {
 		return btnGestionarClientes;
 	}
@@ -200,10 +204,6 @@ public class VentanaAdministrador extends JFrame {
 
 	public JButton getBtnVerComprasVirtuales() {
 		return btnVerComprasVirtuales;
-	}
-
-	public JButton getBtnGenerarOrdenDeManufactura() {
-		return btnGenerarOrdenDeManufactura;
 	}
 
 	public JButton getBtnPedidosAProveedores() {
