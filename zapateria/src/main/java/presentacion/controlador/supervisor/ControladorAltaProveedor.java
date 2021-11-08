@@ -165,10 +165,15 @@ public class ControladorAltaProveedor {
 			double limiteCredito =Double.parseDouble(this.ventanaAltaProveedor.getTextLimiteCredito().getText());
 			ProveedorDTO proveedorNuevo = new ProveedorDTO(0,nombre,correo,limiteCredito);
 			
-//			if(yaExisteProveedor(proveedorNuevo)) {
-//				JOptionPane.showMessageDialog(null, "Ya existe un proveedor con este nombre");
-//				return;
-//			}
+			if(!nombre.equals(this.proveedorAEditar.getNombre())) {
+				for(ProveedorDTO p: this.todosLosProveedores) {
+					if(p.getNombre().equals(nombre) && p.getId()!=this.proveedorAEditar.getId()) {
+						JOptionPane.showMessageDialog(null, "Ya existe un proveedor con este nombre");
+						return;
+					}
+				}	
+			}
+			
 			
 			boolean update = this.proveedor.update(proveedorNuevo,this.proveedorAEditar.getId());
 			if(!update) {
