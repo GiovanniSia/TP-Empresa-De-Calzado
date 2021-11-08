@@ -91,6 +91,8 @@ public class VerPasos extends JFrame {
 	private JLabel lblProductoAsociado;
 	private JLabel lblNombre;
 	private JLabel lblNueva;
+	
+	JButton btnInactivarPaso;
 
 	public VerPasos() {
 		initialize();
@@ -358,6 +360,16 @@ public class VerPasos extends JFrame {
 		lblNueva.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNueva.setBounds(332, 80, 60, 27);
 		panel.add(lblNueva);
+		
+		btnInactivarPaso = new JButton("");
+		btnInactivarPaso.setToolTipText("Agregar Paso a Lista");
+		btnInactivarPaso.setBounds(247, 350, 30, 30);
+		panel.add(btnInactivarPaso);
+		
+		JLabel lblInactivar = new JLabel("Inactivar");
+		lblInactivar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblInactivar.setBounds(162, 350, 75, 30);
+		panel.add(lblInactivar);
 
 		
 		lblNewLabel = new JLabel("Editor de Recetas");
@@ -581,5 +593,9 @@ public class VerPasos extends JFrame {
 
 	public JLabel getLblReceta() {
 		return lblReceta;
+	}
+
+	public JButton getBtnInactivarPaso() {
+		return btnInactivarPaso;
 	}
 }

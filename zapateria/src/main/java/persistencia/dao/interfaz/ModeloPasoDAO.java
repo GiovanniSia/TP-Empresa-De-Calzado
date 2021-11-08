@@ -10,4 +10,6 @@ public interface ModeloPasoDAO {
 	public boolean delete(PasoDTO paso);
 	
 	public List<PasoDTO> readAll();
+	
+	public boolean updatePaso(PasoDTO paso);
 }

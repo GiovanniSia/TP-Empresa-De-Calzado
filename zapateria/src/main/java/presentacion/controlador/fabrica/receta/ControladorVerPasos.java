@@ -93,6 +93,8 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnActualizarReceta().addActionListener(r->actualizarReceta(r));
 		
 		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
+		
+		this.ventanaPrincipal.getBtnInactivarPaso().addActionListener(r->inactivarPaso(r));
 	}
 
 	private void seleccionIngrediente(ActionEvent r) {
@@ -229,6 +231,21 @@ public class ControladorVerPasos implements ActionListener {
 		}
 		//return true;
 		return ret;
+	}
+	
+	private void inactivarPaso(ActionEvent r) {
+		int[] filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
+		if(filasSeleccionadas.length == 0) {
+			mostrarMensajeEmergente("No se ha seleccionado ningun paso para eliminar.");
+			return;
+		}
+		if(this.pasosEnLista.get(filasSeleccionadas[0]).getEstado().toLowerCase().equals("activo")) {
+			this.pasosEnLista.get(filasSeleccionadas[0]).setEstado("Inactivo");
+		}else {
+			this.pasosEnLista.get(filasSeleccionadas[0]).setEstado("Activo");
+		}
+		this.modeloPaso.update(this.pasosEnLista.get(filasSeleccionadas[0]));
+		refrescarTabla();
 	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
