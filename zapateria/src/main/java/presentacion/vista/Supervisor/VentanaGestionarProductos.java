@@ -33,7 +33,7 @@ private static final long serialVersionUID = 1L;
 	private DefaultTableModel modelProductos;
 	private JTable tablaProductos;
 	private JLabel lblFiltrarPor;
-	private JLabel lblGestionarProductos;
+	private JLabel lblTitulo;
 	private JScrollPane spProductos;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
@@ -196,10 +196,10 @@ private static final long serialVersionUID = 1L;
 		chckbxProdSinStock.setBounds(737, 64, 165, 21);
 		panel_1.add(chckbxProdSinStock);
 
-		lblGestionarProductos = new JLabel("Gestionar Productos");
-		lblGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblGestionarProductos.setBounds(10, 52, 259, 43);
-		frame.getContentPane().add(lblGestionarProductos);
+		lblTitulo = new JLabel("Gestionar Productos");
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitulo.setBounds(10, 52, 643, 43);
+		frame.getContentPane().add(lblTitulo);
 
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -234,6 +234,14 @@ private static final long serialVersionUID = 1L;
 		this.frame.setVisible(true);
 	}
 
+	public void mostrarVentanaParaVendedor() {
+		lblTitulo.setText("Ver Productos");
+		btnAgregarProducto.setVisible(false);
+		btnGenerarOrdenDeManufactura.setVisible(false);
+		btnGenerarPedido.setVisible(false);
+		btnAtras.setVisible(true);
+	}
+	
 	public void cerrar() {
 
 		frame.setVisible(false);

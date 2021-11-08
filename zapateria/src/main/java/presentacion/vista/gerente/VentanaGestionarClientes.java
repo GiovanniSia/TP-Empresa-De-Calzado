@@ -1,6 +1,5 @@
 package presentacion.vista.gerente;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -39,7 +37,7 @@ public class VentanaGestionarClientes extends JFrame{
 	private JLabel lblCodCliente;
 	private JTextField txtFieldCodCliente;
 	private JLabel lblFiltrarPor;
-	private JLabel lblElegirCliente;
+	private JLabel lblTitulo;
 	private JScrollPane spCliente;
 	private JPanel panel_2;
 	private JLabel lblNewLabel;
@@ -192,10 +190,10 @@ public class VentanaGestionarClientes extends JFrame{
 		lblFiltrarPor.setBounds(10, 0, 70, 25);
 		panel_1.add(lblFiltrarPor);
 
-		lblElegirCliente = new JLabel("Elegir Cliente");
-		lblElegirCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblElegirCliente.setBounds(10, 52, 189, 43);
-		frame.getContentPane().add(lblElegirCliente);
+		lblTitulo = new JLabel("Elegir Cliente");
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitulo.setBounds(10, 52, 452, 43);
+		frame.getContentPane().add(lblTitulo);
 
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
@@ -228,6 +226,14 @@ public class VentanaGestionarClientes extends JFrame{
 			}
 		});
 		this.frame.setVisible(true);
+	}
+	
+	public void mostrarVentanaParaVendedor() {
+		lblTitulo.setText("Ver y Agregar Clientes");
+		btnAgregarCliente.setVisible(true);
+		btnAtras.setVisible(true);
+		btnEditarCliente.setVisible(false);
+		btnHistorialDeCambios.setVisible(false);
 	}
 
 	public void cerrar() {

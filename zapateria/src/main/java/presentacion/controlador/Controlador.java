@@ -446,6 +446,8 @@ public class Controlador {
 
 	public void escucharBotonesVentanaVendedor() {
 		this.ventanaVendedor.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
+		this.ventanaVendedor.getBtnVerAgregarClientes().addActionListener(a -> pasarAGestionarClientes(a));
+		this.ventanaVendedor.getBtnVerProductos().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaVendedor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 
@@ -474,6 +476,10 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
+		
+		
+		
+		
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 

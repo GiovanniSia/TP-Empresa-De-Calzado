@@ -3,6 +3,7 @@ package presentacion.controlador.gerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import dto.ClienteDTO;
+import inicioSesion.empleadoProperties;
 import modelo.Cliente;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
@@ -18,6 +20,19 @@ import presentacion.vista.gerente.VentanaGestionarClientes;
 
 public class ControladorGestionarClientes {
 
+	static String tipoEmpleado = "";
+
+	public void obtenerDatosPropertiesEmpleado() {
+		try {
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	VentanaGestionarClientes ventanaGestionarClientes;
 	
 	Cliente cliente;
@@ -50,15 +65,19 @@ public class ControladorGestionarClientes {
 	}
 	
 	public void inicializar() {
+		obtenerDatosPropertiesEmpleado();
+		
 		this.ventanaGestionarClientes = new VentanaGestionarClientes();
 		this.todosLosClientes = this.cliente.readAll();
 		
-		
-		this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
-		this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
+		if(tipoEmpleado.equals("Vendedor")) {
+			this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
+			mostrarVentanaParaVendedor();
+		}else{
+			this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
+			this.ventanaGestionarClientes.getBtnHistorialDeCambios().addActionListener(a -> pasarAHistorialDeClientes());			
+		}
 		this.ventanaGestionarClientes.getBtnAtras().addActionListener(a -> salir(a));
-		this.ventanaGestionarClientes.getBtnHistorialDeCambios().addActionListener(a -> pasarAHistorialDeClientes());
-		
 		
 		// TextField
 		this.ventanaGestionarClientes.getTxtFieldCodCliente().addKeyListener(new KeyAdapter() {
@@ -95,6 +114,10 @@ public class ControladorGestionarClientes {
 		validarTeclado();
 		
 		
+	}
+	
+	public void mostrarVentanaParaVendedor() {
+		this.ventanaGestionarClientes.mostrarVentanaParaVendedor();
 	}
 	
 	public void mostrarVentana() {
