@@ -13,7 +13,7 @@ import persistencia.dao.interfaz.ModeloPasoDAO;
 
 public class ModeloPasoDAOSQL implements ModeloPasoDAO{
 	
-	private static final String insert = "INSERT INTO paso VALUES(?, ?)";
+	private static final String insert = "INSERT INTO paso VALUES(?, ?, ?)";
 	private static final String delete = "DELETE FROM paso WHERE IdPaso = ?";
 	private static final String readall = "SELECT * FROM paso";
 	
@@ -26,6 +26,7 @@ public class ModeloPasoDAOSQL implements ModeloPasoDAO{
 			statement = conexion.prepareStatement(insert);
 			statement.setInt(1, paso.getIdPaso());
 			statement.setString(2, paso.getDescripcion());
+			statement.setString(3, paso.getEstado());
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
 				isInsertExitoso = true;
@@ -80,7 +81,8 @@ public class ModeloPasoDAOSQL implements ModeloPasoDAO{
 	private PasoDTO getCajaDTO(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("IdPaso");
 		String descr = resultSet.getString("Descripcion");
-		return new PasoDTO(id, descr);
+		String estado = resultSet.getString("Estado");
+		return new PasoDTO(id, descr, estado);
 	}
 
 }

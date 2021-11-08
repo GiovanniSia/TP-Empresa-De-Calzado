@@ -1120,5 +1120,13 @@ public class ReControladorOperario implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	}
+	
+	public static void main(String[] args){
+		ReControladorOperario controladorOperatoria = new ReControladorOperario(null,
+				new SucursalDTO(1, "", "", "", "", "",
+				"", "", ""));
+		controladorOperatoria.inicializar();
+		controladorOperatoria.mostrarVentana();
+	}
 
 }

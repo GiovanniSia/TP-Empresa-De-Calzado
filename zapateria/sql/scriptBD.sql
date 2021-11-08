@@ -217,6 +217,7 @@ CREATE TABLE `paso`
 (
   `IdPaso` int(11) NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(45) NOT NULL,
+  `Estado` varchar(45) NOT NULL,
   PRIMARY KEY (`IdPaso`)
 );
 
@@ -609,12 +610,12 @@ insert into clientes values(8, "Vicentino", "Reboredo","223004","pepeptS@mgail.c
 
 insert into recetas values(1,1,'Receta eficiente');
 
-insert into paso values(1,"Cortado");
-insert into paso values(2,"Aparado");
-insert into paso values(3,"Preparación");
-insert into paso values(4,"Montado");
-insert into paso values(5,"Pegado");
-insert into paso values(6,"Terminado");
+insert into paso values(1,"Cortado","Activo");
+insert into paso values(2,"Aparado","Activo");
+insert into paso values(3,"Preparación","Activo");
+insert into paso values(4,"Montado","Activo");
+insert into paso values(5,"Pegado","Activo");
+insert into paso values(6,"Terminado","Activo");
 
 insert into pasosReceta values(1,1,1,1);
 insert into pasosReceta values(2,1,2,2);

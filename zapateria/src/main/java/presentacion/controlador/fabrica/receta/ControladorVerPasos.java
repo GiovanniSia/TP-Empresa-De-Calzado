@@ -127,7 +127,7 @@ public class ControladorVerPasos implements ActionListener {
 	private void llenarTablaConPasos(List<PasoDTO> pasosEnLista) {
 		for(PasoDTO p : pasosEnLista) {
 			//Object[] agregar = {p.getIdPaso(), p.getDescripcion()};
-			Object[] agregar = {p.getDescripcion()};
+			Object[] agregar = {p.getDescripcion(), p.getEstado()};
 			ventanaPrincipal.getModelPasos().addRow(agregar);
 		}
 	}
@@ -172,7 +172,7 @@ public class ControladorVerPasos implements ActionListener {
 			mostrarMensajeEmergente("El nombre del paso sobrepasa los 20 caracteres.");
 			return;
 		}
-		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar));
+		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar,"Activo"));
 		refrescarTabla();
 	}
 	
@@ -351,7 +351,7 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		this.filasSeleccionadas = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows();
-		PasoDTO pasoIncluir = new PasoDTO(this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(),this.pasosEnLista.get(filasSeleccionadas[0]).getDescripcion());
+		PasoDTO pasoIncluir = new PasoDTO(this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(),this.pasosEnLista.get(filasSeleccionadas[0]).getDescripcion(),this.pasosEnLista.get(filasSeleccionadas[0]).getEstado());
 		pasosRecetaEnLista.add(new PasoDeRecetaDTO(0,this.recetaSeleccionada.getIdReceta(),pasosRecetaEnLista.size()+1,this.pasosEnLista.get(filasSeleccionadas[0]).getIdPaso(), pasoIncluir));
 		reiniciarTablaPasosReceta();
 		llenarTablaPasosReceta(pasosRecetaEnLista);

@@ -35,7 +35,7 @@ public class VerPasos extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	//private String[] nombreColumnas = { "Id paso","Descripcion"};
-	private String[] nombreColumnas = {"Descripcion"};
+	private String[] nombreColumnas = {"Descripcion","Estado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JScrollPane spCliente;
