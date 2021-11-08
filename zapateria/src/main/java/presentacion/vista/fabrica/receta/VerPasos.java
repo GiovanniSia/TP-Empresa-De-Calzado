@@ -54,7 +54,7 @@ public class VerPasos extends JFrame {
 	
 	JScrollPane spPasosReceta;
 	//private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
-	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden"};
+	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden","Estado"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
 	

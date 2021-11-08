@@ -246,6 +246,7 @@ public class ControladorVerPasos implements ActionListener {
 		}
 		this.modeloPaso.update(this.pasosEnLista.get(filasSeleccionadas[0]));
 		refrescarTabla();
+		refrescarTablaPasosReceta();
 	}
 	
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -272,6 +273,10 @@ public class ControladorVerPasos implements ActionListener {
 	}
 	
 	private void seleccionReceta(ActionEvent r) {
+		refrescarTablaPasosReceta();
+	}
+
+	private void refrescarTablaPasosReceta() {
 		reiniciarTablaPasosReceta();
 		llenarTablaPasosReceta();
 	}
@@ -307,7 +312,7 @@ public class ControladorVerPasos implements ActionListener {
 	private void llenarTablaPasosReceta(List<PasoDeRecetaDTO> pasos) {
 		for(PasoDeRecetaDTO p: pasos) {
 			//Object[] agregar = {p.getPasosDTO().getIdPaso(), p.getPasosDTO().getDescripcion(), p.getNroOrden()};
-			Object[] agregar = { p.getPasosDTO().getDescripcion(), p.getNroOrden()};
+			Object[] agregar = { p.getPasosDTO().getDescripcion(), p.getNroOrden(), p.getPasosDTO().getEstado()};
 			this.ventanaPrincipal.getModelPasosReceta().addRow(agregar);
 		}
 	}
