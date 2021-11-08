@@ -13,8 +13,11 @@ import javax.swing.event.ListSelectionListener;
 
 import dto.ClienteDTO;
 import dto.PaisDTO;
+import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.Pais;
+import modelo.Sucursal;
+import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaEditarPais;
 
@@ -24,20 +27,30 @@ public class ControladorEditarPais {
 	Pais pais;
 	
 	Cliente cliente;
+	Sucursal sucursal;
 	
 	VentanaEditarPais ventanaEditarPais;
-	ControladorAltaCliente controladorAltaCliente;
 	
-	public ControladorEditarPais(ControladorAltaCliente controladorAltaCliente,Pais pais,Cliente cliente) {
-		this.cliente = cliente;
+	ControladorAltaCliente controladorAltaCliente;
+	ControladorAltaSucursal controladorAltaSucursal;
+	
+	public ControladorEditarPais(Pais pais) {
+		this.cliente = new Cliente(new DAOSQLFactory());
+		this.sucursal = new Sucursal(new DAOSQLFactory());
+		
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.pais = pais;
 //		this.ventanaEditarPais = new VentanaEditarPais();
-		
-		this.controladorAltaCliente = controladorAltaCliente;
-		
+
 	}
 	
+	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
+		this.controladorAltaCliente = controladorAltaCliente;	
+	}
+	
+	public void setControladorAltaSucursal(ControladorAltaSucursal controladorAltaSucursal) {
+		this.controladorAltaSucursal = controladorAltaSucursal;
+	}
 	
 	
 	public void inicializar() {
@@ -73,9 +86,9 @@ public class ControladorEditarPais {
 
 	public void mostrarVentana() {
 		this.ventanaEditarPais.show();
-		
 	}
 
+	
 	public void salir(ActionEvent a) {
 		cerrarVentana();
 	}
@@ -118,7 +131,15 @@ public class ControladorEditarPais {
 		this.todosLosPaises = this.pais.readAll();
 		llenarTablaPaises();
 		JOptionPane.showMessageDialog(null, "Pais añadido con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		}
+		
+		
 	}
 
 	public boolean yaExisteElPais(String nuevoPais) {
@@ -143,8 +164,8 @@ public class ControladorEditarPais {
 		PaisDTO paisElegido = getPaisDeTabla(nombrePaisBorrar);
 		
 		
-		if(!noTieneNingunClienteAsignado(paisElegido)) {
-			JOptionPane.showMessageDialog(null, "No se puede borrar el pais ya que existe un cliente que tiene asignado este pasi", "Error", JOptionPane.INFORMATION_MESSAGE);
+		if(!noTieneNingunClienteAsignado(paisElegido) && !noTieneNingunaSucursalAsingada(paisElegido)) {
+			JOptionPane.showMessageDialog(null, "No se puede borrar el pais ya que existe un cliente o sucursal que tiene asignado este pais", "Error", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		
@@ -160,7 +181,13 @@ public class ControladorEditarPais {
 		this.todosLosPaises = this.pais.readAll();
 		llenarTablaPaises();
 		JOptionPane.showMessageDialog(null, "Pais eliminado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		}
 	}
 	
 	public PaisDTO getPaisDeTabla(String nombrePais) {
@@ -200,18 +227,28 @@ public class ControladorEditarPais {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al editar el pais");
 			return;			
 		}
-		actualizarDatosClientes(paisEditar,nombreNuevo);
+		actualizarDatosMasivamente(paisEditar,nombreNuevo);
 		
 		this.todosLosPaises = this.pais.readAll();
 		this.ventanaEditarPais.getTextPaisNuevo().setText("");
 		llenarTablaPaises();
 		JOptionPane.showMessageDialog(null, "Pais actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		}
 	}
 	
 	
 	public void actualizarComboBoxesDeCliente() {
 		this.controladorAltaCliente.actualizarComboBoxes();
+	}
+	
+	public void actualizarComboBoxesDeAltaSucursal() {
+		this.controladorAltaSucursal.actualizarComboBoxes();
 	}
 	
 	public boolean ventanaYaEstaInicializada() {
@@ -229,18 +266,38 @@ public class ControladorEditarPais {
 		}return true;
 	}
 	
-	public void actualizarDatosClientes(PaisDTO pais,String nombreNuevo) {
+	public boolean noTieneNingunaSucursalAsingada(PaisDTO pais) {
+		ArrayList<SucursalDTO> todaLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
+		for(SucursalDTO s: todaLasSucursales) {
+			if(pais.getNombrePais().equals(s.getPais())) {
+				return false;
+			}
+		}return true;
+	}
+	
+	public void actualizarDatosMasivamente(PaisDTO pais,String nombreNuevo) {
 		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
 		for(ClienteDTO c: todosLosClientes) {
 			if(c.getPais().equals(pais.getNombrePais())) {
 				c.setPais(nombreNuevo);
 				boolean update = this.cliente.update(c.getIdCliente(),c);
 				if(!update) {
-					JOptionPane.showMessageDialog(null, "Error al actualizar el pais de clientes ", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
+					JOptionPane.showMessageDialog(null, "Error al actualizar el pais de cliente: "+c.getCUIL(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		}
+		
+		ArrayList<SucursalDTO> todaLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
+		for(SucursalDTO s: todaLasSucursales) {
+			if(s.getPais().equals(pais.getNombrePais())) {
+				s.setPais(nombreNuevo);
+				boolean update = this.sucursal.update(s.getIdSucursal(), s);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Error al actualizar el pais de la sucursal: "+s.getNombre(), "Error", JOptionPane.ERROR_MESSAGE);
+					return;		
 			
+				}
+			}
 		}
 	}
 	

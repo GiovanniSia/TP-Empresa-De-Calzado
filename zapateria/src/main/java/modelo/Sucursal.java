@@ -13,17 +13,17 @@ public class Sucursal {
 		this.sucursal = metodo_persistencia.createSucursalDAO();
 	}
 	
-	public void insert(SucursalDTO empleado) {
-		this.sucursal.insert(empleado);
+	public boolean insert(SucursalDTO empleado) {
+		return this.sucursal.insert(empleado);
 	}
 		
 
-	public void delete(SucursalDTO empleado_a_eliminar) {
-		this.sucursal.delete(empleado_a_eliminar);
+	public boolean delete(SucursalDTO empleado_a_eliminar) {
+		return this.sucursal.delete(empleado_a_eliminar);
 	}
 	
-	public void update(int id_empleado_a_actualizar, SucursalDTO empleado_nuevo) {
-		this.sucursal.update(id_empleado_a_actualizar, empleado_nuevo);
+	public boolean update(int id_empleado_a_actualizar, SucursalDTO empleado_nuevo) {
+		return this.sucursal.update(id_empleado_a_actualizar, empleado_nuevo);
 	}
 
 	public List<SucursalDTO> readAll(){

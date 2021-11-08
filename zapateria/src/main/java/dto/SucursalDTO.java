@@ -3,7 +3,6 @@ package dto;
 public class SucursalDTO {
 
 	int IdSucursal;
-
 	String Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre;
 	
 	public SucursalDTO(int idSucursal, String telefono, String calle, String altura, String provincia, String localidad,
@@ -54,5 +53,37 @@ public class SucursalDTO {
 
 	public String getNombre() {
 		return Nombre;
+	}
+	
+	public void setTelefono(String telefono) {
+		Telefono = telefono;
+	}
+
+	public void setCalle(String calle) {
+		Calle = calle;
+	}
+
+	public void setAltura(String altura) {
+		Altura = altura;
+	}
+
+	public void setProvincia(String provincia) {
+		Provincia = provincia;
+	}
+
+	public void setLocalidad(String localidad) {
+		Localidad = localidad;
+	}
+
+	public void setPais(String pais) {
+		Pais = pais;
+	}
+
+	public void setCodigoPostal(String codigoPostal) {
+		CodigoPostal = codigoPostal;
+	}
+
+	public void setNombre(String nombre) {
+		Nombre = nombre;
 	}
 }

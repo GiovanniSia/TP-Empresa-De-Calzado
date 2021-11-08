@@ -41,6 +41,14 @@ public class VentanaAltaSucursal {
 	private JLabel lblEditar;
 	private JTextField textAltura;
 	private JTextField textCodPostal;
+
+	private JComboBox<String> comboBoxPais;
+	private JComboBox<String> comboBoxProvincia;
+	private JComboBox<String> comboBoxLocalidad;
+
+	private JButton btnUbicacion;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -122,7 +130,7 @@ public class VentanaAltaSucursal {
 		textTelefono.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textTelefono.getText().length() >= 25) {
+				if (textTelefono.getText().length() >= 18) {
 					e.consume();
 				}
 			}
@@ -136,7 +144,7 @@ public class VentanaAltaSucursal {
 		textCalle.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCalle.getText().length() >= 7) {
+				if (textCalle.getText().length() >= 25) {
 					e.consume();
 				}
 			}
@@ -194,6 +202,14 @@ public class VentanaAltaSucursal {
 		
 		textAltura = new JTextField();
 		textAltura.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textAltura.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textAltura.getText().length() >= 10) {
+					e.consume();
+				}
+			}
+		});
 		textAltura.setColumns(10);
 		textAltura.setBounds(178, 198, 178, 25);
 		frame.getContentPane().add(textAltura);
@@ -203,15 +219,15 @@ public class VentanaAltaSucursal {
 		lblAltura.setBounds(10, 201, 156, 19);
 		frame.getContentPane().add(lblAltura);
 		
-		JComboBox comboBoxPais = new JComboBox();
+		comboBoxPais = new JComboBox<String>();
 		comboBoxPais.setBounds(178, 233, 178, 19);
 		frame.getContentPane().add(comboBoxPais);
 		
-		JComboBox comboBoxProvincia = new JComboBox();
+		comboBoxProvincia = new JComboBox<String>();
 		comboBoxProvincia.setBounds(178, 268, 178, 19);
 		frame.getContentPane().add(comboBoxProvincia);
 		
-		JComboBox comboBoxLocalidad = new JComboBox();
+		comboBoxLocalidad = new JComboBox<String>();
 		comboBoxLocalidad.setBounds(178, 310, 178, 19);
 		frame.getContentPane().add(comboBoxLocalidad);
 		
@@ -232,6 +248,14 @@ public class VentanaAltaSucursal {
 		
 		textCodPostal = new JTextField();
 		textCodPostal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textCodPostal.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(textCodPostal.getText().length()>=6) {
+                    e.consume();
+                }
+            }
+        });
 		textCodPostal.setColumns(10);
 		textCodPostal.setBounds(178, 349, 178, 25);
 		frame.getContentPane().add(textCodPostal);
@@ -240,6 +264,10 @@ public class VentanaAltaSucursal {
 		lblCodpostal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblCodpostal.setBounds(10, 356, 156, 19);
 		frame.getContentPane().add(lblCodpostal);
+		
+		btnUbicacion = new JButton("Editar Ubicacion");
+		btnUbicacion.setBounds(314, 61, 112, 21);
+		frame.getContentPane().add(btnUbicacion);
 		lblEditar.setVisible(false);
 		
 	}
@@ -325,5 +353,20 @@ public class VentanaAltaSucursal {
 	public JTextField getTextCodPostal() {
 		return textCodPostal;
 	}
+	public JComboBox<String> getComboBoxPais() {
+		return comboBoxPais;
+	}
 
+	public JComboBox<String> getComboBoxProvincia() {
+		return comboBoxProvincia;
+	}
+
+	public JComboBox<String> getComboBoxLocalidad() {
+		return comboBoxLocalidad;
+	}
+	
+	
+	public JButton getBtnUbicacion() {
+		return btnUbicacion;
+	}
 }

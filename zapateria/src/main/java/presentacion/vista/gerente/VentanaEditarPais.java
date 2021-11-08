@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import java.awt.Color;
 
 public class VentanaEditarPais {
 	private JFrame frame;
@@ -35,6 +36,8 @@ public class VentanaEditarPais {
 	private JButton btnEditarPais;
 	private JButton btnEliminarPais;
 	private JButton btnSalirPais;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +71,7 @@ public class VentanaEditarPais {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -89,11 +93,6 @@ public class VentanaEditarPais {
 		btnEliminarPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnEliminarPais.setBounds(85, 145, 69, 21);
 		frame.getContentPane().add(btnEliminarPais);
-		
-		btnSalirPais = new JButton("Salir");
-		btnSalirPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnSalirPais.setBounds(10, 145, 69, 21);
-		frame.getContentPane().add(btnSalirPais);
 		
 		textPaisNuevo = new JTextField();
 		textPaisNuevo.setBounds(30, 60, 103, 19);
@@ -125,6 +124,10 @@ public class VentanaEditarPais {
 		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 		
+		btnSalirPais = new JButton("Salir");
+		btnSalirPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnSalirPais.setBounds(10, 145, 69, 21);
+		frame.getContentPane().add(btnSalirPais);
 	}
 	
 	
@@ -189,8 +192,7 @@ public class VentanaEditarPais {
 
 	public JButton getBtnSalirPais() {
 		return btnSalirPais;
-	}
-	
+	}	
 	
 	public JFrame getFrame() {
 		return frame;

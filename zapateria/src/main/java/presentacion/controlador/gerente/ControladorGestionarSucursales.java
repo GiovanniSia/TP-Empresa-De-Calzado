@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dto.SucursalDTO;
+import modelo.Localidad;
+import modelo.Pais;
+import modelo.Provincia;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.gerente.VentanaGestionarSucursales;
@@ -18,18 +21,33 @@ public class ControladorGestionarSucursales {
 	List<SucursalDTO> sucursalesEnTabla;
 	VentanaGestionarSucursales ventanaGestionarSucursales;
 	
+	ControladorAltaSucursal controladorAltaSucursal;
+	
 	public ControladorGestionarSucursales(Sucursal sucursal) {
 		this.sucursal = sucursal;
 		
 		this.todasLasSucursales = new ArrayList<SucursalDTO>();
 		this.sucursalesEnTabla = new ArrayList<SucursalDTO>();
+		
+		Pais pais = new Pais(new DAOSQLFactory());
+		Provincia provincia = new Provincia(new DAOSQLFactory());
+		Localidad localidad = new Localidad(new DAOSQLFactory());
+		
+		this.controladorAltaSucursal = new ControladorAltaSucursal(sucursal,pais,provincia,localidad);
+		this.controladorAltaSucursal.setControladorGestionarSucursales(this);
+		
+		
 	}
 	
 	public void inicializar() {
 		this.ventanaGestionarSucursales = new VentanaGestionarSucursales();
 		this.todasLasSucursales = this.sucursal.readAll();
 		
+		
+		
 		this.ventanaGestionarSucursales.getBtnRegresar().addActionListener(a -> salir());
+		
+		this.ventanaGestionarSucursales.getBtnAniadir().addActionListener(a -> pasarAAniadirSucursal());
 		
 		this.ventanaGestionarSucursales.getTextNombre().addKeyListener(new KeyAdapter() {
 			@Override
@@ -59,6 +77,12 @@ public class ControladorGestionarSucursales {
 		for(SucursalDTO s: this.todasLasSucursales) {
 			agregarATabla(s);
 		}
+	}
+	
+	public void pasarAAniadirSucursal() {
+		this.ventanaGestionarSucursales.cerrar();
+		this.controladorAltaSucursal.inicializar();
+		this.controladorAltaSucursal.mostrarVentanaAgregar();
 	}
 	
 	public void realizarBusqueda() {
@@ -102,6 +126,7 @@ public class ControladorGestionarSucursales {
 	public static void main(String[] args) {
 		Sucursal s = new Sucursal(new DAOSQLFactory());
 		ControladorGestionarSucursales c = new ControladorGestionarSucursales(s);
+		
 		c.inicializar();
 		c.mostrarVentana();
 	}

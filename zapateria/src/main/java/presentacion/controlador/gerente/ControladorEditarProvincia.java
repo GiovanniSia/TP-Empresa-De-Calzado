@@ -16,9 +16,12 @@ import javax.swing.event.ListSelectionListener;
 import dto.ClienteDTO;
 import dto.PaisDTO;
 import dto.ProvinciaDTO;
+import dto.SucursalDTO;
 import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
+import modelo.Sucursal;
+import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.gerente.VentanaEditarProvincia;
 
@@ -37,16 +40,27 @@ public class ControladorEditarProvincia {
 	PaisDTO paisEnTabla;
 	
 	ControladorAltaCliente controladorAltaCliente;
+	ControladorAltaSucursal controladorAltaSucursal;
 	
-	public ControladorEditarProvincia(ControladorAltaCliente controladorAltaCliente,Pais pais,Provincia provincia,Cliente cliente) {
-		this.cliente = cliente;
+	Sucursal sucursal;
+	
+	public ControladorEditarProvincia(Pais pais,Provincia provincia) {
 		this.pais = pais;
 		this.provincia = provincia;
-		this.controladorAltaCliente = controladorAltaCliente;
+		this.sucursal = new Sucursal(new DAOSQLFactory());
+		this.cliente = new Cliente(new DAOSQLFactory());
 		
 		this.todosLosPaises = new ArrayList<PaisDTO>();
 		this.todosLasProvincias= new ArrayList<ProvinciaDTO>();
 		this.provinciasEnTabla = new ArrayList<ProvinciaDTO>();		
+	}
+	
+	public void setControladorAltaCliente(ControladorAltaCliente controladorAltaCliente) {
+		this.controladorAltaCliente = controladorAltaCliente;	
+	}
+	
+	public void setControladorAltaSucursal(ControladorAltaSucursal controladorAltaSucursal) {
+		this.controladorAltaSucursal = controladorAltaSucursal;
 	}
 	
 	public void inicializar() {
@@ -168,7 +182,14 @@ public class ControladorEditarProvincia {
 		this.todosLosPaises = this.pais.readAll();
 		actualizarTabla();
 		JOptionPane.showMessageDialog(null, "Provincia agregada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		}
+		
 	}
 	
 
@@ -194,13 +215,19 @@ public class ControladorEditarProvincia {
 			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar una nueva provincia", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		actualizarDatosDeClientes(provincia,nombreNuevo);
+		actualizarDatosMasivamente(provincia,nombreNuevo);
 		
 		this.todosLasProvincias = this.provincia.readAll();
 		this.ventanaEditarProvincia.getTxtLocalidad().setText("");
 		actualizarTabla();
 		JOptionPane.showMessageDialog(null, "Provincia actualizada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		};
 	}
 	
 	
@@ -213,8 +240,8 @@ public class ControladorEditarProvincia {
 		
 		ProvinciaDTO prov = this.provinciasEnTabla.get(filaSeleccionada);
 		
-		if(!noTieneClienteAsignado(prov)) {
-			JOptionPane.showMessageDialog(null, "No se puede borrar la provincia ya que existe al menos un cliente con esta provincia asignada", "Error", JOptionPane.ERROR_MESSAGE);
+		if(!noTieneClienteAsignado(prov) && !noTieneNingunaSucursalAsingada(prov)) {
+			JOptionPane.showMessageDialog(null, "No se puede borrar la provincia ya que existe al menos un cliente o sucursal con esta provincia asignada", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
@@ -225,7 +252,13 @@ public class ControladorEditarProvincia {
 		}
 		actualizarTabla();
 		JOptionPane.showMessageDialog(null, "Provincia borrada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
-		actualizarComboBoxesDeCliente();
+		
+		if(this.controladorAltaCliente!=null) {
+			actualizarComboBoxesDeCliente();	
+		}
+		if(this.controladorAltaSucursal!=null) {
+			actualizarComboBoxesDeAltaSucursal();
+		}
 	}
 
 	public boolean yaExisteProvincia(PaisDTO pais,String nombreProvincia) {
@@ -236,8 +269,16 @@ public class ControladorEditarProvincia {
 				}
 			}
 		}
-		
 		return false;
+	}
+	
+	public boolean noTieneNingunaSucursalAsingada(ProvinciaDTO prov) {
+		ArrayList<SucursalDTO> todaLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
+		for(SucursalDTO s: todaLasSucursales) {
+			if(this.paisEnTabla.getNombrePais().equals(s.getPais()) && prov.getNombreProvincia().equals(s.getProvincia())) {
+				return false;
+			}
+		}return true;
 	}
 	
 	public void actualizarTabla() {
@@ -274,12 +315,16 @@ public class ControladorEditarProvincia {
 		this.controladorAltaCliente.actualizarComboBoxes();
 	}
 
+	public void actualizarComboBoxesDeAltaSucursal() {
+		this.controladorAltaSucursal.actualizarComboBoxes();
+	}
+	
 	public boolean ventanaYaFueInicializada() {
 		if(this.ventanaEditarProvincia == null) return false;
 		return this.ventanaEditarProvincia.getFrame().isShowing();
 	}
 	
-	public void actualizarDatosDeClientes(ProvinciaDTO prov,String nombreNuevo) {
+	public void actualizarDatosMasivamente(ProvinciaDTO prov,String nombreNuevo) {
 		ArrayList<ClienteDTO> todosLosClientes = (ArrayList<ClienteDTO>) this.cliente.readAll();
 		for(ClienteDTO c: todosLosClientes) {
 			if(c.getProvincia().equals(prov.getNombreProvincia()) && c.getPais().equals(this.paisEnTabla.getNombrePais())) {
@@ -290,6 +335,17 @@ public class ControladorEditarProvincia {
 					return;
 				}
 				
+			}
+		}
+		
+		ArrayList<SucursalDTO> todaLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
+		for(SucursalDTO s: todaLasSucursales) {
+			if(s.getPais().equals(this.paisEnTabla.getNombrePais()) && s.getProvincia().equals(prov.getNombreProvincia())) {
+				s.setProvincia(nombreNuevo);
+				boolean update = this.sucursal.update(s.getIdSucursal(), s);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Error al actualizar la provincia de la sucursal: "+s.getNombre(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		}
 	}

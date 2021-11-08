@@ -80,9 +80,9 @@ public class ControladorAltaCliente {
 		this.provEnComboBox = new ArrayList<ProvinciaDTO>();
 		this.localidadEnComboBox = new ArrayList<LocalidadDTO>();
 	
-		this.controladorEditarPais = new ControladorEditarPais(this,this.pais,this.cliente);
-		this.controladorEditarProvincia = new ControladorEditarProvincia(this, this.pais, this.provincia,this.cliente);
-		this.controladorEditarLocalidad = new ControladorEditarLocalidad(this, this.pais, this.provincia, this.localidad,this.cliente);
+		this.controladorEditarPais = new ControladorEditarPais(this.pais);
+		this.controladorEditarProvincia = new ControladorEditarProvincia(this.pais, this.provincia);
+		this.controladorEditarLocalidad = new ControladorEditarLocalidad(this.pais, this.provincia, this.localidad);
 
 	}
 
@@ -735,7 +735,8 @@ public class ControladorAltaCliente {
 				return;
 			}
 			this.controladorEditarProvincia.cerrarVentana();
-			this.controladorEditarLocalidad.cerrarVentana();	
+			this.controladorEditarLocalidad.cerrarVentana();
+			this.controladorEditarPais.setControladorAltaCliente(this);
 			this.controladorEditarPais.inicializar();
 			this.controladorEditarPais.mostrarVentana();
 		}
@@ -747,6 +748,7 @@ public class ControladorAltaCliente {
 			}
 			this.controladorEditarPais.cerrarVentana();
 			this.controladorEditarLocalidad.cerrarVentana();
+			this.controladorEditarProvincia.setControladorAltaCliente(this);
 			this.controladorEditarProvincia.inicializar();
 			this.controladorEditarProvincia.mostrarVentana();
 		}
@@ -756,7 +758,7 @@ public class ControladorAltaCliente {
 			}
 			this.controladorEditarProvincia.cerrarVentana();
 			this.controladorEditarPais.cerrarVentana();
-			
+			this.controladorEditarLocalidad.setControladorAltaCliente(this);
 			this.controladorEditarLocalidad.inicializar();
 			this.controladorEditarLocalidad.mostrarVentana();
 		}
