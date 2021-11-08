@@ -344,7 +344,7 @@ public class Controlador {
 	}
 
 	public void inicializarControladoresSupervisorDeFabrica() {
-
+		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
 	}
 
 	public void inicializarControladoresSupervisor() {
@@ -476,7 +476,8 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
-
+		this.ventanaSupervisorFabrica.getBtnOperatoriaDeFabrica()
+		.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 
@@ -511,6 +512,7 @@ public class Controlador {
 		if (tipoEmpleado.equals("Supervisor")) {
 			ventanaSupervisor.mostrarVentana();
 		}
+	
 		if (tipoEmpleado.equals("Gerente")) {
 			ventanaGerente.mostrarVentana();
 		}

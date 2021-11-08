@@ -1,6 +1,5 @@
 package presentacion.vista.Login;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -31,6 +30,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
+	private JButton btnOperatoriaDeFabrica;
 
 	public VentanaSupervisorFabrica() {
 		this.initialize();
@@ -95,6 +95,15 @@ public class VentanaSupervisorFabrica extends JFrame {
 		lblFondo.setBounds(0, 0, 720, 540);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
+		
+		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
+		btnOperatoriaDeFabrica.setToolTipText("");
+		btnOperatoriaDeFabrica.setOpaque(true);
+		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
+		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
+		btnOperatoriaDeFabrica.setBounds(202, 79, 323, 57);
+		contentPane.add(btnOperatoriaDeFabrica);
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
@@ -127,6 +136,10 @@ public class VentanaSupervisorFabrica extends JFrame {
 			}
 		});
 		this.frame.setVisible(true);
+	}
+
+	public JButton getBtnOperatoriaDeFabrica() {
+		return btnOperatoriaDeFabrica;
 	}
 
 	public void cerrarVentana() {
