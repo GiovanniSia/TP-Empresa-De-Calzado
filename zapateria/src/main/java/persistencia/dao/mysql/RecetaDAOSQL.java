@@ -42,7 +42,7 @@ public class RecetaDAOSQL implements RecetaDAO {
 		return new RecetaDTO(id, IdProducto, Descripcion);
 	}
 	*/
-	private static String insertRecetaNueva = "insert into recetas values(?,?,?);";
+	private static String insertRecetaNueva = "insert into recetas values(?,?,?,?);";
 	
 	public boolean insertReceta(RecetaDTO receta) {
 		PreparedStatement statement;
@@ -54,6 +54,7 @@ public class RecetaDAOSQL implements RecetaDAO {
 			statement.setInt(1, receta.getIdReceta());
 			statement.setInt(2, receta.getIdProducto());
 			statement.setString(3, receta.getDescripcion());
+			statement.setString(4, receta.getEstado());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();

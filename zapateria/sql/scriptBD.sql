@@ -181,6 +181,7 @@ CREATE TABLE `recetas`
   `IdReceta` int(11) NOT NULL AUTO_INCREMENT,
   `IdProducto` int(11) NOT NULL,
   `Descripcion` varchar(45) NOT NULL,
+  `EstadoR` varchar(45) NOT NULL,
   PRIMARY KEY (`IdReceta`)
 );
 
@@ -608,7 +609,7 @@ insert into clientes values(6, "Delta", "Aula","523004","juanS@mgail.com",200,10
 insert into clientes values(7, "Puda", "Pula","223004","juanS@mgail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 insert into clientes values(8, "Vicentino", "Reboredo","223004","pepeptS@mgail.com",200,100,"Mayorista","RI","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 
-insert into recetas values(1,1,'Receta eficiente');
+insert into recetas values(1,1,'Receta eficiente','Activo');
 
 insert into paso values(1,"Cortado","Activo");
 insert into paso values(2,"Aparado","Activo");
@@ -628,35 +629,35 @@ insert into materialesDePaso values(1,7,10,5);
 insert into materialesDePaso values(2,8,6,1);
 insert into materialesDePaso values(3,9,7,5);
 
-insert into recetas values(2,1,'Receta Dupli');
+insert into recetas values(2,1,'Receta Dupli','Activo');
 insert into pasosReceta values(7,2,1,1);
 insert into pasosReceta values(8,2,2,4);
 insert into pasosReceta values(9,2,3,6);
 insert into materialesDePaso values(4,9,7,9);
 insert into stock values(7,1,9,'LOTECREADOAMANO',70);
 
-insert into recetas values(3,1,'Receta Auxiliar');
+insert into recetas values(3,1,'Receta Auxiliar','Activo');
 insert into pasosReceta values(10,3,1,2);
 insert into pasosReceta values(11,3,2,5);
 
-insert into recetas values(4,2,'Receta sin material');
+insert into recetas values(4,2,'Receta sin material','Activo');
 insert into pasosReceta values(12,4,1,1);
 insert into pasosReceta values(13,4,2,2);
 insert into ordenfabrica values(1,1,'2011-02-5',20,'L493132',3);
 
-insert into recetas values(5,3,'Receta sin material');
+insert into recetas values(5,3,'Receta sin material','Activo');
 insert into pasosReceta values(14,5,1,1);
 insert into pasosReceta values(15,5,2,2);
 
-insert into recetas values(6,4,'Receta sin material');
+insert into recetas values(6,4,'Receta sin material','Activo');
 insert into pasosReceta values(16,6,1,1);
 insert into pasosReceta values(17,6,2,2);
 
-insert into recetas values(7,5,'Receta sin material');
+insert into recetas values(7,5,'Receta sin material','Activo');
 insert into pasosReceta values(18,7,1,1);
 insert into pasosReceta values(19,7,2,2);
 
-insert into recetas values(8,6,'Receta sin material');
+insert into recetas values(8,6,'Receta sin material','Activo');
 insert into pasosReceta values(20,8,1,1);
 insert into pasosReceta values(21,8,2,2);
 /*

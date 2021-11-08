@@ -46,7 +46,8 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int id = resultSet.getInt("IdReceta");
 		int IdProducto = resultSet.getInt("IdProducto");
 		String Descripcion = resultSet.getString("Descripcion");
-		return new RecetaDTO(id, IdProducto, Descripcion);
+		String estado = resultSet.getString("EstadoR");
+		return new RecetaDTO(id, IdProducto, Descripcion, estado);
 	}
 	
 	public boolean isRecetaDisponible(RecetaDTO receta) {	

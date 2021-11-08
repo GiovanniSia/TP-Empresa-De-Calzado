@@ -37,7 +37,7 @@ public class ControladorVerPasos implements ActionListener {
 	int[]filasSeleccionadas;
 	
 	List<RecetaDTO> recetasEnComboBox;
-	RecetaDTO recetaSeleccionada = new RecetaDTO(0,0, "");
+	RecetaDTO recetaSeleccionada = new RecetaDTO(0,0, "","Activo");
 	List<PasoDeRecetaDTO> pasosRecetaEnLista;
 	PasoDeRecetaDTO pasoDeRecetaSeleccionado;
 	List<MaestroProductoDTO> ingredientesEnComboBox;
@@ -290,7 +290,7 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getComboBoxReceta().removeAllItems();
 		this.ventanaPrincipal.getComboBoxReceta().addItem("Nueva receta");
 		for(RecetaDTO r: recetas) {
-			this.ventanaPrincipal.getComboBoxReceta().addItem(r.getDescripcion());
+			this.ventanaPrincipal.getComboBoxReceta().addItem(r.getDescripcion() + " ("+r.getEstado()+")");
 		}
 	}
 	
@@ -307,11 +307,11 @@ public class ControladorVerPasos implements ActionListener {
 		reiniciarTablaPasosReceta();
 		this.ventanaPrincipal.getLblReceta().setText("");
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == -1) {
-			recetaSeleccionada = new RecetaDTO(0,0, "");
+			recetaSeleccionada = new RecetaDTO(0,0, "","Activo");
 			return;
 		}
 		if(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex() == 0) {
-			recetaSeleccionada = new RecetaDTO(0,0, "");
+			recetaSeleccionada = new RecetaDTO(0,0, "","Activo");
 		}else {
 			recetaSeleccionada = this.recetasEnComboBox.get(this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex()-1);
 		}
