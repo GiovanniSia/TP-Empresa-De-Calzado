@@ -243,7 +243,7 @@ public class Controlador {
 
 		// mod precio unitario
 		this.controladorModificarMProducto = new ControladorModificarMProducto(this, this.maestroProducto);
-		
+
 		// GestionarProductos
 		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
 		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
@@ -291,9 +291,9 @@ public class Controlador {
 	}
 
 	public void inicializarControladoresVendedor() {
-		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
 
 		// armar Venta
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
 		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
 		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock,
 				this.sucursal, this.carrito, this.detalleCarrito);
@@ -348,6 +348,16 @@ public class Controlador {
 	}
 
 	public void inicializarControladoresSupervisor() {
+
+		// armar Venta
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
+
+		this.controladorBusquedaCliente = new ControladorBusquedaCliente(this, cliente);
+		this.controladorBusquedaProducto = new ControladorBusquedaProductos(this.maestroProducto, this.stock,
+				this.sucursal, this.carrito, this.detalleCarrito);
+		this.controladorBusquedaCliente.setControladorBusquedaProducto(this.controladorBusquedaProducto);
+		this.controladorBusquedaProducto.setControladorBusquedaCliente(this.controladorBusquedaCliente);
+
 		// Config
 		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
 
@@ -425,7 +435,8 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
-		this.ventanaAdministrador.getBtnModificacionMasivaDePrecios().addActionListener(a -> pasarAModificarPrecioUnitario(a));
+		this.ventanaAdministrador.getBtnModificacionMasivaDePrecios()
+				.addActionListener(a -> pasarAModificarPrecioUnitario(a));
 		this.ventanaAdministrador.getBtnGestionarClientes().addActionListener(a -> pasarAGestionarClientes(a));
 		this.ventanaAdministrador.getBtnGestionarProductos().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaAdministrador.getBtnGestionarEmpleados().addActionListener(a -> pasarAGestionarEmpleado(a));
@@ -458,6 +469,7 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaSupervisor() {
+		this.ventanaSupervisor.getBtnArmarVenta().addActionListener(a -> pasarAArmarVenta(a));
 		this.ventanaSupervisor.getBtnConfig().addActionListener(a -> pasarAConfig(a));
 		this.ventanaSupervisor.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
 		this.ventanaSupervisor.getBtnModPrecioUnitario().addActionListener(a -> pasarAModificarPrecioUnitario(a));
@@ -477,7 +489,7 @@ public class Controlador {
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
 		this.ventanaSupervisorFabrica.getBtnOperatoriaDeFabrica()
-		.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
+				.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 
@@ -512,7 +524,7 @@ public class Controlador {
 		if (tipoEmpleado.equals("Supervisor")) {
 			ventanaSupervisor.mostrarVentana();
 		}
-	
+
 		if (tipoEmpleado.equals("Gerente")) {
 			ventanaGerente.mostrarVentana();
 		}

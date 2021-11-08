@@ -228,6 +228,14 @@ public class VentanaGestionarClientes extends JFrame{
 		this.frame.setVisible(true);
 	}
 	
+	public void mostrarVentanaParaSupervisor() {
+		lblTitulo.setText("Ver Clientes");
+		btnAgregarCliente.setVisible(false);
+		btnAtras.setVisible(true);
+		btnEditarCliente.setVisible(false);
+		btnHistorialDeCambios.setVisible(false);
+	}
+	
 	public void mostrarVentanaParaVendedor() {
 		lblTitulo.setText("Ver y Agregar Clientes");
 		btnAgregarCliente.setVisible(true);

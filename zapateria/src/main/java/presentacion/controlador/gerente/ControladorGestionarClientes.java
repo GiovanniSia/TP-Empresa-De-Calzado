@@ -73,9 +73,12 @@ public class ControladorGestionarClientes {
 		if(tipoEmpleado.equals("Vendedor")) {
 			this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 			mostrarVentanaParaVendedor();
-		}else{
+		}else if(tipoEmpleado.equals("Supervisor")){
+			mostrarVentanaParaSupervisor();
+		}else {
+			this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 			this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
-			this.ventanaGestionarClientes.getBtnHistorialDeCambios().addActionListener(a -> pasarAHistorialDeClientes());			
+			this.ventanaGestionarClientes.getBtnHistorialDeCambios().addActionListener(a -> pasarAHistorialDeClientes());				
 		}
 		this.ventanaGestionarClientes.getBtnAtras().addActionListener(a -> salir(a));
 		
@@ -113,7 +116,10 @@ public class ControladorGestionarClientes {
 		
 		validarTeclado();
 		
-		
+	}
+	
+	public void mostrarVentanaParaSupervisor() {
+		this.ventanaGestionarClientes.mostrarVentanaParaSupervisor();
 	}
 	
 	public void mostrarVentanaParaVendedor() {
