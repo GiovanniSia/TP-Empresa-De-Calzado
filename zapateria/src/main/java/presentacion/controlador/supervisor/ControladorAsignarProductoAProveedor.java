@@ -188,19 +188,25 @@ public class ControladorAsignarProductoAProveedor {
 	}
 	
 	public boolean productoTieneProveedorAsignado(MaestroProductoDTO prod) {
-		boolean deboAgregar=true;
-		boolean prodEsProvistoPorEsteProv = true;
+//		boolean deboAgregar=true;
+//		boolean prodEsProvistoPorEsteProv = true;
+//		for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
+//			
+//			//si al menos un pp pertenece al mp entonces no se agrega
+//			deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
+//			
+//			if(!deboAgregar) {
+//				return deboAgregar || p.getIdProveedor() != this.proveedorElegido.getId();
+//			}
+//		}
+//		return true;
+		
 		for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-			
-			//si al menos un pp pertenece al mp entonces no se agrega
-			deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
-			
-			if(!deboAgregar) {
-//				prodEsProvistoPorEsteProv  = prodEsProvistoPorEsteProv && p.getIdProveedor() == this.proveedorElegido.getId();
-				return deboAgregar || p.getIdProveedor() != this.proveedorElegido.getId();
+			if(p.getIdMaestroProducto() == prod.getIdMaestroProducto() && p.getIdProveedor() == this.proveedorElegido.getId()) {
+				return false;
 			}
-		}
-		return true;
+		}return true;
+		
 	}
 	
 	
