@@ -37,6 +37,7 @@ public class VentanaAdministrador extends JFrame {
 	private JButton btnVerComprasVirtuales;
 	private JButton btnGenerarOrdenDeManufactura;
 	private JButton btnPedidosAProveedores;
+	private JButton btnTareasAutomaticas;
 
 	public VentanaAdministrador() {
 		this.initialize();
@@ -56,6 +57,13 @@ public class VentanaAdministrador extends JFrame {
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
+		btnTareasAutomaticas = new JButton("Tareas Automaticas");
+		btnTareasAutomaticas.setForeground(new Color(51, 102, 153));
+		btnTareasAutomaticas.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnTareasAutomaticas.setBackground(new Color(51, 102, 204));
+		btnTareasAutomaticas.setBounds(255, 376, 282, 41);
+		contentPane.add(btnTareasAutomaticas);
 
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -201,6 +209,9 @@ public class VentanaAdministrador extends JFrame {
 	public JButton getBtnPedidosAProveedores() {
 		return btnPedidosAProveedores;
 	}
+	public JButton getBtnTareasAutomaticas() {
+		return btnTareasAutomaticas;
+	} 
 
 	public void cerrarVentana() {
 		frame.setVisible(false);

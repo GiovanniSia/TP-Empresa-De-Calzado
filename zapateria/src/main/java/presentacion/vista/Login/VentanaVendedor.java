@@ -32,6 +32,8 @@ public class VentanaVendedor extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
+	private JButton btnVerAgregarClientes;
+	private JButton btnVerProductos;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -88,7 +90,7 @@ public class VentanaVendedor extends JFrame {
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
-		btnArmarVenta.setBounds(210, 139, 282, 41);
+		btnArmarVenta.setBounds(206, 11, 282, 41);
 		panel_1.add(btnArmarVenta);
 
 		btnCerrarSesion = new JButton("");
@@ -105,6 +107,20 @@ public class VentanaVendedor extends JFrame {
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(80, 273, 132, 60);
 		panel_1.add(lblNewLabel_1);
+		
+		btnVerAgregarClientes = new JButton("Ver / Agregar Clientes");
+		btnVerAgregarClientes.setForeground(new Color(51, 102, 153));
+		btnVerAgregarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerAgregarClientes.setBackground(new Color(51, 102, 204));
+		btnVerAgregarClientes.setBounds(206, 63, 282, 41);
+		panel_1.add(btnVerAgregarClientes);
+		
+		btnVerProductos = new JButton("Ver Productos");
+		btnVerProductos.setForeground(new Color(51, 102, 153));
+		btnVerProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerProductos.setBackground(new Color(51, 102, 204));
+		btnVerProductos.setBounds(206, 115, 282, 41);
+		panel_1.add(btnVerProductos);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
@@ -141,6 +157,14 @@ public class VentanaVendedor extends JFrame {
 			}
 		});
 		this.frame.setVisible(true);
+	}
+
+	public JButton getBtnVerAgregarClientes() {
+		return btnVerAgregarClientes;
+	}
+
+	public JButton getBtnVerProductos() {
+		return btnVerProductos;
 	}
 
 	public void cerrarVentana() {
