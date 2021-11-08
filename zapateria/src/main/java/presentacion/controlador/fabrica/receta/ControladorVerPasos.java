@@ -95,6 +95,8 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getComboBoxIngredientes().addActionListener(r->seleccionIngrediente(r));
 		
 		this.ventanaPrincipal.getBtnInactivarPaso().addActionListener(r->inactivarPaso(r));
+		
+		this.ventanaPrincipal.getBtnInactivarReceta().addActionListener(r->inactivarReceta(r));
 	}
 
 	private void seleccionIngrediente(ActionEvent r) {
@@ -296,6 +298,7 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void seleccionReceta(ActionEvent r) {
 		refrescarTablaPasosReceta();
+		actualizarLblEstadoReceta(this.recetaSeleccionada.getEstado());
 	}
 
 	private void refrescarTablaPasosReceta() {
@@ -608,6 +611,24 @@ public class ControladorVerPasos implements ActionListener {
 			ret = ret && f.getIdReceta() != recetaAVerificar.getIdReceta();
 		}
 		return !ret;
+	}
+	
+	private void inactivarReceta(ActionEvent r) {
+		cambiarEstadoReceta();
+	}
+
+	private void cambiarEstadoReceta() {
+		if(this.recetaSeleccionada.getEstado().toLowerCase().equals("activo")) {
+			this.recetaSeleccionada.setEstado("Inactivo");
+		}else {
+			this.recetaSeleccionada.setEstado("Activo");
+		}
+		actualizarLblEstadoReceta(this.recetaSeleccionada.getEstado());
+	}
+
+
+	private void actualizarLblEstadoReceta(String estado) {
+		this.ventanaPrincipal.getLblEstadoReceta().setText(estado);
 	}
 
 	@Override

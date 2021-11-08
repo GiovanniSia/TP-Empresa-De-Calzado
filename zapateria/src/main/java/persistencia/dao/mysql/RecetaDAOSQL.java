@@ -175,7 +175,7 @@ public class RecetaDAOSQL implements RecetaDAO {
 		return id;
 	}
 	
-	private static final String update = "UPDATE recetas set Descripcion=?, IdProducto=? where IdReceta=?";
+	private static final String update = "UPDATE recetas set Descripcion=?, IdProducto=?, EstadoR=? where IdReceta=?";
 	
 	@Override
 	public boolean updateReceta(RecetaDTO receta, List<PasoDeRecetaDTO> pasos) {
@@ -187,7 +187,8 @@ public class RecetaDAOSQL implements RecetaDAO {
 
 			statement.setString(1, receta.getDescripcion());
 			statement.setInt(2, receta.getIdProducto());
-			statement.setInt(3, receta.getIdReceta());
+			statement.setInt(4, receta.getIdReceta());
+			statement.setString(3, receta.getEstado());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
