@@ -54,6 +54,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		boolean ret = true;
 		List<PasoDeRecetaDTO> pasosDeLaReceta = this.readAllPasosFromOneReceta(receta.getIdReceta());
 		for(PasoDeRecetaDTO pdr: pasosDeLaReceta) {
+			ret = ret && pdr.getPasosDTO().getEstado().toLowerCase().equals("activo");
 			MaestroProductoDTO mpAux;
 			for(int x = 0; x < pdr.getPasosDTO().getMateriales().size(); x++) {
 				mpAux = pdr.getPasosDTO().getMateriales().get(x);
