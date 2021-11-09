@@ -46,7 +46,8 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int id = resultSet.getInt("IdReceta");
 		int IdProducto = resultSet.getInt("IdProducto");
 		String Descripcion = resultSet.getString("Descripcion");
-		return new RecetaDTO(id, IdProducto, Descripcion);
+		String estado = resultSet.getString("EstadoR");
+		return new RecetaDTO(id, IdProducto, Descripcion, estado);
 	}
 	
 	public boolean isRecetaDisponible(RecetaDTO receta) {	
@@ -54,6 +55,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		boolean ret = true;
 		List<PasoDeRecetaDTO> pasosDeLaReceta = this.readAllPasosFromOneReceta(receta.getIdReceta());
 		for(PasoDeRecetaDTO pdr: pasosDeLaReceta) {
+			ret = ret && pdr.getPasosDTO().getEstado().toLowerCase().equals("activo");
 			MaestroProductoDTO mpAux;
 			for(int x = 0; x < pdr.getPasosDTO().getMateriales().size(); x++) {
 				mpAux = pdr.getPasosDTO().getMateriales().get(x);
@@ -97,7 +99,8 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			}
 		}
 		String descr = obtenerDescrpcionPaso(IdPaso);
-		PasoDeRecetaDTO paso = new PasoDeRecetaDTO(IdPasoReceta,IdReceta,NroOrden,IdPaso,new PasoDTO(IdPaso,descr, materiales, cantidades));
+		String estado = obtenerEstadoPaso(IdPaso);
+		PasoDeRecetaDTO paso = new PasoDeRecetaDTO(IdPasoReceta,IdReceta,NroOrden,IdPaso,new PasoDTO(IdPaso,descr, materiales, cantidades, estado));
 		return paso;
 	}
 	
@@ -168,6 +171,25 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				ret = resultSet.getString("Descripcion");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+		
+	}
+	
+	private String obtenerEstadoPaso(int idPaso){
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		String ret = "";
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(readOnePaso);
+			statement.setInt(1,idPaso);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				ret = resultSet.getString("Estado");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

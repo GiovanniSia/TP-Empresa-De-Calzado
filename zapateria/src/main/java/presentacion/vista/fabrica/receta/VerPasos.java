@@ -35,7 +35,7 @@ public class VerPasos extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	//private String[] nombreColumnas = { "Id paso","Descripcion"};
-	private String[] nombreColumnas = {"Descripcion"};
+	private String[] nombreColumnas = {"Descripcion","Estado"};
 	private DefaultTableModel modelOrdenes;
 	private JTable tabla;
 	private JScrollPane spCliente;
@@ -54,7 +54,7 @@ public class VerPasos extends JFrame {
 	
 	JScrollPane spPasosReceta;
 	//private String[] nombreColumnasPasosReceta = { "Id paso","Descripcion","Nro orden"};
-	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden"};
+	private String[] nombreColumnasPasosReceta = { "Descripcion","Nro orden","Estado"};
 	private DefaultTableModel modelPasosReceta;
 	private JTable tablaPasosReceta;
 	
@@ -91,6 +91,11 @@ public class VerPasos extends JFrame {
 	private JLabel lblProductoAsociado;
 	private JLabel lblNombre;
 	private JLabel lblNueva;
+	
+	JButton btnInactivarPaso;
+	private JButton btnInactivarReceta;
+	private JLabel lblInactivarReceta;
+	private JLabel lblEstadoReceta;
 
 	public VerPasos() {
 		initialize();
@@ -103,14 +108,14 @@ public class VerPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 848, 632);
+		frame.setBounds(100, 100, 848, 662);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
-		panel.setBounds(10, 104, 812, 409);
+		panel.setBounds(10, 104, 812, 437);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -358,6 +363,31 @@ public class VerPasos extends JFrame {
 		lblNueva.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNueva.setBounds(332, 80, 60, 27);
 		panel.add(lblNueva);
+		
+		btnInactivarPaso = new JButton("");
+		btnInactivarPaso.setToolTipText("Agregar Paso a Lista");
+		btnInactivarPaso.setBounds(247, 350, 30, 30);
+		panel.add(btnInactivarPaso);
+		
+		JLabel lblInactivar = new JLabel("Inactivar");
+		lblInactivar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblInactivar.setBounds(162, 350, 75, 30);
+		panel.add(lblInactivar);
+		
+		btnInactivarReceta = new JButton("");
+		btnInactivarReceta.setToolTipText("Agregar Paso a Lista");
+		btnInactivarReceta.setBounds(332, 391, 30, 30);
+		panel.add(btnInactivarReceta);
+		
+		lblInactivarReceta = new JLabel("Inactivar");
+		lblInactivarReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblInactivarReceta.setBounds(372, 391, 75, 30);
+		panel.add(lblInactivarReceta);
+		
+		lblEstadoReceta = new JLabel("-");
+		lblEstadoReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEstadoReceta.setBounds(456, 391, 132, 30);
+		panel.add(lblEstadoReceta);
 
 		
 		lblNewLabel = new JLabel("Editor de Recetas");
@@ -392,12 +422,12 @@ public class VerPasos extends JFrame {
 		panel_1.add(lblNewLabel_2);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(20, 524, 60, 60);
+		btnSalir.setBounds(20, 552, 60, 60);
 		frame.getContentPane().add(btnSalir);
 		cambiarIconoBotones(btnSalir,  "back2.png");
 		
 				JLabel lblAtras = new JLabel("Atras");
-				lblAtras.setBounds(90, 524, 90, 60);
+				lblAtras.setBounds(90, 552, 90, 60);
 				frame.getContentPane().add(lblAtras);
 				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 				
@@ -581,5 +611,17 @@ public class VerPasos extends JFrame {
 
 	public JLabel getLblReceta() {
 		return lblReceta;
+	}
+
+	public JButton getBtnInactivarPaso() {
+		return btnInactivarPaso;
+	}
+
+	public JButton getBtnInactivarReceta() {
+		return btnInactivarReceta;
+	}
+
+	public JLabel getLblEstadoReceta() {
+		return lblEstadoReceta;
 	}
 }

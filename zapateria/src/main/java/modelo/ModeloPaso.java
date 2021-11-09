@@ -25,5 +25,9 @@ public class ModeloPaso {
 	public List<PasoDTO> readAll(){
 		return modeloPaso.readAll();
 	}
+	
+	public boolean update(PasoDTO paso) {
+		return modeloPaso.updatePaso(paso);
+	}
 
 }

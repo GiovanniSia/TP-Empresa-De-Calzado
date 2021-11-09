@@ -717,7 +717,7 @@ public class ReControladorOperario implements ActionListener {
 		this.ventanaElegirReceta.getComboBox().removeAllItems();
 		for(RecetaDTO r: listaRecetas) {
 			if(ordenATrabajar.getIdProd() == r.getIdProducto()) {
-				if(modeloFabricacion.isRecetaDisponible(r)) {
+				if(modeloFabricacion.isRecetaDisponible(r) && r.getEstado().equals("Activo")) {
 					/*
 					if(existeMaterialSuficiente(r, ordenSeleccionado.getCantidad())) {
 						//System.out.println("LEI RECETA DISPONIBLE");s
@@ -1119,6 +1119,14 @@ public class ReControladorOperario implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	}
+	
+	public static void main(String[] args){
+		ReControladorOperario controladorOperatoria = new ReControladorOperario(null,
+				new SucursalDTO(1, "", "", "", "", "",
+				"", "", ""));
+		controladorOperatoria.inicializar();
+		controladorOperatoria.mostrarVentana();
 	}
 
 }
