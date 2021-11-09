@@ -10,18 +10,23 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import dto.EgresosDTO;
+import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
+import dto.MotivoEgresoDTO;
 import dto.PedidosPendientesDTO;
 import dto.TipoEgresosDTO;
 import inicioSesion.sucursalProperties;
 import modelo.Egresos;
+import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MedioPagoEgreso;
 import modelo.PedidosPendientes;
 import modelo.TipoEgresos;
+import modelo.compraVirtual.MotivoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
+import presentacion.reportes.ReporteNotaCredito;
 import presentacion.vista.Cajero.VentanaEgresoCaja;
 
 public class ControladorEgresosCaja {
@@ -168,8 +173,31 @@ public class ControladorEgresosCaja {
 				ingresarEgreso(fa);
 			}
 			if (tipoEgresoSeleccionado.equals("Nota Credito")) {
+				/*
 				String nc = this.ventanaEgresoCaja.getTxtFieldNC().getText();
 				ingresarEgreso(nc);
+				*/
+				//* * * * * * * * * * * * * * *
+				String nc = this.ventanaEgresoCaja.getTxtFieldNC().getText();
+				if(nroFacturaExiste(nc)) {
+					if(yaExisteNotaCredito(nc)) {
+						JOptionPane.showMessageDialog(null,
+								"Ya existe una nota de credito asociada a esta factura", "Error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					ingresarEgreso(nc);
+					MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
+					modeloMotivo.insert(new MotivoEgresoDTO(nc,"Este egreso se hizo para la factura: "+nc));
+					ReporteNotaCredito notaCredito = new ReporteNotaCredito(nc);
+					notaCredito.mostrar();
+				}else {
+					JOptionPane.showMessageDialog(null,
+							"El numero de factura no corresponde a una factura existente", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				//* * * * * * * * * * * * * * * 
 			}
 			if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
@@ -183,6 +211,23 @@ public class ControladorEgresosCaja {
 			this.ventanaEgresoCaja.limpiarCampos();
 		}
 		actualizarLblBalance();
+	}
+
+	private boolean nroFacturaExiste(String nc) {
+		boolean ret = false;
+		Factura modeloFactura = new Factura(new DAOSQLFactory());
+		for(FacturaDTO f: modeloFactura.readAll()) {
+			ret = ret || f.getNroFacturaCompleta().equals(nc);
+		}
+		return ret;
+	}
+	
+	private boolean yaExisteNotaCredito(String nc) {
+		boolean ret = false;
+		for(EgresosDTO e: this.egresos.readAll()) {
+			ret = ret || e.getDetalle().toLowerCase().equals(nc.toLowerCase());
+		}
+		return ret;
 	}
 
 	private void registrarPedidoComoPagado(int ppNroOrdenCompra) {
