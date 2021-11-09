@@ -178,7 +178,7 @@ public class VentanaSupervisor extends JFrame {
 		btnGestionarSucursales.setForeground(new Color(51, 102, 153));
 		btnGestionarSucursales.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarSucursales.setBackground(new Color(51, 102, 204));
-		btnGestionarSucursales.setBounds(343, 366, 282, 41);
+		btnGestionarSucursales.setBounds(343, 426, 282, 41);
 		contentPane.add(btnGestionarSucursales);
 		btnArmarVenta = new JButton("Armar Venta");
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
