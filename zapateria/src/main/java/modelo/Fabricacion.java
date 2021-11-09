@@ -69,7 +69,7 @@ public class Fabricacion {
 		return fab.pasarOrdenAStock(fabri);
 	}
 	
-	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock) {
+	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(double nuevoValor, int idStock) {
 		return fab.actuaizarCantidadStockDeUnProductoEnUnaSucursal(nuevoValor, idStock);
 	}
 	

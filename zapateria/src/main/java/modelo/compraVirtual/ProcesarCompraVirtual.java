@@ -392,7 +392,7 @@ public class ProcesarCompraVirtual {
 		if(producto == null) {
 			return false;
 		}
-		int cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
+		Double cantStock = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal,idProducto);
 		if(cantStock == 0) {
 			return false;
 		}
@@ -686,16 +686,16 @@ public class ProcesarCompraVirtual {
 	
 	private static void descontarStock(int idSucursalADescontar, int idProducto, int cantidadADescontar) {
 		Stock modeloStock = new Stock(new DAOSQLFactory());
-		int restar = cantidadADescontar;
+		Double restar = (double) cantidadADescontar;
 		for(StockDTO s: modeloStock.readAll()) {
 			if(s.getIdProducto()==idProducto && s.getIdSucursal()==idSucursalADescontar) {
-				int aux = s.getStockDisponible() - restar;
+				Double aux = s.getStockDisponible() - restar;
 				if(aux < 0) {
-					s.setStockDisponible(0);
+					s.setStockDisponible(0.0);
 					restar = -aux;
 				}else {
 					s.setStockDisponible(aux);
-					restar = 0;
+					restar = 0.0;
 				}
 				modeloStock.actualizarStock(s.getIdStock(), s.getStockDisponible());
 			}

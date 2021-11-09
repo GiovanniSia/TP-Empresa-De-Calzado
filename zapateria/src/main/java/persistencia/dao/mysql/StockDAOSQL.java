@@ -31,7 +31,7 @@ public class StockDAOSQL implements StockDAO {
 			statement.setInt(2, stock.getIdSucursal());
 			statement.setInt(3, stock.getIdProducto());
 			statement.setString(4, stock.getCodigoLote());
-			statement.setInt(5, stock.getStockDisponible());
+			statement.setDouble(5, stock.getStockDisponible());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();
@@ -73,20 +73,20 @@ public class StockDAOSQL implements StockDAO {
 		int idSucursal = resultSet.getInt("IdSucursal");
 		int idProducto = resultSet.getInt("IdProducto");
 		String codigoLote = resultSet.getString("CodigoLote");
-		int stockDisponible = resultSet.getInt("StockDisponible");
+		Double stockDisponible = resultSet.getDouble("StockDisponible");
 		
 		return new StockDTO(idStock,idSucursal,idProducto,codigoLote,stockDisponible);
 	}
 	
 	@Override
-	public boolean actualizarStock(int idStock, int cant) {
+	public boolean actualizarStock(int idStock, Double cant) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isUpdateExitoso = false;
 		try {
 			statement = conexion.prepareStatement(updateStock);
 
-			statement.setInt(1,cant);
+			statement.setDouble(1,cant);
 			statement.setInt(2,idStock);
 
 			if (statement.executeUpdate() > 0) {

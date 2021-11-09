@@ -161,13 +161,13 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		int diasARep = this.productoElegido.getDiasParaReponer();
 		
 		
-		int stockDisp;
+		Double stockDisp;
 		String codLote=null;
 		if(this.stockDeProd != null) {
 			stockDisp = this.stockDeProd.getStockDisponible();
 			codLote = this.stockDeProd.getCodigoLote();
 		}else {
-			stockDisp = 0;
+			stockDisp = 0.0;
 			codLote = "Sin asignar";
 		}
 	
