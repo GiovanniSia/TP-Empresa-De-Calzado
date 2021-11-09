@@ -231,7 +231,10 @@ public class ReControladorOperario implements ActionListener {
 		ventanaParaCancelacion.getComboBoxMotivo().addItem("Accidente con el operario");
 		ventanaParaCancelacion.getComboBoxMotivo().addItem("Otro");
 		refrescarTabla();
-		
+		if(this.empleado.getTipoEmpleado().toLowerCase().equals("operario de fabrica")) {
+			this.ventanaPrincipal.getBtnVerHistorialPasos().setVisible(false);
+			this.ventanaPrincipal.getLblHistorial().setVisible(false);
+		}
 	}
 	
 	private void verHistorialPasos(ActionEvent r) {
@@ -287,6 +290,9 @@ public class ReControladorOperario implements ActionListener {
 		}
 		
 		if(ordenesEnLista.size() > filasSeleccionadas[0]) {	//Escogio una orden sin trabajar
+			if(this.empleado.getTipoEmpleado().toLowerCase().equals("gerente")) {
+				return;
+			}
 			OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filasSeleccionadas[0]);
 			ordenSeleccionado = ordenATrabajar;
 			inicializarComboBoxRecetas(filasSeleccionadas[0]);
@@ -295,6 +301,9 @@ public class ReControladorOperario implements ActionListener {
 			//SELECCIONO UNA ORDEN YA EN MARCHA
 			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
 			if(fabricacionTrabajando.getEstado().equals("activo")) {
+				if(this.empleado.getTipoEmpleado().toLowerCase().equals("gerente")) {
+					return;
+				}
 				reiniciarTablaIngredientesDeUnTrabajo();
 				OrdenFabricaDTO oM = this.getOrdenManufactura(fabricacionTrabajando.getIdOrdenFabrica());
 				String texto = "";
@@ -306,6 +315,9 @@ public class ReControladorOperario implements ActionListener {
 			}
 			if(fabricacionTrabajando.getEstado().equals("completo")) {
 				reiniciarTablaIngredientesDeUnTrabajo();
+				if(this.empleado.getTipoEmpleado().toLowerCase().equals("operario de fabrica")) {
+					return;
+				}
 				this.ventanaDiaDeLlegada.show();
 			}
 			
@@ -390,7 +402,9 @@ public class ReControladorOperario implements ActionListener {
 				
 				fabricacionTrabajando.completarOrden();
 				modeloFabricacion.actualizarFabricacionEnMarcha(fabricacionTrabajando);
-				this.ventanaDiaDeLlegada.show();
+				if(this.empleado.getTipoEmpleado().toLowerCase().equals("supervisor de fabrica")) {
+					this.ventanaDiaDeLlegada.show();
+				}
 				this.ventanaUnaTrabajo.cerrar();
 				mostrarMensajeEmergente("Se completo el ultimo paso de fabricacion.");
 			}

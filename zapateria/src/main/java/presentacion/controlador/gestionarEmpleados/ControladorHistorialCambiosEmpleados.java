@@ -21,6 +21,7 @@ public class ControladorHistorialCambiosEmpleados {
 	private VentanaHistorialCambiosEmpleados ventanaHistorialCambioEmpleados;
 	private HistorialCambioEmpleado historialCambioEmpleado;
 	private List<HistorialCambioEmpleadoDTO> historialCambioEmpleadosEnTabla;
+	private ControladorGestionarEmpleados controladorGestionarEmpleados;
 
 	public ControladorHistorialCambiosEmpleados() {
 		this.ventanaHistorialCambioEmpleados = new VentanaHistorialCambiosEmpleados();
@@ -105,9 +106,6 @@ public class ControladorHistorialCambiosEmpleados {
 		String txtCodSucursal = this.ventanaHistorialCambioEmpleados.getTxtFiltroCodSucursal().getText();
 		String txtCodEmpleado = this.ventanaHistorialCambioEmpleados.getTxtFiltroCodEmpleado().getText();
 
-		System.out.println(
-				txtIdEmpleadoResponsable + " , " + dateFecha + " , " + txtCodSucursal + " , " + txtCodEmpleado);
-
 		List<HistorialCambioEmpleadoDTO> historialCambioEmpleadoFiltro = this.historialCambioEmpleado.getFiltrarPor(
 				"IdEmpleadoResponsable", txtIdEmpleadoResponsable, "Fecha", dateFecha, "IdSucursal", txtCodSucursal,
 				"IdEmpleado", txtCodEmpleado);
@@ -135,6 +133,7 @@ public class ControladorHistorialCambiosEmpleados {
 
 	public void atras(ActionEvent a) {
 		this.ventanaHistorialCambioEmpleados.cerrarVentana();
+		this.controladorGestionarEmpleados.mostrarVentana();
 	}
 
 	public void refrescarTabla() {
@@ -230,4 +229,10 @@ public class ControladorHistorialCambiosEmpleados {
 			}
 		}
 	}
+
+	public void setControladorGestionarEmpleados(ControladorGestionarEmpleados controladorGestionarEmpleados) {
+		this.controladorGestionarEmpleados = controladorGestionarEmpleados;
+	}
+	
+	
 }

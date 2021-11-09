@@ -23,6 +23,7 @@ import modelo.MaestroProducto;
 import modelo.ModeloPaso;
 import modelo.Receta;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.receta.VerPasos;
 
 public class ControladorVerPasos implements ActionListener {
@@ -42,6 +43,8 @@ public class ControladorVerPasos implements ActionListener {
 	PasoDeRecetaDTO pasoDeRecetaSeleccionado;
 	List<MaestroProductoDTO> ingredientesEnComboBox;
 	List<MaestroProductoDTO> productosTerminados;
+	
+	private Controlador controlador;
 	
 	public ControladorVerPasos() {
 		try {
@@ -89,6 +92,7 @@ public class ControladorVerPasos implements ActionListener {
 		this.ventanaPrincipal.getBtnQuitarIngrediente().addActionListener(r->quitarIngrediente(r));
 		this.ventanaPrincipal.getBtnSubirPaso().addActionListener(r->subirPaso(r));
 		this.ventanaPrincipal.getBtnBajarPaso().addActionListener(r->bajarPaso(r));
+		this.ventanaPrincipal.getBtnSalir().addActionListener(r->salir(r));
 		
 		this.ventanaPrincipal.getBtnActualizarReceta().addActionListener(r->actualizarReceta(r));
 		
@@ -638,6 +642,17 @@ public class ControladorVerPasos implements ActionListener {
 	private void mostrarMensajeEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
         return;
+	}
+	
+	public void salir(ActionEvent r) {
+		this.ventanaPrincipal.cerrar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
+	}
+	
+	
+
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
 	}
 
 	public static void main(String[] args) {

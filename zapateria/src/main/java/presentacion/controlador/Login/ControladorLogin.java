@@ -85,6 +85,11 @@ public class ControladorLogin {
 			return false;
 		}
 		
+		if(this.ventanaLogin.getCbSucursales().getSelectedItem().equals("Sin especificar") && !empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Gerente")) {
+			JOptionPane.showMessageDialog(null, "Tiene que indicar una sucursal");
+			return false;
+		}
+		
 		JOptionPane.showMessageDialog(null,
 				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
 

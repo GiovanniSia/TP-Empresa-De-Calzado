@@ -286,6 +286,12 @@ public class VentanaGestionarEmpleados extends JFrame {
 	public JButton getBtnHistorialCambio() {
 		return btnHistorialCambio;
 	}
+	
+	public void limpiarCampos() {
+		this.txtFiltroCUIL.setText("");
+		this.txtFiltroIdEmpleado.setText("");
+		this.cbTipoEmpleado.setSelectedItem("Sin seleccionar");
+	}
 
 	public void cerrarVentana() {
 		frame.setVisible(false);
