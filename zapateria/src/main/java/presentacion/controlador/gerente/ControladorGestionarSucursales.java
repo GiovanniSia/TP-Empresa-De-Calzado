@@ -74,7 +74,7 @@ public class ControladorGestionarSucursales {
 
 	public void salir() {
 		this.ventanaGestionarSucursales.cerrar();
-		this.controlador.inicializar();
+//		this.controlador.inicializar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	

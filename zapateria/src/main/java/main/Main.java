@@ -12,5 +12,4 @@ public class Main {
 		login.inicializar();
 		login.mostrarVentana();		
 	}
-	
 }

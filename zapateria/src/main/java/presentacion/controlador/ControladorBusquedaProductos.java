@@ -89,8 +89,8 @@ public class ControladorBusquedaProductos {
 	}
 
 	public void inicializar() {
-		System.out.println("se inicializa el buscar prod");
-		this.listaStock = this.stock.readAll();
+		obtenerDatosPropertiesSucursalEmpleado();
+		this.listaStock = recuperarListaDeStock();
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		//estos dos se guardan en la aplicacion no lo obtenemos de la bd
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
@@ -241,6 +241,19 @@ public class ControladorBusquedaProductos {
 				}
 			}
 		}
+	}
+	
+	private ArrayList<StockDTO> recuperarListaDeStock(){
+		ArrayList<StockDTO> todoElStock = (ArrayList<StockDTO>) this.stock.readAll();
+		
+		ArrayList<StockDTO> ret = new ArrayList<StockDTO>();
+		
+		for(StockDTO s: todoElStock) {
+			if(s.getStockDisponible()>0) {
+				ret.add(s);
+			}
+		}
+		return ret;
 	}
 	
 	public void escribirTabla(List<MaestroProductoDTO> productosAproximados) {
