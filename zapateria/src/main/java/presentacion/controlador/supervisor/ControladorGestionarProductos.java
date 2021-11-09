@@ -97,8 +97,12 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 
 		if (tipoEmpleado.equals("Vendedor")) {
-			mostrarVentanaParaVendedor();
-		} else {
+			mostrarVentanaParaVerProductos();
+		} else if(tipoEmpleado.equals("Administrativo")){
+			mostrarVentanaParaVerProductosYOrdenDeManufactura();
+			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
+			.addActionListener(a -> generarOrdenDeManufactura());
+		}else{
 			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
 			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
 					.addActionListener(a -> generarOrdenDeManufactura());
@@ -185,8 +189,12 @@ public class ControladorGestionarProductos {
 		validarTeclado();
 	}
 
-	public void mostrarVentanaParaVendedor() {
-		this.ventanaGestionarProductos.mostrarVentanaParaVendedor();
+	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
+		this.ventanaGestionarProductos.mostrarVentanaParaVerProductosYOrdenDeManufactura();
+	}
+	
+	public void mostrarVentanaParaVerProductos() {
+		this.ventanaGestionarProductos.mostrarVentanaParaVerProductos();
 	}
 
 	public void mostrarVentana() {

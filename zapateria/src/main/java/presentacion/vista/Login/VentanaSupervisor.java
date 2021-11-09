@@ -90,7 +90,7 @@ public class VentanaSupervisor extends JFrame {
 		lblNewLabel_2.setBounds(343, 28, 59, 19);
 		panel.add(lblNewLabel_2);
 
-		btnGestionarClientes = new JButton("Gestionar Clientes");
+		btnGestionarClientes = new JButton("Ver Clientes");
 		btnGestionarClientes.setForeground(new Color(51, 102, 153));
 		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarClientes.setBackground(new Color(51, 102, 204));

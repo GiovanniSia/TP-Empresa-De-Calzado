@@ -228,13 +228,23 @@ private static final long serialVersionUID = 1L;
 		this.frame.setVisible(true);
 	}
 
-	public void mostrarVentanaParaVendedor() {
+	public void mostrarVentanaParaVerProductos() {
 		lblTitulo.setText("Ver Productos");
 		btnAgregarProducto.setVisible(false);
 		btnGenerarOrdenDeManufactura.setVisible(false);
 		btnGenerarPedido.setVisible(false);
 		btnAtras.setVisible(true);
 	}
+	
+	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
+		lblTitulo.setText("Ver y Ordenar Productos");
+		btnAgregarProducto.setVisible(false);
+		btnGenerarOrdenDeManufactura.setVisible(true);
+		btnGenerarPedido.setVisible(false);
+		btnAtras.setVisible(true);
+	}
+	
+
 	
 	public void cerrar() {
 

@@ -32,7 +32,7 @@ public class VentanaAdministrador extends JFrame {
 	private JLabel lblNewLabel_2;
 
 	private JButton btnGestionarClientes;
-	private JButton btnGestionarProductos;
+	private JButton btnVerProductos;
 	private JButton btnGestionarEmpleados;
 	private JButton btnVerComprasVirtuales;
 	private JButton btnPedidosAProveedores;
@@ -59,11 +59,11 @@ public class VentanaAdministrador extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
-		btnModificacionMasivaDePrecios = new JButton("Modificacion Masiva De Precios");
+		btnModificacionMasivaDePrecios = new JButton("Modificar Precios Masivos");
 		btnModificacionMasivaDePrecios.setForeground(new Color(51, 102, 153));
 		btnModificacionMasivaDePrecios.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnModificacionMasivaDePrecios.setBackground(new Color(51, 102, 204));
-		btnModificacionMasivaDePrecios.setBounds(210, 116, 364, 41);
+		btnModificacionMasivaDePrecios.setBounds(255, 116, 282, 41);
 		contentPane.add(btnModificacionMasivaDePrecios);
 
 		btnTareasAutomaticas = new JButton("Tareas Automaticas");
@@ -120,12 +120,12 @@ public class VentanaAdministrador extends JFrame {
 		btnGestionarClientes.setBounds(255, 168, 282, 41);
 		contentPane.add(btnGestionarClientes);
 
-		btnGestionarProductos = new JButton("Gestionar Productos");
-		btnGestionarProductos.setForeground(new Color(51, 102, 153));
-		btnGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
-		btnGestionarProductos.setBackground(new Color(51, 102, 204));
-		btnGestionarProductos.setBounds(255, 64, 282, 41);
-		contentPane.add(btnGestionarProductos);
+		btnVerProductos = new JButton("Productos");
+		btnVerProductos.setForeground(new Color(51, 102, 153));
+		btnVerProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerProductos.setBackground(new Color(51, 102, 204));
+		btnVerProductos.setBounds(255, 64, 282, 41);
+		contentPane.add(btnVerProductos);
 
 		btnGestionarEmpleados = new JButton("Gestionar Empleados");
 		btnGestionarEmpleados.setForeground(new Color(51, 102, 153));
@@ -206,8 +206,8 @@ public class VentanaAdministrador extends JFrame {
 		return btnGestionarClientes;
 	}
 
-	public JButton getBtnGestionarProductos() {
-		return btnGestionarProductos;
+	public JButton getBtnVerProductos() {
+		return btnVerProductos;
 	}
 
 	public JButton getBtnGestionarEmpleados() {
