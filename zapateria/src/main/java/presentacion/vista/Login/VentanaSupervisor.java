@@ -43,6 +43,8 @@ public class VentanaSupervisor extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
+	private JButton btnGestionarSucursales;
+
 
 	public VentanaSupervisor() {
 		this.initialize();
@@ -173,6 +175,13 @@ public class VentanaSupervisor extends JFrame {
 		cambiarIconoBotones(btnCerrarSesion, "exit.png");
 		contentPane.add(btnCerrarSesion);
 		
+		btnGestionarSucursales = new JButton("Gestionar Sucursales");
+		btnGestionarSucursales.setForeground(new Color(51, 102, 153));
+		btnGestionarSucursales.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarSucursales.setBackground(new Color(51, 102, 204));
+		btnGestionarSucursales.setBounds(343, 366, 282, 41);
+		contentPane.add(btnGestionarSucursales);
+		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
 		frame.getContentPane().add(lblFondo);
@@ -261,5 +270,10 @@ public class VentanaSupervisor extends JFrame {
 
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
+	}
+	
+
+	public JButton getBtnGestionarSucursales() {
+		return btnGestionarSucursales;
 	}
 }

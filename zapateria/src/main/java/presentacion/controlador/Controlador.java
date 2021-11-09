@@ -41,6 +41,7 @@ import presentacion.controlador.fabrica.ReControladorOperario;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.gerente.ControladorGestionarClientes;
+import presentacion.controlador.gerente.ControladorGestionarSucursales;
 import presentacion.controlador.gerente.ControladorHistorialDeCambiosDeCliente;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
@@ -89,6 +90,10 @@ public class Controlador {
 	
 
 	// Controladores
+	
+	private ControladorGestionarSucursales controladorGestionarSucursales;
+	
+	
 	private ControladorBusquedaCliente controladorBusquedaCliente;
 	private ControladorBusquedaProductos controladorBusquedaProducto;
 
@@ -257,6 +262,8 @@ public class Controlador {
 	}
 
 	public void inicializarControladoresSupervisor() {
+		this.controladorGestionarSucursales = new ControladorGestionarSucursales(this,sucursal);
+		
 		// Config
 		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
 		// cotizacion
@@ -383,6 +390,8 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnVerComprasVirtuales().addActionListener(a -> pasarAVerComprasVirtuales(a));
 		this.ventanaSupervisor.getBtnVerReporteRanking().addActionListener(a -> pasarAVerRanking(a));
 		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		
+		this.ventanaSupervisor.getBtnGestionarSucursales().addActionListener(a -> pasarAGestionarSucursales(a));
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
@@ -508,6 +517,13 @@ public class Controlador {
 		this.controladorVisualizarCarritos.mostrarVentana();
 	}
 
+	//Gestionar Sucursales
+	public void pasarAGestionarSucursales(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		this.controladorGestionarSucursales.inicializar();
+		this.controladorGestionarSucursales.mostrarVentana();
+	}
+	
 	// Cotizacion
 	public void pasarACotizaciones(ActionEvent a) {
 		cerrarTodasLasVentanas();

@@ -58,7 +58,6 @@ public class VentanaMenuSistemaDeVentas {
 	
 //	private JButton btnConfig;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -400,4 +399,9 @@ public class VentanaMenuSistemaDeVentas {
 	public JLabel getLblNombreSucursal() {
 		return lblNombreSucursal;
 	}
+	
+
+
+
+
 }

@@ -5,12 +5,15 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import dto.SucursalDTO;
 import modelo.Localidad;
 import modelo.Pais;
 import modelo.Provincia;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.gerente.VentanaGestionarSucursales;
 
 public class ControladorGestionarSucursales {
@@ -22,10 +25,10 @@ public class ControladorGestionarSucursales {
 	VentanaGestionarSucursales ventanaGestionarSucursales;
 	
 	ControladorAltaSucursal controladorAltaSucursal;
-	
-	public ControladorGestionarSucursales(Sucursal sucursal) {
+	Controlador controlador;
+	public ControladorGestionarSucursales(Controlador controlador,Sucursal sucursal) {
 		this.sucursal = sucursal;
-		
+		this.controlador =controlador;
 		this.todasLasSucursales = new ArrayList<SucursalDTO>();
 		this.sucursalesEnTabla = new ArrayList<SucursalDTO>();
 		
@@ -49,6 +52,8 @@ public class ControladorGestionarSucursales {
 		
 		this.ventanaGestionarSucursales.getBtnAniadir().addActionListener(a -> pasarAAniadirSucursal());
 		
+		this.ventanaGestionarSucursales.getBtnEditar().addActionListener(a -> pasarAEditarSucursal());
+		
 		this.ventanaGestionarSucursales.getTextNombre().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -69,6 +74,8 @@ public class ControladorGestionarSucursales {
 
 	public void salir() {
 		this.ventanaGestionarSucursales.cerrar();
+		this.controlador.inicializar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 	
 	public void llenarTablaCompleta(){
@@ -122,14 +129,21 @@ public class ControladorGestionarSucursales {
 		this.ventanaGestionarSucursales.getModelTablaSucursales().setColumnIdentifiers(this.ventanaGestionarSucursales.getNombreColumnas());
 		this.sucursalesEnTabla.removeAll(this.sucursalesEnTabla);
 	}
-	
-	public static void main(String[] args) {
-		Sucursal s = new Sucursal(new DAOSQLFactory());
-		ControladorGestionarSucursales c = new ControladorGestionarSucursales(s);
-		
-		c.inicializar();
-		c.mostrarVentana();
-	}
-	
-}
 
+	
+	public void pasarAEditarSucursal() {
+		int filaSeleccionada = this.ventanaGestionarSucursales.getTable().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar una sucursal", "Error", JOptionPane.OK_OPTION);
+			return;
+		}
+		
+		SucursalDTO sucursal = this.sucursalesEnTabla.get(filaSeleccionada);
+		this.ventanaGestionarSucursales.cerrar();
+		this.controladorAltaSucursal.setearSucursalAEditar(sucursal);
+		this.controladorAltaSucursal.inicializar();
+		this.controladorAltaSucursal.mostrarVentanaEditar();
+		
+		
+	}
+}
