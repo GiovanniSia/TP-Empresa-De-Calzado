@@ -57,7 +57,6 @@ public class ControladorVerPedidosAProveedor {
 		this.pedidosPendientes = pedidosPendientes;
 		this.todosLosPedidosPendientes = new ArrayList<PedidosPendientesDTO>();
 		this.pedidosPendientesEnTabla = new ArrayList<PedidosPendientesDTO>();
-		this.ventanaVerPedidosAProveedor = new VentanaVerPedidosAProveedores();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.maestroProducto = maestroProducto;
 		
@@ -66,6 +65,8 @@ public class ControladorVerPedidosAProveedor {
 	}
 	
 	public void inicializar() {
+		this.ventanaVerPedidosAProveedor = new VentanaVerPedidosAProveedores();
+
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listaStock = this.stock.readAll();
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
