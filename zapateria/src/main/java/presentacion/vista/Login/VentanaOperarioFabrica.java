@@ -159,5 +159,4 @@ public class VentanaOperarioFabrica extends JFrame {
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
 	}
-	
 }

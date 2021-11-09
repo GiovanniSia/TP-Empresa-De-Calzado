@@ -355,6 +355,10 @@ public class Controlador {
 
 	public void inicializarControladoresSupervisorDeFabrica() {
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
+		// Gestionar recetas y pasos
+		this.controladorVerPasos = new ControladorVerPasos();
+		this.controladorVerPasos.setControlador(this);
+		
 	}
 
 	public void inicializarControladoresSupervisor() {
@@ -515,6 +519,7 @@ public class Controlador {
 		
 		// Gestionar recetas y pasos
 		this.controladorVerPasos = new ControladorVerPasos();
+		this.controladorVerPasos.setControlador(this);
 		
 	}
 
@@ -593,6 +598,7 @@ public class Controlador {
 	public void escucharBotonesVentanaSupervisorFabrica() {
 		this.ventanaSupervisorFabrica.getBtnOperatoriaDeFabrica()
 				.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
+		this.ventanaSupervisorFabrica.getBtnGestionarRecetasYPasos().addActionListener(a -> pasarAGestionarRecetasYPasos(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 	}
 

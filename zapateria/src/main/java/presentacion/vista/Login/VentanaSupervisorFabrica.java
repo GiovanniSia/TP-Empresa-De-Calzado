@@ -31,6 +31,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
 	private JButton btnOperatoriaDeFabrica;
+	private JButton btnGestionarRecetasYPasos;
 
 	public VentanaSupervisorFabrica() {
 		this.initialize();
@@ -91,11 +92,6 @@ public class VentanaSupervisorFabrica extends JFrame {
 		lblNewLabel_2.setBounds(343, 28, 59, 19);
 		panel.add(lblNewLabel_2);
 		
-		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 720, 540);
-		frame.getContentPane().add(lblFondo);
-		cambiarIconoLabel(lblFondo, "fondo.png");
-		
 		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
 		btnOperatoriaDeFabrica.setToolTipText("");
 		btnOperatoriaDeFabrica.setOpaque(true);
@@ -104,6 +100,20 @@ public class VentanaSupervisorFabrica extends JFrame {
 		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
 		btnOperatoriaDeFabrica.setBounds(202, 79, 323, 57);
 		contentPane.add(btnOperatoriaDeFabrica);
+		
+		btnGestionarRecetasYPasos = new JButton("Gestionar Recetas y Pasos");
+		btnGestionarRecetasYPasos.setToolTipText("");
+		btnGestionarRecetasYPasos.setOpaque(true);
+		btnGestionarRecetasYPasos.setForeground(new Color(51, 102, 153));
+		btnGestionarRecetasYPasos.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		btnGestionarRecetasYPasos.setBackground(new Color(51, 102, 204));
+		btnGestionarRecetasYPasos.setBounds(174, 147, 374, 57);
+		contentPane.add(btnGestionarRecetasYPasos);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 720, 540);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
@@ -136,6 +146,10 @@ public class VentanaSupervisorFabrica extends JFrame {
 			}
 		});
 		this.frame.setVisible(true);
+	}
+
+	public JButton getBtnGestionarRecetasYPasos() {
+		return btnGestionarRecetasYPasos;
 	}
 
 	public JButton getBtnOperatoriaDeFabrica() {

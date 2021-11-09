@@ -112,7 +112,6 @@ public class ControladorGestionarProductos {
 			mostrarVentanaParaVendedor();
 		} else {
 			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
-			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
 			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
 					.addActionListener(a -> generarOrdenDeManufactura());
 			this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
