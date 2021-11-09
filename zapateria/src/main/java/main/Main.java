@@ -10,6 +10,6 @@ public class Main {
 		envio.start();
 		ControladorLogin login = new ControladorLogin();
 		login.inicializar();
-		login.mostrarVentana();		
+		login.mostrarVentana();
 	}
 }
