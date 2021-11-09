@@ -48,6 +48,7 @@ public class VentanaDashboardGerente {
 	private JButton btnEgresoDeCaja;
 	private JButton btnCierreDeCaja;
 	private JButton btnGestionarRecetasYPasos;
+	private JButton btnGestionarSucursales_1;
 
 	/**
 	 * Launch the application.
@@ -231,6 +232,13 @@ public class VentanaDashboardGerente {
 		btnGestionarRecetasYPasos.setBounds(20, 577, 282, 41);
 		panel.add(btnGestionarRecetasYPasos);
 		
+		btnGestionarSucursales_1 = new JButton("Gestionar Sucursales");
+		btnGestionarSucursales_1.setForeground(new Color(51, 102, 153));
+		btnGestionarSucursales_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarSucursales_1.setBackground(new Color(51, 102, 204));
+		btnGestionarSucursales_1.setBounds(38, 609, 282, 41);
+		panel.add(btnGestionarSucursales_1);
+		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(383, 50, 320, 246);
@@ -348,6 +356,12 @@ public class VentanaDashboardGerente {
 		this.show();
 	}
 	
+	
+	
+	public JButton getBtnGestionarSucursales() {
+		return btnGestionarSucursales_1;
+	}
+
 	public JButton getBtnGestionarRecetasYPasos() {
 		return btnGestionarRecetasYPasos;
 	}

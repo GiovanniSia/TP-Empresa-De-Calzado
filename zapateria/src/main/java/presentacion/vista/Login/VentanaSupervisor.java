@@ -146,7 +146,7 @@ public class VentanaSupervisor extends JFrame {
 		btnVerReporteRanking.setBounds(343, 248, 282, 41);
 		contentPane.add(btnVerReporteRanking);
 
-		btnVerProveedores = new JButton("Ver Proveedores");
+		btnVerProveedores = new JButton("Gestionar Proveedores");
 		btnVerProveedores.setForeground(new Color(51, 102, 153));
 		btnVerProveedores.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerProveedores.setBackground(new Color(51, 102, 204));
