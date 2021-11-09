@@ -385,6 +385,20 @@ public class ControladorAltaSucursal {
 			return false;	
 		}
 		
+		if(this.ventanaAltaSucursal.getComboBoxPais().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "El pais no puede ser vacio");
+			return false;		
+		}
+		if(this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "La provincia no puede ser vacia");
+			return false;		
+		}
+		if(this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "La localidad no puede ser vacia");
+			return false;		
+		}
+		
+		
 		return true;
 	}
 	
