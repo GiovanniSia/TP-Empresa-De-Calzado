@@ -469,8 +469,7 @@ public class Controlador {
 		this.controladorGestionarProductos = new ControladorGestionarProductos(this, this.maestroProducto, this.stock);
 		this.controladorAltaProducto = new ControladorAltaProducto(this.maestroProducto, this.proveedor,
 				this.productoDeProveedor);
-		this.controladorGestionarProveedores = new ControladorGestionarProveedores(this, this.proveedor,
-				this.productoDeProveedor);
+//		this.controladorGestionarProveedores = new ControladorGestionarProveedores(this, this.proveedor,this.productoDeProveedor);
 
 		this.controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(
 				proveedor, stock, pedidosPendientes, productoDeProveedor);

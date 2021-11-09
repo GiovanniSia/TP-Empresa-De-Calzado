@@ -78,7 +78,7 @@ public class ControladorGestionarProductos {
 		this.todoElStock = new ArrayList<StockDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
-		this.ventanaGestionarProductos = new VentanaGestionarProductos();
+//		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 
 	}
 
@@ -146,7 +146,7 @@ public class ControladorGestionarProductos {
 		
 //		this.ventanaGestionarProductos.getChckbxProdSinStock().addActionListener(a -> realizarBusqueda());
 		
-		this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
+//		this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
 
 		this.ventanaGestionarProductos.getTablaProductos().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel rowSM = this.ventanaGestionarProductos.getTablaProductos().getSelectionModel();

@@ -33,7 +33,7 @@ public class ControladorAltaProveedor {
 		this.ventanaAltaProveedor.getBtnRegresar().addActionListener(a -> salir());
 		
 		this.ventanaAltaProveedor.getBtnEditar().addActionListener(a -> editarProveedor());
-		
+		validarTeclado();
 	}
 	
 	public void setControladorGestionarProveedores(	ControladorGestionarProveedores controladorGestionarProveedores) {
@@ -115,10 +115,11 @@ public class ControladorAltaProveedor {
 			JOptionPane.showMessageDialog(null, "El nombre no puede ser vacio");
 			return false;
 		}
-		String correo = this.ventanaAltaProveedor.getTextCorreo().getText();
-		if(correo.equals("")) {
-			JOptionPane.showMessageDialog(null, "El correo no puede ser vacio");
-			return false;	
+		String mail = this.ventanaAltaProveedor.getTextCorreo().getText();
+		boolean m = mail.matches("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		if(!m) {
+			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
+			return false;
 		}
 		String limiteDeCredit = this.ventanaAltaProveedor.getTextLimiteCredito().getText();
 		if(limiteDeCredit.equals("")) {

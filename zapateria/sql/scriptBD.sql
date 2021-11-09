@@ -191,7 +191,6 @@ CREATE TABLE `proveedor`
   `Nombre` varchar(45) NOT NULL,
   `CorreoElectronico` varchar(45) NOT NULL,
   `LimiteCredito` double(45,2) NOT NULL,
-  `CreditoDisponible` double(45,2) NOT NULL,
   PRIMARY KEY (`Idproveedor`)
 );
 
@@ -581,10 +580,10 @@ INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","N",100 ,5050,2000,5
 
 INSERT INTO maestroProductos values(10,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
 
-insert into proveedor values(1,"Naik","zapateriaargento198@gmail.com",20000,10000);
-insert into proveedor values(2,"Adida","zapateriaargento198@gmail.com",3000,1000);
-insert into proveedor values(3,"Rebuk","zapateriaargento198@gmail.com",200,500);
-insert into proveedor values(4,"ProveedorX","zapateriaargento198@gmail.com",2000,500);
+insert into proveedor values(1,"Naik","zapateriaargento198@gmail.com",20000);
+insert into proveedor values(2,"Adida","zapateriaargento198@gmail.com",3000);
+insert into proveedor values(3,"Rebuk","zapateriaargento198@gmail.com",200);
+insert into proveedor values(4,"ProveedorX","zapateriaargento198@gmail.com",2000);
 
 INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
 INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
