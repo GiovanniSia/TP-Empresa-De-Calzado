@@ -39,6 +39,7 @@ import presentacion.controlador.ModificarProducto.ControladorModificarMProducto;
 import presentacion.controlador.compraVirtual.ControladorVisualizarComprasVirtuales;
 import presentacion.controlador.fabrica.ControladorHistorialPasos;
 import presentacion.controlador.fabrica.ReControladorOperario;
+import presentacion.controlador.fabrica.receta.ControladorVerPasos;
 import presentacion.controlador.generarOrdenesManufactura.ControladorGenerarOrdenesManufactura;
 import presentacion.controlador.gerente.ControladorAltaCliente;
 import presentacion.controlador.gerente.ControladorGestionarClientes;
@@ -59,6 +60,7 @@ import presentacion.vista.Login.VentanaSupervisor;
 import presentacion.vista.Login.VentanaSupervisorFabrica;
 import presentacion.vista.Login.VentanaVendedor;
 import presentacion.vista.dashboardGerente.VentanaDashboardGerente;
+import presentacion.vista.fabrica.receta.VerPasos;
 
 public class Controlador {
 
@@ -142,6 +144,9 @@ public class Controlador {
 	private VentanaSupervisorFabrica ventanaSupervisorFabrica;
 	private VentanaVendedor ventanaVendedor;
 	private ControladorGestionarEmpleados controladorGestionarEmpleado;
+	
+	// gestionar recetas y pasos
+	private ControladorVerPasos controladorVerPasos;
 
 	// Configuracion (properties)
 	private ConfiguracionBD config = ConfiguracionBD.getInstance();
@@ -491,6 +496,26 @@ public class Controlador {
 		
 		//Historial fabricacion
 		this.reControladorOperario = new ReControladorOperario(this, this.sucursalObj);
+		
+		//Ingreso de Caja
+		this.controladorIngresosCaja = new ControladorIngresosCaja(this, caja);
+		//Egreso de Caja
+		this.controladorEgresosCaja = new ControladorEgresosCaja(this, egresos, pedidosPendientes);
+
+		// Registrar Venta
+		// Cierre de Caja
+		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
+		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
+				maestroProducto, stock);
+		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
+				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
+				this.ingresos);
+		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
+		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+		
+		// Gestionar recetas y pasos
+		this.controladorVerPasos = new ControladorVerPasos();
+		
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
@@ -543,6 +568,8 @@ public class Controlador {
 	}
 
 	public void escucharBotonesVentanaGerente() {
+		this.ventanaDashboardGerente.getBtnHistorialFabrica()
+		.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 		this.ventanaDashboardGerente.getBtnGestionarProductos().addActionListener(a -> pasarADarDeAltaProducto(a));
 		this.ventanaDashboardGerente.getBtnModPrecioMasivo().addActionListener(a -> pasarAModificarPrecioUnitario(a));
 		this.ventanaDashboardGerente.getBtnGestionarClientes().addActionListener(a -> pasarAGestionarClientes(a));
@@ -551,10 +578,16 @@ public class Controlador {
 		this.ventanaDashboardGerente.getBtnTareasAutomaticas().addActionListener(a -> pasarAConfig(a));
 		this.ventanaDashboardGerente.getBtnVerPedidosA().addActionListener(a -> pasarAVerPedidosAProveedor(a));
 		this.ventanaDashboardGerente.getBtnCotizaciones().addActionListener(a -> pasarACotizaciones(a));
+
+		this.ventanaDashboardGerente.getBtnCobrarVenta().addActionListener(a -> pasarACobrarVenta(a));
+		this.ventanaDashboardGerente.getBtnIngresoDeCaja().addActionListener(a -> pasarAIngresoDeCaja(a));
+		this.ventanaDashboardGerente.getBtnEgresoDeCaja().addActionListener(a -> pasarAEgresosCaja(a));
+		this.ventanaDashboardGerente.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
+		
+		this.ventanaDashboardGerente.getBtnGestionarRecetasYPasos().addActionListener(a -> pasarAGestionarRecetasYPasos(a));
+		
 		this.ventanaDashboardGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));	
 		
-		this.ventanaDashboardGerente.getBtnHistorialFabrica()
-		.addActionListener(a -> iniciarSistemaOperatoriaFabrica(a));
 	}
 
 	public void escucharBotonesVentanaSupervisorFabrica() {
@@ -639,6 +672,11 @@ public class Controlador {
 
 	}
 
+	public void pasarAGestionarRecetasYPasos(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		this.controladorVerPasos.inicializar();
+	}
+	
 	public void pasarAConfig(ActionEvent a) {
 		if (this.controladorTareasAutomatizadas.ventanaYaFueInicializada()) {
 			return;

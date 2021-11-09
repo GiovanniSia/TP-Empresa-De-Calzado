@@ -43,6 +43,11 @@ public class VentanaDashboardGerente {
 	private JButton btnCotizaciones;
 	private JButton btnCerrarSesion;
 	private JButton btnHistorialFabrica;
+	private JButton btnCobrarVenta;
+	private JButton btnIngresoDeCaja;
+	private JButton btnEgresoDeCaja;
+	private JButton btnCierreDeCaja;
+	private JButton btnGestionarRecetasYPasos;
 
 	/**
 	 * Launch the application.
@@ -99,75 +104,75 @@ public class VentanaDashboardGerente {
 		panel.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setBounds(10, 50, 319, 86);
+		lblLogo.setBounds(10, 11, 319, 86);
 		panel.add(lblLogo);
 		cambiarIconoLabel(lblLogo,"argentoshoes.png");
 		
 		JLabel lblNewLabel = new JLabel("Gerente:");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel.setBounds(20, 156, 91, 22);
+		lblNewLabel.setBounds(20, 108, 91, 22);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNombreGerente = new JLabel("Nombre Gerente");
 		lblNombreGerente.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNombreGerente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNombreGerente.setBounds(121, 156, 199, 22);
+		lblNombreGerente.setBounds(121, 108, 199, 22);
 		panel.add(lblNombreGerente);
 		
 		btnGestionarProductos = new JButton("Gestionar Productos");
 		btnGestionarProductos.setForeground(new Color(51, 102, 153));
 		btnGestionarProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarProductos.setBackground(new Color(51, 102, 204));
-		btnGestionarProductos.setBounds(27, 212, 282, 41);
+		btnGestionarProductos.setBounds(30, 145, 282, 41);
 		panel.add(btnGestionarProductos);
 		
 		btnModPrecioUnitario = new JButton("Modificar Precios Masivos");
 		btnModPrecioUnitario.setForeground(new Color(51, 102, 153));
 		btnModPrecioUnitario.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnModPrecioUnitario.setBackground(new Color(51, 102, 204));
-		btnModPrecioUnitario.setBounds(27, 264, 282, 41);
+		btnModPrecioUnitario.setBounds(38, 178, 282, 41);
 		panel.add(btnModPrecioUnitario);
 		
 		btnGestionarClientes = new JButton("Gestionar Clientes");
 		btnGestionarClientes.setForeground(new Color(51, 102, 153));
 		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarClientes.setBackground(new Color(51, 102, 204));
-		btnGestionarClientes.setBounds(27, 316, 282, 41);
+		btnGestionarClientes.setBounds(27, 213, 282, 41);
 		panel.add(btnGestionarClientes);
 		
 		btnGestionarEmpleados = new JButton("Gestionar Empleados");
 		btnGestionarEmpleados.setForeground(new Color(51, 102, 153));
 		btnGestionarEmpleados.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarEmpleados.setBackground(new Color(51, 102, 204));
-		btnGestionarEmpleados.setBounds(27, 368, 282, 41);
+		btnGestionarEmpleados.setBounds(38, 248, 282, 41);
 		panel.add(btnGestionarEmpleados);
 		
 		btnVerReporteRanking = new JButton("Ranking de Ventas");
 		btnVerReporteRanking.setForeground(new Color(51, 102, 153));
 		btnVerReporteRanking.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerReporteRanking.setBackground(new Color(51, 102, 204));
-		btnVerReporteRanking.setBounds(27, 420, 282, 41);
+		btnVerReporteRanking.setBounds(10, 280, 282, 41);
 		panel.add(btnVerReporteRanking);
 		
 		btnTareasAutomaticas = new JButton("Tareas Automaticas");
 		btnTareasAutomaticas.setForeground(new Color(51, 102, 153));
 		btnTareasAutomaticas.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnTareasAutomaticas.setBackground(new Color(51, 102, 204));
-		btnTareasAutomaticas.setBounds(27, 472, 282, 41);
+		btnTareasAutomaticas.setBounds(20, 312, 282, 41);
 		panel.add(btnTareasAutomaticas);
 		
 		btnVerPedidosA = new JButton("Pedidos a Proveedores");
 		btnVerPedidosA.setForeground(new Color(51, 102, 153));
 		btnVerPedidosA.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerPedidosA.setBackground(new Color(51, 102, 204));
-		btnVerPedidosA.setBounds(27, 524, 282, 41);
+		btnVerPedidosA.setBounds(38, 348, 282, 41);
 		panel.add(btnVerPedidosA);
 		
 		btnCotizaciones = new JButton("Cotizaciones");
 		btnCotizaciones.setForeground(new Color(51, 102, 153));
 		btnCotizaciones.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnCotizaciones.setBackground(new Color(51, 102, 204));
-		btnCotizaciones.setBounds(27, 576, 282, 41);
+		btnCotizaciones.setBounds(10, 379, 282, 41);
 		panel.add(btnCotizaciones);
 		
 		btnCerrarSesion = new JButton("");
@@ -188,8 +193,43 @@ public class VentanaDashboardGerente {
 		btnHistorialFabrica.setForeground(new Color(51, 102, 153));
 		btnHistorialFabrica.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnHistorialFabrica.setBackground(new Color(51, 102, 204));
-		btnHistorialFabrica.setBounds(10, 189, 282, 41);
+		btnHistorialFabrica.setBounds(48, 415, 282, 41);
 		panel.add(btnHistorialFabrica);
+		
+		btnCobrarVenta = new JButton("Cobrar Venta");
+		btnCobrarVenta.setForeground(new Color(51, 102, 153));
+		btnCobrarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnCobrarVenta.setBackground(new Color(51, 102, 204));
+		btnCobrarVenta.setBounds(9, 547, 282, 41);
+		panel.add(btnCobrarVenta);
+		
+		btnIngresoDeCaja = new JButton("Ingreso de Caja");
+		btnIngresoDeCaja.setForeground(new Color(51, 102, 153));
+		btnIngresoDeCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnIngresoDeCaja.setBackground(new Color(51, 102, 204));
+		btnIngresoDeCaja.setBounds(27, 450, 282, 41);
+		panel.add(btnIngresoDeCaja);
+		
+		btnEgresoDeCaja = new JButton("Egreso de Caja");
+		btnEgresoDeCaja.setForeground(new Color(51, 102, 153));
+		btnEgresoDeCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnEgresoDeCaja.setBackground(new Color(51, 102, 204));
+		btnEgresoDeCaja.setBounds(-11, 481, 282, 41);
+		panel.add(btnEgresoDeCaja);
+		
+		btnCierreDeCaja = new JButton("Cierre de Caja");
+		btnCierreDeCaja.setForeground(new Color(51, 102, 153));
+		btnCierreDeCaja.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnCierreDeCaja.setBackground(new Color(51, 102, 204));
+		btnCierreDeCaja.setBounds(27, 514, 282, 41);
+		panel.add(btnCierreDeCaja);
+		
+		btnGestionarRecetasYPasos = new JButton("Gestionar Recetas y Pasos");
+		btnGestionarRecetasYPasos.setForeground(new Color(51, 102, 153));
+		btnGestionarRecetasYPasos.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarRecetasYPasos.setBackground(new Color(51, 102, 204));
+		btnGestionarRecetasYPasos.setBounds(20, 577, 282, 41);
+		panel.add(btnGestionarRecetasYPasos);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
@@ -308,6 +348,26 @@ public class VentanaDashboardGerente {
 		this.show();
 	}
 	
+	public JButton getBtnGestionarRecetasYPasos() {
+		return btnGestionarRecetasYPasos;
+	}
+
+	public JButton getBtnCobrarVenta() {
+		return btnCobrarVenta;
+	}
+
+	public JButton getBtnIngresoDeCaja() {
+		return btnIngresoDeCaja;
+	}
+
+	public JButton getBtnEgresoDeCaja() {
+		return btnEgresoDeCaja;
+	}
+
+	public JButton getBtnCierreDeCaja() {
+		return btnCierreDeCaja;
+	}
+
 	public JButton getBtnGestionarProductos() {
 		return btnGestionarProductos;
 	}
