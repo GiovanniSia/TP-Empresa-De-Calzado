@@ -283,7 +283,7 @@ public class ControladorBusquedaProductos {
 			preci = m.getPrecioMinorista();
 		}
 		BigDecimal precio = new BigDecimal(preci);
-		int stockDisp = s.getStockDisponible();
+		Double stockDisp = s.getStockDisponible();
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
@@ -336,7 +336,7 @@ public class ControladorBusquedaProductos {
 	public void modificarCantStock(MaestroProductoDTO producto, int IdStock, int cant) {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==producto.getIdMaestroProducto() && IdStock == s.getIdStock()) {
-				int valor = s.getStockDisponible()+cant;
+				Double valor = s.getStockDisponible()+cant;
 				s.setStockDisponible(valor);
 				return;
 			}
@@ -430,7 +430,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO s: this.listaStock) {
 			if(idMaestroProducto == s.getIdProducto() && s.getIdSucursal()==this.idSucursal) {
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
-					int total = s.getStockDisponible()+ prod.getCantidad();
+					Double total = s.getStockDisponible()+ prod.getCantidad();
 					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
 						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
@@ -538,7 +538,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO stock: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
-					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
+					Double nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
 					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
 					if(!a) {
 						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al descontar del stock");
@@ -590,7 +590,7 @@ public class ControladorBusquedaProductos {
 //		        	}
 		        	
 		        }else {
-		        	if((int)table.getValueAt(row, 3) == 0) {
+		        	if((Double)table.getValueAt(row, 3) == 0) {
 			        	setBackground(Color.red);
 			        	setForeground(Color.WHITE);	
 		        	}else {

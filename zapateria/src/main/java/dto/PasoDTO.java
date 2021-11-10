@@ -9,12 +9,12 @@ public class PasoDTO {
 	private String Descripcion;
 
 	private List<MaestroProductoDTO> materiales;
-	private List<Integer> cantidadUsada;
+	private List<Double> cantidadUsada;
 	
 	private String estado;
 
 	public PasoDTO(int idPaso, String descripcion, List<MaestroProductoDTO> materiales,
-			List<Integer> cantidadUsada, String estado) {
+			List<Double> cantidadUsada, String estado) {
 		super();
 		IdPaso = idPaso;
 		Descripcion = descripcion;
@@ -28,15 +28,15 @@ public class PasoDTO {
 		IdPaso = idPaso;
 		Descripcion = descripcion;
 		this.materiales = new ArrayList<MaestroProductoDTO>();
-		this.cantidadUsada = new ArrayList<Integer>();
+		this.cantidadUsada = new ArrayList<Double>();
 		this.estado = estado;
 	}
 
-	public List<Integer> getCantidadUsada() {
+	public List<Double> getCantidadUsada() {
 		return cantidadUsada;
 	}
 
-	public void setCantidadUsada(List<Integer> cantidadUsada) {
+	public void setCantidadUsada(List<Double> cantidadUsada) {
 		this.cantidadUsada = cantidadUsada;
 	}
 

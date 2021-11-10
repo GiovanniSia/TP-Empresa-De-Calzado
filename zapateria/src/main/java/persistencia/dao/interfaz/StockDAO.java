@@ -9,5 +9,5 @@ public interface StockDAO {
 	
 	public boolean insert(StockDTO stock) ;
 	
-	public boolean actualizarStock(int idStock,int cant);
+	public boolean actualizarStock(int idStock,Double double1);
 }

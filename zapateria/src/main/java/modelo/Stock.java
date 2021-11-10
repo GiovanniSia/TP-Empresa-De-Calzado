@@ -23,8 +23,8 @@ public class Stock {
 		return this.stock.readAll();
 	}
 	
-	public boolean actualizarStock(int idStock,int cant) {
-		return this.stock.actualizarStock(idStock,cant);
+	public boolean actualizarStock(int idStock,Double double1) {
+		return this.stock.actualizarStock(idStock,double1);
 	}
 	
 }

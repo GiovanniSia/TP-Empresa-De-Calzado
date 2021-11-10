@@ -352,8 +352,8 @@ public class ReControladorOperario implements ActionListener {
 		if(tengoMateriales) {
 			// Descontar los materiales que usara
 			int cont = 0;
-			int cantidadADescontar = 0;
-			int restante = 0;
+			Double cantidadADescontar = 0.0;
+			Double restante = 0.0;
 			for(MaestroProductoDTO mp: pasoActual.getPasosDTO().getMateriales()) {
 				cantidadADescontar = pasoActual.getPasosDTO().getCantidadUsada().get(cont)*ordenTra.getCantidad();
 				for(StockDTO ss: modeloStock.readAll()) {
@@ -361,7 +361,7 @@ public class ReControladorOperario implements ActionListener {
 						restante = ss.getStockDisponible() - cantidadADescontar;
 						if(restante < 0){
 							cantidadADescontar = -restante;
-							restante = 0;
+							restante = 0.0;
 						}
 						modeloFabricacion.actuaizarCantidadStockDeUnProductoEnUnaSucursal(restante, ss.getIdStock());
 						System.out.println("Producto: "+mp.getDescripcion());
@@ -810,9 +810,9 @@ public class ReControladorOperario implements ActionListener {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                 String status = (String)table.getModel().getValueAt(row, 2);
-                int usar = Integer.valueOf(status);
+                Double usar = Double.valueOf(status);
                 status = (String)table.getModel().getValueAt(row, 3);
-                int tengo = Integer.valueOf(status);
+                Double tengo = Double.valueOf(status);
                 if (tengo<usar) {
                     setBackground(Color.pink);
                     //setForeground(Color.WHITE);
@@ -844,16 +844,16 @@ public class ReControladorOperario implements ActionListener {
 		return ret;
 	}
 	
-	private boolean hayStockSuficienteDeUnMaterial(int idMaestroProducto, int i) {
+	private boolean hayStockSuficienteDeUnMaterial(int idMaestroProducto, double d) {
 		//Primero cuento todo el stock luego juzgo
 		List<StockDTO> todoElStock = modeloStock.readAll();
-		int cantidadTotalDisponible = 0;
+		Double cantidadTotalDisponible = 0.0;
 		for(StockDTO s: todoElStock) {
 			if(s.getIdProducto() == idMaestroProducto && s.getIdSucursal() == this.idFabrica) {
 				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();
 			}
 		}
-		return cantidadTotalDisponible >= i;
+		return cantidadTotalDisponible >= d;
 	}
 	
 	private void reiniciarTablaIngredientesDeUnTrabajo() {
@@ -873,9 +873,9 @@ public class ReControladorOperario implements ActionListener {
 		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
 			//{ "Material", "Cantidad a usar", "Cantidad en stock", "Unidad medida"};
 			String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
-			int cantUsar = (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad());
+			double cantUsar = (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad());
 			String cantUsada = cantUsar+"";
-			int cantDisponible = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x));
+			Double cantDisponible = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x));
 			String cantActual = cantDisponible+"";
 			String unidadMedida = p.getPasosDTO().getMateriales().get(x).getUnidadMedida();
 			Object[] agregar = {desc, cantUsada, cantActual, unidadMedida};
@@ -896,9 +896,9 @@ public class ReControladorOperario implements ActionListener {
                     super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 
                     String status = (String)table.getModel().getValueAt(row, 1);
-                    int usar = Integer.valueOf(status);
+                    Double usar = Double.valueOf(status);
                     status = (String)table.getModel().getValueAt(row, 2);
-                    int tengo = Integer.valueOf(status);
+                    Double tengo = Double.valueOf(status);
                     if (tengo<usar) {
                         setBackground(Color.pink);
                         //setForeground(Color.WHITE);
@@ -1120,9 +1120,9 @@ public class ReControladorOperario implements ActionListener {
 		return anioCumpleCreado+"-"+mesCumpleCreado+"-"+diaCumpleCreado;
 	}
 	
-	private int cantidadEnStock(MaestroProductoDTO producto) {
+	private Double cantidadEnStock(MaestroProductoDTO producto) {
 		List<StockDTO> todoElStock = modeloStock.readAll();
-		int cantidadTotalDisponible = 0;
+		Double cantidadTotalDisponible = 0.0;
 		for(StockDTO s: todoElStock) {
 			if(s.getIdProducto() == producto.getIdMaestroProducto() && s.getIdSucursal() == this.idFabrica) {
 				cantidadTotalDisponible = cantidadTotalDisponible + s.getStockDisponible();

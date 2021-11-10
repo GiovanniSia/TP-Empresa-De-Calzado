@@ -144,7 +144,7 @@ public class ControladorGenerarOrdenesManufactura implements ActionListener {
 		for(MaestroProductoDTO mp: productosEnLista) {
 			DAOSQLFactory a = new DAOSQLFactory();
 			List<StockDTO> stock = a.createStockDAO().readAll();
-			int cantidadEnStock = 0;
+			double cantidadEnStock = 0;
 			for(StockDTO s: stock) {
 				if(s.getIdSucursal() == idSucursal && s.getIdProducto() == mp.getIdMaestroProducto()) {
 					cantidadEnStock = cantidadEnStock + s.getStockDisponible();

@@ -113,7 +113,7 @@ CREATE TABLE `stock`
   `IdSucursal` int(11) NOT NULL,
   `IdProducto` int(11) NOT NULL,
   `CodigoLote` varchar(45) NOT NULL,
-  `StockDisponible` int(11) NOT NULL,
+  `StockDisponible` double(11,2) NOT NULL,
   PRIMARY KEY (`IdStock`)
 );
 
@@ -226,7 +226,7 @@ CREATE TABLE `materialesDePaso`
 (
   `IdMaterialDePaso` int(11) NOT NULL AUTO_INCREMENT,
   `IdMaterial` int(11) NOT NULL,
-  `CantidadUsada` int(11) NOT NULL,
+  `CantidadUsada` double(11,2) NOT NULL,
   `IdPaso` int(11) NOT NULL,
   PRIMARY KEY (`IdMaterialDePaso`)
 );

@@ -349,7 +349,7 @@ public class ControladorVerPedidosAProveedor {
 	    String hora = tf.format(LocalDateTime.now());
 		
 	    
-		int cantidadDeStockDisp = getStockDisponible(pedidoSeleccionado.getIdMaestroProducto());
+	    Double cantidadDeStockDisp = getStockDisponible(pedidoSeleccionado.getIdMaestroProducto());
 		
 		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+cantidadDeStockDisp+" -> Stock actualizado: "+(cantidadDeStockDisp+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
@@ -369,7 +369,7 @@ public class ControladorVerPedidosAProveedor {
 			int idSucursal = this.idSucursal;
 			int idProd = producto.getIdMaestroProducto();
 			String codLote = generarOrdenesFabricacion.crearCodigoLote(producto);
-			int stockDisp = pedidoSeleccionado.getCantidad();
+			Double stockDisp = (double) pedidoSeleccionado.getCantidad();
 
 			
 			StockDTO nuevoStock = new StockDTO(idStock,idSucursal,idProd,codLote,stockDisp);
@@ -396,8 +396,8 @@ public class ControladorVerPedidosAProveedor {
 		}return null;
 	}
 
-	public int getStockDisponible(int idProducto) {
-		int cant=0;
+	public Double getStockDisponible(int idProducto) {
+		Double cant=0.0;
 		for(StockDTO s: this.listaStock) {
 			//si ese stock tiene este producto asociado
 			if(s.getIdProducto()==idProducto) {

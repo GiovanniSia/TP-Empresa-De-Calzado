@@ -11,7 +11,7 @@ import persistencia.dao.mysql.DAOSQLFactory;
 public class generarOrdenesFabricacion {
 	
 	public static boolean faltaStockDeUnProductoEnUnaSucursal(int idSucursal, MaestroProductoDTO producto) {
-		int cantidadEnStock = contarStockDeUnProductoEnUnaSucursal(idSucursal,producto.getIdMaestroProducto());
+		Double cantidadEnStock = contarStockDeUnProductoEnUnaSucursal(idSucursal,producto.getIdMaestroProducto());
 		if(producto.getPuntoRepositorio()>=cantidadEnStock) {
 			return true;
 		}
@@ -26,10 +26,10 @@ public class generarOrdenesFabricacion {
 		}*/
 	}
 	
-	public static int contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
+	public static Double contarStockDeUnProductoEnUnaSucursal(int idSucursal, int idProducto) {
 		DAOSQLFactory a = new DAOSQLFactory();
 		List<StockDTO> todosLosStocks = a.createStockDAO().readAll();
-		int cantidadContador = 0;
+		Double cantidadContador = 0.0;
 		for(StockDTO stock : todosLosStocks) {
 			if(stock.getIdSucursal() == idSucursal && stock.getIdProducto() == idProducto) {
 				cantidadContador = cantidadContador + stock.getStockDisponible();

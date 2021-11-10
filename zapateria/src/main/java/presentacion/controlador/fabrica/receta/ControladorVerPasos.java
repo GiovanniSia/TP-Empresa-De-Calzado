@@ -462,17 +462,19 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		boolean yaEstaba = false;
+		//Double cantidadUsar = (Double) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue();
+		Double cantidadUsar = Double.valueOf(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText());
 		for(int x = 0; x<pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().size();x++) {
 			MaestroProductoDTO m = pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().get(x);
 			yaEstaba = yaEstaba || m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto();
 			if(m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto()) {
 				//pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().remove(x);
-				pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().set(x, pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().get(x)+(Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+				pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().set(x, pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().get(x)+cantidadUsar);
 			}
 		}
 		if(!yaEstaba) {
 			pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().add(ingredienteSeleccionado);
-			pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().add((Integer) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue());
+			pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().add(cantidadUsar);
 		}
 		/*
 		reiniciarTablaIngredientes();
