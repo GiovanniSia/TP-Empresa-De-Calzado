@@ -180,8 +180,21 @@ public class ControladorVerPasos implements ActionListener {
 			mostrarMensajeEmergente("El nombre del paso sobrepasa los 20 caracteres.");
 			return;
 		}
+		if(!esNombreDePasoValido(pasoAgregar)) {
+			mostrarMensajeEmergente("El nombre del paso es repetido, ya esta en uso en otro paso.");
+			return;
+		}
 		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar,"Activo"));
 		refrescarTabla();
+	}
+	
+	private boolean esNombreDePasoValido(String nombre) {
+		boolean ret = true;
+		List<PasoDTO> todosLosPasos = this.modeloPaso.readAll();
+		for(PasoDTO p: todosLosPasos) {
+			ret = ret && !p.getDescripcion().toLowerCase().equals(nombre.toLowerCase());
+		}
+		return ret;
 	}
 	
 	private void botonEliminarPasos(ActionEvent r) {
@@ -437,6 +450,10 @@ public class ControladorVerPasos implements ActionListener {
 			this.mostrarMensajeEmergente("La receta debe crear un producto, no se a seleccionado que producto fabrica.");
 			return;
 		}
+		if(!esNombreDeRecetaValido(this.ventanaPrincipal.getTextFieldReceta().getText())) {
+			mostrarMensajeEmergente("El nombre de la receta es repetido, ya esta en uso en otra receta.");
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		recetaSeleccionada.setIdProducto(this.productosTerminados.get(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex()).getIdMaestroProducto());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
@@ -448,6 +465,15 @@ public class ControladorVerPasos implements ActionListener {
 		
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(this.ventanaPrincipal.getComboBoxReceta().getItemCount()-1);
+	}
+	
+	private boolean esNombreDeRecetaValido(String nombre) {
+		boolean ret = true;
+		List<RecetaDTO> recetas = this.modeloFabricacion.readAllReceta();
+		for(RecetaDTO r: recetas) {
+			ret = ret && !r.getDescripcion().toLowerCase().equals(nombre.toLowerCase());
+		}
+		return ret;
 	}
 	
 	private void agregarIngrediente(ActionEvent e) {
@@ -603,11 +629,22 @@ public class ControladorVerPasos implements ActionListener {
 			this.mostrarMensajeEmergente("Esta receta esta actualmente esta en uso, no se puede modificar.");
 			return;
 		}
+		if(!nuevoNombreRecetaEsValido(this.ventanaPrincipal.getTextFieldReceta().getText())) {
+			mostrarMensajeEmergente("El nombre de la receta es repetido, ya esta en uso en otra receta.");
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
 		int indiceSeleccionado = this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex();
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(indiceSeleccionado);
+	}
+
+	private boolean nuevoNombreRecetaEsValido(String text) {
+		if(this.recetaSeleccionada.getDescripcion().toLowerCase().equals(text.toLowerCase())) {
+			return true;
+		}
+		return esNombreDeRecetaValido(text);
 	}
 
 	private boolean estaEnUsoLaReceta(RecetaDTO recetaAVerificar) {
