@@ -52,6 +52,7 @@ public class VentanaDashboardGerente {
 	private JButton btnGestionarProveedores;
 	private JLabel lblNombreSucursal;
 	private JLabel lblSucursal;
+	private JLabel lblGerente;
 
 	/**
 	 * Launch the application.
@@ -119,10 +120,10 @@ public class VentanaDashboardGerente {
 		panel.add(lblLogo);
 		cambiarIconoLabel(lblLogo,"argentoshoes.png");
 		
-		JLabel lblNewLabel = new JLabel("Gerente:");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel.setBounds(20, 108, 91, 22);
-		panel.add(lblNewLabel);
+		lblGerente = new JLabel("Gerente:");
+		lblGerente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblGerente.setBounds(20, 108, 160, 22);
+		panel.add(lblGerente);
 		
 		JLabel lblNombreGerente = new JLabel("Nombre Gerente");
 		lblNombreGerente.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -257,7 +258,7 @@ public class VentanaDashboardGerente {
 		
 		lblSucursal = new JLabel("Sucursal");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblSucursal.setBounds(20, 138, 91, 22);
+		lblSucursal.setBounds(20, 138, 160, 22);
 		panel.add(lblSucursal);
 		
 		JPanel panel_1 = new JPanel();
@@ -443,5 +444,13 @@ public class VentanaDashboardGerente {
 
 	public JButton getBtnHistorialFabrica() {
 		return btnHistorialFabrica;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblGerente() {
+		return lblGerente;
 	}
 }

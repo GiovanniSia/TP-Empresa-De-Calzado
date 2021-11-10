@@ -28,8 +28,8 @@ public class VentanaAdministrador extends JFrame {
 	private JButton btnCerrarSesion;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_2;
+	private JLabel lblSucursal;
+	private JLabel lblEmpleado;
 
 	private JButton btnGestionarClientes;
 	private JButton btnVerProductos;
@@ -82,17 +82,17 @@ public class VentanaAdministrador extends JFrame {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
 
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(547, 28, 59, 19);
-		panel.add(lblNewLabel);
+		lblSucursal = new JLabel("Sucursal:");
+		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSucursal.setBounds(547, 28, 138, 19);
+		panel.add(lblSucursal);
 
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(316, 28, 59, 19);
-		panel.add(lblNewLabel_2);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(316, 28, 151, 19);
+		panel.add(lblEmpleado);
 
 		lblNewLabel_1 = new JLabel("Cerrar Sesion");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -307,5 +307,13 @@ public class VentanaAdministrador extends JFrame {
 
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
 	}
 }

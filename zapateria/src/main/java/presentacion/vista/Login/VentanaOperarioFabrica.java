@@ -31,7 +31,7 @@ public class VentanaOperarioFabrica extends JFrame {
 	private JPanel panel;
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_2;
+	private JLabel lblEmpleado;
 	
 	public VentanaOperarioFabrica() {
 		this.initialize();
@@ -100,11 +100,11 @@ public class VentanaOperarioFabrica extends JFrame {
 		lblNewLabel.setBounds(537, 28, 172, 19);
 		panel.add(lblNewLabel);
 		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(343, 28, 59, 19);
-		panel.add(lblNewLabel_2);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(343, 28, 233, 19);
+		panel.add(lblEmpleado);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
@@ -158,5 +158,9 @@ public class VentanaOperarioFabrica extends JFrame {
 
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
 	}
 }
