@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 import dto.EmpleadoDTO;
 import dto.SucursalDTO;
@@ -27,6 +28,9 @@ public class ControladorLogin {
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
 	private String mail;
+	
+	private JProgressBar progressBar;
+	private Simulacion simulacion=null;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -58,9 +62,8 @@ public class ControladorLogin {
 	}
 
 	private void iniciarZapateria() {
-		cerrarVentana();
 		establecerPropertiesEmpleado();
-		establecerPropertiesSucursal();	
+		establecerPropertiesSucursal();			
 		mostrarControlador();
 	}
 
@@ -111,10 +114,13 @@ public class ControladorLogin {
 
 	private void mostrarControlador() {
 		controlador = new Controlador();
-		controlador.inicializar();
 		controlador.setControladorLogin(this);
+		progressBar = this.ventanaLogin.getProgressBar();
+		progressBar.setVisible(true);
+		simulacion = new Simulacion(controlador, progressBar,this);
+		simulacion.execute();
+//		cerrarVentana();
 		ventanaLogin.limpiarCampos();
-		controlador.mostrarVentanaPorTipoEmpleado();
 	}
 
 	private void establecerPropertiesEmpleado() {

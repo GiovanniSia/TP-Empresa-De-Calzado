@@ -23,6 +23,7 @@ import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
+import javax.swing.JProgressBar;
 
 public class VentanaLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,7 @@ public class VentanaLogin extends JFrame {
 	private JComboBox cbSucursales;
 	private JLabel lblNewLabel_1;
 	private JLabel lblZapateriaArgento;
+	private JProgressBar progressBar;
 
 	public static void main(String[] args) {
 		VentanaLogin n = new VentanaLogin();
@@ -47,7 +49,7 @@ public class VentanaLogin extends JFrame {
 		initialize();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("rawtypes")
 	public void initialize() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -188,11 +190,16 @@ public class VentanaLogin extends JFrame {
 		lblNewLabel_1 = new JLabel("Clave: 1234");
 		lblNewLabel_1.setBounds(659, 555, 112, 14);
 		contentPane.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(0, 0, 800, 600);
-		contentPane.add(lblNewLabel_2);
-		cambiarIconoLabel(lblNewLabel_2, "foto.png");
+		
+		progressBar = new JProgressBar();
+		progressBar.setBounds(244, 345, 292, 32);
+		progressBar.setVisible(false);
+		contentPane.add(progressBar);
+		
+				JLabel lblNewLabel_2 = new JLabel("");
+				lblNewLabel_2.setBounds(0, 0, 800, 600);
+				contentPane.add(lblNewLabel_2);
+				cambiarIconoLabel(lblNewLabel_2, "foto.png");
 
 	}
 
@@ -240,6 +247,10 @@ public class VentanaLogin extends JFrame {
 		this.show();
 	}
 
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
 	public JTextField getTxtFieldCorreo() {
 		return txtFieldCorreo;
 	}
@@ -256,5 +267,4 @@ public class VentanaLogin extends JFrame {
 	public JComboBox getCbSucursales() {
 		return cbSucursales;
 	}
-
 }
