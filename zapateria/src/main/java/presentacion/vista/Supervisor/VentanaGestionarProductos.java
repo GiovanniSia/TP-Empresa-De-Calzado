@@ -3,6 +3,7 @@ package presentacion.vista.Supervisor;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -20,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JCheckBox;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaGestionarProductos extends JFrame {
 
@@ -35,14 +38,19 @@ private static final long serialVersionUID = 1L;
 	private JLabel lblFiltrarPor;
 	private JLabel lblTitulo;
 	private JScrollPane spProductos;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JButton btnAtras;
 	private JLabel lblAtrs;
 	private JButton btnAgregarProducto;
 	private JTextField textTalle;
 	JButton btnGenerarPedido;
 	JButton btnGenerarOrdenDeManufactura;
+	private JPanel panel_2;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblAgregarProducto;
+	private JLabel lblAtrs_2;
+	private JLabel lblAtrs_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -69,20 +77,21 @@ private static final long serialVersionUID = 1L;
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 932, 589);
+		frame.setBounds(100, 100, 923, 609);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 191, 908, 351);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 191, 908, 295);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spProductos = new JScrollPane();
-		spProductos.setBounds(10, 11, 898, 270);
+		spProductos.setBounds(10, 11, 888, 270);
 		spProductos.setBackground(new Color(248, 248, 255));
 
 
@@ -132,36 +141,11 @@ private static final long serialVersionUID = 1L;
 		tablaProductos.doLayout();
 		
 		panel.add(spProductos);
-		
-		
-		btnAtras = new JButton("");
-		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(10, 291, 55, 50);
-		cambiarIconoBotones(btnAtras, "back2.png");
-		panel.add(btnAtras);
-		
-
-		lblAtrs = new JLabel("Atras");
-		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtrs.setBounds(84, 291, 70, 50);
-		panel.add(lblAtrs);
-		
-		btnAgregarProducto = new JButton("Agregar Producto");
-		btnAgregarProducto.setBounds(164, 293, 132, 48);
-		panel.add(btnAgregarProducto);
-		
-		btnGenerarPedido = new JButton("Generar Pedido");
-		btnGenerarPedido.setBounds(394, 293, 179, 48);
-		panel.add(btnGenerarPedido);
-		
-		btnGenerarOrdenDeManufactura = new JButton("Generar Orden de manufactura");
-		btnGenerarOrdenDeManufactura.setBounds(733, 291, 175, 27);
-		panel.add(btnGenerarOrdenDeManufactura);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
-		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 95, 908, 95);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 95, 908, 99);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -194,22 +178,92 @@ private static final long serialVersionUID = 1L;
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblTitulo.setBounds(10, 52, 643, 43);
 		frame.getContentPane().add(lblTitulo);
-
+		
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 908, 50);
+		panel_2.setBounds(0, 0, 906, 53);
 		frame.getContentPane().add(panel_2);
-
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(671, 28, 59, 19);
 		panel_2.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("Empleado:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(477, 28, 59, 19);
+		panel_2.add(lblNewLabel_1);
+		
+		btnGenerarPedido = new JButton("");
+		btnGenerarPedido.setBounds(480, 494, 60, 60);
+		cambiarIconoBotones(btnGenerarPedido, "arroba.png");
+		frame.getContentPane().add(btnGenerarPedido);
+		
+		btnAgregarProducto = new JButton("");
+		btnAgregarProducto.setBounds(265, 494, 60, 60);
+		cambiarIconoBotones(btnAgregarProducto, "product+.png");
+		frame.getContentPane().add(btnAgregarProducto);
+		
+
+		lblAtrs = new JLabel("Atras");
+		lblAtrs.setBounds(103, 494, 51, 60);
+		frame.getContentPane().add(lblAtrs);
+		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		
+		btnAtras = new JButton("");
+		btnAtras.setBounds(33, 494, 60, 60);
+		frame.getContentPane().add(btnAtras);
+		btnAtras.setBackground(new Color(248, 248, 255));
+		cambiarIconoBotones(btnAtras, "back2.png");
+		
+		btnGenerarOrdenDeManufactura = new JButton("");
+		btnGenerarOrdenDeManufactura.setBounds(682, 494, 60, 60);
+		cambiarIconoBotones(btnGenerarOrdenDeManufactura, "fabrica.png");
+		frame.getContentPane().add(btnGenerarOrdenDeManufactura);
+		
+		lblAgregarProducto = new JLabel("Agregar Producto");
+		lblAgregarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAgregarProducto.setBounds(335, 494, 135, 60);
+		frame.getContentPane().add(lblAgregarProducto);
+		
+		lblAtrs_2 = new JLabel("<html>Generar Pedido a Proveedor</html>");
+		lblAtrs_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtrs_2.setBounds(551, 494, 121, 60);
+		frame.getContentPane().add(lblAtrs_2);
+		
+		lblAtrs_1 = new JLabel("<html>Generar Orden de Manufactura</html>");
+		lblAtrs_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtrs_1.setBounds(752, 494, 121, 60);
+		frame.getContentPane().add(lblAtrs_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 1000, 750);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

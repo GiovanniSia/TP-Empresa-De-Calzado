@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
+import javax.swing.border.MatteBorder;
 
 public class VentanaVerPedidosAProveedores {
 
@@ -58,11 +59,13 @@ public class VentanaVerPedidosAProveedores {
 	private JSpinner spinnerHoraHasta;
 	
 	private JComboBox<String> comboBoxEstadoSolo;
-	private JPanel panel_1;
-	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_5;
+	private JPanel panel_1;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_6;
 
 
 	/**
@@ -104,9 +107,10 @@ public class VentanaVerPedidosAProveedores {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 0));
 		panel.setBounds(0, 0, 1169, 539);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -117,45 +121,45 @@ public class VentanaVerPedidosAProveedores {
 		panel.add(lblNewLabel);
 		
 		JPanel panelTabla = new JPanel();
-		panelTabla.setBackground(new Color(248, 248, 255));
-		panelTabla.setBounds(10, 98, 1159, 347);
+		panelTabla.setBackground(new Color(255, 255, 255, 180));
+		panelTabla.setBounds(0, 98, 1169, 354);
 		panel.add(panelTabla);
 		panelTabla.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Filtrar por:");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblNewLabel_1.setBounds(10, 0, 183, 31);
+		lblNewLabel_1.setBounds(20, 0, 183, 31);
 		panelTabla.add(lblNewLabel_1);		
 		
 		JLabel lblId = new JLabel("Id");
 		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblId.setBounds(10, 32, 29, 19);
+		lblId.setBounds(20, 32, 29, 19);
 		panelTabla.add(lblId);
 				
 		JLabel lblProveedor = new JLabel("Proveedor");
 		lblProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblProveedor.setBounds(56, 32, 79, 19);
+		lblProveedor.setBounds(66, 32, 79, 19);
 		panelTabla.add(lblProveedor);
 
 		JLabel lblProducto = new JLabel("Producto");
 		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblProducto.setBounds(170, 32, 79, 19);
+		lblProducto.setBounds(180, 32, 79, 19);
 		panelTabla.add(lblProducto);
 				
 		JLabel lblPrecio = new JLabel("Precio");
 		lblPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblPrecio.setBounds(290, 32, 79, 19);
+		lblPrecio.setBounds(300, 32, 79, 19);
 		panelTabla.add(lblPrecio);
 				
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblEstado.setBounds(422, 32, 79, 19);
+		lblEstado.setBounds(432, 32, 79, 19);
 		panelTabla.add(lblEstado);
 		
 		JLabel lblFechaDesde = new JLabel("Desde");
 		lblFechaDesde.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFechaDesde.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaDesde.setBounds(681, 32, 79, 19);
+		lblFechaDesde.setBounds(691, 32, 79, 19);
 		panelTabla.add(lblFechaDesde);
 		
 		
@@ -172,7 +176,7 @@ public class VentanaVerPedidosAProveedores {
 			}			
 		};
 		JScrollPane scrollPaneTablaPedidos = new JScrollPane(this.tablePedidos, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneTablaPedidos.setBounds(0, 81, 1149, 266);
+		scrollPaneTablaPedidos.setBounds(10, 81, 1149, 266);
 		
 		tablePedidos = new JTable(modelTablaPedidos);
 		tablePedidos.setBounds(10, 81, 1247, 380);
@@ -203,70 +207,70 @@ public class VentanaVerPedidosAProveedores {
 		*/
 		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		comboBoxEstado.setBounds(422, 51, 146, 21);
+		comboBoxEstado.setBounds(432, 51, 146, 21);
 		comboBoxEstado.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstado);
 		
 		comboBoxEstadoSolo = new JComboBox<String>();
 		comboBoxEstadoSolo.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		comboBoxEstadoSolo.setBounds(1065, 50, 79, 21);
+		comboBoxEstadoSolo.setBounds(1075, 50, 79, 21);
 		comboBoxEstadoSolo.addItem("Sin seleccionar");
 		panelTabla.add(comboBoxEstadoSolo);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(156, 455, 60, 60);
+		btnSalir.setBounds(155, 463, 60, 60);
 		cambiarIconoBotones(btnSalir,  "back2.png");
 		panel.add(btnSalir);
 		
 		btnConfirmarPedido = new JButton("");
 		btnConfirmarPedido.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-		btnConfirmarPedido.setBounds(393, 455, 60, 60);
+		btnConfirmarPedido.setBounds(392, 463, 60, 60);
 		cambiarIconoBotones(btnConfirmarPedido,  "check2.png");
 		panel.add(btnConfirmarPedido);
 		
 		btnConfirmarCancelacionDe = new JButton("");
 		btnConfirmarCancelacionDe.setFont(new Font("Segoe UI", Font.PLAIN, 17));
-		btnConfirmarCancelacionDe.setBounds(720, 455, 60, 60);
+		btnConfirmarCancelacionDe.setBounds(719, 463, 60, 60);
 		cambiarIconoBotones(btnConfirmarCancelacionDe,  "cancel2.png");
 		panel.add(btnConfirmarCancelacionDe);
 		
 		textId = new JTextField();
 		textId.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		textId.setBounds(10, 52, 29, 19);
+		textId.setBounds(20, 52, 29, 19);
 		panelTabla.add(textId);
 		textId.setColumns(10);
 		
 		textPrecio = new JTextField();
 		textPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textPrecio.setColumns(10);
-		textPrecio.setBounds(290, 52, 96, 19);
+		textPrecio.setBounds(300, 52, 96, 19);
 		panelTabla.add(textPrecio);
 		
 		textProducto = new JTextField();
 		textProducto.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textProducto.setColumns(10);
-		textProducto.setBounds(170, 52, 96, 19);
+		textProducto.setBounds(180, 52, 96, 19);
 		panelTabla.add(textProducto);
 		
 		textProveedor = new JTextField();
 		textProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		textProveedor.setColumns(10);
-		textProveedor.setBounds(56, 52, 96, 19);
+		textProveedor.setBounds(66, 52, 96, 19);
 		panelTabla.add(textProveedor);
 				
 		JLabel lblFechaHasta = new JLabel("Hasta");
 		lblFechaHasta.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblFechaHasta.setBounds(915, 32, 79, 19);
+		lblFechaHasta.setBounds(925, 32, 79, 19);
 		panelTabla.add(lblFechaHasta);
 		
 		
 		dateChooserDesde = new JDateChooser();
-		dateChooserDesde.setBounds(618, 52, 122, 19);
+		dateChooserDesde.setBounds(628, 52, 122, 19);
 		panelTabla.add(dateChooserDesde);
 		
 		dateChooserHasta = new JDateChooser();
-		dateChooserHasta.setBounds(853, 51, 122, 19);
+		dateChooserHasta.setBounds(863, 51, 122, 19);
 		panelTabla.add(dateChooserHasta);
 		
 		
@@ -275,7 +279,7 @@ public class VentanaVerPedidosAProveedores {
 		spinnerHoraDesde.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		JSpinner.DateEditor de_spinnerHoraDesde = new JSpinner.DateEditor(spinnerHoraDesde, "HH:mm");
 		spinnerHoraDesde.setEditor(de_spinnerHoraDesde);
-		spinnerHoraDesde.setBounds(750, 52, 70, 19);
+		spinnerHoraDesde.setBounds(760, 52, 70, 19);
 		
 		spinnerHoraDesde.setValue(new Date(0, 0,0, 00, 0, 0));
 //		spinner.setValue(new Date()); // will only show the current time
@@ -286,38 +290,62 @@ public class VentanaVerPedidosAProveedores {
 		spinnerHoraHasta.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		JSpinner.DateEditor de_spinnerHoraHasta = new JSpinner.DateEditor(spinnerHoraHasta, "HH:mm");
 		spinnerHoraHasta.setEditor(de_spinnerHoraHasta);
-		spinnerHoraHasta.setBounds(985, 52, 70, 19);
+		spinnerHoraHasta.setBounds(995, 52, 70, 19);
 		spinnerHoraHasta.setValue(new Date(0, 0,0, 00, 0, 0));
 		panelTabla.add(spinnerHoraHasta);
 		
-		panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 1169, 50);
-		panel.add(panel_1);
-		
-		lblNewLabel_2 = new JLabel("Zapateria Argento");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_2.setBounds(10, 0, 236, 50);
-		panel_1.add(lblNewLabel_2);
-		
 		lblNewLabel_3 = new JLabel("Confirmar Pedido Completado");
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(463, 455, 212, 60);
+		lblNewLabel_3.setBounds(462, 463, 212, 60);
 		panel.add(lblNewLabel_3);
 		
 		lblNewLabel_4 = new JLabel("Confirmar Cancelacion de Pedido");
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(790, 455, 231, 60);
+		lblNewLabel_4.setBounds(789, 463, 231, 60);
 		panel.add(lblNewLabel_4);
 		
 		lblNewLabel_5 = new JLabel("Atras");
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_5.setBounds(226, 455, 60, 60);
+		lblNewLabel_5.setBounds(225, 463, 60, 60);
 		panel.add(lblNewLabel_5);
 		
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(new Color(153, 204, 255));
+		panel_1.setBounds(0, 0, 1169, 53);
+		panel.add(panel_1);
 		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_1.add(lblLogo);
+		
+		lblNewLabel_2 = new JLabel("Sucursal:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(876, 28, 59, 19);
+		panel_1.add(lblNewLabel_2);
+		
+		lblNewLabel_6 = new JLabel("Empleado:");
+		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_6.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_6.setBounds(645, 28, 59, 19);
+		panel_1.add(lblNewLabel_6);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(1, 0, 1280, 960);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
