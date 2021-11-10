@@ -48,6 +48,8 @@ public class VentanaDashboardGerente {
 	private JButton btnEgresoDeCaja;
 	private JButton btnCierreDeCaja;
 	private JButton btnGestionarRecetasYPasos;
+	private JButton btnGestionarSucursales_1;
+	private JButton btnGestionarProveedores;
 
 	/**
 	 * Launch the application.
@@ -116,7 +118,7 @@ public class VentanaDashboardGerente {
 		JLabel lblNombreGerente = new JLabel("Nombre Gerente");
 		lblNombreGerente.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNombreGerente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNombreGerente.setBounds(121, 108, 199, 22);
+		lblNombreGerente.setBounds(203, 108, 117, 22);
 		panel.add(lblNombreGerente);
 		
 		btnGestionarProductos = new JButton("Gestionar Productos");
@@ -133,7 +135,7 @@ public class VentanaDashboardGerente {
 		btnModPrecioUnitario.setBounds(38, 178, 282, 41);
 		panel.add(btnModPrecioUnitario);
 		
-		btnGestionarClientes = new JButton("Gestionar Clientes");
+		btnGestionarClientes = new JButton("Ver Clientes");
 		btnGestionarClientes.setForeground(new Color(51, 102, 153));
 		btnGestionarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnGestionarClientes.setBackground(new Color(51, 102, 204));
@@ -230,6 +232,20 @@ public class VentanaDashboardGerente {
 		btnGestionarRecetasYPasos.setBackground(new Color(51, 102, 204));
 		btnGestionarRecetasYPasos.setBounds(20, 577, 282, 41);
 		panel.add(btnGestionarRecetasYPasos);
+		
+		btnGestionarSucursales_1 = new JButton("Gestionar Sucursales");
+		btnGestionarSucursales_1.setForeground(new Color(51, 102, 153));
+		btnGestionarSucursales_1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarSucursales_1.setBackground(new Color(51, 102, 204));
+		btnGestionarSucursales_1.setBounds(38, 609, 282, 41);
+		panel.add(btnGestionarSucursales_1);
+		
+		btnGestionarProveedores = new JButton("Gestionar Proveedores");
+		btnGestionarProveedores.setForeground(new Color(51, 102, 153));
+		btnGestionarProveedores.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnGestionarProveedores.setBackground(new Color(51, 102, 204));
+		btnGestionarProveedores.setBounds(20, 108, 282, 41);
+		panel.add(btnGestionarProveedores);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
@@ -347,7 +363,15 @@ public class VentanaDashboardGerente {
 	public void mostrarVentana() {
 		this.show();
 	}
-	
+
+	public JButton getBtnGestionarProveedores() {
+		return btnGestionarProveedores;
+	}
+
+	public JButton getBtnGestionarSucursales() {
+		return btnGestionarSucursales_1;
+	}
+
 	public JButton getBtnGestionarRecetasYPasos() {
 		return btnGestionarRecetasYPasos;
 	}

@@ -75,6 +75,8 @@ public class ControladorGestionarClientes {
 			mostrarVentanaParaVendedor();
 		}else if(tipoEmpleado.equals("Supervisor")){
 			mostrarVentanaParaSupervisor();
+		}else if(tipoEmpleado.equals("Gerente")) {
+			mostrarVentanaParaGerente();
 		}else {
 			this.ventanaGestionarClientes.getBtnAgregarCliente().addActionListener(a -> pasarAAgregarCliente(a));
 			this.ventanaGestionarClientes.getBtnEditarCliente().addActionListener(a -> pasarAEditarCliente(a));
@@ -116,6 +118,10 @@ public class ControladorGestionarClientes {
 		
 		validarTeclado();
 		
+	}
+	
+	public void mostrarVentanaParaGerente() {
+		this.ventanaGestionarClientes.mostrarVentanaParaGerente();
 	}
 	
 	public void mostrarVentanaParaSupervisor() {

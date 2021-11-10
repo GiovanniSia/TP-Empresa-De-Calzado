@@ -35,6 +35,9 @@ public class VentanaCajero extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_1_2;
+	private JLabel lblNewLabel_1_3;
+	private JLabel lblNewLabel_1_4;
 
 	public VentanaCajero() {
 		this.initialize();
@@ -46,7 +49,7 @@ public class VentanaCajero extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 734, 332);
+		frame.setBounds(100, 100, 708, 397);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,44 +85,76 @@ public class VentanaCajero extends JFrame {
 		panel.add(lblNewLabel_2);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 0));
-		panel_1.setBounds(10, 66, 476, 216);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(10, 66, 672, 216);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		btnIngresoDeCaja = new JButton("Ingreso de Caja");
+		btnIngresoDeCaja = new JButton("");
 		btnIngresoDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnIngresoDeCaja.setBounds(172, 11, 178, 39);
+		btnIngresoDeCaja.setBounds(34, 61, 120, 120);
+		btnIngresoDeCaja.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnIngresoDeCaja, "cashier+.png");
 		panel_1.add(btnIngresoDeCaja);
 
-		btnEgresoDeCaja = new JButton("Egreso de Caja");
+		btnEgresoDeCaja = new JButton("");
 		btnEgresoDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnEgresoDeCaja.setBounds(172, 61, 178, 39);
+		btnEgresoDeCaja.setBounds(194, 61, 120, 120);
+		btnEgresoDeCaja.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnEgresoDeCaja, "cashier-.png");
 		panel_1.add(btnEgresoDeCaja);
 
-		btnCierreDeCaja = new JButton("Cierre de Caja");
+		btnCierreDeCaja = new JButton("");
 		btnCierreDeCaja.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCierreDeCaja.setBounds(172, 111, 178, 39);
+		btnCierreDeCaja.setBounds(514, 61, 120, 120);
+		btnCierreDeCaja.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnCierreDeCaja, "cashierlock.png");
 		panel_1.add(btnCierreDeCaja);
 
-		btnCobrarVenta = new JButton("Cobrar Venta");
+		btnCobrarVenta = new JButton("");
 		btnCobrarVenta.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCobrarVenta.setBounds(172, 161, 178, 39);
+		btnCobrarVenta.setBounds(354, 61, 120, 120);
+		btnCobrarVenta.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnCobrarVenta, "factura.png");
 		panel_1.add(btnCobrarVenta);
 		
+		JLabel lblNewLabel_1_1 = new JLabel("<html>Ingresos de Caja</html>");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_1.setBounds(34, 21, 120, 43);
+		panel_1.add(lblNewLabel_1_1);
+		
+		lblNewLabel_1_2 = new JLabel("<html>Egresos de Caja</html>");
+		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_2.setBounds(194, 21, 120, 43);
+		panel_1.add(lblNewLabel_1_2);
+		
+		lblNewLabel_1_3 = new JLabel("<html>Cobrar Venta</html>");
+		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_3.setBounds(354, 21, 120, 43);
+		panel_1.add(lblNewLabel_1_3);
+		
+		lblNewLabel_1_4 = new JLabel("<html>Cierre de Caja</html>");
+		lblNewLabel_1_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_4.setBounds(514, 21, 120, 43);
+		panel_1.add(lblNewLabel_1_4);
+		
 		lblNewLabel_1 = new JLabel("Cerrar Sesion");
+		lblNewLabel_1.setBounds(80, 293, 132, 60);
+		contentPane.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(70, 156, 132, 60);
-		panel_1.add(lblNewLabel_1);
 		
 		btnCerrarSesion = new JButton("");
+		btnCerrarSesion.setBounds(10, 293, 60, 60);
+		contentPane.add(btnCerrarSesion);
 		btnCerrarSesion.setToolTipText("");
 		btnCerrarSesion.setForeground(new Color(51, 102, 153));
 		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnCerrarSesion.setBackground(new Color(51, 102, 204));
-		btnCerrarSesion.setBounds(0, 156, 60, 60);
 		cambiarIconoBotones(btnCerrarSesion, "exit.png");
-		panel_1.add(btnCerrarSesion);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
@@ -185,5 +220,4 @@ public class VentanaCajero extends JFrame {
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
 	}
-
 }

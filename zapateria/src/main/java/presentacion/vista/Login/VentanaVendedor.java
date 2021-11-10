@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaVendedor extends JFrame {
 
@@ -34,6 +36,9 @@ public class VentanaVendedor extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JButton btnVerAgregarClientes;
 	private JButton btnVerProductos;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -81,51 +86,75 @@ public class VentanaVendedor extends JFrame {
 		panel.add(lblNewLabel_2);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 0));
-		panel_1.setBounds(10, 65, 700, 344);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(10, 65, 700, 273);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
-		btnArmarVenta = new JButton("Armar Venta");
+		btnArmarVenta = new JButton("");
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
-		btnArmarVenta.setBounds(206, 11, 282, 41);
+		btnArmarVenta.setBounds(35, 74, 120, 120);
+		cambiarIconoBotones(btnArmarVenta, "tag.png");
 		panel_1.add(btnArmarVenta);
-
-		btnCerrarSesion = new JButton("");
-		btnCerrarSesion.setToolTipText("");
-		btnCerrarSesion.setForeground(new Color(51, 102, 153));
-		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnCerrarSesion.setBackground(new Color(51, 102, 204));
-		btnCerrarSesion.setBounds(10, 273, 60, 60);
-		cambiarIconoBotones(btnCerrarSesion, "exit.png");
-		panel_1.add(btnCerrarSesion);
-		cambiarIconoBotones(btnCerrarSesion, "exit.png");
 		
-		lblNewLabel_1 = new JLabel("Cerrar Sesion");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(80, 273, 132, 60);
-		panel_1.add(lblNewLabel_1);
-		
-		btnVerAgregarClientes = new JButton("Ver / Agregar Clientes");
+		btnVerAgregarClientes = new JButton("");
+		btnVerAgregarClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnVerAgregarClientes.setForeground(new Color(51, 102, 153));
 		btnVerAgregarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerAgregarClientes.setBackground(new Color(51, 102, 204));
-		btnVerAgregarClientes.setBounds(206, 63, 282, 41);
+		btnVerAgregarClientes.setBounds(285, 74, 120, 120);
+		cambiarIconoBotones(btnVerAgregarClientes, "person.png");
 		panel_1.add(btnVerAgregarClientes);
 		
-		btnVerProductos = new JButton("Ver Productos");
+		btnVerProductos = new JButton("");
 		btnVerProductos.setForeground(new Color(51, 102, 153));
 		btnVerProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerProductos.setBackground(new Color(51, 102, 204));
-		btnVerProductos.setBounds(206, 115, 282, 41);
+		btnVerProductos.setBounds(535, 74, 120, 120);
+		cambiarIconoBotones(btnVerProductos, "product.png");
 		panel_1.add(btnVerProductos);
 		
-		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 720, 540);
-		frame.getContentPane().add(lblFondo);
-		cambiarIconoLabel(lblFondo, "fondo.png");
+		lblNewLabel_3 = new JLabel("Armar Venta");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(35, 30, 120, 43);
+		panel_1.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("Clientes");
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(285, 30, 120, 43);
+		panel_1.add(lblNewLabel_4);
+		
+		lblNewLabel_5 = new JLabel("Productos");
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_5.setBounds(535, 30, 120, 43);
+		panel_1.add(lblNewLabel_5);
+		
+		lblNewLabel_1 = new JLabel("Cerrar Sesion");
+		lblNewLabel_1.setBounds(80, 349, 132, 60);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+				btnCerrarSesion = new JButton("");
+				btnCerrarSesion.setBounds(10, 349, 60, 60);
+				contentPane.add(btnCerrarSesion);
+				btnCerrarSesion.setToolTipText("");
+				btnCerrarSesion.setForeground(new Color(51, 102, 153));
+				btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+				btnCerrarSesion.setBackground(new Color(51, 102, 204));
+				cambiarIconoBotones(btnCerrarSesion, "exit.png");
+				
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(0, 0, 720, 540);
+				frame.getContentPane().add(lblFondo);
+				cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {

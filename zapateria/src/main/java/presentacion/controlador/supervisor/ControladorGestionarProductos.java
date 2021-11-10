@@ -78,18 +78,6 @@ public class ControladorGestionarProductos {
 		this.todoElStock = new ArrayList<StockDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
-//		this.ventanaGestionarProductos = new VentanaGestionarProductos();
-
-	}
-
-	public ControladorGestionarProductos(MaestroProducto maestroProducto, Stock stock) {
-		this.maestroProducto = maestroProducto;
-		this.stock = stock;
-
-		this.todoElStock = new ArrayList<StockDTO>();
-		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
-		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
-
 	}
 
 	public void setControladorAltaProducto(ControladorAltaProducto controladorAltaProducto) {
@@ -109,8 +97,12 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos = new VentanaGestionarProductos();
 
 		if (tipoEmpleado.equals("Vendedor")) {
-			mostrarVentanaParaVendedor();
-		} else {
+			mostrarVentanaParaVerProductos();
+		} else if(tipoEmpleado.equals("Administrativo")){
+			mostrarVentanaParaVerProductosYOrdenDeManufactura();
+			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
+			.addActionListener(a -> generarOrdenDeManufactura());
+		}else{
 			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
 			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
 					.addActionListener(a -> generarOrdenDeManufactura());
@@ -197,8 +189,12 @@ public class ControladorGestionarProductos {
 		validarTeclado();
 	}
 
-	public void mostrarVentanaParaVendedor() {
-		this.ventanaGestionarProductos.mostrarVentanaParaVendedor();
+	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
+		this.ventanaGestionarProductos.mostrarVentanaParaVerProductosYOrdenDeManufactura();
+	}
+	
+	public void mostrarVentanaParaVerProductos() {
+		this.ventanaGestionarProductos.mostrarVentanaParaVerProductos();
 	}
 
 	public void mostrarVentana() {
@@ -411,34 +407,6 @@ public class ControladorGestionarProductos {
 		this.ventanaGestionarProductos.cerrar();
 		this.controladorGenerarPedidoAProveedorManualmente.inicializar();
 		this.controladorGenerarPedidoAProveedorManualmente.mostrarVentana();
-	}
-
-	public static void main(String[] args) {
-		MaestroProducto m = new MaestroProducto(new DAOSQLFactory());
-		Stock stock = new Stock(new DAOSQLFactory());
-		Cliente cliente = new Cliente(new DAOSQLFactory());
-
-		Proveedor prov = new Proveedor(new DAOSQLFactory());
-		ProductoDeProveedor prodProv = new ProductoDeProveedor(new DAOSQLFactory());
-		PedidosPendientes pedi = new PedidosPendientes(new DAOSQLFactory());
-		
-		ControladorAltaProducto alta = new ControladorAltaProducto(m, prov, prodProv); 
-		
-		
-		
-		ControladorGestionarProveedores consultar = new ControladorGestionarProveedores(prov,prodProv);
-		
-		ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente = new ControladorGenerarPedidoAProveedorManualmente(prov,stock,pedi, prodProv);
-		ControladorGestionarProductos g = new ControladorGestionarProductos(m, stock);
-		g.setControladorGenerarPedidoAProveedorManualmente(controladorGenerarPedidoAProveedorManualmente);
-		g.setControladorAltaProducto(alta);
-		alta.setControladorGestionarProductos(g);
-		alta.setControladorConsultarProveedor(consultar);
-		controladorGenerarPedidoAProveedorManualmente.setControladorGestionarProductos(g);
-		consultar.setControladorAltaProducto(alta);
-		consultar.setControladorAsignarProductoAProveedor(null);
-		g.inicializar();
-		g.mostrarVentana();
 	}
 
 	public void generarOrdenDeManufactura() {
