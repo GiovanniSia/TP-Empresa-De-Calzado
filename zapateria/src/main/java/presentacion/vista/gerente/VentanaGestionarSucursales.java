@@ -38,7 +38,7 @@ public class VentanaGestionarSucursales {
 	private JTable table;
 	private DefaultTableModel modelTablaSucursales;
 	
-	private String[] nombreColumnas = {"Id","Nombre","Telefono","Calle","Altura","Provincia","Localidad","Pais","Cod. Postal"};
+	private String[] nombreColumnas = {"Id","Nro Sucursal","Nombre","Telefono","Calle","Altura","Provincia","Localidad","Pais","Cod. Postal"};
 	private JScrollPane scrollPane;
 	private JPanel panel;
 	private JLabel lblNewLabel_1;

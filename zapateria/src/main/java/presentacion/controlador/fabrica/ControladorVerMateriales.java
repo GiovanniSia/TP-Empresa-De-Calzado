@@ -169,7 +169,7 @@ public class ControladorVerMateriales {
 	}
 
 	public static void main(String[] args) {
-		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","",""));
+		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","","",""));
 		conVerMat.inicializar();
 	}
 }

@@ -301,7 +301,7 @@ public class ControladorAltaSucursal {
 			SucursalDTO sucursalNueva = getSucursalDeVista();
 			
 			if(yaExisteEstaSucursal(sucursalNueva)) {
-				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			
@@ -310,7 +310,7 @@ public class ControladorAltaSucursal {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al insertar la nueva sucursal", "Error", JOptionPane.ERROR_MESSAGE);
 				return;	
 			}else {
-				JOptionPane.showMessageDialog(null, "Sucursal agregada con exito", "Info", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(null, "Sucursal agregada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 			this.todasLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
 			limpiarDatos();
@@ -327,7 +327,8 @@ public class ControladorAltaSucursal {
 		String pais = this.ventanaAltaSucursal.getComboBoxPais().getSelectedItem().toString();
 		String provincia = this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem().toString();
 		String localidad = this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem().toString();
-		return new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
+		String nroSucursal = this.ventanaAltaSucursal.getTextNroSucursal().getText();
+		return new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre,nroSucursal);
 	}
 	
 	public void limpiarDatos() {
@@ -397,7 +398,11 @@ public class ControladorAltaSucursal {
 			JOptionPane.showMessageDialog(ventanaEditarProvincia, "La localidad no puede ser vacia");
 			return false;		
 		}
-		
+		String nroSucursal = this.ventanaAltaSucursal.getTextNroSucursal().getText();
+		if(nroSucursal.equals("")) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "El numero de sucursal no puede ser vacio");
+			return false;			
+		}
 		
 		return true;
 	}
@@ -433,21 +438,17 @@ public class ControladorAltaSucursal {
 			}
 		}));
 		
+		this.ventanaAltaSucursal.getTextNroSucursal().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
 	}
 
 	public void editarSucursal() {
 		if(todosLosCamposSonValidos()) {
-			String nombre = this.ventanaAltaSucursal.getTextNombre().getText();
-			String telefono = this.ventanaAltaSucursal.getTextTelefono().getText();
-			String calle = this.ventanaAltaSucursal.getTextCalle().getText();
-			String altura = this.ventanaAltaSucursal.getTextAltura().getText();
-			String codPostal = this.ventanaAltaSucursal.getTextCodPostal().getText();
+			SucursalDTO sucursalNueva = getSucursalDeVista();
 			
-			String pais = this.ventanaAltaSucursal.getComboBoxPais().getSelectedItem().toString();
-			String provincia = this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem().toString();
-			String localidad = this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem().toString();
-			
-			SucursalDTO sucursalNueva = new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
 			if(yaExisteEstaSucursal(sucursalNueva)) {
 				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
 				return;	

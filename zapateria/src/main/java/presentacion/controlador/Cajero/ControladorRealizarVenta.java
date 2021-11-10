@@ -21,6 +21,7 @@ import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
 import dto.MedioPagoDTO;
+import dto.SucursalDTO;
 import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
 import modelo.Carrito;
@@ -33,7 +34,9 @@ import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
 import modelo.PedidosPendientes;
+import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
+import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.reportes.ReporteFactura;
 import presentacion.vista.Cajero.VentanaRealizarVenta;
@@ -83,6 +86,8 @@ public class ControladorRealizarVenta {
 	DetalleFactura detalleFactura;
 	Ingresos ingresos;
 
+	Sucursal sucursal;
+	
 	List<MedioPagoDTO> listamediosDePago;
 
 	List<IngresosDTO> listaDeIngresosARegistrar;// representa tambien el pago que este en la tabla (por indice)
@@ -107,6 +112,8 @@ public class ControladorRealizarVenta {
 		this.detalleFactura = detalleFactura;
 		this.ingresos = ingresos;
 
+		this.sucursal = new Sucursal(new DAOSQLFactory());
+		
 		this.listamediosDePago = new ArrayList<MedioPagoDTO>();
 		this.listaDeIngresosARegistrar = new ArrayList<IngresosDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
@@ -498,7 +505,7 @@ public class ControladorRealizarVenta {
 
 		String tipoFactura = determinarCategoriaFactura(client);
 
-		String nroFacturaCompleto = tipoFactura + generarNroSucursal() + generarNroFacturaSecuencial();
+		String nroFacturaCompleto = generarNroSucursal()+ tipoFactura + generarNroFacturaSecuencial();
 		int idSucursal = this.carritoACobrar.getIdSucursal();
 		double descuento = this.descuento;
 
@@ -574,15 +581,20 @@ public class ControladorRealizarVenta {
 		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);
 	}
 
-	public String generarNroSucursal() {
-		String nroSucursal = "" + this.carritoACobrar.getIdSucursal();
-		String nroSucFactura = "" + nroSucursal;
-		while (nroSucFactura.length() < 5) {
-			nroSucFactura = "0" + nroSucFactura;
-		}
-		return nroSucFactura;
-	}
+//	public String generarNroSucursal() {
+//		String nroSucursal = "" + this.carritoACobrar.getIdSucursal();
+//		String nroSucFactura = "" + nroSucursal;
+//		while (nroSucFactura.length() < 5) {
+//			nroSucFactura = "0" + nroSucFactura;
+//		}
+//		return nroSucFactura;
+//	}
 
+	public String generarNroSucursal() {
+		SucursalDTO sucursal = this.sucursal.select(idSucursal);
+		return sucursal.getNroSucursal();
+	}
+	
 	public String generarNroFacturaSecuencial() {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
 		if (todasLasFacturas.size() == 0) {

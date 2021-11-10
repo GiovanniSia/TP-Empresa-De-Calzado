@@ -128,6 +128,7 @@ CREATE TABLE `sucursales`
   `Pais` varchar(45) NOT NULL,
   `CodigoPostal` varchar(45) NOT NULL,
   `Nombre` varchar(45) NOT NULL,
+  `NroSucursal` varchar(45) NOT NULL,
   PRIMARY KEY (`IdSucursal`)
 );
 
