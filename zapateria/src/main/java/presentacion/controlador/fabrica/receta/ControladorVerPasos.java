@@ -488,6 +488,14 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		boolean yaEstaba = false;
+		if(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText().equals("")) {
+			this.mostrarMensajeEmergente("No ingreso la cantidad de material a usar.");
+			return;
+		}
+		if(!validarFormatoCantidad(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText())) {
+			this.mostrarMensajeEmergente("El formato no es valido.");
+			return;
+		}
 		//Double cantidadUsar = (Double) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue();
 		Double cantidadUsar = Double.valueOf(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText());
 		for(int x = 0; x<pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().size();x++) {
@@ -508,6 +516,14 @@ public class ControladorVerPasos implements ActionListener {
 		*/
 		this.refrescarTablaIngredientes();
 	}
+	
+	private boolean validarFormatoCantidad(String precio) {
+        boolean expresion = precio.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+        if (!expresion) {
+            return false;
+        }
+        return true;
+    }
 	
 	@SuppressWarnings("unchecked")
 	private void refrescarComboBoxProductosTerminados() {
