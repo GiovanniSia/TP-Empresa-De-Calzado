@@ -1,5 +1,6 @@
 package modelo.datosGraficos;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import dto.IngresosDTO;
@@ -10,26 +11,45 @@ import persistencia.dao.mysql.DAOSQLFactory;
 
 public class RankingDatos {
 	
-	static public HashMap<SucursalDTO,Double> getRankingVentasXSucursales(int cantidadDeseada){
+	static public HashMap<SucursalDTO,Double> getRankingVentasXSucursales(int cantidadSucursalesDeseada, int mesesAtras){
 		HashMap<SucursalDTO,Double> ret = new HashMap<SucursalDTO,Double>();
 		Sucursal modeloSucursal = new Sucursal(new DAOSQLFactory());
 		for(SucursalDTO s: modeloSucursal.readAll()) {
-			ret.put(s, getIngresos(s.getIdSucursal()));
+			ret.put(s, getIngresos(s.getIdSucursal(), mesesAtras));
 		}
-		return getTop(ret, cantidadDeseada);
+		return getTop(ret, cantidadSucursalesDeseada);
 	}
 	
-	static private Double getIngresos(int idSucursal) {
+	static private Double getIngresos(int idSucursal, int mesesAtras) {
 		Double ret = 0.0;
 		Ingresos modeloIngreso = new Ingresos(new DAOSQLFactory());
 		for(IngresosDTO i: modeloIngreso.readAll()) {
 			if(i.getIdSucursal() == idSucursal) {
-				ret += i.getTotal();
+				if(fechaEsValida(i,mesesAtras)) {
+					ret += i.getTotal();
+				}
 			}
 		}
 		return ret;
 	}
 	
+	@SuppressWarnings("deprecation")
+	private static boolean fechaEsValida(IngresosDTO i, int mesesAtras) {
+		Date fechaComparar = new Date();
+		Date fechaIngreso = new Date();
+		String[] fechaIngregoString = i.getFecha().split("-"); 
+		fechaIngreso.setYear(Integer.valueOf(fechaIngregoString[0])-1900);
+		fechaIngreso.setMonth(Integer.valueOf(fechaIngregoString[1])-1);
+		fechaIngreso.setDate(Integer.valueOf(fechaIngregoString[2]));
+		
+		fechaComparar.setMonth(Integer.valueOf(fechaComparar.getMonth()-mesesAtras));
+		fechaComparar.setDate(1);
+		if(fechaComparar.compareTo(fechaIngreso)>=0) {
+			return false;
+		}
+		return true;
+	}
+
 	static private HashMap<SucursalDTO,Double> getTop(HashMap<SucursalDTO,Double> lista, int cantidadDeseada){
 		HashMap<SucursalDTO,Double> ret = new HashMap<SucursalDTO,Double>();
 		HashMap<SucursalDTO,Double> copia = lista;
@@ -57,7 +77,7 @@ public class RankingDatos {
 	}
 	
 	public static void main(String[] args){
-		HashMap<SucursalDTO,Double> rankingSucursal = getRankingVentasXSucursales(2);
+		HashMap<SucursalDTO,Double> rankingSucursal = getRankingVentasXSucursales(3,1);
 		for(SucursalDTO s: rankingSucursal.keySet()) {
 			System.out.println(s.getNombre()+": "+rankingSucursal.get(s));
 		}
