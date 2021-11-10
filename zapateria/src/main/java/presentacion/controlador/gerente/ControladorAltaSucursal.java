@@ -116,6 +116,8 @@ public class ControladorAltaSucursal {
 	public void mostrarVentanaEditar() {
 		this.ventanaAltaSucursal.getBtnEditar().setVisible(true);
 		this.ventanaAltaSucursal.getLblEditar().setVisible(true);
+		this.ventanaAltaSucursal.getLblNumeroDeSucursal().setVisible(false);
+		this.ventanaAltaSucursal.getTextNroSucursal().setVisible(false);
 		escribirValores();
 		this.ventanaAltaSucursal.show();
 	}
@@ -140,6 +142,7 @@ public class ControladorAltaSucursal {
 		this.ventanaAltaSucursal.getComboBoxPais().setSelectedItem(this.sucursalSeteada.getPais());
 		this.ventanaAltaSucursal.getComboBoxProvincia().setSelectedItem(this.sucursalSeteada.getProvincia());
 		this.ventanaAltaSucursal.getComboBoxLocalidad().setSelectedItem(this.sucursalSeteada.getLocalidad());
+//		this.ventanaAltaSucursal.getTextNroSucursal().setText(this.sucursalSeteada.getNroSucursal());
 	}
 	
 	public void actualizarCbUbicacionDadoPais() {
@@ -301,7 +304,7 @@ public class ControladorAltaSucursal {
 			SucursalDTO sucursalNueva = getSucursalDeVista();
 			
 			if(yaExisteEstaSucursal(sucursalNueva)) {
-				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			
@@ -310,7 +313,7 @@ public class ControladorAltaSucursal {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al insertar la nueva sucursal", "Error", JOptionPane.ERROR_MESSAGE);
 				return;	
 			}else {
-				JOptionPane.showMessageDialog(null, "Sucursal agregada con exito", "Info", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(null, "Sucursal agregada con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 			this.todasLasSucursales = (ArrayList<SucursalDTO>) this.sucursal.readAll();
 			limpiarDatos();
@@ -327,7 +330,8 @@ public class ControladorAltaSucursal {
 		String pais = this.ventanaAltaSucursal.getComboBoxPais().getSelectedItem().toString();
 		String provincia = this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem().toString();
 		String localidad = this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem().toString();
-		return new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
+		String nroSucursal = this.ventanaAltaSucursal.getTextNroSucursal().getText();
+		return new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre,nroSucursal);
 	}
 	
 	public void limpiarDatos() {
@@ -335,7 +339,12 @@ public class ControladorAltaSucursal {
 		this.ventanaAltaSucursal.getTextTelefono().setText("");
 		this.ventanaAltaSucursal.getTextCalle().setText("");
 		this.ventanaAltaSucursal.getTextAltura().setText("");
-		this.ventanaAltaSucursal.getTextCodPostal().setText("");	
+		this.ventanaAltaSucursal.getTextCodPostal().setText("");
+		
+		if(this.ventanaAltaSucursal.getTextNroSucursal().isShowing()) {
+			this.ventanaAltaSucursal.getTextNroSucursal().setText("");			
+		}
+		
 	}
 	
 	public boolean yaExisteEstaSucursal(SucursalDTO nuevaSucursal) {
@@ -385,6 +394,29 @@ public class ControladorAltaSucursal {
 			return false;	
 		}
 		
+		if(this.ventanaAltaSucursal.getComboBoxPais().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "El pais no puede ser vacio");
+			return false;		
+		}
+		if(this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "La provincia no puede ser vacia");
+			return false;		
+		}
+		if(this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem()==null) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "La localidad no puede ser vacia");
+			return false;		
+		}
+		
+		if(this.ventanaAltaSucursal.getTextNroSucursal().isShowing()) {
+			String nroSucursal = this.ventanaAltaSucursal.getTextNroSucursal().getText();
+			if(nroSucursal.equals("") || nroSucursal.length()<4) {
+				JOptionPane.showMessageDialog(ventanaEditarProvincia, "Numero de sucursal incorrecto");
+				return false;			
+			}			
+		}
+		
+		
+		
 		return true;
 	}
 	
@@ -419,6 +451,11 @@ public class ControladorAltaSucursal {
 			}
 		}));
 		
+		this.ventanaAltaSucursal.getTextNroSucursal().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
 	}
 
 	public void editarSucursal() {
@@ -433,7 +470,9 @@ public class ControladorAltaSucursal {
 			String provincia = this.ventanaAltaSucursal.getComboBoxProvincia().getSelectedItem().toString();
 			String localidad = this.ventanaAltaSucursal.getComboBoxLocalidad().getSelectedItem().toString();
 			
-			SucursalDTO sucursalNueva = new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
+			
+			SucursalDTO sucursalNueva = new SucursalDTO(0,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre,"");
+			
 			if(yaExisteEstaSucursal(sucursalNueva)) {
 				JOptionPane.showMessageDialog(null, "Ya existe una sucursal con este nombre", "Error", JOptionPane.ERROR_MESSAGE);
 				return;	

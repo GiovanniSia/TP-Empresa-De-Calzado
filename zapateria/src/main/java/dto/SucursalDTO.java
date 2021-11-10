@@ -3,10 +3,10 @@ package dto;
 public class SucursalDTO {
 
 	int IdSucursal;
-	String Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre;
-	
+	String Telefono, Calle, Altura, Provincia, Localidad, Pais, CodigoPostal, Nombre,NroSucursal;
+
 	public SucursalDTO(int idSucursal, String telefono, String calle, String altura, String provincia, String localidad,
-			String pais, String codigoPostal, String nombre) {
+			String pais, String codigoPostal, String nombre,String nroSucursal) {
 		super();
 		IdSucursal = idSucursal;
 		Telefono = telefono;
@@ -17,6 +17,7 @@ public class SucursalDTO {
 		Pais = pais;
 		CodigoPostal = codigoPostal;
 		Nombre = nombre;
+		this.NroSucursal = nroSucursal;
 	}
 
 	public int getIdSucursal() {
@@ -85,5 +86,9 @@ public class SucursalDTO {
 
 	public void setNombre(String nombre) {
 		Nombre = nombre;
+	}
+	
+	public String getNroSucursal() {
+		return NroSucursal;
 	}
 }

@@ -398,7 +398,7 @@ public class ControladorVisualizarCarritos {
 			for (StockDTO s : todosLosStock) {
 				if (d.getIdCarrito() == carrito.getIdCarrito() && s.getIdStock() == d.getIdStock()
 						&& s.getIdProducto() == d.getIdProducto()) {
-					this.stock.actualizarStock(d.getIdStock(), d.getCantidad());
+					this.stock.actualizarStock(d.getIdStock(), (double) d.getCantidad());
 				}
 			}
 

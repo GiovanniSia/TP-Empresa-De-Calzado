@@ -12,6 +12,7 @@ import dto.ProveedorDTO;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import presentacion.controlador.Controlador;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaGestionarProveedores;
 
 public class ControladorGestionarProveedores {

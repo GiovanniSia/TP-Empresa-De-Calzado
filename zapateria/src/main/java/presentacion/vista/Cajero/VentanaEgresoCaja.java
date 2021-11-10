@@ -271,9 +271,12 @@ public class VentanaEgresoCaja extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
-
+				/*
 				boolean numeros = key >= 48 && key <= 57;
 				if (txtFieldNC.getText().length() >= 9 || !numeros) {
+					e.consume();
+				}*/
+				if (txtFieldNC.getText().length() >= 9) {
 					e.consume();
 				}
 			}

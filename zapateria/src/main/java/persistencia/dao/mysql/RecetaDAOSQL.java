@@ -131,7 +131,7 @@ public class RecetaDAOSQL implements RecetaDAO {
 			
 			statement.setInt(1, 0);
 			statement.setInt(2, paso.getPasosDTO().getMateriales().get(indiceMaterial).getIdMaestroProducto());
-			statement.setInt(3, paso.getPasosDTO().getCantidadUsada().get(indiceMaterial));
+			statement.setDouble(3, paso.getPasosDTO().getCantidadUsada().get(indiceMaterial));
 
 			if(statement.executeUpdate() > 0)
 			{

@@ -113,7 +113,7 @@ CREATE TABLE `stock`
   `IdSucursal` int(11) NOT NULL,
   `IdProducto` int(11) NOT NULL,
   `CodigoLote` varchar(45) NOT NULL,
-  `StockDisponible` int(11) NOT NULL,
+  `StockDisponible` double(11,2) NOT NULL,
   PRIMARY KEY (`IdStock`)
 );
 
@@ -128,6 +128,7 @@ CREATE TABLE `sucursales`
   `Pais` varchar(45) NOT NULL,
   `CodigoPostal` varchar(45) NOT NULL,
   `Nombre` varchar(45) NOT NULL,
+  `NroSucursal` varchar(45) NOT NULL,
   PRIMARY KEY (`IdSucursal`)
 );
 
@@ -225,7 +226,7 @@ CREATE TABLE `materialesDePaso`
 (
   `IdMaterialDePaso` int(11) NOT NULL AUTO_INCREMENT,
   `IdMaterial` int(11) NOT NULL,
-  `CantidadUsada` int(11) NOT NULL,
+  `CantidadUsada` double(11,2) NOT NULL,
   `IdPaso` int(11) NOT NULL,
   PRIMARY KEY (`IdMaterialDePaso`)
 );
@@ -667,11 +668,11 @@ insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
 
-INSERT INTO sucursales VALUES(1, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines");
-INSERT INTO sucursales VALUES(2, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos");
-insert into sucursales values(3,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg');
-insert into sucursales values(4,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino');
-insert into sucursales values(5,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata');
+INSERT INTO sucursales VALUES(1, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines","1234");
+INSERT INTO sucursales VALUES(2, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","1234");
+insert into sucursales values(3,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"1234");
+insert into sucursales values(4,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"1234");
+insert into sucursales values(5,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"1234");
 
 insert into ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',1000);
 insert into ingresos values (2,2,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);

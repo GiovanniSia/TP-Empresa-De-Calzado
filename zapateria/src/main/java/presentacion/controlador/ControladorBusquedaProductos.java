@@ -69,6 +69,7 @@ public class ControladorBusquedaProductos {
 	List<StockDTO> listaStock;
 	List<MaestroProductoDTO> listaMaestroProducto;
 	List<MaestroProductoDTO> productosEnTabla;
+	List<StockDTO> stockEnTabla;
 	List<ProductoEnCarritoDTO> productosEnCarrito;
 	List<CarritoDTO> listaCarrito;
 	
@@ -94,6 +95,7 @@ public class ControladorBusquedaProductos {
 		this.listaMaestroProducto = this.maestroProducto.readAll();
 		//estos dos se guardan en la aplicacion no lo obtenemos de la bd
 		this.productosEnTabla = new ArrayList<MaestroProductoDTO>();
+		this.stockEnTabla = new ArrayList<StockDTO>();
 		this.productosEnCarrito=new ArrayList<ProductoEnCarritoDTO>();
 		this.listaCarrito = carrito.readAll();
 		
@@ -233,11 +235,13 @@ public class ControladorBusquedaProductos {
 	
 	public void escribirTablaCompleta() {
 		productosEnTabla.removeAll(productosEnTabla);
+		this.stockEnTabla.removeAll(stockEnTabla);
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: this.listaMaestroProducto) {
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m) && m.getTipo().equals("PT")) {
 					agregarATabla(s,m);
 					productosEnTabla.add(m);
+					stockEnTabla.add(s);
 				}
 			}
 		}
@@ -258,11 +262,13 @@ public class ControladorBusquedaProductos {
 	
 	public void escribirTabla(List<MaestroProductoDTO> productosAproximados) {
 		productosEnTabla.removeAll(productosEnTabla);
+		this.stockEnTabla.removeAll(stockEnTabla);
 		for(StockDTO s: this.listaStock) {
 			for(MaestroProductoDTO m: productosAproximados) {
 				if(m.getIdMaestroProducto()==s.getIdProducto() && idSucursal == s.getIdSucursal() && esAptoParaVender(s,m) && m.getTipo().equals("PT")) {
 					agregarATabla(s,m);
 					productosEnTabla.add(m);
+					stockEnTabla.add(s);
 				}
 			}
 		}
@@ -277,7 +283,7 @@ public class ControladorBusquedaProductos {
 			preci = m.getPrecioMinorista();
 		}
 		BigDecimal precio = new BigDecimal(preci);
-		int stockDisp = s.getStockDisponible();
+		Double stockDisp = s.getStockDisponible();
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
@@ -298,6 +304,7 @@ public class ControladorBusquedaProductos {
 			return;
 		}
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
+		StockDTO stockDeProductoSeleccionado = this.stockEnTabla.get(filaSeleccionada);
 		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
 		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),null)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
@@ -305,7 +312,8 @@ public class ControladorBusquedaProductos {
 		}
 		//verificamos si existe este prod en el carrito
 		for(ProductoEnCarritoDTO c: this.productosEnCarrito) {
-			if(productoSeleccionado.getIdMaestroProducto() == c.getProducto().getIdMaestroProducto()) {
+			if(productoSeleccionado.getIdMaestroProducto() == c.getProducto().getIdMaestroProducto()
+					&& c.getStock().getCodigoLote()==stockDeProductoSeleccionado.getCodigoLote() && c.getStock().getIdStock()==stockDeProductoSeleccionado.getIdStock()) {
 				modificarCantStock(productoSeleccionado,c.getStock().getIdStock(),-cantSeleccionada);
 				c.aniadirProducto(cantSeleccionada);
 				actualzarTablaCarrito();
@@ -315,7 +323,7 @@ public class ControladorBusquedaProductos {
 		}
 		//si no existe se crea la entidad ProductoEnCarritoDTO
 		for(StockDTO s: this.listaStock) {
-			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal) {
+			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal && s.getIdStock()==stockDeProductoSeleccionado.getIdStock() && s.getCodigoLote()==stockDeProductoSeleccionado.getCodigoLote()) {
 				modificarCantStock(productoSeleccionado,s.getIdStock(),-cantSeleccionada);
 				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
 			}
@@ -328,7 +336,7 @@ public class ControladorBusquedaProductos {
 	public void modificarCantStock(MaestroProductoDTO producto, int IdStock, int cant) {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==producto.getIdMaestroProducto() && IdStock == s.getIdStock()) {
-				int valor = s.getStockDisponible()+cant;
+				Double valor = s.getStockDisponible()+cant;
 				s.setStockDisponible(valor);
 				return;
 			}
@@ -422,7 +430,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO s: this.listaStock) {
 			if(idMaestroProducto == s.getIdProducto() && s.getIdSucursal()==this.idSucursal) {
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
-					int total = s.getStockDisponible()+ prod.getCantidad();
+					Double total = s.getStockDisponible()+ prod.getCantidad();
 					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
 						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
@@ -514,7 +522,7 @@ public class ControladorBusquedaProductos {
 	public boolean hayStockDisponible() {
 		boolean ret = true;
 		//actualizamos la lista de stockdisponible
-		this.listaStock = this.stock.readAll();
+		this.listaStock = recuperarListaDeStock();
 		for(StockDTO s: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 				if(s.getIdProducto()==compra.getProducto().getIdMaestroProducto() && s.getIdSucursal()== this.idSucursal) {
@@ -530,7 +538,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO stock: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
-					int nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
+					Double nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
 					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
 					if(!a) {
 						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al descontar del stock");
@@ -582,7 +590,7 @@ public class ControladorBusquedaProductos {
 //		        	}
 		        	
 		        }else {
-		        	if((int)table.getValueAt(row, 3) == 0) {
+		        	if((Double)table.getValueAt(row, 3) == 0) {
 			        	setBackground(Color.red);
 			        	setForeground(Color.WHITE);	
 		        	}else {

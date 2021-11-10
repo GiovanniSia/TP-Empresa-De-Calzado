@@ -113,8 +113,8 @@ public class ControladorVerMateriales {
 		ventanaPrincipal.getModelOrdenes().setColumnIdentifiers(ventanaPrincipal.getNombreColumnas());
 	}
 	
-	private int getCantidadEnStockDeMaterial(MaestroProductoDTO ingrediente) {
-		int cantidadTotalDisponible = 0;
+	private Double getCantidadEnStockDeMaterial(MaestroProductoDTO ingrediente) {
+		Double cantidadTotalDisponible = 0.0;
 		List<StockDTO> todoElStock = modeloStock.readAll();
 		for(StockDTO s: todoElStock) {
 			if(s.getIdProducto() == ingrediente.getIdMaestroProducto() && s.getIdSucursal() == this.fabrica.getIdSucursal()) {
@@ -169,7 +169,7 @@ public class ControladorVerMateriales {
 	}
 
 	public static void main(String[] args) {
-		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","",""));
+		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","","",""));
 		conVerMat.inicializar();
 	}
 }

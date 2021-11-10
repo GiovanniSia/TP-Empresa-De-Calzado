@@ -12,7 +12,7 @@ import persistencia.dao.interfaz.SucursalDAO;
 
 public class SucursalDAOSQL implements SucursalDAO{
 
-	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "INSERT INTO sucursales VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM sucursales WHERE IdSucursal = ?";
 	private static final String update = "UPDATE sucursales set Telefono=?, Calle=?, Altura=?, Provincia=?, Localidad=?, Pais=?, CodigoPostal=?, Nombre=? where IdSucursal=?";
 	private static final String readall = "SELECT * FROM sucursales";
@@ -36,6 +36,7 @@ public class SucursalDAOSQL implements SucursalDAO{
 			statement.setString(7, sucursal.getPais());
 			statement.setString(8, sucursal.getCodigoPostal());
 			statement.setString(9, sucursal.getNombre());
+			statement.setString(10, sucursal.getNroSucursal());
 			
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -129,7 +130,8 @@ public class SucursalDAOSQL implements SucursalDAO{
 		String pais = resultSet.getString("Pais");
 		String codPostal = resultSet.getString("CodigoPostal");
 		String nombre = resultSet.getString("Nombre");
-		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre);
+		String nroSucursal = resultSet.getString("NroSucursal");
+		return new SucursalDTO(idSucursal,telefono,calle,altura,provincia,localidad,pais,codPostal,nombre,nroSucursal);
 	}
 
 	@Override

@@ -5,9 +5,9 @@ public class StockDTO {
 	private int idSucursal;
 	private int idProducto;
 	private String codigoLote;
-	private int stockDisponible;
+	private Double stockDisponible;
 
-	public StockDTO(int idStock, int idSucursal, int idProducto, String codigoLote, int stockDisponible) {
+	public StockDTO(int idStock, int idSucursal, int idProducto, String codigoLote, Double stockDisponible) {
 		this.idStock = idStock;
 		this.idSucursal = idSucursal;
 		this.idProducto = idProducto;
@@ -47,11 +47,11 @@ public class StockDTO {
 		this.codigoLote = codigoLote;
 	}
 
-	public int getStockDisponible() {
+	public Double getStockDisponible() {
 		return stockDisponible;
 	}
 
-	public void setStockDisponible(int stockDisponible) {
+	public void setStockDisponible(Double stockDisponible) {
 		this.stockDisponible = stockDisponible;
 	}
 }

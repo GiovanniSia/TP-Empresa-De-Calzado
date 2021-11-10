@@ -96,6 +96,7 @@ public class VerPasos extends JFrame {
 	private JButton btnInactivarReceta;
 	private JLabel lblInactivarReceta;
 	private JLabel lblEstadoReceta;
+	private JTextField textFieldCantidadIngrediente;
 
 	public VerPasos() {
 		initialize();
@@ -242,12 +243,14 @@ public class VerPasos extends JFrame {
 		btnAgregarPasoAReceta.setBounds(289, 125, 60, 60);
 		cambiarIconoBotones(btnAgregarPasoAReceta,  "plus.png");
 		panel.add(btnAgregarPasoAReceta);
-		
+		/*
 		SpinnerModel sm = new SpinnerNumberModel(1, 1, 100, 1);
 		spinnerCantidadIngrediente = new JSpinner(sm);
 		spinnerCantidadIngrediente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		spinnerCantidadIngrediente.setBounds(608, 360, 52, 20);
 		panel.add(spinnerCantidadIngrediente);
+		*/
+		
 		
 		comboBoxProductos = new JComboBox();
 		comboBoxProductos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -388,6 +391,12 @@ public class VerPasos extends JFrame {
 		lblEstadoReceta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblEstadoReceta.setBounds(456, 391, 132, 30);
 		panel.add(lblEstadoReceta);
+		
+		textFieldCantidadIngrediente = new JTextField();
+		textFieldCantidadIngrediente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		textFieldCantidadIngrediente.setColumns(10);
+		textFieldCantidadIngrediente.setBounds(608, 362, 45, 30);
+		panel.add(textFieldCantidadIngrediente);
 
 		
 		lblNewLabel = new JLabel("Editor de Recetas");
@@ -624,4 +633,10 @@ public class VerPasos extends JFrame {
 	public JLabel getLblEstadoReceta() {
 		return lblEstadoReceta;
 	}
+
+	public JTextField getTextFieldCantidadIngrediente() {
+		return textFieldCantidadIngrediente;
+	}
+	
+	
 }

@@ -206,7 +206,11 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		String costo = this.ventanaAltaProducto.getTextCosto().getText();
-		if(costo.equals("") || Double.parseDouble(costo)<=0) {
+//		if(costo.equals("") && this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem().toString().equals("No")) {
+//			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
+//			return false;	
+//		}
+		if((costo.equals("") || Double.parseDouble(costo)<=0) && this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem().toString().equals("Si")) {
 			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
 			return false;
 		}
@@ -287,7 +291,13 @@ public class ControladorAltaProducto {
 			String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
 			tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
 			String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
-			double costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());
+			double costo;
+			if(fabricado.equals("S")) {
+				costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());	
+			}else {
+				costo=0;
+			}
+			
 			
 			int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
 			int proveedor = obtenerProveedor();
@@ -350,11 +360,18 @@ public class ControladorAltaProducto {
 			this.proveedorElegido=null;
 			this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
 			this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(false);
+			this.ventanaAltaProducto.getTextCosto().setEnabled(true);
 //			this.ventanaAltaProducto.getBtnElegirProveedor().repaint();
 			return;
 		}
+		if(fabricado.equals("No")) {
+			this.ventanaAltaProducto.getTextCosto().setText("");
+			this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(true);
+			this.ventanaAltaProducto.getTextCosto().setEnabled(false);	
+			return;
+		}
+		this.ventanaAltaProducto.getTextCosto().setEnabled(true);
 		this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(true);
-		
 	}
 	
 	

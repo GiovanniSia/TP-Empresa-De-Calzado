@@ -118,7 +118,8 @@ public class ControladorGestionarSucursales {
 		String loc = s.getLocalidad();
 		String pais = s.getPais();
 		String codPostal = s.getCodigoPostal();
-		Object[] fila = {id,nombre,tel,calle,altura,prov,loc,pais,codPostal};
+		String nroSucursal = s.getNroSucursal();
+		Object[] fila = {id,nroSucursal,nombre,tel,calle,altura,prov,loc,pais,codPostal};
 		this.ventanaGestionarSucursales.getModelTablaSucursales().addRow(fila);
 		this.sucursalesEnTabla.add(s);	
 	}

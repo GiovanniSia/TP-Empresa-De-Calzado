@@ -91,7 +91,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		
 		List<MaestroProductoDTO> materiales = new ArrayList<MaestroProductoDTO>();
 		materiales = readAllMaterialesFromOnePaso(IdPasoReceta);
-		List<Integer> cantidades = new ArrayList<Integer>();
+		List<Double> cantidades = new ArrayList<Double>();
 		if(materiales.size()>0) {
 			for(MaestroProductoDTO m : materiales) {
 				//cantidades.add(obtenerCantidadMaterial(IdPaso,m.getIdMaestroProducto()));
@@ -140,10 +140,10 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		return new MaestroProductoDTO(idMaestroProducto, descripcion, tipo,fabricado,precioCosto,precioMayorista,precioMinorista,puntoRepositorio,idProveedor,talle,unidadMedida,estado, CantidadAReponer, DiasParaReponer);
 	}
 	
-	private Integer obtenerCantidadMaterial(int idPaso, int idMaterial){
+	private Double obtenerCantidadMaterial(int idPaso, int idMaterial){
 		PreparedStatement statement;
 		ResultSet resultSet; // Guarda el resultado de la query
-		Integer lista = 0;
+		Double lista = 0.0;
 		Conexion conexion = Conexion.getConexion();
 		try {
 			statement = conexion.getSQLConexion().prepareStatement(readAllCantidadMaterialesFromOnePaso);
@@ -151,7 +151,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			statement.setInt(2,idMaterial);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
-				lista = resultSet.getInt("CantidadUsada");
+				lista = resultSet.getDouble("CantidadUsada");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -537,14 +537,14 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 	// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	
 	private static final String actualizarCantidadDeUnStock = "UPDATE stock SET StockDisponible = ? WHERE IdStock = ?;";
-	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(int nuevoValor, int idStock) {
+	public boolean actuaizarCantidadStockDeUnProductoEnUnaSucursal(double nuevoValor, int idStock) {
 		PreparedStatement statement;
 		Connection conexion = Conexion.getConexion().getSQLConexion();
 		boolean isInsertExitoso = false;
 		try
 		{
 			statement = conexion.prepareStatement(actualizarCantidadDeUnStock);
-			statement.setInt(1, nuevoValor);
+			statement.setDouble(1, nuevoValor);
 			statement.setInt(2, idStock);
 			
 			if(statement.executeUpdate() > 0)
