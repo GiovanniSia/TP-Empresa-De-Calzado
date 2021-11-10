@@ -11,21 +11,21 @@ import persistencia.dao.mysql.DAOSQLFactory;
 
 public class RankingDatos {
 	
-	static public HashMap<SucursalDTO,Double> getRankingVentasXSucursales(int cantidadSucursalesDeseada, int mesesAtras){
+	static public HashMap<SucursalDTO,Double> getRankingVentasXSucursales(int cantidadSucursalesDeseada, int diasParaAtras){
 		HashMap<SucursalDTO,Double> ret = new HashMap<SucursalDTO,Double>();
 		Sucursal modeloSucursal = new Sucursal(new DAOSQLFactory());
 		for(SucursalDTO s: modeloSucursal.readAll()) {
-			ret.put(s, getIngresos(s.getIdSucursal(), mesesAtras));
+			ret.put(s, getIngresos(s.getIdSucursal(), diasParaAtras));
 		}
 		return getTop(ret, cantidadSucursalesDeseada);
 	}
 	
-	static private Double getIngresos(int idSucursal, int mesesAtras) {
+	static private Double getIngresos(int idSucursal, int diasParaAtras) {
 		Double ret = 0.0;
 		Ingresos modeloIngreso = new Ingresos(new DAOSQLFactory());
 		for(IngresosDTO i: modeloIngreso.readAll()) {
 			if(i.getIdSucursal() == idSucursal) {
-				if(fechaEsValida(i,mesesAtras)) {
+				if(fechaEsValida(i,diasParaAtras)) {
 					ret += i.getTotal();
 				}
 			}
@@ -34,7 +34,7 @@ public class RankingDatos {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private static boolean fechaEsValida(IngresosDTO i, int mesesAtras) {
+	private static boolean fechaEsValida(IngresosDTO i, int diasParaAtras) {
 		Date fechaComparar = new Date();
 		Date fechaIngreso = new Date();
 		String[] fechaIngregoString = i.getFecha().split("-"); 
@@ -42,11 +42,14 @@ public class RankingDatos {
 		fechaIngreso.setMonth(Integer.valueOf(fechaIngregoString[1])-1);
 		fechaIngreso.setDate(Integer.valueOf(fechaIngregoString[2]));
 		
-		fechaComparar.setMonth(Integer.valueOf(fechaComparar.getMonth()-mesesAtras));
-		fechaComparar.setDate(1);
-		if(fechaComparar.compareTo(fechaIngreso)>=0) {
+		fechaComparar.setDate(Integer.valueOf(fechaComparar.getDate()-diasParaAtras));
+		//fechaComparar.setDate(1);
+		System.out.println("fecha comparar: "+fechaComparar);
+		System.out.println(fechaIngreso);
+		if(fechaComparar.compareTo(fechaIngreso)>0) {
 			return false;
 		}
+		System.out.println("La fecha da");
 		return true;
 	}
 
