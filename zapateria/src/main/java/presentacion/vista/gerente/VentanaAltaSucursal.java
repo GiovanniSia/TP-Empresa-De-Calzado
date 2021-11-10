@@ -42,6 +42,8 @@ public class VentanaAltaSucursal {
 	private JTextField textAltura;
 	private JTextField textCodPostal;
 
+	private JLabel lblNumeroDeSucursal;
+
 	private JComboBox<String> comboBoxPais;
 	private JComboBox<String> comboBoxProvincia;
 	private JComboBox<String> comboBoxLocalidad;
@@ -284,7 +286,7 @@ public class VentanaAltaSucursal {
 		textNroSucursal.setBounds(178, 394, 178, 25);
 		frame.getContentPane().add(textNroSucursal);
 		
-		JLabel lblNumeroDeSucursal = new JLabel("Numero de Sucursal");
+		lblNumeroDeSucursal = new JLabel("Numero de Sucursal");
 		lblNumeroDeSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNumeroDeSucursal.setBounds(10, 397, 156, 19);
 		frame.getContentPane().add(lblNumeroDeSucursal);
@@ -394,5 +396,9 @@ public class VentanaAltaSucursal {
 
 	public JTextField getTextNroSucursal() {
 		return textNroSucursal;
+	}
+	
+	public JLabel getLblNumeroDeSucursal() {
+		return lblNumeroDeSucursal;
 	}
 }
