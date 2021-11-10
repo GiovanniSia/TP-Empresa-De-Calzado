@@ -94,8 +94,8 @@ public class ControladorLogin {
 		}
 		
 		JOptionPane.showMessageDialog(null,
-				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
-
+				"Bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
+		
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correoElectronico, clave);
 		return true;
@@ -119,8 +119,6 @@ public class ControladorLogin {
 		progressBar.setVisible(true);
 		simulacion = new Simulacion(controlador, progressBar,this);
 		simulacion.execute();
-//		cerrarVentana();
-		ventanaLogin.limpiarCampos();
 	}
 
 	private void establecerPropertiesEmpleado() {
@@ -152,7 +150,17 @@ public class ControladorLogin {
 		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
 				CodigoPostal, Nombre);
 	}
+	public void bloquearUsuarioYClave() {
+		this.ventanaLogin.getCbSucursales().setEnabled(false);
+		this.ventanaLogin.getTxtFieldCorreo().setEditable(false);
+		this.ventanaLogin.getTxtFieldContra().setEditable(false);
+		this.ventanaLogin.getBtnIniciarSesion().setEnabled(false);
+	}
 
+	public void limpiarCampos() {
+		this.ventanaLogin.limpiarCampos();
+	}
+	
 	public void mostrarVentana() {
 		this.ventanaLogin.mostrarVentana();
 	}

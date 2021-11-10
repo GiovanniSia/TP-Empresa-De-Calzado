@@ -19,11 +19,12 @@ public class Simulacion extends SwingWorker<Boolean, Boolean> {
 
 	@Override
 	protected Boolean doInBackground() throws Exception {
+		controladorLogin.bloquearUsuarioYClave();
 		progressBar.setIndeterminate(true);
 		controlador.inicializar();
 		controlador.mostrarVentanaPorTipoEmpleado();
 		controladorLogin.cerrarVentana();
-		
+		controladorLogin.limpiarCampos();
 		return true;
 	}
 
