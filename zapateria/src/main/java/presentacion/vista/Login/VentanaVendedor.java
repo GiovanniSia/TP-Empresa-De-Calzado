@@ -96,7 +96,7 @@ public class VentanaVendedor extends JFrame {
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnArmarVenta.setBackground(new Color(51, 102, 204));
 		btnArmarVenta.setBounds(35, 74, 120, 120);
-		cambiarIconoBotones(btnArmarVenta, "exit.png");
+		cambiarIconoBotones(btnArmarVenta, "tag.png");
 		panel_1.add(btnArmarVenta);
 		
 		btnVerAgregarClientes = new JButton("");
@@ -108,6 +108,7 @@ public class VentanaVendedor extends JFrame {
 		btnVerAgregarClientes.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerAgregarClientes.setBackground(new Color(51, 102, 204));
 		btnVerAgregarClientes.setBounds(285, 74, 120, 120);
+		cambiarIconoBotones(btnVerAgregarClientes, "person.png");
 		panel_1.add(btnVerAgregarClientes);
 		
 		btnVerProductos = new JButton("");
@@ -115,6 +116,7 @@ public class VentanaVendedor extends JFrame {
 		btnVerProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerProductos.setBackground(new Color(51, 102, 204));
 		btnVerProductos.setBounds(535, 74, 120, 120);
+		cambiarIconoBotones(btnVerProductos, "product.png");
 		panel_1.add(btnVerProductos);
 		
 		lblNewLabel_3 = new JLabel("Armar Venta");
