@@ -505,7 +505,7 @@ public class ControladorRealizarVenta {
 
 		String tipoFactura = determinarCategoriaFactura(client);
 
-		String nroFacturaCompleto = generarNroSucursal()+ tipoFactura + generarNroFacturaSecuencial();
+		String nroFacturaCompleto = generarNroSucursal()+ tipoFactura + generarNroFacturaSecuencial(tipoFactura);
 		int idSucursal = this.carritoACobrar.getIdSucursal();
 		double descuento = this.descuento;
 
@@ -595,7 +595,8 @@ public class ControladorRealizarVenta {
 		return sucursal.getNroSucursal();
 	}
 	
-	public String generarNroFacturaSecuencial() {
+	public String generarNroFacturaSecuencial(String tipoFactura) {
+/*
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
 		if (todasLasFacturas.size() == 0) {
 			return "1";
@@ -612,7 +613,54 @@ public class ControladorRealizarVenta {
 		int viejoSuma = Integer.parseInt(ultSec);
 		int nuevoSec = (viejoSuma + 1);
 		return "" + nuevoSec;
+	*/
+		String nroFacturaSec="";
+		FacturaDTO ultFactura = obtenerUltFacturaParaSerie(tipoFactura);
+		
+		
+		if(ultFactura!=null) {
+			//si ya existe entonces hay que buscar el utimo y sumarle +1
+			
+			int longitudFactura= ultFactura.getNroFacturaCompleta().length();
+			for(int i=8 ; i>=1 ; i--) {
+				nroFacturaSec = nroFacturaSec + ultFactura.getNroFacturaCompleta().charAt(longitudFactura-i);
+			}
+			int suma = Integer.parseInt(nroFacturaSec) + 1;
+			nroFacturaSec = suma+"";
+			if(nroFacturaSec.length()<8) {
+				while(nroFacturaSec.length()<8) {
+					nroFacturaSec = "0"+nroFacturaSec;
+				}
+				return nroFacturaSec;
+				
+				
+			}else {
+				return nroFacturaSec;
+			}
+			
+		}else {
+			//si no existe hay que crear uno nuevo. Ej 00000001
+			for(int i=1; i<=7;i++) {
+				nroFacturaSec=nroFacturaSec+0;
+			}
+			return nroFacturaSec+"1";
+		}
 	}
+
+	public FacturaDTO obtenerUltFacturaParaSerie(String tipoFactura) {
+		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
+		FacturaDTO ultFactura = null;
+		for(FacturaDTO f: todasLasFacturas) {
+			for(int i=0; i<f.getNroFacturaCompleta().length();i++) {
+				//si en algun caracter de la factura existe un A-B o E entonces es true
+				if(f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
+					ultFactura=f;
+				}	
+			}
+			
+		}return ultFactura;		
+	}
+
 
 	public boolean calcularIVA(ClienteDTO cliente) {
 		if (cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
