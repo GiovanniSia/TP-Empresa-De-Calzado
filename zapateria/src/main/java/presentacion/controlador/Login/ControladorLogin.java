@@ -151,6 +151,7 @@ public class ControladorLogin {
 				CodigoPostal, Nombre);
 	}
 	public void bloquearUsuarioYClave() {
+		this.ventanaLogin.getLblCargando().setVisible(true);
 		this.ventanaLogin.getCbSucursales().setEnabled(false);
 		this.ventanaLogin.getTxtFieldCorreo().setEditable(false);
 		this.ventanaLogin.getTxtFieldContra().setEditable(false);

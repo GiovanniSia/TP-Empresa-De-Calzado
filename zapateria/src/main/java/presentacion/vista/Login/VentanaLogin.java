@@ -39,6 +39,7 @@ public class VentanaLogin extends JFrame {
 	private JLabel lblNewLabel_1;
 	private JLabel lblZapateriaArgento;
 	private JProgressBar progressBar;
+	private JLabel lblCargando;
 
 	public static void main(String[] args) {
 		VentanaLogin n = new VentanaLogin();
@@ -63,9 +64,9 @@ public class VentanaLogin extends JFrame {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 808, 635);
-		
+
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
-	
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -182,7 +183,7 @@ public class VentanaLogin extends JFrame {
 		JLabel lblMichelleAdmin = new JLabel("michelle@ Admin");
 		lblMichelleAdmin.setBounds(659, 508, 112, 14);
 		contentPane.add(lblMichelleAdmin);
-		
+
 		JLabel lblMatiasGerente = new JLabel("matias@ Gerente");
 		lblMatiasGerente.setBounds(659, 530, 112, 14);
 		contentPane.add(lblMatiasGerente);
@@ -190,17 +191,27 @@ public class VentanaLogin extends JFrame {
 		lblNewLabel_1 = new JLabel("Clave: 1234");
 		lblNewLabel_1.setBounds(659, 555, 112, 14);
 		contentPane.add(lblNewLabel_1);
-		
+
 		progressBar = new JProgressBar();
 		progressBar.setBounds(244, 345, 292, 32);
 		progressBar.setVisible(false);
 		contentPane.add(progressBar);
+
+		lblCargando = new JLabel("Por favor espere...");
+		lblCargando.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCargando.setBounds(244, 384, 292, 25);
+		lblCargando.setVisible(false);
+		contentPane.add(lblCargando);
 		
 				JLabel lblNewLabel_2 = new JLabel("");
 				lblNewLabel_2.setBounds(0, 0, 800, 600);
 				contentPane.add(lblNewLabel_2);
 				cambiarIconoLabel(lblNewLabel_2, "foto.png");
 
+	}
+	
+	public JLabel getLblCargando() {
+		return lblCargando;
 	}
 
 	public void cambiarIconoLabel(JLabel label, String ruta) {
@@ -233,7 +244,7 @@ public class VentanaLogin extends JFrame {
 		});
 		this.frame.setVisible(true);
 	}
-	
+
 	public void limpiarCampos() {
 		this.txtFieldCorreo.setText(null);
 		this.txtFieldContra.setText(null);
