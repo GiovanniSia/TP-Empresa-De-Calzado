@@ -144,7 +144,7 @@ public class ControladorModificarEmpleados {
 		if (CUILAntiguo.equals(CUILNuevo) && NombreAntiguo.equals(NombreNuevo) && ApellidoAntiguo.equals(ApellidoNuevo)
 				&& CorreoElectronicoAntiguo.equals(CorreoElectronicoNuevo)
 				&& TipoEmpleadoAntiguo.equals(TipoEmpleadoNuevo)) {
-			JOptionPane.showMessageDialog(null, "es lo msiom");
+			JOptionPane.showMessageDialog(null, "No hubo ningun cambio");
 			return false;
 		}
 
