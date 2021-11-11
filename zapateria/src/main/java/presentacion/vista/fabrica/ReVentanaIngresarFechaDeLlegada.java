@@ -33,9 +33,10 @@ public class ReVentanaIngresarFechaDeLlegada extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 180));
 		panel.setBounds(10, 11, 391, 210);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -60,12 +61,24 @@ public class ReVentanaIngresarFechaDeLlegada extends JFrame {
 		lblCompletar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblCompletar.setBounds(258, 108, 123, 56);
 		panel.add(lblCompletar);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 960, 720);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 

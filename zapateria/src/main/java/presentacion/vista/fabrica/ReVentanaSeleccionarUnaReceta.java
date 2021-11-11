@@ -47,13 +47,14 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 703, 475);
+		frame.setBounds(100, 100, 703, 483);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
-
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 180));
 		panel.setBounds(10, 25, 664, 408);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -83,7 +84,7 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		panel.add(lblMensaje);
 		
 		btnTrabajar = new JButton("");
-		btnTrabajar.setBounds(400, 337, 60, 60);
+		btnTrabajar.setBounds(447, 337, 60, 60);
 		cambiarIconoBotones(btnTrabajar,  "pick.png");
 		panel.add(btnTrabajar);
 		
@@ -109,14 +110,29 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		
 		lblNewLabel_1 = new JLabel("Pasar a Produccion");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(470, 337, 184, 60);
+		lblNewLabel_1.setBounds(517, 337, 137, 60);
 		panel.add(lblNewLabel_1);
+		
+		JButton btnAtras = new JButton("");
+		btnAtras.setBounds(304, 337, 60, 60);
+		cambiarIconoBotones(btnAtras,  "back2.png");
+		panel.add(btnAtras);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Atras");
+		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_1.setBounds(371, 337, 66, 60);
+		panel.add(lblNewLabel_1_1);
 		
 		panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(0, 0, 687, 14);
 		frame.getContentPane().add(panel_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 960, 720);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
@@ -124,7 +140,14 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
-
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
+	}
+	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.frame.addWindowListener(new WindowAdapter() {
