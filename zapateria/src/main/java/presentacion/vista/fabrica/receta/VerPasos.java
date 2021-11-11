@@ -80,8 +80,6 @@ public class VerPasos extends JFrame {
 	private JLabel lblReceta;
 	private JPanel panel_1;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
 	private JSeparator separator_1;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
@@ -447,18 +445,6 @@ public class VerPasos extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes.png");
 		panel_1.add(lblLogo);
-		
-		lblNewLabel_1 = new JLabel("F\u00E1brica");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(640, 28, 172, 19);
-		panel_1.add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(343, 28, 59, 19);
-		panel_1.add(lblNewLabel_2);
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(20, 552, 60, 60);

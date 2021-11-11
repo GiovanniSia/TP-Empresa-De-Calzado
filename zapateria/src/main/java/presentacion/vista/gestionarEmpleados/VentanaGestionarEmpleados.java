@@ -189,18 +189,6 @@ public class VentanaGestionarEmpleados extends JFrame {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
 		
-		JLabel lblNewLabel_2 = new JLabel("Sucursal:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(537, 28, 59, 19);
-		panel_2.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("Empleado:");
-		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2_1.setBounds(343, 28, 59, 19);
-		panel_2.add(lblNewLabel_2_1);
-		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
 		panel.setBounds(0, 99, 725, 290);

@@ -33,8 +33,6 @@ import javax.swing.JButton;
 public class VentanaGenerarPedidoProveedor {
 
 	private JFrame frame;
-	private JLabel lblNombreEmpleado;
-	private JLabel lblNombreSucursal;
 	private JTable tablaProducto;
 	private String[] nombreColumnasProducto = {"Id Producto","Descripcion","Tipo","Prod. Propio","Costo prod.","Precio Mayorista","Precio Minorista","Punto de rep. minimo","Id Prov","Talle","Medida","Estado","Cant a rep","Dias para rep.","Stock disp","Cod. lote"};
 	private DefaultTableModel modelProducto;
@@ -110,30 +108,6 @@ public class VentanaGenerarPedidoProveedor {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
-		
-		JLabel lblSucursal = new JLabel("Sucursal:");
-		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(468, 28, 59, 19);
-		panel_2.add(lblSucursal);
-		
-		JLabel lblEmpleado = new JLabel("Empleado:");
-		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEmpleado.setBounds(225, 28, 59, 19);
-		panel_2.add(lblEmpleado);
-		
-		lblNombreEmpleado = new JLabel("");
-		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNombreEmpleado.setBounds(296, 28, 183, 19);
-		panel_2.add(lblNombreEmpleado);
-		
-		lblNombreSucursal = new JLabel("");
-		lblNombreSucursal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNombreSucursal.setBounds(537, 28, 172, 19);
-		panel_2.add(lblNombreSucursal);
 		
 		JLabel lblNewLabel = new JLabel("Pedido a Proveedor");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -327,13 +301,6 @@ public class VentanaGenerarPedidoProveedor {
 		return frame;
 	}
 
-	public JLabel getLblNombreEmpleado() {
-		return lblNombreEmpleado;
-	}
-
-	public JLabel getLblNombreSucursal() {
-		return lblNombreSucursal;
-	}
 
 	public JTable getTablaProducto() {
 		return tablaProducto;

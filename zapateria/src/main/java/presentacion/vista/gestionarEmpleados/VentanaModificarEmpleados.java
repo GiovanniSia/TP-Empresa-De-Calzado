@@ -49,8 +49,6 @@ public class VentanaModificarEmpleados extends JFrame {
 	private JPasswordField txtClaveNueva;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel;
 	private JPanel panel_1;
 
 	public static void main(String[] args) {
@@ -251,18 +249,6 @@ public class VentanaModificarEmpleados extends JFrame {
 		lblLogo.setBounds(10, 5, 64, 42);
 		cambiarIconoLabel(lblLogo, "icono2.png");
 		panel.add(lblLogo);
-		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(100, 28, 59, 19);
-		panel.add(lblNewLabel_2);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(100, 5, 59, 19);
-		panel.add(lblNewLabel);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));

@@ -45,15 +45,11 @@ private static final long serialVersionUID = 1L;
 	JButton btnGenerarOrdenDeManufactura;
 	private JPanel panel_2;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JLabel lblAgregarProducto;
 	private JLabel lblAtrs_2;
 	private JLabel lblAtrs_1;
 
 	private JButton btnEditar;
-	private JLabel lblNombreEmpleado;
-	private JLabel lblNombreSucursal;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -192,30 +188,6 @@ private static final long serialVersionUID = 1L;
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(671, 28, 59, 19);
-		panel_2.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Empleado:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(477, 28, 59, 19);
-		panel_2.add(lblNewLabel_1);
-		
-		lblNombreEmpleado = new JLabel("");
-		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNombreEmpleado.setBounds(546, 28, 129, 19);
-		panel_2.add(lblNombreEmpleado);
-		
-		lblNombreSucursal = new JLabel("");
-		lblNombreSucursal.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNombreSucursal.setBounds(740, 28, 129, 19);
-		panel_2.add(lblNombreSucursal);
 		
 		btnGenerarPedido = new JButton("");
 		btnGenerarPedido.setBounds(480, 494, 60, 60);
@@ -411,13 +383,7 @@ private static final long serialVersionUID = 1L;
 		return lblLogo;
 	}
 
-	public JLabel getLblNewLabel() {
-		return lblNewLabel;
-	}
 
-	public JLabel getLblNewLabel_1() {
-		return lblNewLabel_1;
-	}
 
 	public JLabel getLblAgregarProducto() {
 		return lblAgregarProducto;
@@ -435,14 +401,6 @@ private static final long serialVersionUID = 1L;
 		return btnEditar;
 	}
 
-	public JLabel getLblNombreEmpleado() {
-		return lblNombreEmpleado;
-	}
-
-	public JLabel getLblNombreSucursal() {
-		return lblNombreSucursal;
-	}
-	
 	
 }
 

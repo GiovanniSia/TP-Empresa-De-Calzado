@@ -52,8 +52,6 @@ public class VentanaGestionarProveedores {
 	private JButton btnEditar;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
 	private JPanel panel_1;
 	private JLabel lblregistrarProveedor;
 	private JLabel lbleditarProveedor;
@@ -170,7 +168,7 @@ public class VentanaGestionarProveedores {
 		
 		lblAsignarProductoA = new JLabel("<html>Asignar Producto a Proveedor</html>");
 		lblAsignarProductoA.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblAsignarProductoA.setBounds(641, 544, 71, 58);
+		lblAsignarProductoA.setBounds(641, 544, 79, 58);
 		frame.getContentPane().add(lblAsignarProductoA);
 		
 		btnAniadir = new JButton("");
@@ -197,18 +195,6 @@ public class VentanaGestionarProveedores {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
-		
-		lblNewLabel_1 = new JLabel("Sucursal:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(547, 28, 59, 19);
-		panel.add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(316, 28, 59, 19);
-		panel.add(lblNewLabel_2);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255, 180));
@@ -321,10 +307,6 @@ public class VentanaGestionarProveedores {
 
 	public JButton getBtnAsignarProdAProv() {
 		return btnAsignarProdAProv;
-	}
-
-	public JLabel getLblNewLabel_1() {
-		return lblNewLabel_1;
 	}
 
 	public JLabel getLblSeleccionarProveedor() {

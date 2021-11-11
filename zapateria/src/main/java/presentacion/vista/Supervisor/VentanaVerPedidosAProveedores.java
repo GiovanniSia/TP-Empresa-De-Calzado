@@ -64,8 +64,6 @@ public class VentanaVerPedidosAProveedores {
 	private JLabel lblNewLabel_5;
 	private JPanel panel_1;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_6;
 
 
 	/**
@@ -322,18 +320,6 @@ public class VentanaVerPedidosAProveedores {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_1.add(lblLogo);
-		
-		lblNewLabel_2 = new JLabel("Sucursal:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(876, 28, 59, 19);
-		panel_1.add(lblNewLabel_2);
-		
-		lblNewLabel_6 = new JLabel("Empleado:");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_6.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_6.setBounds(645, 28, 59, 19);
-		panel_1.add(lblNewLabel_6);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(1, 0, 1280, 960);

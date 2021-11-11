@@ -290,7 +290,7 @@ public class VentanaDashboardGerente {
 		
 		lblSucursal = new JLabel("Sucursal:");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(186, 95, 143, 22);
+		lblSucursal.setBounds(186, 95, 171, 22);
 		panel.add(lblSucursal);
 		
 		lblProveedores = new JLabel("Proveedores");

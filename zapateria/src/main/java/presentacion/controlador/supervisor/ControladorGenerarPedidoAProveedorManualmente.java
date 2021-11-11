@@ -87,7 +87,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		
 		llenarTablaProductoElegido();
 		llenarTablaProveedores();
-		llenarLabels();
+//		llenarLabels();
 		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().setSelected(true);
 		
 		this.ventanaGenerarPedidoProveedor.getRdbtnProveedoresPref().addActionListener(a -> radioButtonProveedorPreferenciadoSeleccionado());
@@ -106,21 +106,21 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		
 	}
 
-	public void llenarLabels() {
-		empleadoProperties empleado = empleadoProperties.getInstance();
-		sucursalProperties sucu = sucursalProperties.getInstance();
-		try {
-			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
-			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
-			
-			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
-			String sucursal = sucu.getValue("Nombre");
-			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
-			this.ventanaGenerarPedidoProveedor.getLblNombreSucursal().setText(sucursal);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void llenarLabels() {
+//		empleadoProperties empleado = empleadoProperties.getInstance();
+//		sucursalProperties sucu = sucursalProperties.getInstance();
+//		try {
+//			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
+//			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
+//			
+//			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+//			String sucursal = sucu.getValue("Nombre");
+//			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
+//			this.ventanaGenerarPedidoProveedor.getLblNombreSucursal().setText(sucursal);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void mostrarVentana() {
 		this.ventanaGenerarPedidoProveedor.show();

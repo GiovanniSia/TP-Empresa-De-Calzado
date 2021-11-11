@@ -190,21 +190,21 @@ public class ControladorGestionarProductos {
 
 		escribirTablaCompleta();
 		validarTeclado();
-		escribirLabels();
+//		escribirLabels();
 	}
 
-	public void escribirLabels() {
-		empleadoProperties empleado = empleadoProperties.getInstance();
-		sucursalProperties sucu = sucursalProperties.getInstance();
-		try {
-			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
-			String sucursal = sucu.getValue("Nombre");
-			this.ventanaGestionarProductos.getLblNombreEmpleado().setText(nombreEmp);
-			this.ventanaGestionarProductos.getLblNombreSucursal().setText(sucursal);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void escribirLabels() {
+//		empleadoProperties empleado = empleadoProperties.getInstance();
+//		sucursalProperties sucu = sucursalProperties.getInstance();
+//		try {
+//			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+//			String sucursal = sucu.getValue("Nombre");
+//			this.ventanaGestionarProductos.getLblNombreEmpleado().setText(nombreEmp);
+//			this.ventanaGestionarProductos.getLblNombreSucursal().setText(sucursal);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
 		this.ventanaGestionarProductos.mostrarVentanaParaVerProductosYOrdenDeManufactura();

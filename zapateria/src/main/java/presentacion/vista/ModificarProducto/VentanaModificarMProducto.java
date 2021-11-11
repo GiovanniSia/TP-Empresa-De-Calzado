@@ -95,8 +95,6 @@ public class VentanaModificarMProducto extends JFrame {
 	private JSeparator separator_2;
 	private JPanel panel_2;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_4;
-	private JLabel lblNewLabel_5;
 
 	public VentanaModificarMProducto() {
 		initialize();
@@ -520,18 +518,6 @@ public class VentanaModificarMProducto extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
-		
-		lblNewLabel_4 = new JLabel("Sucursal:");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(902, 23, 59, 19);
-		panel_2.add(lblNewLabel_4);
-		
-		lblNewLabel_5 = new JLabel("Empleado:");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_5.setBounds(671, 23, 59, 19);
-		panel_2.add(lblNewLabel_5);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(1, 0, 1280, 960);
