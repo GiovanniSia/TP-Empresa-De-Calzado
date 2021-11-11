@@ -19,6 +19,7 @@ public class EmpleadoDAOSQL implements EmpleadoDAO {
 	private static final String readall = "select IdEmpleado,cuil,nombre,apellido,correoelectronico,tipoempleado,(aes_decrypt(contra,'AES')) Contra from empleados";
 	private static final String select = "SELECT * FROM empleados WHERE IdEmpleado=?";
 	private static final String selectUser = "SELECT * FROM empleados where CorreoElectronico=? and Contra=(aes_ENCRYPT(?,'AES'))";
+	private static final String selectUserCorreo = "select IdEmpleado,cuil,nombre,apellido,correoelectronico,tipoempleado,(aes_decrypt(contra,'AES')) Contra from empleados where correoelectronico=?";
 
 	@Override
 	public boolean insert(EmpleadoDTO empleado) {
@@ -145,6 +146,27 @@ public class EmpleadoDAOSQL implements EmpleadoDAO {
 		}
 		return empleado;
 	}
+	
+	public EmpleadoDTO selectUserCorreo(String correo) {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		EmpleadoDTO empleado = null;
+		Conexion conexion = Conexion.getConexion();
+
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(selectUserCorreo);
+			statement.setString(1, correo);
+			resultSet = statement.executeQuery();
+
+			if (resultSet.next()) {
+				empleado = getEmpleadoDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return empleado;
+	}	
 
 	public EmpleadoDTO selectUser(String correo, String contra) {
 		PreparedStatement statement;

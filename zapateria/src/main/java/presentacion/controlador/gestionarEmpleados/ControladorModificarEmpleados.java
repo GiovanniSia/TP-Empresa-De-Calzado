@@ -37,7 +37,7 @@ public class ControladorModificarEmpleados {
 	VentanaModificarEmpleados ventanaModificarEmpleados;
 
 	private String[] estados = { "Cajero", "Vendedor", "Supervisor", "Supervisor de Fabrica", "Operario de Fabrica",
-			"Administrativo", "Gerente", "Inactivo" };
+			"Administrativo", "Gerente", "Inactivo","Bloqueado" };
 	private Empleado empleado;
 	private EmpleadoDTO empleadoSeleccionado;
 	private EmpleadoDTO empleadoNuevo;

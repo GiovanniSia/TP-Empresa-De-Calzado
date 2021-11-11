@@ -19,7 +19,7 @@ public class ControladorGestionarEmpleados {
 	private Empleado empleado;
 	private List<EmpleadoDTO> empleadosEnTabla;
 	private String[] estados = { "Cajero", "Vendedor", "Supervisor", "Supervisor de Fabrica", "Operario de Fabrica",
-			"Administrativo", "Gerente" };
+			"Administrativo", "Gerente","Inactivo","Bloqueado" };
 	private ControladorAgregarEmpleados controladorAgregarEmpleados;
 
 	private ControladorModificarEmpleados controladorModificarEmpelados;
@@ -83,7 +83,8 @@ public class ControladorGestionarEmpleados {
 
 		List<EmpleadoDTO> empleadosFiltro = this.empleado.getFiltrarPor("IdEmpleado", txtIdEmpleado, "CUIL", txtCUIL,
 				"TipoEmpleado", tipoEmpleado);
-		llenarTabla(empleadosFiltro);
+		empleadosEnTabla = empleadosFiltro;
+		llenarTabla(empleadosEnTabla);
 	}
 
 	public void agregar(ActionEvent v) {

@@ -28,9 +28,12 @@ public class ControladorLogin {
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
 	private String mail;
-	
+
 	private JProgressBar progressBar;
-	private Simulacion simulacion=null;
+	private Simulacion simulacion = null;
+
+	private int vecesIngresado = 0;
+	private String correoElectrionicoAnterior = "";
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -54,7 +57,7 @@ public class ControladorLogin {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void iniciarSesion(ActionEvent a) {
 		if (inicioSesionValido()) {
 			iniciarZapateria();
@@ -63,7 +66,7 @@ public class ControladorLogin {
 
 	private void iniciarZapateria() {
 		establecerPropertiesEmpleado();
-		establecerPropertiesSucursal();			
+		establecerPropertiesSucursal();
 		mostrarControlador();
 	}
 
@@ -78,24 +81,60 @@ public class ControladorLogin {
 	private boolean inicioSesionValido() {
 		String correoElectronico = this.ventanaLogin.getTxtFieldCorreo().getText();
 		String clave = this.ventanaLogin.getTxtFieldContra().getText();
-		if (empleado.selectUser(correoElectronico, clave) == null) {
-			JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
-			return false;
+
+		if (!correoElectronico.equals(correoElectrionicoAnterior)) {
+			System.out.println("Valor dendo aaaaa: " + vecesIngresado);
+			vecesIngresado = 0;
+			correoElectrionicoAnterior = correoElectronico;
 		}
-		
-		if(empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Inactivo")) {
+
+		if (empleado.selectUser(correoElectronico, clave) == null) {
+			System.out.println("Valor en el primer first: " + vecesIngresado);
+
+			if (empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Inactivo")) {
+				JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
+				return false;
+			}
+			if (empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Bloqueado")) {
+				JOptionPane.showMessageDialog(null, "Su cuenta se encuentra bloqueada");
+				return false;
+			}
+
+			if (vecesIngresado != 5
+					|| empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Gerente")) {
+				vecesIngresado++;
+				JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
+				return false;
+			}
+		}
+
+		if (empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Inactivo")) {
 			JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
 			return false;
 		}
-		
-		if(this.ventanaLogin.getCbSucursales().getSelectedItem().equals("Sin especificar") && !empleado.selectUser(correoElectronico, clave).getTipoEmpleado().equals("Gerente")) {
-			JOptionPane.showMessageDialog(null, "Tiene que indicar una sucursal");
+		if (empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Bloqueado")) {
+			JOptionPane.showMessageDialog(null, "Su cuenta se encuentra bloqueada");
 			return false;
 		}
-		
+
+		if (vecesIngresado == 5 && !empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Inactivo")
+				&& !empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Bloqueado")
+				&& !empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Gerente")) {
+			JOptionPane.showMessageDialog(null, "Cuenta bloqueada, por favor notifique que su cuenta fue bloqueada");
+
+			EmpleadoDTO empleadoBloqueado = empleado.selectUserCorreo(correoElectronico);
+
+			EmpleadoDTO empleadoNuevo = new EmpleadoDTO(empleadoBloqueado.getIdEmpleado(), empleadoBloqueado.getCUIL(),
+					empleadoBloqueado.getNombre(), empleadoBloqueado.getApellido(),
+					empleadoBloqueado.getCorreoElectronico(), "Bloqueado", empleadoBloqueado.getContra());
+			empleado.update(empleadoBloqueado.getIdEmpleado(), empleadoNuevo);
+			vecesIngresado = 0;
+			return false;
+		}
+
 		JOptionPane.showMessageDialog(null,
 				"Bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
-		
+
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correoElectronico, clave);
 		return true;
@@ -117,7 +156,7 @@ public class ControladorLogin {
 		controlador.setControladorLogin(this);
 		progressBar = this.ventanaLogin.getProgressBar();
 		progressBar.setVisible(true);
-		simulacion = new Simulacion(controlador, progressBar,this);
+		simulacion = new Simulacion(controlador, progressBar, this);
 		simulacion.execute();
 	}
 
@@ -150,6 +189,7 @@ public class ControladorLogin {
 		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
 				CodigoPostal, Nombre);
 	}
+
 	public void bloquearUsuarioYClave() {
 		this.ventanaLogin.getLblCargando().setVisible(true);
 		this.ventanaLogin.getCbSucursales().setEnabled(false);
@@ -161,7 +201,7 @@ public class ControladorLogin {
 	public void limpiarCampos() {
 		this.ventanaLogin.limpiarCampos();
 	}
-	
+
 	public void mostrarVentana() {
 		this.ventanaLogin.mostrarVentana();
 	}
