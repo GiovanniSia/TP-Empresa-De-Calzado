@@ -31,7 +31,7 @@ public class VentanaOperarioFabrica extends JFrame {
 	private JPanel panel;
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_2;
+	private JLabel lblEmpleado;
 	private JLabel lblNewLabel_3;
 	
 	public VentanaOperarioFabrica() {
@@ -94,11 +94,11 @@ public class VentanaOperarioFabrica extends JFrame {
 		lblNewLabel.setBounds(537, 28, 172, 19);
 		panel.add(lblNewLabel);
 		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(343, 28, 59, 19);
-		panel.add(lblNewLabel_2);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(343, 28, 233, 19);
+		panel.add(lblEmpleado);
 		
 		btnCerrarSesion = new JButton("");
 		btnCerrarSesion.setBounds(10, 222, 60, 60);
@@ -141,7 +141,7 @@ public class VentanaOperarioFabrica extends JFrame {
 		this.frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showOptionDialog(null, "¿Estás seguro que quieres salir?", "Advertencia",
+				int confirm = JOptionPane.showOptionDialog(null, "ï¿½Estï¿½s seguro que quieres salir?", "Advertencia",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
 					Conexion.getConexion().cerrarConexion();
@@ -166,5 +166,9 @@ public class VentanaOperarioFabrica extends JFrame {
 
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
 	}
 }

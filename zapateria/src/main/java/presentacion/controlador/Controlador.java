@@ -66,6 +66,7 @@ public class Controlador {
 
 	private int idSucursal = 0;
 	private String tipoEmpleado = "";
+	private String nombreEmpleado = "";
 
 	private SucursalDTO sucursalObj;
 	private MaestroProducto maestroProducto;
@@ -195,40 +196,52 @@ public class Controlador {
 	public void inicializar() {
 		if (tipoEmpleado.equals("Administrativo")) {
 			this.ventanaAdministrador = new VentanaAdministrador();
+			this.ventanaAdministrador.getLblEmpleado().setText("Administrador: "+nombreEmpleado);
+			this.ventanaAdministrador.getLblSucursal().setText("Sucursal: "+sucursalObj.getNombre());
 			inicializarControladoresAdministrativos();
 			escucharBotonesVentanaAdministrativo();
 		}
 		if (tipoEmpleado.equals("Cajero")) {
 			this.ventanaCajero = new VentanaCajero();
+			this.ventanaCajero.getLblEmpleado().setText("Cajero: " + nombreEmpleado);
+			this.ventanaCajero.getLblSucursal().setText("Sucursal: " + sucursalObj.getNombre());
 			inicializarControladoresCajero();
 			escucharBotonesVentanaCajero();
 		}
 		if (tipoEmpleado.equals("Vendedor")) {
 			this.ventanaVendedor = new VentanaVendedor();
+			this.ventanaVendedor.getLblEmpleado().setText("Vendedor: " + nombreEmpleado);
+			this.ventanaVendedor.getLblSucursal().setText("Sucursal: " + sucursalObj.getNombre());
 			inicializarControladoresVendedor();
 			escucharBotonesVentanaVendedor();
 		}
 		if (tipoEmpleado.equals("Operario de Fabrica")) {
 			this.ventanaOperarioFabrica = new VentanaOperarioFabrica();
+			this.ventanaOperarioFabrica.getLblEmpleado().setText("Operario de Fabrica: " + nombreEmpleado);
 			inicializarControladoresOperarioDeFabrica();
 			escucharBotonesVentanaOperatoriaDeFabrica();
 		}
 		if (tipoEmpleado.equals("Supervisor de Fabrica")) {
 			this.ventanaSupervisorFabrica = new VentanaSupervisorFabrica();
+			this.ventanaSupervisorFabrica.getLblEmpleado().setText("Supervisor de Fabrica: "+nombreEmpleado);
 			inicializarControladoresSupervisorDeFabrica();
 			escucharBotonesVentanaSupervisorFabrica();
 		}
 		if (tipoEmpleado.equals("Supervisor")) {
 			this.ventanaSupervisor = new VentanaSupervisor();
+			this.ventanaSupervisor.getLblEmpleado().setText("Supervisor: "+nombreEmpleado);
+			this.ventanaSupervisor.getLblSucursal().setText("Sucursal: "+sucursalObj.getNombre());
 			inicializarControladoresSupervisor();
 			escucharBotonesVentanaSupervisor();
 		}
 		if (tipoEmpleado.equals("Gerente")) {
 			this.ventanaDashboardGerente = new VentanaDashboardGerente();
+			this.ventanaDashboardGerente.getLblGerente().setText("Gerente: " + nombreEmpleado);
+			this.ventanaDashboardGerente.getLblSucursal().setText("Sucursal: " + sucursalObj.getNombre());
 			inicializarControladoresGerente();
 			escucharBotonesVentanaGerente();
 		}
-
+		
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
 	}
 
@@ -696,6 +709,8 @@ public class Controlador {
 
 			empleadoProperties empleadoProp = empleadoProperties.getInstance();
 			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
+			
+			nombreEmpleado = empleadoProp.getValue("Nombre");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

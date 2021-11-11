@@ -71,6 +71,7 @@ public class VentanaDashboardGerente {
 	private JLabel lblcierreDeCaja_2;
 	private JSeparator separator_1;
 	private JSeparator separator_2;
+	private JLabel lblGerente;
 
 	/**
 	 * Launch the application.
@@ -143,10 +144,10 @@ public class VentanaDashboardGerente {
 		panel.add(lblLogo);
 		cambiarIconoLabel(lblLogo,"argentoshoes.png");
 		
-		JLabel lblNewLabel = new JLabel("Gerente:");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(10, 95, 91, 22);
-		panel.add(lblNewLabel);
+		lblGerente = new JLabel("Gerente:");
+		lblGerente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblGerente.setBounds(10, 95, 91, 22);
+		panel.add(lblGerente);
 		
 		btnGestionarProductos = new JButton("");
 		btnGestionarProductos.setForeground(new Color(51, 102, 153));
@@ -473,7 +474,7 @@ public class VentanaDashboardGerente {
 		this.frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showOptionDialog(null, "¿Estás seguro que quieres salir?", "Advertencia",
+				int confirm = JOptionPane.showOptionDialog(null, "ï¿½Estï¿½s seguro que quieres salir?", "Advertencia",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
 					Conexion.getConexion().cerrarConexion();
@@ -558,5 +559,13 @@ public class VentanaDashboardGerente {
 
 	public JButton getBtnHistorialFabrica() {
 		return btnHistorialFabrica;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblGerente() {
+		return lblGerente;
 	}
 }

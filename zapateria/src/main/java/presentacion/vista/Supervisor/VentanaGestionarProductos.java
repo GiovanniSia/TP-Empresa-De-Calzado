@@ -20,7 +20,6 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
-import javax.swing.JCheckBox;
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
 
@@ -288,6 +287,9 @@ private static final long serialVersionUID = 1L;
 		btnGenerarOrdenDeManufactura.setVisible(false);
 		btnGenerarPedido.setVisible(false);
 		btnAtras.setVisible(true);
+		lblAtrs_1.setVisible(false);
+		lblAgregarProducto.setVisible(false);
+		lblAtrs_2.setVisible(false);
 	}
 	
 	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
@@ -296,6 +298,8 @@ private static final long serialVersionUID = 1L;
 		btnGenerarOrdenDeManufactura.setVisible(true);
 		btnGenerarPedido.setVisible(false);
 		btnAtras.setVisible(true);
+		lblAgregarProducto.setVisible(false);
+		lblAtrs_2.setVisible(false);
 	}
 	
 
