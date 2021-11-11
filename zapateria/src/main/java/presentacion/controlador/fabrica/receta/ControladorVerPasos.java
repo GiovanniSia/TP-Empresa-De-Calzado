@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -180,8 +182,21 @@ public class ControladorVerPasos implements ActionListener {
 			mostrarMensajeEmergente("El nombre del paso sobrepasa los 20 caracteres.");
 			return;
 		}
+		if(!esNombreDePasoValido(pasoAgregar)) {
+			mostrarMensajeEmergente("El nombre del paso es repetido, ya esta en uso en otro paso.");
+			return;
+		}
 		this.modeloPaso.insert(new PasoDTO(0,pasoAgregar,"Activo"));
 		refrescarTabla();
+	}
+	
+	private boolean esNombreDePasoValido(String nombre) {
+		boolean ret = true;
+		List<PasoDTO> todosLosPasos = this.modeloPaso.readAll();
+		for(PasoDTO p: todosLosPasos) {
+			ret = ret && !p.getDescripcion().toLowerCase().equals(nombre.toLowerCase());
+		}
+		return ret;
 	}
 	
 	private void botonEliminarPasos(ActionEvent r) {
@@ -370,7 +385,8 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaIngredientes(PasoDTO pasosDTO) {
 		for(int x = 0; x < pasosDTO.getMateriales().size(); x++) {
-			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), pasosDTO.getCantidadUsada().get(x)};
+			BigDecimal cantidad = new BigDecimal(pasosDTO.getCantidadUsada().get(x)).setScale(2, RoundingMode.HALF_UP);;
+			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), cantidad};
 			ventanaPrincipal.getModelIngredientes().addRow(agregar);
 		}
 	}
@@ -437,6 +453,10 @@ public class ControladorVerPasos implements ActionListener {
 			this.mostrarMensajeEmergente("La receta debe crear un producto, no se a seleccionado que producto fabrica.");
 			return;
 		}
+		if(!esNombreDeRecetaValido(this.ventanaPrincipal.getTextFieldReceta().getText())) {
+			mostrarMensajeEmergente("El nombre de la receta es repetido, ya esta en uso en otra receta.");
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		recetaSeleccionada.setIdProducto(this.productosTerminados.get(this.ventanaPrincipal.getComboBoxProductos().getSelectedIndex()).getIdMaestroProducto());
 		this.modeloReceta.insertReceta(recetaSeleccionada);
@@ -448,6 +468,15 @@ public class ControladorVerPasos implements ActionListener {
 		
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(this.ventanaPrincipal.getComboBoxReceta().getItemCount()-1);
+	}
+	
+	private boolean esNombreDeRecetaValido(String nombre) {
+		boolean ret = true;
+		List<RecetaDTO> recetas = this.modeloFabricacion.readAllReceta();
+		for(RecetaDTO r: recetas) {
+			ret = ret && !r.getDescripcion().toLowerCase().equals(nombre.toLowerCase());
+		}
+		return ret;
 	}
 	
 	private void agregarIngrediente(ActionEvent e) {
@@ -462,6 +491,14 @@ public class ControladorVerPasos implements ActionListener {
 			return;
 		}
 		boolean yaEstaba = false;
+		if(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText().equals("")) {
+			this.mostrarMensajeEmergente("No ingreso la cantidad de material a usar.");
+			return;
+		}
+		if(!validarFormatoCantidad(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText())) {
+			this.mostrarMensajeEmergente("El formato no es valido.");
+			return;
+		}
 		//Double cantidadUsar = (Double) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue();
 		Double cantidadUsar = Double.valueOf(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText());
 		for(int x = 0; x<pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().size();x++) {
@@ -482,6 +519,14 @@ public class ControladorVerPasos implements ActionListener {
 		*/
 		this.refrescarTablaIngredientes();
 	}
+	
+	private boolean validarFormatoCantidad(String precio) {
+        boolean expresion = precio.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+        if (!expresion) {
+            return false;
+        }
+        return true;
+    }
 	
 	@SuppressWarnings("unchecked")
 	private void refrescarComboBoxProductosTerminados() {
@@ -603,11 +648,22 @@ public class ControladorVerPasos implements ActionListener {
 			this.mostrarMensajeEmergente("Esta receta esta actualmente esta en uso, no se puede modificar.");
 			return;
 		}
+		if(!nuevoNombreRecetaEsValido(this.ventanaPrincipal.getTextFieldReceta().getText())) {
+			mostrarMensajeEmergente("El nombre de la receta es repetido, ya esta en uso en otra receta.");
+			return;
+		}
 		recetaSeleccionada.setDescripcion(this.ventanaPrincipal.getTextFieldReceta().getText());
 		this.modeloReceta.updateReceta(recetaSeleccionada, pasosRecetaEnLista);
 		int indiceSeleccionado = this.ventanaPrincipal.getComboBoxReceta().getSelectedIndex();
 		this.refrescarComboBoxReceta();
 		this.ventanaPrincipal.getComboBoxReceta().setSelectedIndex(indiceSeleccionado);
+	}
+
+	private boolean nuevoNombreRecetaEsValido(String text) {
+		if(this.recetaSeleccionada.getDescripcion().toLowerCase().equals(text.toLowerCase())) {
+			return true;
+		}
+		return esNombreDeRecetaValido(text);
 	}
 
 	private boolean estaEnUsoLaReceta(RecetaDTO recetaAVerificar) {

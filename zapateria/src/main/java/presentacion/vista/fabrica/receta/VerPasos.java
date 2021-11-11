@@ -22,6 +22,8 @@ import persistencia.conexion.Conexion;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -393,6 +395,31 @@ public class VerPasos extends JFrame {
 		panel.add(lblEstadoReceta);
 		
 		textFieldCantidadIngrediente = new JTextField();
+		textFieldCantidadIngrediente.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				int key = e.getKeyChar();
+				boolean numeros = key >= 48 && key <= 57 || key == 46;
+				if (textFieldCantidadIngrediente.getText().length() >= 11 || !numeros) {
+					e.consume();
+					return;
+				}
+				if(textFieldCantidadIngrediente.getText().indexOf(".")>=0 && key == 46) {
+					e.consume();
+					return;
+				}
+				/*	Se intento hacer que no se ingrese mas de dos numeros despues de la coma
+				if(textFieldCantidadIngrediente.getText().indexOf(".")>=0) {
+					String[] separados = textFieldCantidadIngrediente.getText().split("\\.");
+					if(separados.length>=2) {
+						if(separados[1].length()>1) {
+							e.consume();
+							return;
+						}
+					}
+				}*/
+			}
+		});
 		textFieldCantidadIngrediente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textFieldCantidadIngrediente.setColumns(10);
 		textFieldCantidadIngrediente.setBounds(608, 362, 45, 30);
