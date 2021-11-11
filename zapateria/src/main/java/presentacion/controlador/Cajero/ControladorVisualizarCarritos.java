@@ -18,6 +18,7 @@ import dto.ClienteDTO;
 import dto.DetalleCarritoDTO;
 import dto.MaestroProductoDTO;
 import dto.StockDTO;
+import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
 import modelo.Carrito;
 import modelo.Cliente;
@@ -81,12 +82,28 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 
 		this.controlador = controlador;
+		
+		escribirLabels();
+		
 	}
 
 	public void setControladorRealizarVenta(ControladorRealizarVenta controladorRealizarVenta) {
 		this.controladorRealizarVenta = controladorRealizarVenta;
 	}
 
+	public void escribirLabels() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+			String sucursal = sucu.getValue("Nombre");
+			this.ventanaVisualizarCarritos.getLblNombreEmpleado().setText(nombreEmp);
+			this.ventanaVisualizarCarritos.getLblNombreSucursal().setText(sucursal);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void inicializar() {
 		this.controladorRealizarVenta.inicializar();
 

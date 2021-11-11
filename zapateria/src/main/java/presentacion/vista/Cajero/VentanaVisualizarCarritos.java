@@ -60,9 +60,17 @@ public class VentanaVisualizarCarritos {
 	private JPanel panelTablas;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_1_1;
+	private JLabel lblSucursal;
+	private JLabel lblEmpleado;
 	private JPanel panel_1;
+
+
+
+	private JLabel lblNombreEmpleado;
+
+
+
+	private JLabel lblNombreSucursal;
 
 	/**
 	 * Launch the application.
@@ -155,17 +163,29 @@ public class VentanaVisualizarCarritos {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
 		
-		lblNewLabel_2 = new JLabel("Sucursal:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(706, 23, 59, 19);
-		panel.add(lblNewLabel_2);
+		lblSucursal = new JLabel("Sucursal:");
+		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSucursal.setBounds(634, 23, 59, 19);
+		panel.add(lblSucursal);
 		
-		lblNewLabel_1_1 = new JLabel("Empleado:");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(512, 23, 59, 19);
-		panel.add(lblNewLabel_1_1);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(334, 23, 59, 19);
+		panel.add(lblEmpleado);
+		
+		lblNombreEmpleado = new JLabel("");
+		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombreEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombreEmpleado.setBounds(400, 23, 165, 19);
+		panel.add(lblNombreEmpleado);
+		
+		lblNombreSucursal = new JLabel("");
+		lblNombreSucursal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombreSucursal.setBounds(701, 23, 165, 19);
+		panel.add(lblNombreSucursal);
 		scrollPaneTablaCarritos.setViewportView(tableCarritos);
 		
 		panelTablas.add(scrollPaneTablaCarritos);
@@ -427,5 +447,60 @@ public class VentanaVisualizarCarritos {
 	
 	public JPanel getPanelTablas() {
 		return panelTablas;
+	}
+
+	public JScrollPane getScrollPaneDetalle() {
+		return scrollPaneDetalle;
+	}
+
+	public JLabel getLblFiltrarPor() {
+		return lblFiltrarPor;
+	}
+
+	public JLabel getLblNombre() {
+		return lblNombre;
+	}
+
+	public JLabel getLblCUIL() {
+		return lblCUIL;
+	}
+
+	public JLabel getLblApellido() {
+		return lblApellido;
+	}
+
+	public JLabel getLblSalir() {
+		return lblSalir;
+	}
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public JLabel getLblLogo() {
+		return lblLogo;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
+	}
+
+	public JPanel getPanel_1() {
+		return panel_1;
+	}
+
+	public JLabel getLblNombreEmpleado() {
+		return lblNombreEmpleado;
+	}
+
+	public JLabel getLblNombreSucursal() {
+		return lblNombreSucursal;
 	}	
+	
+	
+	
 }

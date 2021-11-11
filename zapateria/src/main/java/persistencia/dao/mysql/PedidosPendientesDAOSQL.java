@@ -35,7 +35,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 			statement.setString(3, pedido.getNombreProveedor());
 			statement.setInt(4, pedido.getIdMaestroProducto());
 			statement.setString(5,pedido.getNombreMaestroProducto());
-			statement.setInt(6, pedido.getCantidad());
+			statement.setDouble(6, pedido.getCantidad());
 			statement.setString(7, pedido.getFecha());
 			statement.setString(8, pedido.getHora());
 			statement.setDouble(9, pedido.getPrecioUnidad());
@@ -179,7 +179,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		String nombreProveedor = resultSet.getString("NombreProveedor");
 		int idMaestroProducto = resultSet.getInt("IdMaestroProducto");
 		String nombreMaestroProducto = resultSet.getString("NombreMaestroProducto");
-		int cantidad = resultSet.getInt("Cantidad");
+		double cantidad = resultSet.getDouble("Cantidad");
 		String fecha = resultSet.getString("Fecha");
 		String hora = resultSet.getString("Hora");
 		double precioUnidad = resultSet.getDouble("PrecioUnidad");

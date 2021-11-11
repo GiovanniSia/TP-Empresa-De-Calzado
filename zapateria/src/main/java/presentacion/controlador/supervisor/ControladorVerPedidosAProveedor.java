@@ -7,6 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -246,7 +247,10 @@ public class ControladorVerPedidosAProveedor {
 		int id = p.getId();
 		String proveedor = p.getNombreProveedor();
 		String prod = p.getNombreMaestroProducto();
-		int cant = p.getCantidad();
+		
+		double cantidad = p.getCantidad();
+		BigDecimal cant = new BigDecimal(cantidad).setScale(2, RoundingMode.HALF_UP);
+		
 		String unidadMedida = p.getUnidadMedida();
 		
 		double precioTota = p.getPrecioTotal();

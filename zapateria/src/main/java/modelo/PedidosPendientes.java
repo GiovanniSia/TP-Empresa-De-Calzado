@@ -80,7 +80,7 @@ public class PedidosPendientes {
 		String nombreMaestroprod = producto.getDescripcion();
 		
 		int cantPorLote = prodProv.getCantidadPorLote();
-		int cantidadTotal = determinarCantidad(producto,prodProv);;
+		double cantidadTotal = determinarCantidad(producto,prodProv,idSucursal);
 				
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -89,7 +89,7 @@ public class PedidosPendientes {
 	    String hora = tf.format(LocalDateTime.now());
 		
 	    double precioUnidad = prodProv.getPrecioVenta();
-	    int auxCantDeLotes = cantidadTotal/cantPorLote;
+	    double auxCantDeLotes = cantidadTotal/cantPorLote;
 	    double precioTotal = precioUnidad * auxCantDeLotes;
 	    	    
 	    String estado = "En espera";
@@ -112,9 +112,10 @@ public class PedidosPendientes {
 	
 	
 	
-	private static int determinarCantidad(MaestroProductoDTO producto, ProductoDeProveedorDTO prodProv) {
-		int cantProdDeseada = producto.getCantidadAReponer();
-		int cantProd=0;
+	private static double determinarCantidad(MaestroProductoDTO producto, ProductoDeProveedorDTO prodProv,int idSucursal) {
+		double cantidadRestantoDeProducto = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal, producto.getIdMaestroProducto());
+		double cantProdDeseada = producto.getCantidadAReponer()+(producto.getPuntoRepositorio()-cantidadRestantoDeProducto);
+		double cantProd=0;
 		int cantLotes=0;
 		double costo = prodProv.getPrecioVenta();
 		while(cantProd<cantProdDeseada) {

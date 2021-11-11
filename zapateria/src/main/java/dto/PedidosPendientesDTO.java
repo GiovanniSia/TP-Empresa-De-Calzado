@@ -6,7 +6,7 @@ public class PedidosPendientesDTO {
 	String nombreProveedor;
 	int idMaestroProducto;
 	String nombreMaestroProducto;
-	int cantidad;
+	double cantidad;
 	String fecha;
 	String hora;
 	double precioUnidad, precioTotal;
@@ -20,7 +20,7 @@ public class PedidosPendientesDTO {
 	String unidadMedida;
 
 	public PedidosPendientesDTO(int id, int idProveedor, String nombreProveedor, int idMaestroProducto,
-			String nombreMaestroProducto, int cantidad, String fecha, String hora, double precioUnidad,
+			String nombreMaestroProducto, double cantidad, String fecha, String hora, double precioUnidad,
 			double precioTotal, String estado, int idSucursal,int idEmpleado, String fechaEnvioMail,String horaEnvioMail,String fechaCompleto,String horaCompleto, String unidadMedida) {
 		super();
 		this.id = id;
@@ -83,11 +83,11 @@ public class PedidosPendientesDTO {
 		this.nombreMaestroProducto = nombreMaestroProducto;
 	}
 
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(double cantidad) {
 		this.cantidad = cantidad;
 	}
 

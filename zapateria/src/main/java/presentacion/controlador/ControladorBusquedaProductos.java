@@ -459,7 +459,7 @@ public class ControladorBusquedaProductos {
 	public void armarVenta(ActionEvent a) {
 		int resp = JOptionPane.showConfirmDialog(null, "Estas seguro que desea armar la venta?", "Armar venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		if(this.productosEnCarrito.size()==0) {
-			JOptionPane.showMessageDialog(null, "No ha agregado ning�n producto en el carrito!");
+			JOptionPane.showMessageDialog(null, "No ha agregado ningun producto en el carrito!");
 			return;
 		
 		}
