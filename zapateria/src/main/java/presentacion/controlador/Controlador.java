@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -653,7 +655,7 @@ public class Controlador {
 		DefaultPieDataset datos2 = new DefaultPieDataset();
 		for(EmpleadoDTO e: datosVendedores.keySet()) {
 			if(datosVendedores.get(e) >= this.minimoNecesarioParaIngresarEnLosGraficos) {
-				datos2.setValue(e.getNombre()+" "+e.getApellido()+": " + datosVendedores.get(e), datosVendedores.get(e));
+				datos2.setValue(e.getNombre()+" "+e.getApellido()+": " + new BigDecimal(datosVendedores.get(e)).setScale(2, RoundingMode.HALF_UP), datosVendedores.get(e));
 			}
 		}
 		return datos2;
@@ -681,7 +683,7 @@ public class Controlador {
 		DefaultPieDataset datos = new DefaultPieDataset();
 		for(SucursalDTO s: datosSucursales.keySet()) {
 			if(datosSucursales.get(s) >= minimoNecesarioParaIngresarEnLosGraficos) {
-				datos.setValue(s.getNombre() + ": " + datosSucursales.get(s), datosSucursales.get(s));
+				datos.setValue(s.getNombre() + ": " + new BigDecimal(datosSucursales.get(s)).setScale(2, RoundingMode.HALF_UP), datosSucursales.get(s));
 			}
 		}
 		return datos;
