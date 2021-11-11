@@ -311,7 +311,7 @@ public class VentanaAltaProducto {
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 426, 50);
+		panel.setBounds(0, 0, 819, 50);
 		frame.getContentPane().add(panel);
 		
 		lblNewLabel_2 = new JLabel("Zapateria Argento");

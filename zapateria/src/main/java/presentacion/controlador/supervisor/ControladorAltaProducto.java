@@ -42,7 +42,8 @@ public class ControladorAltaProducto {
 	List<ProductoDeProveedorDTO> productoDeProveedorEnTabla;
 	
 	MaestroProductoDTO productoAEditar;
-	
+	List<ProductoDeProveedorDTO> todosLosProductosDeProveedores;	
+
 	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor = proveedor;
@@ -71,6 +72,7 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto = new VentanaAltaProducto();
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
+		this.todosLosProductosDeProveedores = (ArrayList<ProductoDeProveedorDTO>) this.productoDeProveedor.readAll();
 		
 		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCbDadoTipo(a));
 		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbDadoFabricado(a));
@@ -485,9 +487,17 @@ public class ControladorAltaProducto {
 		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
 	}
 	
+	public boolean yaFueAsignado(ProveedorDTO prov) {
+		for(ProveedorDTO p: this.proveedoresEnTabla) {
+			if(p.getId() == prov.getId()) {
+				return true;
+			}
+		}return false;
+	}
+	
 	public void aniadirProveedor(ProveedorDTO prov) {
 		
-		if(this.proveedoresEnTabla.contains(prov)) {
+		if(yaFueAsignado(prov)) {
 			JOptionPane.showMessageDialog(null, "Este proveedor ya se ha agregado", "Informacion", JOptionPane.INFORMATION_MESSAGE);			
 			return;
 		}
@@ -623,34 +633,6 @@ public class ControladorAltaProducto {
 		refrescarTabla();
 	}
 
-//	public void verificarCambioDeComboBox() {
-//		int filaSeleccionada = this.ventanaAltaProducto.getTableProveedores().getSelectedRow();
-//		if(filaSeleccionada==-1) {
-//			return;
-//		}
-//		int columnaSeleccionada = this.ventanaAltaProducto.getTableProveedores().getSelectedColumn();
-//		if(columnaSeleccionada == 5) {
-//			//si la fila ya estaba seleccionada, se vuelve false
-//			System.out.println("valor de fila: "+this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada));
-//			if(this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada) == null) {
-//				this.ventanaAltaProducto.getTableProveedores().setValueAt(true, filaSeleccionada, columnaSeleccionada);
-//			}else {
-//				if((Boolean)this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada)) {
-//					this.ventanaAltaProducto.getTableProveedores().setValueAt(false, filaSeleccionada, columnaSeleccionada);
-//				}else {
-//					//si no estaba seleccionada, se selecciona y las demas se vuelven false porque no pueden haber mas de 1 seleccionadas
-//					this.ventanaAltaProducto.getTableProveedores().setValueAt(true, filaSeleccionada, columnaSeleccionada);
-//					for(int i=0; i<this.proveedoresEnTabla.size();i++) {
-//						if(i!=filaSeleccionada) {
-//							this.ventanaAltaProducto.getTableProveedores().setValueAt(false, i, columnaSeleccionada);
-//						}
-//					}
-//				}	
-//			}
-//			
-//		}
-//		this.ventanaAltaProducto.getScrollPaneProveedores().updateUI();
-//	}
 	public int cantProvPreferenciadoElegidos() {
 		int cant=0;	
 		for(int i=0; i<this.proveedoresEnTabla.size();i++) {
@@ -663,13 +645,25 @@ public class ControladorAltaProducto {
 	public void asignarProveedoresAProducto() {
 		MaestroProductoDTO m = this.maestroProducto.selectUltimoMPInsetado(); 
 		for(ProductoDeProveedorDTO pp: this.productoDeProveedorEnTabla) {
-			pp.setIdMaestroProducto(m.getIdMaestroProducto());
-			boolean insert = productoDeProveedor.insert(pp);
-			if(!insert) {
-				JOptionPane.showMessageDialog(null, "El producto: "+pp.getIdMaestroProducto()+" no se ha podido añadir correctamente");
+			
+			if(!yaEixsteAsignacionConProducto(pp)) {
+				pp.setIdMaestroProducto(m.getIdMaestroProducto());
+				boolean insert = productoDeProveedor.insert(pp);
+				if(!insert) {
+					JOptionPane.showMessageDialog(null, "El producto: "+pp.getIdMaestroProducto()+" no se ha podido añadir correctamente");
+				}	
 			}
 		}
 	}
+
+	public boolean yaEixsteAsignacionConProducto(ProductoDeProveedorDTO pp) {
+		for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedores) {
+			if(pp.equals(prodProv)) {
+				return true;
+			}
+		}return false;
+	}
+	
 	
 	
 	public void setProductoAEditar(MaestroProductoDTO producto) {
@@ -685,9 +679,9 @@ public class ControladorAltaProducto {
 		String fabricado = this.productoAEditar.getFabricado().equals("S") ? "Si" : "No";
 		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedItem(fabricado);
 		
-		this.ventanaAltaProducto.getTextCosto().setText(""+this.productoAEditar.getPrecioCosto());
-		this.ventanaAltaProducto.getTextPrecioMayorista().setText(""+this.productoAEditar.getPrecioMayorista());
-		this.ventanaAltaProducto.getTextPrecioMinorista().setText(""+this.productoAEditar.getPrecioMinorista());
+		this.ventanaAltaProducto.getTextCosto().setText(""+new BigDecimal(this.productoAEditar.getPrecioCosto()));
+		this.ventanaAltaProducto.getTextPrecioMayorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMayorista()));
+		this.ventanaAltaProducto.getTextPrecioMinorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMinorista()));
 		this.ventanaAltaProducto.getTextPuntoRepMinimo().setText(""+this.productoAEditar.getPuntoRepositorio());
 		
 		String talle = this.productoAEditar.getTalle();
@@ -726,25 +720,25 @@ public class ControladorAltaProducto {
 		
 		String estado = this.productoAEditar.getEstado();
 		this.ventanaAltaProducto.getComboBoxEstado().setSelectedItem(estado);
-		
-		/*
-		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
-		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
-		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
-		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
-		this.productoDeProveedorEnTabla.removeAll(productoDeProveedorEnTabla);
-		*/
+
 		llenarTablaProveedores();
 		
 	}
 
 	public void llenarTablaProveedores() {
-		ArrayList<ProductoDeProveedorDTO> todosLosProductosDeProveedores = (ArrayList<ProductoDeProveedorDTO>) this.productoDeProveedor.readAll();
-		for(ProductoDeProveedorDTO pp: todosLosProductosDeProveedores) {
+		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
+		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+		this.productoDeProveedorEnTabla.removeAll(productoDeProveedorEnTabla);		
+		
+		
+		for(ProductoDeProveedorDTO pp: this.todosLosProductosDeProveedores) {
 			if(pp.getIdMaestroProducto() == this.productoAEditar.getIdMaestroProducto()) {
 				for(ProveedorDTO p: this.todosLosProveedores) {
 					if(p.getId() == pp.getIdProveedor()) {
 						this.proveedoresEnTabla.add(p);
+						System.out.println("se añade prov: "+p.getNombre()+" a la lista");
 						this.productoDeProveedorEnTabla.add(pp);
 						refrescarTabla();
 					}
@@ -754,17 +748,21 @@ public class ControladorAltaProducto {
 	}
 
 	public void editar() {
-		MaestroProductoDTO prod = obtenerProductoDeVista();
-		boolean update = this.maestroProducto.update(this.productoAEditar.getIdMaestroProducto(), prod);
-		if(!update) {
-			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el producto");
-			return;
-		}else {
-			JOptionPane.showMessageDialog(null, "Producto editado con exito");
+		if(todosLosCamposSonCorrectos()) {
+			MaestroProductoDTO prod = obtenerProductoDeVista();
+			boolean update = this.maestroProducto.update(this.productoAEditar.getIdMaestroProducto(), prod);
+			if(!update) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el producto");
+				return;
+			}else {
+				JOptionPane.showMessageDialog(null, "Producto editado con exito");
+			}
+			asignarProveedoresAProducto();
+			this.todosLosProductosDeProveedores = this.productoDeProveedor.readAll();
+//			borrarDatosEscritos();		
+			salir();	
 		}
-		asignarProveedoresAProducto();
-//		borrarDatosEscritos();		
-		salir();
+		
 	}
 	
 }

@@ -206,13 +206,13 @@ private static final long serialVersionUID = 1L;
 		panel_2.add(lblNewLabel_1);
 		
 		lblNombreEmpleado = new JLabel("");
-		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNombreEmpleado.setBounds(546, 28, 129, 19);
 		panel_2.add(lblNombreEmpleado);
 		
 		lblNombreSucursal = new JLabel("");
-		lblNombreSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNombreSucursal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNombreSucursal.setBounds(740, 28, 129, 19);
 		panel_2.add(lblNombreSucursal);
