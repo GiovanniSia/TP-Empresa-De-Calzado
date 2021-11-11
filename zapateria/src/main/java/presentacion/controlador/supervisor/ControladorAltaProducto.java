@@ -356,7 +356,9 @@ public class ControladorAltaProducto {
 		if(tipo.equals("Materia Prima")) {
 			this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(2);
 			this.ventanaAltaProducto.getComboBoxFabricado().disable();
-			
+			this.ventanaAltaProducto.getTextCosto().setText("");
+			this.ventanaAltaProducto.getTextPrecioMayorista().setText("");
+			this.ventanaAltaProducto.getTextPrecioMinorista().setText("");
 			this.ventanaAltaProducto.getTextPrecioMayorista().disable();
 			this.ventanaAltaProducto.getTextPrecioMinorista().disable();
 			
@@ -404,6 +406,13 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedIndex(0);
 		this.ventanaAltaProducto.getTextCantidadAReponer().setText("");
 		this.ventanaAltaProducto.getTextDiasParaReponer().setText("");
+		
+		
+		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
+		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+		this.productoDeProveedorEnTabla.removeAll(productoDeProveedorEnTabla);
 		
 	}
 	
@@ -475,13 +484,13 @@ public class ControladorAltaProducto {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
 						cantidadDeProductosPorLote = Integer.parseInt(cantProdLotes);
-						if (cantidadDeProductosPorLote > 999) {
-							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 999", "Informacion",	JOptionPane.OK_OPTION);
+						if (cantidadDeProductosPorLote > 99999999) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 99999999", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (cantidadDeProductosPorLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (cantidadDeProductosPorLote > 0 && cantidadDeProductosPorLote < 999) {
+						if (cantidadDeProductosPorLote > 0 && cantidadDeProductosPorLote < 99999999) {
 							repetir = false;
 						}
 					}
@@ -507,13 +516,13 @@ public class ControladorAltaProducto {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
 						precioLote = Integer.parseInt(precioLot);
-						if (precioLote > 999) {
-							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 999", "Informacion",	JOptionPane.OK_OPTION);
+						if (precioLote > 99999999) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 99999999", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (precioLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (precioLote > 0 && precioLote < 999) {
+						if (precioLote > 0 && precioLote <= 99999999) {
 							repetir = false;
 						}
 					}
