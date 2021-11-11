@@ -34,7 +34,7 @@ public class ControladorModificarEmpleados {
 		}
 	}
 
-	private VentanaModificarEmpleados ventanaModificarEmpleados;
+	VentanaModificarEmpleados ventanaModificarEmpleados;
 
 	private String[] estados = { "Cajero", "Vendedor", "Supervisor", "Supervisor de Fabrica", "Operario de Fabrica",
 			"Administrativo", "Gerente", "Inactivo" };
@@ -49,12 +49,13 @@ public class ControladorModificarEmpleados {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.historialCambioEmpleado = new HistorialCambioEmpleado(new DAOSQLFactory());
 		this.controladorGestionarEmpleados = controladorGestionarEmpleados;
-	}
-
-	public void inicializar() {
 		this.ventanaModificarEmpleados = new VentanaModificarEmpleados();
 		this.ventanaModificarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaModificarEmpleados.getBtnActualizar().addActionListener(v -> actualizar(v));
+	}
+
+	public void inicializar() {
+
 	}
 
 	public void rellenarCampos() {
