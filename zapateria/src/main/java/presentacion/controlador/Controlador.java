@@ -291,7 +291,7 @@ public class Controlador {
 
 		// Set Gestionar Productos
 		this.controladorGestionarProveedores.setControladorAltaProducto(this.controladorAltaProducto);
-		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
+//		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.controladorGestionarProductos
@@ -361,7 +361,7 @@ public class Controlador {
 
 		// Set Gestionar Productos
 		this.controladorGestionarProveedores.setControladorAltaProducto(this.controladorAltaProducto);
-		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
+//		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.controladorGestionarProductos
@@ -489,7 +489,7 @@ public class Controlador {
 				proveedor, stock, pedidosPendientes, productoDeProveedor);
 
 		this.controladorGestionarProveedores.setControladorAltaProducto(this.controladorAltaProducto);
-		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
+//		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.controladorGestionarProductos
@@ -538,7 +538,7 @@ public class Controlador {
 
 		// Set Gestionar Productos
 		this.controladorGestionarProveedores.setControladorAltaProducto(this.controladorAltaProducto);
-		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
+//		this.controladorAltaProducto.setControladorConsultarProveedor(this.controladorGestionarProveedores);
 		this.controladorAltaProducto.setControladorGestionarProductos(this.controladorGestionarProductos);
 		this.controladorGestionarProductos.setControladorAltaProducto(this.controladorAltaProducto);
 		this.controladorGestionarProductos

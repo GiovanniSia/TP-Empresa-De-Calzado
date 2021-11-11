@@ -176,15 +176,7 @@ public class VentanaGenerarPedidoProveedor {
 		spinnerModelCantARep = new SpinnerNumberModel(1, 1, 999, 1); //default value,lower bound,upper bound,increment by
 		spinnerCantARep = new JSpinner(spinnerModelCantARep);
 		spinnerCantARep.setBounds(176, 345, 83, 22);
-//		spinnerCantARep.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyTyped(KeyEvent e) {
-//				if ((int)spinnerCantARep.getValue() >= 15) {
-//					e.consume();
-//				}
-//			}
-//		});
-		
+		spinnerCantARep.setEditor(new JSpinner.DefaultEditor(spinnerCantARep));	
 		panel.add(spinnerCantARep);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("(al menos 1 y hasta 999)");

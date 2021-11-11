@@ -36,4 +36,21 @@ public class ProductoDeProveedorDTO {
 	public int getCantidadPorLote() {
 		return cantidadPorLote;
 	}
+
+	public void setIdProveedor(int idProveedor) {
+		IdProveedor = idProveedor;
+	}
+
+	public void setIdMaestroProducto(int idMaestroProducto) {
+		IdMaestroProducto = idMaestroProducto;
+	}
+
+	public void setPrecioVenta(double precioVenta) {
+		this.precioVenta = precioVenta;
+	}
+
+	public void setCantidadPorLote(int cantidadPorLote) {
+		this.cantidadPorLote = cantidadPorLote;
+	}
+	
 }

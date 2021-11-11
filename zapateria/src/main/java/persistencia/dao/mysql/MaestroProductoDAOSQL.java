@@ -17,7 +17,7 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 	private static final String readall = "SELECT * FROM maestroProductos";
 
 	private static final String select = "SELECT * FROM maestroProductos WHERE IdMaestroProducto = ?"; 
-	
+	private static final String selectUltInsert = "SELECT * FROM maestroProductos WHERE IdMaestroProducto = (SELECT MAX(IdMaestroProducto) AS IdMaestroProducto FROM maestroProductos)";
 	@Override
 	public boolean insert(MaestroProductoDTO maestroProductos) {
 		PreparedStatement statement;
@@ -261,5 +261,23 @@ public class MaestroProductoDAOSQL implements MaestroProductoDAO {
 				e.printStackTrace();
 			}
 			return maestroProducto;
+	}
+
+	@Override
+	public MaestroProductoDTO selectUltimoMPInsetado() {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		MaestroProductoDTO producto = null;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(selectUltInsert);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				producto = getMaestroProductoDTO(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return producto;
 	}
 }

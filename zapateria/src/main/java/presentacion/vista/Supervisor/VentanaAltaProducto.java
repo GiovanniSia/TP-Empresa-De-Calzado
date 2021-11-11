@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JTextField;
@@ -21,6 +23,8 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class VentanaAltaProducto {
 
@@ -37,15 +41,12 @@ public class VentanaAltaProducto {
 
 	private JButton btnRegistrar;
 	private JButton btnRegresar;
-	private JButton btnBorrarProveedor;
 
 	private JComboBox<String> comboBoxEstado;
 	private JComboBox<String> comboBoxFabricado;
 	private JComboBox<String> comboBoxTipo;
 
 	private JLabel lblCantidadAReponer;
-	private JButton btnElegirProveedor;
-	private JLabel lblProveedorElegido;
 	private JPanel panel;
 	private JLabel lblNewLabel_2;
 	private JLabel lblAtras;
@@ -55,6 +56,17 @@ public class VentanaAltaProducto {
 	private JComboBox<String> comboBoxTalle;
 	private JButton btnAniadirUnidadMedida;
 	private JCheckBox chckbxNumerico;
+	
+	
+	private JButton btnAgregarProv;	
+	
+	private DefaultTableModel modelTablaProveedores;
+	private String[] nombreColumnas = {"Nombre Proveedor","Correo","Limite de credito","Precio Venta","Cant Prod por lote","Proveedor Preferenciado"};
+	private JTable tableProveedores;
+
+	private JButton btnBorrarProv;
+
+	private JScrollPane scrollPaneProveedores;
 	/**
 	 * Launch the application.
 	 */
@@ -90,7 +102,7 @@ public class VentanaAltaProducto {
 
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(500, 100, 442, 705);
+		frame.setBounds(500, 100, 833, 619);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un nuevo producto");
@@ -119,47 +131,42 @@ public class VentanaAltaProducto {
 
 		JLabel lblCostoDeProduccion = new JLabel("Costo de Produccion");
 		lblCostoDeProduccion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblCostoDeProduccion.setBounds(20, 216, 156, 19);
+		lblCostoDeProduccion.setBounds(408, 95, 156, 19);
 		frame.getContentPane().add(lblCostoDeProduccion);
 
 		JLabel lblPrecioMayorista = new JLabel("Precio Mayorista");
 		lblPrecioMayorista.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblPrecioMayorista.setBounds(20, 256, 156, 19);
+		lblPrecioMayorista.setBounds(408, 133, 156, 19);
 		frame.getContentPane().add(lblPrecioMayorista);
 
 		JLabel lblPrecioMinorista = new JLabel("Precio Minorista");
 		lblPrecioMinorista.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblPrecioMinorista.setBounds(20, 298, 156, 19);
+		lblPrecioMinorista.setBounds(408, 173, 156, 19);
 		frame.getContentPane().add(lblPrecioMinorista);
 
 		JLabel lblPuntoDeReposicion = new JLabel("Punto de reposicion minimo");
 		lblPuntoDeReposicion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblPuntoDeReposicion.setBounds(20, 339, 156, 19);
+		lblPuntoDeReposicion.setBounds(408, 208, 156, 19);
 		frame.getContentPane().add(lblPuntoDeReposicion);
-
-		JLabel lblProveedor = new JLabel("Proveedor");
-		lblProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblProveedor.setBounds(10, 383, 79, 32);
-		frame.getContentPane().add(lblProveedor);
 
 		JLabel lblTalle = new JLabel("Talle");
 		lblTalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblTalle.setBounds(20, 427, 148, 19);
+		lblTalle.setBounds(20, 208, 148, 19);
 		frame.getContentPane().add(lblTalle);
 
 		JLabel lblUnidadDeMedida = new JLabel("Unidad de medida");
 		lblUnidadDeMedida.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblUnidadDeMedida.setBounds(20, 458, 148, 19);
+		lblUnidadDeMedida.setBounds(28, 237, 148, 19);
 		frame.getContentPane().add(lblUnidadDeMedida);
 
 		JLabel lblEstado = new JLabel("Estado");
 		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEstado.setBounds(20, 487, 148, 19);
+		lblEstado.setBounds(408, 237, 148, 19);
 		frame.getContentPane().add(lblEstado);
 
 		JLabel lblDiasParaReponer = new JLabel("Dias para reponer");
 		lblDiasParaReponer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblDiasParaReponer.setBounds(20, 543, 148, 19);
+		lblDiasParaReponer.setBounds(408, 266, 148, 19);
 		frame.getContentPane().add(lblDiasParaReponer);
 
 		textDescripcion = new JTextField();
@@ -187,7 +194,7 @@ public class VentanaAltaProducto {
 			}
 		});
 		textCosto.setColumns(10);
-		textCosto.setBounds(178, 215, 178, 25);
+		textCosto.setBounds(574, 90, 178, 25);
 		frame.getContentPane().add(textCosto);
 
 		textPrecioMayorista = new JTextField();
@@ -201,7 +208,7 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPrecioMayorista.setColumns(10);
-		textPrecioMayorista.setBounds(178, 256, 178, 25);
+		textPrecioMayorista.setBounds(574, 130, 178, 25);
 		frame.getContentPane().add(textPrecioMayorista);
 
 		textPrecioMinorista = new JTextField();
@@ -215,7 +222,7 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPrecioMinorista.setColumns(10);
-		textPrecioMinorista.setBounds(178, 298, 178, 25);
+		textPrecioMinorista.setBounds(574, 170, 178, 25);
 		frame.getContentPane().add(textPrecioMinorista);
 
 		textPuntoRepMinimo = new JTextField();
@@ -229,7 +236,7 @@ public class VentanaAltaProducto {
 			}
 		});
 		textPuntoRepMinimo.setColumns(10);
-		textPuntoRepMinimo.setBounds(178, 336, 178, 25);
+		textPuntoRepMinimo.setBounds(574, 205, 178, 25);
 		frame.getContentPane().add(textPuntoRepMinimo);
 
 		textCantidadAReponer = new JTextField();
@@ -243,7 +250,7 @@ public class VentanaAltaProducto {
 			}
 		});
 		textCantidadAReponer.setColumns(10);
-		textCantidadAReponer.setBounds(178, 514, 178, 19);
+		textCantidadAReponer.setBounds(178, 268, 178, 19);
 		frame.getContentPane().add(textCantidadAReponer);
 
 		textDiasParaReponer = new JTextField();
@@ -257,23 +264,23 @@ public class VentanaAltaProducto {
 			}
 		});
 		textDiasParaReponer.setColumns(10);
-		textDiasParaReponer.setBounds(178, 543, 178, 19);
+		textDiasParaReponer.setBounds(574, 266, 178, 19);
 		frame.getContentPane().add(textDiasParaReponer);
 
 		btnRegresar = new JButton("");
-		btnRegresar.setBounds(30, 597, 60, 60);
+		btnRegresar.setBounds(20, 517, 60, 60);
 		cambiarIconoBotones(btnRegresar, "back2.png");
 		frame.getContentPane().add(btnRegresar);
 
 		btnRegistrar = new JButton("");
 		btnRegistrar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		btnRegistrar.setBounds(188, 596, 60, 60);
+		btnRegistrar.setBounds(211, 517, 60, 60);
 		cambiarIconoBotones(btnRegistrar, "regis2.png");
 		frame.getContentPane().add(btnRegistrar);
 
 		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		comboBoxEstado.setBounds(178, 485, 178, 19);
+		comboBoxEstado.setBounds(574, 237, 178, 19);
 		frame.getContentPane().add(comboBoxEstado);
 
 		comboBoxFabricado = new JComboBox<String>();
@@ -288,23 +295,8 @@ public class VentanaAltaProducto {
 
 		lblCantidadAReponer = new JLabel("Cantidad a reponer (por lote)");
 		lblCantidadAReponer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblCantidadAReponer.setBounds(20, 515, 156, 19);
+		lblCantidadAReponer.setBounds(20, 266, 156, 19);
 		frame.getContentPane().add(lblCantidadAReponer);
-
-		btnElegirProveedor = new JButton("Elegir proveedor");
-		btnElegirProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		btnElegirProveedor.setBounds(246, 383, 124, 33);
-		frame.getContentPane().add(btnElegirProveedor);
-
-		lblProveedorElegido = new JLabel("Sin seleccionar");
-		lblProveedorElegido.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblProveedorElegido.setBounds(99, 383, 159, 31);
-		frame.getContentPane().add(lblProveedorElegido);
-
-		btnBorrarProveedor = new JButton("");
-		btnBorrarProveedor.setBounds(380, 383, 33, 33);
-		cambiarIconoBotones(btnBorrarProveedor, "trash.png");
-		frame.getContentPane().add(btnBorrarProveedor);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -320,32 +312,146 @@ public class VentanaAltaProducto {
 		
 		lblAtras = new JLabel("Atras");
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(99, 597, 112, 60);
+		lblAtras.setBounds(90, 517, 112, 60);
 		frame.getContentPane().add(lblAtras);
 		
 		lblRegistrarProducto = new JLabel("Registrar Producto");
 		lblRegistrarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblRegistrarProducto.setBounds(258, 596, 137, 60);
+		lblRegistrarProducto.setBounds(276, 517, 137, 60);
 		frame.getContentPane().add(lblRegistrarProducto);
 		
 		comboBoxUnidadDeMedida = new JComboBox<String>();
 		comboBoxUnidadDeMedida.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		comboBoxUnidadDeMedida.setBounds(178, 458, 93, 19);
+		comboBoxUnidadDeMedida.setBounds(178, 237, 93, 19);
 		frame.getContentPane().add(comboBoxUnidadDeMedida);
 		
 		comboBoxTalle = new JComboBox<String>();
 		comboBoxTalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		comboBoxTalle.setBounds(178, 427, 93, 19);
+		comboBoxTalle.setBounds(178, 208, 93, 19);
 		frame.getContentPane().add(comboBoxTalle);
 		
 		chckbxNumerico = new JCheckBox("Numerico");
-		chckbxNumerico.setBounds(277, 427, 93, 21);
+		chckbxNumerico.setBounds(277, 208, 93, 21);
 		frame.getContentPane().add(chckbxNumerico);
 		
 		btnAniadirUnidadMedida = new JButton("Otros...");
-		btnAniadirUnidadMedida.setBounds(281, 458, 85, 21);
+		btnAniadirUnidadMedida.setBounds(285, 237, 85, 21);
 		frame.getContentPane().add(btnAniadirUnidadMedida);
+		
+		
+		
+		/*
+				modelProductos = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				if (columnas == 5) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		};
+
+		tablaProductos = new JTable(modelProductos);
+		tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+
+		tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(190);
+		tablaProductos.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tablaProductos.getColumnModel().getColumn(3).setPreferredWidth(70);
+		tablaProductos.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(7).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(8).setPreferredWidth(80);
+		tablaProductos.getColumnModel().getColumn(9).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(10).setPreferredWidth(120);
+		tablaProductos.getColumnModel().getColumn(11).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(12).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(13).setPreferredWidth(100);
+		tablaProductos.getColumnModel().getColumn(14).setPreferredWidth(100);
+		
+		
+		
+//		tablaProductos.getColumnModel().getColumn(0).setResizable(false);
+//		tablaProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
+//		tablaProductos.getColumnModel().getColumn(1).setResizable(false);
+		
+		
+		
+		tablaProductos.getTableHeader().setReorderingAllowed(false);
+		spProductos.setViewportView(tablaProductos);
+		tablaProductos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaProductos.doLayout();
+		
+		panel.add(spProductos);
+		*/
+		
+		scrollPaneProveedores = new JScrollPane();
+		scrollPaneProveedores.setBounds(10, 345, 799, 162);
+		
+		this.modelTablaProveedores = new DefaultTableModel(null, nombreColumnas) {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {
+				return columnas==5;
+				
+			}
+		};
+		
+		tableProveedores = new JTable(modelTablaProveedores){
+			
+			private static final long serialVersionUID = 1L;
+
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return Double.class;
+				case 3:
+					return Double.class;
+				case 4:
+					return Double.class;
+				default:
+					return Boolean.class;
+				}
+			}
+		};
+		scrollPaneProveedores.setViewportView(tableProveedores);
+//		tableProveedores.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+
+		
+		frame.getContentPane().add(scrollPaneProveedores);
+		
+		
+		
+		
+		
+		
+		
+		JLabel lblSeleccioneQueProv = new JLabel("Seleccione que proveedores pueden proveer este producto");
+		lblSeleccioneQueProv.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblSeleccioneQueProv.setBounds(10, 295, 426, 38);
+		frame.getContentPane().add(lblSeleccioneQueProv);
+		
+		
+		
+		btnAgregarProv = new JButton("Elegir Proveedores");
+		btnAgregarProv.setBounds(440, 307, 164, 21);
+		frame.getContentPane().add(btnAgregarProv);
+		
+		btnBorrarProv = new JButton("");
+		btnBorrarProv.setBounds(777, 307, 32, 28);
+		cambiarIconoBotones(btnBorrarProv, "trash.png");
+		frame.getContentPane().add(btnBorrarProv);
 	}
+
 
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -421,22 +527,6 @@ public class VentanaAltaProducto {
 		return textCantidadAReponer;
 	}
 
-	public JButton getBtnElegirProveedor() {
-		return btnElegirProveedor;
-	}
-
-	public JLabel getLblProveedorElegido() {
-		return lblProveedorElegido;
-	}
-
-	public void setLblProveedorElegido(JLabel lblProveedorElegido) {
-		this.lblProveedorElegido = lblProveedorElegido;
-	}
-
-	public JButton getBtnBorrarProveedor() {
-		return btnBorrarProveedor;
-	}
-
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -455,5 +545,46 @@ public class VentanaAltaProducto {
 	public JCheckBox getChckbxNumerico() {
 		return chckbxNumerico;
 	}
+	public JButton getBtnAgregarProv() {
+		return btnAgregarProv;
+	}
+	public JLabel getLblCantidadAReponer() {
+		return lblCantidadAReponer;
+	}
 
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public JLabel getLblNewLabel_2() {
+		return lblNewLabel_2;
+	}
+
+	public JLabel getLblAtras() {
+		return lblAtras;
+	}
+
+	public JLabel getLblRegistrarProducto() {
+		return lblRegistrarProducto;
+	}
+
+	public DefaultTableModel getModelTablaProveedores() {
+		return modelTablaProveedores;
+	}
+
+	public String[] getNombreColumnas() {
+		return nombreColumnas;
+	}
+
+	public JTable getTableProveedores() {
+		return tableProveedores;
+	}
+
+	public JButton getBtnBorrarProv() {
+		return btnBorrarProv;
+	}
+	public JScrollPane getScrollPaneProveedores() {
+		return scrollPaneProveedores;
+	}
+	
 }

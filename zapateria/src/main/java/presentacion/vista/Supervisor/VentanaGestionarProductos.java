@@ -91,11 +91,8 @@ private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int filas, int columnas) {
-				if (columnas == 5) {
-					return true;
-				} else {
-					return false;
-				}
+				return false;
+				
 			}
 		};
 

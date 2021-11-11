@@ -4,12 +4,17 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import dto.MaestroProductoDTO;
+import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
@@ -30,30 +35,30 @@ public class ControladorAltaProducto {
 	
 	VentanaAltaProducto ventanaAltaProducto;
 	
-
-	ProveedorDTO proveedorElegido;
 	ControladorGestionarProveedores controladorConsultarProveedor;
 	ControladorGestionarProductos controladorGestionarProductos;
 	
-
+	List<ProveedorDTO> proveedoresEnTabla;
+	List<ProductoDeProveedorDTO> productoDeProveedorEnTabla;
 	
 	
 	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
 		this.proveedor = proveedor;
 		this.productoDeProveedor = productoDeProveedor;
-
-
-		
-		
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
 		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
+
+		this.proveedoresEnTabla = new ArrayList<ProveedorDTO>();
+		this.productoDeProveedorEnTabla = new ArrayList<ProductoDeProveedorDTO>();
 		
+		this.controladorConsultarProveedor = new ControladorGestionarProveedores(null,proveedor, productoDeProveedor);
+		this.controladorConsultarProveedor.setControladorAltaProducto(this);
 	}
 	
-	public void setControladorConsultarProveedor(ControladorGestionarProveedores controladorConsultarProveedor) {
-		this.controladorConsultarProveedor=controladorConsultarProveedor;
-	}
+//	public void setControladorConsultarProveedor(ControladorGestionarProveedores controladorConsultarProveedor) {
+//		this.controladorConsultarProveedor=controladorConsultarProveedor;
+//	}
 	
 	public void setControladorGestionarProductos(ControladorGestionarProductos controladorGestionarProductos) {
 		this.controladorGestionarProductos = controladorGestionarProductos;
@@ -61,23 +66,35 @@ public class ControladorAltaProducto {
 	
 	
 	public void inicializar() {
+		this.controladorConsultarProveedor.inicializar();
 		this.ventanaAltaProducto = new VentanaAltaProducto();
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.todosLosProveedores = this.proveedor.readAll();
 		
 		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCbDadoTipo(a));
 		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbDadoFabricado(a));
-//		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbProveedor(a));
 		this.ventanaAltaProducto.getBtnRegistrar().addActionListener(a -> agregarProducto(a));
 		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir(a));
-		this.ventanaAltaProducto.getBtnElegirProveedor().addActionListener(a -> pasarAElegirProveedor(a));
-		this.ventanaAltaProducto.getBtnBorrarProveedor().addActionListener(a -> borrarProveedor(a));
 
 		this.ventanaAltaProducto.getBtnAniadirUnidadMedida().addActionListener(a -> aniadirUnidadMedida());
 		this.ventanaAltaProducto.getChckbxNumerico().addActionListener(a -> filtrarTallePorNumero());
-		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
 
+		this.ventanaAltaProducto.getBtnAgregarProv().addActionListener(a -> mostrarVentanaGestionarProveedores());
+
+		this.ventanaAltaProducto.getBtnAgregarProv().addActionListener(a -> pasarAAGregarProv());
+		this.ventanaAltaProducto.getBtnBorrarProv().addActionListener(a -> borrarProveedor());
 		
+		this.ventanaAltaProducto.getTableProveedores().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel rowSM = this.ventanaAltaProducto.getTableProveedores().getSelectionModel();
+
+		rowSM.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+//				verificarCambioDeComboBox();
+			}
+
+		});		
 		llenarCb();
 		validarTeclado();
 	}
@@ -127,14 +144,7 @@ public class ControladorAltaProducto {
 	public void mostrarVentana() {
 		this.ventanaAltaProducto.show();
 	}
-	
-	
-	public void establecerProveedorElegido(ProveedorDTO prov) {
-		this.proveedorElegido=prov;
-		this.ventanaAltaProducto.getLblProveedorElegido().setText(this.proveedorElegido.getNombre());
-		this.ventanaAltaProducto.getLblProveedorElegido().repaint();
-	}
-	
+		
 	public void salir(ActionEvent a ) {
 		this.ventanaAltaProducto.cerrar();
 		this.controladorGestionarProductos.inicializar();
@@ -206,10 +216,6 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		String costo = this.ventanaAltaProducto.getTextCosto().getText();
-//		if(costo.equals("") && this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem().toString().equals("No")) {
-//			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
-//			return false;	
-//		}
 		if((costo.equals("") || Double.parseDouble(costo)<=0) && this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem().toString().equals("Si")) {
 			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
 			return false;
@@ -259,16 +265,15 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		
-//		String prov = (String)this.ventanaAltaProducto.getComboBoxProveedorPreferenciado().getSelectedItem();
-//		if(productoPropio.equals("No") && prov.equals("Sin seleccionar")) {
-//			JOptionPane.showMessageDialog(null, "El producto no es propio, por lo que debe tener un proveedor asignado");
-//			return false;
-//		}
-		String prov = this.ventanaAltaProducto.getLblProveedorElegido().getText();
-		if(productoPropio.equals("No") && prov.equals("Sin seleccionar")) {
-			JOptionPane.showMessageDialog(null, "El producto no es propio, por lo que debe tener un proveedor asignado");
-			return false;
+		if(productoPropio.equals("Si") && this.proveedoresEnTabla.size()==0) {
+			JOptionPane.showMessageDialog(null, "Debe elegir al menos un proveedor");
+			return false;	
 		}
+		if(cantProvPreferenciadoElegidos() != 1) {
+			JOptionPane.showMessageDialog(null, "Debe elegir solo un proveedor preferenciado");
+			return false;		
+		}
+		
 		
 		return true;
 	}
@@ -298,9 +303,8 @@ public class ControladorAltaProducto {
 				costo=0;
 			}
 			
-			
 			int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
-			int proveedor = obtenerProveedor();
+			int proveedor = obtenerProveedorPreferenciado();
 			String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
 			String unidadMedida = this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getSelectedItem().toString();
 			String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
@@ -317,13 +321,16 @@ public class ControladorAltaProducto {
 //			
 //			this.productoDeProveedor.insert();
 			
+			asignarProveedoresAProducto();
+			
 			JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
 			borrarDatosEscritos();
 			
 		}
 	}
 	
-	public int obtenerProveedor() {
+	public int obtenerProveedorPreferenciado() {
+		/*
 		String resp = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 		if(resp.equals("Si")) {
 			return 0;
@@ -333,7 +340,13 @@ public class ControladorAltaProducto {
 		}
 		
 		return this.proveedorElegido.getId();
-		
+		*/
+		int id=0;
+		for(int i=0; i<this.productoDeProveedorEnTabla.size(); i++) {
+			if((Boolean)this.ventanaAltaProducto.getTableProveedores().getValueAt(i, 5)==true) {
+				id=this.proveedoresEnTabla.get(i).getId();
+			}
+		}return id;
 	}
 
 	
@@ -357,21 +370,23 @@ public class ControladorAltaProducto {
 	public void actualizarCbDadoFabricado(ActionEvent a) {
 		String fabricado =(String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
 		if(fabricado.equals("Si")) {
-			this.proveedorElegido=null;
-			this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
-			this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(false);
+//			this.proveedorElegido=null;
+			this.ventanaAltaProducto.getBtnAgregarProv().setEnabled(false);
 			this.ventanaAltaProducto.getTextCosto().setEnabled(true);
-//			this.ventanaAltaProducto.getBtnElegirProveedor().repaint();
+			
+			this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+			this.productoDeProveedorEnTabla.removeAll(productoDeProveedorEnTabla);
+			refrescarTabla();
 			return;
 		}
 		if(fabricado.equals("No")) {
 			this.ventanaAltaProducto.getTextCosto().setText("");
-			this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(true);
+			this.ventanaAltaProducto.getBtnAgregarProv().setEnabled(true);
 			this.ventanaAltaProducto.getTextCosto().setEnabled(false);	
 			return;
 		}
 		this.ventanaAltaProducto.getTextCosto().setEnabled(true);
-		this.ventanaAltaProducto.getBtnElegirProveedor().setEnabled(true);
+		this.ventanaAltaProducto.getBtnAgregarProv().setEnabled(true);
 	}
 	
 	
@@ -399,11 +414,7 @@ public class ControladorAltaProducto {
 		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
 	}
 	
-	public void borrarProveedor(ActionEvent a) {
-		this.proveedorElegido=null;
-		this.ventanaAltaProducto.getLblProveedorElegido().setText("Sin seleccionar");
-	}
-	
+
 	public void aniadirUnidadMedida() {
 		String resp=null;
 		boolean repetir = true;
@@ -418,8 +429,14 @@ public class ControladorAltaProducto {
 	    			if(resp.equals("")) {
 	    				JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion", JOptionPane.OK_OPTION);	    				
 	    			}else {
-	    				this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(resp);
-		    			repetir = false;        
+	    				if(resp.length()>20) {
+	    					JOptionPane.showMessageDialog(null, "El texto es demasiado largo", "Informacion", JOptionPane.OK_OPTION);
+	    				}else {
+	    					this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(resp);
+			    			repetir = false;        	
+	    				}
+	    				
+	    				
 	    			}
 	    		}
 	    	 }
@@ -429,6 +446,187 @@ public class ControladorAltaProducto {
 	    }
 	    
 	    
+	}
+
+	public void mostrarVentanaGestionarProveedores() {
+		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
+	}
+	
+	public void aniadirProveedor(ProveedorDTO prov) {
+		
+		if(this.proveedoresEnTabla.contains(prov)) {
+			JOptionPane.showMessageDialog(null, "Este proveedor ya se ha agregado", "Informacion", JOptionPane.INFORMATION_MESSAGE);			
+			return;
+		}
+		
+		boolean repetir = true;
+		String cantProdLotes = null;
+		int cantidadDeProductosPorLote=0;
+		while (repetir) {
+
+			try {
+				// si la resp es null, se eligio cancelar
+				cantProdLotes = JOptionPane.showInputDialog("Ingrese la cantidad de productos por lote");
+				if (cantProdLotes == null) {
+					repetir = false;
+					return;
+				} else {
+					if (cantProdLotes.equals("")) {
+						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
+					} else {
+						cantidadDeProductosPorLote = Integer.parseInt(cantProdLotes);
+						if (cantidadDeProductosPorLote > 999) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 999", "Informacion",	JOptionPane.OK_OPTION);
+						}
+						if (cantidadDeProductosPorLote <= 0) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
+						}
+						if (cantidadDeProductosPorLote > 0 && cantidadDeProductosPorLote < 999) {
+							repetir = false;
+						}
+					}
+				}
+			} catch (HeadlessException | NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion",JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		
+		repetir=true;
+		String precioLot = null;
+		int precioLote=0;
+		while (repetir) {
+
+			try {
+				// si la resp es null, se eligio cancelar
+				precioLot = JOptionPane.showInputDialog("Ingrese el precio del lote");
+				if (precioLot == null) {
+					repetir = false;
+					return;
+				} else {
+					if (precioLot.equals("")) {
+						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
+					} else {
+						precioLote = Integer.parseInt(precioLot);
+						if (precioLote > 999) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 999", "Informacion",	JOptionPane.OK_OPTION);
+						}
+						if (precioLote <= 0) {
+							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
+						}
+						if (precioLote > 0 && precioLote < 999) {
+							repetir = false;
+						}
+					}
+				}
+			} catch (HeadlessException | NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion",JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+		int Id=0;
+		int IdProveedor = prov.getId();
+		int IdMaestroProducto = 0;
+		double precioVenta = precioLote;
+		int cantidadPorLote = cantidadDeProductosPorLote;
+		
+		ProductoDeProveedorDTO pp = new ProductoDeProveedorDTO(Id,IdProveedor,IdMaestroProducto,precioVenta,cantidadPorLote);
+
+		this.proveedoresEnTabla.add(prov);
+		this.productoDeProveedorEnTabla.add(pp);
+		refrescarTabla();
+	}
+	
+	public void refrescarTabla() {
+		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
+		
+		for(int i=0; i<this.proveedoresEnTabla.size();i++) {
+			aniadirProveedorATabla(this.proveedoresEnTabla.get(i),this.productoDeProveedorEnTabla.get(i));	
+		}
+		
+			
+	}
+	
+	public void aniadirProveedorATabla(ProveedorDTO prov,ProductoDeProveedorDTO pp) {
+//		{"Nombre Proveedor","Correo","Limite de credito","Precio Venta","Cant Prod por lote"};
+		String nombre = prov.getNombre();
+		String correo = prov.getCorreo();
+		
+		double limiteCredit = prov.getLimiteCredito();
+		BigDecimal limiteCredito = new BigDecimal(limiteCredit);
+		
+		double precioVent = pp.getPrecioVenta();
+		BigDecimal precioVenta = new BigDecimal(precioVent);
+		
+		int cantProd = pp.getCantidadPorLote();
+		Object[] fila = {nombre,correo,limiteCredito,precioVenta,cantProd,false};
+		this.ventanaAltaProducto.getModelTablaProveedores().addRow(fila);
+	}
+	
+	public void pasarAAGregarProv() {
+		this.controladorConsultarProveedor.mostrarVentanaParaAltaProducto();
+	}
+	
+	public void borrarProveedor() {
+		int filaSeleccionada = this.ventanaAltaProducto.getTableProveedores().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "Debe seleccionar un proveedor", "Informacion",JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+//		ProveedorDTO prov = this.proveedoresEnTabla.get(filaSeleccionada);
+//		ProductoDeProveedorDTO pp = this.productoDeProveedorEnTabla.get(filaSeleccionada);
+		this.proveedoresEnTabla.remove(filaSeleccionada);
+		this.productoDeProveedorEnTabla.remove(filaSeleccionada);
+		refrescarTabla();
+	}
+
+//	public void verificarCambioDeComboBox() {
+//		int filaSeleccionada = this.ventanaAltaProducto.getTableProveedores().getSelectedRow();
+//		if(filaSeleccionada==-1) {
+//			return;
+//		}
+//		int columnaSeleccionada = this.ventanaAltaProducto.getTableProveedores().getSelectedColumn();
+//		if(columnaSeleccionada == 5) {
+//			//si la fila ya estaba seleccionada, se vuelve false
+//			System.out.println("valor de fila: "+this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada));
+//			if(this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada) == null) {
+//				this.ventanaAltaProducto.getTableProveedores().setValueAt(true, filaSeleccionada, columnaSeleccionada);
+//			}else {
+//				if((Boolean)this.ventanaAltaProducto.getTableProveedores().getValueAt(filaSeleccionada, columnaSeleccionada)) {
+//					this.ventanaAltaProducto.getTableProveedores().setValueAt(false, filaSeleccionada, columnaSeleccionada);
+//				}else {
+//					//si no estaba seleccionada, se selecciona y las demas se vuelven false porque no pueden haber mas de 1 seleccionadas
+//					this.ventanaAltaProducto.getTableProveedores().setValueAt(true, filaSeleccionada, columnaSeleccionada);
+//					for(int i=0; i<this.proveedoresEnTabla.size();i++) {
+//						if(i!=filaSeleccionada) {
+//							this.ventanaAltaProducto.getTableProveedores().setValueAt(false, i, columnaSeleccionada);
+//						}
+//					}
+//				}	
+//			}
+//			
+//		}
+//		this.ventanaAltaProducto.getScrollPaneProveedores().updateUI();
+//	}
+	public int cantProvPreferenciadoElegidos() {
+		int cant=0;	
+		for(int i=0; i<this.proveedoresEnTabla.size();i++) {
+			if((Boolean)this.ventanaAltaProducto.getTableProveedores().getValueAt(i, 5)==true) {
+				cant++;
+			}
+		}return cant;
+	}
+	
+	public void asignarProveedoresAProducto() {
+		MaestroProductoDTO m = this.maestroProducto.selectUltimoMPInsetado(); 
+		for(ProductoDeProveedorDTO pp: this.productoDeProveedorEnTabla) {
+			pp.setIdMaestroProducto(m.getIdMaestroProducto());
+			boolean insert = productoDeProveedor.insert(pp);
+			if(!insert) {
+				JOptionPane.showMessageDialog(null, "El producto: "+pp.getIdMaestroProducto()+" no se ha podido añadir correctamente");
+			}
+		}
 	}
 	
 }

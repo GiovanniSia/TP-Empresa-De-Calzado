@@ -97,7 +97,6 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 		lblCajaDiariaDeSucursal = new JLabel("Caja Diaria de Sucursal");
 		lblCajaDiariaDeSucursal.setBackground(new Color(248, 248, 255));
 		lblCajaDiariaDeSucursal.setBounds(10, 49, 528, 50);

@@ -276,7 +276,7 @@ public class VentanaAltaSucursal {
 		textNroSucursal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textNroSucursal.getText().length()>=4) {
+                if(textNroSucursal.getText().length()>=8) {
                     e.consume();
                 }
             }

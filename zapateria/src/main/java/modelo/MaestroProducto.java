@@ -43,4 +43,8 @@ public class MaestroProducto {
 	public MaestroProductoDTO selectMaestroProducto(int idMaestroProducto) {
 		return this.maestroProducto.selectMaestroProducto(idMaestroProducto);
 	}
+	
+	public MaestroProductoDTO selectUltimoMPInsetado() {
+		return this.maestroProducto.selectUltimoMPInsetado();
+	}
 }

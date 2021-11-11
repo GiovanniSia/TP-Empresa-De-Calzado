@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -240,8 +241,7 @@ public class ControladorGestionarProductos {
 	public void escribirTablaFiltrada(List<MaestroProductoDTO> productosAproximados) {
 		this.ventanaGestionarProductos.getModelProductos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaGestionarProductos.getModelProductos().setColumnCount(0);
-		this.ventanaGestionarProductos.getModelProductos()
-				.setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
+		this.ventanaGestionarProductos.getModelProductos().setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
 		
 		for(MaestroProductoDTO m: productosAproximados) {
@@ -259,13 +259,13 @@ public class ControladorGestionarProductos {
 		String propio = m.getFabricado();
 
 		double costoProd = m.getPrecioCosto();
-		BigDecimal costoProduccion = new BigDecimal(costoProd);
-
+		BigDecimal costoProduccion = new BigDecimal(costoProd).setScale(2, RoundingMode.HALF_UP);
+				
 		double precioM = m.getPrecioMayorista();
-		BigDecimal precioMayo = new BigDecimal(precioM);
+		BigDecimal precioMayo = new BigDecimal(precioM).setScale(2, RoundingMode.HALF_UP);
 
 		double precioMi = m.getPrecioMinorista();
-		BigDecimal precioMino = new BigDecimal(precioMi);
+		BigDecimal precioMino = new BigDecimal(precioMi).setScale(2, RoundingMode.HALF_UP);
 
 		int puntoRepMin = m.getPuntoRepositorio();
 

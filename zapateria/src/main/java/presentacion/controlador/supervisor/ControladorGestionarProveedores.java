@@ -1,5 +1,6 @@
 package presentacion.controlador.supervisor;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
@@ -42,12 +44,12 @@ public class ControladorGestionarProveedores {
 		this.proveedorEnTabla = new ArrayList<ProveedorDTO>();
 		this.controlador=controlador;
 	}
-	public ControladorGestionarProveedores(Proveedor proveedor,ProductoDeProveedor prodProveedor) {
-		this.proveedor = proveedor;
-		this.prodProveedor = prodProveedor;
-		
-		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
-	}
+//	public ControladorGestionarProveedores(Proveedor proveedor,ProductoDeProveedor prodProveedor) {
+//		this.proveedor = proveedor;
+//		this.prodProveedor = prodProveedor;
+//		
+//		this.todosLosProveedores = new ArrayList<ProveedorDTO>();
+//	}
 	
 	
 	public void setControladorAltaProducto(ControladorAltaProducto controladorAltaProducto) {
@@ -72,7 +74,7 @@ public class ControladorGestionarProveedores {
 		//ESTE ES PARA ASIGNAR UN PROD AL PROV
 		this.ventanaConsultarProveedores.getBtnAsignarProdAProveedor().addActionListener(a -> pasarAAsignarProductoAProveedor(a));
 		
-		this.ventanaConsultarProveedores.getBtnRegresar().addActionListener(a -> cerrarVentanaParaAltaProd(a));
+		this.ventanaConsultarProveedores.getBtnRegresar().addActionListener(a -> cerrarVentana(a));
 		
 		
 		this.ventanaConsultarProveedores.getTextNombre().addKeyListener(new KeyAdapter() {
@@ -91,7 +93,7 @@ public class ControladorGestionarProveedores {
 		
 	}
 	
-	public void cerrarVentanaParaAltaProd(ActionEvent a) {
+	public void cerrarVentana(ActionEvent a) {
 		//si el boton seleccionar prov es visible significa que se abrio la ventana desde alta prod
 		if(this.ventanaConsultarProveedores.getBtnSeleccionarProveedor().isVisible()) {
 			this.ventanaConsultarProveedores.cerrar();
@@ -169,9 +171,10 @@ public class ControladorGestionarProveedores {
 			return;
 		}
 		ProveedorDTO proveedorElegido = this.todosLosProveedores.get(filaSeleccionada);
-		this.controladorAltaProducto.establecerProveedorElegido(proveedorElegido);
 		
-		this.ventanaConsultarProveedores.cerrar();
+		this.controladorAltaProducto.aniadirProveedor(proveedorElegido);
+		
+//		this.ventanaConsultarProveedores.cerrar();
 		
 	}
 	
