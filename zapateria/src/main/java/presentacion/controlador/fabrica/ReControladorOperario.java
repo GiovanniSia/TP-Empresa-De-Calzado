@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -781,9 +783,20 @@ public class ReControladorOperario implements ActionListener {
 				
 				String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
 				//String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad() + " "+p.getPasosDTO().getMateriales().get(x).getUnidadMedida());
-				String cantUsarXunidad = p.getPasosDTO().getCantidadUsada().get(x)+" ";
-				String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())+"";
-				String cantActual = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))+"";
+				
+				
+				//String cantUsarXunidad = p.getPasosDTO().getCantidadUsada().get(x)+" ";	//ANTES DEL BIGDECIMAL
+				BigDecimal cantidad = new BigDecimal(p.getPasosDTO().getCantidadUsada().get(x)).setScale(2, RoundingMode.HALF_UP);;
+				String cantUsarXunidad = cantidad+"";
+				
+				//String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())+"";	//ANTES DEL BIGDECIMAL
+				BigDecimal cantidad2 = new BigDecimal(p.getPasosDTO().getCantidadUsada().get(x)).setScale(2, RoundingMode.HALF_UP);;
+				String cantUsada = cantidad2+"";
+				
+				//String cantActual = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))+"";	//ANTES DEL BIGDECIMAL
+				BigDecimal cantidad3 = new BigDecimal(this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))).setScale(2, RoundingMode.HALF_UP);;
+				String cantActual = cantidad3+"";
+				
 				String unidadMedida = p.getPasosDTO().getMateriales().get(x).getUnidadMedida();
 				//
 				Object[] agregar = {desc, cantUsarXunidad, cantUsada, cantActual, unidadMedida};
@@ -873,16 +886,20 @@ public class ReControladorOperario implements ActionListener {
 		for(int x = 0; x<p.getPasosDTO().getMateriales().size(); x++) {
 			//{ "Material", "Cantidad a usar", "Cantidad en stock", "Unidad medida"};
 			String desc = p.getPasosDTO().getMateriales().get(x).getDescripcion();
-			double cantUsar = (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad());
+			//double cantUsar = (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad());	//ANTES DEL BIGDECIMAL
+			BigDecimal cantUsar = new BigDecimal(p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad()).setScale(2, RoundingMode.HALF_UP);;
 			String cantUsada = cantUsar+"";
-			Double cantDisponible = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x));
+			//Double cantDisponible = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x));	//ANTES DEL BIGDECIMAL
+			BigDecimal cantDisponible = new BigDecimal(this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))).setScale(2, RoundingMode.HALF_UP);;
 			String cantActual = cantDisponible+"";
 			String unidadMedida = p.getPasosDTO().getMateriales().get(x).getUnidadMedida();
 			Object[] agregar = {desc, cantUsada, cantActual, unidadMedida};
 			ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
 			//Object[] agregar = {p.getPasosDTO().getMateriales().get(x).getDescripcion(), (p.getPasosDTO().getCantidadUsada().get(x)*of.getCantidad())};
 			//ventanaUnaTrabajo.getModelOrdenes().addRow(agregar);
-			hayMateriales = hayMateriales && cantUsar <= cantDisponible;
+			
+			//hayMateriales = hayMateriales && cantUsar <= cantDisponible;	//ANTES DEL BIGDECIMAL
+			hayMateriales = hayMateriales && (cantUsar.compareTo(cantDisponible) <= 0);
 			ventanaUnaTrabajo.getTablaIngredientes().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
                 /**
 				 * 
