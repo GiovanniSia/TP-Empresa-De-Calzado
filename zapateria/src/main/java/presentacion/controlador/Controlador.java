@@ -1,8 +1,19 @@
 package presentacion.controlador;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.HashMap;
+
 import javax.swing.JOptionPane;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
+import dto.EmpleadoDTO;
 import dto.SucursalDTO;
 import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
@@ -28,6 +39,7 @@ import modelo.Provincia;
 import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
+import modelo.datosGraficos.RankingDatos;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Cajero.ControladorCierreCaja;
 import presentacion.controlador.Cajero.ControladorEgresosCaja;
@@ -613,7 +625,51 @@ public class Controlador {
 		// Gestionar recetas y pasos
 		this.controladorVerPasos = new ControladorVerPasos();
 		this.controladorVerPasos.setControlador(this);
+		
+		//GRAFICO
+		iniciarGraficos();
 
+	}
+	
+	private void iniciarGraficos() {
+		//	GRAFICO DE SUCURSALES
+		HashMap<SucursalDTO,Double> datosSucursales = RankingDatos.getRankingVentasXSucursales(4, 1000);
+		DefaultPieDataset datos = new DefaultPieDataset();
+		for(SucursalDTO s: datosSucursales.keySet()) {
+			if(datosSucursales.get(s) != 0.0) {
+				datos.setValue(s.getNombre() + ": " + datosSucursales.get(s), datosSucursales.get(s));
+			}
+		}
+		
+		this.ventanaDashboardGerente.getPanel_1().remove(this.ventanaDashboardGerente.getPanelTorta());
+		JFreeChart graficoTorta = ChartFactory.createPieChart(null, datos, false, false, false);
+		ChartPanel panelTorta = new ChartPanel(graficoTorta);
+		panelTorta.setBackground(new Color(255, 255, 255));
+		panelTorta.setBounds(0, 5, 320, 240);
+		panelTorta.setMouseWheelEnabled(true);
+		panelTorta.setPreferredSize(new Dimension(320,240));
+		this.ventanaDashboardGerente.setPanelTorta(panelTorta);
+		this.ventanaDashboardGerente.getPanel_1().add(this.ventanaDashboardGerente.getPanelTorta());
+		
+		//	GRAFICO DE EMPLEADOS
+		
+		HashMap<EmpleadoDTO, Double> datosVendedores = RankingDatos.getRankingVentasxVendedor(4,1000);
+		DefaultPieDataset datos2 = new DefaultPieDataset();
+		for(EmpleadoDTO e: datosVendedores.keySet()) {
+			if(datosVendedores.get(e) != 0.0) {
+				datos2.setValue(e.getNombre()+" "+e.getApellido()+": " + datosVendedores.get(e), datosVendedores.get(e));
+			}
+		}
+		JFreeChart graficoTorta2 = ChartFactory.createPieChart(null, datos2, false, false, false);
+		ChartPanel panelTorta2;
+		panelTorta2 = new ChartPanel(graficoTorta2);
+		panelTorta2.setBackground(new Color(255, 255, 255));
+		panelTorta2.setBounds(0, 5, 320, 240);
+		panelTorta2.setMouseWheelEnabled(true);
+		panelTorta2.setPreferredSize(new Dimension(320,240));
+		this.ventanaDashboardGerente.getPanel_1_1().remove(this.ventanaDashboardGerente.getPanelTorta2());
+		this.ventanaDashboardGerente.setPanelTorta2(panelTorta2);
+		this.ventanaDashboardGerente.getPanel_1_1().add(this.ventanaDashboardGerente.getPanelTorta2());
 	}
 
 	public void escucharBotonesVentanaAdministrativo() {
