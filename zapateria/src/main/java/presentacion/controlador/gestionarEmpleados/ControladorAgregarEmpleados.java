@@ -46,13 +46,13 @@ public class ControladorAgregarEmpleados {
 
 	public ControladorAgregarEmpleados(ControladorGestionarEmpleados controladorGestionarEmpleados) {
 		obtenerDatosPropertiesSucursalEmpleado();
-		this.ventanaAgregarEmpleados = new VentanaAgregarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.historialCambioEmpleado = new HistorialCambioEmpleado(new DAOSQLFactory());
 		this.controladorGestionarEmpleados = controladorGestionarEmpleados;
 	}
 
 	public void inicializar() {
+		this.ventanaAgregarEmpleados = new VentanaAgregarEmpleados();
 		this.ventanaAgregarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaAgregarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
 
@@ -137,6 +137,11 @@ public class ControladorAgregarEmpleados {
 		String claveRepetida = this.ventanaAgregarEmpleados.getTxtRepetirClave().getText();
 		if (!claveNueva.equals(claveRepetida)) {
 			JOptionPane.showMessageDialog(null, "No coinciden las claves");
+			return false;
+		}
+		
+		if(cuil.length()!=11) {
+			JOptionPane.showMessageDialog(null, "El CUIL tiene que tener 11 digitos");
 			return false;
 		}
 

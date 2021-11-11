@@ -46,13 +46,13 @@ public class ControladorModificarEmpleados {
 
 	public ControladorModificarEmpleados(ControladorGestionarEmpleados controladorGestionarEmpleados) {
 		obtenerDatosPropertiesSucursalEmpleado();
-		this.ventanaModificarEmpleados = new VentanaModificarEmpleados();
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.historialCambioEmpleado = new HistorialCambioEmpleado(new DAOSQLFactory());
 		this.controladorGestionarEmpleados = controladorGestionarEmpleados;
 	}
 
 	public void inicializar() {
+		this.ventanaModificarEmpleados = new VentanaModificarEmpleados();
 		this.ventanaModificarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaModificarEmpleados.getBtnActualizar().addActionListener(v -> actualizar(v));
 	}
@@ -140,10 +140,11 @@ public class ControladorModificarEmpleados {
 
 		empleadoNuevo = new EmpleadoDTO(this.empleadoSeleccionado.getIdEmpleado(), CUILNuevo, NombreNuevo,
 				ApellidoNuevo, CorreoElectronicoNuevo, TipoEmpleadoNuevo, ClaveNuevo);
+		Boolean checkboxActivado = this.ventanaModificarEmpleados.getCheckboxCambiarClave().isSelected();
 
 		if (CUILAntiguo.equals(CUILNuevo) && NombreAntiguo.equals(NombreNuevo) && ApellidoAntiguo.equals(ApellidoNuevo)
 				&& CorreoElectronicoAntiguo.equals(CorreoElectronicoNuevo)
-				&& TipoEmpleadoAntiguo.equals(TipoEmpleadoNuevo)) {
+				&& TipoEmpleadoAntiguo.equals(TipoEmpleadoNuevo) && !checkboxActivado) {
 			JOptionPane.showMessageDialog(null, "No hubo ningun cambio");
 			return false;
 		}
@@ -167,7 +168,6 @@ public class ControladorModificarEmpleados {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}
-		Boolean checkboxActivado = this.ventanaModificarEmpleados.getCheckboxCambiarClave().isSelected();
 		if (checkboxActivado && ClaveNuevo.equals("")) {
 			JOptionPane.showMessageDialog(null, "La clave no puede ser vacia");
 			return false;
@@ -175,6 +175,10 @@ public class ControladorModificarEmpleados {
 
 		if (TipoEmpleadoNuevo.equals("Sin seleccionar")) {
 			JOptionPane.showMessageDialog(null, "No selecciono el tipo de empleado");
+			return false;
+		}
+		if(CUILNuevo.length()!=11) {
+			JOptionPane.showMessageDialog(null, "El CUIL tiene que tener 11 digitos");
 			return false;
 		}
 
