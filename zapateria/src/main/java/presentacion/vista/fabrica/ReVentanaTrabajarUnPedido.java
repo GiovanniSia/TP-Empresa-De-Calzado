@@ -52,9 +52,10 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 180));
 		panel.setBounds(10, 25, 640, 370);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -133,12 +134,24 @@ public class ReVentanaTrabajarUnPedido extends JFrame {
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(0, 0, 660, 14);
 		frame.getContentPane().add(panel_1);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 960, 720);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

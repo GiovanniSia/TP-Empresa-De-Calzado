@@ -22,6 +22,8 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaVerMateriales extends JFrame {
 
@@ -42,6 +44,10 @@ public class VentanaVerMateriales extends JFrame {
 	private JButton btnSalir;
 	private JTextField textUnidad;
 	private JCheckBox chckbxRiesgo;
+	private JPanel panel_1;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel_1;
+	private JLabel lblEmpleado;
 	
 
 	public VentanaVerMateriales() {
@@ -55,14 +61,15 @@ public class VentanaVerMateriales extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 918, 556);
+		frame.setBounds(100, 100, 918, 572);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 93, 902, 424);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 103, 902, 350);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -121,11 +128,6 @@ public class VentanaVerMateriales extends JFrame {
 		lblProducto.setBounds(180, 11, 60, 14);
 		panel.add(lblProducto);
 		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(152, 352, 60, 60);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
-		
 		textUnidad = new JTextField();
 		textUnidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textUnidad.setColumns(10);
@@ -142,28 +144,52 @@ public class VentanaVerMateriales extends JFrame {
 		chckbxRiesgo.setBounds(679, 35, 111, 23);
 		panel.add(chckbxRiesgo);
 
-		JLabel lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(222, 352, 90, 60);
-		panel.add(lblAtras);
-
 		
 		lblNewLabel = new JLabel("Materiales de fabricacion");
-		lblNewLabel.setBounds(10, 49, 324, 44);
+		lblNewLabel.setBounds(10, 49, 324, 53);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(0, 0, 902, 50);
+		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(0, 0, 902, 53);
 		frame.getContentPane().add(panel_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(new Color(30, 144, 255));
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 421, 50);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes.png");
+		panel_1.add(lblLogo);
+		
+		lblNewLabel_1 = new JLabel("F\u00E1brica");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(706, 28, 172, 19);
 		panel_1.add(lblNewLabel_1);
+		
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(512, 28, 232, 19);
+		panel_1.add(lblEmpleado);
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(135, 462, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+				JLabel lblAtras = new JLabel("Atras");
+				lblAtras.setBounds(205, 462, 90, 60);
+				frame.getContentPane().add(lblAtras);
+				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+				
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(0, 0, 960, 720);
+				frame.getContentPane().add(lblFondo);
+				cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void show() {
@@ -195,6 +221,15 @@ public class VentanaVerMateriales extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	

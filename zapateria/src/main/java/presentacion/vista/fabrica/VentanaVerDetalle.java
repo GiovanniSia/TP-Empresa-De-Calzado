@@ -40,14 +40,15 @@ public class VentanaVerDetalle extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 524, 524);
+		frame.setBounds(100, 100, 524, 531);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 64, 508, 421);
+		panel.setBounds(0, 64, 508, 349);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -64,16 +65,6 @@ public class VentanaVerDetalle extends JFrame {
 		textPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textPane.setBounds(10, 38, 488, 299);
 		panel.add(textPane);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(183, 350, 60, 60);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
-		
-		lblNewLabel_1 = new JLabel("Volver");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(253, 348, 60, 62);
-		panel.add(lblNewLabel_1);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
@@ -84,12 +75,34 @@ public class VentanaVerDetalle extends JFrame {
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(180, 426, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+		lblNewLabel_1 = new JLabel("Volver");
+		lblNewLabel_1.setBounds(250, 424, 60, 62);
+		frame.getContentPane().add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 1000, 750);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {

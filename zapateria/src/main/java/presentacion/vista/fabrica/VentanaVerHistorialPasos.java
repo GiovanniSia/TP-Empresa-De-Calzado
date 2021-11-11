@@ -61,14 +61,15 @@ public class VentanaVerHistorialPasos extends JFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 1000, 527);
+		frame.setBounds(100, 100, 1000, 537);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 64, 984, 415);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 64, 984, 355);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -97,15 +98,6 @@ public class VentanaVerHistorialPasos extends JFrame {
 		tabla.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		
 		spCliente.setViewportView(tabla);
-
-		btnVerDescripcion = new JButton("");
-		btnVerDescripcion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVerDescripcion.setBounds(545, 352, 60, 60);
-		cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
-		panel.add(btnVerDescripcion);
 		
 		lblId = new JLabel("Id");
 		lblId.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -139,11 +131,6 @@ public class VentanaVerHistorialPasos extends JFrame {
 		lblProducto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblProducto.setBounds(180, 11, 60, 14);
 		panel.add(lblProducto);
-		
-		btnSalir = new JButton("");
-		btnSalir.setBounds(169, 352, 60, 60);
-		cambiarIconoBotones(btnSalir,  "back2.png");
-		panel.add(btnSalir);
 		
 		textAccion = new JTextField();
 		textAccion.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -184,16 +171,6 @@ public class VentanaVerHistorialPasos extends JFrame {
 		lblFechaHasta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblFechaHasta.setBounds(529, 11, 108, 14);
 		panel.add(lblFechaHasta);
-		
-		lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(239, 352, 46, 60);
-		panel.add(lblAtras);
-		
-		lblVerDetalleDe = new JLabel("Ver Detalle de Fabricacion");
-		lblVerDetalleDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblVerDetalleDe.setBounds(615, 352, 182, 60);
-		panel.add(lblVerDetalleDe);
 
 		panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
@@ -203,7 +180,36 @@ public class VentanaVerHistorialPasos extends JFrame {
 		lblNewLabel = new JLabel("Historial de fabricacion");
 		lblNewLabel.setBounds(10, 21, 324, 32);
 		frame.getContentPane().add(lblNewLabel);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		
+		btnSalir = new JButton("");
+		btnSalir.setBounds(170, 430, 60, 60);
+		frame.getContentPane().add(btnSalir);
+		cambiarIconoBotones(btnSalir,  "back2.png");
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setBounds(240, 430, 46, 60);
+		frame.getContentPane().add(lblAtras);
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+				btnVerDescripcion = new JButton("");
+				btnVerDescripcion.setBounds(546, 430, 60, 60);
+				frame.getContentPane().add(btnVerDescripcion);
+				btnVerDescripcion.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				cambiarIconoBotones(btnVerDescripcion,  "descripcion.png");
+				
+				lblVerDetalleDe = new JLabel("Ver Detalle de Fabricacion");
+				lblVerDetalleDe.setBounds(616, 430, 182, 60);
+				frame.getContentPane().add(lblVerDetalleDe);
+				lblVerDetalleDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+				
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(0, 0, 1000, 750);
+				frame.getContentPane().add(lblFondo);
+				cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void cerrar() {
@@ -237,6 +243,13 @@ public class VentanaVerHistorialPasos extends JFrame {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JTable getTablaFabricacionesEnMarcha() {

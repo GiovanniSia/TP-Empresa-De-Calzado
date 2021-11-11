@@ -372,6 +372,7 @@ public class VerPasos extends JFrame {
 		btnInactivarPaso = new JButton("");
 		btnInactivarPaso.setToolTipText("Agregar Paso a Lista");
 		btnInactivarPaso.setBounds(247, 350, 30, 30);
+		cambiarIconoBotones(btnInactivarPaso,  "off.png");
 		panel.add(btnInactivarPaso);
 		
 		JLabel lblInactivar = new JLabel("Inactivar");
@@ -382,6 +383,7 @@ public class VerPasos extends JFrame {
 		btnInactivarReceta = new JButton("");
 		btnInactivarReceta.setToolTipText("Agregar Paso a Lista");
 		btnInactivarReceta.setBounds(332, 391, 30, 30);
+		cambiarIconoBotones(btnInactivarReceta,  "off.png");
 		panel.add(btnInactivarReceta);
 		
 		lblInactivarReceta = new JLabel("Inactivar");
