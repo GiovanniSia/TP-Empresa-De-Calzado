@@ -20,8 +20,11 @@ import persistencia.conexion.Conexion;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Color;
 
 public class VentanaEditarLocalidad {
 
@@ -79,32 +82,38 @@ public class VentanaEditarLocalidad {
 		}
 		
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
 		frame.setBounds(100, 100, 568, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("Zapateria Argento - Editar Localidad");
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		comboBoxPaises = new JComboBox<String>();
-		comboBoxPaises.setBounds(62, 34, 123, 21);
+		comboBoxPaises.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxPaises.setBounds(46, 34, 164, 21);
 		frame.getContentPane().add(comboBoxPaises);
 		
 		lblPaises = new JLabel("Seleccione un pais");
+		lblPaises.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblPaises.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPaises.setBounds(62, 12, 123, 13);
+		lblPaises.setBounds(46, 12, 164, 13);
 		frame.getContentPane().add(lblPaises);
 		
 		lblProvincias = new JLabel("Seleccione una provincia");
+		lblProvincias.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblProvincias.setHorizontalAlignment(SwingConstants.CENTER);
-		lblProvincias.setBounds(62, 74, 123, 13);
+		lblProvincias.setBounds(46, 74, 164, 13);
 		frame.getContentPane().add(lblProvincias);
 		
 		comboProvincias = new JComboBox<String>();
-		comboProvincias.setBounds(62, 97, 123, 21);
+		comboProvincias.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboProvincias.setBounds(46, 97, 164, 21);
 		frame.getContentPane().add(comboProvincias);
 		
 		txtNuevaLocalidad = new JTextField();
-		txtNuevaLocalidad.setBounds(62, 172, 123, 21);
+		txtNuevaLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		txtNuevaLocalidad.setBounds(46, 172, 164, 21);
 		frame.getContentPane().add(txtNuevaLocalidad);
 		txtNuevaLocalidad.addKeyListener(new KeyAdapter() {
             @Override
@@ -117,8 +126,9 @@ public class VentanaEditarLocalidad {
 		txtNuevaLocalidad.setColumns(10);
 		
 		lblNuevaLocalidad = new JLabel("Escriba una nueva localidad");
+		lblNuevaLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNuevaLocalidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNuevaLocalidad.setBounds(46, 149, 154, 13);
+		lblNuevaLocalidad.setBounds(46, 149, 164, 13);
 		frame.getContentPane().add(lblNuevaLocalidad);
 		
 		JScrollPane scrollPane = new JScrollPane(this.table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -146,24 +156,31 @@ public class VentanaEditarLocalidad {
 		scrollPane.setViewportView(table);
 		
 		btnAgregarLocalidad = new JButton("Agregar");
-		btnAgregarLocalidad.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnAgregarLocalidad.setBounds(0, 232, 76, 21);
+		btnAgregarLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnAgregarLocalidad.setBounds(220, 70, 75, 21);
 		frame.getContentPane().add(btnAgregarLocalidad);
 		
 		btnEditarLocalidad = new JButton("Editar");
-		btnEditarLocalidad.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnEditarLocalidad.setBounds(78, 232, 61, 21);
+		btnEditarLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnEditarLocalidad.setBounds(220, 97, 75, 21);
 		frame.getContentPane().add(btnEditarLocalidad);
 		
 		btnBorrarLocalidad = new JButton("Borrar");
-		btnBorrarLocalidad.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnBorrarLocalidad.setBounds(149, 232, 61, 21);
+		btnBorrarLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnBorrarLocalidad.setBounds(220, 123, 75, 21);
 		frame.getContentPane().add(btnBorrarLocalidad);
 		
-		btnSalirLocalidad = new JButton("Salir");
-		btnSalirLocalidad.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnSalirLocalidad.setBounds(220, 232, 71, 21);
+		btnSalirLocalidad = new JButton("");
+		btnSalirLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnSalirLocalidad.setBounds(10, 204, 46, 46);
+		cambiarIconoBotones(btnSalirLocalidad,  "back2.png");
 		frame.getContentPane().add(btnSalirLocalidad);
+	}
+	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 	
 	public void show() {

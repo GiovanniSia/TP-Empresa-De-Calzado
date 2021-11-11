@@ -83,6 +83,7 @@ public class VentanaEgresoCaja extends JFrame {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		panel = new JPanel();
 		panel.setLayout(null);

@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.border.MatteBorder;
 
 public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -40,8 +41,6 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private JButton btnVolverAModificarProducto;
 
 	private JPanel panel_1;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JLabel lblVolver;
 	
 	private JTextField txtCodEmpleado;
@@ -51,6 +50,10 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	private JTextField textCUIL;
 
 	private JButton btnBorrarFiltroFecha;
+	private JPanel panel_2;
+	private JLabel lblLogo;
+
+	private JLabel lblNewLabel;
 
 
 	public static void main(String[] args) {
@@ -78,14 +81,14 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 1280, 477);
+		frame.setBounds(100, 100, 1280, 488);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 175, 1264, 263);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 175, 1264, 189);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -112,25 +115,9 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		tablaHistorialCambioCliente.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tablaHistorialCambioCliente.doLayout();
 		panel.add(spHistorialCambioCliente);
-		
-		
-		btnVolverAModificarProducto = new JButton("");
-		btnVolverAModificarProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVolverAModificarProducto.setBounds(151, 189, 60, 60);
-		cambiarIconoBotones(btnVolverAModificarProducto,  "back2.png");
-		panel.add(btnVolverAModificarProducto);
-		btnVolverAModificarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		
-		lblVolver = new JLabel("Volver");
-		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblVolver.setBounds(221, 189, 70, 60);
-		panel.add(lblVolver);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		panel_1.setBounds(0, 89, 1264, 87);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -189,10 +176,10 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		
 		btnBorrarFiltroFecha = new JButton("");
 		btnBorrarFiltroFecha.setBounds(598, 50, 26, 26);
-		cambiarIconoBotones(btnBorrarFiltroFecha,  "trash.png");
+		cambiarIconoBotones(btnBorrarFiltroFecha,  "trash2.png");
 		panel_1.add(btnBorrarFiltroFecha);
 
-		lblHistorialCambioCliente = new JLabel("Historial de Cambios de Clilentes");
+		lblHistorialCambioCliente = new JLabel("Historial de Cambios de Clientes");
 		lblHistorialCambioCliente.setBackground(new Color(248, 248, 255));
 		lblHistorialCambioCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblHistorialCambioCliente.setBounds(10, 50, 716, 41);
@@ -200,21 +187,51 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 1264, 50);
+		panel_2.setBounds(0, 0, 1264, 53);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
-		panel_2.add(lblNewLabel);
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		
+		btnVolverAModificarProducto = new JButton("");
+		btnVolverAModificarProducto.setBounds(154, 375, 60, 60);
+		frame.getContentPane().add(btnVolverAModificarProducto);
+		btnVolverAModificarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		cambiarIconoBotones(btnVolverAModificarProducto,  "back2.png");
+		btnVolverAModificarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+		lblVolver = new JLabel("Volver");
+		lblVolver.setBounds(224, 375, 70, 60);
+		frame.getContentPane().add(lblVolver);
+		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 11, 1280, 960);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public void show() {

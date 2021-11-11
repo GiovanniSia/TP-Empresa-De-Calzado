@@ -125,6 +125,7 @@ public class VentanaBusquedaProductos {
 		frame.setTitle("Zapatería Argento - Realizar Venta");
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(245, 255, 250, 180));

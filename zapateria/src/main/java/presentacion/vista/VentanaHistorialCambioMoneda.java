@@ -72,6 +72,8 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
 		panel.setBounds(0, 186, 749, 185);

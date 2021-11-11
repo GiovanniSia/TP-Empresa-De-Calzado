@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -20,7 +21,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class VentanaEditarPais {
 	private JFrame frame;
@@ -71,31 +74,31 @@ public class VentanaEditarPais {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
-		frame.setTitle("Zapateria Argento - Editar Pais");
 		frame.setLocationRelativeTo(null);	
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		btnAgregarPais = new JButton("Agregar");
-		btnAgregarPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnAgregarPais.setBounds(10, 114, 69, 21);
+		btnAgregarPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnAgregarPais.setBounds(69, 103, 75, 21);
 		frame.getContentPane().add(btnAgregarPais);
 		
 		btnEditarPais = new JButton("Editar");
-		btnEditarPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnEditarPais.setBounds(85, 114, 69, 21);
+		btnEditarPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnEditarPais.setBounds(69, 135, 75, 21);
 		frame.getContentPane().add(btnEditarPais);
 		
 		btnEliminarPais = new JButton("Eliminar");
-		btnEliminarPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnEliminarPais.setBounds(85, 145, 69, 21);
+		btnEliminarPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnEliminarPais.setBounds(69, 165, 75, 21);
 		frame.getContentPane().add(btnEliminarPais);
 		
 		textPaisNuevo = new JTextField();
-		textPaisNuevo.setBounds(30, 60, 103, 19);
+		textPaisNuevo.setBounds(30, 60, 156, 19);
 		frame.getContentPane().add(textPaisNuevo);
 		textPaisNuevo.addKeyListener(new KeyAdapter() {
 			@Override
@@ -108,7 +111,9 @@ public class VentanaEditarPais {
 		textPaisNuevo.setColumns(10);
 		
 		JLabel lblPais = new JLabel("Escriba un nuevo pais");
-		lblPais.setBounds(30, 28, 146, 21);
+		lblPais.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblPais.setBounds(30, 28, 156, 21);
 		frame.getContentPane().add(lblPais);
 
 		
@@ -124,12 +129,18 @@ public class VentanaEditarPais {
 		table.getTableHeader().setReorderingAllowed(false);
 		scrollPane.setViewportView(table);
 		
-		btnSalirPais = new JButton("Salir");
-		btnSalirPais.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnSalirPais.setBounds(10, 145, 69, 21);
+		btnSalirPais = new JButton("");
+		btnSalirPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnSalirPais.setBounds(10, 204, 46, 46);
+		cambiarIconoBotones(btnSalirPais,  "back2.png");
 		frame.getContentPane().add(btnSalirPais);
 	}
 	
+	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

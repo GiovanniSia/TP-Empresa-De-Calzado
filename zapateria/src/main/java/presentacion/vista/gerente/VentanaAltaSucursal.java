@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 
 import persistencia.conexion.Conexion;
 import javax.swing.JComboBox;
+import javax.swing.border.MatteBorder;
 
 public class VentanaAltaSucursal {
 
@@ -32,8 +33,6 @@ public class VentanaAltaSucursal {
 
 	private JButton btnRegistrar;
 	private JButton btnRegresar;
-	private JPanel panel;
-	private JLabel lblTitulo;
 	private JLabel lblAtras;
 	private JLabel lblRegistrar;
 	
@@ -50,6 +49,11 @@ public class VentanaAltaSucursal {
 
 	private JButton btnUbicacion;
 	private JTextField textNroSucursal;
+	private JPanel panel;
+	private JLabel lblLogo;
+
+	private JLabel lblTitulo;
+	private JPanel panel_1;
 
 
 	/**
@@ -90,32 +94,32 @@ public class VentanaAltaSucursal {
 		frame.setBounds(500, 100, 442, 584);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("Zapateria Argento - Registrar un nuevo proveedor");
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
-		JLabel lblSubtitulo = new JLabel("Registrar Proveedor");
-		lblSubtitulo.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblSubtitulo.setBounds(10, 47, 403, 38);
+		JLabel lblSubtitulo = new JLabel("Registrar Sucursal");
+		lblSubtitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblSubtitulo.setBounds(10, 47, 289, 51);
 		frame.getContentPane().add(lblSubtitulo);
 
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNombre.setBounds(10, 95, 156, 19);
+		lblNombre.setBounds(20, 109, 156, 19);
 		frame.getContentPane().add(lblNombre);
 
 		JLabel lblTelefono = new JLabel("Telefono");
 		lblTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblTelefono.setBounds(10, 131, 156, 19);
+		lblTelefono.setBounds(20, 145, 156, 19);
 		frame.getContentPane().add(lblTelefono);
 
 		JLabel lblCalle = new JLabel("Calle");
 		lblCalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblCalle.setBounds(10, 166, 156, 19);
+		lblCalle.setBounds(20, 180, 156, 19);
 		frame.getContentPane().add(lblCalle);
 
 		textNombre = new JTextField();
-		textNombre.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -124,12 +128,12 @@ public class VentanaAltaSucursal {
 				}
 			}
 		});
-		textNombre.setBounds(178, 93, 178, 25);
+		textNombre.setBounds(186, 106, 178, 25);
 		frame.getContentPane().add(textNombre);
 		textNombre.setColumns(10);
 
 		textTelefono = new JTextField();
-		textTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textTelefono.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textTelefono.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -139,11 +143,11 @@ public class VentanaAltaSucursal {
 			}
 		});
 		textTelefono.setColumns(10);
-		textTelefono.setBounds(176, 128, 178, 25);
+		textTelefono.setBounds(186, 142, 178, 25);
 		frame.getContentPane().add(textTelefono);
 
 		textCalle = new JTextField();
-		textCalle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textCalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCalle.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -153,25 +157,13 @@ public class VentanaAltaSucursal {
 			}
 		});
 		textCalle.setColumns(10);
-		textCalle.setBounds(178, 163, 178, 25);
+		textCalle.setBounds(186, 177, 178, 25);
 		frame.getContentPane().add(textCalle);
 
 		btnRegresar = new JButton("");
 		btnRegresar.setBounds(10, 477, 60, 60);
 		cambiarIconoBotones(btnRegresar, "back2.png");
 		frame.getContentPane().add(btnRegresar);
-		
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 426, 50);
-		frame.getContentPane().add(panel);
-		
-		lblTitulo = new JLabel("Zapateria Argento");
-		lblTitulo.setForeground(Color.WHITE);
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblTitulo.setBounds(10, 0, 236, 50);
-		panel.add(lblTitulo);
 
 		btnRegistrar = new JButton("");
 		btnRegistrar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -204,7 +196,7 @@ public class VentanaAltaSucursal {
 		frame.getContentPane().add(lblEditar);
 		
 		textAltura = new JTextField();
-		textAltura.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textAltura.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textAltura.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -214,43 +206,46 @@ public class VentanaAltaSucursal {
 			}
 		});
 		textAltura.setColumns(10);
-		textAltura.setBounds(178, 198, 178, 25);
+		textAltura.setBounds(186, 212, 178, 25);
 		frame.getContentPane().add(textAltura);
 		
 		JLabel lblAltura = new JLabel("Altura");
 		lblAltura.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblAltura.setBounds(10, 201, 156, 19);
+		lblAltura.setBounds(20, 215, 156, 19);
 		frame.getContentPane().add(lblAltura);
 		
 		comboBoxPais = new JComboBox<String>();
-		comboBoxPais.setBounds(178, 233, 178, 19);
+		comboBoxPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxPais.setBounds(186, 247, 178, 25);
 		frame.getContentPane().add(comboBoxPais);
 		
 		comboBoxProvincia = new JComboBox<String>();
-		comboBoxProvincia.setBounds(178, 268, 178, 19);
+		comboBoxProvincia.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxProvincia.setBounds(186, 288, 178, 25);
 		frame.getContentPane().add(comboBoxProvincia);
 		
 		comboBoxLocalidad = new JComboBox<String>();
-		comboBoxLocalidad.setBounds(178, 310, 178, 19);
+		comboBoxLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxLocalidad.setBounds(186, 324, 178, 25);
 		frame.getContentPane().add(comboBoxLocalidad);
 		
 		JLabel lblPais = new JLabel("Pais");
 		lblPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblPais.setBounds(10, 236, 156, 19);
+		lblPais.setBounds(20, 250, 156, 19);
 		frame.getContentPane().add(lblPais);
 		
 		JLabel lblProvincia = new JLabel("Provincia");
 		lblProvincia.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblProvincia.setBounds(10, 271, 156, 19);
+		lblProvincia.setBounds(20, 285, 156, 19);
 		frame.getContentPane().add(lblProvincia);
 		
 		JLabel lblLocalidad = new JLabel("Localidad");
 		lblLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblLocalidad.setBounds(10, 313, 156, 19);
+		lblLocalidad.setBounds(20, 327, 156, 19);
 		frame.getContentPane().add(lblLocalidad);
 		
 		textCodPostal = new JTextField();
-		textCodPostal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textCodPostal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCodPostal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -260,16 +255,18 @@ public class VentanaAltaSucursal {
             }
         });
 		textCodPostal.setColumns(10);
-		textCodPostal.setBounds(178, 349, 178, 25);
+		textCodPostal.setBounds(186, 367, 178, 25);
 		frame.getContentPane().add(textCodPostal);
 		
 		JLabel lblCodpostal = new JLabel("CodPostal");
 		lblCodpostal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblCodpostal.setBounds(10, 356, 156, 19);
+		lblCodpostal.setBounds(20, 370, 156, 19);
 		frame.getContentPane().add(lblCodpostal);
 		
-		btnUbicacion = new JButton("Editar Ubicacion");
-		btnUbicacion.setBounds(314, 61, 112, 21);
+		btnUbicacion = new JButton("");
+		btnUbicacion.setToolTipText("Editar ubicaciones disponibles");
+		btnUbicacion.setBounds(376, 283, 30, 30);
+		cambiarIconoBotones(btnUbicacion, "earth.png");
 		frame.getContentPane().add(btnUbicacion);
 		
 		textNroSucursal = new JTextField();
@@ -281,17 +278,40 @@ public class VentanaAltaSucursal {
                 }
             }
         });
-		textNroSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		textNroSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textNroSucursal.setColumns(10);
-		textNroSucursal.setBounds(178, 394, 178, 25);
+		textNroSucursal.setBounds(186, 408, 178, 25);
 		frame.getContentPane().add(textNroSucursal);
 		
 		lblNumeroDeSucursal = new JLabel("Numero de Sucursal");
 		lblNumeroDeSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNumeroDeSucursal.setBounds(10, 397, 156, 19);
+		lblNumeroDeSucursal.setBounds(20, 411, 156, 19);
 		frame.getContentPane().add(lblNumeroDeSucursal);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, -3, 426, 53);
+		frame.getContentPane().add(panel);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel.add(lblLogo);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 100, 426, 344);
+		frame.getContentPane().add(panel_1);
 		lblEditar.setVisible(false);
 		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 11, 800, 600);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	public void show() {
@@ -318,6 +338,13 @@ public class VentanaAltaSucursal {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_DEFAULT));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public JFrame getFrame() {

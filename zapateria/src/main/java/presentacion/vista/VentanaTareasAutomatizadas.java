@@ -79,6 +79,7 @@ public class VentanaTareasAutomatizadas {
 		frame.setBounds(100, 100, 660, 533);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 0));

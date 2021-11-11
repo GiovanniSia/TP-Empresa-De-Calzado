@@ -23,6 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
+import javax.swing.border.MatteBorder;
 
 public class VentanaGestionarSucursales {
 	
@@ -40,12 +41,17 @@ public class VentanaGestionarSucursales {
 	
 	private String[] nombreColumnas = {"Id","Nro Sucursal","Nombre","Telefono","Calle","Altura","Provincia","Localidad","Pais","Cod. Postal"};
 	private JScrollPane scrollPane;
-	private JPanel panel;
-	private JLabel lblNewLabel_1;
 	private JLabel lblAtras;
 	
 	private JButton btnAniadir;
 	private JButton btnEditar;
+	private JPanel panel;
+	private JLabel lblLogo;
+
+	private JLabel lblNewLabel_1;
+	private JPanel panel_1;
+	private JLabel lblAadirSucursal;
+	private JLabel lblEditarSucursal;
 	
 	
 	/**
@@ -87,7 +93,7 @@ public class VentanaGestionarSucursales {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-		
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JLabel lblListaDeSucursales = new JLabel("Lista de sucursales");
 		lblListaDeSucursales.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -137,34 +143,58 @@ public class VentanaGestionarSucursales {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnRegresar.setBounds(31, 544, 60, 60);
+		btnRegresar.setBounds(30, 553, 60, 60);
 		cambiarIconoBotones(btnRegresar,  "back2.png");
 		frame.getContentPane().add(btnRegresar);
 		
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 720, 50);
-		frame.getContentPane().add(panel);
-		
-		lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 236, 50);
-		panel.add(lblNewLabel_1);
-		
 		lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblAtras.setBounds(101, 546, 45, 58);
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAtras.setBounds(100, 555, 45, 58);
 		frame.getContentPane().add(lblAtras);
 		
-		btnAniadir = new JButton("A\u00F1adir");
-		btnAniadir.setBounds(247, 550, 63, 54);
+		btnAniadir = new JButton("");
+		btnAniadir.setBounds(252, 553, 60, 60);
+		cambiarIconoBotones(btnAniadir,  "plus2.png");
 		frame.getContentPane().add(btnAniadir);
 		
-		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(349, 550, 63, 54);
+		btnEditar = new JButton("");
+		btnEditar.setBounds(507, 553, 60, 60);
+		cambiarIconoBotones(btnEditar,  "pencil.png");
 		frame.getContentPane().add(btnEditar);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel.setBackground(new Color(153, 204, 255));
+		panel.setBounds(0, 0, 720, 53);
+		frame.getContentPane().add(panel);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel.add(lblLogo);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 103, 720, 439);
+		frame.getContentPane().add(panel_1);
+		
+		lblAadirSucursal = new JLabel("A\u00F1adir Sucursal");
+		lblAadirSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblAadirSucursal.setBounds(322, 553, 116, 58);
+		frame.getContentPane().add(lblAadirSucursal);
+		
+		lblEditarSucursal = new JLabel("Editar Sucursal");
+		lblEditarSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblEditarSucursal.setBounds(577, 555, 116, 58);
+		frame.getContentPane().add(lblEditarSucursal);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 31, 800, 600);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 	
@@ -196,6 +226,13 @@ public class VentanaGestionarSucursales {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 

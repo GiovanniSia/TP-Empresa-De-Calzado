@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Color;
+import javax.swing.border.MatteBorder;
 
 public class VentanaAltaCliente {
 
@@ -45,8 +46,6 @@ public class VentanaAltaCliente {
 	private JComboBox<String> comboBoxImpuestoAFIP;
 	private JComboBox<String> comboBoxTipoCliente;
 	private JTextField textSaldoInicial;
-	private JPanel panel;
-	private JLabel lblNewLabel;
 	private JLabel lblAtras;
 	private JLabel lblRegistrarCliente;
 
@@ -61,6 +60,8 @@ public class VentanaAltaCliente {
 	private JTextField textLimiteCredito;
 	private JLabel lblEstado;
 	private JComboBox<String> comboBoxEstado;	
+	private JPanel panel;
+	private JLabel lblRegistrarCliente_1;
 	
 	
 	
@@ -100,11 +101,12 @@ public class VentanaAltaCliente {
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(500, 100, 682, 527);
+		frame.setBounds(500, 100, 682, 515);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle("Zapateria Argento - Registrar un cliente");
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 //		JLabel lblRegistrarCliente = new JLabel("Registrar Cliente");
 //		lblRegistrarCliente.setFont(new Font("Segoe UI", Font.BOLD, 22));
@@ -190,6 +192,7 @@ public class VentanaAltaCliente {
 		
 		
 		textNombre = new JTextField();
+		textNombre.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textNombre.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -203,6 +206,7 @@ public class VentanaAltaCliente {
 		textNombre.setColumns(10);
 		
 		textApellido = new JTextField();
+		textApellido.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textApellido.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -216,6 +220,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(textApellido);
 		
 		textCUIL = new JTextField();
+		textCUIL.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCUIL.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -230,6 +235,7 @@ public class VentanaAltaCliente {
 		
 		
 		textCorreo = new JTextField();
+		textCorreo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCorreo.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -243,6 +249,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(textCorreo);
 		
 		textCalle = new JTextField();
+		textCalle.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCalle.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -256,6 +263,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(textCalle);
 		
 		textAltura = new JTextField();
+		textAltura.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textAltura.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -269,6 +277,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(textAltura);
 		
 		textCodPostal = new JTextField();
+		textCodPostal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textCodPostal.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -284,19 +293,22 @@ public class VentanaAltaCliente {
 		
 		
 		btnCancelar = new JButton("");
-		btnCancelar.setBounds(101, 394, 60, 60);
+		btnCancelar.setBounds(23, 402, 60, 60);
 		cambiarIconoBotones(btnCancelar,  "back2.png");
 		frame.getContentPane().add(btnCancelar);
 		
 		comboBoxImpuestoAFIP = new JComboBox<String>();
+		comboBoxImpuestoAFIP.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		comboBoxImpuestoAFIP.setBounds(128, 278, 195, 23);
 		frame.getContentPane().add(comboBoxImpuestoAFIP);
 		
 		comboBoxTipoCliente = new JComboBox<String>();
+		comboBoxTipoCliente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		comboBoxTipoCliente.setBounds(128, 247, 195, 23);
 		frame.getContentPane().add(comboBoxTipoCliente);
 		
 		textSaldoInicial = new JTextField();
+		textSaldoInicial.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textSaldoInicial.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -315,22 +327,10 @@ public class VentanaAltaCliente {
 		lblSaldoInicial.setBounds(10, 311, 108, 24);
 		frame.getContentPane().add(lblSaldoInicial);
 		
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(-1, 0, 670, 50);
-		frame.getContentPane().add(panel);
-		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
-		panel.add(lblNewLabel);
-		
 		lblAtras = new JLabel("Atras");
 		lblAtras.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtras.setBounds(171, 394, 60, 60);
+		lblAtras.setBounds(93, 402, 60, 60);
 		frame.getContentPane().add(lblAtras);
 				
 		lblSaldoInicial_1 = new JLabel("$");
@@ -339,42 +339,50 @@ public class VentanaAltaCliente {
 		lblSaldoInicial_1.setBounds(128, 311, 21, 24);
 		frame.getContentPane().add(lblSaldoInicial_1);
 		
-		btnUbicacion = new JButton("Admin. Ubicacion");
-		btnUbicacion.setBounds(537, 71, 116, 21);
+		btnUbicacion = new JButton("");
+		btnUbicacion.setToolTipText("Editar ubicaciones disponibles");
+		btnUbicacion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnUbicacion.setBounds(623, 150, 30, 30);
+		cambiarIconoBotones(btnUbicacion,  "earth.png");
 		frame.getContentPane().add(btnUbicacion);
 		
 		comboBoxPais = new JComboBox<String>();
-		comboBoxPais.setBounds(451, 109, 202, 23);
+		comboBoxPais.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxPais.setBounds(451, 109, 165, 23);
 		frame.getContentPane().add(comboBoxPais);
 		
 		comboBoxProvincia = new JComboBox<String>();
-		comboBoxProvincia.setBounds(451, 153, 202, 23);
+		comboBoxProvincia.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxProvincia.setBounds(451, 153, 165, 23);
 		frame.getContentPane().add(comboBoxProvincia);
 		
 		comboBoxLocalidad = new JComboBox<String>();
-		comboBoxLocalidad.setBounds(451, 192, 202, 23);
+		comboBoxLocalidad.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		comboBoxLocalidad.setBounds(451, 192, 165, 23);
 		frame.getContentPane().add(comboBoxLocalidad);
 		
 		
 		lblRegistrarCliente = new JLabel("Registrar Cliente");
 		lblRegistrarCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRegistrarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblRegistrarCliente.setBounds(428, 394, 137, 60);
+		lblRegistrarCliente.setBounds(529, 402, 137, 60);
 		frame.getContentPane().add(lblRegistrarCliente);
 		lblRegistrarCliente.setVisible(false);
 		
 		btnRegistrar = new JButton("");
-		btnRegistrar.setBounds(358, 394, 60, 60);
-		cambiarIconoBotones(btnRegistrar,  "registrar.png");
+		btnRegistrar.setBounds(459, 402, 60, 60);
+		cambiarIconoBotones(btnRegistrar,  "person+.png");
 		frame.getContentPane().add(btnRegistrar);
 		btnRegistrar.setVisible(false);
 		
-		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(241, 394, 85, 60);
+		btnEditar = new JButton("");
+		btnEditar.setBounds(229, 402, 60, 60);
 		frame.getContentPane().add(btnEditar);
+		cambiarIconoBotones(btnEditar,  "personedit.png");
 		btnEditar.setVisible(false);
 		
 		textLimiteCredito = new JTextField();
+		textLimiteCredito.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		textSaldoInicial.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -396,6 +404,7 @@ public class VentanaAltaCliente {
 		lblLimiteDeCredito.setVisible(false);
 		
 		comboBoxEstado = new JComboBox<String>();
+		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		comboBoxEstado.setBounds(458, 347, 195, 23);
 		frame.getContentPane().add(comboBoxEstado);
 		comboBoxEstado.setVisible(false);
@@ -405,7 +414,43 @@ public class VentanaAltaCliente {
 		lblEstado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblEstado.setBounds(386, 347, 116, 24);
 		frame.getContentPane().add(lblEstado);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 666, 53);
+		frame.getContentPane().add(panel_2);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JLabel lblEditarCliente = new JLabel("Editar Cliente");
+		lblEditarCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblEditarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblEditarCliente.setBounds(299, 402, 127, 60);
+		frame.getContentPane().add(lblEditarCliente);
+		
+		panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 97, 666, 294);
+		frame.getContentPane().add(panel);
+		
+		lblRegistrarCliente_1 = new JLabel("Registrar Cliente");
+		lblRegistrarCliente_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblRegistrarCliente_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblRegistrarCliente_1.setBounds(10, 50, 312, 53);
+		frame.getContentPane().add(lblRegistrarCliente_1);
 		lblEstado.setVisible(false);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 11, 800, 600);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void show() {
@@ -441,6 +486,12 @@ public class VentanaAltaCliente {
 		boton.setIcon(Icono);
 	}
 	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
+	}
 	
 	public JFrame getFrame() {
 		return frame;

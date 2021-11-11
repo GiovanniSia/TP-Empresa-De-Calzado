@@ -49,8 +49,6 @@ public class VentanaGestionarClientes extends JFrame{
 	private JButton btnHistorialDeCambios;
 	private JPanel panel_2;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JLabel lblAgregarCliente;
 	private JLabel lblEditarCliente;
 	private JLabel lblVerHistorialDe;
@@ -193,18 +191,6 @@ public class VentanaGestionarClientes extends JFrame{
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(814, 28, 59, 19);
-		panel_2.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Empleado:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(620, 28, 59, 19);
-		panel_2.add(lblNewLabel_1);
 		
 				btnAtras = new JButton("");
 				btnAtras.setBounds(37, 412, 60, 60);
