@@ -75,6 +75,11 @@ import presentacion.vista.Login.VentanaVendedor;
 import presentacion.vista.dashboardGerente.VentanaDashboardGerente;
 
 public class Controlador {
+	
+	private int cantSucursalesEnGrafico = 4;
+	private int cantVendedorEnGrafico = 4;
+	private Double minimoNecesarioParaIngresarEnLosGraficos = 0.1;
+	private int diasParaAtras = 1000;
 
 	private int idSucursal = 0;
 	private String tipoEmpleado = "";
@@ -631,35 +636,30 @@ public class Controlador {
 
 	}
 	
+	// * * * * GRAFICOS * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+	
 	private void iniciarGraficos() {
 		//	GRAFICO DE SUCURSALES
-		HashMap<SucursalDTO,Double> datosSucursales = RankingDatos.getRankingVentasXSucursales(4, 1000);
-		DefaultPieDataset datos = new DefaultPieDataset();
-		for(SucursalDTO s: datosSucursales.keySet()) {
-			if(datosSucursales.get(s) != 0.0) {
-				datos.setValue(s.getNombre() + ": " + datosSucursales.get(s), datosSucursales.get(s));
-			}
-		}
-		
-		this.ventanaDashboardGerente.getPanel_1().remove(this.ventanaDashboardGerente.getPanelTorta());
-		JFreeChart graficoTorta = ChartFactory.createPieChart(null, datos, false, false, false);
-		ChartPanel panelTorta = new ChartPanel(graficoTorta);
-		panelTorta.setBackground(new Color(255, 255, 255));
-		panelTorta.setBounds(0, 5, 320, 240);
-		panelTorta.setMouseWheelEnabled(true);
-		panelTorta.setPreferredSize(new Dimension(320,240));
-		this.ventanaDashboardGerente.setPanelTorta(panelTorta);
-		this.ventanaDashboardGerente.getPanel_1().add(this.ventanaDashboardGerente.getPanelTorta());
+		DefaultPieDataset datos = getDatosVentasXSucursales();
+		mostrarDatosVentasXSucursales(datos);
 		
 		//	GRAFICO DE EMPLEADOS
-		
-		HashMap<EmpleadoDTO, Double> datosVendedores = RankingDatos.getRankingVentasxVendedor(4,1000);
+		DefaultPieDataset datos2 = getDatosVentasXVendedores();
+		mostrarDatosVentasXVendedores(datos2);
+	}
+	
+	private DefaultPieDataset getDatosVentasXVendedores() {
+		HashMap<EmpleadoDTO, Double> datosVendedores = RankingDatos.getRankingVentasxVendedor(this.cantVendedorEnGrafico,this.diasParaAtras);
 		DefaultPieDataset datos2 = new DefaultPieDataset();
 		for(EmpleadoDTO e: datosVendedores.keySet()) {
-			if(datosVendedores.get(e) != 0.0) {
+			if(datosVendedores.get(e) >= this.minimoNecesarioParaIngresarEnLosGraficos) {
 				datos2.setValue(e.getNombre()+" "+e.getApellido()+": " + datosVendedores.get(e), datosVendedores.get(e));
 			}
 		}
+		return datos2;
+	}
+	
+	private void mostrarDatosVentasXVendedores(DefaultPieDataset datos2) {
 		JFreeChart graficoTorta2 = ChartFactory.createPieChart(null, datos2, false, false, false);
 		ChartPanel panelTorta2;
 		panelTorta2 = new ChartPanel(graficoTorta2);
@@ -667,10 +667,43 @@ public class Controlador {
 		panelTorta2.setBounds(0, 5, 320, 240);
 		panelTorta2.setMouseWheelEnabled(true);
 		panelTorta2.setPreferredSize(new Dimension(320,240));
+		reiniciarPanelVendedor(panelTorta2);
+	}
+
+	private void reiniciarPanelVendedor(ChartPanel panelTorta2) {
 		this.ventanaDashboardGerente.getPanel_1_1().remove(this.ventanaDashboardGerente.getPanelTorta2());
 		this.ventanaDashboardGerente.setPanelTorta2(panelTorta2);
 		this.ventanaDashboardGerente.getPanel_1_1().add(this.ventanaDashboardGerente.getPanelTorta2());
 	}
+	
+	private DefaultPieDataset getDatosVentasXSucursales() {
+		HashMap<SucursalDTO,Double> datosSucursales = RankingDatos.getRankingVentasXSucursales(this.cantSucursalesEnGrafico, this.diasParaAtras);
+		DefaultPieDataset datos = new DefaultPieDataset();
+		for(SucursalDTO s: datosSucursales.keySet()) {
+			if(datosSucursales.get(s) >= minimoNecesarioParaIngresarEnLosGraficos) {
+				datos.setValue(s.getNombre() + ": " + datosSucursales.get(s), datosSucursales.get(s));
+			}
+		}
+		return datos;
+	}
+	
+	private void mostrarDatosVentasXSucursales(DefaultPieDataset datos) {
+		JFreeChart graficoTorta = ChartFactory.createPieChart(null, datos, false, false, false);
+		ChartPanel panelTorta = new ChartPanel(graficoTorta);
+		panelTorta.setBackground(new Color(255, 255, 255));
+		panelTorta.setBounds(0, 5, 320, 240);
+		panelTorta.setMouseWheelEnabled(true);
+		panelTorta.setPreferredSize(new Dimension(320,240));
+		reiniciarPanelSucursal(panelTorta);
+	}
+
+	private void reiniciarPanelSucursal(ChartPanel panelTorta) {
+		this.ventanaDashboardGerente.getPanel_1().remove(this.ventanaDashboardGerente.getPanelTorta());
+		this.ventanaDashboardGerente.setPanelTorta(panelTorta);
+		this.ventanaDashboardGerente.getPanel_1().add(this.ventanaDashboardGerente.getPanelTorta());
+	}
+	
+	// * * * * FIN GRAFICOS * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
 	public void escucharBotonesVentanaAdministrativo() {
 		this.ventanaAdministrador.getBtnModificacionMasivaDePrecios()
