@@ -138,6 +138,8 @@ public class ControladorGestionarProveedores {
 	
 	public void mostrarVentanaParaAltaProducto() {
 		this.ventanaConsultarProveedores.getBtnSeleccionarProveedor().setVisible(true);
+		this.ventanaConsultarProveedores.getLblAsignarProductoA().setVisible(false);
+		this.ventanaConsultarProveedores.getLbleditarProveedor().setVisible(false);
 		this.ventanaConsultarProveedores.show();
 	}
 	

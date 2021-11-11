@@ -57,8 +57,8 @@ public class VentanaGestionarProveedores {
 	private JPanel panel_1;
 	private JLabel lblregistrarProveedor;
 	private JLabel lbleditarProveedor;
-	
-	
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -345,5 +345,10 @@ public class VentanaGestionarProveedores {
 
 	public JButton getBtnEditar() {
 		return btnEditar;
+	}
+	
+	
+	public JLabel getLbleditarProveedor() {
+		return lbleditarProveedor;
 	}
 }
