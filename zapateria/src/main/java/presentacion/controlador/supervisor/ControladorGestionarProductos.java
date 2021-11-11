@@ -64,7 +64,7 @@ public class ControladorGestionarProductos {
 	List<MaestroProductoDTO> productosEnTabla;
 
 	VentanaGestionarProductos ventanaGestionarProductos;
-
+	
 	Controlador controlador;
 	ControladorAltaProducto controladorAltaProducto;
 
@@ -89,7 +89,7 @@ public class ControladorGestionarProductos {
 			ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente) {
 		this.controladorGenerarPedidoAProveedorManualmente = controladorGenerarPedidoAProveedorManualmente;
 	}
-
+	
 	public void inicializar() {
 		obtenerDatosPropertiesSucursalEmpleado();
 		this.todosLosProductos = this.maestroProducto.readAll();
@@ -104,10 +104,12 @@ public class ControladorGestionarProductos {
 			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
 			.addActionListener(a -> generarOrdenDeManufactura());
 		}else{
+			
 			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
-			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
-					.addActionListener(a -> generarOrdenDeManufactura());
+			this.ventanaGestionarProductos.getBtnEditar().addActionListener(a -> pasarAEditarProducto());
+			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura().addActionListener(a -> generarOrdenDeManufactura());
 			this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
+			
 		}
 		this.ventanaGestionarProductos.getBtnAtras().addActionListener(a -> volverAtras(a));
 
@@ -188,8 +190,22 @@ public class ControladorGestionarProductos {
 
 		escribirTablaCompleta();
 		validarTeclado();
+		escribirLabels();
 	}
 
+	public void escribirLabels() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+			String sucursal = sucu.getValue("Nombre");
+			this.ventanaGestionarProductos.getLblNombreEmpleado().setText(nombreEmp);
+			this.ventanaGestionarProductos.getLblNombreSucursal().setText(sucursal);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
 		this.ventanaGestionarProductos.mostrarVentanaParaVerProductosYOrdenDeManufactura();
 	}
@@ -201,7 +217,7 @@ public class ControladorGestionarProductos {
 	public void mostrarVentana() {
 		this.ventanaGestionarProductos.show();
 	}
-
+	
 	public void volverAtras(ActionEvent a) {
 		this.ventanaGestionarProductos.cerrar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
@@ -469,4 +485,19 @@ public class ControladorGestionarProductos {
 		JOptionPane.showMessageDialog(null, mensaje);
 		return;
 	}
+	
+	
+	public void pasarAEditarProducto() {
+		int fila = this.ventanaGestionarProductos.getTablaProductos().getSelectedRow();
+		if(fila==-1) {
+			JOptionPane.showMessageDialog(ventanaGestionarProductos, "Debe seleccionar un producto");
+			return;
+		}
+		MaestroProductoDTO p = this.productosEnTabla.get(fila);
+		this.ventanaGestionarProductos.cerrar();
+		this.controladorAltaProducto.setProductoAEditar(p);
+		this.controladorAltaProducto.inicializar();
+		this.controladorAltaProducto.mostrarVentanaEditar();		
+	}
+	
 }

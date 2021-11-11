@@ -51,6 +51,10 @@ private static final long serialVersionUID = 1L;
 	private JLabel lblAtrs_2;
 	private JLabel lblAtrs_1;
 
+	private JButton btnEditar;
+	private JLabel lblNombreEmpleado;
+	private JLabel lblNombreSucursal;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -201,25 +205,37 @@ private static final long serialVersionUID = 1L;
 		lblNewLabel_1.setBounds(477, 28, 59, 19);
 		panel_2.add(lblNewLabel_1);
 		
+		lblNombreEmpleado = new JLabel("");
+		lblNombreEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNombreEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombreEmpleado.setBounds(546, 28, 129, 19);
+		panel_2.add(lblNombreEmpleado);
+		
+		lblNombreSucursal = new JLabel("");
+		lblNombreSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNombreSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNombreSucursal.setBounds(740, 28, 129, 19);
+		panel_2.add(lblNombreSucursal);
+		
 		btnGenerarPedido = new JButton("");
 		btnGenerarPedido.setBounds(480, 494, 60, 60);
 		cambiarIconoBotones(btnGenerarPedido, "arroba.png");
 		frame.getContentPane().add(btnGenerarPedido);
 		
 		btnAgregarProducto = new JButton("");
-		btnAgregarProducto.setBounds(265, 494, 60, 60);
+		btnAgregarProducto.setBounds(116, 494, 60, 60);
 		cambiarIconoBotones(btnAgregarProducto, "product+.png");
 		frame.getContentPane().add(btnAgregarProducto);
 		
 
 		lblAtrs = new JLabel("Atras");
-		lblAtrs.setBounds(103, 494, 51, 60);
+		lblAtrs.setBounds(75, 494, 51, 60);
 		frame.getContentPane().add(lblAtrs);
 		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
 		
 		btnAtras = new JButton("");
-		btnAtras.setBounds(33, 494, 60, 60);
+		btnAtras.setBounds(10, 494, 60, 60);
 		frame.getContentPane().add(btnAtras);
 		btnAtras.setBackground(new Color(248, 248, 255));
 		cambiarIconoBotones(btnAtras, "back2.png");
@@ -231,7 +247,7 @@ private static final long serialVersionUID = 1L;
 		
 		lblAgregarProducto = new JLabel("Agregar Producto");
 		lblAgregarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAgregarProducto.setBounds(335, 494, 135, 60);
+		lblAgregarProducto.setBounds(179, 496, 135, 60);
 		frame.getContentPane().add(lblAgregarProducto);
 		
 		lblAtrs_2 = new JLabel("<html>Generar Pedido a Proveedor</html>");
@@ -243,6 +259,16 @@ private static final long serialVersionUID = 1L;
 		lblAtrs_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAtrs_1.setBounds(752, 494, 121, 60);
 		frame.getContentPane().add(lblAtrs_1);
+		
+		btnEditar = new JButton("");
+		btnEditar.setBounds(305, 496, 60, 60);
+		cambiarIconoBotones(btnEditar, "update.png");
+		frame.getContentPane().add(btnEditar);
+		
+		JLabel lbleditarProducto = new JLabel("<html>Editar Producto<html>");
+		lbleditarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lbleditarProducto.setBounds(366, 496, 111, 60);
+		frame.getContentPane().add(lbleditarProducto);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 1000, 750);
@@ -357,5 +383,66 @@ private static final long serialVersionUID = 1L;
 		return btnGenerarOrdenDeManufactura;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public JLabel getLblNombre() {
+		return lblNombre;
+	}
+
+	public JLabel getLblFiltrarPor() {
+		return lblFiltrarPor;
+	}
+
+	public JLabel getLblTitulo() {
+		return lblTitulo;
+	}
+
+	public JLabel getLblAtrs() {
+		return lblAtrs;
+	}
+
+	public JPanel getPanel_2() {
+		return panel_2;
+	}
+
+	public JLabel getLblLogo() {
+		return lblLogo;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public JLabel getLblNewLabel_1() {
+		return lblNewLabel_1;
+	}
+
+	public JLabel getLblAgregarProducto() {
+		return lblAgregarProducto;
+	}
+
+	public JLabel getLblAtrs_2() {
+		return lblAtrs_2;
+	}
+
+	public JLabel getLblAtrs_1() {
+		return lblAtrs_1;
+	}
+
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
+
+	public JLabel getLblNombreEmpleado() {
+		return lblNombreEmpleado;
+	}
+
+	public JLabel getLblNombreSucursal() {
+		return lblNombreSucursal;
+	}
+	
+	
 }
 

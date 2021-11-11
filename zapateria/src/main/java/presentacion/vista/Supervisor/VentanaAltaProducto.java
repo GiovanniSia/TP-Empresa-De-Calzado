@@ -67,6 +67,8 @@ public class VentanaAltaProducto {
 	private JButton btnBorrarProv;
 
 	private JScrollPane scrollPaneProveedores;
+	private JButton btnEditar;
+	private JLabel lblEditarProducto;
 	/**
 	 * Launch the application.
 	 */
@@ -277,6 +279,14 @@ public class VentanaAltaProducto {
 		btnRegistrar.setBounds(211, 517, 60, 60);
 		cambiarIconoBotones(btnRegistrar, "regis2.png");
 		frame.getContentPane().add(btnRegistrar);
+//		btnRegistrar.setVisible(false);
+		
+		lblRegistrarProducto = new JLabel("Registrar Producto");
+		lblRegistrarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblRegistrarProducto.setBounds(276, 517, 137, 60);
+		frame.getContentPane().add(lblRegistrarProducto);
+//		lblRegistrarProducto.setVisible(false);
+		
 
 		comboBoxEstado = new JComboBox<String>();
 		comboBoxEstado.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -314,11 +324,6 @@ public class VentanaAltaProducto {
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblAtras.setBounds(90, 517, 112, 60);
 		frame.getContentPane().add(lblAtras);
-		
-		lblRegistrarProducto = new JLabel("Registrar Producto");
-		lblRegistrarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblRegistrarProducto.setBounds(276, 517, 137, 60);
-		frame.getContentPane().add(lblRegistrarProducto);
 		
 		comboBoxUnidadDeMedida = new JComboBox<String>();
 		comboBoxUnidadDeMedida.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -450,6 +455,19 @@ public class VentanaAltaProducto {
 		btnBorrarProv.setBounds(777, 307, 32, 28);
 		cambiarIconoBotones(btnBorrarProv, "trash.png");
 		frame.getContentPane().add(btnBorrarProv);
+		
+		btnEditar = new JButton("");
+		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		btnEditar.setBounds(423, 517, 60, 60);
+		cambiarIconoBotones(btnEditar,"update.png");
+		frame.getContentPane().add(btnEditar);
+		btnEditar.setVisible(false);
+		
+		lblEditarProducto = new JLabel("Editar Producto");
+		lblEditarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblEditarProducto.setBounds(493, 517, 137, 60);
+		frame.getContentPane().add(lblEditarProducto);
+		lblEditarProducto.setVisible(false);
 	}
 
 
@@ -585,6 +603,14 @@ public class VentanaAltaProducto {
 	}
 	public JScrollPane getScrollPaneProveedores() {
 		return scrollPaneProveedores;
+	}
+
+	public JButton getBtnEditar() {
+		return btnEditar;
+	}
+
+	public JLabel getLblEditarProducto() {
+		return lblEditarProducto;
 	}
 	
 }

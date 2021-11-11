@@ -14,16 +14,16 @@ public class MaestroProducto {
 		this.maestroProducto = metodo_persistencia.createMaestroProductoDAO();
 	}
 
-	public void insert(MaestroProductoDTO empleado) {
-		this.maestroProducto.insert(empleado);
+	public boolean insert(MaestroProductoDTO empleado) {
+		return this.maestroProducto.insert(empleado);
 	}
 
-	public void delete(MaestroProductoDTO maestroProducto_a_eliminar) {
-		this.maestroProducto.delete(maestroProducto_a_eliminar);
+	public boolean  delete(MaestroProductoDTO maestroProducto_a_eliminar) {
+		return this.maestroProducto.delete(maestroProducto_a_eliminar);
 	}
 
-	public void update(int id_maestroProducto_a_actualizar, MaestroProductoDTO maestroProducto_nuevo) {
-		this.maestroProducto.update(id_maestroProducto_a_actualizar, maestroProducto_nuevo);
+	public boolean update(int id_maestroProducto_a_actualizar, MaestroProductoDTO maestroProducto_nuevo) {
+		return this.maestroProducto.update(id_maestroProducto_a_actualizar, maestroProducto_nuevo);
 	}
 
 	public List<MaestroProductoDTO> readAll() {

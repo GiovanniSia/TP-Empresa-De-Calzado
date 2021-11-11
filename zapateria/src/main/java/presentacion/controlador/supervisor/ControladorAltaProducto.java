@@ -41,6 +41,7 @@ public class ControladorAltaProducto {
 	List<ProveedorDTO> proveedoresEnTabla;
 	List<ProductoDeProveedorDTO> productoDeProveedorEnTabla;
 	
+	MaestroProductoDTO productoAEditar;
 	
 	public ControladorAltaProducto(MaestroProducto maestroProducto, Proveedor proveedor, ProductoDeProveedor productoDeProveedor) {
 		this.maestroProducto=maestroProducto;
@@ -74,8 +75,10 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getComboBoxTipo().addActionListener(a -> actualizarCbDadoTipo(a));
 		this.ventanaAltaProducto.getComboBoxFabricado().addActionListener(a -> actualizarCbDadoFabricado(a));
 		this.ventanaAltaProducto.getBtnRegistrar().addActionListener(a -> agregarProducto(a));
-		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir(a));
+		this.ventanaAltaProducto.getBtnRegresar().addActionListener(a -> salir());
 
+		this.ventanaAltaProducto.getBtnEditar().addActionListener(a -> editar());
+		
 		this.ventanaAltaProducto.getBtnAniadirUnidadMedida().addActionListener(a -> aniadirUnidadMedida());
 		this.ventanaAltaProducto.getChckbxNumerico().addActionListener(a -> filtrarTallePorNumero());
 
@@ -145,8 +148,19 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.show();
 	}
 		
-	public void salir(ActionEvent a ) {
+	
+	public void mostrarVentanaEditar() {
+		llenarDatos();
+		this.ventanaAltaProducto.getLblRegistrarProducto().setVisible(false);
+		this.ventanaAltaProducto.getBtnRegistrar().setVisible(false);
+		this.ventanaAltaProducto.getBtnEditar().setVisible(true);
+		this.ventanaAltaProducto.getLblEditarProducto().setVisible(true);
+		this.ventanaAltaProducto.show();
+	}
+	
+	public void salir() {
 		this.ventanaAltaProducto.cerrar();
+		this.productoAEditar = null;
 		this.controladorGestionarProductos.inicializar();
 		this.controladorGestionarProductos.mostrarVentana();
 	}
@@ -280,40 +294,15 @@ public class ControladorAltaProducto {
 	
 	public void agregarProducto(ActionEvent a ) {
 		if(todosLosCamposSonCorrectos()) {
-			String tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
-			double precioMayorista = 0;
-			double precioMinorista = 0;
-			
-			if(!tipo.equals("Materia Prima")) {
-				precioMayorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMayorista().getText());
-				precioMinorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMinorista().getText());
-			}else {
-				precioMayorista = 0;
-				precioMinorista = 0;
 
+			
+			MaestroProductoDTO producto = obtenerProductoDeVista();
+			
+			boolean insert = this.maestroProducto.insert(producto);
+			if(!insert) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al insertar el nuevo producto");
+				return;
 			}
-			int id = 0;
-			String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
-			tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
-			String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
-			double costo;
-			if(fabricado.equals("S")) {
-				costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());	
-			}else {
-				costo=0;
-			}
-			
-			int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
-			int proveedor = obtenerProveedorPreferenciado();
-			String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
-			String unidadMedida = this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getSelectedItem().toString();
-			String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
-			int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
-			int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
-			
-			MaestroProductoDTO producto = new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
-			
-			this.maestroProducto.insert(producto);	
 			
 			//se asigna al proveedor como proveedor de este material
 //			
@@ -327,6 +316,41 @@ public class ControladorAltaProducto {
 			borrarDatosEscritos();
 			
 		}
+	}
+	
+	public MaestroProductoDTO obtenerProductoDeVista() {
+		String tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
+		double precioMayorista = 0;
+		double precioMinorista = 0;
+		
+		if(!tipo.equals("Materia Prima")) {
+			precioMayorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMayorista().getText());
+			precioMinorista = Double.parseDouble(this.ventanaAltaProducto.getTextPrecioMinorista().getText());
+		}else {
+			precioMayorista = 0;
+			precioMinorista = 0;
+
+		}
+		int id = 0;
+		String descr = this.ventanaAltaProducto.getTextDescripcion().getText();
+		tipo = (String)this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem()=="Producto Terminado" ? "PT" : "MP";
+		String fabricado = ((String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem()).charAt(0)+"";
+		double costo;
+		if(fabricado.equals("S")) {
+			costo = Double.parseDouble(this.ventanaAltaProducto.getTextCosto().getText());	
+		}else {
+			costo=0;
+		}
+		
+		int puntoRepMinimo = Integer.parseInt(this.ventanaAltaProducto.getTextPuntoRepMinimo().getText());
+		int proveedor = obtenerProveedorPreferenciado();
+		String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
+		String unidadMedida = this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getSelectedItem().toString();
+		String estado = (String)this.ventanaAltaProducto.getComboBoxEstado().getSelectedItem();
+		int cantAReponer = Integer.parseInt(this.ventanaAltaProducto.getTextCantidadAReponer().getText());
+		int diasParaReponer = Integer.parseInt(this.ventanaAltaProducto.getTextDiasParaReponer().getText());
+		
+		return new MaestroProductoDTO(id,descr,tipo,fabricado,costo,precioMayorista,precioMinorista,puntoRepMinimo,proveedor,talle,unidadMedida,estado,cantAReponer,diasParaReponer);
 	}
 	
 	public int obtenerProveedorPreferenciado() {
@@ -569,7 +593,16 @@ public class ControladorAltaProducto {
 		BigDecimal precioVenta = new BigDecimal(precioVent);
 		
 		int cantProd = pp.getCantidadPorLote();
-		Object[] fila = {nombre,correo,limiteCredito,precioVenta,cantProd,false};
+		
+		boolean aux=false;
+		if(this.productoAEditar!=null) {
+			if(this.productoAEditar.getIdProveedor() == prov.getId()) {
+				aux=true;
+			}
+		}
+		
+		
+		Object[] fila = {nombre,correo,limiteCredito,precioVenta,cantProd,aux};
 		this.ventanaAltaProducto.getModelTablaProveedores().addRow(fila);
 	}
 	
@@ -636,6 +669,102 @@ public class ControladorAltaProducto {
 				JOptionPane.showMessageDialog(null, "El producto: "+pp.getIdMaestroProducto()+" no se ha podido añadir correctamente");
 			}
 		}
+	}
+	
+	
+	public void setProductoAEditar(MaestroProductoDTO producto) {
+		this.productoAEditar=producto;
+	}
+
+	public void llenarDatos() {
+		this.ventanaAltaProducto.getTextDescripcion().setText(this.productoAEditar.getDescripcion());
+		
+		String tipo = this.productoAEditar.getTipo().equals("PT") ? "Producto Terminado" : "Materia Prima";
+		this.ventanaAltaProducto.getComboBoxTipo().setSelectedItem(tipo);
+		
+		String fabricado = this.productoAEditar.getFabricado().equals("S") ? "Si" : "No";
+		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedItem(fabricado);
+		
+		this.ventanaAltaProducto.getTextCosto().setText(""+this.productoAEditar.getPrecioCosto());
+		this.ventanaAltaProducto.getTextPrecioMayorista().setText(""+this.productoAEditar.getPrecioMayorista());
+		this.ventanaAltaProducto.getTextPrecioMinorista().setText(""+this.productoAEditar.getPrecioMinorista());
+		this.ventanaAltaProducto.getTextPuntoRepMinimo().setText(""+this.productoAEditar.getPuntoRepositorio());
+		
+		String talle = this.productoAEditar.getTalle();
+		this.ventanaAltaProducto.getComboBoxUnidadDeMedida().setSelectedItem(talle);
+		boolean seEncontroTalle=false;
+		for(int i=0; i< this.ventanaAltaProducto.getComboBoxTalle().getItemCount();i++) {
+			System.out.println("cb: "+this.ventanaAltaProducto.getComboBoxTalle().getItemAt(i).toString()+", talle: "+talle);
+			if(this.ventanaAltaProducto.getComboBoxTalle().getItemAt(i).equals(talle)) {
+				this.ventanaAltaProducto.getComboBoxTalle().setSelectedIndex(i);
+				seEncontroTalle=true;
+			}		
+		}
+		if(!seEncontroTalle) {
+			System.out.println("no se encontro, se crea uno nuevo");
+			this.ventanaAltaProducto.getComboBoxTalle().addItem(talle);	
+			this.ventanaAltaProducto.getComboBoxTalle().setSelectedItem(talle);	
+		}
+		
+		String unidadMedida = this.productoAEditar.getUnidadMedida();
+		boolean valorSeEncuentraEnCb = false;
+		for(int i=0; i<this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getItemCount(); i++) {
+			if(this.ventanaAltaProducto.getComboBoxUnidadDeMedida().getItemAt(i).toString().equals(unidadMedida)) {
+				this.ventanaAltaProducto.getComboBoxUnidadDeMedida().setSelectedIndex(i);
+				valorSeEncuentraEnCb = true;
+				
+			}
+		}
+		if(!valorSeEncuentraEnCb) {
+			this.ventanaAltaProducto.getComboBoxUnidadDeMedida().addItem(unidadMedida);	
+			this.ventanaAltaProducto.getComboBoxUnidadDeMedida().setSelectedItem(unidadMedida);
+		}
+		
+		
+		this.ventanaAltaProducto.getTextCantidadAReponer().setText(""+this.productoAEditar.getCantidadAReponer());
+		this.ventanaAltaProducto.getTextDiasParaReponer().setText(""+this.productoAEditar.getDiasParaReponer());
+		
+		String estado = this.productoAEditar.getEstado();
+		this.ventanaAltaProducto.getComboBoxEstado().setSelectedItem(estado);
+		
+		/*
+		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
+		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
+		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+		this.productoDeProveedorEnTabla.removeAll(productoDeProveedorEnTabla);
+		*/
+		llenarTablaProveedores();
+		
+	}
+
+	public void llenarTablaProveedores() {
+		ArrayList<ProductoDeProveedorDTO> todosLosProductosDeProveedores = (ArrayList<ProductoDeProveedorDTO>) this.productoDeProveedor.readAll();
+		for(ProductoDeProveedorDTO pp: todosLosProductosDeProveedores) {
+			if(pp.getIdMaestroProducto() == this.productoAEditar.getIdMaestroProducto()) {
+				for(ProveedorDTO p: this.todosLosProveedores) {
+					if(p.getId() == pp.getIdProveedor()) {
+						this.proveedoresEnTabla.add(p);
+						this.productoDeProveedorEnTabla.add(pp);
+						refrescarTabla();
+					}
+				}
+			}
+		}
+	}
+
+	public void editar() {
+		MaestroProductoDTO prod = obtenerProductoDeVista();
+		boolean update = this.maestroProducto.update(this.productoAEditar.getIdMaestroProducto(), prod);
+		if(!update) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el producto");
+			return;
+		}else {
+			JOptionPane.showMessageDialog(null, "Producto editado con exito");
+		}
+		asignarProveedoresAProducto();
+//		borrarDatosEscritos();		
+		salir();
 	}
 	
 }
