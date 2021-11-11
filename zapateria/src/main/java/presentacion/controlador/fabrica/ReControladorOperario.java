@@ -17,7 +17,10 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import dto.EmpleadoDTO;
@@ -237,6 +240,20 @@ public class ReControladorOperario implements ActionListener {
 			this.ventanaPrincipal.getBtnVerHistorialPasos().setVisible(false);
 			this.ventanaPrincipal.getLblHistorial().setVisible(false);
 		}
+		
+		this.ventanaPrincipal.getTablaFabricacionesEnMarcha().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel rowSMProducto = this.ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectionModel();
+        rowSMProducto.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                int filaSeleccionada = ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRow();
+                if (filaSeleccionada == -1)
+                    return;
+                actualizarColorSeleccionTabla();
+            }
+
+        });
 	}
 	
 	private void verHistorialPasos(ActionEvent r) {
@@ -1147,6 +1164,42 @@ public class ReControladorOperario implements ActionListener {
 		}
 		return cantidadTotalDisponible;
 	}
+	
+	public void actualizarColorSeleccionTabla() {
+        this.ventanaPrincipal.getTablaFabricacionesEnMarcha().setDefaultRenderer(Object.class, new DefaultTableCellRenderer(){
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table,
+                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
+
+                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+
+                if(isSelected) {
+                	return this;
+                }
+                String status = (String)table.getModel().getValueAt(row, 6);
+		        if (stringQueDescribeElEstadoDeLasOrdenesSiendoTrabajadas.equals(status)) {
+		           setBackground(Color.ORANGE);
+		           setForeground(Color.BLACK);
+		        } else if ("completo".equals(status)){
+		        	setBackground(Color.green);
+		        	setForeground(Color.BLACK);
+		        } else if (stringQueDescribeElEstadoDeLasOrdenesCanceladas.equals(status) ){
+		        	setBackground(Color.red);
+		        	setForeground(Color.WHITE);
+		        }else {
+		        	setBackground(table.getBackground());
+		        	setForeground(Color.BLACK);
+		        }
+
+                return this;
+            }
+        });
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
