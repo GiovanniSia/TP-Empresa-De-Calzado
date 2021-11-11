@@ -67,6 +67,7 @@ public class VentanaBusquedaCliente extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		lblAtrs = new JLabel("Atras");
 		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));

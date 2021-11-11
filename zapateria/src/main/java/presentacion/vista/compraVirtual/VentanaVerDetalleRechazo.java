@@ -86,6 +86,7 @@ public class VentanaVerDetalleRechazo extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));

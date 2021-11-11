@@ -106,6 +106,7 @@ public class VentanaRealizarVenta {
 		panel.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JLabel lblNewLabel = new JLabel("Venta");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
