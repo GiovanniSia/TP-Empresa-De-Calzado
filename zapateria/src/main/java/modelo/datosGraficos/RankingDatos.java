@@ -21,7 +21,7 @@ public class RankingDatos {
 		for(SucursalDTO s: modeloSucursal.readAll()) {
 			ret.put(s, getIngresosPorSucursal(s.getIdSucursal(), diasParaAtras));
 		}
-		return getTop(ret, cantidadSucursalesDeseada);
+		return getTopSucursales(ret, cantidadSucursalesDeseada);
 	}
 	
 	static public HashMap<EmpleadoDTO, Double> getRankingVentasxVendedor(int cantidadEmpleadosDeseado, int diasParaAtras){
@@ -29,9 +29,8 @@ public class RankingDatos {
 		Empleado modeloEmpleado = new Empleado(new DAOSQLFactory());
 		for(EmpleadoDTO e: modeloEmpleado.readAll()) {
 			ret.put(e, getIngresosPorEmpleado(e.getIdEmpleado(), diasParaAtras));
-			System.out.println(ret.get(e)+" resultado final");
 		}
-		return ret;
+		return getTopEmpleado(ret, cantidadEmpleadosDeseado);
 	}
 	
 	static private Double getIngresosPorEmpleado(int idEmpleado, int diasParaAtras) {
@@ -40,7 +39,6 @@ public class RankingDatos {
 		for(FacturaDTO i: modeloFactura.readAll()) {
 			if(i.getIdVendedor() == idEmpleado) {
 				if(fechaEsValida(i,diasParaAtras)) {
-					System.out.println("Se sumo");
 					ret += i.getTotalFactura();
 					System.out.println(ret);
 				}
@@ -90,20 +88,29 @@ public class RankingDatos {
 		
 		fechaComparar.setDate(Integer.valueOf(fechaComparar.getDate()-diasParaAtras));
 		//fechaComparar.setDate(1);
-		System.out.println("fecha comparar: "+fechaComparar);
-		System.out.println(fechaIngreso);
 		if(fechaComparar.compareTo(fechaIngreso)>0) {
 			return false;
 		}
-		System.out.println("La fecha da");
 		return true;
 	}
 
-	static private HashMap<SucursalDTO,Double> getTop(HashMap<SucursalDTO,Double> lista, int cantidadDeseada){
+	static private HashMap<SucursalDTO,Double> getTopSucursales(HashMap<SucursalDTO,Double> lista, int cantidadDeseada){
 		HashMap<SucursalDTO,Double> ret = new HashMap<SucursalDTO,Double>();
 		HashMap<SucursalDTO,Double> copia = lista;
 		while(copia.keySet().size()>0 && cantidadDeseada>0) {
 			SucursalDTO masAlto = getMasAlto(copia);
+			ret.put(masAlto, copia.get(masAlto));
+			copia.remove(masAlto);
+			cantidadDeseada = cantidadDeseada-1;
+		}
+		return ret;
+	}
+	
+	static private HashMap<EmpleadoDTO,Double> getTopEmpleado(HashMap<EmpleadoDTO,Double> lista, int cantidadDeseada){
+		HashMap<EmpleadoDTO,Double> ret = new HashMap<EmpleadoDTO,Double>();
+		HashMap<EmpleadoDTO,Double> copia = lista;
+		while(copia.keySet().size()>0 && cantidadDeseada>0) {
+			EmpleadoDTO masAlto = getMasAltoEmpleado(copia);
 			ret.put(masAlto, copia.get(masAlto));
 			copia.remove(masAlto);
 			cantidadDeseada = cantidadDeseada-1;
@@ -125,13 +132,27 @@ public class RankingDatos {
 		return ret;
 	}
 	
+	static private EmpleadoDTO getMasAltoEmpleado(HashMap<EmpleadoDTO,Double> lista){
+		HashMap<EmpleadoDTO,Double> copia = lista;
+		EmpleadoDTO ret = null;
+		for(EmpleadoDTO s: copia.keySet()) {
+			if(ret == null) {
+				ret = s;
+			}
+			if(copia.get(s)>lista.get(ret)){
+				ret = s;
+			}
+		}
+		return ret;
+	}
+	
 	public static void main(String[] args){
 		HashMap<SucursalDTO,Double> rankingSucursal = getRankingVentasXSucursales(3,1);
 		for(SucursalDTO s: rankingSucursal.keySet()) {
 			System.out.println(s.getNombre()+": "+rankingSucursal.get(s));
 		}
 		
-		HashMap<EmpleadoDTO, Double> rankingVendedor = getRankingVentasxVendedor(2,0);
+		HashMap<EmpleadoDTO, Double> rankingVendedor = getRankingVentasxVendedor(3,1000);
 		for(EmpleadoDTO e: rankingVendedor.keySet()) {
 			System.out.println(e.getNombre()+": "+rankingVendedor.get(e));
 		}
