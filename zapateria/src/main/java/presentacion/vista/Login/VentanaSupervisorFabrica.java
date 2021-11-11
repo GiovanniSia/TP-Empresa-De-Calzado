@@ -32,6 +32,9 @@ public class VentanaSupervisorFabrica extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JButton btnOperatoriaDeFabrica;
 	private JButton btnGestionarRecetasYPasos;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
 
 	public VentanaSupervisorFabrica() {
 		this.initialize();
@@ -92,23 +95,41 @@ public class VentanaSupervisorFabrica extends JFrame {
 		lblNewLabel_2.setBounds(343, 28, 59, 19);
 		panel.add(lblNewLabel_2);
 		
-		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
-		btnOperatoriaDeFabrica.setToolTipText("");
-		btnOperatoriaDeFabrica.setOpaque(true);
-		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
-		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
-		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
-		btnOperatoriaDeFabrica.setBounds(202, 79, 323, 57);
-		contentPane.add(btnOperatoriaDeFabrica);
+		panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(10, 64, 696, 151);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 		
-		btnGestionarRecetasYPasos = new JButton("Gestionar Recetas y Pasos");
+		btnGestionarRecetasYPasos = new JButton("");
+		btnGestionarRecetasYPasos.setBounds(370, 11, 120, 120);
+		panel_1.add(btnGestionarRecetasYPasos);
 		btnGestionarRecetasYPasos.setToolTipText("");
 		btnGestionarRecetasYPasos.setOpaque(true);
 		btnGestionarRecetasYPasos.setForeground(new Color(51, 102, 153));
 		btnGestionarRecetasYPasos.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		cambiarIconoBotones(btnGestionarRecetasYPasos, "descripcion.png");
 		btnGestionarRecetasYPasos.setBackground(new Color(51, 102, 204));
-		btnGestionarRecetasYPasos.setBounds(174, 147, 374, 57);
-		contentPane.add(btnGestionarRecetasYPasos);
+		
+		btnOperatoriaDeFabrica = new JButton("");
+		btnOperatoriaDeFabrica.setBounds(66, 11, 120, 120);
+		panel_1.add(btnOperatoriaDeFabrica);
+		btnOperatoriaDeFabrica.setToolTipText("");
+		btnOperatoriaDeFabrica.setOpaque(true);
+		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
+		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		cambiarIconoBotones(btnOperatoriaDeFabrica, "fabrica.png");
+		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
+		
+		lblNewLabel_3 = new JLabel("<html>Ordenes de Fabricacion</html>");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(196, 41, 98, 60);
+		panel_1.add(lblNewLabel_3);
+		
+		lblNewLabel_4 = new JLabel("<html>Recetas de Fabricacion</html>");
+		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4.setBounds(500, 41, 98, 60);
+		panel_1.add(lblNewLabel_4);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);

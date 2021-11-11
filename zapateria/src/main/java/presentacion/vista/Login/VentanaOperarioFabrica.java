@@ -32,6 +32,7 @@ public class VentanaOperarioFabrica extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
 	
 	public VentanaOperarioFabrica() {
 		this.initialize();
@@ -53,32 +54,25 @@ public class VentanaOperarioFabrica extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 66, 476, 216);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(10, 66, 699, 145);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		btnOperatoriaDeFabrica = new JButton("Operatoria de Fabrica");
+		btnOperatoriaDeFabrica = new JButton("");
 		btnOperatoriaDeFabrica.setToolTipText("");
 		btnOperatoriaDeFabrica.setOpaque(true);
 		btnOperatoriaDeFabrica.setForeground(new Color(51, 102, 153));
 		btnOperatoriaDeFabrica.setFont(new Font("Segoe UI", Font.PLAIN, 29));
 		btnOperatoriaDeFabrica.setBackground(new Color(51, 102, 204));
-		btnOperatoriaDeFabrica.setBounds(71, 11, 323, 57);
+		btnOperatoriaDeFabrica.setBounds(240, 11, 120, 120);
+		cambiarIconoBotones(btnOperatoriaDeFabrica, "fabrica.png");
 		panel_1.add(btnOperatoriaDeFabrica);
 		
-		lblNewLabel_1 = new JLabel("Cerrar Sesion");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_1.setBounds(70, 156, 132, 60);
-		panel_1.add(lblNewLabel_1);
-		
-		btnCerrarSesion = new JButton("");
-		btnCerrarSesion.setToolTipText("");
-		btnCerrarSesion.setForeground(new Color(51, 102, 153));
-		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		btnCerrarSesion.setBackground(new Color(51, 102, 204));
-		btnCerrarSesion.setBounds(0, 156, 60, 60);
-		cambiarIconoBotones(btnCerrarSesion, "exit.png");
-		panel_1.add(btnCerrarSesion);
+		lblNewLabel_3 = new JLabel("<html>Operatoria de Fabrica</html>");
+		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3.setBounds(370, 38, 98, 60);
+		panel_1.add(lblNewLabel_3);
 		
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -105,6 +99,20 @@ public class VentanaOperarioFabrica extends JFrame {
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel_2.setBounds(343, 28, 59, 19);
 		panel.add(lblNewLabel_2);
+		
+		btnCerrarSesion = new JButton("");
+		btnCerrarSesion.setBounds(10, 222, 60, 60);
+		contentPane.add(btnCerrarSesion);
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnCerrarSesion, "exit.png");
+		
+		lblNewLabel_1 = new JLabel("Cerrar Sesion");
+		lblNewLabel_1.setBounds(80, 222, 132, 60);
+		contentPane.add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
