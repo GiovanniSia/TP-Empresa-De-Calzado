@@ -35,18 +35,14 @@ public class ControladorGestionarEmpleados {
 		this.controladorHistorialCambiosEmpleados = new ControladorHistorialCambiosEmpleados();
 
 		this.controlador = controlador;
-	}
 
-	public void inicializar() {	
+		
 		this.ventanaGestionarEmpleados = new VentanaGestionarEmpleados();
-
+		
 		this.ventanaGestionarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaGestionarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
 		this.ventanaGestionarEmpleados.getBtnModificar().addActionListener(c -> actualizar(c));
 		this.ventanaGestionarEmpleados.getBtnHistorialCambio().addActionListener(v -> verHistorial(v));
-
-		rellenarCbTipoEmpleado();
-
 		// TextFiltos
 		this.ventanaGestionarEmpleados.getTxtFiltroIdEmpleado().addKeyListener(new KeyAdapter() {
 			@Override
@@ -61,8 +57,14 @@ public class ControladorGestionarEmpleados {
 				realizarBusqueda();
 			}
 		});
-
+		
 		this.ventanaGestionarEmpleados.getCbTipoEmpleado().addActionListener(a -> realizarBusqueda());
+	}
+
+	public void inicializar() {	
+
+		rellenarCbTipoEmpleado();
+
 
 	}
 

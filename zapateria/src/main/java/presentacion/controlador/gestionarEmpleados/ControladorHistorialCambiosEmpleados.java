@@ -26,12 +26,8 @@ public class ControladorHistorialCambiosEmpleados {
 	public ControladorHistorialCambiosEmpleados() {
 		this.ventanaHistorialCambioEmpleados = new VentanaHistorialCambiosEmpleados();
 		this.historialCambioEmpleado = new HistorialCambioEmpleado(new DAOSQLFactory());
-	}
-
-	public void inicializar() {
-
 		this.ventanaHistorialCambioEmpleados.getBtnAtras().addActionListener(a -> atras(a));
-
+		
 		// TextFiltos
 		this.ventanaHistorialCambioEmpleados.getTxtFiltroCodEmpleadoResponsable().addKeyListener(new KeyAdapter() {
 			@Override
@@ -41,13 +37,13 @@ public class ControladorHistorialCambiosEmpleados {
 		});
 		// DateFiltos
 		this.ventanaHistorialCambioEmpleados.getDateFiltroFecha()
-				.addPropertyChangeListener(new PropertyChangeListener() {
-					@Override
-					public void propertyChange(PropertyChangeEvent e) {
-						realizarBusqueda();
-					}
-				});
-
+		.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+				realizarBusqueda();
+			}
+		});
+		
 		// TextFiltos
 		this.ventanaHistorialCambioEmpleados.getTxtFiltroCodSucursal().addKeyListener(new KeyAdapter() {
 			@Override
@@ -55,7 +51,7 @@ public class ControladorHistorialCambiosEmpleados {
 				realizarBusqueda();
 			}
 		});
-
+		
 		// TextFiltos
 		this.ventanaHistorialCambioEmpleados.getTxtFiltroCodEmpleado().addKeyListener(new KeyAdapter() {
 			@Override
@@ -63,13 +59,15 @@ public class ControladorHistorialCambiosEmpleados {
 				realizarBusqueda();
 			}
 		});
-
+		
 		this.ventanaHistorialCambioEmpleados.getCheckboxEmpleadosAgregados()
-				.addActionListener(a -> llenarTablaConEmpleadosAgregados());
-
+		.addActionListener(a -> llenarTablaConEmpleadosAgregados());
+		
 		this.ventanaHistorialCambioEmpleados.getCheckboxEmpleadosModificados()
-				.addActionListener(a -> llenarTablaConEmpleadosModificados());
+		.addActionListener(a -> llenarTablaConEmpleadosModificados());
+	}
 
+	public void inicializar() {
 	}
 
 	public void llenarTablaConEmpleadosAgregados() {

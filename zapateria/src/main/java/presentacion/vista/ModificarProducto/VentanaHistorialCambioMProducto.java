@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaHistorialCambioMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -40,8 +42,6 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 
 	private JPanel panel_1;
 	private JTextField txtFiltroCodSucursal;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JLabel lblVolver;
 
 	public VentanaHistorialCambioMProducto() {
@@ -61,9 +61,10 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 175, 1264, 263);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 175, 1264, 186);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -91,23 +92,8 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 
 		spHistorialCambiosMProducto.setViewportView(tablaHistorialCambioMProducto);
 
-		btnVolverAModificarProducto = new JButton("");
-		btnVolverAModificarProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnVolverAModificarProducto.setBounds(151, 189, 60, 60);
-		cambiarIconoBotones(btnVolverAModificarProducto,  "back2.png");
-		panel.add(btnVolverAModificarProducto);
-		btnVolverAModificarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		
-		lblVolver = new JLabel("Volver");
-		lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblVolver.setBounds(221, 189, 70, 60);
-		panel.add(lblVolver);
-
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(248, 248, 255));
+		panel_1.setBackground(new Color(255, 255, 255, 180));
 		panel_1.setBounds(0, 89, 1264, 87);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
@@ -160,23 +146,65 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		lblVerHistorialCambiosMProducto.setBounds(10, 50, 716, 41);
 		frame.getContentPane().add(lblVerHistorialCambiosMProducto);
 		
-		panel_2 = new JPanel();
+		JPanel panel_2 = new JPanel();
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 1264, 50);
+		panel_2.setBounds(0, 0, 1264, 53);
 		frame.getContentPane().add(panel_2);
 		
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JLabel lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(942, 28, 59, 19);
 		panel_2.add(lblNewLabel);
+		
+		JLabel lblNewLabel_2 = new JLabel("Empleado:");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_2.setBounds(711, 28, 59, 19);
+		panel_2.add(lblNewLabel_2);
+		
+				btnVolverAModificarProducto = new JButton("");
+				btnVolverAModificarProducto.setBounds(147, 367, 60, 60);
+				frame.getContentPane().add(btnVolverAModificarProducto);
+				btnVolverAModificarProducto.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				cambiarIconoBotones(btnVolverAModificarProducto,  "back2.png");
+				btnVolverAModificarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+				
+				lblVolver = new JLabel("Volver");
+				lblVolver.setBounds(217, 367, 70, 60);
+				frame.getContentPane().add(lblVolver);
+				lblVolver.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+				
+				JLabel lblFondo = new JLabel("");
+				lblFondo.setBounds(1, 0, 1280, 960);
+				frame.getContentPane().add(lblFondo);
+				cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public DefaultTableModel getModelhistorialCambioMProducto() {

@@ -50,12 +50,11 @@ public class ControladorAgregarEmpleados {
 		this.empleado = new Empleado(new DAOSQLFactory());
 		this.historialCambioEmpleado = new HistorialCambioEmpleado(new DAOSQLFactory());
 		this.controladorGestionarEmpleados = controladorGestionarEmpleados;
+		this.ventanaAgregarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
+		this.ventanaAgregarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
 	}
 
 	public void inicializar() {
-		this.ventanaAgregarEmpleados.getBtnAtras().addActionListener(a -> atras(a));
-		this.ventanaAgregarEmpleados.getBtnAgregar().addActionListener(v -> agregar(v));
-
 		rellenarCbTipoEmpleado();
 	}
 

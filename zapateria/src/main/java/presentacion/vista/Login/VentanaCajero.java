@@ -1,6 +1,5 @@
 package presentacion.vista.Login;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -33,8 +32,8 @@ public class VentanaCajero extends JFrame {
 	private JButton btnCerrarSesion;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_2;
+	private JLabel lblSucursal;
+	private JLabel lblEmpleado;
 	private JLabel lblNewLabel_1_2;
 	private JLabel lblNewLabel_1_3;
 	private JLabel lblNewLabel_1_4;
@@ -72,17 +71,17 @@ public class VentanaCajero extends JFrame {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
 		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(537, 28, 59, 19);
-		panel.add(lblNewLabel);
+		lblSucursal = new JLabel("Sucursal:");
+		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSucursal.setBounds(537, 28, 140, 19);
+		panel.add(lblSucursal);
 		
-		lblNewLabel_2 = new JLabel("Empleado:");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(343, 28, 59, 19);
-		panel.add(lblNewLabel_2);
+		lblEmpleado = new JLabel("Empleado:");
+		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmpleado.setBounds(343, 28, 140, 19);
+		panel.add(lblEmpleado);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255, 180));
@@ -219,5 +218,13 @@ public class VentanaCajero extends JFrame {
 
 	public JButton getBtnCerrarSesion() {
 		return btnCerrarSesion;
+	}
+
+	public JLabel getLblSucursal() {
+		return lblSucursal;
+	}
+
+	public JLabel getLblEmpleado() {
+		return lblEmpleado;
 	}
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 
 import dto.EmpleadoDTO;
 import dto.SucursalDTO;
@@ -27,6 +28,9 @@ public class ControladorLogin {
 	private sucursalProperties sucursalProp;
 	private Controlador controlador;
 	private String mail;
+	
+	private JProgressBar progressBar;
+	private Simulacion simulacion=null;
 
 	public ControladorLogin() {
 		this.empleado = new Empleado(new DAOSQLFactory());
@@ -58,9 +62,8 @@ public class ControladorLogin {
 	}
 
 	private void iniciarZapateria() {
-		cerrarVentana();
 		establecerPropertiesEmpleado();
-		establecerPropertiesSucursal();	
+		establecerPropertiesSucursal();			
 		mostrarControlador();
 	}
 
@@ -91,8 +94,8 @@ public class ControladorLogin {
 		}
 		
 		JOptionPane.showMessageDialog(null,
-				"Ingreso exitoso, bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
-
+				"Bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
+		
 		sucursalSeleccionada = obtenerSucursalSleccionada();
 		empleadoInicioSesion = empleado.selectUser(correoElectronico, clave);
 		return true;
@@ -111,10 +114,11 @@ public class ControladorLogin {
 
 	private void mostrarControlador() {
 		controlador = new Controlador();
-		controlador.inicializar();
 		controlador.setControladorLogin(this);
-		ventanaLogin.limpiarCampos();
-		controlador.mostrarVentanaPorTipoEmpleado();
+		progressBar = this.ventanaLogin.getProgressBar();
+		progressBar.setVisible(true);
+		simulacion = new Simulacion(controlador, progressBar,this);
+		simulacion.execute();
 	}
 
 	private void establecerPropertiesEmpleado() {
@@ -146,7 +150,18 @@ public class ControladorLogin {
 		sucursalProp.establecerPropertiesSucursal(IdSucursal, Telefono, Calle, Altura, Provincia, Localidad, Pais,
 				CodigoPostal, Nombre);
 	}
+	public void bloquearUsuarioYClave() {
+		this.ventanaLogin.getLblCargando().setVisible(true);
+		this.ventanaLogin.getCbSucursales().setEnabled(false);
+		this.ventanaLogin.getTxtFieldCorreo().setEditable(false);
+		this.ventanaLogin.getTxtFieldContra().setEditable(false);
+		this.ventanaLogin.getBtnIniciarSesion().setEnabled(false);
+	}
 
+	public void limpiarCampos() {
+		this.ventanaLogin.limpiarCampos();
+	}
+	
 	public void mostrarVentana() {
 		this.ventanaLogin.mostrarVentana();
 	}

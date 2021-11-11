@@ -18,8 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 public class VentanaGestionarClientes extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -39,13 +42,18 @@ public class VentanaGestionarClientes extends JFrame{
 	private JLabel lblFiltrarPor;
 	private JLabel lblTitulo;
 	private JScrollPane spCliente;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
 	private JButton btnAtras;
 	private JLabel lblAtrs;
 	private JButton btnAgregarCliente;
 	private JButton btnEditarCliente;
 	private JButton btnHistorialDeCambios;
+	private JPanel panel_2;
+	private JLabel lblLogo;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblAgregarCliente;
+	private JLabel lblEditarCliente;
+	private JLabel lblVerHistorialDe;
 
 
 	public VentanaGestionarClientes() {
@@ -60,20 +68,21 @@ public class VentanaGestionarClientes extends JFrame{
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 1100, 450);
+		frame.setBounds(100, 100, 1092, 532);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
-
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(248, 248, 255));
-		panel.setBounds(0, 191, 1076, 224);
+		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBounds(0, 191, 1076, 210);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		spCliente = new JScrollPane();
-		spCliente.setBounds(10, 11, 1056, 145);
+		spCliente.setBounds(10, 11, 1056, 188);
 		spCliente.setBackground(new Color(248, 248, 255));
 		panel.add(spCliente);
 
@@ -118,33 +127,9 @@ public class VentanaGestionarClientes extends JFrame{
 		tablaClientes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		spCliente.setViewportView(tablaClientes);
 
-		btnAtras = new JButton("");
-		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(20, 163, 55, 50);
-		panel.add(btnAtras);
-		cambiarIconoBotones(btnAtras, "back2.png");
-
-		lblAtrs = new JLabel("Atras");
-		lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAtrs.setBounds(85, 163, 70, 50);
-		panel.add(lblAtrs);
-		
-		btnAgregarCliente = new JButton("Agregar Cliente");
-		btnAgregarCliente.setBounds(271, 166, 106, 48);
-		panel.add(btnAgregarCliente);
-		
-		btnEditarCliente = new JButton("Editar Cliente");
-		btnEditarCliente.setBounds(512, 165, 106, 48);
-		panel.add(btnEditarCliente);
-		
-		btnHistorialDeCambios = new JButton("Ver Historial de cambios");
-		btnHistorialDeCambios.setBounds(648, 166, 152, 48);
-		panel.add(btnHistorialDeCambios);
-
 		JPanel panel_1 = new JPanel();
-		panel_1.setForeground(new Color(248, 248, 255));
-		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 95, 1076, 95);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 95, 1076, 99);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -194,22 +179,90 @@ public class VentanaGestionarClientes extends JFrame{
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblTitulo.setBounds(10, 52, 452, 43);
 		frame.getContentPane().add(lblTitulo);
-
+		
 		panel_2 = new JPanel();
 		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 1076, 50);
+		panel_2.setBounds(0, 0, 1076, 53);
 		frame.getContentPane().add(panel_2);
-
-		lblNewLabel = new JLabel("Zapateria Argento");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel.setBounds(10, 0, 421, 50);
+		
+		lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		lblNewLabel = new JLabel("Sucursal:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel.setBounds(814, 28, 59, 19);
 		panel_2.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("Empleado:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(620, 28, 59, 19);
+		panel_2.add(lblNewLabel_1);
+		
+				btnAtras = new JButton("");
+				btnAtras.setBounds(37, 412, 60, 60);
+				frame.getContentPane().add(btnAtras);
+				btnAtras.setBackground(new Color(248, 248, 255));
+				cambiarIconoBotones(btnAtras, "back2.png");
+				
+						lblAtrs = new JLabel("Atras");
+						lblAtrs.setBounds(107, 412, 70, 60);
+						frame.getContentPane().add(lblAtrs);
+						lblAtrs.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+						
+						btnAgregarCliente = new JButton("");
+						btnAgregarCliente.setBounds(272, 412, 60, 60);
+						cambiarIconoBotones(btnAgregarCliente, "person+.png");
+						frame.getContentPane().add(btnAgregarCliente);
+						
+						btnEditarCliente = new JButton("");
+						btnEditarCliente.setBounds(551, 412, 60, 60);
+						cambiarIconoBotones(btnEditarCliente, "personedit.png");
+						frame.getContentPane().add(btnEditarCliente);
+						
+						btnHistorialDeCambios = new JButton("");
+						btnHistorialDeCambios.setBounds(803, 412, 60, 60);
+						cambiarIconoBotones(btnHistorialDeCambios, "history.png");
+						frame.getContentPane().add(btnHistorialDeCambios);
+						
+						lblAgregarCliente = new JLabel("Agregar Cliente");
+						lblAgregarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+						lblAgregarCliente.setBounds(342, 412, 117, 60);
+						frame.getContentPane().add(lblAgregarCliente);
+						
+						lblEditarCliente = new JLabel("Editar Cliente");
+						lblEditarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+						lblEditarCliente.setBounds(621, 412, 117, 60);
+						frame.getContentPane().add(lblEditarCliente);
+						
+						lblVerHistorialDe = new JLabel("Ver Historial de Cambios");
+						lblVerHistorialDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+						lblVerHistorialDe.setBounds(873, 412, 180, 60);
+						frame.getContentPane().add(lblVerHistorialDe);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 1100, 825);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
-
+	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
+	}
+	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 
 	public void show() {
@@ -231,25 +284,32 @@ public class VentanaGestionarClientes extends JFrame{
 	public void mostrarVentanaParaGerente() {
 		lblTitulo.setText("Ver Clientes");
 		btnAgregarCliente.setVisible(false);
+		lblAgregarCliente.setVisible(false);
 		btnAtras.setVisible(true);
 		btnEditarCliente.setVisible(false);
+		lblEditarCliente.setVisible(false);
 		btnHistorialDeCambios.setVisible(false);
+		lblVerHistorialDe.setVisible(false);	
 	}
 	
 	public void mostrarVentanaParaSupervisor() {
 		lblTitulo.setText("Ver Clientes");
 		btnAgregarCliente.setVisible(false);
+		lblAgregarCliente.setVisible(false);
 		btnAtras.setVisible(true);
 		btnEditarCliente.setVisible(false);
+		lblEditarCliente.setVisible(false);
 		btnHistorialDeCambios.setVisible(false);
+		lblVerHistorialDe.setVisible(false);	
 	}
 	
 	public void mostrarVentanaParaVendedor() {
 		lblTitulo.setText("Ver y Agregar Clientes");
-		btnAgregarCliente.setVisible(true);
 		btnAtras.setVisible(true);
 		btnEditarCliente.setVisible(false);
+		lblEditarCliente.setVisible(false);
 		btnHistorialDeCambios.setVisible(false);
+		lblVerHistorialDe.setVisible(false);	
 	}
 
 	public void cerrar() {
