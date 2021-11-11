@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -383,7 +385,8 @@ public class ControladorVerPasos implements ActionListener {
 	
 	private void llenarTablaIngredientes(PasoDTO pasosDTO) {
 		for(int x = 0; x < pasosDTO.getMateriales().size(); x++) {
-			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), pasosDTO.getCantidadUsada().get(x)};
+			BigDecimal cantidad = new BigDecimal(pasosDTO.getCantidadUsada().get(x)).setScale(2, RoundingMode.HALF_UP);;
+			Object[] agregar = {pasosDTO.getMateriales().get(x).getDescripcion(), cantidad};
 			ventanaPrincipal.getModelIngredientes().addRow(agregar);
 		}
 	}
