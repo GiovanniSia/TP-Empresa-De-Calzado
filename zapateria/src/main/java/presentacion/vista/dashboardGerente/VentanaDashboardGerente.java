@@ -72,6 +72,11 @@ public class VentanaDashboardGerente {
 	private JSeparator separator_1;
 	private JSeparator separator_2;
 	private JLabel lblGerente;
+	
+	ChartPanel panelTorta;
+	JPanel panel_1;
+	JPanel panel_1_1;
+	ChartPanel panelTorta2;
 
 	/**
 	 * Launch the application.
@@ -376,7 +381,7 @@ public class VentanaDashboardGerente {
 		separator_2.setBounds(34, 506, 275, 11);
 		panel.add(separator_2);
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(383, 50, 320, 246);
 		panel_1.setBorder(null);
@@ -393,7 +398,7 @@ public class VentanaDashboardGerente {
 		
 		JFreeChart graficoTorta = ChartFactory.createPieChart(null, datos, false, false, false);
 		
-		ChartPanel panelTorta = new ChartPanel(graficoTorta);
+		panelTorta = new ChartPanel(graficoTorta);
 		panelTorta.setBackground(new Color(255, 255, 255));
 		panelTorta.setBounds(0, 5, 320, 240);
 		panelTorta.setMouseWheelEnabled(true);
@@ -401,7 +406,7 @@ public class VentanaDashboardGerente {
 		
 		panel_1.add(panelTorta);
 		
-		JPanel panel_1_1 = new JPanel();
+		panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
 		panel_1_1.setBounds(383, 380, 320, 246);
 		frame.getContentPane().add(panel_1_1);
@@ -419,7 +424,7 @@ public class VentanaDashboardGerente {
 		
 		JFreeChart graficoTorta2 = ChartFactory.createPieChart(null, datos2, false, false, false);
 		
-		ChartPanel panelTorta2 = new ChartPanel(graficoTorta2);
+		panelTorta2 = new ChartPanel(graficoTorta2);
 		panelTorta2.setBackground(new Color(255, 255, 255));
 		panelTorta2.setBounds(0, 5, 320, 240);
 		panelTorta2.setMouseWheelEnabled(true);
@@ -567,5 +572,29 @@ public class VentanaDashboardGerente {
 
 	public JLabel getLblGerente() {
 		return lblGerente;
+	}
+
+	public ChartPanel getPanelTorta() {
+		return panelTorta;
+	}
+
+	public void setPanelTorta(ChartPanel panelTorta) {
+		this.panelTorta = panelTorta;
+	}
+
+	public JPanel getPanel_1() {
+		return panel_1;
+	}
+
+	public JPanel getPanel_1_1() {
+		return panel_1_1;
+	}
+
+	public ChartPanel getPanelTorta2() {
+		return panelTorta2;
+	}
+
+	public void setPanelTorta2(ChartPanel panelTorta2) {
+		this.panelTorta2 = panelTorta2;
 	}
 }
