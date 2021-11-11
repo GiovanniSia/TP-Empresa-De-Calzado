@@ -36,7 +36,6 @@ public class VentanaLogin extends JFrame {
 	private JPasswordField txtFieldContra;
 	@SuppressWarnings("rawtypes")
 	private JComboBox cbSucursales;
-	private JLabel lblNewLabel_1;
 	private JLabel lblZapateriaArgento;
 	private JProgressBar progressBar;
 	private JLabel lblCargando;
@@ -160,38 +159,6 @@ public class VentanaLogin extends JFrame {
 
 		contentPane.add(lblZapateriaArgento);
 
-		JLabel lblNewLabel = new JLabel("pepe@ Cajero");
-		lblNewLabel.setBounds(659, 384, 112, 14);
-		contentPane.add(lblNewLabel);
-
-		JLabel lblJuangmailcomVendedor = new JLabel("juan@ Vendedor");
-		lblJuangmailcomVendedor.setBounds(659, 409, 112, 14);
-		contentPane.add(lblJuangmailcomVendedor);
-
-		JLabel lblCamilaVendedor = new JLabel("camila@ Supervisor");
-		lblCamilaVendedor.setBounds(659, 432, 112, 14);
-		contentPane.add(lblCamilaVendedor);
-
-		JLabel lblMaximilianoCajero = new JLabel("maximiliano@ OperarioF");
-		lblMaximilianoCajero.setBounds(659, 460, 123, 14);
-		contentPane.add(lblMaximilianoCajero);
-
-		JLabel lblSupervisorf = new JLabel("josselyn@ SupervisorF");
-		lblSupervisorf.setBounds(659, 485, 112, 14);
-		contentPane.add(lblSupervisorf);
-
-		JLabel lblMichelleAdmin = new JLabel("michelle@ Admin");
-		lblMichelleAdmin.setBounds(659, 508, 112, 14);
-		contentPane.add(lblMichelleAdmin);
-
-		JLabel lblMatiasGerente = new JLabel("matias@ Gerente");
-		lblMatiasGerente.setBounds(659, 530, 112, 14);
-		contentPane.add(lblMatiasGerente);
-
-		lblNewLabel_1 = new JLabel("Clave: 1234");
-		lblNewLabel_1.setBounds(659, 555, 112, 14);
-		contentPane.add(lblNewLabel_1);
-
 		progressBar = new JProgressBar();
 		progressBar.setBounds(244, 345, 292, 32);
 		progressBar.setVisible(false);
@@ -202,14 +169,14 @@ public class VentanaLogin extends JFrame {
 		lblCargando.setBounds(244, 384, 292, 25);
 		lblCargando.setVisible(false);
 		contentPane.add(lblCargando);
-		
-				JLabel lblNewLabel_2 = new JLabel("");
-				lblNewLabel_2.setBounds(0, 0, 800, 600);
-				contentPane.add(lblNewLabel_2);
-				cambiarIconoLabel(lblNewLabel_2, "foto.png");
+
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(0, 0, 800, 600);
+		contentPane.add(lblNewLabel_2);
+		cambiarIconoLabel(lblNewLabel_2, "foto.png");
 
 	}
-	
+
 	public JLabel getLblCargando() {
 		return lblCargando;
 	}

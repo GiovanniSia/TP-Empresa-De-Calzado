@@ -17,6 +17,8 @@ public interface EmpleadoDAO {
 	
 	public EmpleadoDTO selectEmpleado(int idEmpleado);
 	
+	public EmpleadoDTO selectUserCorreo(String correo); 
+	
 	public EmpleadoDTO selectUser(String correo, String contra);
 	
 	public List<EmpleadoDTO> getFiltrarPor(String nombreColumna1, String txtAprox1,

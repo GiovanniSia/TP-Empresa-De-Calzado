@@ -70,7 +70,7 @@ CREATE TABLE `empleados`
   `Apellido` varchar(45) NOT NULL,
   `CorreoElectronico` varchar(45) NOT NULL,
   `TipoEmpleado` varchar(45) NOT NULL,
-  `Contra` varchar(45) NOT NULL,
+  `Contra` varchar(500) NOT NULL,
   PRIMARY KEY (`IdEmpleado`)
 )ENGINE='InnoDB'DEFAULT CHARSET = LATIN1;
 
