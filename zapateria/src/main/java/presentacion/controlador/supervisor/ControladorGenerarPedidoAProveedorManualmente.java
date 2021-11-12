@@ -353,6 +353,14 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		int idMaestroProd = this.productoElegido.getIdMaestroProducto();
 		String nombreMaestroprod = this.productoElegido.getDescripcion();
 		
+		if(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText().equals("")) {
+	   		JOptionPane.showMessageDialog(null, "La cantidad no puede ser vacia", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		if(Double.parseDouble(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText()) <=0) {
+			JOptionPane.showMessageDialog(null, "La cantidad no puede ser menor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+			return;	
+		}
 		
 		BigDecimal cantidad = new BigDecimal(Double.parseDouble(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText()));
 		
