@@ -53,7 +53,10 @@ public class RankingDatos {
 		for(IngresosDTO i: modeloIngreso.readAll()) {
 			if(i.getIdSucursal() == idSucursal) {
 				if(fechaEsValida(i,diasParaAtras)) {
-					ret += i.getTotal();
+					if(i.getTipo().toLowerCase().equals("vt")) {
+						ret += i.getTotal();
+					}
+					
 				}
 			}
 		}

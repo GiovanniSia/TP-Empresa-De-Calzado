@@ -35,6 +35,8 @@ public class VentanaSupervisorFabrica extends JFrame {
 	private JPanel panel_1;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
+	
+	JButton btnParametrosEnvioProveedor;
 
 	public VentanaSupervisorFabrica() {
 		this.initialize();
@@ -102,7 +104,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 		panel_1.setLayout(null);
 		
 		btnGestionarRecetasYPasos = new JButton("");
-		btnGestionarRecetasYPasos.setBounds(370, 11, 120, 120);
+		btnGestionarRecetasYPasos.setBounds(248, 11, 120, 120);
 		panel_1.add(btnGestionarRecetasYPasos);
 		btnGestionarRecetasYPasos.setToolTipText("");
 		btnGestionarRecetasYPasos.setOpaque(true);
@@ -112,7 +114,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 		btnGestionarRecetasYPasos.setBackground(new Color(51, 102, 204));
 		
 		btnOperatoriaDeFabrica = new JButton("");
-		btnOperatoriaDeFabrica.setBounds(66, 11, 120, 120);
+		btnOperatoriaDeFabrica.setBounds(10, 11, 120, 120);
 		panel_1.add(btnOperatoriaDeFabrica);
 		btnOperatoriaDeFabrica.setToolTipText("");
 		btnOperatoriaDeFabrica.setOpaque(true);
@@ -123,13 +125,28 @@ public class VentanaSupervisorFabrica extends JFrame {
 		
 		lblNewLabel_3 = new JLabel("<html>Ordenes de Fabricacion</html>");
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(196, 41, 98, 60);
+		lblNewLabel_3.setBounds(140, 41, 98, 60);
 		panel_1.add(lblNewLabel_3);
 		
 		lblNewLabel_4 = new JLabel("<html>Recetas de Fabricacion</html>");
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(500, 41, 98, 60);
+		lblNewLabel_4.setBounds(378, 41, 98, 60);
 		panel_1.add(lblNewLabel_4);
+		
+		btnParametrosEnvioProveedor = new JButton("");
+		btnParametrosEnvioProveedor.setToolTipText("");
+		btnParametrosEnvioProveedor.setOpaque(true);
+		btnParametrosEnvioProveedor.setForeground(new Color(51, 102, 153));
+		btnParametrosEnvioProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 29));
+		btnParametrosEnvioProveedor.setBackground(new Color(51, 102, 204));
+		btnParametrosEnvioProveedor.setBounds(486, 11, 120, 120);
+		panel_1.add(btnParametrosEnvioProveedor);
+		cambiarIconoBotones(btnParametrosEnvioProveedor,"auto.png");
+		
+		JLabel lblNewLabel_4_1 = new JLabel("<html>Parametros Envio Proveedor</html>");
+		lblNewLabel_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_4_1.setBounds(616, 11, 98, 120);
+		panel_1.add(lblNewLabel_4_1);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 0, 720, 540);
@@ -191,5 +208,9 @@ public class VentanaSupervisorFabrica extends JFrame {
 
 	public JLabel getLblEmpleado() {
 		return lblEmpleado;
+	}
+
+	public JButton getBtnParametrosEnvioProveedor() {
+		return btnParametrosEnvioProveedor;
 	}
 }
