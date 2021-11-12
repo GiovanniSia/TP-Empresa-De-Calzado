@@ -83,14 +83,18 @@ public class ControladorLogin {
 		String clave = this.ventanaLogin.getTxtFieldContra().getText();
 
 		if (!correoElectronico.equals(correoElectrionicoAnterior)) {
-			System.out.println("Valor dendo aaaaa: " + vecesIngresado);
 			vecesIngresado = 0;
 			correoElectrionicoAnterior = correoElectronico;
 		}
 
 		if (empleado.selectUser(correoElectronico, clave) == null) {
-			System.out.println("Valor en el primer first: " + vecesIngresado);
 
+			if(empleado.selectUserCorreo(correoElectronico) == null) {
+				JOptionPane.showMessageDialog(null, "Ingreso denegado, algunos de los datos es invalido");
+				return false;
+			}
+			
+			
 			if (empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Inactivo")) {
 				JOptionPane.showMessageDialog(null, "Usted a sido dado de baja");
 				return false;
