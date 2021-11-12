@@ -669,18 +669,18 @@ insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
 insert into sucursales values(1, '14513123','Juan doming.','596','BSAS','TORTGUITAS','ARG','1234','La fabrica',"0000");
 INSERT INTO sucursales VALUES(2, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines","1234");
-INSERT INTO sucursales VALUES(3, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","1234");
-insert into sucursales values(4,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"1234");
-insert into sucursales values(5,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"1234");
-insert into sucursales values(6,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"1234");
+INSERT INTO sucursales VALUES(3, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","0003");
+insert into sucursales values(4,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"0006");
+insert into sucursales values(5,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"0808");
+insert into sucursales values(6,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"3132");
 
 insert into ingresos values (1,2,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',1000);
 insert into ingresos values (2,3,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
 insert into ingresos values (3,4,'2021-10-16','12:20','VT',2,'A','aaaa','USD',100,3,'',300);
 
 insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','1234B00000001',2,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','1234B00000001',3,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','1234B00000001',4,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','0003B00000001',3,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','0006B00000001',4,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 
 INSERT INTO empleados VALUES(1,"123","Pepe","Perez","pepe@gmail.com","Cajero",aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (2, 512,'Juan','Vera','juan@gmail.com','Vendedor',aes_encrypt('1234','AES'));
