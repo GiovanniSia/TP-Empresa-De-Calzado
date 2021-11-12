@@ -2,7 +2,9 @@ package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -234,6 +236,9 @@ public class ControladorEgresosCaja {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
 			if (p.getId() == ppNroOrdenCompra) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago))
+						.setScale(2, RoundingMode.HALF_UP);
+				
 				double pagoRestante = p.getPrecioTotal() - pago;
 
 				boolean update = true;
@@ -248,7 +253,7 @@ public class ControladorEgresosCaja {
 					} else {
 						JOptionPane.showMessageDialog(null,
 								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'",
-								"Pago", JOptionPane.OK_OPTION);
+								"Pago", JOptionPane.INFORMATION_MESSAGE);
 					}
 
 				} else {
@@ -260,7 +265,7 @@ public class ControladorEgresosCaja {
 								JOptionPane.ERROR_MESSAGE);
 					} else {
 						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: " + p.getId()
-								+ ".\nNuevo saldo: " + pagoRestante, "Pago", JOptionPane.OK_OPTION);
+								+ ".\nNuevo saldo: " + pagoRestanteMostrar, "Pago", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 
