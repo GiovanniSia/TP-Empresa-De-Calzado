@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.border.MatteBorder;
 
 public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -34,8 +35,6 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 	private JButton btnActualizarProducto;
 	private JTextField txtActualizarCambioDescripcion;
 	private JComboBox<String> cbActualizarCambioProveedor;
-	private JPanel panel;
-	private JLabel lblNewLabel_1;
 	private JLabel lblAtras;
 	private JLabel lblActualizarProducto;
 
@@ -57,11 +56,12 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(100, 100, 621, 392);
+		frame.setBounds(100, 100, 621, 383);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		modelProducto = new DefaultTableModel(null, nombreColumnas) {
 			private static final long serialVersionUID = 1L;
@@ -77,8 +77,8 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		};
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(0, 96, 605, 257);
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 113, 605, 144);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -88,7 +88,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		panel_1.add(lblProductcoSeleccionado);
 
 		JScrollPane spProductoSeleccionado = new JScrollPane();
-		spProductoSeleccionado.setBounds(10, 34, 579, 43);
+		spProductoSeleccionado.setBounds(10, 34, 579, 57);
 		panel_1.add(spProductoSeleccionado);
 
 		tablaProductoSeleccionado = new JTable(modelProducto);
@@ -100,29 +100,18 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 
 		spProductoSeleccionado.setViewportView(tablaProductoSeleccionado);
 
-		btnAtras = new JButton("");
-		btnAtras.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnAtras.setBounds(89, 166, 60, 60);
-		cambiarIconoBotones(btnAtras,  "back2.png");
-		panel_1.add(btnAtras);
-
-		btnActualizarProducto = new JButton("");
-		btnActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		btnActualizarProducto.setBounds(316, 166, 60, 60);
-		cambiarIconoBotones(btnActualizarProducto,  "update.png");
-		panel_1.add(btnActualizarProducto);
-
 		JLabel lblNewLabel = new JLabel("Cambiar Descripcion");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNewLabel.setBounds(10, 102, 130, 23);
+		lblNewLabel.setBounds(10, 102, 130, 31);
 		panel_1.add(lblNewLabel);
 
 		JLabel lblNuevoProveedor = new JLabel("Cambiar Proveedor");
 		lblNuevoProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNuevoProveedor.setBounds(324, 102, 130, 23);
+		lblNuevoProveedor.setBounds(324, 102, 130, 31);
 		panel_1.add(lblNuevoProveedor);
 
 		txtActualizarCambioDescripcion = new JTextField();
+		txtActualizarCambioDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtActualizarCambioDescripcion.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -132,42 +121,69 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 			 }
 			}
 		});
-		txtActualizarCambioDescripcion.setBounds(166, 103, 127, 20);
+		txtActualizarCambioDescripcion.setBounds(166, 103, 127, 30);
 		panel_1.add(txtActualizarCambioDescripcion);
 		txtActualizarCambioDescripcion.setColumns(10);
 
 		cbActualizarCambioProveedor = new JComboBox<String>();
-		cbActualizarCambioProveedor.setBounds(464, 104, 127, 22);
+		cbActualizarCambioProveedor.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		cbActualizarCambioProveedor.setBounds(464, 104, 127, 29);
 		panel_1.add(cbActualizarCambioProveedor);
-		
-		lblAtras = new JLabel("Atras");
-		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblAtras.setBounds(159, 166, 130, 60);
-		panel_1.add(lblAtras);
-		
-		lblActualizarProducto = new JLabel("Actualizar Producto");
-		lblActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblActualizarProducto.setBounds(386, 166, 130, 60);
-		panel_1.add(lblActualizarProducto);
 
 		lblTItulo = new JLabel("Cambiar Descripcion y Proveedor de Producto");
 		lblTItulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblTItulo.setBounds(10, 55, 492, 30);
+		lblTItulo.setBounds(10, 55, 492, 53);
 		frame.getContentPane().add(lblTItulo);
 		
-		panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 605, 50);
-		frame.getContentPane().add(panel);
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_1_1.setBackground(new Color(153, 204, 255));
+		panel_1_1.setBounds(0, 0, 605, 53);
+		frame.getContentPane().add(panel_1_1);
 		
-		lblNewLabel_1 = new JLabel("Zapateria Argento");
-		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(10, 0, 421, 50);
-		panel.add(lblNewLabel_1);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_1_1.add(lblLogo);
+		
+		lblActualizarProducto = new JLabel("Actualizar Producto");
+		lblActualizarProducto.setBounds(389, 268, 130, 60);
+		frame.getContentPane().add(lblActualizarProducto);
+		lblActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		
+				btnActualizarProducto = new JButton("");
+				btnActualizarProducto.setBounds(319, 268, 60, 60);
+				frame.getContentPane().add(btnActualizarProducto);
+				btnActualizarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				cambiarIconoBotones(btnActualizarProducto,  "update.png");
+				
+						btnAtras = new JButton("");
+						btnAtras.setBounds(92, 268, 60, 60);
+						frame.getContentPane().add(btnAtras);
+						btnAtras.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+						cambiarIconoBotones(btnAtras,  "back2.png");
+						
+						lblAtras = new JLabel("Atras");
+						lblAtras.setBounds(162, 268, 130, 60);
+						frame.getContentPane().add(lblAtras);
+						lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+						
+						JLabel lblFondo = new JLabel("");
+						lblFondo.setBounds(1, 0, 640, 480);
+						frame.getContentPane().add(lblFondo);
+						cambiarIconoLabel(lblFondo, "fondo.png");
 	}
-
+	
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
+	}
+	
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
@@ -225,5 +241,4 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 	public void mostrarVentana() {
 		this.setVisible(true);
 	}
-
 }

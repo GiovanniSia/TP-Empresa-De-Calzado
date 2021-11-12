@@ -195,7 +195,7 @@ private static final long serialVersionUID = 1L;
 		frame.getContentPane().add(btnGenerarPedido);
 		
 		btnAgregarProducto = new JButton("");
-		btnAgregarProducto.setBounds(116, 494, 60, 60);
+		btnAgregarProducto.setBounds(132, 494, 60, 60);
 		cambiarIconoBotones(btnAgregarProducto, "product+.png");
 		frame.getContentPane().add(btnAgregarProducto);
 		
@@ -217,9 +217,9 @@ private static final long serialVersionUID = 1L;
 		cambiarIconoBotones(btnGenerarOrdenDeManufactura, "fabrica.png");
 		frame.getContentPane().add(btnGenerarOrdenDeManufactura);
 		
-		lblAgregarProducto = new JLabel("Agregar Producto");
+		lblAgregarProducto = new JLabel("<html>Agregar Producto</html>");
 		lblAgregarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblAgregarProducto.setBounds(179, 496, 135, 60);
+		lblAgregarProducto.setBounds(202, 497, 84, 60);
 		frame.getContentPane().add(lblAgregarProducto);
 		
 		lblAtrs_2 = new JLabel("<html>Generar Pedido a Proveedor</html>");
@@ -239,7 +239,7 @@ private static final long serialVersionUID = 1L;
 		
 		JLabel lbleditarProducto = new JLabel("<html>Editar Producto<html>");
 		lbleditarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lbleditarProducto.setBounds(366, 496, 111, 60);
+		lbleditarProducto.setBounds(366, 496, 90, 60);
 		frame.getContentPane().add(lbleditarProducto);
 		
 		JLabel lblFondo = new JLabel("");

@@ -192,18 +192,6 @@ public class VentanaTareasAutomatizadas {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
 		
-		JLabel lblNewLabel_3 = new JLabel("Sucursal:");
-		lblNewLabel_3.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(460, 23, 59, 19);
-		panel_2.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Empleado:");
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(266, 23, 59, 19);
-		panel_2.add(lblNewLabel_1_2);
-		
 		btnActualizar = new JButton("");
 		btnActualizar.setFont(new Font("Comic Sans MS", Font.PLAIN, 21));
 		btnActualizar.setBounds(369, 424, 60, 60);

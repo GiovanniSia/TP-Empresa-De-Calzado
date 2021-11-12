@@ -43,8 +43,6 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JScrollPane spCliente;
 	private JPanel panel_2;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JButton btnPasarAVenta;
 	private JLabel lblElegirProductos;
 	private JButton btnAtras;
@@ -191,18 +189,6 @@ public class VentanaBusquedaCliente extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(606, 23, 59, 19);
-		panel_2.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Empleado:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(412, 23, 59, 19);
-		panel_2.add(lblNewLabel_1);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 24, 854, 642);

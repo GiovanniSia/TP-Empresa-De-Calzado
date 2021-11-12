@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.MatteBorder;
 
 public class VentanaAsignarProductoAProveedor {
 
@@ -96,6 +97,7 @@ public class VentanaAsignarProductoAProveedor {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 //		panel.add(scrollPaneFrame);		
 		/*
 		JScrollPane scrollPaneTodosLosProd = new JScrollPane(this.tableTodosLosProd,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -146,12 +148,12 @@ public class VentanaAsignarProductoAProveedor {
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 1205, 571);
 		frame.getContentPane().add(panel);
-		panel.setBackground(new Color(248, 248, 255));
+		panel.setBackground(new Color(255, 255, 255, 0));
 		// panel.setBounds(10, 0, 1126, 705);
 		// frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1279, 600));
-		JLabel lblAsignarProductoAProv = new JLabel("Asignar Producto a un proveedor");
+		JLabel lblAsignarProductoAProv = new JLabel("Asignar Producto a un Proveedor");
 		lblAsignarProductoAProv.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblAsignarProductoAProv.setBounds(10, 56, 1080, 46);
 		// frame.getContentPane().add(lblAsignarProductoAProv);
@@ -284,18 +286,6 @@ public class VentanaAsignarProductoAProveedor {
 		// frame.getContentPane().add(btnModificarCantidadPorLote);
 		panel.add(btnModificarCantidadPorLote);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(153, 204, 255));
-		panel_1.setBounds(0, 0, 1269, 50);
-		panel.add(panel_1);
-
-		JLabel lblNewLabel_2 = new JLabel("Zapateria Argento");
-		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblNewLabel_2.setBounds(10, 0, 236, 50);
-		panel_1.add(lblNewLabel_2);
-
 		JLabel lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		lblDescripcion.setBounds(604, 141, 89, 13);
@@ -310,7 +300,29 @@ public class VentanaAsignarProductoAProveedor {
 		btnModificarPrecioDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		btnModificarPrecioDe.setBounds(508, 359, 274, 25);
 		panel.add(btnModificarPrecioDe);
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 1205, 53);
+		panel.add(panel_2);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBounds(0, 104, 1205, 467);
+		panel.add(panel_1);
 
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 1280, 960);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 
 
@@ -318,6 +330,12 @@ public class VentanaAsignarProductoAProveedor {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
+	}
+	public void cambiarIconoLabel(JLabel label, String ruta) {
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH));
+		label.setIcon(Icono);
 	}
 	
 	public void show() {
@@ -327,7 +345,7 @@ public class VentanaAsignarProductoAProveedor {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir?", 
+		             null, "Estas seguro que quieres salir?", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {

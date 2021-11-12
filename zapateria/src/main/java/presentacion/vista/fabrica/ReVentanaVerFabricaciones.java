@@ -57,9 +57,8 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JLabel lblHistorial;
 	private JPanel panel_1;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_1;
-	private JLabel lblEmpleado;
-	private JButton btnVerMateriales;
+	
+	JButton btnVerMateriales;
 	
 	JLabel lblMateriales;
 
@@ -218,18 +217,6 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		cambiarIconoLabel(lblLogo, "argentoshoes.png");
 		panel_1.add(lblLogo);
 		
-		lblNewLabel_1 = new JLabel("F\u00E1brica");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(706, 28, 172, 19);
-		panel_1.add(lblNewLabel_1);
-		
-		lblEmpleado = new JLabel("Empleado:");
-		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEmpleado.setBounds(512, 28, 232, 19);
-		panel_1.add(lblEmpleado);
-		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(10, 458, 60, 60);
 		frame.getContentPane().add(btnSalir);
@@ -278,7 +265,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estas seguro que quieres salir?", 
+		             null, "ï¿½Estas seguro que quieres salir?", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {

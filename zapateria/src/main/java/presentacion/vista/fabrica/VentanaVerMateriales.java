@@ -46,8 +46,6 @@ public class VentanaVerMateriales extends JFrame {
 	private JCheckBox chckbxRiesgo;
 	private JPanel panel_1;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_1;
-	private JLabel lblEmpleado;
 	
 
 	public VentanaVerMateriales() {
@@ -163,18 +161,6 @@ public class VentanaVerMateriales extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes.png");
 		panel_1.add(lblLogo);
-		
-		lblNewLabel_1 = new JLabel("F\u00E1brica");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(706, 28, 172, 19);
-		panel_1.add(lblNewLabel_1);
-		
-		lblEmpleado = new JLabel("Empleado:");
-		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEmpleado.setBounds(512, 28, 232, 19);
-		panel_1.add(lblEmpleado);
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(135, 462, 60, 60);

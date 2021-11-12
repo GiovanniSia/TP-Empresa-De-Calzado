@@ -52,8 +52,6 @@ public class VentanaVerComprasVirtuales extends JFrame {
 	JCheckBox chckbxCancelados;
 	private JPanel panel_1;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_1_1;
 	
 	JCheckBox chckbxErrorSucursal;
 
@@ -214,18 +212,6 @@ public class VentanaVerComprasVirtuales extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_1.add(lblLogo);
-		
-		lblNewLabel_1 = new JLabel("Sucursal:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(766, 23, 59, 19);
-		panel_1.add(lblNewLabel_1);
-		
-		lblNewLabel_1_1 = new JLabel("Empleado:");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(572, 23, 59, 19);
-		panel_1.add(lblNewLabel_1_1);
 		
 		btnSalir = new JButton("");
 		btnSalir.setBounds(130, 471, 60, 60);
