@@ -29,6 +29,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 public class VentanaGenerarPedidoProveedor {
 
@@ -55,6 +56,7 @@ public class VentanaGenerarPedidoProveedor {
 	private JButton btnSeleccionarProveedor;
 	
 	private JButton btnBorrarTablaPedido;
+	private JTextField textCantidad;
 
 
 	/**
@@ -147,11 +149,13 @@ public class VentanaGenerarPedidoProveedor {
 		panel.add(rdbtnTodosLosProveedores);
 		
 		
-		spinnerModelCantARep = new SpinnerNumberModel(1, 1, 999, 1); //default value,lower bound,upper bound,increment by
-		spinnerCantARep = new JSpinner(spinnerModelCantARep);
-		spinnerCantARep.setBounds(176, 345, 83, 22);
-		spinnerCantARep.setEditor(new JSpinner.DefaultEditor(spinnerCantARep));	
-		panel.add(spinnerCantARep);
+//		spinnerModelCantARep = new SpinnerNumberModel(1, 1, 999, 1); //default value,lower bound,upper bound,increment by
+//		spinnerCantARep = new JSpinner(spinnerModelCantARep);
+//		spinnerCantARep.setBounds(176, 345, 83, 22);
+//		spinnerCantARep.setEditor(new JSpinner.DefaultEditor(spinnerCantARep));	
+//		panel.add(spinnerCantARep);
+		
+		
 		
 		JLabel lblNewLabel_3_2 = new JLabel("(al menos 1 y hasta 999)");
 		lblNewLabel_3_2.setBounds(176, 367, 124, 14);
@@ -246,6 +250,19 @@ public class VentanaGenerarPedidoProveedor {
 		btnBorrarTablaPedido.setBounds(667, 324, 42, 34);
 		cambiarIconoBotones(btnBorrarTablaPedido,  "trash.png");
 		panel.add(btnBorrarTablaPedido);
+		
+		textCantidad = new JTextField();
+		textCantidad.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textCantidad.getText().length() >= 3) {
+					e.consume();
+				}
+			}
+		});
+		textCantidad.setBounds(182, 344, 96, 19);
+		panel.add(textCantidad);
+		textCantidad.setColumns(10);
 		/////////////////////////////////////////////////////////////////////////////////////////////
 		
 	
@@ -368,6 +385,10 @@ public class VentanaGenerarPedidoProveedor {
 	
 	public JButton getBtnBorrarTablaPedido() {
 		return btnBorrarTablaPedido;
+	}
+
+	public JTextField getTextCantidad() {
+		return textCantidad;
 	}
 	
 }

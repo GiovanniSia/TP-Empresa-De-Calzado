@@ -14,7 +14,7 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 
 	private static final String insert = "INSERT INTO productosDeProveedor VALUES(?,?,?,?,?)";
 	private static final String delete = "DELETE FROM productosDeProveedor WHERE Id=?";
-	private static final String readAll = "SELECT * FROM productosDeProveedor";
+	private static final String readAll = "SELECT * FROM productosDeProveedor ORDER BY PrecioVenta";
 	
 	private static final String updateCantPorLote = "UPDATE productosDeProveedor SET CantidadPorLote=? WHERE Id=?";
 	

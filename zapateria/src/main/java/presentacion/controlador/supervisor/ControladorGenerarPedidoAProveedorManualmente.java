@@ -1,6 +1,7 @@
 package presentacion.controlador.supervisor;
 
-import java.io.IOException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,20 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import dto.MaestroProductoDTO;
 import dto.PedidosPendientesDTO;
 import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import dto.StockDTO;
-import inicioSesion.empleadoProperties;
-import inicioSesion.sucursalProperties;
+
 import modelo.PedidosPendientes;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
 import modelo.Stock;
+import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.generarPedidoProveedor.VentanaGenerarPedidoProveedor;
 
 public class ControladorGenerarPedidoAProveedorManualmente {
@@ -94,33 +93,25 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		this.ventanaGenerarPedidoProveedor.getRdbtnTodosLosProveedores().addActionListener(a -> radioButtonTodosLosProveedoresSeleccionado());
 		this.ventanaGenerarPedidoProveedor.getBtnSeleccionarProveedor().addActionListener(a -> agregarProveedor());
 		this.ventanaGenerarPedidoProveedor.getBtnBorrarTablaPedido().addActionListener(a -> quitarDatosDeTablaPedido());
-		this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().addChangeListener(new ChangeListener() {
+		
+//		this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().addChangeListener(new ChangeListener() {
+//			@Override
+//			public void stateChanged(ChangeEvent e) {
+//				actualizarDatosTablaPedido();
+//			}
+//
+//		});
+		this.ventanaGenerarPedidoProveedor.getTextCantidad().addKeyListener(new KeyAdapter() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
+			public void keyReleased(KeyEvent e) {
 				actualizarDatosTablaPedido();
 			}
-
 		});
 		
-		this.ventanaGenerarPedidoProveedor.getBtnGenerarPedido().addActionListener(a -> generarPedido());
 		
+		this.ventanaGenerarPedidoProveedor.getBtnGenerarPedido().addActionListener(a -> generarPedido());
+		validarTeclado();
 	}
-
-//	public void llenarLabels() {
-//		empleadoProperties empleado = empleadoProperties.getInstance();
-//		sucursalProperties sucu = sucursalProperties.getInstance();
-//		try {
-//			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
-//			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
-//			
-//			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
-//			String sucursal = sucu.getValue("Nombre");
-//			this.ventanaGenerarPedidoProveedor.getLblNombreEmpleado().setText(nombreEmp);
-//			this.ventanaGenerarPedidoProveedor.getLblNombreSucursal().setText(sucursal);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	public void mostrarVentana() {
 		this.ventanaGenerarPedidoProveedor.show();
@@ -178,9 +169,8 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	
 	public void llenarTablaProveedores() {
 		limpiarTablaProveedores();
-		
-		for(ProveedorDTO p: this.todosLosProveedores) {
-			for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
+		for(ProductoDeProveedorDTO prodProv: this.todosLosProductosDeProveedor) {
+			for(ProveedorDTO p: this.todosLosProveedores) {
 				if(prodProv.getIdProveedor() == p.getId() && prodProv.getIdMaestroProducto() == this.productoElegido.getIdMaestroProducto()) {
 					agregarProveedorATabla(p,prodProv);
 				}
@@ -275,13 +265,27 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		this.ventanaGenerarPedidoProveedor.getModelPedido().setColumnCount(0);
 		this.ventanaGenerarPedidoProveedor.getModelPedido().setColumnIdentifiers(this.ventanaGenerarPedidoProveedor.getNombreColumnasPedido());
 		
-		int cantidad = (int) this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().getValue();
+//		int cantidad = (int) this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().getValue();
+		
 		ProductoDeProveedorDTO productoDeProveedor = getProductoDeProveedor(this.proveedorElegido.getId(),this.productoElegido.getIdMaestroProducto());
+
+		String cant = this.ventanaGenerarPedidoProveedor.getTextCantidad().getText();
+		double canti;
+		if(cant.equals("")) {
+			canti = 0;
+		}else {
+			canti = Double.parseDouble(cant);
+		}
 		
-		double precioTota = productoDeProveedor.getPrecioVenta() * cantidad;
-		BigDecimal precioTotal = new BigDecimal(precioTota);
+		BigDecimal cantidad = new BigDecimal(canti);
+		BigDecimal precio = new BigDecimal(productoDeProveedor.getPrecioVenta());
 		
-		int cantTotal = cantidad * productoDeProveedor.getCantidadPorLote();
+		BigDecimal precioTotal = cantidad.multiply(precio);
+		
+		BigDecimal cantidadPorLote = new BigDecimal(productoDeProveedor.getCantidadPorLote());
+		
+		BigDecimal cantTotal = cantidad.multiply(cantidadPorLote) ;
+		
 		String unidadMedida = this.productoElegido.getUnidadMedida();
 		Object[] fila = {unidadMedida,cantidad,cantTotal,precioTotal};
 		this.ventanaGenerarPedidoProveedor.getModelPedido().addRow(fila);
@@ -312,9 +316,9 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	   		JOptionPane.showMessageDialog(null, "Debe seleccionar un producto (tremendo error)", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
-		if((int)this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().getValue()<=0) {
+		if(this.ventanaGenerarPedidoProveedor.getTextCantidad().equals("")) {
 			JOptionPane.showMessageDialog(null, "La cantidad seleccionada no es valida", "Informacion", JOptionPane.INFORMATION_MESSAGE);
-			return;	
+			return;		
 		}
 		
 	    if(yaExisteUnPedidoParaEsteProducto(this.productoElegido,this.proveedorElegido)) {
@@ -335,9 +339,11 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		String nombreMaestroprod = this.productoElegido.getDescripcion();
 		
 		
-		int cantidad = (int) this.ventanaGenerarPedidoProveedor.getSpinnerCantARep().getValue();
-		int cantPorLote = prodProv.getCantidadPorLote();
-		int cantidadTotal = cantidad * cantPorLote;
+		BigDecimal cantidad = new BigDecimal(Double.parseDouble(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText()));
+		
+		BigDecimal cantPorLote = new BigDecimal(prodProv.getCantidadPorLote());
+		
+		BigDecimal cantidadTotal = cantidad.multiply(cantPorLote);
 				
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -345,9 +351,20 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
 	    String hora = tf.format(LocalDateTime.now());
 		
-	    double precioUnidad = prodProv.getPrecioVenta();
-	    double precioTotal = cantidad * precioUnidad;
-	    	    
+	    BigDecimal precioUnidad =new BigDecimal(prodProv.getPrecioVenta());
+	    BigDecimal precioTotal = cantidad.multiply(precioUnidad);
+	    	
+	    String auxPrecio = precioTotal+"";
+	    if(auxPrecio.length()>45) {
+			JOptionPane.showMessageDialog(null, "El precio total supera la cantidad de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+			return;	
+	    }
+	    String auxCantTotal = cantidadTotal+"";
+	    if(auxCantTotal.length()>45) {
+	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+			return;		
+	    }
+	    
 	    String estado = "En espera";
 	    int idSuc = this.idSucursal;
 	    String fechaEnvio = null;
@@ -355,7 +372,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    String fechaCompleto = null;
 	    String horaCompleto = null;
 	    String unidadMedida = this.productoElegido.getUnidadMedida();
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal,fecha,hora,precioUnidad,precioTotal,estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal.doubleValue(),fecha,hora,precioUnidad.doubleValue(),precioTotal.doubleValue(),estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 		    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {
@@ -376,4 +393,13 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		}return false;
 	}
 	
+	public void validarTeclado() {
+
+		this.ventanaGenerarPedidoProveedor.getTextCantidad().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+		
+	}
 }

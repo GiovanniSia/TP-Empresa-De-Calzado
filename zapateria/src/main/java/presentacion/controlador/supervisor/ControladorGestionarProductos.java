@@ -405,13 +405,18 @@ public class ControladorGestionarProductos {
 		if (fila == -1) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.OK_OPTION);
 			return;
-		}
+		}		
 		MaestroProductoDTO productoSeleccionado = this.productosEnTabla.get(fila);
 		if (productoSeleccionado.getFabricado().equals("S")) {
 			JOptionPane.showMessageDialog(null, "El producto es propio. Imposible generar orden a proveedor", "Error",
 					JOptionPane.OK_OPTION);
 			return;
 		}
+		if(productoSeleccionado.getEstado().equals("Inactivo") || productoSeleccionado.getEstado().equals("Suspendido")) {
+			JOptionPane.showMessageDialog(null, "El producto no se encuentra activo", "Info",JOptionPane.INFORMATION_MESSAGE);
+			return;	
+		}
+		
 		StockDTO stockDeProd = null;
 		for (StockDTO s : this.todoElStock) {
 			if (s.getIdProducto() == productoSeleccionado.getIdMaestroProducto()) {
@@ -436,7 +441,11 @@ public class ControladorGestionarProductos {
 			JOptionPane.showMessageDialog(ventanaGestionarProductos, "El producto no se fabrica en la fabrica");
 			return;
 		}
-
+		if(prodSeleccionado.getEstado().equals("Inactivo") || prodSeleccionado.getEstado().equals("Suspendido")) {
+			JOptionPane.showMessageDialog(null, "El producto no se encuentra activo", "Info",JOptionPane.INFORMATION_MESSAGE);
+			return;	
+		}
+		
 		boolean repetir = true;
 		String resp = null;
 		while (repetir) {

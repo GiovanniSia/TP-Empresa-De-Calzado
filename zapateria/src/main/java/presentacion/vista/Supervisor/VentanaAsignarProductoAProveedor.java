@@ -54,6 +54,8 @@ public class VentanaAsignarProductoAProveedor {
 
 	private JTextField textPrecioVenta;
 	private JTextField textCantPorLote;
+
+	private JButton btnModificarPrecioDe;
 	/**
 	 * Launch the application.
 	 */
@@ -240,7 +242,7 @@ public class VentanaAsignarProductoAProveedor {
 		textPrecioVenta.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textPrecioVenta.getText().length() >= 8) {
+				if (textPrecioVenta.getText().length() >= 20) {
 					e.consume();
 				}
 			}
@@ -254,7 +256,7 @@ public class VentanaAsignarProductoAProveedor {
 		textCantPorLote.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCantPorLote.getText().length() >= 8) {
+				if (textCantPorLote.getText().length() >= 20) {
 					e.consume();
 				}
 			}
@@ -303,9 +305,15 @@ public class VentanaAsignarProductoAProveedor {
 		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		lblAtras.setBounds(252, 257, 50, 60);
 		panel.add(lblAtras);
+		
+		btnModificarPrecioDe = new JButton("Modificar Precio de Venta");
+		btnModificarPrecioDe.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnModificarPrecioDe.setBounds(508, 359, 274, 25);
+		panel.add(btnModificarPrecioDe);
 
 	}
-	
+
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
 		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
@@ -401,5 +409,9 @@ public class VentanaAsignarProductoAProveedor {
 	
 	public JButton getBtnModificarCantidadPorLote() {
 		return btnModificarCantidadPorLote;
+	}	
+	public JButton getBtnModificarPrecioDe() {
+		return btnModificarPrecioDe;
 	}
+	
 }

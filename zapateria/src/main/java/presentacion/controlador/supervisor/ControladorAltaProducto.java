@@ -90,16 +90,16 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getBtnBorrarProv().addActionListener(a -> borrarProveedor());
 		
 		this.ventanaAltaProducto.getTableProveedores().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		ListSelectionModel rowSM = this.ventanaAltaProducto.getTableProveedores().getSelectionModel();
+//		ListSelectionModel rowSM = this.ventanaAltaProducto.getTableProveedores().getSelectionModel();
+//
+//		rowSM.addListSelectionListener(new ListSelectionListener() {
 
-		rowSM.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
 //				verificarCambioDeComboBox();
-			}
-
-		});		
+//			}
+//
+//		});		
 		llenarCb();
 		validarTeclado();
 	}
@@ -509,7 +509,9 @@ public class ControladorAltaProducto {
 
 			try {
 				// si la resp es null, se eligio cancelar
-				cantProdLotes = JOptionPane.showInputDialog("Ingrese la cantidad de productos por lote");
+				cantProdLotes = JOptionPane.showInputDialog("Ingrese la cantidad de productos por lote (limite 20 caracteres)");
+
+				
 				if (cantProdLotes == null) {
 					repetir = false;
 					return;
@@ -518,13 +520,13 @@ public class ControladorAltaProducto {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
 						cantidadDeProductosPorLote = Integer.parseInt(cantProdLotes);
-						if (cantidadDeProductosPorLote > 99999999) {
-							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 99999999", "Informacion",	JOptionPane.OK_OPTION);
+						if (cantProdLotes.length()>20) {
+							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 20", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (cantidadDeProductosPorLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (cantidadDeProductosPorLote > 0 && cantidadDeProductosPorLote < 99999999) {
+						if (cantidadDeProductosPorLote > 0 && cantProdLotes.length() <= 20) {
 							repetir = false;
 						}
 					}
@@ -541,7 +543,7 @@ public class ControladorAltaProducto {
 
 			try {
 				// si la resp es null, se eligio cancelar
-				precioLot = JOptionPane.showInputDialog("Ingrese el precio del lote");
+				precioLot = JOptionPane.showInputDialog("Ingrese el precio del lote (limite 20 caracteres)");
 				if (precioLot == null) {
 					repetir = false;
 					return;
@@ -550,13 +552,13 @@ public class ControladorAltaProducto {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
 						precioLote = Integer.parseInt(precioLot);
-						if (precioLote > 99999999) {
-							JOptionPane.showMessageDialog(null, "El valor no puede ser mayor a 99999999", "Informacion",	JOptionPane.OK_OPTION);
+						if (precioLot.length() > 20) {
+							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 20", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (precioLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (precioLote > 0 && precioLote <= 99999999) {
+						if (precioLote > 0 && precioLot.length() <= 20) {
 							repetir = false;
 						}
 					}
