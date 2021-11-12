@@ -1,5 +1,6 @@
 package presentacion.controlador.fabrica;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import dto.SucursalDTO;
 import modelo.MaestroProducto;
 import modelo.Stock;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
 import presentacion.vista.fabrica.VentanaVerMateriales;
 
 public class ControladorVerMateriales {
@@ -28,8 +30,10 @@ public class ControladorVerMateriales {
 	List<MaestroProductoDTO> ingredientesEnLista;
 	
 	SucursalDTO fabrica;
+	Controlador controlador;
+	ReControladorOperario ReControladorOperario;
 	
-	public ControladorVerMateriales(SucursalDTO fabrica) {
+	public ControladorVerMateriales(SucursalDTO fabrica, Controlador controlador, ReControladorOperario ReControladorOperario) {
 		modeloMaestroProducto = new MaestroProducto(new DAOSQLFactory());
 		modeloStock = new Stock(new DAOSQLFactory());
 		ventanaPrincipal = new VentanaVerMateriales();
@@ -39,8 +43,17 @@ public class ControladorVerMateriales {
 		asignarCodigoAText(ventanaPrincipal.gettextTalle());
 		asignarCodigoAText(ventanaPrincipal.gettextUnidad());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxCancelados());
+		ventanaPrincipal.getBtnSalir().addActionListener(r->salir(r));
+		this.controlador = controlador;
+		this.ReControladorOperario = ReControladorOperario;
 	}
 	
+	private void salir(ActionEvent r) {
+		this.ventanaPrincipal.cerrar();
+		//this.controlador.mostrarVentanaMenu();
+		this.ReControladorOperario.mostrarVentana();
+	}
+
 	public void inicializar() {
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
@@ -169,7 +182,7 @@ public class ControladorVerMateriales {
 	}
 
 	public static void main(String[] args) {
-		ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","","",""));
-		conVerMat.inicializar();
+		//ControladorVerMateriales conVerMat = new ControladorVerMateriales(new SucursalDTO(1,"","","","","","","","",""));
+		//conVerMat.inicializar();
 	}
 }
