@@ -340,18 +340,6 @@ public class VentanaRealizarVenta {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_1.add(lblLogo);
 		
-		JLabel lblNewLabel_1 = new JLabel("Sucursal:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(610, 23, 59, 19);
-		panel_1.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Empleado:");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(416, 23, 59, 19);
-		panel_1.add(lblNewLabel_1_1);
-		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 53, 856, 642);
 		cambiarIconoLabel(lblFondo, "fondo.png");

@@ -71,8 +71,6 @@ public class VentanaCierreCaja extends JFrame {
 	private JLabel lblAtras;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 
 	public VentanaCierreCaja() {
 		initialize();
@@ -346,18 +344,6 @@ public class VentanaCierreCaja extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(711, 28, 59, 19);
-		panel.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Empleado:");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(517, 28, 59, 19);
-		panel.add(lblNewLabel_1);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 53, 960, 720);

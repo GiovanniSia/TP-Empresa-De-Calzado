@@ -61,8 +61,6 @@ public class VentanaEgresoCaja extends JFrame {
 	private JPanel panel_1;
 	private JPanel panel;
 	private JLabel lblLogo;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_6;
 
 	public VentanaEgresoCaja() {
 		try {
@@ -98,18 +96,6 @@ public class VentanaEgresoCaja extends JFrame {
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
-		
-		lblNewLabel = new JLabel("Sucursal:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(266, 5, 59, 19);
-		panel.add(lblNewLabel);
-		
-		lblNewLabel_6 = new JLabel("Empleado:");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNewLabel_6.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_6.setBounds(266, 28, 59, 19);
-		panel.add(lblNewLabel_6);
 
 		JLabel lblNewLabel_1 = new JLabel("Tipo de Egreso");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
