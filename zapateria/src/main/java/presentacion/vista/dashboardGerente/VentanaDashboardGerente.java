@@ -123,7 +123,7 @@ public class VentanaDashboardGerente {
 		lblRankingDeVentas_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRankingDeVentas_2.setForeground(Color.WHITE);
 		lblRankingDeVentas_2.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-		lblRankingDeVentas_2.setBounds(803, 17, 320, 22);
+		lblRankingDeVentas_2.setBounds(383, 348, 320, 22);
 		frame.getContentPane().add(lblRankingDeVentas_2);
 		
 		JPanel panel = new JPanel();
