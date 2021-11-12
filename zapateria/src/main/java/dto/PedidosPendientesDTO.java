@@ -169,4 +169,21 @@ public class PedidosPendientesDTO {
 	public String getHoraCompleto() {
 		return horaCompleto;
 	}
+
+	public void setIdEmpleado(int idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+	public void setHoraEnvioMail(String horaEnvioMail) {
+		this.horaEnvioMail = horaEnvioMail;
+	}
+
+	public void setHoraCompleto(String horaCompleto) {
+		this.horaCompleto = horaCompleto;
+	}
+
+	public void setUnidadMedida(String unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+	
 }

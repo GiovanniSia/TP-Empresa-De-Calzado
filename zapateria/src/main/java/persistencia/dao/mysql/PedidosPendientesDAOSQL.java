@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.PaisDTO;
 import dto.PedidosPendientesDTO;
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
@@ -22,6 +23,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	
 	private static final String cambiarEstado = "UPDATE PedidosPendientes SET Estado=? WHERE Id=?";
 	
+	private static final String update = "UPDATE PedidosPendientes SET IdProveedor=?, NombreProveedor=?, IdMaestroProducto=?, NombreMaestroProducto=?, Cantidad=?, Fecha=?, Hora=?, PrecioUnidad=?, PrecioTotal=?, Estado=?, IdSucursal=?, IdEmpleado=?, FechaEnvioMail=?, HoraEnvioMail=?, FechaCompleto=?, HoraCompleto=?, UnidadMedida=? WHERE Id=?";
 	@Override
 	public boolean insert(PedidosPendientesDTO pedido) {
  		PreparedStatement statement;
@@ -127,7 +129,39 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	
 	@Override
 	public boolean update(PedidosPendientesDTO nuevopedido, int idPedido) {
-		return false;
+		PreparedStatement statement;
+		Connection conexion = Conexion.getConexion().getSQLConexion();
+		boolean isUpdateExitoso = false;
+		try {
+			statement = conexion.prepareStatement(update);
+			
+			statement.setInt(1, nuevopedido.getIdProveedor());
+			statement.setString(2, nuevopedido.getNombreProveedor());
+			statement.setInt(3, nuevopedido.getIdMaestroProducto());
+			statement.setString(4, nuevopedido.getNombreMaestroProducto());
+			statement.setDouble(5, nuevopedido.getCantidad());
+			statement.setString(6, nuevopedido.getFecha());
+			statement.setString(7, nuevopedido.getHora());
+			statement.setDouble(8, nuevopedido.getPrecioUnidad());
+			statement.setDouble(9, nuevopedido.getPrecioTotal());
+			statement.setString(10, nuevopedido.getEstado());
+			statement.setInt(11, nuevopedido.getIdSucursal());
+			statement.setInt(12, nuevopedido.getIdEmpleado());
+			statement.setString(13, nuevopedido.getFechaEnvioMail());
+			statement.setString(14, nuevopedido.getHoraEnvioMail());
+			statement.setString(15, nuevopedido.getFechaCompleto());
+			statement.setString(16, nuevopedido.getHoraCompleto());
+			statement.setString(17, nuevopedido.getUnidadMedida());
+			statement.setInt(18, nuevopedido.getId());
+
+			if (statement.executeUpdate() > 0) {
+				conexion.commit();
+				isUpdateExitoso = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return isUpdateExitoso;
 	}
 
 	@Override
@@ -257,6 +291,4 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		}
 		return pedidos;
 	}	
-	
-	
 }

@@ -295,7 +295,8 @@ public class ControladorGestionarProductos {
 		int diasARep = m.getDiasParaReponer();
 		
 //		BigDecimal cantStockDisp = obtenerCantidadStockDisp(m);
-		double cantStockDisp = Stock.cantidadTotalDeStock(m);
+		BigDecimal cantStockDisp = new BigDecimal( Stock.cantidadTotalDeStock(m));
+//		BigDecimal cantStockDisp = sumarTodoElStock(m);
 		
 		Object[] fila = { id,nombre,cantStockDisp,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
@@ -303,6 +304,16 @@ public class ControladorGestionarProductos {
 
 		verificarCambiarColorAEstaFila();
 
+	}
+	
+	public BigDecimal sumarTodoElStock(MaestroProductoDTO m) {
+		BigDecimal cant=new BigDecimal(0);
+		for(StockDTO s: todoElStock) {
+			if(s.getIdProducto() == m.getIdMaestroProducto()) {
+				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
+				cant.add(stockDisp);
+			}
+		}return cant;
 	}
 	
 //	public BigDecimal obtenerCantidadStockDisp(MaestroProductoDTO prod) {
@@ -331,7 +342,10 @@ public class ControladorGestionarProductos {
 				//al parecer el row toma la ultima fila agregada
 		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
 		        
-	        	if((Double)table.getValueAt(row, 2) == 0) {
+//	        	if((Double)table.getValueAt(row, 2) == 0) {
+		        BigDecimal valor = (BigDecimal) table.getValueAt(row, 2);
+		        BigDecimal aux = new BigDecimal(0);
+		        if(valor.compareTo(aux) == 0 || valor.compareTo(aux)==-1) {
 		        	setBackground(Color.red);
 		        	setForeground(Color.WHITE);	
 		        }else {
@@ -374,7 +388,10 @@ public class ControladorGestionarProductos {
 //		        	}
 		        	
 		        }else {
-		        	if((Double)table.getValueAt(row, 2) == 0) {
+//		        	if((Double)table.getValueAt(row, 2) == 0) {
+			        BigDecimal valor = (BigDecimal) table.getValueAt(row, 2);
+			        BigDecimal aux = new BigDecimal(0);
+			        if(valor.compareTo(aux) == 0 || valor.compareTo(aux)==-1) {
 			        	setBackground(Color.red);
 			        	setForeground(Color.WHITE);	
 		        	}else {

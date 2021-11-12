@@ -182,7 +182,21 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 	private static void marcarPedidoComoEnviado(ArrayList<PedidosPendientesDTO> pedidos) {
 		PedidosPendientes pedidosPendietes = new PedidosPendientes(new DAOSQLFactory());
 		for(PedidosPendientesDTO pedido: pedidos) {
-			boolean update = pedidosPendietes.cambiarEstado(pedido.getId(), "Enviado");
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+			String fecha = dtf.format(LocalDateTime.now());
+			
+		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		    String hora = tf.format(LocalDateTime.now());
+			
+		    pedido.setEstado("Enviado");
+		    pedido.setHoraEnvioMail(hora);
+		    pedido.setFechaEnvioMail(fecha);
+		    
+		    boolean update = pedidosPendietes.update(pedido,pedido.getId());
+		    
+//			boolean update = pedidosPendietes.cambiarEstado(pedido.getId(), "Enviado");
+		    
 			if(!update) {
 				System.out.println("ha ocurrido un error al marcar al pedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getCantidad()+" como enviado");
 			}
