@@ -74,7 +74,9 @@ public class ControladorLogin {
 	private void rellenarCombobox() {
 		this.sucursales = this.sucursal.readAll();
 		for (SucursalDTO s : sucursales) {
-			ventanaLogin.getCbSucursales().addItem(s.getNombre());
+			if(s.getIdSucursal()!=1) {
+				ventanaLogin.getCbSucursales().addItem(s.getNombre());
+			}
 		}
 	}
 
@@ -141,6 +143,10 @@ public class ControladorLogin {
 				"Bienvenido " + empleado.selectUser(correoElectronico, clave).getTipoEmpleado());
 
 		sucursalSeleccionada = obtenerSucursalSleccionada();
+		if(empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Supervisor de Fabrica") 
+				|| empleado.selectUserCorreo(correoElectronico).getTipoEmpleado().equals("Operario de Fabrica")) {
+			sucursalSeleccionada = sucursales.get(0);
+		}
 		empleadoInicioSesion = empleado.selectUser(correoElectronico, clave);
 		return true;
 	}
