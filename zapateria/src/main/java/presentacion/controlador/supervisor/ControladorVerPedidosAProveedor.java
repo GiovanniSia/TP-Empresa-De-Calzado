@@ -186,7 +186,10 @@ public class ControladorVerPedidosAProveedor {
 		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
 		
 		for(PedidosPendientesDTO p: this.todosLosPedidosPendientes) {
-			escribirTabla(p);
+			if(p.getIdSucursal() == this.idSucursal) {
+				escribirTabla(p);	
+			}
+				
 		}
 	}
 	
@@ -275,20 +278,25 @@ public class ControladorVerPedidosAProveedor {
 		this.pedidosPendientesEnTabla.removeAll(this.pedidosPendientesEnTabla);
 		 String cBestadoSolo = (String) this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().getSelectedItem(); 
 		for(PedidosPendientesDTO p: pedidosFiltrados) {
-			System.out.println("prod: "+p.getNombreMaestroProducto()+" - "+p.getEstado());
-			if(!cBestadoSolo.equals("Sin seleccionar")) {
-				if(cBestadoSolo.equals("Alta") && p.getFecha()!=null) {
+			
+			if(p.getIdSucursal() == this.idSucursal) {
+				System.out.println("prod: "+p.getNombreMaestroProducto()+" - "+p.getEstado());
+				if(!cBestadoSolo.equals("Sin seleccionar")) {
+					if(cBestadoSolo.equals("Alta") && p.getFecha()!=null) {
+						escribirTabla(p);
+					}
+					if(cBestadoSolo.equals("Envio") && p.getFechaEnvioMail()!=null) {
+						escribirTabla(p);
+					}
+					if(cBestadoSolo.equals("Cierre") && p.getFechaCompleto()!=null) {
+						escribirTabla(p);
+					}
+				}else {
 					escribirTabla(p);
-				}
-				if(cBestadoSolo.equals("Envio") && p.getFechaEnvioMail()!=null) {
-					escribirTabla(p);
-				}
-				if(cBestadoSolo.equals("Cierre") && p.getFechaCompleto()!=null) {
-					escribirTabla(p);
-				}
-			}else {
-				escribirTabla(p);
+				}	
 			}
+			
+			
 			
 		}
 		

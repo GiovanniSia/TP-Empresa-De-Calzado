@@ -328,6 +328,7 @@ public class ControladorBusquedaProductos {
 				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
 			}
 		}
+		
 		actualzarTablaCarrito();
 		realizarBusqueda();
 		
@@ -506,7 +507,7 @@ public class ControladorBusquedaProductos {
 		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 			int idProducto = compra.getProducto().getIdMaestroProducto();
 			int idStock = compra.getStock().getIdStock();
-			double cant = compra.getCantidad();
+			int cant = (int)compra.getCantidad();
 			double precio;
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
 				precio = compra.getProducto().getPrecioMayorista() * compra.getCantidad();

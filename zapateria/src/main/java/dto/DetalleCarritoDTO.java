@@ -3,10 +3,10 @@ package dto;
 public class DetalleCarritoDTO {
 	
 	int id, idCarrito, idProducto, idStock;
-	double cantidad;
+	int cantidad;
 	double precio;
 
-	public DetalleCarritoDTO(int id, int idCarrito, int idProducto, int idStock , double cantidad, double precio) {
+	public DetalleCarritoDTO(int id, int idCarrito, int idProducto, int idStock , int cantidad, double precio) {
 		super();
 		this.id = id;
 		this.idCarrito = idCarrito;
@@ -32,7 +32,7 @@ public class DetalleCarritoDTO {
 		return idStock;
 	}
 	
-	public double getCantidad() {
+	public int getCantidad() {
 		return this.cantidad;
 	}
 	

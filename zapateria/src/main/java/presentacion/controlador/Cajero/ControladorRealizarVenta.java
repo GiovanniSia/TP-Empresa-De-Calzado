@@ -44,8 +44,8 @@ import presentacion.vista.Cajero.VentanaRealizarVenta;
 public class ControladorRealizarVenta {
 
 	// hardcodeado
-	private static int idEmpleado = 0;
-	private static int idSucursal = 0;
+	int idEmpleado = 0;
+	int idSucursal = 0;
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -651,12 +651,15 @@ public class ControladorRealizarVenta {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
 		FacturaDTO ultFactura = null;
 		for(FacturaDTO f: todasLasFacturas) {
-			for(int i=0; i<f.getNroFacturaCompleta().length();i++) {
-				//si en algun caracter de la factura existe un A-B o E entonces es true
-				if(f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
-					ultFactura=f;
+			if(f.getIdSucursal() == this.idSucursal) {
+				for(int i=0; i<f.getNroFacturaCompleta().length();i++) {
+					//si en algun caracter de la factura existe un A-B o E entonces es true
+					if(f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
+						ultFactura=f;
+					}	
 				}	
 			}
+			
 			
 		}return ultFactura;		
 	}

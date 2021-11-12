@@ -72,6 +72,7 @@ public class ControladorLogin {
 
 	@SuppressWarnings("unchecked")
 	private void rellenarCombobox() {
+		this.sucursales = this.sucursal.readAll();
 		for (SucursalDTO s : sucursales) {
 			ventanaLogin.getCbSucursales().addItem(s.getNombre());
 		}

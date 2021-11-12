@@ -4,6 +4,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ import javax.swing.event.ListSelectionListener;
 import dto.MaestroProductoDTO;
 import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.MaestroProducto;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
@@ -25,6 +28,8 @@ import presentacion.vista.Supervisor.VentanaAltaProducto;
 
 public class ControladorAltaProducto {
 
+	int idSucursal = 0;
+	String tipoEmpleado = "";
 	
 	MaestroProducto maestroProducto;
 	Proveedor proveedor;
@@ -66,8 +71,22 @@ public class ControladorAltaProducto {
 		this.controladorGestionarProductos = controladorGestionarProductos;
 	}
 	
+	public void obtenerDatosPropertiesSucursalEmpleado() {
+		try {
+			sucursalProperties sucursalProp = sucursalProperties.getInstance();
+			idSucursal = Integer.parseInt(sucursalProp.getValue("IdSucursal"));
+
+			empleadoProperties empleadoProp = empleadoProperties.getInstance();
+			tipoEmpleado = empleadoProp.getValue("TipoEmpleado");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void inicializar() {
+		obtenerDatosPropertiesSucursalEmpleado();
 		this.controladorConsultarProveedor.inicializar();
 		this.ventanaAltaProducto = new VentanaAltaProducto();
 		this.todosLosProductos = this.maestroProducto.readAll();

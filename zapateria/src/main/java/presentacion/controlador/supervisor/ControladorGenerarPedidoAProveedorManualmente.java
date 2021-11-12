@@ -2,6 +2,7 @@ package presentacion.controlador.supervisor;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +16,8 @@ import dto.PedidosPendientesDTO;
 import dto.ProductoDeProveedorDTO;
 import dto.ProveedorDTO;
 import dto.StockDTO;
-
+import inicioSesion.empleadoProperties;
+import inicioSesion.sucursalProperties;
 import modelo.PedidosPendientes;
 import modelo.ProductoDeProveedor;
 import modelo.Proveedor;
@@ -50,6 +52,19 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	VentanaGenerarPedidoProveedor ventanaGenerarPedidoProveedor;
 	
 	ControladorGestionarProductos controladorGestionarProductos;
+	
+	public void setearDatosDeProperties() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			this.idSucursal = Integer.parseInt(sucu.getValue("IdSucursal"));
+			this.idEmpleado = Integer.parseInt(empleado.getValue("IdEmpleado"));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public ControladorGenerarPedidoAProveedorManualmente(Proveedor proveedor,Stock stock,PedidosPendientes pedidosPendientes,ProductoDeProveedor productoDeProveedor) {
 		this.proveedor=proveedor;
@@ -108,7 +123,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 			}
 		});
 		
-		
+		setearDatosDeProperties();
 		this.ventanaGenerarPedidoProveedor.getBtnGenerarPedido().addActionListener(a -> generarPedido());
 		validarTeclado();
 	}
@@ -426,7 +441,7 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	public boolean yaExisteUnPedidoParaEsteProducto(MaestroProductoDTO producto,ProveedorDTO prov) {
 		for(PedidosPendientesDTO pedido: this.todosLosPedidosPendientes) {
 			if(pedido.getIdMaestroProducto() == producto.getIdMaestroProducto() && prov.getId() == pedido.getIdProveedor()
-					&& (pedido.getEstado().equals("En espera") || pedido.getEstado().equals("Enviado")) ) {
+					&& (pedido.getEstado().equals("En espera") || pedido.getEstado().equals("Enviado")) && pedido.getIdSucursal() == this.idSucursal ) {
 				return true;
 			}
 		}return false;

@@ -39,7 +39,7 @@ import presentacion.vista.Supervisor.VentanaGestionarProductos;
 
 public class ControladorGestionarProductos {
 
-	public int idSucursal = 1;
+	public int idSucursal = 0;
 	static String tipoEmpleado = "";
 
 	public void obtenerDatosPropertiesSucursalEmpleado() {
@@ -246,12 +246,18 @@ public class ControladorGestionarProductos {
 				.setColumnIdentifiers(this.ventanaGestionarProductos.getNombreColumnas());
 		productosEnTabla.removeAll(productosEnTabla);
 		for(MaestroProductoDTO m: this.todosLosProductos) {
-//			if(m.getTipo().equals("PT")) {
-				agregarATabla(m);	
-//			}
+			agregarATabla(m);	
 				
 			
 		}
+	}
+	
+	public boolean sucursalVendeEsteProducto(MaestroProductoDTO m) {
+		for(StockDTO s: this.todoElStock) {
+			if(s.getIdProducto() == m.getIdMaestroProducto() && s.getIdSucursal() == this.idSucursal) {
+				return true;
+			}
+		}return false;
 	}
 	
 	public void escribirTablaFiltrada(List<MaestroProductoDTO> productosAproximados) {
@@ -261,9 +267,7 @@ public class ControladorGestionarProductos {
 		productosEnTabla.removeAll(productosEnTabla);
 		
 		for(MaestroProductoDTO m: productosAproximados) {
-//			if(m.getTipo().equals("PT")) {
-				agregarATabla(m);	
-//			}
+			agregarATabla(m);	
 			
 		}
 	}
@@ -309,7 +313,7 @@ public class ControladorGestionarProductos {
 	public BigDecimal sumarTodoElStock(MaestroProductoDTO m) {
 		BigDecimal cant=new BigDecimal(0);
 		for(StockDTO s: todoElStock) {
-			if(s.getIdProducto() == m.getIdMaestroProducto()) {
+			if(s.getIdProducto() == m.getIdMaestroProducto() && s.getIdSucursal() == this.idSucursal) {
 				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
 				cant = cant.add(stockDisp);
 			}
