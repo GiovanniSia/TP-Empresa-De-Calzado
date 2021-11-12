@@ -516,7 +516,8 @@ public class ProcesarCompraVirtual {
 		String tipoFactura = determinarCategoriaFactura(client);
 		
 		int idSucursal = compraVirtual.getIdSucursal();
-		String nroFacturaCompleto = tipoFactura+generarNroSucursal(idSucursal)+generarNroFacturaSecuencial();
+		//String nroFacturaCompleto = tipoFactura+generarNroSucursal(idSucursal)+generarNroFacturaSecuencial();	//antes
+		String nroFacturaCompleto = generarNroSucursal(idSucursal)+ tipoFactura + generarNroFacturaSecuencial(tipoFactura);
 		double descuento = 0;
 		
 		double totalBruto = calcularTotalBruto(client, compraVirtual.getPago());
@@ -642,31 +643,76 @@ public class ProcesarCompraVirtual {
 	}
 	
 	private static String generarNroSucursal(int idSucursal) {
-		String nroSucursal = ""+idSucursal;
-		String nroSucFactura=""+nroSucursal;
-		while(nroSucFactura.length() < 5) {
-			nroSucFactura = "0" + nroSucFactura;
-		}
-		return nroSucFactura;
+		Sucursal sucursala = new Sucursal(new DAOSQLFactory());
+		SucursalDTO sucursal = sucursala.select(idSucursal);
+		return sucursal.getNroSucursal();
 	}
 
-	private static String generarNroFacturaSecuencial() {
+	private static String generarNroFacturaSecuencial(String tipoFactura) {
+		/*
+				ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
+				if (todasLasFacturas.size() == 0) {
+					return "1";
+				}
+				FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size() - 1);
+				String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
+
+				String ultSec = "";
+				// damos por hecho que 1 dig sera para el tipo de factura, y 5 para el nro de
+				// sucursal
+				for (int i = 6; i < nroCompletoUlt.length(); i++) {
+					ultSec = ultSec + nroCompletoUlt.charAt(i);// obtenemos los ult 8 dig secuenciales
+				}
+				int viejoSuma = Integer.parseInt(ultSec);
+				int nuevoSec = (viejoSuma + 1);
+				return "" + nuevoSec;
+			*/
+				String nroFacturaSec="";
+				FacturaDTO ultFactura = obtenerUltFacturaParaSerie(tipoFactura);
+				
+				
+				if(ultFactura!=null) {
+					//si ya existe entonces hay que buscar el utimo y sumarle +1
+					
+					int longitudFactura= ultFactura.getNroFacturaCompleta().length();
+					for(int i=8 ; i>=1 ; i--) {
+						nroFacturaSec = nroFacturaSec + ultFactura.getNroFacturaCompleta().charAt(longitudFactura-i);
+					}
+					int suma = Integer.parseInt(nroFacturaSec) + 1;
+					nroFacturaSec = suma+"";
+					if(nroFacturaSec.length()<8) {
+						while(nroFacturaSec.length()<8) {
+							nroFacturaSec = "0"+nroFacturaSec;
+						}
+						return nroFacturaSec;
+						
+						
+					}else {
+						return nroFacturaSec;
+					}
+					
+				}else {
+					//si no existe hay que crear uno nuevo. Ej 00000001
+					for(int i=1; i<=7;i++) {
+						nroFacturaSec=nroFacturaSec+0;
+					}
+					return nroFacturaSec+"1";
+				}
+			}
+	
+	private static FacturaDTO obtenerUltFacturaParaSerie(String tipoFactura) {
 		Factura factura = new Factura(new DAOSQLFactory());
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) factura.readAll();
-		if(todasLasFacturas.size()==0) {
-			return "1";
-		}
-		FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size()-1);
-		String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
-		
-		String ultSec="";
-		//damos por hecho que 1 dig sera para el tipo de factura, y 5 para el nro de sucursal
-		for(int i=6; i<nroCompletoUlt.length() ; i++) {
-			ultSec = ultSec+ nroCompletoUlt.charAt(i);//obtenemos los ult 8 dig secuenciales
-		}
-		int viejoSuma = Integer.parseInt(ultSec);
-		int nuevoSec = (viejoSuma+1);
-		return ""+nuevoSec;
+		FacturaDTO ultFactura = null;
+		for(FacturaDTO f: todasLasFacturas) {
+			for(int i=0; i<f.getNroFacturaCompleta().length();i++) {
+				//si en algun caracter de la factura existe un A-B o E entonces es true
+				if(f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
+					ultFactura=f;
+				}	
+			}
+			
+		}return ultFactura;		
 	}
 	
 	private static boolean deboCalcularIVA(ClienteDTO cliente) {

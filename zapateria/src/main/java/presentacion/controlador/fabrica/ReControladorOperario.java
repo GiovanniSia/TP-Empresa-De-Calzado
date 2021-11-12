@@ -213,6 +213,7 @@ public class ReControladorOperario implements ActionListener {
 		ventanaElegirReceta = new ReVentanaSeleccionarUnaReceta();
 		ventanaElegirReceta.getComboBox().addActionListener(r->botonSeleccionarReceta(r));
 		ventanaElegirReceta.getBtnTrabajar().addActionListener(r->crearTrabajo(r));
+		ventanaElegirReceta.getBtnAtras().addActionListener(r->cerrarVentanaSeleccionarReceta(r));
 		
 		ventanaUnaTrabajo = new ReVentanaTrabajarUnPedido();
 		ventanaUnaTrabajo.getBtnAvanzarUnPaso().addActionListener(r->avanzarUnPaso(r));
@@ -261,6 +262,10 @@ public class ReControladorOperario implements ActionListener {
         });
         
         
+	}
+
+	private void cerrarVentanaSeleccionarReceta(ActionEvent r) {
+		ventanaElegirReceta.cerrar();
 	}
 
 	private void verHistorialPasos(ActionEvent r) {
@@ -814,7 +819,8 @@ public class ReControladorOperario implements ActionListener {
 				String cantUsarXunidad = cantidad+"";
 				
 				//String cantUsada = (p.getPasosDTO().getCantidadUsada().get(x)*this.ordenSeleccionado.getCantidad())+"";	//ANTES DEL BIGDECIMAL
-				BigDecimal cantidad2 = new BigDecimal(p.getPasosDTO().getCantidadUsada().get(x)).setScale(2, RoundingMode.HALF_UP);;
+				BigDecimal cantidad2 = new BigDecimal(this.ordenSeleccionado.getCantidad()).setScale(2, RoundingMode.HALF_UP);;
+				cantidad2 = cantidad2.multiply(cantidad).setScale(2, RoundingMode.HALF_UP);;
 				String cantUsada = cantidad2+"";
 				
 				//String cantActual = this.cantidadEnStock(p.getPasosDTO().getMateriales().get(x))+"";	//ANTES DEL BIGDECIMAL

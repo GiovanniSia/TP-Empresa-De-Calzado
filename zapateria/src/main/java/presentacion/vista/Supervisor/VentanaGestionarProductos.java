@@ -291,10 +291,10 @@ private static final long serialVersionUID = 1L;
 		lblTitulo.setText("Ver y Ordenar Productos");
 		btnAgregarProducto.setVisible(false);
 		btnGenerarOrdenDeManufactura.setVisible(true);
-		btnGenerarPedido.setVisible(false);
+		btnGenerarPedido.setVisible(true);
 		btnAtras.setVisible(true);
 		lblAgregarProducto.setVisible(false);
-		lblAtrs_2.setVisible(false);
+		lblAtrs_2.setVisible(true);
 	}
 	
 

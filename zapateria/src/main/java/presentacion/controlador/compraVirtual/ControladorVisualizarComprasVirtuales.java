@@ -120,6 +120,7 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 			    });
 		checkBoxCanceladoGeneral(ventanaPrincipal.getChckbxCancelados());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorSucursal());
+		ventanaPrincipal.getChckbxErrorSucursal().setVisible(false);
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorCorreo());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorPais());
 		agregarRefrescarTablaACheckBox(ventanaPrincipal.getChckbxErrorProvincia());

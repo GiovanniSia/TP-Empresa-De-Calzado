@@ -39,6 +39,8 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 	private JLabel lblFecha;
 	private JPanel panel_1;
 	private JLabel lblNewLabel_1;
+	
+	private JButton btnAtras ;
 
 	public ReVentanaSeleccionarUnaReceta() {
 		initialize();
@@ -113,7 +115,7 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 		lblNewLabel_1.setBounds(517, 337, 137, 60);
 		panel.add(lblNewLabel_1);
 		
-		JButton btnAtras = new JButton("");
+		btnAtras = new JButton("");
 		btnAtras.setBounds(304, 337, 60, 60);
 		cambiarIconoBotones(btnAtras,  "back2.png");
 		panel.add(btnAtras);
@@ -205,5 +207,9 @@ public class ReVentanaSeleccionarUnaReceta extends JFrame {
 
 	public JLabel getLblFecha() {
 		return lblFecha;
+	}
+
+	public JButton getBtnAtras() {
+		return btnAtras;
 	}
 }
