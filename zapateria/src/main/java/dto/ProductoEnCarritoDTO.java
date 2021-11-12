@@ -3,9 +3,9 @@ package dto;
 public class ProductoEnCarritoDTO {
 	MaestroProductoDTO producto;
 	StockDTO stock;
-	int cantidad;
+	double cantidad;
 	
-	public ProductoEnCarritoDTO(MaestroProductoDTO producto, StockDTO stock, int cantidad) {
+	public ProductoEnCarritoDTO(MaestroProductoDTO producto, StockDTO stock, double cantidad) {
 		super();
 		this.producto = producto;
 		this.stock=stock;
@@ -20,7 +20,7 @@ public class ProductoEnCarritoDTO {
 		return this.stock;
 	}
 
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
 	

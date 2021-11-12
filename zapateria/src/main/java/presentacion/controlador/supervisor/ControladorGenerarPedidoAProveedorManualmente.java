@@ -368,20 +368,20 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 //	    System.out.println("cantidad total total: "+auxSuma);
 	    String aux = ""+auxSuma;
 //	    System.out.println("stock total seria: "+aux);
-	    if(aux.length()>20) {
+	    if(auxSuma.doubleValue() > Double.MAX_VALUE) {
 	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;		
 	    }
 	    
 	    
 	    String auxPrecio = precioTotal+"";
-	    if(auxPrecio.length()>20) {
+	    if(precioTotal.doubleValue() > Double.MAX_VALUE) {
 			JOptionPane.showMessageDialog(null, "El precio total supera la cantidad de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;	
 	    }
 	    
 	    String auxPrecioUnidad = precioUnidad+"";
-	    if(auxPrecioUnidad.length()>20) {
+	    if(precioUnidad.doubleValue() > Double.MAX_VALUE) {
 	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;			
 	    }

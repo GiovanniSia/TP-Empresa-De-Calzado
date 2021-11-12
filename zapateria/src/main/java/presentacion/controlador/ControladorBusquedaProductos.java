@@ -333,7 +333,7 @@ public class ControladorBusquedaProductos {
 		
 	}
 	
-	public void modificarCantStock(MaestroProductoDTO producto, int IdStock, int cant) {
+	public void modificarCantStock(MaestroProductoDTO producto, int IdStock, double cant) {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==producto.getIdMaestroProducto() && IdStock == s.getIdStock()) {
 				Double valor = s.getStockDisponible()+cant;
@@ -357,7 +357,7 @@ public class ControladorBusquedaProductos {
 				total = m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
 			BigDecimal b = new BigDecimal(total);
-			int cantObj = m.getCantidad();
+			BigDecimal cantObj = new BigDecimal(m.getCantidad());
 			
 			String codLote = m.getStock().getCodigoLote();
 			String talle = m.getProducto().getTalle();
@@ -416,7 +416,7 @@ public class ControladorBusquedaProductos {
 		}
 		
 		//dado el spinner si el nuevo valor es menor que la cant del carrito significa que se le resta al carrito (se le suma al stock original), si es mayor se le suma uno al carrito (se le descuenta al stock original)
-		int diferencia = productoEnCarrito.getCantidad() - valorDelSpinner;
+		double diferencia = productoEnCarrito.getCantidad() - valorDelSpinner;
 		
 		modificarCantStock(productoEnCarrito.getProducto(),productoEnCarrito.getStock().getIdStock(),diferencia);
 
@@ -506,7 +506,7 @@ public class ControladorBusquedaProductos {
 		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 			int idProducto = compra.getProducto().getIdMaestroProducto();
 			int idStock = compra.getStock().getIdStock();
-			int cant = compra.getCantidad();
+			double cant = compra.getCantidad();
 			double precio;
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
 				precio = compra.getProducto().getPrecioMayorista() * compra.getCantidad();

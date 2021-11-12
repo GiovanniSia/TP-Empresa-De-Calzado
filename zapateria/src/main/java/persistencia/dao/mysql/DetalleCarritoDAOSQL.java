@@ -30,7 +30,7 @@ public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 			statement.setInt(2, detalle.getIdCarrito());
 			statement.setInt(3, detalle.getIdProducto());
 			statement.setInt(4, detalle.getIdStock());
-			statement.setInt(5, detalle.getCantidad());
+			statement.setDouble(5, detalle.getCantidad());
 			statement.setDouble(6, detalle.getPrecio());	
 
 			if (statement.executeUpdate() > 0) {
@@ -89,7 +89,7 @@ public class DetalleCarritoDAOSQL implements DetalleCarritoDAO{
 		int idCarrito = resultSet.getInt("idCarrito");
 		int idProducto = resultSet.getInt("idProducto");
 		int idStock = resultSet.getInt("idStock");
-		int cant = resultSet.getInt("cantidad");
+		Double cant = resultSet.getDouble("cantidad");
 		double precio = resultSet.getDouble("precio");
 		
 		return new DetalleCarritoDTO(id,idCarrito,idProducto,idStock,cant, precio);

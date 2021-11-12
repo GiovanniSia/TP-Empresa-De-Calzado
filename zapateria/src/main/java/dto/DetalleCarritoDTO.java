@@ -2,10 +2,11 @@ package dto;
 
 public class DetalleCarritoDTO {
 	
-	int id, idCarrito, idProducto, idStock, cantidad;
+	int id, idCarrito, idProducto, idStock;
+	double cantidad;
 	double precio;
 
-	public DetalleCarritoDTO(int id, int idCarrito, int idProducto, int idStock , int cantidad, double precio) {
+	public DetalleCarritoDTO(int id, int idCarrito, int idProducto, int idStock , double cantidad, double precio) {
 		super();
 		this.id = id;
 		this.idCarrito = idCarrito;
@@ -31,7 +32,7 @@ public class DetalleCarritoDTO {
 		return idStock;
 	}
 	
-	public int getCantidad() {
+	public double getCantidad() {
 		return this.cantidad;
 	}
 	

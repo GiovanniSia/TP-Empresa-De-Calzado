@@ -257,7 +257,7 @@ public class ControladorVisualizarCarritos {
 					&& carritoSeleccionado.getIdSucursal() == this.idSucursal) {
 				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
-				int cant = detalleCar.getCantidad();
+				BigDecimal cant = new BigDecimal(detalleCar.getCantidad());
 				double p = detalleCar.getPrecio();
 				BigDecimal precio = new BigDecimal(p);
 

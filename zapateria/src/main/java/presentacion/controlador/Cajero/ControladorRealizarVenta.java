@@ -549,7 +549,7 @@ public class ControladorRealizarVenta {
 		for (DetalleCarritoDTO detalleCarrito : this.detalleCarritoACobrar) {
 			int id = 0;
 			int idProd = detalleCarrito.getIdProducto();
-			int cant = detalleCarrito.getCantidad();
+			int cant = (int) detalleCarrito.getCantidad();
 			MaestroProductoDTO producto = this.maestroProducto.selectMaestroProducto(idProd);
 			String descr = producto.getDescripcion();
 			double precioCosto = producto.getPrecioCosto();
