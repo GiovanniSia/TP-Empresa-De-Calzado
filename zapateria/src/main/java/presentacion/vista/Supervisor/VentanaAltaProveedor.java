@@ -119,7 +119,7 @@ public class VentanaAltaProveedor {
 		textCorreo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCorreo.getText().length() >= 25) {
+				if (textCorreo.getText().length() >= 30) {
 					e.consume();
 				}
 			}

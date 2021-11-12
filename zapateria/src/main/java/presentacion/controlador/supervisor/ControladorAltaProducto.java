@@ -163,6 +163,8 @@ public class ControladorAltaProducto {
 	public void salir() {
 		this.ventanaAltaProducto.cerrar();
 		this.productoAEditar = null;
+		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+		this.productoDeProveedorEnTabla.removeAll(this.productoDeProveedorEnTabla);
 		this.controladorGestionarProductos.inicializar();
 		this.controladorGestionarProductos.mostrarVentana();
 	}
@@ -315,8 +317,11 @@ public class ControladorAltaProducto {
 			asignarProveedoresAProducto();
 			
 			JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
+			this.productoAEditar = null;
+			this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+			this.productoDeProveedorEnTabla.removeAll(this.productoDeProveedorEnTabla);
 			borrarDatosEscritos();
-			
+			salir();
 		}
 	}
 	
@@ -765,6 +770,9 @@ public class ControladorAltaProducto {
 			//agregamos los nuevos si no existen, si ya existian no se agregan
 //			asignarProveedoresAProducto();
 			this.todosLosProductosDeProveedores = this.productoDeProveedor.readAll();
+			this.productoAEditar = null;
+			this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
+			this.productoDeProveedorEnTabla.removeAll(this.productoDeProveedorEnTabla);
 //			borrarDatosEscritos();		
 			salir();	
 		}
