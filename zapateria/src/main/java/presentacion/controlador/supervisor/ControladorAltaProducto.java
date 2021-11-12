@@ -759,10 +759,34 @@ public class ControladorAltaProducto {
 			}else {
 				JOptionPane.showMessageDialog(null, "Producto editado con exito");
 			}
+			//borramos los que estan de mas
+			actualizarProveedoresDeProducto();
+			//agregamos los nuevos si no existen, si ya existian no se agregan
 			asignarProveedoresAProducto();
 			this.todosLosProductosDeProveedores = this.productoDeProveedor.readAll();
 //			borrarDatosEscritos();		
 			salir();	
+		}
+	}
+
+	public void actualizarProveedoresDeProducto() {
+		ArrayList<ProductoDeProveedorDTO> proveedoresDeProductoPrevio = new ArrayList<ProductoDeProveedorDTO>();
+		for(ProductoDeProveedorDTO pp: this.todosLosProductosDeProveedores) {
+			//no se si faltará un if mas :(
+			if(pp.getIdMaestroProducto()==this.productoAEditar.getIdMaestroProducto()) {
+				proveedoresDeProductoPrevio.add(pp);
+			}
+		}
+		//this.productoDeProveedorEnTabla son los prodDeProv que quedarian en la tabla luego del editar
+		for(ProductoDeProveedorDTO prv: proveedoresDeProductoPrevio) {
+			boolean existe = false;
+			for(ProductoDeProveedorDTO pp: this.productoDeProveedorEnTabla) {	
+				existe = existe || pp.getId() == prv.getId();
+			}
+			if(!existe) {
+				this.productoDeProveedor.delete(prv);
+			}
+			existe = false;
 		}
 		
 	}

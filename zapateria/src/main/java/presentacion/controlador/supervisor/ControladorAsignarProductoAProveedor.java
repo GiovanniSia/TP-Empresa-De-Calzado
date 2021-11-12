@@ -65,6 +65,7 @@ public class ControladorAsignarProductoAProveedor {
 		this.ventanaAsignarProductoAProveedor.getBtnQuitar().addActionListener(a -> quitarProductoAProveedor(a));
 		
 		this.ventanaAsignarProductoAProveedor.getBtnModificarCantidadPorLote().addActionListener(a -> modificarCantidadPorLote(a));
+		this.ventanaAsignarProductoAProveedor.getBtnModificarPrecioDe().addActionListener(a -> modificarPrecioDeLote(a));
 		
 		this.ventanaAsignarProductoAProveedor.getBtnSalir().addActionListener(a -> salir(a));
 		
@@ -383,8 +384,8 @@ public class ControladorAsignarProductoAProveedor {
 	    if(resp==null && valorNuevo==0) {
 	    	return;
 	    }
-//	    proveedor
-	    boolean update = this.productoDeProveedor.updateCantidadPorLote(valorNuevo, proveedorSeleccionado.getId());
+	    proveedorSeleccionado.setCantidadPorLote(valorNuevo);
+	    boolean update = this.productoDeProveedor.update(proveedorSeleccionado, proveedorSeleccionado.getId());
 	    if(!update) {
 	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el nuevo valor");
 	    }else {
@@ -392,7 +393,53 @@ public class ControladorAsignarProductoAProveedor {
 	    }
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 		llenarTablaProductosDelProveedor();
-	    
+	}
+	
+	public void modificarPrecioDeLote(ActionEvent a) {
+		int filaSeleccionada = this.ventanaAsignarProductoAProveedor.getTableProdDeProv().getSelectedRow();
+		if(filaSeleccionada==-1) {
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto");
+			return;
+		}
+		ProductoDeProveedorDTO proveedorSeleccionado = this.productosDeProveedorEnTabla.get(filaSeleccionada);
+		int valorNuevo=0;
+		String resp=null;
+		boolean repetir = true;
+	    while (repetir) {
+	    	
+	    	try {
+	    		resp=JOptionPane.showInputDialog("Ingrese el nuevo precio del lote (cantidad maxima de caracteres 20)");
+	    		if(resp==null) {
+	    			repetir=false;
+	    			
+	    		}else {
+	    			valorNuevo = Integer.parseInt(resp);
+	    			if(resp.length()<=20 && valorNuevo>0)  {
+	    				repetir = false;
+	    			}else {
+	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
+	    			}
+		            
+	    		}
+	    	 }
+	    	 catch(HeadlessException | NumberFormatException e) {
+	    		    		 
+	    		 JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+//	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
+	         }
+	    }
+	    if(resp==null && valorNuevo==0) {
+	    	return;
+	    }
+	    proveedorSeleccionado.setPrecioVenta(valorNuevo);
+	    boolean update = this.productoDeProveedor.update(proveedorSeleccionado, proveedorSeleccionado.getId());
+	    if(!update) {
+	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el nuevo valor");
+	    }else {
+	    	JOptionPane.showMessageDialog(null, "Nuevo valor actualizado con exito");
+	    }
+		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
+		llenarTablaProductosDelProveedor();
 	}
 	
 }

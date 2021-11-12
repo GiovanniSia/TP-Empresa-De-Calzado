@@ -26,6 +26,10 @@ public class ProductoDeProveedor {
 		return this.productoDeProveedor.readAll();
 	}
 	
+	public boolean update(ProductoDeProveedorDTO producto,int id) {
+		return this.productoDeProveedor.update(producto, id);
+	}
+	
 	public boolean updateCantidadPorLote(double cantidad,int id) {
 		return this.productoDeProveedor.updateCantidadPorLote(cantidad, id);
 	}

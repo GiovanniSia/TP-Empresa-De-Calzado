@@ -13,4 +13,6 @@ public interface ProductoDeProveedorDAO {
 	public List<ProductoDeProveedorDTO> readAll();
 	
 	public boolean updateCantidadPorLote(double cantidad,int id); 
+	
+	public boolean update(ProductoDeProveedorDTO producto, int id);
 }
