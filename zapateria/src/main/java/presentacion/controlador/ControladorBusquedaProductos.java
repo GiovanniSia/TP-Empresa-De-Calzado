@@ -131,7 +131,7 @@ public class ControladorBusquedaProductos {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().getSelectedRow();
 				if(filaSeleccionada==-1) return;
 //				//cuando se clickea en la tabla, se actualiza el spinner
-				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+				vistaBusquedaProductos.getSpinnerCarrito().setValue((int) productosEnCarrito.get(filaSeleccionada).getCantidad()); 
 			}
 			
 		});
