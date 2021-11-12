@@ -103,6 +103,7 @@ public class ControladorGestionarProductos {
 			mostrarVentanaParaVerProductosYOrdenDeManufactura();
 			this.ventanaGestionarProductos.getBtnGenerarOrdenDeManufactura()
 			.addActionListener(a -> generarOrdenDeManufactura());
+			this.ventanaGestionarProductos.getBtnGenerarPedido().addActionListener(a -> pasarAGenerarPedido());
 		}else{
 			
 			this.ventanaGestionarProductos.getBtnAgregarProducto().addActionListener(a -> pasarAAgregarProducto(a));
