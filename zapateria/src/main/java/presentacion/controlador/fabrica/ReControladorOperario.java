@@ -143,6 +143,7 @@ public class ReControladorOperario implements ActionListener {
 		
 		ventanaPrincipal = new ReVentanaVerFabricaciones();
 		ventanaPrincipal.getBtnVerHistorialPasos().addActionListener(r-> verHistorialPasos(r));
+		this.ventanaPrincipal.getBtnVerMateriales().addActionListener(r->verMateriales(r));
 
 	}
 
@@ -240,6 +241,10 @@ public class ReControladorOperario implements ActionListener {
 			this.ventanaPrincipal.getBtnVerHistorialPasos().setVisible(false);
 			this.ventanaPrincipal.getLblHistorial().setVisible(false);
 		}
+		if(this.empleado.getTipoEmpleado().toLowerCase().equals("gerente")) {
+			this.ventanaPrincipal.getBtnVerMateriales().setVisible(false);
+			this.ventanaPrincipal.getLblMateriales().setVisible(false);
+		}
 		
 		this.ventanaPrincipal.getTablaFabricacionesEnMarcha().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ListSelectionModel rowSMProducto = this.ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectionModel();
@@ -254,8 +259,10 @@ public class ReControladorOperario implements ActionListener {
             }
 
         });
+        
+        
 	}
-	
+
 	private void verHistorialPasos(ActionEvent r) {
 		ventanaPrincipal.cerrar();
 		/*
@@ -1200,6 +1207,12 @@ public class ReControladorOperario implements ActionListener {
             }
         });
     }
+	
+	private void verMateriales(ActionEvent r) {
+		this.ventanaPrincipal.cerrar();
+		ControladorVerMateriales control = new ControladorVerMateriales(this.fabrica, this.controlador, this);
+		control.inicializar();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

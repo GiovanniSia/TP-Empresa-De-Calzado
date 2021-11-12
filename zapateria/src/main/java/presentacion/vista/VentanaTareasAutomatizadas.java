@@ -42,6 +42,11 @@ public class VentanaTareasAutomatizadas {
 
 
 	private JButton btnRegresar;
+	
+	JLabel lblComprasVirtuales;	
+	JLabel lblNewLabel_2;
+	JLabel lblNewLabel_1_1;
+	JLabel lblNewLabel_1;
 	/**
 	 * Launch the application.
 	 */
@@ -99,7 +104,7 @@ public class VentanaTareasAutomatizadas {
 		panelParametros.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		
-		JLabel lblComprasVirtuales = new JLabel("Compras Virtuales");
+		lblComprasVirtuales = new JLabel("Compras Virtuales");
 		lblComprasVirtuales.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		lblComprasVirtuales.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComprasVirtuales.setBounds(10, 36, 294, 50);
@@ -121,20 +126,20 @@ public class VentanaTareasAutomatizadas {
 		lblALas.setBounds(368, 174, 109, 28);
 		panelParametros.add(lblALas);
 				
-		JLabel lblNewLabel_1 = new JLabel();
+		lblNewLabel_1 = new JLabel();
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(20, 96, 197, 93);
 		lblNewLabel_1.setText("<html>"+"Tolerancia de desfasaje entre precio de compra y precio de venta"+"<html>");
 		panelParametros.add(lblNewLabel_1);
-				
-		JLabel lblNewLabel_2 = new JLabel("%");
+
+		lblNewLabel_2 = new JLabel("%");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblNewLabel_2.setBounds(284, 123, 29, 35);
 		panelParametros.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_1_1 = new JLabel();
+		lblNewLabel_1_1 = new JLabel();
 		lblNewLabel_1_1.setText("<html>Procesar compras virtuales cada: <html>");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -235,7 +240,7 @@ public class VentanaTareasAutomatizadas {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "�Est�s seguro que quieres salir?. Se perder� todos los progresos que se hayan realizado", 
+		             null, "Estas seguro que quieres salir?. Se perderan todos los progresos que se hayan realizado", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {
@@ -291,5 +296,23 @@ public class VentanaTareasAutomatizadas {
 	public JFrame getFrame() {
 		return frame;
 	}
+
+	public JLabel getLblComprasVirtuales() {
+		return lblComprasVirtuales;
+	}
+
+	public JLabel getLblNewLabel_2() {
+		return lblNewLabel_2;
+	}
+
+	public JLabel getLblNewLabel_1_1() {
+		return lblNewLabel_1_1;
+	}
+
+	public JLabel getLblNewLabel_1() {
+		return lblNewLabel_1;
+	}
+	
+	
 }
 

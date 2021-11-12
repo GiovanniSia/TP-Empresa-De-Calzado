@@ -59,7 +59,9 @@ public class ReVentanaVerFabricaciones extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel_1;
 	private JLabel lblEmpleado;
+	private JButton btnVerMateriales;
 	
+	JLabel lblMateriales;
 
 	public ReVentanaVerFabricaciones() {
 		initialize();
@@ -77,6 +79,16 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
+		
+		lblMateriales = new JLabel("Materiales");
+		lblMateriales.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblMateriales.setBounds(250, 458, 90, 60);
+		frame.getContentPane().add(lblMateriales);
+		
+		btnVerMateriales = new JButton("");
+		btnVerMateriales.setBounds(180, 458, 60, 60);
+		frame.getContentPane().add(btnVerMateriales);
+		cambiarIconoBotones(btnVerMateriales,  "product.png");
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
@@ -219,12 +231,12 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		panel_1.add(lblEmpleado);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(151, 458, 60, 60);
+		btnSalir.setBounds(10, 458, 60, 60);
 		frame.getContentPane().add(btnSalir);
 		cambiarIconoBotones(btnSalir,  "back2.png");
 		
 				JLabel lblAtras = new JLabel("Atras");
-				lblAtras.setBounds(221, 458, 90, 60);
+				lblAtras.setBounds(80, 458, 90, 60);
 				frame.getContentPane().add(lblAtras);
 				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 				
@@ -365,5 +377,13 @@ public class ReVentanaVerFabricaciones extends JFrame {
 
 	public JLabel getLblHistorial() {
 		return lblHistorial;
+	}
+
+	public JButton getBtnVerMateriales() {
+		return btnVerMateriales;
+	}
+
+	public JLabel getLblMateriales() {
+		return lblMateriales;
 	}
 }

@@ -419,6 +419,7 @@ public class Controlador {
 		// Gestionar recetas y pasos
 		this.controladorVerPasos = new ControladorVerPasos();
 		this.controladorVerPasos.setControlador(this);
+		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
 
 	}
 
@@ -791,6 +792,7 @@ public class Controlador {
 		this.ventanaSupervisorFabrica.getBtnGestionarRecetasYPasos()
 				.addActionListener(a -> pasarAGestionarRecetasYPasos(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		this.ventanaSupervisorFabrica.getBtnParametrosEnvioProveedor().addActionListener(a -> pasarAConfig(a));;
 	}
 
 	public void obtenerDatosPropertiesSucursal() {

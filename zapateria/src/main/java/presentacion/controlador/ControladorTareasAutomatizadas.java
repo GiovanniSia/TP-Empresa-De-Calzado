@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import inicioSesion.empleadoProperties;
 import modelo.ConfiguracionBD;
 import presentacion.vista.VentanaTareasAutomatizadas;
 
@@ -25,6 +26,24 @@ public class ControladorTareasAutomatizadas {
 		this.ventanaTareasAutomatizadas.getBtnRegresar().addActionListener(a -> salir(a));
 		this.controlador = controlador;
 		this.ventanaTareasAutomatizadas.getBtnActualizar().addActionListener(a -> actualizarValores(a));
+		
+		try {
+			if(empleadoProperties.getInstance().getValue("TipoEmpleado").toLowerCase().equals("supervisor de fabrica")) {
+				ocultarConfiguracionCompraVirtual();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void ocultarConfiguracionCompraVirtual() {
+		this.ventanaTareasAutomatizadas.getComboBoxFrecuenciaProcesamientoCompraVirtuales().setVisible(false);
+		this.ventanaTareasAutomatizadas.getSpinnerTolerancia().setVisible(false);
+		this.ventanaTareasAutomatizadas.getLblComprasVirtuales().setVisible(false);
+		this.ventanaTareasAutomatizadas.getLblNewLabel_1_1().setVisible(false);
+		this.ventanaTareasAutomatizadas.getLblNewLabel_2().setVisible(false);
+		this.ventanaTareasAutomatizadas.getLblNewLabel_1().setVisible(false);
 	}
 	
 	public void inicializar() {
