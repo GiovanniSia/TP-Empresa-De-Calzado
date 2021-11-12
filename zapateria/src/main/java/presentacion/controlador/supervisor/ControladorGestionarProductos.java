@@ -295,8 +295,8 @@ public class ControladorGestionarProductos {
 		int diasARep = m.getDiasParaReponer();
 		
 //		BigDecimal cantStockDisp = obtenerCantidadStockDisp(m);
-		BigDecimal cantStockDisp = new BigDecimal( Stock.cantidadTotalDeStock(m));
-//		BigDecimal cantStockDisp = sumarTodoElStock(m);
+//		BigDecimal cantStockDisp = new BigDecimal( Stock.cantidadTotalDeStock(m));
+		BigDecimal cantStockDisp = sumarTodoElStock(m);
 		
 		Object[] fila = { id,nombre,cantStockDisp,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
@@ -311,7 +311,7 @@ public class ControladorGestionarProductos {
 		for(StockDTO s: todoElStock) {
 			if(s.getIdProducto() == m.getIdMaestroProducto()) {
 				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
-				cant.add(stockDisp);
+				cant = cant.add(stockDisp);
 			}
 		}return cant;
 	}

@@ -353,9 +353,12 @@ public class ControladorVerPedidosAProveedor {
 	    String hora = tf.format(LocalDateTime.now());
 		
 	    
-	    Double cantidadDeStockDisp = getStockDisponible(pedidoSeleccionado.getIdMaestroProducto());
+//	    Double cantidadDeStockDisp = getStockDisponible(pedidoSeleccionado.getIdMaestroProducto());
+	    BigDecimal cantidadDeStockDisp = sumarTodoElStock(pedidoSeleccionado.getIdMaestroProducto());
+	    BigDecimal cantidadPedido = new BigDecimal(pedidoSeleccionado.getCantidad());
+	    BigDecimal stockAct = cantidadDeStockDisp.add(cantidadPedido); 
 		
-		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+cantidadDeStockDisp+" -> Stock actualizado: "+(cantidadDeStockDisp+pedidoSeleccionado.getCantidad()), "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		int resp = JOptionPane.showConfirmDialog(null, "Esta seguro que desea marcar el pedido como completado?.\nSe aumentara el stock de: "+pedidoSeleccionado.getNombreMaestroProducto()+" "+pedidoSeleccionado.getUnidadMedida()+"\nStock previo: "+cantidadDeStockDisp+" -> Stock actualizado: "+stockAct, "Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if(resp==0) {
 			boolean update = this.pedidosPendientes.finalizarPedido("Recibido", fecha, hora, pedidoSeleccionado.getId());
@@ -412,7 +415,15 @@ public class ControladorVerPedidosAProveedor {
 		return cant;
 	}
 	
-	
+	public BigDecimal sumarTodoElStock(int idMP) {
+		BigDecimal cant=new BigDecimal(0);
+		for(StockDTO s: listaStock) {
+			if(s.getIdProducto() == idMP) {
+				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
+				cant = cant.add(stockDisp);
+			}
+		}return cant;
+	}
 	
 	
 	public void llenarComboBoxes() {
