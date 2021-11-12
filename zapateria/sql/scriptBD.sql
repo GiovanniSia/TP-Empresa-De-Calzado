@@ -678,9 +678,9 @@ insert into ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',10
 insert into ingresos values (2,2,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
 insert into ingresos values (3,3,'2021-10-16','12:20','VT',2,'A','aaaa','USD',100,3,'',300);
 
-insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','B123400000001',1,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','B123400000002',2,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','B123400000003',3,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','1234B00000001',1,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','1234B00000002',2,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','1234B00000003',3,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 
 INSERT INTO empleados VALUES(1,"123","Pepe","Perez","pepe@gmail.com","Cajero",aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (2, 512,'Juan','Vera','juan@gmail.com','Vendedor',aes_encrypt('1234','AES'));
