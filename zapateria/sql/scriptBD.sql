@@ -586,18 +586,18 @@ insert into proveedor values(2,"Adida","zapateriaargento198@gmail.com",3000);
 insert into proveedor values(3,"Rebuk","zapateriaargento198@gmail.com",200);
 insert into proveedor values(4,"ProveedorX","zapateriaargento198@gmail.com",2000);
 
-INSERT INTO stock VALUES(1,1,1,"ASDF1111",2000);
-INSERT INTO stock VALUES(2,1,2,"ASDF2122",2000);
-INSERT INTO stock VALUES(3,3,3,"ASDF5325",2000);
-INSERT INTO stock VALUES(4,2,2,"ASDF1325",4000);
-INSERT INTO stock VALUES(5,1,5,"ASDF5511325",4000);
-INSERT INTO stock VALUES(6,1,6,"ASDF55325",55000);
+INSERT INTO stock VALUES(1,2,1,"ASDF1111",2000);
+INSERT INTO stock VALUES(2,2,2,"ASDF2122",2000);
+INSERT INTO stock VALUES(3,4,3,"ASDF5325",2000);
+INSERT INTO stock VALUES(4,3,2,"ASDF1325",4000);
+INSERT INTO stock VALUES(5,2,5,"ASDF5511325",4000);
+INSERT INTO stock VALUES(6,2,6,"ASDF55325",55000);
 
 insert into stock values(8,1,7,'LOTECREADOAMANO2',350);
 insert into stock values(9,1,8,'LOTECREADOAMANO3',400);
 insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
 
-INSERT INTO stock VALUES(11,1,10,"ASDF11111",1000);
+INSERT INTO stock VALUES(11,2,10,"ASDF11111",1000);
 
 
 insert into clientes values(1, "Consumidor Final", "","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
@@ -667,12 +667,12 @@ insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
 insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
 insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
 */
-
-INSERT INTO sucursales VALUES(1, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines","1234");
-INSERT INTO sucursales VALUES(2, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","1234");
-insert into sucursales values(3,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"1234");
-insert into sucursales values(4,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"1234");
-insert into sucursales values(5,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"1234");
+insert into sucursales values(1, '14513123','Juan doming.','596','BSAS','TORTGUITAS','ARG','1234','La fabrica',"0000");
+INSERT INTO sucursales VALUES(2, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines","1234");
+INSERT INTO sucursales VALUES(3, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","1234");
+insert into sucursales values(4,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"1234");
+insert into sucursales values(5,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"1234");
+insert into sucursales values(6,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"1234");
 
 insert into ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',1000);
 insert into ingresos values (2,2,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
