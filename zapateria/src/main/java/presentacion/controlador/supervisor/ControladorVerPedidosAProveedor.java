@@ -388,7 +388,8 @@ public class ControladorVerPedidosAProveedor {
 		
 		
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
-		llenarTablaCompleta();
+//		llenarTablaCompleta();
+		realizarBusqueda();
 		
 	}
 	
@@ -415,7 +416,7 @@ public class ControladorVerPedidosAProveedor {
 	
 	
 	public void llenarComboBoxes() {
-		String[] estados = {"En espera","Recibido","Pagado","Cancelado"};
+		String[] estados = {"En espera","Enviado","Recibido","Pagado","Cancelado"};
 		for(int i=0; i<estados.length; i++) {
 			this.ventanaVerPedidosAProveedor.getComboBoxEstado().addItem(estados[i]);
 		}

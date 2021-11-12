@@ -294,7 +294,8 @@ public class ControladorGestionarProductos {
 		int cantARep = m.getCantidadAReponer();
 		int diasARep = m.getDiasParaReponer();
 		
-		Double cantStockDisp = obtenerCantidadStockDisp(m);
+//		BigDecimal cantStockDisp = obtenerCantidadStockDisp(m);
+		double cantStockDisp = Stock.cantidadTotalDeStock(m);
 		
 		Object[] fila = { id,nombre,cantStockDisp,tipo,propio,costoProduccion,precioMayo,precioMino,puntoRepMin,idProv,talle,medida,estado,cantARep,diasARep};
 		this.ventanaGestionarProductos.getModelProductos().addRow(fila);
@@ -304,15 +305,16 @@ public class ControladorGestionarProductos {
 
 	}
 	
-	public Double obtenerCantidadStockDisp(MaestroProductoDTO prod) {
-		Double cant=0.0;
-		for(StockDTO s: this.todoElStock) {
-			if(s.getIdProducto() == prod.getIdMaestroProducto()) {
-				cant = cant + s.getStockDisponible();
-			}
-		}
-		return cant;
-	}
+//	public BigDecimal obtenerCantidadStockDisp(MaestroProductoDTO prod) {
+//		BigDecimal cant=new BigDecimal(0);
+//		for(StockDTO s: this.todoElStock) {
+//			if(s.getIdProducto() == prod.getIdMaestroProducto()) {
+//				BigDecimal stock = new BigDecimal(s.getStockDisponible());
+//				cant.add(stock);
+//			}
+//		}
+//		return cant;
+//	}
 	
 	private void verificarCambiarColorAEstaFila() {
 		this.ventanaGestionarProductos.getTablaProductos().setDefaultRenderer(Object.class,
@@ -328,9 +330,8 @@ public class ControladorGestionarProductos {
 
 				//al parecer el row toma la ultima fila agregada
 		        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-
-		        Double status = (Double) table.getModel().getValueAt(row,2);
-		        if(status<=0) {
+		        
+	        	if((Double)table.getValueAt(row, 2) == 0) {
 		        	setBackground(Color.red);
 		        	setForeground(Color.WHITE);	
 		        }else {

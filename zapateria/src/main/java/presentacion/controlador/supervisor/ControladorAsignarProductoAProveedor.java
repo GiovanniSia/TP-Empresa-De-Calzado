@@ -367,7 +367,7 @@ public class ControladorAsignarProductoAProveedor {
 	    			
 	    		}else {
 	    			valorNuevo = Integer.parseInt(resp);
-	    			if(resp.length()<=20 && valorNuevo>0)  {
+	    			if(resp.length()<=8 && valorNuevo>0)  {
 	    				repetir = false;
 	    			}else {
 	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
@@ -414,7 +414,7 @@ public class ControladorAsignarProductoAProveedor {
 	    			
 	    		}else {
 	    			valorNuevo = Integer.parseInt(resp);
-	    			if(resp.length()<=20 && valorNuevo>0)  {
+	    			if(resp.length()<=8 && valorNuevo>0)  {
 	    				repetir = false;
 	    			}else {
 	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		

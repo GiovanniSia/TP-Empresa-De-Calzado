@@ -354,17 +354,37 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    BigDecimal precioUnidad =new BigDecimal(prodProv.getPrecioVenta());
 	    BigDecimal precioTotal = cantidad.multiply(precioUnidad);
 	    	
-	    String auxPrecio = precioTotal+"";
-	    if(auxPrecio.length()>45) {
-			JOptionPane.showMessageDialog(null, "El precio total supera la cantidad de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
-			return;	
-	    }
-	    String auxCantTotal = cantidadTotal+"";
-	    if(auxCantTotal.length()>45) {
+	    double cantTotalStock = Stock.cantidadTotalDeStock(productoElegido);
+	    System.out.println("cantidad total de stock: "+cantTotalStock);
+	    BigDecimal auxCantTotalStock = new BigDecimal(cantTotalStock);
+	    
+	    BigDecimal cantidadDeProdDeOtrosPedidosIguales = obtenerSumaDeProductosDeOtrosPedidosDeMismoProd(productoElegido);
+	    System.out.println("cantidad de pedidos de otros prod: "+cantidadDeProdDeOtrosPedidosIguales);
+
+	    BigDecimal auxSuma = auxCantTotalStock.add(cantidadTotal);
+	    System.out.println("se suma la cant total de sotck + la cantidad de pedidos del mismo prod: "+auxSuma);
+	    
+	    auxSuma = auxSuma.add(cantidadDeProdDeOtrosPedidosIguales);
+	    System.out.println("cantidad total total: "+auxSuma);
+	    String aux = ""+auxSuma;
+	    System.out.println("stock total seria: "+aux);
+	    if(aux.length()>20) {
 	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;		
 	    }
 	    
+	    
+	    String auxPrecio = precioTotal+"";
+	    if(auxPrecio.length()>20) {
+			JOptionPane.showMessageDialog(null, "El precio total supera la cantidad de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+			return;	
+	    }
+	    
+	    String auxPrecioUnidad = precioUnidad+"";
+	    if(auxPrecioUnidad.length()>20) {
+	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+			return;			
+	    }
 	    String estado = "En espera";
 	    int idSuc = this.idSucursal;
 	    String fechaEnvio = null;
@@ -374,6 +394,14 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    String unidadMedida = this.productoElegido.getUnidadMedida();
 	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal.doubleValue(),fecha,hora,precioUnidad.doubleValue(),precioTotal.doubleValue(),estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
 		    
+	    // si selecciona que si devuelve un 0, no un 1, y la x un -1
+	    int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar el pedido?",
+	   		"Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	    if(resp==1 || resp==-1) {
+	    	return;
+	    }
+	    
+	    
 	    boolean insert = pedidosPendientes.insert(p);
 	    if(!insert) {
 	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al ingresar el pedido automatico para el prod: "+this.productoElegido.getDescripcion());
@@ -382,6 +410,17 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    }
 	    this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
 		
+	}
+	
+	public BigDecimal obtenerSumaDeProductosDeOtrosPedidosDeMismoProd(MaestroProductoDTO p) {
+		this.todosLosPedidosPendientes = pedidosPendientes.readAll();
+		BigDecimal cant=new BigDecimal(0);
+		for(PedidosPendientesDTO pedido: this.todosLosPedidosPendientes) {
+			if(pedido.getIdMaestroProducto() == p.getIdMaestroProducto() && (pedido.getEstado().equals("En espera") || pedido.getEstado().equals("Enviado"))) {
+				BigDecimal sumar = new BigDecimal(pedido.getCantidad());
+				cant = cant.add(sumar);
+			}
+		}return cant;
 	}
 	
 	public boolean yaExisteUnPedidoParaEsteProducto(MaestroProductoDTO producto,ProveedorDTO prov) {

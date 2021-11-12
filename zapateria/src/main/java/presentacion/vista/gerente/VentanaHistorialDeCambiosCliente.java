@@ -30,7 +30,7 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 	
 	private JFrame frame;
 	
-	private String[] nombreColumnas = {"Id cliente","Id empleado","Fecha Modificacion","Nombre anterior","Nombre nuevo","Apellido anterior","Apellido nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
+	private String[] nombreColumnas = {"Id cliente","Id empleado","Fecha Modificacion","Nombre anterior","Nombre nuevo","Apellido anterior","Apellido nuevo","CUIL anterior","CUIL nuevo","Correo anterior","Correo nuevo","Limite de Cred. anterior","Limite Cred. nuevo","Cred. anterior","Cred nuevo","Tipo cliente anterior","Tipo cliente nuevo","AFIP anterior","AFIP nuevo","Estado anterior","Estado Nuevo","Calle anterior","Calle nueva","Altura anterior","Altura nueva","Pais anterior","Pais nuevo","Provincia anterior","Provincia nueva","Localidad anterior","Localidad nueva","Cod Postal anterior","Cod Postal nuevo"};
 	private DefaultTableModel modelhistorialCambioCliente;
 	private JTable tablaHistorialCambioCliente;
 	private JLabel lblCodEmpleado;

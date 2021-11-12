@@ -113,7 +113,7 @@ CREATE TABLE `stock`
   `IdSucursal` int(11) NOT NULL,
   `IdProducto` int(11) NOT NULL,
   `CodigoLote` varchar(45) NOT NULL,
-  `StockDisponible` double(11,2) NOT NULL,
+  `StockDisponible` double(45,2) NOT NULL,
   PRIMARY KEY (`IdStock`)
 );
 
@@ -431,7 +431,7 @@ CREATE TABLE `PedidosPendientes`
     `NombreProveedor` varchar(45) NOT NULL,
     `IdMaestroProducto` int(11) NOT NULL,
     `NombreMaestroProducto` varchar(45) NOT NULL,
-    `Cantidad` int(11) NOT NULL,
+    `Cantidad` double(45,2) NOT NULL,
     `Fecha` Date NOT NULL,
     `Hora` Time NOT NULL,
     `PrecioUnidad` double(45,2) NOT NULL,
@@ -678,9 +678,9 @@ insert into ingresos values (1,1,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',10
 insert into ingresos values (2,2,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
 insert into ingresos values (3,3,'2021-10-16','12:20','VT',2,'A','aaaa','USD',100,3,'',300);
 
-insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','B000011',1,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','B000022',2,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','B000031',3,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','B123400000001',1,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','B123400000002',2,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','B123400000003',3,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 
 INSERT INTO empleados VALUES(1,"123","Pepe","Perez","pepe@gmail.com","Cajero",aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (2, 512,'Juan','Vera','juan@gmail.com','Vendedor',aes_encrypt('1234','AES'));

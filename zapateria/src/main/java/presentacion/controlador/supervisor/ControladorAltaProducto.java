@@ -509,7 +509,7 @@ public class ControladorAltaProducto {
 
 			try {
 				// si la resp es null, se eligio cancelar
-				cantProdLotes = JOptionPane.showInputDialog("Ingrese la cantidad de productos por lote (limite 20 caracteres)");
+				cantProdLotes = JOptionPane.showInputDialog("Ingrese la cantidad de productos por lote (limite 8 caracteres)");
 
 				
 				if (cantProdLotes == null) {
@@ -519,14 +519,15 @@ public class ControladorAltaProducto {
 					if (cantProdLotes.equals("")) {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
+						System.out.println("logitud de string: "+(""+cantProdLotes).length());
 						cantidadDeProductosPorLote = Integer.parseInt(cantProdLotes);
-						if (cantProdLotes.length()>20) {
-							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 20", "Informacion",	JOptionPane.OK_OPTION);
+						if (cantProdLotes.length() >8) {
+							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 8", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (cantidadDeProductosPorLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (cantidadDeProductosPorLote > 0 && cantProdLotes.length() <= 20) {
+						if (cantidadDeProductosPorLote > 0 && cantProdLotes.length() <= 8) {
 							repetir = false;
 						}
 					}
@@ -543,7 +544,7 @@ public class ControladorAltaProducto {
 
 			try {
 				// si la resp es null, se eligio cancelar
-				precioLot = JOptionPane.showInputDialog("Ingrese el precio del lote (limite 20 caracteres)");
+				precioLot = JOptionPane.showInputDialog("Ingrese el precio del lote (limite 8 caracteres)");
 				if (precioLot == null) {
 					repetir = false;
 					return;
@@ -552,13 +553,13 @@ public class ControladorAltaProducto {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
 						precioLote = Integer.parseInt(precioLot);
-						if (precioLot.length() > 20) {
-							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 20", "Informacion",	JOptionPane.OK_OPTION);
+						if (precioLot.length() > 8) {
+							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 8", "Informacion",	JOptionPane.OK_OPTION);
 						}
 						if (precioLote <= 0) {
 							JOptionPane.showMessageDialog(null, "El valor no puede ser menor a 0", "Informacion",JOptionPane.OK_OPTION);
 						}
-						if (precioLote > 0 && precioLot.length() <= 20) {
+						if (precioLote > 0 && precioLot.length() <= 8) {
 							repetir = false;
 						}
 					}
@@ -762,7 +763,7 @@ public class ControladorAltaProducto {
 			//borramos los que estan de mas
 			actualizarProveedoresDeProducto();
 			//agregamos los nuevos si no existen, si ya existian no se agregan
-			asignarProveedoresAProducto();
+//			asignarProveedoresAProducto();
 			this.todosLosProductosDeProveedores = this.productoDeProveedor.readAll();
 //			borrarDatosEscritos();		
 			salir();	
@@ -789,6 +790,16 @@ public class ControladorAltaProducto {
 			existe = false;
 		}
 		
+		for(ProductoDeProveedorDTO pp: this.productoDeProveedorEnTabla) {
+			
+			if(!yaEixsteAsignacionConProducto(pp)) {
+				pp.setIdMaestroProducto(this.productoAEditar.getIdMaestroProducto());
+				boolean insert = productoDeProveedor.insert(pp);
+				if(!insert) {
+					JOptionPane.showMessageDialog(null, "El producto: "+pp.getIdMaestroProducto()+" no se ha podido añadir correctamente");
+				}	
+			}
+		}
 	}
 	
 }

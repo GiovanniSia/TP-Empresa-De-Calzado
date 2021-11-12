@@ -160,6 +160,7 @@ public class ControladorAltaCliente {
 	
 	public void mostrarVentanaEditar() {
 		this.ventanaAltaCliente.getBtnEditar().setVisible(true);
+		this.ventanaAltaCliente.getLblEditarCliente().setVisible(true);
 		this.ventanaAltaCliente.getLblLimiteDeCredito().setVisible(true);
 		this.ventanaAltaCliente.getTextLimiteCredito().setVisible(true);
 		this.ventanaAltaCliente.getLblEstado().setVisible(true);

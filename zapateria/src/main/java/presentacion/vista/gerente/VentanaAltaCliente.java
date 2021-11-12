@@ -62,6 +62,8 @@ public class VentanaAltaCliente {
 	private JComboBox<String> comboBoxEstado;	
 	private JPanel panel;
 	private JLabel lblRegistrarCliente_1;
+
+	private JLabel lblEditarCliente;
 	
 	
 	
@@ -429,11 +431,12 @@ public class VentanaAltaCliente {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
 		
-		JLabel lblEditarCliente = new JLabel("Editar Cliente");
+		lblEditarCliente = new JLabel("Editar Cliente");
 		lblEditarCliente.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEditarCliente.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblEditarCliente.setBounds(299, 402, 127, 60);
 		frame.getContentPane().add(lblEditarCliente);
+		lblEditarCliente.setVisible(false);
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255, 180));
@@ -452,7 +455,7 @@ public class VentanaAltaCliente {
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
-	
+
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		for (WindowListener listener : this.frame.getWindowListeners())
@@ -584,5 +587,9 @@ public class VentanaAltaCliente {
 
 	public JComboBox<String> getComboBoxEstado() {
 		return comboBoxEstado;
+	}
+	
+	public JLabel getLblEditarCliente() {
+		return lblEditarCliente;
 	}
 }
