@@ -355,19 +355,19 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    BigDecimal precioTotal = cantidad.multiply(precioUnidad);
 	    	
 	    double cantTotalStock = Stock.cantidadTotalDeStock(productoElegido);
-	    System.out.println("cantidad total de stock: "+cantTotalStock);
+//	    System.out.println("cantidad total de stock: "+cantTotalStock);
 	    BigDecimal auxCantTotalStock = new BigDecimal(cantTotalStock);
 	    
 	    BigDecimal cantidadDeProdDeOtrosPedidosIguales = obtenerSumaDeProductosDeOtrosPedidosDeMismoProd(productoElegido);
-	    System.out.println("cantidad de pedidos de otros prod: "+cantidadDeProdDeOtrosPedidosIguales);
+//	    System.out.println("cantidad de pedidos de otros prod: "+cantidadDeProdDeOtrosPedidosIguales);
 
 	    BigDecimal auxSuma = auxCantTotalStock.add(cantidadTotal);
-	    System.out.println("se suma la cant total de sotck + la cantidad de pedidos del mismo prod: "+auxSuma);
+//	    System.out.println("se suma la cant total de sotck + la cantidad de pedidos del mismo prod: "+auxSuma);
 	    
 	    auxSuma = auxSuma.add(cantidadDeProdDeOtrosPedidosIguales);
-	    System.out.println("cantidad total total: "+auxSuma);
+//	    System.out.println("cantidad total total: "+auxSuma);
 	    String aux = ""+auxSuma;
-	    System.out.println("stock total seria: "+aux);
+//	    System.out.println("stock total seria: "+aux);
 	    if(aux.length()>20) {
 	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;		
