@@ -40,7 +40,7 @@ import java.time.LocalDateTime;
 
 public class ControladorBusquedaProductos {
 	
-	private int idSucursal = 0;// esto esta hardcodeado
+	private int idSucursal = 0;
 	private int idVendedor = 0;
 
 	public void obtenerDatosPropertiesSucursalEmpleado() {
@@ -56,7 +56,7 @@ public class ControladorBusquedaProductos {
 		}
 	}
 	
-	int Preciototal;
+	double Preciototal;
 	
 	ControladorBusquedaCliente controladorBusquedaCliente;
 	
@@ -321,7 +321,7 @@ public class ControladorBusquedaProductos {
 		StockDTO stockDeProductoSeleccionado = this.stockEnTabla.get(filaSeleccionada);
 //		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
 		double cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
-		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),stockDeProductoSeleccionado,null)) {
+		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado,stockDeProductoSeleccionado,null)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
 			return;
 		}
@@ -385,14 +385,22 @@ public class ControladorBusquedaProductos {
 	
 	public void calcularPrecioTotal() {
 		Preciototal=0;
+		System.out.println("cantidad de prod en carrito: "+this.productosEnCarrito.size());
 		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
+//			BigDecimal precioMayorista = new BigDecimal(m.getProducto().getPrecioMayorista());
+//			BigDecimal cantidad = new BigDecimal(m.getCantidad());
+			
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+				
 				Preciototal += m.getProducto().getPrecioMayorista() * m.getCantidad();
 			}else {
 				Preciototal += m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
+			
 		}
-		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+Preciototal);
+		BigDecimal precio = new BigDecimal(this.Preciototal);
+		System.out.println("nuevo total: "+precio);
+		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+precio);
 	}
 	
 	public void quitarProductoDelCarrito(ActionEvent a) {
@@ -431,7 +439,7 @@ public class ControladorBusquedaProductos {
 //			quitarProductoDelCarrito(null);
 //			return;
 //		}
-		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto().getIdMaestroProducto(),stockDeProd,productoEnCarrito)) {
+		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto(),stockDeProd,productoEnCarrito)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es válida");
 			return;
 		}
@@ -447,11 +455,11 @@ public class ControladorBusquedaProductos {
 		actualzarTablaCarrito();
 	}
 	
-	public boolean laCantidadEsValida(double valorDelSpinner,int idMaestroProducto,StockDTO stockDeProd ,ProductoEnCarritoDTO prod) {
+	public boolean laCantidadEsValida(double valorDelSpinner,MaestroProductoDTO maestroProducto,StockDTO stockDeProd ,ProductoEnCarritoDTO prod) {
 
 		for(StockDTO s: this.listaStock) {
 
-			if(idMaestroProducto == s.getIdProducto() && s.getIdSucursal()==this.idSucursal && stockDeProd.getIdStock()==s.getIdStock()) {
+			if(maestroProducto.getIdMaestroProducto() == s.getIdProducto() && s.getIdSucursal()==this.idSucursal && stockDeProd.getIdStock()==s.getIdStock()) {
 				
 				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
 				BigDecimal valorDelSpnner = new BigDecimal(valorDelSpinner);
@@ -472,8 +480,9 @@ public class ControladorBusquedaProductos {
 
 				}else {
 //					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
-
-					return stockDisp.doubleValue() >= valorDelSpnner.doubleValue() && valorDelSpnner.doubleValue() > 0;  
+					
+					return stockDisp.doubleValue() >= valorDelSpnner.doubleValue() && valorDelSpnner.doubleValue() > 0
+							&& elPrecioTotalSePuedeAlmacenarEnElSistema(valorDelSpinner,maestroProducto,stockDeProd);  
 					
 //					return s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
 				}
@@ -483,6 +492,41 @@ public class ControladorBusquedaProductos {
 		return false;
 	}
 	
+	public boolean elPrecioTotalSePuedeAlmacenarEnElSistema(double valorDelSpinner,MaestroProductoDTO maestroProducto,StockDTO stockDeProd) {
+		Double precioTotal = 0.0;
+		Double cantTotal = 0.0;
+		for(ProductoEnCarritoDTO p: this.productosEnCarrito) {
+			cantTotal += p.getCantidad();
+			
+			Double precioParaCliente = 0.0;
+			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+				precioParaCliente = p.getProducto().getPrecioMayorista();
+			}else {
+				precioParaCliente = p.getProducto().getPrecioMinorista();
+			}
+			
+			precioTotal +=cantTotal * precioParaCliente;
+		}
+		
+		Double precioParaCliente = 0.0;
+		if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
+			precioParaCliente = maestroProducto.getPrecioMayorista();
+		}else {
+			precioParaCliente = maestroProducto.getPrecioMinorista();
+		}
+		Double precioTotalEntrante = valorDelSpinner * precioParaCliente;
+		
+		
+		BigDecimal auxTotalEnt = new BigDecimal(precioTotalEntrante);
+		BigDecimal auxPrecioTotal = new BigDecimal(precioTotal);
+		auxPrecioTotal = auxPrecioTotal.add(auxTotalEnt);
+		
+		BigDecimal auxCantTotalPrev = new BigDecimal(cantTotal);
+		BigDecimal auxCantTotalEntrante = new BigDecimal(valorDelSpinner);
+		BigDecimal cantTotalTotal = auxCantTotalPrev.add(auxCantTotalEntrante);
+		//La cantidad maxima de digitos que se pueden guardar en la BD -> tabla carrito (cantidad) es 45
+		return (""+auxPrecioTotal.doubleValue()).length() < 45 && (""+cantTotalTotal).length() < 45;
+	}
 	
 	public void volverAtras(ActionEvent a) {
 		this.vistaBusquedaProductos.cerrar();

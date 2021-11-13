@@ -143,15 +143,15 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblTotalAPagar = new JLabel("Total a pagar:");
 		lblTotalAPagar.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblTotalAPagar.setBounds(33, 301, 112, 59);
+		lblTotalAPagar.setBounds(0, 301, 112, 59);
 		panel_2.add(lblTotalAPagar);
 		
-		lblTotalAPagarValor = new JLabel("$0");
-		lblTotalAPagarValor.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTotalAPagarValor = new JLabel("<html>$0<html>");
+		lblTotalAPagarValor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTotalAPagarValor.setBackground(new Color(255, 255, 255));
 		lblTotalAPagarValor.setForeground(Color.BLACK);
 		lblTotalAPagarValor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblTotalAPagarValor.setBounds(149, 301, 116, 59);
+		lblTotalAPagarValor.setBounds(107, 301, 202, 59);
 		panel_2.add(lblTotalAPagarValor);
 		
 		//TABLAS
@@ -200,9 +200,9 @@ public class VentanaRealizarVenta {
 		lblModificarCantidad.setBounds(318, 41, 38, 15);
 		panel_2.add(lblModificarCantidad);
 		
-		lblPrecioVentaValor = new JLabel("$0");
+		lblPrecioVentaValor = new JLabel("<html>$0<html>");
 		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblPrecioVentaValor.setBounds(639, 301, 148, 59);
+		lblPrecioVentaValor.setBounds(639, 301, 171, 59);
 		panel_2.add(lblPrecioVentaValor);
 		lblPrecioVentaValor.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblPrecioVentaValor.setForeground(new Color(0, 128, 0));
@@ -276,7 +276,7 @@ public class VentanaRealizarVenta {
 		lblDescuento.setBounds(310, 301, 91, 59);
 		panel_2.add(lblDescuento);
 		
-		lblDescuentoDescontado = new JLabel("$0");
+		lblDescuentoDescontado = new JLabel("<html>$0<html>");
 		lblDescuentoDescontado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblDescuentoDescontado.setForeground(Color.BLACK);
 		lblDescuentoDescontado.setFont(new Font("Segoe UI", Font.PLAIN, 18));

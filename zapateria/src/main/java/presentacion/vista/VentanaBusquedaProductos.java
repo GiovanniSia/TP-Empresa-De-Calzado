@@ -192,7 +192,7 @@ public class VentanaBusquedaProductos {
 		
 		JLabel lblNewLabel = new JLabel("Confirmar pedido");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblNewLabel.setBounds(669, 526, 173, 60);
+		lblNewLabel.setBounds(669, 526, 260, 60);
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
@@ -253,6 +253,15 @@ public class VentanaBusquedaProductos {
 		this.tableProductosFiltrados.getColumnModel().getColumn(0).setResizable(false);
 		tableProductosFiltrados.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		this.tableProductosFiltrados.getTableHeader().setReorderingAllowed(false);
+		
+		
+		lblValorTotal = new JLabel("<html>$0<html>");
+		lblValorTotal.setVerticalAlignment(SwingConstants.TOP);
+		lblValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblValorTotal.setForeground(new Color(0, 100, 0));
+		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblValorTotal.setBounds(608, 370, 311, 37);
+		panel.add(lblValorTotal);
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
 		panel.add(scrollPaneProductosFiltrados);
@@ -297,16 +306,9 @@ public class VentanaBusquedaProductos {
 				cambiarIconoBotones(btnQuitarProducto,  "trash2.png");
 				panel.add(btnQuitarProducto);
 				
-				
-				lblValorTotal = new JLabel("$0");
-				lblValorTotal.setForeground(new Color(0, 100, 0));
-				lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
-				lblValorTotal.setBounds(776, 370, 133, 39);
-				panel.add(lblValorTotal);
-				
 				JLabel lblTotal = new JLabel("Total: ");
 				lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-				lblTotal.setBounds(707, 370, 63, 39);
+				lblTotal.setBounds(558, 358, 63, 39);
 				panel.add(lblTotal);
 				
 				scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -347,7 +349,7 @@ public class VentanaBusquedaProductos {
 		
 		lblCantidad_1 = new JLabel("Cantidad");
 		lblCantidad_1.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblCantidad_1.setBounds(390, 118, 47, 19);
+		lblCantidad_1.setBounds(414, 118, 47, 19);
 		panel.add(lblCantidad_1);
 		
 		lblQuitarDelCarrito = new JLabel("Quitar del carrito");
@@ -386,7 +388,7 @@ public class VentanaBusquedaProductos {
 		
 		textCantidadListaProductos = new JTextField();
 		textCantidadListaProductos.setColumns(10);
-		textCantidadListaProductos.setBounds(390, 138, 84, 19);
+		textCantidadListaProductos.setBounds(390, 138, 111, 19);
 		textCantidadListaProductos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {

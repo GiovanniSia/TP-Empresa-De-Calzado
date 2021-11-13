@@ -169,8 +169,8 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 				}	
 			}
 			if(pedidosDeProv.size()!=0) {
-//				imprimirMail(pedidosDeProv);
-				enviarMail(prov,pedidosDeProv);
+				imprimirMail(pedidosDeProv);
+//				enviarMail(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
 				System.out.println("se envia el mail!!");
 			}

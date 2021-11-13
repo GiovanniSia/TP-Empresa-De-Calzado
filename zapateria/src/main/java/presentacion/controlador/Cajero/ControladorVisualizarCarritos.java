@@ -245,7 +245,7 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla.removeAll(this.detalleCarritoEnTabla);
 
 		int filaSeleccionada = this.ventanaVisualizarCarritos.getTableCarritos().getSelectedRow();
-		System.out.println("fila seleccionada: " + filaSeleccionada);
+//		System.out.println("fila seleccionada: " + filaSeleccionada);
 		if (filaSeleccionada == -1) {
 //			JOptionPane.showMessageDialog(null, "wtf esto no deberia aparecer xd");
 			return;
