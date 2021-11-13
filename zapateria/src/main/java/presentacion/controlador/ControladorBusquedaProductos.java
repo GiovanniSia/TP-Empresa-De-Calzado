@@ -131,7 +131,13 @@ public class ControladorBusquedaProductos {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().getSelectedRow();
 				if(filaSeleccionada==-1) return;
 //				//cuando se clickea en la tabla, se actualiza el spinner
-				vistaBusquedaProductos.getSpinnerCarrito().setValue((int) productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+//				if(productosEnCarrito.get(filaSeleccionada).getCantidad() > Integer.MAX_VALUE) {
+//					
+//				}else {
+//					vistaBusquedaProductos.getSpinnerCarrito().setValue((int) productosEnCarrito.get(filaSeleccionada).getCantidad());	
+//				}
+				BigDecimal valor = new BigDecimal(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+				vistaBusquedaProductos.getTextCantidadCarrito().setText(""+valor);
 			}
 			
 		});
@@ -145,15 +151,23 @@ public class ControladorBusquedaProductos {
 //			}
 //		});
 		
-		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
-
+//		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
+//
+//			@Override
+//			public void stateChanged(ChangeEvent e) {
+//				//actualizar cantidad
+//				modificarCantDeCarritoDadoSpinner();
+//			}
+//			
+//		});
+		this.vistaBusquedaProductos.getTextCantidadCarrito().addKeyListener(new KeyAdapter() {
 			@Override
-			public void stateChanged(ChangeEvent e) {
-				//actualizar cantidad
+			public void keyReleased(KeyEvent e) {
 				modificarCantDeCarritoDadoSpinner();
 			}
-			
 		});
+		
+		
 		
 		this.vistaBusquedaProductos.getSpinnerPrecioHasta().addChangeListener(new ChangeListener() {
 			@Override
@@ -283,7 +297,7 @@ public class ControladorBusquedaProductos {
 			preci = m.getPrecioMinorista();
 		}
 		BigDecimal precio = new BigDecimal(preci);
-		Double stockDisp = s.getStockDisponible();
+		BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
@@ -305,8 +319,9 @@ public class ControladorBusquedaProductos {
 		}
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
 		StockDTO stockDeProductoSeleccionado = this.stockEnTabla.get(filaSeleccionada);
-		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
-		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),null)) {
+//		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
+		double cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
+		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado.getIdMaestroProducto(),stockDeProductoSeleccionado,null)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
 			return;
 		}
@@ -325,7 +340,7 @@ public class ControladorBusquedaProductos {
 		for(StockDTO s: this.listaStock) {
 			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal && s.getIdStock()==stockDeProductoSeleccionado.getIdStock() && s.getCodigoLote()==stockDeProductoSeleccionado.getCodigoLote()) {
 				modificarCantStock(productoSeleccionado,s.getIdStock(),-cantSeleccionada);
-				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,s,cantSeleccionada));
+				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,stockDeProductoSeleccionado,cantSeleccionada));
 			}
 		}
 		
@@ -399,19 +414,24 @@ public class ControladorBusquedaProductos {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para descontar");
 			return;
 		}
-		
-		ProductoEnCarritoDTO productoEnCarrito = this.productosEnCarrito.get(filaSeleccionada);
-		
-		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
-		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinnerCarrito().getValue(); 
-		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
-			return;
-		}		
-		if(valorDelSpinner == 0) {
+		if(this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("") ||this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("0")) {
 			quitarProductoDelCarrito(null);
 			return;
 		}
-		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto().getIdMaestroProducto(),productoEnCarrito)) {
+		
+		ProductoEnCarritoDTO productoEnCarrito = this.productosEnCarrito.get(filaSeleccionada);
+		StockDTO stockDeProd = productoEnCarrito.getStock();
+		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
+//		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinnerCarrito().getValue(); 
+		double valorDelSpinner = Double.parseDouble( this.vistaBusquedaProductos.getTextCantidadCarrito().getText());
+		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
+			return;
+		}		
+//		if(valorDelSpinner == 0) {
+//			quitarProductoDelCarrito(null);
+//			return;
+//		}
+		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto().getIdMaestroProducto(),stockDeProd,productoEnCarrito)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es válida");
 			return;
 		}
@@ -427,18 +447,35 @@ public class ControladorBusquedaProductos {
 		actualzarTablaCarrito();
 	}
 	
-	public boolean laCantidadEsValida(int valorDelSpinner,int idMaestroProducto, ProductoEnCarritoDTO prod) {
+	public boolean laCantidadEsValida(double valorDelSpinner,int idMaestroProducto,StockDTO stockDeProd ,ProductoEnCarritoDTO prod) {
+
 		for(StockDTO s: this.listaStock) {
-			if(idMaestroProducto == s.getIdProducto() && s.getIdSucursal()==this.idSucursal) {
+
+			if(idMaestroProducto == s.getIdProducto() && s.getIdSucursal()==this.idSucursal && stockDeProd.getIdStock()==s.getIdStock()) {
+				
+				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
+				BigDecimal valorDelSpnner = new BigDecimal(valorDelSpinner);
+				
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
-					Double total = s.getStockDisponible()+ prod.getCantidad();
-					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
-						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
+					System.out.println("entro en la validacion unica");
+					BigDecimal cantProd = new BigDecimal(prod.getCantidad()); 
+					BigDecimal total = stockDisp.add(cantProd) ;
+					
+					System.out.println("cant Prod: "+cantProd.doubleValue());
+					System.out.println("total: "+total.doubleValue());
+					
+					return (stockDisp.doubleValue() == 0 && valorDelSpnner.doubleValue() <= cantProd.doubleValue() ) ||
+						   (stockDisp.doubleValue() != 0 && (valorDelSpnner.doubleValue() > 0 && valorDelSpnner.doubleValue() <= total.doubleValue()) );
+//					Double total = s.getStockDisponible()+ prod.getCantidad();
+//					return (s.getStockDisponible()==0 && valorDelSpinner <= prod.getCantidad() ) || 
+//						   (s.getStockDisponible()!=0 && (valorDelSpinner > 0 && valorDelSpinner <= total )  );
 
 				}else {
 //					boolean a=s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
 
-					return s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
+					return stockDisp.doubleValue() >= valorDelSpnner.doubleValue() && valorDelSpnner.doubleValue() > 0;  
+					
+//					return s.getStockDisponible() >= valorDelSpinner && valorDelSpinner > 0 ;
 				}
 			}
 		}
@@ -591,7 +628,9 @@ public class ControladorBusquedaProductos {
 //		        	}
 		        	
 		        }else {
-		        	if((Double)table.getValueAt(row, 3) == 0) {
+//		        	if((Double)table.getValueAt(row, 3) == 0) {
+		        	BigDecimal valor = (BigDecimal) table.getValueAt(row, 3);
+			        if(valor.intValue() == 0) {
 			        	setBackground(Color.red);
 			        	setForeground(Color.WHITE);	
 		        	}else {

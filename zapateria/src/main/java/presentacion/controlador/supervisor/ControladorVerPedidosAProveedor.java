@@ -280,7 +280,6 @@ public class ControladorVerPedidosAProveedor {
 		for(PedidosPendientesDTO p: pedidosFiltrados) {
 			
 			if(p.getIdSucursal() == this.idSucursal) {
-				System.out.println("prod: "+p.getNombreMaestroProducto()+" - "+p.getEstado());
 				if(!cBestadoSolo.equals("Sin seleccionar")) {
 					if(cBestadoSolo.equals("Alta") && p.getFecha()!=null) {
 						escribirTabla(p);
@@ -399,6 +398,7 @@ public class ControladorVerPedidosAProveedor {
 		
 		
 		this.todosLosPedidosPendientes = this.pedidosPendientes.readAll();
+		this.listaStock = this.stock.readAll();
 //		llenarTablaCompleta();
 		realizarBusqueda();
 		

@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -79,6 +81,8 @@ public class VentanaBusquedaProductos {
 	private JSpinner spinnerPrecioHasta;
 	private JButton btnAtras;
 	private JLabel lblNewLabel_2;
+	private JTextField textCantidadListaProductos;
+	private JTextField textCantidadCarrito;
 	/**
 	 * Launch the application.
 	 */
@@ -127,13 +131,6 @@ public class VentanaBusquedaProductos {
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(245, 255, 250, 180));
-		panel.setBorder(null);
-		panel.setBounds(10, 96, 919, 419);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
-		
 		//Tabla productos filtrados
 		modelTablaProductosFiltrados = new DefaultTableModel(null, nombreColumnasProductosFiltrados) {
 			private static final long serialVersionUID = 1L;
@@ -147,6 +144,105 @@ public class VentanaBusquedaProductos {
 				}
 			}
 		};
+		
+		btnQuitarProducto = new JButton("");
+		btnQuitarProducto.setBounds(855, 23, 39, 37);
+		cambiarIconoBotones(btnQuitarProducto,  "trash.png");
+		
+		btnArmarVenta = new JButton("");
+		btnArmarVenta.setForeground(Color.WHITE);
+		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
+		btnArmarVenta.setBounds(599, 526, 60, 60);
+		frame.getContentPane().add(btnArmarVenta);
+		cambiarIconoBotones(btnArmarVenta,  "cash.png");
+		frame.getContentPane().add(btnArmarVenta);
+		
+		//Tabla carrito
+
+		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				return false;
+				
+			}
+		};
+
+		
+		
+		//Tabla Cliente
+		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int filas, int columnas) {	
+				if(columnas == 4) {
+					return true;
+				}else {
+					return false;
+				}
+			}
+		};
+		
+		lblSubtitulo = new JLabel("Productos");
+		lblSubtitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblSubtitulo.setBounds(10, 57, 195, 41);
+		frame.getContentPane().add(lblSubtitulo);
+		
+		JLabel lblNewLabel = new JLabel("Confirmar pedido");
+		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		lblNewLabel.setBounds(669, 526, 173, 60);
+		frame.getContentPane().add(lblNewLabel);
+		
+		//Spinners
+/*
+		spinnerModelCarrito = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
+		spinnerCarrito = new JSpinner(spinnerModelCarrito);
+		spinnerCarrito.setBounds(681, 40, 47, 19);
+		panel.add(spinnerCarrito);
+
+		spinnerModelProductos = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
+		spinnerProductos = new JSpinner(spinnerModelProductos);
+		spinnerProductos.setBounds(390, 137, 47, 19);
+		panel.add(spinnerProductos);
+		*/
+		
+		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
+		
+		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
+		
+		btnAtras = new JButton("");
+		btnAtras.setBackground(new Color(248, 248, 255));
+		btnAtras.setBounds(81, 526, 60, 60);
+		frame.getContentPane().add(btnAtras);
+		cambiarIconoBotones(btnAtras,  "back2.png");
+		
+		lblNewLabel_2 = new JLabel("Atras");
+		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_2.setBounds(150, 526, 55, 63);
+		frame.getContentPane().add(lblNewLabel_2);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setLayout(null);
+		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		panel_2.setBackground(new Color(153, 204, 255));
+		panel_2.setBounds(0, 0, 937, 53);
+		frame.getContentPane().add(panel_2);
+		
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setForeground(Color.WHITE);
+		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblLogo.setBounds(10, 5, 165, 42);
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
+		panel_2.add(lblLogo);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(245, 255, 250, 180));
+		panel.setBorder(null);
+		panel.setBounds(10, 96, 919, 419);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
 		
 		scrollPaneProductosFiltrados = new JScrollPane(this.tableProductosFiltrados, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneProductosFiltrados.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
@@ -193,61 +289,37 @@ public class VentanaBusquedaProductos {
 		cambiarIconoBotones(btnAniadirProd,  "carrito2.png");
 		panel.add(btnAniadirProd);
 		
-		btnQuitarProducto = new JButton("");
-		btnQuitarProducto.setBounds(855, 23, 39, 37);
-		cambiarIconoBotones(btnQuitarProducto,  "trash.png");
-
-		cambiarIconoBotones(btnAniadirProd,  "meterCarrito.png");
-		panel.add(btnAniadirProd);
-		
-		btnQuitarProducto = new JButton("");
-		btnQuitarProducto.setBounds(870, 23, 39, 37);
-		cambiarIconoBotones(btnQuitarProducto,  "trash2.png");
-		panel.add(btnQuitarProducto);
-		
-		btnArmarVenta = new JButton("");
-		btnArmarVenta.setForeground(Color.WHITE);
-		btnArmarVenta.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
-		btnArmarVenta.setBounds(599, 526, 60, 60);
-		frame.getContentPane().add(btnArmarVenta);
-		cambiarIconoBotones(btnArmarVenta,  "cash.png");
-		frame.getContentPane().add(btnArmarVenta);
-		
-		
-		lblValorTotal = new JLabel("$0");
-		lblValorTotal.setForeground(new Color(0, 100, 0));
-		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		lblValorTotal.setBounds(776, 370, 133, 39);
-		panel.add(lblValorTotal);
-		
-		JLabel lblTotal = new JLabel("Total: ");
-		lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-		lblTotal.setBounds(707, 370, 63, 39);
-		panel.add(lblTotal);
-		
-		//Tabla carrito
-
-		modelTablaCarrito = new DefaultTableModel(null, nombreColumnasCarrito) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int filas, int columnas) {	
-				return false;
+				cambiarIconoBotones(btnAniadirProd,  "meterCarrito.png");
+				panel.add(btnAniadirProd);
 				
-			}
-		};
-		
-		scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
-		scrollPaneCarrito.setBounds(588, 70, 321, 284);
-		panel.add(scrollPaneCarrito);
-		
-		tableCarrito = new JTable(modelTablaCarrito);
-		
-		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
-		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
-		tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		scrollPaneCarrito.setViewportView(tableCarrito);
+				btnQuitarProducto = new JButton("");
+				btnQuitarProducto.setBounds(844, 23, 39, 37);
+				cambiarIconoBotones(btnQuitarProducto,  "trash2.png");
+				panel.add(btnQuitarProducto);
+				
+				
+				lblValorTotal = new JLabel("$0");
+				lblValorTotal.setForeground(new Color(0, 100, 0));
+				lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 18));
+				lblValorTotal.setBounds(776, 370, 133, 39);
+				panel.add(lblValorTotal);
+				
+				JLabel lblTotal = new JLabel("Total: ");
+				lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
+				lblTotal.setBounds(707, 370, 63, 39);
+				panel.add(lblTotal);
+				
+				scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+				scrollPaneCarrito.setBounds(588, 70, 321, 284);
+				panel.add(scrollPaneCarrito);
+				
+				tableCarrito = new JTable(modelTablaCarrito);
+				
+				this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
+				this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
+				tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+				scrollPaneCarrito.setViewportView(tableCarrito);
 				
 		JLabel lblCantidad = new JLabel("Cambiar cantidad");
 		lblCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -259,22 +331,6 @@ public class VentanaBusquedaProductos {
 		lblClienteSeleccionado.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblClienteSeleccionado.setBounds(10, 11, 153, 13);
 		panel.add(lblClienteSeleccionado);
-
-		
-		
-		//Tabla Cliente
-		modelTablaCliente = new DefaultTableModel(null, nombreColumnasCliente) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int filas, int columnas) {	
-				if(columnas == 4) {
-					return true;
-				}else {
-					return false;
-				}
-			}
-		};
 		
 		scrollPaneCliente = new JScrollPane(this.tableCliente, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCliente.setBounds(10, 41, 548, 48);
@@ -296,7 +352,7 @@ public class VentanaBusquedaProductos {
 		
 		lblQuitarDelCarrito = new JLabel("Quitar del carrito");
 		lblQuitarDelCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblQuitarDelCarrito.setBounds(776, 40, 95, 20);
+		lblQuitarDelCarrito.setBounds(814, 5, 95, 20);
 		panel.add(lblQuitarDelCarrito);
 		
 		lblPrecioDesde = new JLabel("Precio desde");
@@ -312,72 +368,47 @@ public class VentanaBusquedaProductos {
 
 		
 		JLabel lblAgregar = new JLabel("Agregar");
-		lblAgregar.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblAgregar.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAgregar.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblAgregar.setBounds(447, 115, 54, 42);
+		lblAgregar.setBounds(496, 86, 64, 42);
 		panel.add(lblAgregar);
 		
 		JLabel lblCarrito = new JLabel("Carrito de compras");
 		lblCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 17));
 		lblCarrito.setBounds(587, 0, 258, 31);
 		panel.add(lblCarrito);
-		
-		lblSubtitulo = new JLabel("Productos");
-		lblSubtitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblSubtitulo.setBounds(10, 57, 195, 41);
-		frame.getContentPane().add(lblSubtitulo);
-		
-		JLabel lblNewLabel = new JLabel("Confirmar pedido");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 22));
-		lblNewLabel.setBounds(669, 526, 173, 60);
-		frame.getContentPane().add(lblNewLabel);
-		
-		//Spinners
-		spinnerModelCarrito = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
-		spinnerCarrito = new JSpinner(spinnerModelCarrito);
-		spinnerCarrito.setBounds(681, 40, 47, 19);
-		panel.add(spinnerCarrito);
-		
-		spinnerModelProductos = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
-		spinnerProductos = new JSpinner(spinnerModelProductos);
-		spinnerProductos.setBounds(390, 137, 47, 19);
-		panel.add(spinnerProductos);
-		
-		
-		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		spinnerPrecioDesde = new JSpinner(spinnerModelDesde);
 		spinnerPrecioDesde.setBounds(199, 137, 47, 19);
 		panel.add(spinnerPrecioDesde);
-		
-		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		spinnerPrecioHasta = new JSpinner(spinnerModelHasta);
 		spinnerPrecioHasta.setBounds(310, 137, 47, 19);
 		panel.add(spinnerPrecioHasta);
 		
-		btnAtras = new JButton("");
-		btnAtras.setBackground(new Color(248, 248, 255));
-		btnAtras.setBounds(81, 526, 60, 60);
-		frame.getContentPane().add(btnAtras);
-		cambiarIconoBotones(btnAtras,  "back2.png");
+		textCantidadListaProductos = new JTextField();
+		textCantidadListaProductos.setColumns(10);
+		textCantidadListaProductos.setBounds(390, 138, 84, 19);
+		textCantidadListaProductos.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textCantidadListaProductos.getText().length() >= 20) {
+					e.consume();
+				}
+			}
+		});
+		panel.add(textCantidadListaProductos);
 		
-		lblNewLabel_2 = new JLabel("Atras");
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_2.setBounds(150, 526, 55, 63);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setLayout(null);
-		panel_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_2.setBackground(new Color(153, 204, 255));
-		panel_2.setBounds(0, 0, 937, 53);
-		frame.getContentPane().add(panel_2);
-		
-		JLabel lblLogo = new JLabel("");
-		lblLogo.setForeground(Color.WHITE);
-		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblLogo.setBounds(10, 5, 165, 42);
-		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
-		panel_2.add(lblLogo);
+		textCantidadCarrito = new JTextField();
+		textCantidadCarrito.setColumns(10);
+		textCantidadCarrito.setBounds(688, 41, 84, 19);
+		textCantidadCarrito.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textCantidadCarrito.getText().length() >= 20) {
+					e.consume();
+				}
+			}
+		});
+		panel.add(textCantidadCarrito);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 24, 960, 720);
@@ -558,5 +589,103 @@ public class VentanaBusquedaProductos {
 	public void setSpinnerPrecioDesde(JSpinner spinnerPrecioDesde) {
 		this.spinnerPrecioDesde = spinnerPrecioDesde;
 	}
+
+
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
+	public JScrollPane getScrollPaneProductosFiltrados() {
+		return scrollPaneProductosFiltrados;
+	}
+
+
+
+	public JScrollPane getScrollPaneCarrito() {
+		return scrollPaneCarrito;
+	}
+
+
+
+	public JLabel getLblNombre() {
+		return lblNombre;
+	}
+
+
+
+	public JLabel getLblTalle() {
+		return lblTalle;
+	}
+
+
+
+	public JLabel getLblSubtitulo() {
+		return lblSubtitulo;
+	}
+
+
+
+	public JButton getBtnArmarVenta() {
+		return btnArmarVenta;
+	}
+
+
+
+	public JLabel getLblCantidad_1() {
+		return lblCantidad_1;
+	}
+
+
+
+	public JLabel getLblQuitarDelCarrito() {
+		return lblQuitarDelCarrito;
+	}
+
+
+
+	public JLabel getLblPrecioDesde() {
+		return lblPrecioDesde;
+	}
+
+
+
+	public JLabel getLblPrecioHasta() {
+		return lblPrecioHasta;
+	}
+
+
+
+	public SpinnerModel getSpinnerModelProductos() {
+		return spinnerModelProductos;
+	}
+
+
+
+	public SpinnerModel getSpinnerModelCarrito() {
+		return spinnerModelCarrito;
+	}
+
+
+
+	public JLabel getLblNewLabel_2() {
+		return lblNewLabel_2;
+	}
+
+
+
+	public JTextField getTextCantidadListaProductos() {
+		return textCantidadListaProductos;
+	}
+
+
+
+	public JTextField getTextCantidadCarrito() {
+		return textCantidadCarrito;
+	}
+	
+	
 }
 

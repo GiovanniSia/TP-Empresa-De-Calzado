@@ -24,10 +24,10 @@ public class ProductoEnCarritoDTO {
 		return cantidad;
 	}
 	
-	public void aniadirProducto(int cantidad) {
+	public void aniadirProducto(double cantidad) {
 		this.cantidad +=cantidad;
 	}
-	public void cambiarCantidad(int valor) {
+	public void cambiarCantidad(double valor) {
 		this.cantidad=valor;
 	}
 }
