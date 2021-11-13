@@ -220,6 +220,16 @@ public class ControladorBusquedaProductos {
 				ValidadorTeclado.aceptarLetrasYEspacios(e);
 			}
 		}));
+		this.vistaBusquedaProductos.getTextCantidadCarrito().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
+		this.vistaBusquedaProductos.getTextCantidadListaProductos().addKeyListener((new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ValidadorTeclado.aceptarSoloNumeros(e);
+			}
+		}));
 	}
 	
 	
@@ -319,6 +329,8 @@ public class ControladorBusquedaProductos {
 		}
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
 		StockDTO stockDeProductoSeleccionado = this.stockEnTabla.get(filaSeleccionada);
+//		System.out.println("fila seleccionada: "+filaSeleccionada);
+//		System.out.println("productoId: "+productoSeleccionado.getIdMaestroProducto()+", stockId: "+stockDeProductoSeleccionado.getIdStock());
 //		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
 		double cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
 		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado,stockDeProductoSeleccionado,null)) {
@@ -328,7 +340,7 @@ public class ControladorBusquedaProductos {
 		//verificamos si existe este prod en el carrito
 		for(ProductoEnCarritoDTO c: this.productosEnCarrito) {
 			if(productoSeleccionado.getIdMaestroProducto() == c.getProducto().getIdMaestroProducto()
-					&& c.getStock().getCodigoLote()==stockDeProductoSeleccionado.getCodigoLote() && c.getStock().getIdStock()==stockDeProductoSeleccionado.getIdStock()) {
+					&& c.getStock().getIdStock()==stockDeProductoSeleccionado.getIdStock()) {
 				modificarCantStock(productoSeleccionado,c.getStock().getIdStock(),-cantSeleccionada);
 				c.aniadirProducto(cantSeleccionada);
 				actualzarTablaCarrito();
@@ -336,9 +348,11 @@ public class ControladorBusquedaProductos {
 				return;
 			}
 		}
+//		System.out.println("el producto no existe en el carrito, se crea un obj carrito");
 		//si no existe se crea la entidad ProductoEnCarritoDTO
 		for(StockDTO s: this.listaStock) {
-			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal && s.getIdStock()==stockDeProductoSeleccionado.getIdStock() && s.getCodigoLote()==stockDeProductoSeleccionado.getCodigoLote()) {
+			if(s.getIdProducto()==productoSeleccionado.getIdMaestroProducto() && s.getIdSucursal()==idSucursal && s.getIdStock()==stockDeProductoSeleccionado.getIdStock()) {
+//				System.out.println("se agrega un productoEnCarritoDTO");
 				modificarCantStock(productoSeleccionado,s.getIdStock(),-cantSeleccionada);
 				this.productosEnCarrito.add(new ProductoEnCarritoDTO(productoSeleccionado,stockDeProductoSeleccionado,cantSeleccionada));
 			}
@@ -351,7 +365,7 @@ public class ControladorBusquedaProductos {
 	
 	public void modificarCantStock(MaestroProductoDTO producto, int IdStock, double cant) {
 		for(StockDTO s: this.listaStock) {
-			if(s.getIdProducto()==producto.getIdMaestroProducto() && IdStock == s.getIdStock()) {
+			if(s.getIdProducto()==producto.getIdMaestroProducto() && IdStock == s.getIdStock() && s.getIdSucursal() == this.idSucursal) {
 				Double valor = s.getStockDisponible()+cant;
 				s.setStockDisponible(valor);
 				return;
@@ -385,7 +399,7 @@ public class ControladorBusquedaProductos {
 	
 	public void calcularPrecioTotal() {
 		Preciototal=0;
-		System.out.println("cantidad de prod en carrito: "+this.productosEnCarrito.size());
+//		System.out.println("cantidad de prod en carrito: "+this.productosEnCarrito.size());
 		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
 //			BigDecimal precioMayorista = new BigDecimal(m.getProducto().getPrecioMayorista());
 //			BigDecimal cantidad = new BigDecimal(m.getCantidad());
@@ -399,7 +413,7 @@ public class ControladorBusquedaProductos {
 			
 		}
 		BigDecimal precio = new BigDecimal(this.Preciototal);
-		System.out.println("nuevo total: "+precio);
+//		System.out.println("nuevo total: "+precio);
 		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+precio);
 	}
 	
@@ -465,12 +479,12 @@ public class ControladorBusquedaProductos {
 				BigDecimal valorDelSpnner = new BigDecimal(valorDelSpinner);
 				
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
-					System.out.println("entro en la validacion unica");
+//					System.out.println("entro en la validacion unica");
 					BigDecimal cantProd = new BigDecimal(prod.getCantidad()); 
 					BigDecimal total = stockDisp.add(cantProd) ;
 					
-					System.out.println("cant Prod: "+cantProd.doubleValue());
-					System.out.println("total: "+total.doubleValue());
+//					System.out.println("cant Prod: "+cantProd.doubleValue());
+//					System.out.println("total: "+total.doubleValue());
 					
 					return (stockDisp.doubleValue() == 0 && valorDelSpnner.doubleValue() <= cantProd.doubleValue() ) ||
 						   (stockDisp.doubleValue() != 0 && (valorDelSpnner.doubleValue() > 0 && valorDelSpnner.doubleValue() <= total.doubleValue()) );
@@ -619,7 +633,8 @@ public class ControladorBusquedaProductos {
 	public void descontarDelStock() {
 		for(StockDTO stock: this.listaStock) {
 			for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
-				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal) {
+				if(stock.getIdProducto() == compra.getProducto().getIdMaestroProducto() && stock.getIdSucursal() == this.idSucursal && stock.getIdStock() == compra.getStock().getIdStock()) {
+//					System.out.println("SE DESCUENTA STOCK DEL STOCK: "+stock.getIdStock());
 					Double nuevoValor = stock.getStockDisponible() - compra.getCantidad(); 
 					boolean a = this.stock.actualizarStock(stock.getIdStock(), nuevoValor);
 					if(!a) {
@@ -646,7 +661,7 @@ public class ControladorBusquedaProductos {
 	
 	public void modificarValorMaximoDeSpinnerDesde() {
 		int valorMaximo = (int)this.vistaBusquedaProductos.getSpinnerPrecioHasta().getValue();
-		System.out.println("se deberia actualizar el valor maximo del desde, nuevo maxiom: "+valorMaximo);
+//		System.out.println("se deberia actualizar el valor maximo del desde, nuevo maxiom: "+valorMaximo);
 		this.vistaBusquedaProductos.setSpinnerModelDesde(new SpinnerNumberModel(0, 0, valorMaximo, 100));
 	}
 	

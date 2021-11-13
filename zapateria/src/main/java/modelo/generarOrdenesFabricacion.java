@@ -1,5 +1,6 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import dto.FabricacionesDTO;
@@ -12,7 +13,9 @@ public class generarOrdenesFabricacion {
 	
 	public static boolean faltaStockDeUnProductoEnUnaSucursal(int idSucursal, MaestroProductoDTO producto) {
 		Double cantidadEnStock = contarStockDeUnProductoEnUnaSucursal(idSucursal,producto.getIdMaestroProducto());
-		if(producto.getPuntoRepositorio()>=cantidadEnStock) {
+		BigDecimal auxcantidadEnStock = new BigDecimal(cantidadEnStock);
+		System.out.println("cantidad de stock restante: "+auxcantidadEnStock);
+		if(producto.getPuntoRepositorio()>=auxcantidadEnStock.doubleValue()) {
 			return true;
 		}
 		return false;

@@ -259,8 +259,8 @@ public class VentanaBusquedaProductos {
 		lblValorTotal.setVerticalAlignment(SwingConstants.TOP);
 		lblValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
 		lblValorTotal.setForeground(new Color(0, 100, 0));
-		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		lblValorTotal.setBounds(608, 370, 311, 37);
+		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
+		lblValorTotal.setBounds(608, 365, 311, 37);
 		panel.add(lblValorTotal);
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
