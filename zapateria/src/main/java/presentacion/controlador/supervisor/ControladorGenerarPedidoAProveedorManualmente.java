@@ -388,26 +388,30 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 //	    System.out.println("se suma la cant total de sotck + la cantidad de pedidos del mismo prod: "+auxSuma);
 	    
 	    auxSuma = auxSuma.add(cantidadDeProdDeOtrosPedidosIguales);
-//	    System.out.println("cantidad total total: "+auxSuma);
 	    String aux = ""+auxSuma;
 //	    System.out.println("stock total seria: "+aux);
-	    if(auxSuma.doubleValue() > Double.MAX_VALUE) {
-	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+//	    if(auxSuma.doubleValue() > Double.MAX_VALUE) {
+	    System.out.println("cantidad total total de productos en stock con este pedido: "+auxSuma+", cantidad de digitos: "+aux.length());
+	    if(aux.length() > 44) {
+	    	JOptionPane.showMessageDialog(null, "La cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;		
 	    }
 	    
 	    
 	    String auxPrecio = precioTotal+"";
-	    if(precioTotal.doubleValue() > Double.MAX_VALUE) {
+	    System.out.println("precio total con este pedido: "+precioTotal+", cantidad de digitos: "+auxPrecio.length());
+//	    if(precioTotal.doubleValue() > Double.MAX_VALUE) {
+	    if( auxPrecio.length() > 44) {
 			JOptionPane.showMessageDialog(null, "El precio total supera la cantidad de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
 			return;	
 	    }
 	    
-	    String auxPrecioUnidad = precioUnidad+"";
-	    if(precioUnidad.doubleValue() > Double.MAX_VALUE) {
-	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
-			return;			
-	    }
+//	    String auxPrecioUnidad = precioUnidad+"";
+//	    System.out.println("precio total con este pedido: "+precioTotal+", cantidad de digitos: "+auxPrecio.length());
+//	    if(auxPrecioUnidad.length() > 44) {
+//	    	JOptionPane.showMessageDialog(null, "El cantidad de productos supera la cantidad total de bytes almacenables en la Base de Datos(45)", "Informacion", JOptionPane.ERROR_MESSAGE);
+//			return;			
+//	    }
 	    String estado = "En espera";
 	    int idSuc = this.idSucursal;
 	    String fechaEnvio = null;
