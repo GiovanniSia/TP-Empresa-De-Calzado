@@ -63,6 +63,11 @@ public class PedidosPendientes {
 		
 		PedidosPendientes pedidosPendientes = new PedidosPendientes(new DAOSQLFactory()); 
 		
+		if(!noHayUnPedidoPrevio(idSucursal,producto)) {
+			System.out.println("ya habia un pedido para: "+producto.getDescripcion());
+			return;
+		}
+		
 		ProveedorDTO prov = getProveedorDeProducto(producto);
 		ProductoDeProveedorDTO prodProv = getProductoDeProveedor(producto.getIdProveedor(),producto.getIdMaestroProducto());
 		if(prov==null) {
@@ -108,10 +113,21 @@ public class PedidosPendientes {
 	    }else {
 	    	JOptionPane.showMessageDialog(null, "Se ha generado un pedido automatico para el Producto: '"+producto.getDescripcion() +"' con exito");
 	    }
+	    System.out.println("se genera un pedido para: "+producto.getDescripcion());
 	}
 	
 	
 	
+	private static boolean noHayUnPedidoPrevio(int idSucursal, MaestroProductoDTO producto) {
+		PedidosPendientes pedidosPendientes = new PedidosPendientes(new DAOSQLFactory());
+		ArrayList<PedidosPendientesDTO> todosLosPedidosPendientes = (ArrayList<PedidosPendientesDTO>) pedidosPendientes.readAll();
+		for(PedidosPendientesDTO p: todosLosPedidosPendientes) {
+			if((p.getEstado().equals("En espera") || p.getEstado().equals("Enviado")) && p.getIdMaestroProducto() == producto.getIdMaestroProducto() && p.getIdSucursal()==idSucursal){
+				return false;
+			}
+		}return true;
+}
+
 	private static double determinarCantidad(MaestroProductoDTO producto, ProductoDeProveedorDTO prodProv,int idSucursal) {
 		double cantidadRestantoDeProducto = generarOrdenesFabricacion.contarStockDeUnProductoEnUnaSucursal(idSucursal, producto.getIdMaestroProducto());
 		double cantProdDeseada = producto.getCantidadAReponer()+(producto.getPuntoRepositorio()-cantidadRestantoDeProducto);

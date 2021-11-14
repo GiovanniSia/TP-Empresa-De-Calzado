@@ -602,7 +602,7 @@ public class ControladorBusquedaProductos {
 		for(ProductoEnCarritoDTO compra: this.productosEnCarrito) {
 			int idProducto = compra.getProducto().getIdMaestroProducto();
 			int idStock = compra.getStock().getIdStock();
-			int cant = (int)compra.getCantidad();
+			double cant = compra.getCantidad();
 			double precio;
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
 				precio = compra.getProducto().getPrecioMayorista() * compra.getCantidad();
