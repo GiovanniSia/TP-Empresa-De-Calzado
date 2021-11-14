@@ -39,6 +39,9 @@ public class VentanaVendedor extends JFrame {
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_5;
+	private JButton btnInfoArmarVenta;
+	private JButton btnInfoClientes;
+	private JButton btnInfoProductos;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -58,27 +61,27 @@ public class VentanaVendedor extends JFrame {
 		contentPane.setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
-		
+
 		panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
 		panel.setBounds(0, 0, 719, 53);
 		contentPane.add(panel);
-		
+
 		lblLogo = new JLabel("");
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblLogo.setBounds(10, 5, 165, 42);
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
-		
+
 		lblSucursal = new JLabel("Sucursal:");
 		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSucursal.setBounds(537, 28, 154, 19);
 		panel.add(lblSucursal);
-		
+
 		lblEmpleado = new JLabel("Empleado:");
 		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -98,7 +101,7 @@ public class VentanaVendedor extends JFrame {
 		btnArmarVenta.setBounds(35, 74, 120, 120);
 		cambiarIconoBotones(btnArmarVenta, "tag.png");
 		panel_1.add(btnArmarVenta);
-		
+
 		btnVerAgregarClientes = new JButton("");
 		btnVerAgregarClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -110,7 +113,7 @@ public class VentanaVendedor extends JFrame {
 		btnVerAgregarClientes.setBounds(285, 74, 120, 120);
 		cambiarIconoBotones(btnVerAgregarClientes, "person.png");
 		panel_1.add(btnVerAgregarClientes);
-		
+
 		btnVerProductos = new JButton("");
 		btnVerProductos.setForeground(new Color(51, 102, 153));
 		btnVerProductos.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -118,50 +121,85 @@ public class VentanaVendedor extends JFrame {
 		btnVerProductos.setBounds(535, 74, 120, 120);
 		cambiarIconoBotones(btnVerProductos, "product.png");
 		panel_1.add(btnVerProductos);
-		
+
 		lblNewLabel_3 = new JLabel("Armar Venta");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(35, 30, 120, 43);
 		panel_1.add(lblNewLabel_3);
-		
+
 		lblNewLabel_4 = new JLabel("Clientes");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_4.setBounds(285, 30, 120, 43);
 		panel_1.add(lblNewLabel_4);
-		
+
 		lblNewLabel_5 = new JLabel("Productos");
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_5.setBounds(535, 30, 120, 43);
 		panel_1.add(lblNewLabel_5);
-		
+
+		btnInfoArmarVenta = new JButton("?");
+		btnInfoArmarVenta.setBounds(78, 205, 37, 28);
+		panel_1.add(btnInfoArmarVenta);
+
+		btnInfoClientes = new JButton("?");
+		btnInfoClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null,
+						"Se puede ver todos los clientes del sistema y poder agregar nuevos",
+						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
+			}
+		});
+		btnInfoClientes.setBounds(328, 208, 37, 28);
+		panel_1.add(btnInfoClientes);
+
+		btnInfoProductos = new JButton("?");
+		btnInfoProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null,
+						"Se puede ver todos los productos del sistema",
+						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
+			}
+		});
+		btnInfoProductos.setBounds(584, 208, 37, 28);
+		panel_1.add(btnInfoProductos);
+		btnInfoArmarVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null,
+						"Es para realizar una nueva venta, \n 1. Tiene que elegir el cilente y en el caso \n de no estarlo entonces agregarlo. \n 2. Tiene que seleccionar los productos que \n quiere el cliente. \n 3. Por ultimo, finalizar pedido",
+						"Armar Venta", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
+			}
+		});
+
 		lblNewLabel_1 = new JLabel("Cerrar Sesion");
 		lblNewLabel_1.setBounds(80, 349, 132, 60);
 		contentPane.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		
-				btnCerrarSesion = new JButton("");
-				btnCerrarSesion.setBounds(10, 349, 60, 60);
-				contentPane.add(btnCerrarSesion);
-				btnCerrarSesion.setToolTipText("");
-				btnCerrarSesion.setForeground(new Color(51, 102, 153));
-				btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-				btnCerrarSesion.setBackground(new Color(51, 102, 204));
-				cambiarIconoBotones(btnCerrarSesion, "exit.png");
-				
-				JLabel lblFondo = new JLabel("");
-				lblFondo.setBounds(0, 0, 720, 540);
-				frame.getContentPane().add(lblFondo);
-				cambiarIconoLabel(lblFondo, "fondo.png");
+
+		btnCerrarSesion = new JButton("");
+		btnCerrarSesion.setBounds(10, 349, 60, 60);
+		contentPane.add(btnCerrarSesion);
+		btnCerrarSesion.setToolTipText("");
+		btnCerrarSesion.setForeground(new Color(51, 102, 153));
+		btnCerrarSesion.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnCerrarSesion.setBackground(new Color(51, 102, 204));
+		cambiarIconoBotones(btnCerrarSesion, "exit.png");
+
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 0, 720, 540);
+		frame.getContentPane().add(lblFondo);
+		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
-	
+
 	public void cambiarIconoBotones(JButton boton, String ruta) {
-		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
-		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
+		ImageIcon Icono = new ImageIcon(
+				Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
 		boton.setIcon(Icono);
 	}
+
 	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
 		ImageIcon Icono = new ImageIcon(
@@ -219,4 +257,5 @@ public class VentanaVendedor extends JFrame {
 	public JLabel getLblEmpleado() {
 		return lblEmpleado;
 	}
+
 }

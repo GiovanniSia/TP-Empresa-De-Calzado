@@ -50,7 +50,7 @@ private static final long serialVersionUID = 1L;
 	private JLabel lblAtrs_1;
 
 	private JButton btnEditar;
-
+	private JLabel lbleditarProducto;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -237,7 +237,7 @@ private static final long serialVersionUID = 1L;
 		cambiarIconoBotones(btnEditar, "update.png");
 		frame.getContentPane().add(btnEditar);
 		
-		JLabel lbleditarProducto = new JLabel("<html>Editar Producto<html>");
+		lbleditarProducto = new JLabel("<html>Editar Producto<html>");
 		lbleditarProducto.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lbleditarProducto.setBounds(366, 496, 90, 60);
 		frame.getContentPane().add(lbleditarProducto);
@@ -285,6 +285,9 @@ private static final long serialVersionUID = 1L;
 		lblAtrs_1.setVisible(false);
 		lblAgregarProducto.setVisible(false);
 		lblAtrs_2.setVisible(false);
+		btnEditar.setVisible(false);
+		lbleditarProducto.setVisible(false);
+		
 	}
 	
 	public void mostrarVentanaParaVerProductosYOrdenDeManufactura() {
