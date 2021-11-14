@@ -546,6 +546,8 @@ public class ControladorRealizarVenta {
 	}
 
 	public void registrarDetallesFactura(FacturaDTO factura) {
+		ClienteDTO client = this.cliente.selectCliente(this.carritoACobrar.getIdCliente());
+		
 		for (DetalleCarritoDTO detalleCarrito : this.detalleCarritoACobrar) {
 			int id = 0;
 			int idProd = detalleCarrito.getIdProducto();
@@ -553,13 +555,18 @@ public class ControladorRealizarVenta {
 			MaestroProductoDTO producto = this.maestroProducto.selectMaestroProducto(idProd);
 			String descr = producto.getDescripcion();
 			double precioCosto = producto.getPrecioCosto();
+			
 			double precioVenta = detalleCarrito.getPrecio() / detalleCarrito.getCantidad();
+			double precioVentaConIVA = calcularIVA(client) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
+			
 			double monto = precioVenta * cant;
+			double montoConIVA = calcularIVA(client) ? (monto - (21 * monto) / 100) : monto; 
+			
 			int idFactura = factura.getIdFactura();
 			String unidadMedida = "" + producto.getUnidadMedida();// CHEQUEAR
 
-			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id, idProd, cant, descr, precioCosto, precioVenta,
-					monto, idFactura, unidadMedida);
+			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id, idProd, cant, descr, precioCosto, precioVentaConIVA,
+					montoConIVA, idFactura, unidadMedida);
 			boolean insertDetalleFactura = this.detalleFactura.insert(detalleFactur);// se guarda en la bd
 			if (!insertDetalleFactura) {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error en uno de los ingresos de factura");

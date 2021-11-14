@@ -620,10 +620,16 @@ public class ProcesarCompraVirtual {
 			}
 					
 			double monto = precioVenta * cant;
+			
+			double precioVentaConIVA = calcularIVA(cliente) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
+			
+			double montoConIVA = calcularIVA(cliente) ? (monto - (21 * monto) / 100) : monto; 
+			
+			
 			int idFactura = factura.getIdFactura();
 			String unidadMedida =""+producto.getUnidadMedida();//CHEQUEAR
 			
-			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id,idProd,cant,descr,precioCosto,precioVenta,monto,idFactura,unidadMedida);
+			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id,idProd,cant,descr,precioCosto,precioVentaConIVA,montoConIVA,idFactura,unidadMedida);
 			
 			DetalleFactura detalleFactura = new DetalleFactura(new DAOSQLFactory());
 			boolean insertDetalleFactura = detalleFactura.insert(detalleFactur);//se guarda en la bd
@@ -641,6 +647,14 @@ public class ProcesarCompraVirtual {
 		}
 		return retNotaCredito;
 	}
+	
+	public static boolean calcularIVA(ClienteDTO cliente) {
+		if (cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 	private static String generarNroSucursal(int idSucursal) {
 		Sucursal sucursala = new Sucursal(new DAOSQLFactory());
