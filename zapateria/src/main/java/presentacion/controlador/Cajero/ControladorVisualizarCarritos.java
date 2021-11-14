@@ -23,7 +23,12 @@ import inicioSesion.sucursalProperties;
 import modelo.Carrito;
 import modelo.Cliente;
 import modelo.DetalleCarrito;
+import modelo.DetalleFactura;
+import modelo.Empleado;
+import modelo.Factura;
+import modelo.Ingresos;
 import modelo.MaestroProducto;
+import modelo.MedioPago;
 import modelo.Stock;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
@@ -63,8 +68,16 @@ public class ControladorVisualizarCarritos {
 
 	Controlador controlador;
 
+	
+	Factura factura;
+	MedioPago medioPago;
+	Empleado empleado;
+	DetalleFactura detalleFactura;
+	Ingresos ingresos;
+	
 	public ControladorVisualizarCarritos(Controlador controlador, Carrito carrito, DetalleCarrito detalleCarrito,
-			Cliente cliente, MaestroProducto maestroProducto, Stock stock) {
+			Cliente cliente, MaestroProducto maestroProducto, Stock stock,Factura factura,MedioPago medioPago,Empleado empleado,DetalleFactura detalleFactura,	Ingresos ingresos) {
+
 		obtenerDatosPropertiesSucursal();
 		this.carrito = carrito;
 		this.detalleCarrito = detalleCarrito;
@@ -72,6 +85,14 @@ public class ControladorVisualizarCarritos {
 		this.maestroProducto = maestroProducto;
 		this.stock = stock;
 
+		this.factura = factura;
+		this.medioPago = medioPago;
+		this.empleado = empleado;
+		this.detalleFactura = detalleFactura;
+		this.ingresos = ingresos;		
+		
+		
+		
 		this.listaCarritos = new ArrayList<CarritoDTO>();
 		this.listaDetalleCarrito = new ArrayList<DetalleCarritoDTO>();
 		this.listaClientes = new ArrayList<ClienteDTO>();
@@ -79,34 +100,17 @@ public class ControladorVisualizarCarritos {
 		this.detalleCarritoEnTabla = new ArrayList<DetalleCarritoDTO>();
 
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
-		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
+
 
 		this.controlador = controlador;
 		
-		escribirLabels();
+		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,this.ingresos);
+		setControladorRealizarVenta(this.controladorRealizarVenta);
+		this.controladorRealizarVenta.setControladorVisualizarCarritos(this);
 		
-	}
+		this.ventanaVisualizarCarritos = new VentanaVisualizarCarritos();
 
-	public void setControladorRealizarVenta(ControladorRealizarVenta controladorRealizarVenta) {
-		this.controladorRealizarVenta = controladorRealizarVenta;
-	}
-
-	public void escribirLabels() {
-		empleadoProperties empleado = empleadoProperties.getInstance();
-		sucursalProperties sucu = sucursalProperties.getInstance();
-		try {
-			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
-			String sucursal = sucu.getValue("Nombre");
-			this.ventanaVisualizarCarritos.getLblNombreEmpleado().setText(nombreEmp);
-			this.ventanaVisualizarCarritos.getLblNombreSucursal().setText(sucursal);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void inicializar() {
 		this.controladorRealizarVenta.inicializar();
-
 		this.listaCarritos = this.carrito.readAll();
 		this.listaDetalleCarrito = this.detalleCarrito.readAll();
 		this.listaClientes = this.cliente.readAll();
@@ -150,7 +154,31 @@ public class ControladorVisualizarCarritos {
 
 		validarTeclado();
 		llenarTablaCompleta();
+		escribirLabels();
 
+		
+	}
+
+	public void setControladorRealizarVenta(ControladorRealizarVenta controladorRealizarVenta) {
+		this.controladorRealizarVenta = controladorRealizarVenta;
+	}
+
+	public void escribirLabels() {
+		empleadoProperties empleado = empleadoProperties.getInstance();
+		sucursalProperties sucu = sucursalProperties.getInstance();
+		try {
+			String nombreEmp = empleado.getValue("Nombre")+" "+empleado.getValue("Apellido");
+			String sucursal = sucu.getValue("Nombre");
+			this.ventanaVisualizarCarritos.getLblNombreEmpleado().setText(nombreEmp);
+			this.ventanaVisualizarCarritos.getLblNombreSucursal().setText(sucursal);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void inicializar() {
+		
+		
 	}
 
 	public void actualizarVentana() {
@@ -201,7 +229,6 @@ public class ControladorVisualizarCarritos {
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().setColumnCount(0);
 		this.ventanaVisualizarCarritos.getModelTablaCarritos()
 				.setColumnIdentifiers(this.ventanaVisualizarCarritos.getNombreColumnasCarritos());
-
 		for (CarritoDTO carrito : this.listaCarritos) {
 			if (carrito.getIdSucursal() == this.idSucursal && !yaFueAgregado(carrito)) {
 

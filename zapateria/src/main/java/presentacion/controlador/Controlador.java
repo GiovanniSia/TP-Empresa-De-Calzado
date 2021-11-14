@@ -348,14 +348,7 @@ public class Controlador {
 
 		// Registrar Venta
 		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
-		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
-				maestroProducto, stock);
-		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
-				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
-				this.ingresos);
-		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
-		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
-
+		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,maestroProducto, stock, factura, medioPago, empleado, detalleFactura, ingresos);
 	}
 
 	public void inicializarControladoresVendedor() {
@@ -623,12 +616,12 @@ public class Controlador {
 		// Cierre de Caja
 		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,
-				maestroProducto, stock);
-		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
-				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
-				this.ingresos);
-		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
-		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
+				maestroProducto, stock, factura, medioPago, empleado, detalleFactura, ingresos);
+//		this.controladorRealizarVenta = new ControladorRealizarVenta(this.medioPago, this.cliente, this.empleado,
+//				this.carrito, this.detalleCarrito, this.maestroProducto, this.factura, this.detalleFactura,
+//				this.ingresos);
+//		this.controladorVisualizarCarritos.setControladorRealizarVenta(this.controladorRealizarVenta);
+//		this.controladorRealizarVenta.setControladorVisualizarCarritos(this.controladorVisualizarCarritos);
 
 		// Gestionar recetas y pasos
 		this.controladorVerPasos = new ControladorVerPasos();
