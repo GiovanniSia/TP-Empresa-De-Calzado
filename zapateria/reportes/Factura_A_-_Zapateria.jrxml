@@ -274,7 +274,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COLUMN_42" class="java.lang.Integer">
+	<field name="COLUMN_42" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="Cantidad"/>
 		<property name="com.jaspersoft.studio.field.label" value="Cantidad"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
@@ -315,7 +315,7 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="cant" class="java.lang.Integer">
+	<field name="cant" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="Cantidad"/>
 		<property name="com.jaspersoft.studio.field.label" value="cant"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="detalle"/>
@@ -598,25 +598,25 @@
 					<textElement textAlignment="Right"/>
 					<text><![CDATA[TOTAL DE VENTA]]></text>
 				</staticText>
-				<textField pattern="EEEEE dd MMMMM yyyy">
+				<textField>
 					<reportElement x="469" y="3" width="84" height="20" uuid="393736cc-22f4-4c65-9a2a-f8cc0693398f"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf( $F{TotalBruto}.intValue()-$F{IVA}.intValue() )]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new BigDecimal($F{TotalBruto})]]></textFieldExpression>
 				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
+				<textField>
 					<reportElement x="469" y="19" width="84" height="20" uuid="d18a81e4-13db-421c-8496-bc22400deb49"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{IVA}.intValue())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new BigDecimal($F{IVA})]]></textFieldExpression>
 				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
+				<textField>
 					<reportElement x="469" y="81" width="84" height="20" uuid="f9711b12-8c0c-4e33-a895-1413e40a6740"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{TotalFactura}.intValue())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new BigDecimal($F{TotalFactura})]]></textFieldExpression>
 				</textField>
-				<textField pattern="EEEEE dd MMMMM yyyy">
+				<textField>
 					<reportElement x="469" y="40" width="84" height="20" uuid="fa9dd0fb-54ee-4257-8215-caa67e808974"/>
 					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{Descuento}.intValue())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new BigDecimal($F{Descuento})]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

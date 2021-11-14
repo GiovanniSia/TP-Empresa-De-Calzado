@@ -528,6 +528,7 @@ public class ControladorRealizarVenta {
 
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = calcularIVA(client) ? ((21 * totalBruto) / 100) : 0.0;
+		totalBruto = calcularIVA(client) ? totalBruto-((21 * totalBruto) / 100) : totalBruto;
 		this.facturaGenerada = new FacturaDTO(id, montoPendiente, idCliente, nombreCliente, idCajero, nombreCajero,
 				idVendedor, nombreVendedor, fecha, tipoFactura, nroFacturaCompleto, idSucursal, descuento, totalBruto,
 				totalFactura, tipoVenta, calle, altura, pais, provincia, localidad, codPostal, CUIL, correo,
@@ -560,7 +561,7 @@ public class ControladorRealizarVenta {
 			double precioVentaConIVA = calcularIVA(client) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
 			
 			double monto = precioVenta * cant;
-			double montoConIVA = calcularIVA(client) ? (monto - (21 * monto) / 100) : monto; 
+			double montoConIVA = calcularIVA(client) ? (monto - ((21 * monto) / 100)) : monto; 
 			
 			int idFactura = factura.getIdFactura();
 			String unidadMedida = "" + producto.getUnidadMedida();// CHEQUEAR

@@ -13,9 +13,13 @@ import modelo.Factura;
 import modelo.Sucursal;
 import modelo.Zapateria;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import persistencia.conexion.Conexion;
@@ -107,10 +111,25 @@ public class ReporteFactura {
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
 			log.info("Se cargó correctamente el reporte");
+			
+			//descargarPDF(nroFacturaCompleto);
 		} catch (JRException ex) {
 			log.error("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
 		}
 	}
+	/*
+	@SuppressWarnings({ "deprecation", "rawtypes" })
+	private void descargarPDF(String nroFacturaCompleto) {
+		String destino = "facturas"+ File.separator + "" + nroFacturaCompleto +".pdf";
+		try{
+			JRExporter exporter = new JRPdfExporter();
+			exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.reporteLleno);
+			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destino);
+			exporter.exportReport();
+		}catch(Exception e){
+			System.err.println( "Error iReport: " + e.getMessage() );
+		}
+	}*/
 
 	public void mostrar() {
 		this.reporteViewer = new JasperViewer(this.reporteLleno, false);
