@@ -265,6 +265,7 @@ public class ControladorRealizarVenta {
 
 		// EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER
 		// TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
+		System.out.println("medio de pago agregado: "+mp);
 		IngresosDTO ingreso = new IngresosDTO(0, idSucursal, "", "", "VT", idCliente, tipoFactura, "0", mp, cantidad,
 				valorConversion, nroOperacion, totalArg);
 		this.listaDeIngresosARegistrar.add(ingreso);
@@ -403,7 +404,14 @@ public class ControladorRealizarVenta {
 	}
 
 	public boolean poseeSaldoSuficiente(ClienteDTO cliente, double cantidad) {
-		return cliente.getCreditoDisponible() >= cantidad;
+		double cantidadAgregada = 0;
+		for(IngresosDTO i: this.listaDeIngresosARegistrar) {
+			if(i.getMedioPago().equals("CC")) {
+				cantidadAgregada +=i.getCantidad();
+			}
+		}
+		cantidadAgregada = cantidadAgregada + cantidad;
+		return cliente.getCreditoDisponible() >= cantidadAgregada;
 	}
 
 	public void registrarPago(ActionEvent a) {
@@ -584,6 +592,16 @@ public class ControladorRealizarVenta {
 		for (IngresosDTO ingreso : this.listaDeIngresosARegistrar) {
 			ingreso.establecerDatosFaltantes(factura.getNroFacturaCompleta(), fecha, hora);
 			this.ingresos.insert(ingreso);
+			if(ingreso.getMedioPago().equals("CC")) {
+				double nuevaCant=cliente.getCreditoDisponible()-ingreso.getCantidad();
+				cliente.setCreditoDisponible(nuevaCant);
+				boolean update = this.cliente.update(cliente.getIdCliente(), cliente);
+				if(!update) {
+					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el credito disponible del cliente");
+				}else {
+					System.out.println("se actualiza el credito disponible del cliente: "+cliente.getNombre()+", a: "+nuevaCant);
+				}
+			}
 
 		}
 		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);
