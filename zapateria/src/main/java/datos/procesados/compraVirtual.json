@@ -3,13 +3,13 @@
     "compra": {
       "1": 5
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 35000.0,
     "IdCliente": 2,
-    "Nombre": "Juan",
-    "Apellido": "Lopez",
-    "CUIL": "4223004",
-    "CorreoElectronico": "juan@mgail.com",
+    "Nombre": "Vicentino",
+    "Apellido": "Reboredo",
+    "CUIL": "223004",
+    "CorreoElectronico": "pepeptS@mgail.com",
     "ImpuestoAFIP": "CF",
     "Estado": "Activo",
     "Calle": "1002",
@@ -25,7 +25,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -47,7 +47,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -69,7 +69,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -91,7 +91,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -113,7 +113,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -136,7 +136,7 @@
       "2": 3,
       "19": 10
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 500.0,
     "IdCliente": 1,
     "Nombre": "Pedro",
@@ -159,7 +159,7 @@
       "2": 3,
       "19": 10
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 500.0,
     "IdCliente": 1,
     "Apellido": "asd",
@@ -179,7 +179,7 @@
       "1": 1994,
       "2": 2000
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 1.202788E7,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -201,7 +201,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 9,
+    "idSucursal": 10,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Sebas",
@@ -223,7 +223,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 1,
+    "idSucursal": 2,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Cliente",
@@ -245,7 +245,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 9,
+    "idSucursal": 10,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Cliente",
@@ -267,7 +267,7 @@
       "1": 1,
       "2": 3
     },
-    "idSucursal": 9,
+    "idSucursal": 10,
     "pago": 14020.0,
     "IdCliente": 1,
     "Nombre": "Cliente",

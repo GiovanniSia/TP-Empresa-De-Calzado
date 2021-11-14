@@ -392,7 +392,7 @@ public class VentanaBusquedaProductos {
 		textCantidadListaProductos.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCantidadListaProductos.getText().length() >= 20) {
+				if (textCantidadListaProductos.getText().length() >= 44) {
 					e.consume();
 				}
 			}
@@ -405,7 +405,7 @@ public class VentanaBusquedaProductos {
 		textCantidadCarrito.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (textCantidadCarrito.getText().length() >= 20) {
+				if (textCantidadCarrito.getText().length() >= 44) {
 					e.consume();
 				}
 			}

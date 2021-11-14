@@ -552,7 +552,8 @@ public class ProcesarCompraVirtual {
 		String correo = client.getCorreo();
 		
 		String impuestoAFIP = obtenerNombreCategoria(client);
-		double IVA = deboCalcularIVA(client) ? ((21 * totalBruto)/100) : 0.0;
+		double IVA = deboCalcularIVA(client) ? ((21 * totalFactura)/100) : 0.0;
+		totalBruto = calcularIVA(client) ? totalFactura-((21 * totalFactura) / 100) : totalFactura;
 		FacturaDTO facturaGenerada = new FacturaDTO(0,0,idCliente,nombreCliente,idCajero,nombreCajero,idVendedor,nombreVendedor,fecha,tipoFactura,nroFacturaCompleto,idSucursal,descuento,totalBruto,totalFactura,tipoVenta,calle,altura,pais,provincia,localidad,codPostal,CUIL,correo,impuestoAFIP,IVA);
 		
 		//registramos la factura en la bd
@@ -621,9 +622,9 @@ public class ProcesarCompraVirtual {
 					
 			double monto = precioVenta * cant;
 			
-			double precioVentaConIVA = calcularIVA(cliente) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
+			double precioVentaConIVA = calcularIVA(cliente) ? (precioVenta - ((21 * precioVenta) / 100)) : precioVenta;
 			
-			double montoConIVA = calcularIVA(cliente) ? (monto - (21 * monto) / 100) : monto; 
+			double montoConIVA = calcularIVA(cliente) ? (monto - ((21 * monto) / 100)) : monto; 
 			
 			
 			int idFactura = factura.getIdFactura();
@@ -768,7 +769,7 @@ public class ProcesarCompraVirtual {
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);	//Compra con cliente ya registrado
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
-		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 1, 35000, 2, "Juan", "Lopez","4223004","juan@mgail.com",
+		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 2, 35000, 2, "Vicentino", "Reboredo","223004","pepeptS@mgail.com",
 				//"Mayorista",
 				"1002","201","Argentina","Buenos Aires","Bella Vista","1661","02320-1234");
 		compras.add(cvd);
@@ -776,7 +777,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
-		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -786,7 +787,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
-		CompraVirtualDTO cvd23 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd23 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -796,7 +797,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
-		CompraVirtualDTO cvd24 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd24 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "",
@@ -806,7 +807,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
-		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -816,7 +817,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra repetida
-		CompraVirtualDTO cvd222 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd222 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"", "", "",
@@ -828,7 +829,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);
 		detalle.put(19, 10);	//id producto invalida, paga invalida
-		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 1, 500, 1, "Pedro",
+		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 2, 500, 1, "Pedro",
 				"asd", "", "sebas@gmail.com", 
 				//"Minorista", 
 				"", "", "Argentina",
@@ -837,7 +838,7 @@ public class ProcesarCompraVirtual {
 		JsonListaCompraVirtual.guardarLista(compras);
 		
 		//Multiples datos invalidos
-		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 1, 500, 1, null,
+		CompraVirtualDTO cvd4 = new CompraVirtualDTO(detalle, 2, 500, 1, null,
 				"asd", "", null, 
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -847,7 +848,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1994);
 		detalle.put(2, 2000);
 		//CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
-				CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880+8000000, 1, "Sebas",
+				CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 2, 4027880+8000000, 1, "Sebas",
 
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
@@ -858,7 +859,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Sucursal invalida
-		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Sebas",
+		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Sebas",
 				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -868,7 +869,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//CUIL INVALIDA
-		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 1, 14020, 1, "Cliente",
+		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Cliente",
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -878,7 +879,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Datos de ubicacion insuficientes
-		CompraVirtualDTO cvd8 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
+		CompraVirtualDTO cvd8 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Cliente",
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
@@ -888,7 +889,7 @@ public class ProcesarCompraVirtual {
 		detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Datos de ubicacion insuficientes
-		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 9, 14020, 1, "Cliente",
+		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Cliente",
 				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
 				"Calle falsa", "5421", "",
 				"", "Tortuguitas", "asda","");

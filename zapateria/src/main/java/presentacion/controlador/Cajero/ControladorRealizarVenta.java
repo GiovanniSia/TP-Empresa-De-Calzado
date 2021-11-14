@@ -527,8 +527,8 @@ public class ControladorRealizarVenta {
 		String correo = client.getCorreo();
 
 		String impuestoAFIP = obtenerNombreCategoria(client);
-		double IVA = calcularIVA(client) ? ((21 * totalBruto) / 100) : 0.0;
-		totalBruto = calcularIVA(client) ? totalBruto-((21 * totalBruto) / 100) : totalBruto;
+		double IVA = calcularIVA(client) ? ((21 * totalFactura) / 100) : 0.0;
+		totalBruto = calcularIVA(client) ? totalFactura-((21 * totalFactura) / 100) : totalFactura;
 		this.facturaGenerada = new FacturaDTO(id, montoPendiente, idCliente, nombreCliente, idCajero, nombreCajero,
 				idVendedor, nombreVendedor, fecha, tipoFactura, nroFacturaCompleto, idSucursal, descuento, totalBruto,
 				totalFactura, tipoVenta, calle, altura, pais, provincia, localidad, codPostal, CUIL, correo,
