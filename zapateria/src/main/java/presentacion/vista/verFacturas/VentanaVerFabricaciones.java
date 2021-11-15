@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
+import com.toedter.calendar.JDateChooser;
 
 public class VentanaVerFabricaciones extends JFrame {
 
@@ -50,6 +51,9 @@ public class VentanaVerFabricaciones extends JFrame {
 	private JLabel lblVerFactura;
 	private JPanel panel_1;
 	private JLabel lblLogo;
+	
+	JDateChooser fechaDesde;
+	JDateChooser fechaHasta;
 
 	public VentanaVerFabricaciones() {
 		initialize();
@@ -153,8 +157,26 @@ public class VentanaVerFabricaciones extends JFrame {
 		
 		chckbxIVA = new JCheckBox("IVA");
 		chckbxIVA.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		chckbxIVA.setBounds(635, 35, 111, 23);
+		chckbxIVA.setBounds(635, 35, 52, 23);
 		panel.add(chckbxIVA);
+		
+		fechaDesde = new JDateChooser();
+		fechaDesde.setBounds(786, 11, 108, 19);
+		panel.add(fechaDesde);
+
+		fechaHasta = new JDateChooser();
+		fechaHasta.setBounds(786, 36, 108, 19);
+		panel.add(fechaHasta);
+		
+		JLabel lblDesde = new JLabel("Desde");
+		lblDesde.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblDesde.setBounds(730, 12, 46, 14);
+		panel.add(lblDesde);
+		
+		JLabel lblHasta = new JLabel("Hasta");
+		lblHasta.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblHasta.setBounds(730, 40, 46, 14);
+		panel.add(lblHasta);
 
 		
 		lblNewLabel = new JLabel("Facturas");
@@ -286,5 +308,13 @@ public class VentanaVerFabricaciones extends JFrame {
 
 	public JCheckBox getChckbxIVA() {
 		return chckbxIVA;
+	}
+	
+	public JDateChooser getFechaDesde() {
+		return fechaDesde;
+	}
+
+	public JDateChooser getFechaHasta() {
+		return fechaHasta;
 	}
 }

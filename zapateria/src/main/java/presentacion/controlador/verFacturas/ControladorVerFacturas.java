@@ -6,8 +6,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -43,11 +46,11 @@ public class ControladorVerFacturas implements ActionListener {
 		ventanaPrincipal = new VentanaVerFabricaciones();
 		inicializarTextFields();
 		inicializarCheckBox();
-		
+		inicializarDateChooser();
 		this.ventanaPrincipal.getBtnVerFactura().addActionListener(r->mostrarFactura(r));
 		this.ventanaPrincipal.getBtnSalir().addActionListener(r->salir(r));
 	}
-	
+
 	private void salir(ActionEvent r) {
 		this.ventanaPrincipal.cerrar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
@@ -151,12 +154,60 @@ public class ControladorVerFacturas implements ActionListener {
 		if(this.ventanaPrincipal.getChckbxIVA().isSelected()) {
 			ret = ret && f.getIVA()!=0.0;
 		}
-		
+		ret = ret && cumpleConLasFechas(f);
 		return ret;
+	}
+	
+	private boolean cumpleConLasFechas(FacturaDTO f) {
+		Date fechaPaso = new Date();
+		String[] fechaPasoString = f.getFecha().split("-");
+		fechaPaso.setYear(Integer.valueOf(fechaPasoString[0])-1900);
+		fechaPaso.setMonth(Integer.valueOf(fechaPasoString[1])-1);
+		fechaPaso.setDate(Integer.valueOf(fechaPasoString[2]));
+		
+		boolean cumpleDesde = false;
+		if(getFechaDesdeDate() != null) {
+			if(getFechaDesdeDate().compareTo(fechaPaso)<=0) {
+				cumpleDesde = true;
+			}
+		}else {
+			cumpleDesde = true;
+		}
+		boolean cumpleHasta = false;
+		if(getFechaDesdeHasta() != null) {
+			if(getFechaDesdeHasta().compareTo(fechaPaso)>=0) {
+				cumpleHasta = true;
+			}
+		}else {
+			cumpleHasta = true;
+		}
+		return (cumpleDesde && cumpleHasta);
 	}
 	
 	private boolean matchea(String conjunto, String subConjunto) {
 		return conjunto.toLowerCase().matches(".*"+subConjunto.toLowerCase()+".*");
+	}
+	
+	@SuppressWarnings("deprecation")
+	private Date getFechaDesdeDate() {
+		Date ret = this.ventanaPrincipal.getFechaDesde().getDate();
+		if(ret != null) {
+			ret.setHours(0);
+			ret.setMinutes(0);
+			ret.setSeconds(0);
+		}
+		return ret;
+	}
+	
+	@SuppressWarnings("deprecation")
+	private Date getFechaDesdeHasta() {
+		Date ret = this.ventanaPrincipal.getFechaHasta().getDate();
+		if(ret != null) {
+			ret.setHours(23);
+			ret.setMinutes(59);
+			ret.setSeconds(59);
+		}
+		return ret;
 	}
 	
 	private void inicializarTextFields() {
@@ -209,6 +260,32 @@ public class ControladorVerFacturas implements ActionListener {
 			}
 		});
 	}
+	
+	private void inicializarDateChooser() {
+		ventanaPrincipal.getFechaDesde().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+		
+		ventanaPrincipal.getFechaHasta().addPropertyChangeListener(
+				new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			            refrescarTabla();
+			        }
+			    });
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -216,8 +293,8 @@ public class ControladorVerFacturas implements ActionListener {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//ControladorVerFacturas controlFactura = new ControladorVerFacturas(new SucursalDTO(2,"","","","","","","","",""));
-		//controlFactura.inicializar();
+		ControladorVerFacturas controlFactura = new ControladorVerFacturas(null, new SucursalDTO(2,"","","","","","","","",""));
+		controlFactura.inicializar();
 
 	}
 
