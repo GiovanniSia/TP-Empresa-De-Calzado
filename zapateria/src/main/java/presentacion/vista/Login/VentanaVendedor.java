@@ -89,7 +89,7 @@ public class VentanaVendedor extends JFrame {
 		panel.add(lblEmpleado);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(10, 65, 700, 273);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
@@ -140,11 +140,12 @@ public class VentanaVendedor extends JFrame {
 		lblNewLabel_5.setBounds(535, 30, 120, 43);
 		panel_1.add(lblNewLabel_5);
 
-		btnInfoArmarVenta = new JButton("?");
-		btnInfoArmarVenta.setBounds(78, 205, 37, 28);
+		btnInfoArmarVenta = new JButton("");
+		btnInfoArmarVenta.setBounds(130, 205, 25, 25);
+		cambiarIconoBotones(btnInfoArmarVenta, "help.png");
 		panel_1.add(btnInfoArmarVenta);
 
-		btnInfoClientes = new JButton("?");
+		btnInfoClientes = new JButton("");
 		btnInfoClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showConfirmDialog(null,
@@ -152,10 +153,11 @@ public class VentanaVendedor extends JFrame {
 						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
 			}
 		});
-		btnInfoClientes.setBounds(328, 208, 37, 28);
+		btnInfoClientes.setBounds(380, 205, 25, 25);
+		cambiarIconoBotones(btnInfoClientes, "help.png");
 		panel_1.add(btnInfoClientes);
 
-		btnInfoProductos = new JButton("?");
+		btnInfoProductos = new JButton("");
 		btnInfoProductos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showConfirmDialog(null,
@@ -163,7 +165,8 @@ public class VentanaVendedor extends JFrame {
 						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
 			}
 		});
-		btnInfoProductos.setBounds(584, 208, 37, 28);
+		btnInfoProductos.setBounds(630, 205, 25, 25);
+		cambiarIconoBotones(btnInfoProductos, "help.png");
 		panel_1.add(btnInfoProductos);
 		btnInfoArmarVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
