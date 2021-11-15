@@ -54,36 +54,35 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 		}
 	}
 	
-	
-public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException, IOException {
-		
+	public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throws ParseException, IOException {
+
 		boolean yaFueSeteado = false;
-	
-		String diaDeEnvio="";
-		String horaProperties="";
+
+		String diaDeEnvio = "";
+		String horaProperties = "";
 		try {
 			diaDeEnvio = config.getValue("DiaDeEnvio");
 			horaProperties = config.getValue("HoraDeEnvio");
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 	
+		}
 		Timer timer = new Timer();
 
 		Date fe;
 		ProcesarCompraVirtual procesoDeCompraVirtual = new ProcesarCompraVirtual();
 		procesoDeCompraVirtual.RutinaProcesarCompra(config);
-		while(true) {			
+		while (true) {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			String fecha = dtf.format(LocalDateTime.now());
-	
+
 			SimpleDateFormat inFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = inFormat.parse(fecha);
 			SimpleDateFormat outFormat = new SimpleDateFormat("EEEE");
 			String d = outFormat.format(date);
-	
+
 			String cadenaNormalize = Normalizer.normalize(d, Normalizer.Form.NFD);
 			String dia = cadenaNormalize.replaceAll("[^\\p{ASCII}]", "");
-	
+
 //			DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
 //			String horaActual = tf.format(LocalDateTime.now());
 
@@ -94,30 +93,30 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 					timer.cancel();
 					timer = new Timer();
 					TimerTask tarea = new TimerTask() {
-						
+
 						@Override
 						public void run() {
-							//Enviar mails
+							// Enviar mails
 							enviarMails();
 							System.out.println("se ejecuta el timer");
-								
+
 						}
 					};
-					
+
 					timer.schedule(tarea, fe);
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-	
+
 			} else {
 				if (!dia.equals(diaDeEnvio)) {
 					timer.cancel();
 					yaFueSeteado = false;
 				}
-	
+
 			}
-			
+
 			try {
 				if (seCambioElProperties()) {
 					diaDeEnvio = config.getValue("DiaDeEnvio");
@@ -128,9 +127,7 @@ public static void verificarEnvioDeMailsAutomatico(ConfiguracionBD config) throw
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-				
-				
-			
+
 		}
 	}
 	

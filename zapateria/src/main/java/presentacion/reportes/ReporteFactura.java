@@ -1,9 +1,15 @@
 package presentacion.reportes;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -65,6 +71,9 @@ public class ReporteFactura {
 					.loadObjectFromFile("reportes" + File.separator + "Factura_A_-_Zapateria.jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
+			
+			guardarFactura(this.reporte,this.reporteLleno);
+			
 			log.info("Se cargó correctamente el reporte");
 		} catch (JRException ex) {
 			log.error("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
@@ -110,8 +119,10 @@ public class ReporteFactura {
 					.loadObjectFromFile("reportes" + File.separator + "Factura_A_-_Zapateria.jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
-			log.info("Se cargó correctamente el reporte");
 			
+			guardarFactura(this.reporte,this.reporteLleno);
+			
+			log.info("Se cargó correctamente el reporte");
 			//descargarPDF(nroFacturaCompleto);
 		} catch (JRException ex) {
 			log.error("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
@@ -134,6 +145,27 @@ public class ReporteFactura {
 	public void mostrar() {
 		this.reporteViewer = new JasperViewer(this.reporteLleno, false);
 		this.reporteViewer.setVisible(true);
+	}
+
+	public void guardarFactura(JasperReport jasperReport,JasperPrint jasperPrint) {
+		File folder = new File("Facturas");
+		if (!folder.exists()) {
+			folder.mkdir();
+		}
+		try {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+			String fecha = dtf.format(LocalDateTime.now());
+		    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH-mm-ss");
+		    String hora = tf.format(LocalDateTime.now());
+		    
+		    String fechaCompleta = "-"+fecha+"-"+hora;
+		    
+			JasperExportManager.exportReportToPdfFile(jasperPrint, "Facturas\\Factura_A_-_Zapateria"+fechaCompleta+".pdf");
+		} catch (JRException ex) {
+			System.err.println("Error iReport: " + ex.getMessage());
+		}
+		  
+		
 	}
 
 }
