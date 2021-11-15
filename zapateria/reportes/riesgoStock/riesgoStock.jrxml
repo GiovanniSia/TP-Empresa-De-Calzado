@@ -3,6 +3,16 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="riesgoStock" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14e72078-8447-48d2-ab62-2f982e270ae5">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Agenda SQL"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="colorStock" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{SUM(st2.StockDisponible)}>$F{PuntoRepositorio}]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFF705"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{SUM(st2.StockDisponible)}<=$F{PuntoRepositorio}]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FF0905"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="IdSucursal" class="java.lang.Integer"/>
 	<parameter name="TipoProducto" class="java.lang.String"/>
 	<queryString>
@@ -11,9 +21,9 @@
 , zapateria.stock as st2  
 WHERE mp.Estado LIKE 'Activo'
  AND mp.Tipo LIKE '$P!{TipoProducto}'
- AND (mp.PuntoRepositorio*2 > (select SUM(sto.StockDisponible) 
+ AND (mp.PuntoRepositorio*2 >= (select SUM(sto.StockDisponible) 
  	FROM zapateria.stock as sto where sto.IdSucursal = '$P!{IdSucursal}'
- 	 AND sto.IdProducto =  mp.IdMaestroProducto) 
+ 	 AND sto.IdProducto =  mp.IdMaestroProducto AND sto.StockDisponible>0.0 GROUP BY sto.IdProducto) 
  )
   AND suc.IdSucursal = '$P!{IdSucursal}'
    AND st2.IdSucursal = '$P!{IdSucursal}' AND st2.IdProducto = mp.IdMaestroProducto
@@ -317,7 +327,7 @@ WHERE mp.Estado LIKE 'Activo'
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="38" height="14" uuid="19e1840f-34cc-4bcd-91ce-e350a899e9aa"/>
 				<textElement textAlignment="Center"/>
@@ -346,10 +356,16 @@ WHERE mp.Estado LIKE 'Activo'
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{SUM(st2.StockDisponible)}]]></textFieldExpression>
 			</textField>
+			<frame>
+				<reportElement style="colorStock" x="494" y="5" width="40" height="14" uuid="247ccbab-cb05-4eec-9d7b-dafa7f07e372"/>
+			</frame>
+			<line>
+				<reportElement x="3" y="22" width="548" height="1" uuid="1e4c905c-443a-43da-8da3-187fed9b53e4"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="34" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
