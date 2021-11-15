@@ -20,6 +20,7 @@ import persistencia.dao.interfaz.MotivoEgresoDAO;
 import persistencia.dao.interfaz.OrdenFabricaDAO;
 import persistencia.dao.interfaz.PaisDAO;
 import persistencia.dao.interfaz.PedidosPendientesDAO;
+import persistencia.dao.interfaz.PrimeraDeudaClienteDAO;
 import persistencia.dao.interfaz.ProductoDeProveedorDAO;
 import persistencia.dao.interfaz.ProveedorDAO;
 import persistencia.dao.interfaz.ProvinciaDAO;
@@ -185,5 +186,9 @@ public class DAOSQLFactory implements DAOAbstractFactory {
 	@Override
 	public HistorialCambioClienteDAO createHistorialCambioClienteDAO() {
 		return new HistorialCambioClienteDAOSQL();
+	}
+	
+	public PrimeraDeudaClienteDAO createPrimeraDeudaClienteDAO() {
+		return new PrimeraDeudaClienteDAOSQL();
 	}
 }

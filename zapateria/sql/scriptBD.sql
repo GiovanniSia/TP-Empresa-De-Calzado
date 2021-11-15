@@ -23,6 +23,14 @@ CREATE TABLE `clientes`
   PRIMARY KEY (`IdCliente`)
 );
 
+CREATE TABLE `primeraDeudaCliente`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCliente` int(11) NOT NULL,
+  `FechaDeuda` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
 CREATE TABLE `HistorialDeCambiosCliente`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
