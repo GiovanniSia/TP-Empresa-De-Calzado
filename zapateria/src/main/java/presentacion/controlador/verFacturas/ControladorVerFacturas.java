@@ -82,6 +82,18 @@ public class ControladorVerFacturas implements ActionListener {
 		boolean ret = true;
 		String nroFactura = this.ventanaPrincipal.getTextNroFactura().getText();
 		ret = ret && matchea(f.getNroFacturaCompleta(),nroFactura);
+		
+		String cajero = this.ventanaPrincipal.getTextCajero().getText();
+		ret = ret && matchea(f.getNombreCajero(), cajero);
+		
+		String vendedor = this.ventanaPrincipal.getTextVendedor().getText();
+		ret = ret && matchea(f.getNombreVendedor(), vendedor);
+		
+		String cliente = this.ventanaPrincipal.getTextCliente().getText();
+		ret = ret && matchea(f.getNombreCliente(), cliente);
+		
+		String cuil = this.ventanaPrincipal.getTextCuil().getText();
+		ret = ret && matchea(f.getCuilCliente(), cuil);
 		return ret;
 	}
 	

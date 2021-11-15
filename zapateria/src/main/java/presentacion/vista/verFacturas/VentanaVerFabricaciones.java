@@ -157,7 +157,7 @@ public class VentanaVerFabricaciones extends JFrame {
 		panel.add(chckbxIVA);
 
 		
-		lblNewLabel = new JLabel("Ordenes de fabricacion pendientes");
+		lblNewLabel = new JLabel("Facturas");
 		lblNewLabel.setBounds(10, 49, 389, 67);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
