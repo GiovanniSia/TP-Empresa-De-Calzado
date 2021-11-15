@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 import dto.FacturaDTO;
@@ -28,6 +31,7 @@ public class ControladorVerFacturas implements ActionListener {
 		
 		ventanaPrincipal = new VentanaVerFabricaciones();
 		inicializarTextFields();
+		inicializarCheckBox();
 	}
 	
 	public void inicializar() {
@@ -94,6 +98,10 @@ public class ControladorVerFacturas implements ActionListener {
 		
 		String cuil = this.ventanaPrincipal.getTextCuil().getText();
 		ret = ret && matchea(f.getCuilCliente(), cuil);
+		if(this.ventanaPrincipal.getChckbxIVA().isSelected()) {
+			ret = ret && f.getIVA()!=0.0;
+		}
+		
 		return ret;
 	}
 	
@@ -109,10 +117,44 @@ public class ControladorVerFacturas implements ActionListener {
 		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextVendedor());
 	}
 	
+	private void inicializarCheckBox() {
+		asignarRefrescarTablaACheckBox(this.ventanaPrincipal.getChckbxIVA());
+	}
+	
 	private void asignarRefrescarTablaATextFields(JTextField jtf) {
 		jtf.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
+	}
+	
+	private void asignarRefrescarTablaACheckBox(JCheckBox cb) {
+		cb.addMouseListener((MouseListener) new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
 				refrescarTabla();
 			}
 		});
