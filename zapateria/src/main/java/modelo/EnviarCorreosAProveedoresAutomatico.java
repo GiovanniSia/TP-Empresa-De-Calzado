@@ -21,19 +21,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.swing.JOptionPane;
-
 import dto.PedidosPendientesDTO;
 import dto.ProveedorDTO;
 import modelo.compraVirtual.ProcesarCompraVirtual;
@@ -98,8 +87,6 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 						public void run() {
 							// Enviar mails
 							enviarMails();
-							System.out.println("se ejecuta el timer");
-
 						}
 					};
 
@@ -162,14 +149,14 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 			for(PedidosPendientesDTO pedido: todosLosPedidos) {
 				if(prov.getId() == pedido.getIdProveedor() && pedido.getEstado().equals("En espera")) {
 					pedidosDeProv.add(pedido);
-					System.out.println("se añade el pedido para el prov: "+prov.getId());
+//					System.out.println("se añade el pedido para el prov: "+prov.getId());
 				}	
 			}
 			if(pedidosDeProv.size()!=0) {
 				imprimirMail(pedidosDeProv);
-//				enviarMail(prov,pedidosDeProv);
+				EnviadorDeMails.enviarMailAProveedor(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
-				System.out.println("se envia el mail!!");
+//				System.out.println("se envia el mail!!");
 			}
 			
 			pedidosDeProv.removeAll(pedidosDeProv);
@@ -209,55 +196,6 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 		System.out.println("el msj: \n"+mensaje);
 	}
 	
-	//se recibe un proveedor con todos sus pedidos
-	private static void enviarMail(ProveedorDTO proveedor,ArrayList<PedidosPendientesDTO> pedidosDeProv) {
-		try {
-			
-			String mensaje="";
-			for(PedidosPendientesDTO p: pedidosDeProv) {
-				mensaje = mensaje +"Nombre de Producto: "+ p.getNombreMaestroProducto() + "\nCantidad: "+p.getCantidad()+"\nUnidad de medida: "+p.getUnidadMedida()+"\n";
-			}
-			
-			Properties props = new Properties();
-			props.setProperty("mail.smtp.host", "smtp.gmail.com");
-			props.setProperty("mail.smtp.starttls.enable", "true");
-			props.setProperty("mail.smtp.port", "587");
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-//			props.put("mail.debug", "true");
-			Session session = Session.getDefaultInstance(props);
-
-			String correoRemitente = "zapateriaargento198@gmail.com";
-			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
-			String correoReceptor = proveedor.getCorreo();
-			String asunto = "Pedido de Reposicion";
-			
-			MimeMessage message = new MimeMessage(session);
-
-			message.setFrom(new InternetAddress(correoRemitente));
-			
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
-			
-			message.setSubject(asunto);
-			message.setText(mensaje);
-			
-			Transport t = session.getTransport("smtp");
-			t.connect(correoRemitente, contrasenia);
-			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
-			t.close();
-			
-			JOptionPane.showMessageDialog(null, "Correo enviado");
-			
-			
-		} catch (AddressException e) {
-//			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-			JOptionPane.showMessageDialog(null, "Error, el primero xd");
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Error, el segundo xd");
-			e.printStackTrace();
-		}
-	}
 	
 	public static boolean seCambioElProperties() throws InterruptedException {
 		  try (WatchService ws = FileSystems.getDefault().newWatchService()) {

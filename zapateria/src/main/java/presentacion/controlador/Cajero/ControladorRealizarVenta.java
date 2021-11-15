@@ -440,6 +440,16 @@ public class ControladorRealizarVenta {
 			generarFactura();
 			borrarCarritoConDetalle();
 			
+			// Consultamos si quiere ver la factura
+			// si selecciona que si devuelve un 0, no un 1, y la x un -1
+			ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal,this.clienteCarrito);
+			int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?",
+					"Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			if (resp == 0) {
+				
+				reporte.mostrar();
+			}
+			
 			this.carritoACobrar = null;
 			this.detalleCarritoACobrar = null;
 			this.clienteCarrito = null;
@@ -447,19 +457,16 @@ public class ControladorRealizarVenta {
 			this.totalAPagarAux = 0;
 			this.totalAPagarSinDescuento = 0;
 			this.totalPagado = 0;
-
-			// Consultamos si quiere ver la factura
-			// si selecciona que si devuelve un 0, no un 1, y la x un -1
-			ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal);
-			int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?",
-					"Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if (resp == 0) {
-				
-				reporte.mostrar();
-			}
+			
+			
+			
 			this.ventanaRealizarVenta.cerrar();
 			vaciarDatosPrevios();
-			this.controladorVisualizarCarritos.actualizarVentana();			
+			this.controladorVisualizarCarritos.actualizarVentana();
+			
+			
+			
+			
 		} else {
 			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
 		}

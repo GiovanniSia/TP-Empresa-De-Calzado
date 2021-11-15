@@ -36,6 +36,7 @@ import modelo.Stock;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.reportes.ReporteFactura;
 
 public class ProcesarCompraVirtual {
 	
@@ -446,6 +447,10 @@ public class ProcesarCompraVirtual {
 	private static void registrarCompraVirtual(CompraVirtualDTO compraVirtual) {
 		String nroFactura = generarFacturaCompraVirtual(compraVirtual);
 		registrarIngreso(compraVirtual, nroFactura);
+		
+		ClienteDTO client = getCliente(compraVirtual.getCUIL());
+		
+		ReporteFactura.guardarYEnviarFacturaVirtual(nroFactura,client);
 //		ReporteFactura reporte = new ReporteFactura(nroFactura);
 //		reporte.mostrar();
 	}
@@ -503,6 +508,8 @@ public class ProcesarCompraVirtual {
 		
 		int idCliente = client.getIdCliente();
 		String nombreCliente =client.getApellido()+" "+ client.getNombre();
+		System.out.println("nombreCliente: "+nombreCliente);
+
 		//private static final int idVendedorVirtual = 0;
 		//private static final int idCajeroVirtual = 0;
 		int idCajero= idCajeroVirtual;
@@ -566,6 +573,7 @@ public class ProcesarCompraVirtual {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) modeloFactura.readAll();
 		facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size()-1).getIdFactura());
 		registrarDetallesFactura(facturaGenerada, compraVirtual);
+		
 		//double notaCredito = registrarDetallesFactura(facturaGenerada, compraVirtual);
 		//if(notaCredito != 0) {
 		//	registrarNotaCredito(notaCredito,facturaGenerada.getNroFacturaCompleta(), compraVirtual.getIdSucursal());
@@ -769,7 +777,7 @@ public class ProcesarCompraVirtual {
 		HashMap<Integer,Integer> detalle = new HashMap<Integer,Integer>();
 		detalle.put(1, 5);	//Compra con cliente ya registrado
 		//CompraVirtualDTO cvd = new CompraVirtualDTO(cliente,detalle,1,500);
-		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 2, 35000, 2, "Vicentino", "Reboredo","223004","pepeptS@mgail.com",
+		CompraVirtualDTO cvd = new CompraVirtualDTO(detalle, 2, 35000, 2, "Vicentino", "Reboredo","223004","zapateriaargento198@gmail.com",
 				//"Mayorista",
 				"1002","201","Argentina","Buenos Aires","Bella Vista","1661","02320-1234");
 		compras.add(cvd);
@@ -778,7 +786,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd22 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -788,7 +796,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd23 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"", "Tortuguitas", "1667","02320-1234");
@@ -798,7 +806,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd24 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -808,7 +816,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra con cliente nuevo
 		CompraVirtualDTO cvd2 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -818,7 +826,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Compra repetida
 		CompraVirtualDTO cvd222 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"", "", "",
 				"", "", "","02320-1234");
@@ -830,7 +838,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(2, 3);
 		detalle.put(19, 10);	//id producto invalida, paga invalida
 		CompraVirtualDTO cvd3 = new CompraVirtualDTO(detalle, 2, 500, 1, "Pedro",
-				"asd", "", "sebas@gmail.com", 
+				"asd", "", "zapateriaargento198@gmail.com", 
 				//"Minorista", 
 				"", "", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -850,7 +858,7 @@ public class ProcesarCompraVirtual {
 		//CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 1, 4027880, 1, "Sebas",
 				CompraVirtualDTO cvd5 = new CompraVirtualDTO(detalle, 2, 4027880+8000000, 1, "Sebas",
 
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Otra Calle falsa", "1423", "Argentina",
 				"Buenos Aires", "Grand Bourg", "1669","02320-1234");
@@ -860,7 +868,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Sucursal invalida
 		CompraVirtualDTO cvd6 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Sebas",
-				"Cubilla", "20125964343", "sebastianx3600@gmail.com",
+				"Cubilla", "20125964343", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -870,7 +878,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//CUIL INVALIDA
 		CompraVirtualDTO cvd7 = new CompraVirtualDTO(detalle, 2, 14020, 1, "Cliente",
-				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				"no cuil", "1234567891234", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "1667","02320-1234");
@@ -880,7 +888,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Datos de ubicacion insuficientes
 		CompraVirtualDTO cvd8 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Cliente",
-				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				"no cuil", "1234567891234", "zapateriaargento198@gmail.com",
 				//"Minorista", 
 				"Calle falsa", "5421", "Argentina",
 				"Buenos Aires", "Tortuguitas", "","02320-1234");
@@ -890,7 +898,7 @@ public class ProcesarCompraVirtual {
 		detalle.put(1, 1);
 		detalle.put(2, 3);	//Datos de ubicacion insuficientes
 		CompraVirtualDTO cvd9 = new CompraVirtualDTO(detalle, 10, 14020, 1, "Cliente",
-				"no cuil", "1234567891234", "miraMiCuil@gmail.com",
+				"no cuil", "1234567891234", "zapateriaargento198@gmail.com",
 				"Calle falsa", "5421", "",
 				"", "Tortuguitas", "asda","");
 		compras.add(cvd9);

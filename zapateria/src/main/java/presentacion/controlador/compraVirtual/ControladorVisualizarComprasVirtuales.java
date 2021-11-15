@@ -489,6 +489,8 @@ public class ControladorVisualizarComprasVirtuales implements ActionListener  {
 		}
 		if(ingresosEnLista.size() > filasSeleccionadas[0]) {
 			//Seleccion un ingreso
+//			ClienteDTO cliente = this.modeloCliente.selectCliente(this.ingresosEnLista.get(filasSeleccionadas[0]).getIdCliente());
+			
 			mostrarFactura(ingresosEnLista.get(filasSeleccionadas[0]).getNroFactura());
 		}else {
 			mostrarDatosRechazo(filasSeleccionadas[0]-ingresosEnLista.size());
