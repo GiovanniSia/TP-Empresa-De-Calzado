@@ -13,9 +13,15 @@ import java.util.List;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
+import dto.EgresosDTO;
 import dto.FacturaDTO;
+import dto.SucursalDTO;
+import modelo.Egresos;
 import modelo.Factura;
 import persistencia.dao.mysql.DAOSQLFactory;
+import presentacion.controlador.Controlador;
+import presentacion.reportes.ReporteFactura;
+import presentacion.reportes.ReporteNotaCredito;
 import presentacion.vista.verFacturas.VentanaVerFabricaciones;
 
 public class ControladorVerFacturas implements ActionListener {
@@ -23,17 +29,53 @@ public class ControladorVerFacturas implements ActionListener {
 	List<FacturaDTO> facturasEnLista;
 	
 	Factura modeloFactura;
+	private Egresos egresos;
 	
 	VentanaVerFabricaciones ventanaPrincipal;
+	
+	SucursalDTO sucursal;
+	Controlador controlador;
 
-	public ControladorVerFacturas() {
+	public ControladorVerFacturas(Controlador controlador, SucursalDTO sucursal) {
+		this.sucursal = sucursal;
 		modeloFactura = new Factura(new DAOSQLFactory());
-		
+		this.egresos = new Egresos(new DAOSQLFactory());
 		ventanaPrincipal = new VentanaVerFabricaciones();
 		inicializarTextFields();
 		inicializarCheckBox();
+		
+		this.ventanaPrincipal.getBtnVerFactura().addActionListener(r->mostrarFactura(r));
+		this.ventanaPrincipal.getBtnSalir().addActionListener(r->salir(r));
 	}
 	
+	private void salir(ActionEvent r) {
+		this.ventanaPrincipal.cerrar();
+		this.controlador.mostrarVentanaMenuDeSistemas();
+	}
+
+	private void mostrarFactura(ActionEvent r) {
+		if(this.ventanaPrincipal.getTablaFactura().getSelectedRow() < 0) {
+			return;
+		}
+		String nroFactura = this.facturasEnLista.get(this.ventanaPrincipal.getTablaFactura().getSelectedRow()).getNroFacturaCompleta();
+		ReporteFactura factura = new ReporteFactura(nroFactura);
+		factura.mostrar();
+		
+		if(hayNotaCredito(nroFactura)) {
+			ReporteNotaCredito notaCredito = new ReporteNotaCredito(nroFactura);
+			notaCredito.mostrar();
+		}
+	}
+
+	private boolean hayNotaCredito(String nroFactura) {
+		boolean ret = false;
+		for(EgresosDTO e: this.egresos.readAll()) {
+			ret = ret || e.getDetalle().toLowerCase().equals(nroFactura.toLowerCase());
+		}
+		return ret;
+		
+	}
+
 	public void inicializar() {
 		refrescarTabla();
 		ventanaPrincipal.mostrarVentana();
@@ -75,13 +117,21 @@ public class ControladorVerFacturas implements ActionListener {
 		ArrayList<FacturaDTO> ret = new ArrayList<FacturaDTO>();
 		List<FacturaDTO> todasLasFacturas = this.modeloFactura.readAll();
 		for(FacturaDTO f: todasLasFacturas) {
-			if(cumpleConLosParametros(f)) {
+			if(cumpleConLosParametros(f) && !esCompraVirtual(f) && perteneceAMISucursal(f)) {
 				ret.add(f);
 			}
 		}
 		return ret;
 	}
 	
+	private boolean perteneceAMISucursal(FacturaDTO f) {
+		return f.getIdSucursal() == this.sucursal.getIdSucursal();
+	}
+
+	private boolean esCompraVirtual(FacturaDTO f) {
+		return f.getIdVendedor() == 0;
+	}
+
 	private boolean cumpleConLosParametros(FacturaDTO f) {
 		boolean ret = true;
 		String nroFactura = this.ventanaPrincipal.getTextNroFactura().getText();
@@ -166,8 +216,8 @@ public class ControladorVerFacturas implements ActionListener {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ControladorVerFacturas controlFactura = new ControladorVerFacturas();
-		controlFactura.inicializar();
+		//ControladorVerFacturas controlFactura = new ControladorVerFacturas(new SucursalDTO(2,"","","","","","","","",""));
+		//controlFactura.inicializar();
 
 	}
 
