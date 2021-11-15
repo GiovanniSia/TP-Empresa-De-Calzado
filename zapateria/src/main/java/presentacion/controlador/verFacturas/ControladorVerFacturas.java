@@ -2,9 +2,13 @@ package presentacion.controlador.verFacturas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JTextField;
 
 import dto.FacturaDTO;
 import modelo.Factura;
@@ -23,6 +27,7 @@ public class ControladorVerFacturas implements ActionListener {
 		modeloFactura = new Factura(new DAOSQLFactory());
 		
 		ventanaPrincipal = new VentanaVerFabricaciones();
+		inicializarTextFields();
 	}
 	
 	public void inicializar() {
@@ -75,8 +80,30 @@ public class ControladorVerFacturas implements ActionListener {
 	
 	private boolean cumpleConLosParametros(FacturaDTO f) {
 		boolean ret = true;
-		
+		String nroFactura = this.ventanaPrincipal.getTextNroFactura().getText();
+		ret = ret && matchea(f.getNroFacturaCompleta(),nroFactura);
 		return ret;
+	}
+	
+	private boolean matchea(String conjunto, String subConjunto) {
+		return conjunto.toLowerCase().matches(".*"+subConjunto.toLowerCase()+".*");
+	}
+	
+	private void inicializarTextFields() {
+		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextCajero());
+		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextCliente());
+		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextCuil());
+		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextNroFactura());
+		asignarRefrescarTablaATextFields(this.ventanaPrincipal.getTextVendedor());
+	}
+	
+	private void asignarRefrescarTablaATextFields(JTextField jtf) {
+		jtf.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				refrescarTabla();
+			}
+		});
 	}
 
 	@Override
