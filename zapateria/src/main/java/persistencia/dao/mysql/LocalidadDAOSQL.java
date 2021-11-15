@@ -15,7 +15,7 @@ public class LocalidadDAOSQL implements LocalidadDAO{
 	private static final String insert = "INSERT INTO localidades(idLocalidad, nombreLocalidad,idForeignProvincia) VALUES(?, ?,?)";
 	private static final String delete = "DELETE FROM localidades WHERE idLocalidad = ?";
 	private static final String update = "UPDATE localidades set nombreLocalidad=? where idLocalidad=?";
-	private static final String readall = "SELECT * FROM localidades";
+	private static final String readall = "SELECT * FROM localidades ORDER BY nombreLocalidad ASC";
 
 	@Override
 	public boolean insert(LocalidadDTO Localidad) {

@@ -15,7 +15,7 @@ public class ProvinciaDAOSQL implements ProvinciaDAO{
 	private static final String insert = "INSERT INTO provincias(idProvincia, nombreProvincia,idForeignPais) VALUES(?,?,?)";
 	private static final String delete = "DELETE FROM provincias WHERE idProvincia = ?";
 	private static final String edit = "UPDATE provincias set nombreProvincia=? where idProvincia=?";
-	private static final String readall = "SELECT * FROM provincias";
+	private static final String readall = "SELECT * FROM provincias ORDER BY nombreProvincia ASC";
 
 	@Override
 	public boolean insert(ProvinciaDTO Provincia) {

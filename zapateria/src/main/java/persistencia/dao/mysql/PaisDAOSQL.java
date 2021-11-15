@@ -15,7 +15,7 @@ public class PaisDAOSQL implements PaisDAO {
 	private static final String insert = "INSERT INTO paises(idPais, nombrePais) VALUES(?, ?)";
 	private static final String delete = "DELETE FROM paises WHERE idPais = ?";
 	private static final String update = "UPDATE paises set nombrePais=? where idPais=?";
-	private static final String readall = "SELECT * FROM paises";
+	private static final String readall = "SELECT * FROM paises ORDER BY nombrePais ASC";
 
 	@Override
 	public boolean insert(PaisDTO Pais) {
