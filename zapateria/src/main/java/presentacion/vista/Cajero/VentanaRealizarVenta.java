@@ -114,7 +114,7 @@ public class VentanaRealizarVenta {
 		panel.add(lblNewLabel);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(255, 248, 220, 180));
+		panel_2.setBackground(new Color(255, 248, 220));
 		panel_2.setBounds(10, 96, 820, 360);
 		panel.add(panel_2);
 		panel_2.setLayout(null);

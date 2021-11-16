@@ -315,7 +315,7 @@ public class VentanaAsignarProductoAProveedor {
 		panel_2.add(lblLogo);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 104, 1205, 467);
 		panel.add(panel_1);
 

@@ -77,7 +77,7 @@ public class VentanaModificarCotizacion extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 172, 501, 270);
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		frame.getContentPane().add(panel);
 		frame.setLocationRelativeTo(null);
 		panel.setLayout(null);
@@ -151,7 +151,7 @@ public class VentanaModificarCotizacion extends JFrame {
 
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 96, 501, 75);
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 

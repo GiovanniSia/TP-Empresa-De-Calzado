@@ -73,7 +73,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 186, 749, 185);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -105,7 +105,7 @@ public class VentanaHistorialCambioMoneda extends JFrame {
 		spHistorialCambioMoneda.setViewportView(tablaHistorialCambioMoneda);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 96, 749, 93);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);

@@ -77,7 +77,7 @@ public class VentanaDescripcionProveedorMProducto extends JFrame {
 		};
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 113, 605, 144);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);

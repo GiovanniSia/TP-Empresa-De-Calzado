@@ -479,7 +479,7 @@ public class VentanaAltaProducto {
 		frame.getContentPane().add(lblEditarProducto);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 99, 817, 427);
 		frame.getContentPane().add(panel_1);
 		lblEditarProducto.setVisible(false);

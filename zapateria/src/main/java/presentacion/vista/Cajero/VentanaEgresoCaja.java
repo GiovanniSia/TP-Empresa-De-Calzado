@@ -295,7 +295,7 @@ public class VentanaEgresoCaja extends JFrame {
 		limpiarCampos();
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 65, 485, 295);
 		contentPane.add(panel_1);
 		

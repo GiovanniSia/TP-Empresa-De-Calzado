@@ -119,7 +119,7 @@ public class VentanaVerPedidosAProveedores {
 		panel.add(lblNewLabel);
 		
 		JPanel panelTabla = new JPanel();
-		panelTabla.setBackground(new Color(255, 255, 255, 180));
+		panelTabla.setBackground(new Color(248, 248, 255));
 		panelTabla.setBounds(0, 98, 1169, 354);
 		panel.add(panelTabla);
 		panelTabla.setLayout(null);

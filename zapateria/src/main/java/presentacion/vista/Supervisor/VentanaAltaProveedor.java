@@ -182,7 +182,7 @@ public class VentanaAltaProveedor {
 		frame.getContentPane().add(lblEditar);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 96, 426, 124);
 		frame.getContentPane().add(panel_1);
 		

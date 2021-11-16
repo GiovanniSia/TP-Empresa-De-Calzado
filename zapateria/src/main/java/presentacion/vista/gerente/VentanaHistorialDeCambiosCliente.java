@@ -87,7 +87,7 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 175, 1264, 189);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -117,7 +117,7 @@ public class VentanaHistorialDeCambiosCliente extends JFrame{
 		panel.add(spHistorialCambioCliente);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 89, 1264, 87);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);

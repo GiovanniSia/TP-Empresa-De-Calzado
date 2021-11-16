@@ -195,7 +195,7 @@ public class VentanaHistorialCambiosEmpleados extends JFrame {
 		panel_2.add(lblLogo);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 98, 725, 312);
 		contentPane.add(panel);
 		frame.setLocationRelativeTo(null);

@@ -341,7 +341,7 @@ public class VentanaVisualizarCarritos {
 		
 		panel_1 = new JPanel();
 		panel_1.setBounds(0, 110, 918, 399);
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panelTablas.add(panel_1);
 		
 		JLabel lblFondo = new JLabel("");

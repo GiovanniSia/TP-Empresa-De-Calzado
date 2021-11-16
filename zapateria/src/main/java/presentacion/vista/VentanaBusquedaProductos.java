@@ -126,7 +126,7 @@ public class VentanaBusquedaProductos {
 		frame.setBounds(100, 100, 953, 654);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.setTitle("Zapatería Argento - Realizar Venta");
+		frame.setTitle("Zapaterï¿½a Argento - Realizar Venta");
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
@@ -238,7 +238,7 @@ public class VentanaBusquedaProductos {
 		panel_2.add(lblLogo);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(245, 255, 250, 180));
+		panel.setBackground(new Color(245, 255, 250));
 		panel.setBorder(null);
 		panel.setBounds(10, 96, 919, 419);
 		frame.getContentPane().add(panel);
@@ -260,7 +260,7 @@ public class VentanaBusquedaProductos {
 		lblValorTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorTotal.setForeground(new Color(0, 100, 0));
 		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-		lblValorTotal.setBounds(608, 365, 311, 37);
+		lblValorTotal.setBounds(679, 365, 211, 37);
 		panel.add(lblValorTotal);
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
@@ -308,7 +308,7 @@ public class VentanaBusquedaProductos {
 				
 				JLabel lblTotal = new JLabel("Total: ");
 				lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-				lblTotal.setBounds(558, 358, 63, 39);
+				lblTotal.setBounds(615, 364, 63, 39);
 				panel.add(lblTotal);
 				
 				scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -427,7 +427,7 @@ public class VentanaBusquedaProductos {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "¿Estás seguro que quieres salir?. Se perderá todos los progresos que se hayan realizado", 
+		             null, "ï¿½Estï¿½s seguro que quieres salir?. Se perderï¿½ todos los progresos que se hayan realizado", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {

@@ -98,7 +98,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 		panel.add(lblEmpleado);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(10, 64, 696, 151);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);

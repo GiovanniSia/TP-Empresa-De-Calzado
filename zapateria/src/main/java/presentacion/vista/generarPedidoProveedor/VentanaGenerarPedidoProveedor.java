@@ -117,7 +117,7 @@ public class VentanaGenerarPedidoProveedor {
 		frame.getContentPane().add(lblNewLabel);
 				
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 106, 719, 384);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
