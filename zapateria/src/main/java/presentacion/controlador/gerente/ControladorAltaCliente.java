@@ -237,22 +237,33 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		verificarClienteFuturoMoroso(clienteActualizado);
-		cambiarEstadoClienteAutomaticoMoroso(clienteActualizado);
-		
+		if (!clienteActualizado.getEstado().equals("Moroso")) {
+
+			// Para agregar a la tabla primerClienteMoroso
+			verificarClienteFuturoMoroso(clienteActualizado);
+
+			cambiarEstadoClienteAutomaticoAMoroso(clienteActualizado);
+		}
+
 		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
 		salirEditar();
 	}
-	
-public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) {
-		
+
+	public void cambiarEstadoClienteAutomaticoAMoroso(ClienteDTO clienteActualizado) {
+
 		if (clienteActualizado.getCreditoDisponible() == clienteActualizado.getLimiteCredito()) {
 			if (existeEnTablaPrimeraDeudaCliente()) {
-				
+				System.out.println(obtenerPrimeraDeudaClienteDeCliente() != null);
 				if (obtenerPrimeraDeudaClienteDeCliente() != null) {
 					PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
-					PrimeraDeudaClienteDTO clienteMoroso = obtenerPrimeraDeudaClienteDeCliente();
-					primeraDeudaCliente.delete(clienteMoroso);
+					PrimeraDeudaClienteDTO clienteMorosoEntablaPrimerClienteMoroso = obtenerPrimeraDeudaClienteDeCliente();
+
+					Cliente cliente = new Cliente(new DAOSQLFactory());
+					ClienteDTO clienteElegido = cliente.selectCliente(clienteSeteado.getIdCliente());
+					clienteElegido.setEstado("Activo");
+					cliente.update(clienteSeteado.getIdCliente(), clienteElegido);
+
+					primeraDeudaCliente.delete(clienteMorosoEntablaPrimerClienteMoroso);
 				}
 			}
 		}
@@ -282,8 +293,6 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		return false;
 	}
 
-	
-	
 	public void verificarClienteFuturoMoroso(ClienteDTO clienteActualizado) {
 		if (esFuturoMoroso(clienteActualizado)) {
 			if (!existeEnTablaPrimeraDeudaCliente()) {
@@ -295,7 +304,6 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 			}
 		}
 	}
-
 
 	public boolean esFuturoMoroso(ClienteDTO clienteActualizado) {
 		if (clienteActualizado.getCreditoDisponible() < clienteActualizado.getLimiteCredito()) {
@@ -309,8 +317,7 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		String fecha = dtf.format(LocalDateTime.now());
 		return fecha;
 	}
-	
-	
+
 	public void salirEditar() {
 		this.clienteSeteado = null;
 		this.ventanaAltaCliente.getBtnEditar().setVisible(false);
@@ -319,7 +326,7 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		this.controladorGestionarClientes.mostrarVentana();
 
 	}
-	
+
 	public void guadarHistorialDeCambioDeCliente(ClienteDTO clienteSeteado, ClienteDTO clienteActualizado) {
 		int id = 0;
 		int idEmpleado = this.idEmpleado;
@@ -480,6 +487,21 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		if (saldoInicial.equals("") || Double.parseDouble(saldoInicial) <= 0) {
 			JOptionPane.showMessageDialog(null, "El saldo inicial es incorrecto");
 			return false;
+		}
+		if (this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString() != null
+				&& !this.ventanaAltaCliente.getTextLimiteCredito().getText().equals("")) {
+			String tipoEstado = this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString();
+			String limiteCredito = this.ventanaAltaCliente.getTextLimiteCredito().getText();
+
+			if (tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) == Double.parseDouble(limiteCredito)) {
+				JOptionPane.showMessageDialog(null, "El cliente no puede ser moroso");
+				return false;
+			}
+
+			if (!tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) != Double.parseDouble(limiteCredito)) {
+				JOptionPane.showMessageDialog(null, "El cliente tiene que ser moroso");
+				return false;
+			}
 		}
 
 		String pais = (String) this.ventanaAltaCliente.getComboBoxPais().getSelectedItem();

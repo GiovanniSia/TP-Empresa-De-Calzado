@@ -441,7 +441,9 @@ public class ControladorRealizarVenta {
 			generarFactura();
 			borrarCarritoConDetalle();
 
-			verificarClienteFuturoMoroso();
+			if (!clienteCarrito.getEstado().equals("Moroso")) {
+				verificarClienteFuturoMoroso();
+			}
 
 			limpiarVariables();
 
