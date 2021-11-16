@@ -5,6 +5,16 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="431"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="561"/>
+	<style name="colorStock" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{SUM(st2.StockDisponible)}>$F{PuntoRepositorio}]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FFF705"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{SUM(st2.StockDisponible)}<=$F{PuntoRepositorio}]]></conditionExpression>
+			<style mode="Opaque" backcolor="#FF0905"/>
+		</conditionalStyle>
+	</style>
 	<parameter name="TipoProducto" class="java.lang.String"/>
 	<parameter name="IdSucursal" class="java.lang.Integer"/>
 	<queryString>
@@ -338,25 +348,19 @@ WHERE mp.Estado LIKE 'Activo'
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<frame>
-				<reportElement mode="Opaque" x="3" y="7" width="548" height="24" backcolor="#2E2A2A" uuid="b083798c-a890-4fbc-99cb-756bc06e166e"/>
-			</frame>
-			<staticText>
-				<reportElement x="10" y="9" width="270" height="25" forecolor="#FFFFFF" uuid="b45271be-8a55-4bb0-8e7d-121ed2f03a51"/>
-				<textElement>
-					<font fontName="Arial" size="14"/>
-				</textElement>
-				<text><![CDATA[Productos activos con riesgo de stock:]]></text>
-			</staticText>
-		</band>
-	</pageHeader>
 	<columnHeader>
-		<band height="22" splitType="Stretch"/>
+		<band height="46" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="8" y="12" width="548" height="24" backcolor="#2E2A2A" uuid="0dc34dac-fac1-47a7-823e-926fc3e117cf"/>
+				<staticText>
+					<reportElement x="15" y="3" width="270" height="25" forecolor="#FFFFFF" uuid="8716617b-18cd-4864-8509-31e27e17e706"/>
+					<textElement>
+						<font fontName="Arial" size="14"/>
+					</textElement>
+					<text><![CDATA[Productos activos con riesgo de stock:]]></text>
+				</staticText>
+			</frame>
+		</band>
 	</columnHeader>
 	<detail>
 		<band height="30" splitType="Stretch">
@@ -401,15 +405,15 @@ WHERE mp.Estado LIKE 'Activo'
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{PrecioVenta}]]></textFieldExpression>
 			</textField>
+			<ellipse>
+				<reportElement style="colorStock" x="550" y="5" width="14" height="14" uuid="3615c047-43c9-4c8d-9230-b1bc316a268b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</ellipse>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
