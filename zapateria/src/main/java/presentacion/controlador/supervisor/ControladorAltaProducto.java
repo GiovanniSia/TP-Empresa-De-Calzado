@@ -110,16 +110,7 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getBtnBorrarProv().addActionListener(a -> borrarProveedor());
 		
 		this.ventanaAltaProducto.getTableProveedores().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		ListSelectionModel rowSM = this.ventanaAltaProducto.getTableProveedores().getSelectionModel();
-//
-//		rowSM.addListSelectionListener(new ListSelectionListener() {
-
-//			@Override
-//			public void valueChanged(ListSelectionEvent e) {
-//				verificarCambioDeComboBox();
-//			}
-//
-//		});		
+	
 		llenarCb();
 		validarTeclado();
 	}
@@ -435,6 +426,7 @@ public class ControladorAltaProducto {
 			this.ventanaAltaProducto.getTextCosto().setText("");
 			this.ventanaAltaProducto.getBtnAgregarProv().setEnabled(true);
 			this.ventanaAltaProducto.getTextCosto().setEnabled(false);	
+			llenarTablaProveedores();
 			return;
 		}
 		this.ventanaAltaProducto.getTextCosto().setEnabled(true);
@@ -754,6 +746,10 @@ public class ControladorAltaProducto {
 	}
 
 	public void llenarTablaProveedores() {
+		if(this.productoAEditar==null) {
+			return;
+		}
+		
 		this.ventanaAltaProducto.getModelTablaProveedores().setRowCount(0);//borrar datos de la tabla
 		this.ventanaAltaProducto.getModelTablaProveedores().setColumnCount(0);
 		this.ventanaAltaProducto.getModelTablaProveedores().setColumnIdentifiers(this.ventanaAltaProducto.getNombreColumnas());
