@@ -39,4 +39,9 @@ public class Cliente {
 	public ClienteDTO selectCliente(int idCliente) {
 		return this.cliente.selectCliente(idCliente);
 	}
+	
+	public int getIdUltimoCliente() {
+		return this.cliente.getIdUltimoCliente();
+	}
+	
 }

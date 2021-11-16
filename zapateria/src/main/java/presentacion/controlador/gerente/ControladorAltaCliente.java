@@ -340,11 +340,74 @@ public class ControladorAltaCliente {
 				JOptionPane.showMessageDialog(null, "Se agrego el nuevo cliente al sistema");	
 			}
 			
+			guardarHistorialParaNuevoCliente(cliente);
 			EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
 			borrarDatosDeLosText();
 			salir();
 		}
 	}	
+	
+	public void guardarHistorialParaNuevoCliente(ClienteDTO clienteNuevo) {
+		int id = 0;
+		int idEmpleado = this.idEmpleado;
+		int idCliente = this.cliente.getIdUltimoCliente();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		String fecha = dtf.format(LocalDateTime.now());
+		
+		String nombreAntiguo = "";
+		String nombreNuevo = clienteNuevo.getNombre();
+		
+		String apellidoAntiguo= "";
+		String apellidoNuevo = clienteNuevo.getApellido();
+		
+		String CUILAntiguo = ""; 
+		String CUILNuevo = clienteNuevo.getCUIL();
+		
+		String correoAntiguo = ""; 
+		String correoNuevo = clienteNuevo.getCorreo();
+		
+		double limiteCreditoAntiguo = 0;
+		double limiteCreditoNuevo = clienteNuevo.getLimiteCredito();
+		
+		double creditoDisponibleAntiguo = 0;
+		double creditoDisponibleNuevo=clienteNuevo.getCreditoDisponible();
+		
+		String tipoClienteAntiguo = "";
+		String tipoClienteNuevo = clienteNuevo.getTipoCliente();
+		
+		String impuestoAFIPAntiguo = "";
+		String impuestoAFIPNuevo = clienteNuevo.getImpuestoAFIP();
+		
+		String estadoAntiguo = "";
+		String estadoNuevo = clienteNuevo.getEstado();
+		
+		String calleAntiguo = "";
+		String calleNuevo = clienteNuevo.getCalle();
+		
+		String alturaAntiguo = "";
+		String alturaNuevo = clienteNuevo.getAltura();
+		
+		String paisAntiguo = "";
+		String paisNuevo = clienteNuevo.getPais();
+		
+		String provinciaAntiguo = "";
+		String provinciaNuevo = clienteNuevo.getProvincia();
+		
+		String localidadAntiguo = "";
+		String localidadNuevo = clienteNuevo.getLocalidad();
+		
+		String codPostalAntiguo = "";
+		String codPostalNuevo = clienteNuevo.getCodPostal();
+		
+		HistorialCambioClienteDTO historial = new HistorialCambioClienteDTO(id,idEmpleado,idCliente,fecha,nombreAntiguo,nombreNuevo,apellidoAntiguo,apellidoNuevo,CUILAntiguo,CUILNuevo,correoAntiguo,correoNuevo,limiteCreditoAntiguo,limiteCreditoNuevo,creditoDisponibleAntiguo,creditoDisponibleNuevo,tipoClienteAntiguo,tipoClienteNuevo,impuestoAFIPAntiguo,impuestoAFIPNuevo,estadoAntiguo,estadoNuevo,calleAntiguo,calleNuevo,alturaAntiguo,alturaNuevo,paisAntiguo,paisNuevo,provinciaAntiguo,provinciaNuevo,localidadAntiguo,localidadNuevo,codPostalAntiguo,codPostalNuevo);
+		
+		boolean insert = this.historialCambioCliente.insert(historial);
+		if(!insert) {
+			JOptionPane.showMessageDialog(ventanaEditarProvincia, "Ha ocurrido un error al insertar el cambio en el historial");
+		}
+	}
+	
+	
 	
 	public ClienteDTO obtenerClienteDeVista() {
 		String nombre = this.ventanaAltaCliente.getTextNombre().getText();
@@ -502,28 +565,7 @@ public class ControladorAltaCliente {
 				ValidadorTeclado.aceptarSoloNumeros(e);
 			}
 		});
-		
-		//pais,prov,localidd,calle,altura,codpostal
-//		this.ventanaAltaCliente.getTextPais().addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidadorTeclado.aceptarLetrasYEspacios(e);
-//			}
-//		});
-//		this.ventanaAltaCliente.getTextProvincia().addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidadorTeclado.aceptarLetrasYEspacios(e);
-//			}
-//		});
-//		this.ventanaAltaCliente.getTextLocalidad().addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidadorTeclado.aceptarLetrasYEspacios(e);
-//			}
-//		});
-//		this.ventanaAltaCliente.getTextCalle().addKeyListener(new KeyAdapter() {
-//			public void keyTyped(KeyEvent e) {
-//				ValidadorTeclado.aceptarLetrasNumerosYEspacios(e);
-//			}
-//		});
+
 		this.ventanaAltaCliente.getTextAltura().addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
@@ -573,35 +615,6 @@ public class ControladorAltaCliente {
 		}
 		
 		this.ventanaAltaCliente.getComboBoxPais().setSelectedIndex(0);
-		
-		
-		
-//		if(this.todasLasProvincias.size()==0) {
-//			return;
-//		}
-//		for(ProvinciaDTO prov: this.todasLasProvincias) {
-//			if(paisEnCb.getIdPais()==prov.getForeignPais()) {
-//				this.ventanaAltaCliente.getComboBoxProvincia().addItem(prov.getNombreProvincia());
-//				this.provEnComboBox.add(prov);
-//			}		
-//		}
-//		ProvinciaDTO provAux = this.provEnComboBox.get(0);
-//		this.ventanaAltaCliente.getComboBoxProvincia().setSelectedIndex(0);
-//		
-//		
-//		
-//		if(this.todasLasLocalidades.size()==0) {
-//			return;
-//		}
-//		for(LocalidadDTO l: this.todasLasLocalidades) {
-//			if(provAux.getIdProvincia() == l.getIdForeignProvincia()) {
-//				this.ventanaAltaCliente.getComboBoxLocalidad().addItem(l.getNombreLocalidad());
-//				this.localidadEnComboBox.add(l);
-//			}			
-//		}
-//		this.ventanaAltaCliente.getComboBoxLocalidad().setSelectedIndex(0);
-		
-		
 	}
 
 	

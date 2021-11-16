@@ -18,4 +18,6 @@ public interface ClienteDAO {
 			String nombreColumna5, String txtAprox5);
 
 	public ClienteDTO selectCliente(int idCliente);
+	
+	public int getIdUltimoCliente();
 }

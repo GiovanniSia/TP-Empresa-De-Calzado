@@ -18,7 +18,7 @@ public class ClienteDAOSQL implements ClienteDAO {
 	private static final String readall = "SELECT * FROM clientes";
 
 	private static final String select = "SELECT * FROM clientes WHERE IdCliente=?";
-
+	private static final String selectMaxIdInsertado = "SELECT MAX(IdCliente) FROM clientes";
 	@Override
 	public boolean insert(ClienteDTO cliente) {
 		PreparedStatement statement;
@@ -211,6 +211,24 @@ public class ClienteDAOSQL implements ClienteDAO {
 			e.printStackTrace();
 		}
 		return cliente;
+	}
+
+	@Override
+	public int getIdUltimoCliente() {
+		PreparedStatement statement;
+		ResultSet resultSet; // Guarda el resultado de la query
+		int maxId=0;
+		Conexion conexion = Conexion.getConexion();
+		try {
+			statement = conexion.getSQLConexion().prepareStatement(selectMaxIdInsertado);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				maxId = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return maxId;
 	}
 
 }
