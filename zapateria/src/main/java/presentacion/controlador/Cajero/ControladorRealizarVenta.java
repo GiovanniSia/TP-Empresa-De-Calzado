@@ -446,8 +446,6 @@ public class ControladorRealizarVenta {
 				verificarClienteFuturoMoroso();
 			}
 
-			limpiarVariables();
-
 			// Consultamos si quiere ver la factura
 			// si selecciona que si devuelve un 0, no un 1, y la x un -1
 			ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal,this.clienteCarrito);
@@ -457,15 +455,7 @@ public class ControladorRealizarVenta {
 				
 				reporte.mostrar();
 			}
-			
-			this.carritoACobrar = null;
-			this.detalleCarritoACobrar = null;
-			this.clienteCarrito = null;
-			this.totalAPagar = 0;
-			this.totalAPagarAux = 0;
-			this.totalAPagarSinDescuento = 0;
-			this.totalPagado = 0;
-		
+			limpiarVariables();		
 			this.ventanaRealizarVenta.cerrar();
 			vaciarDatosPrevios();
 			this.controladorVisualizarCarritos.actualizarVentana();

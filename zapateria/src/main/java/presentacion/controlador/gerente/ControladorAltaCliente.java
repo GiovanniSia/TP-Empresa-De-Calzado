@@ -577,10 +577,10 @@ public class ControladorAltaCliente {
 				return false;
 			}
 
-			if (!tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) != Double.parseDouble(limiteCredito)) {
-				JOptionPane.showMessageDialog(null, "El cliente tiene que ser moroso");
-				return false;
-			}
+//			if (!tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) != Double.parseDouble(limiteCredito)) {
+//				JOptionPane.showMessageDialog(null, "El cliente tiene que ser moroso");
+//				return false;
+//			}
 		}
 
 		String pais = (String) this.ventanaAltaCliente.getComboBoxPais().getSelectedItem();

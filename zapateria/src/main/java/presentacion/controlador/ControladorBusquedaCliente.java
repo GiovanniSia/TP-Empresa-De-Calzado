@@ -3,6 +3,8 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import javax.swing.JOptionPane;
 import dto.ClienteDTO;
@@ -154,8 +156,12 @@ public class ControladorBusquedaCliente {
 			String apellido = c.getApellido();
 			String CUIL = c.getCUIL();
 			String correo = c.getCorreo();
-			double limiteCredito = c.getLimiteCredito();
-			double creditoDisponible = c.getCreditoDisponible();
+			double limiteCredit = c.getLimiteCredito();
+			BigDecimal limiteCredito = new BigDecimal(limiteCredit).setScale(2, RoundingMode.HALF_UP);; 
+			
+			double creditoDisponibl = c.getCreditoDisponible();
+			BigDecimal creditoDisponible = new BigDecimal(creditoDisponibl).setScale(2, RoundingMode.HALF_UP);;
+			
 			String estado = c.getEstado();
 			if (!estado.equals("Inactivo")) {
 				Object[] fila = { codCliente, nombre, apellido, CUIL, correo, limiteCredito, creditoDisponible,
