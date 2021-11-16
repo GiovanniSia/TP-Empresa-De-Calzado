@@ -75,7 +75,7 @@ public class VentanaIngresosCaja extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 62, 496, 72);
 
 		contentPane.add(panel_1);
@@ -123,7 +123,7 @@ public class VentanaIngresosCaja extends JFrame {
 		JPanel panel_2 = new JPanel();
 
 		panel_2.setBorder(null);
-		panel_2.setBackground(new Color(255, 255, 255, 180));
+		panel_2.setBackground(new Color(248, 248, 255));
 		panel_2.setBounds(0, 134, 496, 103);
 
 		contentPane.add(panel_2);

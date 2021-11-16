@@ -68,7 +68,7 @@ public class VentanaVerHistorialPasos extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 64, 984, 355);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);

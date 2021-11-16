@@ -439,7 +439,7 @@ public class VentanaAltaCliente {
 		lblEditarCliente.setVisible(false);
 		
 		panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 97, 666, 294);
 		frame.getContentPane().add(panel);
 		

@@ -90,7 +90,7 @@ public class ReVentanaVerFabricaciones extends JFrame {
 		cambiarIconoBotones(btnVerMateriales,  "product.png");
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 117, 902, 330);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);

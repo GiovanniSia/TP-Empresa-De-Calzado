@@ -238,7 +238,7 @@ public class VentanaBusquedaProductos {
 		panel_2.add(lblLogo);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(245, 255, 250, 180));
+		panel.setBackground(new Color(245, 255, 250));
 		panel.setBorder(null);
 		panel.setBounds(10, 96, 919, 419);
 		frame.getContentPane().add(panel);
@@ -256,11 +256,10 @@ public class VentanaBusquedaProductos {
 		
 		
 		lblValorTotal = new JLabel("<html>$0<html>");
-		lblValorTotal.setVerticalAlignment(SwingConstants.TOP);
-		lblValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblValorTotal.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblValorTotal.setForeground(new Color(0, 100, 0));
 		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-		lblValorTotal.setBounds(608, 365, 311, 37);
+		lblValorTotal.setBounds(679, 365, 211, 37);
 		panel.add(lblValorTotal);
 		scrollPaneProductosFiltrados.setViewportView(tableProductosFiltrados);
 		
@@ -308,7 +307,7 @@ public class VentanaBusquedaProductos {
 				
 				JLabel lblTotal = new JLabel("Total: ");
 				lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-				lblTotal.setBounds(558, 358, 63, 39);
+				lblTotal.setBounds(615, 364, 63, 39);
 				panel.add(lblTotal);
 				
 				scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -84,7 +84,7 @@ public class VentanaCierreCaja extends JFrame {
 		}
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 926, 653);
+		frame.setBounds(100, 100, 926, 665);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
@@ -96,6 +96,16 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+				btnAtras = new JButton("");
+				btnAtras.setBounds(84, 545, 69, 69);
+				contentPane.add(btnAtras);
+				cambiarIconoBotones(btnAtras,  "back2.png");
+		
+		lblAtras = new JLabel("Atras");
+		lblAtras.setBounds(162, 545, 42, 69);
+		contentPane.add(lblAtras);
+		lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		lblCajaDiariaDeSucursal = new JLabel("Caja Diaria de Sucursal");
 		lblCajaDiariaDeSucursal.setBackground(new Color(248, 248, 255));
 		lblCajaDiariaDeSucursal.setBounds(10, 49, 528, 50);
@@ -103,8 +113,8 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.add(lblCajaDiariaDeSucursal);
 
 		panelIngresosEgresos = new JPanel();
-		panelIngresosEgresos.setBackground(new Color(255, 255, 255, 180));
-		panelIngresosEgresos.setBounds(0, 94, 613, 520);
+		panelIngresosEgresos.setBackground(new Color(248, 248, 255));
+		panelIngresosEgresos.setBounds(0, 94, 613, 444);
 		contentPane.add(panelIngresosEgresos);
 		panelIngresosEgresos.setLayout(null);
 
@@ -169,16 +179,6 @@ public class VentanaCierreCaja extends JFrame {
 		lblIngresos.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblIngresos.setBounds(10, 0, 153, 45);
 		panelIngresosEgresos.add(lblIngresos);
-		
-				btnAtras = new JButton("");
-				btnAtras.setBounds(82, 440, 69, 69);
-				cambiarIconoBotones(btnAtras,  "back2.png");
-				panelIngresosEgresos.add(btnAtras);
-				
-				lblAtras = new JLabel("Atras");
-				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-				lblAtras.setBounds(161, 440, 42, 69);
-				panelIngresosEgresos.add(lblAtras);
 
 		lblFechaHoy = new JLabel("Dia XX de XX de XXXX");
 		lblFechaHoy.setHorizontalAlignment(SwingConstants.CENTER);
@@ -187,8 +187,8 @@ public class VentanaCierreCaja extends JFrame {
 		contentPane.add(lblFechaHoy);
 
 		panelMedioPagoTotales = new JPanel();
-		panelMedioPagoTotales.setBackground(new Color(255, 255, 255, 180));
-		panelMedioPagoTotales.setBounds(612, 94, 298, 520);
+		panelMedioPagoTotales.setBackground(new Color(248, 248, 255));
+		panelMedioPagoTotales.setBounds(612, 94, 298, 532);
 		contentPane.add(panelMedioPagoTotales);
 		panelMedioPagoTotales.setLayout(null);
 
@@ -281,7 +281,7 @@ public class VentanaCierreCaja extends JFrame {
 
 		btnCerrarCajaDeSucursal = new JButton("");
 		btnCerrarCajaDeSucursal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnCerrarCajaDeSucursal.setBounds(10, 440, 69, 69);
+		btnCerrarCajaDeSucursal.setBounds(10, 452, 69, 69);
 		cambiarIconoBotones(btnCerrarCajaDeSucursal,  "check.png");
 		panelMedioPagoTotales.add(btnCerrarCajaDeSucursal);
 
@@ -328,7 +328,7 @@ public class VentanaCierreCaja extends JFrame {
 		
 		lblCerrarCajaDe = new JLabel("Cerrar Caja de Sucursal");
 		lblCerrarCajaDe.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblCerrarCajaDe.setBounds(89, 440, 199, 69);
+		lblCerrarCajaDe.setBounds(89, 452, 199, 69);
 		panelMedioPagoTotales.add(lblCerrarCajaDe);
 		
 		panel = new JPanel();

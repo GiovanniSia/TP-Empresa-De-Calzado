@@ -251,7 +251,7 @@ public class VentanaModificarEmpleados extends JFrame {
 		panel.add(lblLogo);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 98, 318, 191);
 		contentPane.add(panel_1);
 		frame.setLocationRelativeTo(null);

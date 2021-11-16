@@ -54,7 +54,7 @@ public class VentanaOperarioFabrica extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(10, 66, 699, 145);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);

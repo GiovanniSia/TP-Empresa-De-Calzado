@@ -98,7 +98,7 @@ public class VentanaTareasAutomatizadas {
 		frame.getContentPane().add(lblFondo);
 		
 		JPanel panelParametros = new JPanel();
-		panelParametros.setBackground(new Color(255, 255, 255, 180));
+		panelParametros.setBackground(new Color(248, 248, 255));
 		panelParametros.setBounds(10, 99, 626, 314);
 		panel.add(panelParametros);
 		panelParametros.setLayout(null);

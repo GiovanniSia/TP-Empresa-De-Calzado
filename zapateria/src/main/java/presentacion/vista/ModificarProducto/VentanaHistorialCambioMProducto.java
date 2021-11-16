@@ -63,7 +63,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		frame.setResizable(false);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 175, 1264, 186);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -93,7 +93,7 @@ public class VentanaHistorialCambioMProducto extends JFrame {
 		spHistorialCambiosMProducto.setViewportView(tablaHistorialCambioMProducto);
 
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 89, 1264, 87);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);

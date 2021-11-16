@@ -177,7 +177,7 @@ public class VentanaGestionarSucursales {
 		panel.add(lblLogo);
 		
 		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 103, 720, 439);
 		frame.getContentPane().add(panel_1);
 		

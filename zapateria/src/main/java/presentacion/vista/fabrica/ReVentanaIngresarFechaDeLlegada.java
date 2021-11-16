@@ -36,7 +36,7 @@ public class ReVentanaIngresarFechaDeLlegada extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(10, 11, 391, 210);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);

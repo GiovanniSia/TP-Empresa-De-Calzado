@@ -84,7 +84,7 @@ private static final long serialVersionUID = 1L;
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 191, 908, 295);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
@@ -140,7 +140,7 @@ private static final long serialVersionUID = 1L;
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setForeground(new Color(248, 248, 255));
-		panel_1.setBackground(new Color(255, 255, 255, 180));
+		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 95, 908, 99);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);

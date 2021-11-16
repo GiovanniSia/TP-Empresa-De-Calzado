@@ -193,7 +193,7 @@ public class VentanaAgregarEmpleados extends JFrame {
 		cambiarIconoLabel(lblLogo, "icono2.png");
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 96, 307, 235);
 		contentPane.add(panel);
 		panel.setLayout(null);

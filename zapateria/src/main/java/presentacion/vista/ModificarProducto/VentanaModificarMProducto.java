@@ -114,7 +114,7 @@ public class VentanaModificarMProducto extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
+		panel.setBackground(new Color(248, 248, 255));
 		panel.setBounds(0, 104, 1145, 509);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
