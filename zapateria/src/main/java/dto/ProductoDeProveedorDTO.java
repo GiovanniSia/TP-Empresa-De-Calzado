@@ -49,7 +49,7 @@ public class ProductoDeProveedorDTO {
 		this.precioVenta = precioVenta;
 	}
 
-	public void setCantidadPorLote(int cantidadPorLote) {
+	public void setCantidadPorLote(double cantidadPorLote) {
 		this.cantidadPorLote = cantidadPorLote;
 	}
 	

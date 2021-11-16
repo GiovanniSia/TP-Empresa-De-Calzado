@@ -358,7 +358,7 @@ public class ControladorAsignarProductoAProveedor {
 			return;
 		}
 		ProductoDeProveedorDTO proveedorSeleccionado = this.productosDeProveedorEnTabla.get(filaSeleccionada);
-		int valorNuevo=0;
+		double valorNuevo=0;
 		String resp=null;
 		boolean repetir = true;
 	    while (repetir) {
@@ -367,20 +367,18 @@ public class ControladorAsignarProductoAProveedor {
 	    		resp=JOptionPane.showInputDialog("Ingrese la nueva cantidad de productos por lote (cantidad maxima de caracteres 8)");
 	    		if(resp==null) {
 	    			repetir=false;
-	    			
 	    		}else {
-	    			valorNuevo = Integer.parseInt(resp);
+	    			valorNuevo = Double.parseDouble(resp);
 	    			if(resp.length()<=8 && valorNuevo>0)  {
 	    				repetir = false;
 	    			}else {
-	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
+	    				JOptionPane.showMessageDialog(null, "El valor debe sere menor o igual a 8 caracteres y mayor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
 	    			}
 		            
 	    		}
 	    	 }
 	    	 catch(HeadlessException | NumberFormatException e) {
-	    		    		 
-	    		 JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+	    		 JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 //	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
 	         }
 	    }
@@ -392,7 +390,7 @@ public class ControladorAsignarProductoAProveedor {
 	    if(!update) {
 	    	JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el nuevo valor");
 	    }else {
-	    	JOptionPane.showMessageDialog(null, "Nuevo valor actualizado con exito");
+//	    	JOptionPane.showMessageDialog(null, "Nuevo valor actualizado con exito");
 	    }
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 		llenarTablaProductosDelProveedor();
@@ -405,7 +403,7 @@ public class ControladorAsignarProductoAProveedor {
 			return;
 		}
 		ProductoDeProveedorDTO proveedorSeleccionado = this.productosDeProveedorEnTabla.get(filaSeleccionada);
-		int valorNuevo=0;
+		double valorNuevo=0;
 		String resp=null;
 		boolean repetir = true;
 	    while (repetir) {
@@ -416,18 +414,18 @@ public class ControladorAsignarProductoAProveedor {
 	    			repetir=false;
 	    			
 	    		}else {
-	    			valorNuevo = Integer.parseInt(resp);
+	    			valorNuevo = Double.parseDouble(resp);
 	    			if(resp.length()<=8 && valorNuevo>0)  {
 	    				repetir = false;
 	    			}else {
-	    				JOptionPane.showMessageDialog(null, "Numero ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
+	    				JOptionPane.showMessageDialog(null, "El valor debe sere menor o igual a 8 caracteres y mayor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);		
 	    			}
 		            
 	    		}
 	    	 }
 	    	 catch(HeadlessException | NumberFormatException e) {
 	    		    		 
-	    		 JOptionPane.showMessageDialog(null, "Debe ingresar un numero", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+	    		 JOptionPane.showMessageDialog(null, "Valor ingresado incorrecto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 //	                caso = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la manera quiere imprimir la bienvenida(1-scanner,2-Panel)"));
 	         }
 	    }

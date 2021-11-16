@@ -92,7 +92,7 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 		int idProveedor = resultSet.getInt("IdProveedor");
 		int idMaestroProducto = resultSet.getInt("IdMaestroProducto");
 		double precioVenta = resultSet.getDouble("PrecioVenta");
-		int cantPorLote = resultSet.getInt("CantidadPorLote");
+		double cantPorLote = resultSet.getDouble("CantidadPorLote");
 		return new ProductoDeProveedorDTO(id,idProveedor,idMaestroProducto,precioVenta,cantPorLote);
 	}
 	
@@ -130,7 +130,7 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 			statement.setInt(2, producto.getIdMaestroProducto());
 			statement.setDouble(3, producto.getPrecioVenta());
 			statement.setDouble(4, producto.getCantidadPorLote());
-			statement.setDouble(5, id);
+			statement.setInt(5, id);
 			
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
