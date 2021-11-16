@@ -129,7 +129,7 @@ public class ProductoDeProveedorDAOSQL implements ProductoDeProveedorDAO{
 			statement.setInt(1, producto.getIdProveedor());
 			statement.setInt(2, producto.getIdMaestroProducto());
 			statement.setDouble(3, producto.getPrecioVenta());
-			statement.setInt(4, producto.getCantidadPorLote());
+			statement.setDouble(4, producto.getCantidadPorLote());
 			statement.setDouble(5, id);
 			
 			if (statement.executeUpdate() > 0) {

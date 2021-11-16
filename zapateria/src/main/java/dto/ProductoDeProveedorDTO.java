@@ -4,10 +4,10 @@ public class ProductoDeProveedorDTO {
 
 	int Id, IdProveedor, IdMaestroProducto;
 	double precioVenta;
-	int cantidadPorLote;
+	double cantidadPorLote;
 	
 	public ProductoDeProveedorDTO(int id, int idProveedor, int idMaestroProducto,
-			double precioVenta, int cantidadPorLote) {
+			double precioVenta, double cantidadPorLote) {
 		super();
 		Id = id;
 		IdProveedor = idProveedor;
@@ -33,7 +33,7 @@ public class ProductoDeProveedorDTO {
 		return precioVenta;
 	}
 
-	public int getCantidadPorLote() {
+	public double getCantidadPorLote() {
 		return cantidadPorLote;
 	}
 

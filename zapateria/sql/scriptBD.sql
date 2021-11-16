@@ -201,7 +201,7 @@ CREATE TABLE `productosDeProveedor`
     `IdProveedor` int(11) NOT NULL,
     `IdMaestroProducto` int(11) NOT NULL,
     `PrecioVenta` double(45,2) NOT NULL,
-    `CantidadPorLote` int(11) NOT NULL,
+    `CantidadPorLote` double(45,2) NOT NULL,
     PRIMARY KEY (`Id`)
 );
 

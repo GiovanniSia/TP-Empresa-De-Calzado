@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -200,12 +201,14 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		String correo = p.getCorreo();
 		
 		double credDisp = p.getLimiteCredito();
-		BigDecimal limiteCredito = new BigDecimal(credDisp);
+		BigDecimal limiteCredito = new BigDecimal(credDisp).setScale(2, RoundingMode.HALF_UP);
 		
 		double precio = prodProv.getPrecioVenta();
-		BigDecimal precioVenta = new BigDecimal(precio);
+		BigDecimal precioVenta = new BigDecimal(precio).setScale(2, RoundingMode.HALF_UP);
 		
-		int cantProd = prodProv.getCantidadPorLote();
+		double cantProduc = prodProv.getCantidadPorLote();
+		BigDecimal cantProd = new BigDecimal(cantProduc).setScale(2, RoundingMode.HALF_UP);
+		
 		Object[] fila = {id,nombre,correo,limiteCredito,precioVenta,cantProd};
 		this.ventanaGenerarPedidoProveedor.getModelProveedores().addRow(fila);
 		this.proveedorEnTabla.add(p);		
@@ -292,14 +295,15 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 			canti = Double.parseDouble(cant);
 		}
 		
-		BigDecimal cantidad = new BigDecimal(canti);
-		BigDecimal precio = new BigDecimal(productoDeProveedor.getPrecioVenta());
+		BigDecimal cantidad = new BigDecimal(canti).setScale(2, RoundingMode.HALF_UP);
+
+		BigDecimal precio = new BigDecimal(productoDeProveedor.getPrecioVenta()).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal precioTotal = cantidad.multiply(precio);
+		BigDecimal precioTotal = cantidad.multiply(precio).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal cantidadPorLote = new BigDecimal(productoDeProveedor.getCantidadPorLote());
+		BigDecimal cantidadPorLote = new BigDecimal(productoDeProveedor.getCantidadPorLote()).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal cantTotal = cantidad.multiply(cantidadPorLote) ;
+		BigDecimal cantTotal = cantidad.multiply(cantidadPorLote).setScale(2, RoundingMode.HALF_UP);
 		
 		String unidadMedida = this.productoElegido.getUnidadMedida();
 		Object[] fila = {unidadMedida,cantidad,cantTotal,precioTotal};
@@ -362,11 +366,11 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 			return;	
 		}
 		
-		BigDecimal cantidad = new BigDecimal(Double.parseDouble(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText()));
+		BigDecimal cantidad = new BigDecimal(Double.parseDouble(this.ventanaGenerarPedidoProveedor.getTextCantidad().getText())).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal cantPorLote = new BigDecimal(prodProv.getCantidadPorLote());
+		BigDecimal cantPorLote = new BigDecimal(prodProv.getCantidadPorLote()).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal cantidadTotal = cantidad.multiply(cantPorLote);
+		BigDecimal cantidadTotal = cantidad.multiply(cantPorLote).setScale(2, RoundingMode.HALF_UP);
 				
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
 		String fecha = dtf.format(LocalDateTime.now());
@@ -374,17 +378,17 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    DateTimeFormatter tf = DateTimeFormatter.ofPattern("HH:mm:ss");
 	    String hora = tf.format(LocalDateTime.now());
 		
-	    BigDecimal precioUnidad =new BigDecimal(prodProv.getPrecioVenta());
-	    BigDecimal precioTotal = cantidad.multiply(precioUnidad);
+	    BigDecimal precioUnidad =new BigDecimal(prodProv.getPrecioVenta()).setScale(2, RoundingMode.HALF_UP);
+	    BigDecimal precioTotal = cantidad.multiply(precioUnidad).setScale(2, RoundingMode.HALF_UP);
 	    	
 	    double cantTotalStock = Stock.cantidadTotalDeStock(productoElegido);
 //	    System.out.println("cantidad total de stock: "+cantTotalStock);
-	    BigDecimal auxCantTotalStock = new BigDecimal(cantTotalStock);
+	    BigDecimal auxCantTotalStock = new BigDecimal(cantTotalStock).setScale(2, RoundingMode.HALF_UP);
 	    
-	    BigDecimal cantidadDeProdDeOtrosPedidosIguales = obtenerSumaDeProductosDeOtrosPedidosDeMismoProd(productoElegido);
+	    BigDecimal cantidadDeProdDeOtrosPedidosIguales = obtenerSumaDeProductosDeOtrosPedidosDeMismoProd(productoElegido).setScale(2, RoundingMode.HALF_UP);
 //	    System.out.println("cantidad de pedidos de otros prod: "+cantidadDeProdDeOtrosPedidosIguales);
 
-	    BigDecimal auxSuma = auxCantTotalStock.add(cantidadTotal);
+	    BigDecimal auxSuma = auxCantTotalStock.add(cantidadTotal).setScale(2, RoundingMode.HALF_UP);
 //	    System.out.println("se suma la cant total de sotck + la cantidad de pedidos del mismo prod: "+auxSuma);
 	    
 	    auxSuma = auxSuma.add(cantidadDeProdDeOtrosPedidosIguales);

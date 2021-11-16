@@ -257,7 +257,7 @@ public class ControladorVerPedidosAProveedor {
 		String unidadMedida = p.getUnidadMedida();
 		
 		double precioTota = p.getPrecioTotal();
-		BigDecimal precioTotal = new BigDecimal(precioTota);
+		BigDecimal precioTotal = new BigDecimal(precioTota).setScale(2, RoundingMode.HALF_UP);
 		
 		
 		

@@ -66,7 +66,8 @@ public class EnviadorDeMails {
 			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
 			t.close();
 
-			JOptionPane.showMessageDialog(null, "Correo enviado");
+			System.out.println("se envia mail a proveedor");
+//			JOptionPane.showMessageDialog(null, "Correo enviado");
 
 		} catch (AddressException e) {
 //				Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
@@ -129,7 +130,7 @@ public class EnviadorDeMails {
 			t.connect(correoRemitente, contrasenia);
 			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
 			t.close();
-
+			System.out.println("se envia factura a cliente");
 //			JOptionPane.showMessageDialog(null, "Factura enviada");
 
 		} catch (AddressException e) {
@@ -185,6 +186,7 @@ public class EnviadorDeMails {
 			t.connect(correoRemitente, contrasenia);
 			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
 			t.close();
+			System.out.println("se envia mail de registro de cliente");
 		} catch (AddressException e) {
 //		Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
 			JOptionPane.showMessageDialog(null, "Error, el primero xd");

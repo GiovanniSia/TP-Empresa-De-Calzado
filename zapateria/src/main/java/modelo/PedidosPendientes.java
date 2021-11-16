@@ -84,7 +84,7 @@ public class PedidosPendientes {
 		int idMaestroProd = producto.getIdMaestroProducto();
 		String nombreMaestroprod = producto.getDescripcion();
 		
-		int cantPorLote = prodProv.getCantidadPorLote();
+		double cantPorLote = prodProv.getCantidadPorLote();
 		double cantidadTotal = determinarCantidad(producto,prodProv,idSucursal);
 				
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 

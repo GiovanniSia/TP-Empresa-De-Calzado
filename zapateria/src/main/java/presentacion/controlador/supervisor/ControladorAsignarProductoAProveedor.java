@@ -272,7 +272,7 @@ public class ControladorAsignarProductoAProveedor {
 		}
 		
 		double precioVenta = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextPrecioVenta().getText());
-		int cantPorLote = Integer.parseInt(this.ventanaAsignarProductoAProveedor.getTextCantPorLote().getText());
+		double cantPorLote = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextCantPorLote().getText());
 		
 		if(precioVenta<=0) {
 	   		 JOptionPane.showMessageDialog(null, "El precio de venta no puede ser menor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -364,7 +364,7 @@ public class ControladorAsignarProductoAProveedor {
 	    while (repetir) {
 	    	
 	    	try {
-	    		resp=JOptionPane.showInputDialog("Ingrese la nueva cantidad de productos por lote (cantidad maxima de caracteres 20)");
+	    		resp=JOptionPane.showInputDialog("Ingrese la nueva cantidad de productos por lote (cantidad maxima de caracteres 8)");
 	    		if(resp==null) {
 	    			repetir=false;
 	    			
@@ -411,7 +411,7 @@ public class ControladorAsignarProductoAProveedor {
 	    while (repetir) {
 	    	
 	    	try {
-	    		resp=JOptionPane.showInputDialog("Ingrese el nuevo precio del lote (cantidad maxima de caracteres 20)");
+	    		resp=JOptionPane.showInputDialog("Ingrese el nuevo precio del lote (cantidad maxima de caracteres 8)");
 	    		if(resp==null) {
 	    			repetir=false;
 	    			

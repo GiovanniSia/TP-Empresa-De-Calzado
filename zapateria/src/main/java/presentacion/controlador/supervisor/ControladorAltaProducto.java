@@ -630,7 +630,8 @@ public class ControladorAltaProducto {
 		double precioVent = pp.getPrecioVenta();
 		BigDecimal precioVenta = new BigDecimal(precioVent).setScale(2, RoundingMode.HALF_UP);
 		
-		int cantProd = pp.getCantidadPorLote();
+		double cantPro = pp.getCantidadPorLote();
+		BigDecimal cantProd = new BigDecimal(cantPro).setScale(2, RoundingMode.HALF_UP);
 		
 		boolean aux=false;
 		if(this.productoAEditar!=null) {
