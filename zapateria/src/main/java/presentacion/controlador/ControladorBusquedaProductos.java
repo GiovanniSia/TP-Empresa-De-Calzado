@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,39 +137,19 @@ public class ControladorBusquedaProductos {
 //				}else {
 //					vistaBusquedaProductos.getSpinnerCarrito().setValue((int) productosEnCarrito.get(filaSeleccionada).getCantidad());	
 //				}
-				BigDecimal valor = new BigDecimal(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
+				BigDecimal valor = new BigDecimal(productosEnCarrito.get(filaSeleccionada).getCantidad()).setScale(2, RoundingMode.HALF_UP); 
 				vistaBusquedaProductos.getTextCantidadCarrito().setText(""+valor);
 			}
 			
 		});
-		
-//		this.vistaBusquedaProductos.getTableCarrito().addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().rowAtPoint(e.getPoint());
-//				//cuando se clickea en la tabla, se actualiza el spinner
-//				vistaBusquedaProductos.getSpinnerCarrito().setValue(productosEnCarrito.get(filaSeleccionada).getCantidad()); 
-//			}
-//		});
-		
-//		this.vistaBusquedaProductos.getSpinnerCarrito().addChangeListener(new ChangeListener() {
-//
-//			@Override
-//			public void stateChanged(ChangeEvent e) {
-//				//actualizar cantidad
-//				modificarCantDeCarritoDadoSpinner();
-//			}
-//			
-//		});
+
 		this.vistaBusquedaProductos.getTextCantidadCarrito().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				modificarCantDeCarritoDadoSpinner();
 			}
 		});
-		
-		
-		
+
 		this.vistaBusquedaProductos.getSpinnerPrecioHasta().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -306,8 +287,8 @@ public class ControladorBusquedaProductos {
 		}else {
 			preci = m.getPrecioMinorista();
 		}
-		BigDecimal precio = new BigDecimal(preci);
-		BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
+		BigDecimal precio = new BigDecimal(preci).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal stockDisp = new BigDecimal(s.getStockDisponible()).setScale(2, RoundingMode.HALF_UP);
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
@@ -386,8 +367,8 @@ public class ControladorBusquedaProductos {
 			}else {
 				total = m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
-			BigDecimal b = new BigDecimal(total);
-			BigDecimal cantObj = new BigDecimal(m.getCantidad());
+			BigDecimal b = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
+			BigDecimal cantObj = new BigDecimal(m.getCantidad()).setScale(2, RoundingMode.HALF_UP);
 			
 			String codLote = m.getStock().getCodigoLote();
 			String talle = m.getProducto().getTalle();
@@ -399,10 +380,7 @@ public class ControladorBusquedaProductos {
 	
 	public void calcularPrecioTotal() {
 		Preciototal=0;
-//		System.out.println("cantidad de prod en carrito: "+this.productosEnCarrito.size());
 		for(ProductoEnCarritoDTO m: this.productosEnCarrito) {
-//			BigDecimal precioMayorista = new BigDecimal(m.getProducto().getPrecioMayorista());
-//			BigDecimal cantidad = new BigDecimal(m.getCantidad());
 			
 			if(this.clienteSeleccionado.getTipoCliente().equals("Mayorista")) {
 				
@@ -412,8 +390,7 @@ public class ControladorBusquedaProductos {
 			}
 			
 		}
-		BigDecimal precio = new BigDecimal(this.Preciototal);
-//		System.out.println("nuevo total: "+precio);
+		BigDecimal precio = new BigDecimal(this.Preciototal).setScale(2, RoundingMode.HALF_UP);
 		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+precio);
 	}
 	
@@ -475,13 +452,13 @@ public class ControladorBusquedaProductos {
 
 			if(maestroProducto.getIdMaestroProducto() == s.getIdProducto() && s.getIdSucursal()==this.idSucursal && stockDeProd.getIdStock()==s.getIdStock()) {
 				
-				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
-				BigDecimal valorDelSpnner = new BigDecimal(valorDelSpinner);
+				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible()).setScale(2, RoundingMode.HALF_UP);
+				BigDecimal valorDelSpnner = new BigDecimal(valorDelSpinner).setScale(2, RoundingMode.HALF_UP);
 				
 				if(prod!=null) {//ESTAMOS VALIDANDO UNA AGREGACION/DESCUENTO EN CARRITO
 //					System.out.println("entro en la validacion unica");
-					BigDecimal cantProd = new BigDecimal(prod.getCantidad()); 
-					BigDecimal total = stockDisp.add(cantProd) ;
+					BigDecimal cantProd = new BigDecimal(prod.getCantidad()).setScale(2, RoundingMode.HALF_UP); 
+					BigDecimal total = stockDisp.add(cantProd).setScale(2, RoundingMode.HALF_UP) ;
 					
 //					System.out.println("cant Prod: "+cantProd.doubleValue());
 //					System.out.println("total: "+total.doubleValue());
@@ -531,12 +508,12 @@ public class ControladorBusquedaProductos {
 		Double precioTotalEntrante = valorDelSpinner * precioParaCliente;
 		
 		
-		BigDecimal auxTotalEnt = new BigDecimal(precioTotalEntrante);
-		BigDecimal auxPrecioTotal = new BigDecimal(precioTotal);
-		auxPrecioTotal = auxPrecioTotal.add(auxTotalEnt);
+		BigDecimal auxTotalEnt = new BigDecimal(precioTotalEntrante).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal auxPrecioTotal = new BigDecimal(precioTotal).setScale(2, RoundingMode.HALF_UP);
+		auxPrecioTotal = auxPrecioTotal.add(auxTotalEnt).setScale(2, RoundingMode.HALF_UP);
 		
-		BigDecimal auxCantTotalPrev = new BigDecimal(cantTotal);
-		BigDecimal auxCantTotalEntrante = new BigDecimal(valorDelSpinner);
+		BigDecimal auxCantTotalPrev = new BigDecimal(cantTotal).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal auxCantTotalEntrante = new BigDecimal(valorDelSpinner).setScale(2, RoundingMode.HALF_UP);
 		BigDecimal cantTotalTotal = auxCantTotalPrev.add(auxCantTotalEntrante);
 		//La cantidad maxima de digitos que se pueden guardar en la BD -> tabla carrito (cantidad) es 45
 		return (""+auxPrecioTotal.doubleValue()).length() < 45 && (""+cantTotalTotal).length() < 45;

@@ -257,7 +257,7 @@ public class VentanaBusquedaProductos {
 		
 		lblValorTotal = new JLabel("<html>$0<html>");
 		lblValorTotal.setVerticalAlignment(SwingConstants.TOP);
-		lblValorTotal.setHorizontalAlignment(SwingConstants.LEFT);
+		lblValorTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblValorTotal.setForeground(new Color(0, 100, 0));
 		lblValorTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
 		lblValorTotal.setBounds(608, 365, 311, 37);

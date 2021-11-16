@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -624,10 +625,10 @@ public class ControladorAltaProducto {
 		String correo = prov.getCorreo();
 		
 		double limiteCredit = prov.getLimiteCredito();
-		BigDecimal limiteCredito = new BigDecimal(limiteCredit);
+		BigDecimal limiteCredito = new BigDecimal(limiteCredit).setScale(2, RoundingMode.HALF_UP);
 		
 		double precioVent = pp.getPrecioVenta();
-		BigDecimal precioVenta = new BigDecimal(precioVent);
+		BigDecimal precioVenta = new BigDecimal(precioVent).setScale(2, RoundingMode.HALF_UP);
 		
 		int cantProd = pp.getCantidadPorLote();
 		
@@ -706,9 +707,9 @@ public class ControladorAltaProducto {
 		String fabricado = this.productoAEditar.getFabricado().equals("S") ? "Si" : "No";
 		this.ventanaAltaProducto.getComboBoxFabricado().setSelectedItem(fabricado);
 		
-		this.ventanaAltaProducto.getTextCosto().setText(""+new BigDecimal(this.productoAEditar.getPrecioCosto()));
-		this.ventanaAltaProducto.getTextPrecioMayorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMayorista()));
-		this.ventanaAltaProducto.getTextPrecioMinorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMinorista()));
+		this.ventanaAltaProducto.getTextCosto().setText(""+new BigDecimal(this.productoAEditar.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP));
+		this.ventanaAltaProducto.getTextPrecioMayorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP));
+		this.ventanaAltaProducto.getTextPrecioMinorista().setText(""+new BigDecimal(this.productoAEditar.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP));
 		this.ventanaAltaProducto.getTextPuntoRepMinimo().setText(""+this.productoAEditar.getPuntoRepositorio());
 		
 		String talle = this.productoAEditar.getTalle();

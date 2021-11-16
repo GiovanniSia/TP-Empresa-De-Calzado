@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -256,7 +257,7 @@ public class ControladorVisualizarCarritos {
 		String estado = cliente.getEstado();
 
 		double precioTota = carrito.getTotal();
-		BigDecimal precioTotal = new BigDecimal(precioTota);
+		BigDecimal precioTotal = new BigDecimal(precioTota).setScale(2, RoundingMode.HALF_UP);;
 
 		Object[] fila = { CUIL, nombreCliente, hora, TipoCliente, estado, precioTotal };
 		this.ventanaVisualizarCarritos.getModelTablaCarritos().addRow(fila);
@@ -284,9 +285,9 @@ public class ControladorVisualizarCarritos {
 					&& carritoSeleccionado.getIdSucursal() == this.idSucursal) {
 				MaestroProductoDTO prod = getProducto(detalleCar.getIdProducto());
 				String nombreProd = prod.getDescripcion();
-				BigDecimal cant = new BigDecimal(detalleCar.getCantidad());
+				BigDecimal cant = new BigDecimal(detalleCar.getCantidad()).setScale(2, RoundingMode.HALF_UP);
 				double p = detalleCar.getPrecio();
-				BigDecimal precio = new BigDecimal(p);
+				BigDecimal precio = new BigDecimal(p).setScale(2, RoundingMode.HALF_UP);
 
 				Object[] fila = { nombreProd, cant, precio };
 				this.ventanaVisualizarCarritos.getModelTablaDetalle().addRow(fila);

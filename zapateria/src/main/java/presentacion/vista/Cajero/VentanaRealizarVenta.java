@@ -126,7 +126,7 @@ public class VentanaRealizarVenta {
 		
 		JLabel lblDineroRestante = new JLabel("Pagando:");
 		lblDineroRestante.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		lblDineroRestante.setBounds(553, 301, 76, 59);
+		lblDineroRestante.setBounds(553, 301, 100, 59);
 		panel_2.add(lblDineroRestante);
 		
 		JLabel lblMtodoDePago = new JLabel("Método de pago");
@@ -201,7 +201,7 @@ public class VentanaRealizarVenta {
 		panel_2.add(lblModificarCantidad);
 		
 		lblPrecioVentaValor = new JLabel("<html>$0<html>");
-		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblPrecioVentaValor.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrecioVentaValor.setBounds(639, 301, 171, 59);
 		panel_2.add(lblPrecioVentaValor);
 		lblPrecioVentaValor.setFont(new Font("Segoe UI", Font.PLAIN, 18));

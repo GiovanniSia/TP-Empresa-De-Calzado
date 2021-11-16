@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -157,7 +158,7 @@ public class ControladorRealizarVenta {
 
 		this.totalAPagarSinDescuento = this.carritoACobrar.getTotal();
 		this.totalAPagar = carritoACobrar.getTotal();
-		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
+		BigDecimal tpgr = new BigDecimal(this.totalAPagar).setScale(2, RoundingMode.HALF_UP);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + tpgr);
 	}
 
@@ -320,9 +321,9 @@ public class ControladorRealizarVenta {
 					String numOperacion = numOperacionAux.equals("") ? "-" : numOperacionAux;
 
 					double cantida = i.getCantidad();
-					BigDecimal cantidad = new BigDecimal(cantida);
+					BigDecimal cantidad = new BigDecimal(cantida).setScale(2, RoundingMode.HALF_UP);
 					double totalAr = cantida * valorConversion;
-					BigDecimal totalArg = new BigDecimal(totalAr);
+					BigDecimal totalArg = new BigDecimal(totalAr).setScale(2, RoundingMode.HALF_UP);
 
 					Object[] fila = { metodoPago, moneda, numOperacion, cantidad, totalArg };
 					this.ventanaRealizarVenta.getModelTablaMedioPago().addRow(fila);
@@ -337,8 +338,8 @@ public class ControladorRealizarVenta {
 
 		this.totalAPagar -= this.descuento;
 
-		BigDecimal totalPgd = new BigDecimal(this.totalPagado);
-		BigDecimal totalPgr = new BigDecimal(this.totalAPagar);
+		BigDecimal totalPgd = new BigDecimal(this.totalPagado).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal totalPgr = new BigDecimal(this.totalAPagar).setScale(2, RoundingMode.HALF_UP);
 
 		this.ventanaRealizarVenta.getLblPrecioVentaValor().setText("" + totalPgd);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + totalPgr);
@@ -368,8 +369,8 @@ public class ControladorRealizarVenta {
 			this.totalAPagarAux = this.totalAPagar;
 			this.descuento = 0;
 
-			BigDecimal desc = new BigDecimal(this.descuento);
-			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux);
+			BigDecimal desc = new BigDecimal(this.descuento).setScale(2, RoundingMode.HALF_UP);
+			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux).setScale(2, RoundingMode.HALF_UP);
 
 			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText("" + desc);
 			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + pgraux);
@@ -377,7 +378,7 @@ public class ControladorRealizarVenta {
 		}
 		if (this.ventanaRealizarVenta.getTextDescuento().getText() != null) {
 			this.descuento = Double.parseDouble(this.ventanaRealizarVenta.getTextDescuento().getText());
-			BigDecimal desc = new BigDecimal(this.descuento);
+			BigDecimal desc = new BigDecimal(this.descuento).setScale(2, RoundingMode.HALF_UP);
 
 			this.ventanaRealizarVenta.getLblDescuentoDescontado().setText("" + desc);
 			// si el desc escrito es mayor al total a pagar, se reinicia
@@ -387,8 +388,8 @@ public class ControladorRealizarVenta {
 				this.totalAPagarAux = this.totalAPagar;
 				this.descuento = 0;
 
-				BigDecimal desc1 = new BigDecimal(this.descuento);
-				BigDecimal pgraux = new BigDecimal(this.totalAPagarAux);
+				BigDecimal desc1 = new BigDecimal(this.descuento).setScale(2, RoundingMode.HALF_UP);
+				BigDecimal pgraux = new BigDecimal(this.totalAPagarAux).setScale(2, RoundingMode.HALF_UP);
 
 				this.ventanaRealizarVenta.getLblDescuentoDescontado().setText("" + desc1);
 				this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + pgraux);
@@ -398,7 +399,7 @@ public class ControladorRealizarVenta {
 			}
 
 			this.totalAPagarAux = this.totalAPagar - this.descuento;
-			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux);
+			BigDecimal pgraux = new BigDecimal(this.totalAPagarAux).setScale(2, RoundingMode.HALF_UP);
 			this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + pgraux);
 		}
 	}
@@ -803,7 +804,7 @@ public class ControladorRealizarVenta {
 		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);// se borran los futuros ingresos, es
 																					// decir los medios de pagos
 		this.totalAPagar = 0;
-		BigDecimal tpgr = new BigDecimal(this.totalAPagar);
+		BigDecimal tpgr = new BigDecimal(this.totalAPagar).setScale(2, RoundingMode.HALF_UP);
 		this.ventanaRealizarVenta.getLblTotalAPagarValor().setText("" + tpgr);
 
 		this.cantidadUsadaCC = 0;

@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,10 +187,10 @@ public class ControladorGestionarClientes {
 		String correo = c.getCorreo();
 		
 		double limiteCredit = c.getLimiteCredito();
-		BigDecimal limiteCredito = new BigDecimal(limiteCredit);
+		BigDecimal limiteCredito = new BigDecimal(limiteCredit).setScale(2, RoundingMode.HALF_UP);
 		
 		double creditoDisponibl = c.getCreditoDisponible();
-		BigDecimal creditoDisponible = new BigDecimal(creditoDisponibl);
+		BigDecimal creditoDisponible = new BigDecimal(creditoDisponibl).setScale(2, RoundingMode.HALF_UP);
 		
 		String tipoCliente = c.getTipoCliente();
 		String afip = c.getImpuestoAFIP();

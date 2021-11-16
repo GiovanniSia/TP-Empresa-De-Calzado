@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,17 +120,17 @@ public class ControladorHistorialDeCambiosDeCliente {
 		String correoNuevo = h.getCorreoNuevo();
 		
 		double limiteCreditoAntigu = h.getLimiteCreditoAntiguo();
-		BigDecimal limiteCreditoAntiguo = new BigDecimal(limiteCreditoAntigu);
+		BigDecimal limiteCreditoAntiguo = new BigDecimal(limiteCreditoAntigu).setScale(2, RoundingMode.HALF_UP);;
 		
 		double limiteCreditoNuev = h.getLimiteCreditoNuevo();
-		BigDecimal limiteCreditoNuevo = new BigDecimal(limiteCreditoNuev);
+		BigDecimal limiteCreditoNuevo = new BigDecimal(limiteCreditoNuev).setScale(2, RoundingMode.HALF_UP);;
 		
 		double creditoDisponibleAntigu = h.getCreditoDisponibleAntiguo();
-		BigDecimal creditoDisponibleAntiguo = new BigDecimal(creditoDisponibleAntigu);
+		BigDecimal creditoDisponibleAntiguo = new BigDecimal(creditoDisponibleAntigu).setScale(2, RoundingMode.HALF_UP);;
 		
 		
 		double creditoDisponibleNuev = h.getCreditoDisponibleNuevo();
-		BigDecimal creditoDisponibleNuevo = new BigDecimal(creditoDisponibleNuev);
+		BigDecimal creditoDisponibleNuevo = new BigDecimal(creditoDisponibleNuev).setScale(2, RoundingMode.HALF_UP);;
 		
 		String tipoClienteAntiguo = h.getTipoClienteAntiguo();
 		String tipoClienteNuevo = h.getTipoClienteNuevo();

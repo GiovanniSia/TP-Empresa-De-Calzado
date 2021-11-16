@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,13 +117,13 @@ public class ControladorAsignarProductoAProveedor {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
 				 
-				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto());
+				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 				String costo = ""+cost;
 				
-				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista());
+				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 				String precioMayorista = ""+precioMayo;
 				
-				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista());
+				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
 				String precioMiniorista =""+precioMino;
 				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
 				String talle = maestroProducto.getTalle();
@@ -169,13 +170,15 @@ public class ControladorAsignarProductoAProveedor {
 			if(deboAgregar) {
 				String descr = maestroProducto.getDescripcion();
 				String tipo = maestroProducto.getTipo();
-				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto());
+				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
 				String costo = ""+cost;
 				
-				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista());
+				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
+;
 				String precioMayorista = ""+precioMayo;
 				
-				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista());
+				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
+;
 				String precioMiniorista =""+precioMino;
 				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
 				String talle = maestroProducto.getTalle();
@@ -225,16 +228,16 @@ public class ControladorAsignarProductoAProveedor {
 					String tipo = p.getTipo();
 					String costo = ""+p.getPrecioCosto();
 					
-					BigDecimal precioMayorista = new BigDecimal(p.getPrecioMayorista());
+					BigDecimal precioMayorista = new BigDecimal(p.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
 //					String precioMayorista = ""+precioMayo;
 					
-					BigDecimal precioMinorista = new BigDecimal(p.getPrecioMinorista()); 
+					BigDecimal precioMinorista = new BigDecimal(p.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP); 
 //					String precioMinorista =""+precioMino;
 					String puntoRepMinimo = ""+p.getPuntoRepositorio();
 					String talle = p.getTalle();
 					
-					BigDecimal precioVenta = new BigDecimal(productoDeProv.getPrecioVenta());
-					BigDecimal cantPorLote=new BigDecimal(productoDeProv.getCantidadPorLote());
+					BigDecimal precioVenta = new BigDecimal(productoDeProv.getPrecioVenta()).setScale(2, RoundingMode.HALF_UP);
+					BigDecimal cantPorLote=new BigDecimal(productoDeProv.getCantidadPorLote()).setScale(2, RoundingMode.HALF_UP);
 					
 					
 					Object[] fila = {descr,tipo,costo,precioMayorista,precioMinorista,puntoRepMinimo,talle,precioVenta,cantPorLote};
