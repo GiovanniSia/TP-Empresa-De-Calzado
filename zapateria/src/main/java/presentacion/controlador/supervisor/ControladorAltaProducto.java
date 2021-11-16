@@ -303,16 +303,15 @@ public class ControladorAltaProducto {
 			return false;
 		}
 		
-		if(productoPropio.equals("Si") && this.proveedoresEnTabla.size()==0) {
+		if(productoPropio.equals("No") && this.proveedoresEnTabla.size()==0) {
 			JOptionPane.showMessageDialog(null, "Debe elegir al menos un proveedor");
 			return false;	
 		}
-		if(cantProvPreferenciadoElegidos() != 1) {
+		if(productoPropio.equals("No") && cantProvPreferenciadoElegidos() != 1) {
 			JOptionPane.showMessageDialog(null, "Debe elegir solo un proveedor preferenciado");
 			return false;		
 		}
-		
-		
+				
 		return true;
 	}
 	
