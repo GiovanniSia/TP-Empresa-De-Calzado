@@ -342,7 +342,7 @@ public class VentanaAltaProducto {
 		frame.getContentPane().add(comboBoxTalle);
 		
 		chckbxNumerico = new JCheckBox("Numerico");
-		chckbxNumerico.setBackground(new Color(255, 255, 255, 0));
+		chckbxNumerico.setBackground(Color.WHITE);
 		chckbxNumerico.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		chckbxNumerico.setBounds(294, 228, 93, 21);
 		frame.getContentPane().add(chckbxNumerico);
