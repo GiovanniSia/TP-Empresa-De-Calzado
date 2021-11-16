@@ -1,5 +1,7 @@
 package modelo;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -33,7 +35,7 @@ public class EnviadorDeMails {
 			String mensaje = "";
 			for (PedidosPendientesDTO p : pedidosDeProv) {
 				mensaje = mensaje + "Nombre de Producto: " + p.getNombreMaestroProducto() + "\nCantidad: "
-						+ p.getCantidad() + "\nUnidad de medida: " + p.getUnidadMedida() + "\n";
+						+ new BigDecimal(p.getCantidad()).setScale(2, RoundingMode.HALF_UP) + "\nUnidad de medida: " + p.getUnidadMedida() + "\n";
 			}
 
 			Properties props = new Properties();
