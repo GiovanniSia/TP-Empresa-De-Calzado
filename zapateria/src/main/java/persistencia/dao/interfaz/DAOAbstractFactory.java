@@ -63,5 +63,6 @@ public interface DAOAbstractFactory {
 	public HistorialCambioClienteDAO createHistorialCambioClienteDAO();
 
 	public HistorialCambioEmpleadoDAO createHistorialCambioEmpleadoDAO();
-	
+
+	public PrimeraDeudaClienteDAO createPrimeraDeudaClienteDAO();
 }

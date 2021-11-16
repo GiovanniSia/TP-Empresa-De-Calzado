@@ -314,7 +314,7 @@ public class VentanaAltaCliente {
 		textSaldoInicial.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textSaldoInicial.getText().length()>=15) {
+                if(textSaldoInicial.getText().length()>=10) {
                     e.consume();
                 }
             }
@@ -385,10 +385,10 @@ public class VentanaAltaCliente {
 		
 		textLimiteCredito = new JTextField();
 		textLimiteCredito.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		textSaldoInicial.addKeyListener(new KeyAdapter() {
+		textLimiteCredito.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(textSaldoInicial.getText().length()>=15) {
+                if(textLimiteCredito.getText().length()>=10) {
                     e.consume();
                 }
             }

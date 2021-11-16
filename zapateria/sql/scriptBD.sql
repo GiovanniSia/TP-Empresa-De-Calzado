@@ -23,6 +23,14 @@ CREATE TABLE `clientes`
   PRIMARY KEY (`IdCliente`)
 );
 
+CREATE TABLE `primeraDeudaCliente`
+(
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCliente` int(11) NOT NULL,
+  `FechaDeuda` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
+
 CREATE TABLE `HistorialDeCambiosCliente`
 (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
@@ -531,15 +539,14 @@ insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
 
 INSERT INTO stock VALUES(11,2,10,"ASDF11111",1000);
 
-
 insert into clientes values(1, "Consumidor Final", "","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
-insert into clientes values(2, "Juan", "Lopez","4223004","zapateriaargento198@gmail.com",100,100,"Mayorista","E","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(3, "Adriana", "Aula","523004","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(4, "Pedra", "Pula","223004","zapateriaargento198@gmail.com",200,100,"Minorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(5, "Lua", "Lopez","4223004","zapateriaargento198@gmail.com",100,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(6, "Delta", "Aula","523004","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(7, "Puda", "Pula","223004","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
-insert into clientes values(8, "Vicentino", "Reboredo","223004","zapateriaargento198@gmail.com",200,100,"Mayorista","RI","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(2, "Juan", "Lopez","33233232129","zapateriaargento198@gmail.com",100,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(3, "Adriana", "Aula","22233282123","zapateriaargento198@gmail.com",200,200,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(4, "Pedra", "Pula","43263272123","zapateriaargento198@gmail.com",200,200,"Minorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(5, "Lua", "Lopez","52233232123","zapateriaargento198@gmail.com",100,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(6, "Delta", "Aula","93223232123","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(7, "Puda", "Pula","23333232124","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Inactivo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
+insert into clientes values(8, "Vicentino", "Reboredo","53333732123","zapateriaargento198@gmail.com",200,100,"Mayorista","RI","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 
 insert into recetas values(1,1,'Receta eficiente','Activo');
 

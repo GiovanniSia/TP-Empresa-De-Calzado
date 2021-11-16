@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import dto.CarritoDTO;
 import dto.ClienteDTO;
 import dto.DetalleCarritoDTO;
@@ -22,6 +20,7 @@ import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MaestroProductoDTO;
 import dto.MedioPagoDTO;
+import dto.PrimeraDeudaClienteDTO;
 import dto.SucursalDTO;
 import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
@@ -35,6 +34,7 @@ import modelo.Ingresos;
 import modelo.MaestroProducto;
 import modelo.MedioPago;
 import modelo.PedidosPendientes;
+import modelo.PrimeraDeudaCliente;
 import modelo.Sucursal;
 import modelo.generarOrdenesFabricacion;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -47,6 +47,7 @@ public class ControladorRealizarVenta {
 	// hardcodeado
 	int idEmpleado = 0;
 	int idSucursal = 0;
+
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -88,7 +89,7 @@ public class ControladorRealizarVenta {
 	Ingresos ingresos;
 
 	Sucursal sucursal;
-	
+
 	List<MedioPagoDTO> listamediosDePago;
 
 	List<IngresosDTO> listaDeIngresosARegistrar;// representa tambien el pago que este en la tabla (por indice)
@@ -114,7 +115,7 @@ public class ControladorRealizarVenta {
 		this.ingresos = ingresos;
 
 		this.sucursal = new Sucursal(new DAOSQLFactory());
-		
+
 		this.listamediosDePago = new ArrayList<MedioPagoDTO>();
 		this.listaDeIngresosARegistrar = new ArrayList<IngresosDTO>();
 		this.todosLosProductos = new ArrayList<MaestroProductoDTO>();
@@ -221,7 +222,7 @@ public class ControladorRealizarVenta {
 		}
 
 		if (nroOperacion.equals("") && esUnPagoConTarjeta(medioPago)) {
-			JOptionPane.showMessageDialog(null, "Debe agregar el número de operación para agregar el medio de pago!");
+			JOptionPane.showMessageDialog(null, "Debe agregar el nï¿½mero de operaciï¿½n para agregar el medio de pago!");
 			return;
 		}
 
@@ -266,11 +267,11 @@ public class ControladorRealizarVenta {
 
 		// EL NRO DE FACTURA SE DEBERA SETEAR AL MOMENTO DE REALIZAR EL COBRO, RECORRER
 		// TODOS LOS INGRESOS Y SETEARLE A CADA UNO EL NRO DE FACTURA GENERADO
-		System.out.println("medio de pago agregado: "+mp);
+//		System.out.println("medio de pago agregado: "+mp);
 		IngresosDTO ingreso = new IngresosDTO(0, idSucursal, "", "", "VT", idCliente, tipoFactura, "0", mp, cantidad,
 				valorConversion, nroOperacion, totalArg);
 		this.listaDeIngresosARegistrar.add(ingreso);
-		// {"Método","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
+		// {"Mï¿½todo","Moneda","Nom. Tarjeta","Cantidad","Cant. (en AR$)"};
 
 		actualizarTablaMedioPago();
 		this.ventanaRealizarVenta.getTextCantidad().setText("");
@@ -406,9 +407,9 @@ public class ControladorRealizarVenta {
 
 	public boolean poseeSaldoSuficiente(ClienteDTO cliente, double cantidad) {
 		double cantidadAgregada = 0;
-		for(IngresosDTO i: this.listaDeIngresosARegistrar) {
-			if(i.getMedioPago().equals("CC")) {
-				cantidadAgregada +=i.getCantidad();
+		for (IngresosDTO i : this.listaDeIngresosARegistrar) {
+			if (i.getMedioPago().equals("CC")) {
+				cantidadAgregada += i.getCantidad();
 			}
 		}
 		cantidadAgregada = cantidadAgregada + cantidad;
@@ -440,7 +441,13 @@ public class ControladorRealizarVenta {
 
 			generarFactura();
 			borrarCarritoConDetalle();
-			
+
+			if (!clienteCarrito.getEstado().equals("Moroso")) {
+				verificarClienteFuturoMoroso();
+			}
+
+			limpiarVariables();
+
 			// Consultamos si quiere ver la factura
 			// si selecciona que si devuelve un 0, no un 1, y la x un -1
 			ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal,this.clienteCarrito);
@@ -458,21 +465,63 @@ public class ControladorRealizarVenta {
 			this.totalAPagarAux = 0;
 			this.totalAPagarSinDescuento = 0;
 			this.totalPagado = 0;
-			
-			
-			
+		
 			this.ventanaRealizarVenta.cerrar();
 			vaciarDatosPrevios();
 			this.controladorVisualizarCarritos.actualizarVentana();
-			
-			
-			
-			
+
 		} else {
-			JOptionPane.showMessageDialog(null, "Todavía no se han pagado todos los productos!");
+			JOptionPane.showMessageDialog(null, "Todavï¿½a no se han pagado todos los productos!");
 		}
 	}
-	
+
+	public void verificarClienteFuturoMoroso() {
+		if (esFuturoMoroso()) {
+			if (!existeEnTablaPrimeraDeudaCliente()) {
+				PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
+				int idCliente = clienteCarrito.getIdCliente();
+				String fechaDeuda = obtenerFechaDeHoy();
+				PrimeraDeudaClienteDTO clienteMoroso = new PrimeraDeudaClienteDTO(0, idCliente, fechaDeuda);
+				primeraDeudaCliente.insert(clienteMoroso);
+			}
+		}
+	}
+
+	public boolean existeEnTablaPrimeraDeudaCliente() {
+		PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
+		List<PrimeraDeudaClienteDTO> listaPrimeraDeudaCliente;
+		listaPrimeraDeudaCliente = primeraDeudaCliente.readAll();
+		for (PrimeraDeudaClienteDTO p : listaPrimeraDeudaCliente) {
+			if (p.getIdCliente() == clienteCarrito.getIdCliente()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean esFuturoMoroso() {
+		if (clienteCarrito.getCreditoDisponible() < clienteCarrito.getLimiteCredito()) {
+			return true;
+		}
+		return false;
+	}
+
+	public String obtenerFechaDeHoy() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		return fecha;
+	}
+
+	public void limpiarVariables() {
+		this.carritoACobrar = null;
+		this.detalleCarritoACobrar = null;
+		this.clienteCarrito = null;
+		this.totalAPagar = 0;
+		this.totalAPagarAux = 0;
+		this.totalAPagarSinDescuento = 0;
+		this.totalPagado = 0;
+	}
+
 	public void cancelarPago(ActionEvent a) {
 
 		vaciarDatosPrevios();
@@ -521,7 +570,7 @@ public class ControladorRealizarVenta {
 
 		String tipoFactura = determinarCategoriaFactura(client);
 
-		String nroFacturaCompleto = generarNroSucursal()+ tipoFactura + generarNroFacturaSecuencial(tipoFactura);
+		String nroFacturaCompleto = generarNroSucursal() + tipoFactura + generarNroFacturaSecuencial(tipoFactura);
 		int idSucursal = this.carritoACobrar.getIdSucursal();
 		double descuento = this.descuento;
 
@@ -544,7 +593,7 @@ public class ControladorRealizarVenta {
 
 		String impuestoAFIP = obtenerNombreCategoria(client);
 		double IVA = calcularIVA(client) ? ((21 * totalFactura) / 100) : 0.0;
-		totalBruto = calcularIVA(client) ? totalFactura-((21 * totalFactura) / 100) : totalFactura;
+		totalBruto = calcularIVA(client) ? totalFactura - ((21 * totalFactura) / 100) : totalFactura;
 		this.facturaGenerada = new FacturaDTO(id, montoPendiente, idCliente, nombreCliente, idCajero, nombreCajero,
 				idVendedor, nombreVendedor, fecha, tipoFactura, nroFacturaCompleto, idSucursal, descuento, totalBruto,
 				totalFactura, tipoVenta, calle, altura, pais, provincia, localidad, codPostal, CUIL, correo,
@@ -559,12 +608,12 @@ public class ControladorRealizarVenta {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
 		this.facturaGenerada.setIdFactura(todasLasFacturas.get(todasLasFacturas.size() - 1).getIdFactura());
 		registrarDetallesFactura(this.facturaGenerada);
-		registrarIngreso(client, this.facturaGenerada);
+		registrarIngreso(this.facturaGenerada);
 	}
 
 	public void registrarDetallesFactura(FacturaDTO factura) {
 		ClienteDTO client = this.cliente.selectCliente(this.carritoACobrar.getIdCliente());
-		
+
 		for (DetalleCarritoDTO detalleCarrito : this.detalleCarritoACobrar) {
 			int id = 0;
 			int idProd = detalleCarrito.getIdProducto();
@@ -572,18 +621,18 @@ public class ControladorRealizarVenta {
 			MaestroProductoDTO producto = this.maestroProducto.selectMaestroProducto(idProd);
 			String descr = producto.getDescripcion();
 			double precioCosto = producto.getPrecioCosto();
-			
+
 			double precioVenta = detalleCarrito.getPrecio() / detalleCarrito.getCantidad();
 			double precioVentaConIVA = calcularIVA(client) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
-			
+
 			double monto = precioVenta * cant;
-			double montoConIVA = calcularIVA(client) ? (monto - ((21 * monto) / 100)) : monto; 
-			
+			double montoConIVA = calcularIVA(client) ? (monto - ((21 * monto) / 100)) : monto;
+
 			int idFactura = factura.getIdFactura();
 			String unidadMedida = "" + producto.getUnidadMedida();// CHEQUEAR
 
-			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id, idProd, cant, descr, precioCosto, precioVentaConIVA,
-					montoConIVA, idFactura, unidadMedida);
+			DetalleFacturaDTO detalleFactur = new DetalleFacturaDTO(id, idProd, cant, descr, precioCosto,
+					precioVentaConIVA, montoConIVA, idFactura, unidadMedida);
 			boolean insertDetalleFactura = this.detalleFactura.insert(detalleFactur);// se guarda en la bd
 			if (!insertDetalleFactura) {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error en uno de los ingresos de factura");
@@ -591,7 +640,7 @@ public class ControladorRealizarVenta {
 		}
 	}
 
-	public void registrarIngreso(ClienteDTO cliente, FacturaDTO factura) {
+	public void registrarIngreso(FacturaDTO factura) {
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String fecha = f.format(LocalDateTime.now());
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -600,14 +649,17 @@ public class ControladorRealizarVenta {
 		for (IngresosDTO ingreso : this.listaDeIngresosARegistrar) {
 			ingreso.establecerDatosFaltantes(factura.getNroFacturaCompleta(), fecha, hora);
 			this.ingresos.insert(ingreso);
-			if(ingreso.getMedioPago().equals("CC")) {
-				double nuevaCant=cliente.getCreditoDisponible()-ingreso.getCantidad();
-				cliente.setCreditoDisponible(nuevaCant);
-				boolean update = this.cliente.update(cliente.getIdCliente(), cliente);
-				if(!update) {
-					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al actualizar el credito disponible del cliente");
-				}else {
-					System.out.println("se actualiza el credito disponible del cliente: "+cliente.getNombre()+", a: "+nuevaCant);
+			if (ingreso.getMedioPago().equals("CC")) {
+				double nuevaCant = clienteCarrito.getCreditoDisponible() - ingreso.getCantidad();
+				clienteCarrito.setCreditoDisponible(nuevaCant);
+
+				boolean update = this.cliente.update(clienteCarrito.getIdCliente(), clienteCarrito);
+				if (!update) {
+					JOptionPane.showMessageDialog(null,
+							"Ha ocurrido un error al actualizar el credito disponible del cliente");
+				} else {
+//					System.out.println("se actualiza el credito disponible del cliente: " + clienteCarrito.getNombre()
+//							+ ", a: " + nuevaCant);
 				}
 			}
 
@@ -628,76 +680,68 @@ public class ControladorRealizarVenta {
 		SucursalDTO sucursal = this.sucursal.select(idSucursal);
 		return sucursal.getNroSucursal();
 	}
-	
-	public String generarNroFacturaSecuencial(String tipoFactura) {
-/*
-		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
-		if (todasLasFacturas.size() == 0) {
-			return "1";
-		}
-		FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size() - 1);
-		String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
 
-		String ultSec = "";
-		// damos por hecho que 1 dig sera para el tipo de factura, y 5 para el nro de
-		// sucursal
-		for (int i = 6; i < nroCompletoUlt.length(); i++) {
-			ultSec = ultSec + nroCompletoUlt.charAt(i);// obtenemos los ult 8 dig secuenciales
-		}
-		int viejoSuma = Integer.parseInt(ultSec);
-		int nuevoSec = (viejoSuma + 1);
-		return "" + nuevoSec;
-	*/
-		String nroFacturaSec="";
+	public String generarNroFacturaSecuencial(String tipoFactura) {
+		/*
+		 * ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>)
+		 * this.factura.readAll(); if (todasLasFacturas.size() == 0) { return "1"; }
+		 * FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size() - 1);
+		 * String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
+		 * 
+		 * String ultSec = ""; // damos por hecho que 1 dig sera para el tipo de
+		 * factura, y 5 para el nro de // sucursal for (int i = 6; i <
+		 * nroCompletoUlt.length(); i++) { ultSec = ultSec + nroCompletoUlt.charAt(i);//
+		 * obtenemos los ult 8 dig secuenciales } int viejoSuma =
+		 * Integer.parseInt(ultSec); int nuevoSec = (viejoSuma + 1); return "" +
+		 * nuevoSec;
+		 */
+		String nroFacturaSec = "";
 		FacturaDTO ultFactura = obtenerUltFacturaParaSerie(tipoFactura);
-		
-		
-		if(ultFactura!=null) {
-			//si ya existe entonces hay que buscar el utimo y sumarle +1
-			
-			int longitudFactura= ultFactura.getNroFacturaCompleta().length();
-			for(int i=8 ; i>=1 ; i--) {
-				nroFacturaSec = nroFacturaSec + ultFactura.getNroFacturaCompleta().charAt(longitudFactura-i);
+
+		if (ultFactura != null) {
+			// si ya existe entonces hay que buscar el utimo y sumarle +1
+
+			int longitudFactura = ultFactura.getNroFacturaCompleta().length();
+			for (int i = 8; i >= 1; i--) {
+				nroFacturaSec = nroFacturaSec + ultFactura.getNroFacturaCompleta().charAt(longitudFactura - i);
 			}
 			int suma = Integer.parseInt(nroFacturaSec) + 1;
-			nroFacturaSec = suma+"";
-			if(nroFacturaSec.length()<8) {
-				while(nroFacturaSec.length()<8) {
-					nroFacturaSec = "0"+nroFacturaSec;
+			nroFacturaSec = suma + "";
+			if (nroFacturaSec.length() < 8) {
+				while (nroFacturaSec.length() < 8) {
+					nroFacturaSec = "0" + nroFacturaSec;
 				}
 				return nroFacturaSec;
-				
-				
-			}else {
+
+			} else {
 				return nroFacturaSec;
 			}
-			
-		}else {
-			//si no existe hay que crear uno nuevo. Ej 00000001
-			for(int i=1; i<=7;i++) {
-				nroFacturaSec=nroFacturaSec+0;
+
+		} else {
+			// si no existe hay que crear uno nuevo. Ej 00000001
+			for (int i = 1; i <= 7; i++) {
+				nroFacturaSec = nroFacturaSec + 0;
 			}
-			return nroFacturaSec+"1";
+			return nroFacturaSec + "1";
 		}
 	}
 
 	public FacturaDTO obtenerUltFacturaParaSerie(String tipoFactura) {
 		ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>) this.factura.readAll();
 		FacturaDTO ultFactura = null;
-		for(FacturaDTO f: todasLasFacturas) {
-			if(f.getIdSucursal() == this.idSucursal) {
-				for(int i=0; i<f.getNroFacturaCompleta().length();i++) {
-					//si en algun caracter de la factura existe un A-B o E entonces es true
-					if(f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
-						ultFactura=f;
-					}	
-				}	
+		for (FacturaDTO f : todasLasFacturas) {
+			if (f.getIdSucursal() == this.idSucursal) {
+				for (int i = 0; i < f.getNroFacturaCompleta().length(); i++) {
+					// si en algun caracter de la factura existe un A-B o E entonces es true
+					if (f.getNroFacturaCompleta().charAt(i) == tipoFactura.charAt(0)) {
+						ultFactura = f;
+					}
+				}
 			}
-			
-			
-		}return ultFactura;		
-	}
 
+		}
+		return ultFactura;
+	}
 
 	public boolean calcularIVA(ClienteDTO cliente) {
 		if (cliente.getImpuestoAFIP().equals("RI") || cliente.getImpuestoAFIP().equals("M")) {
