@@ -153,4 +153,46 @@ public class EnviadorDeMails {
 		return cant <=1;
 	}
 	
+	
+	public static void enviarMailDeBienvenidaACliente(ClienteDTO cliente) {
+		try {
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.auth", "true");
+			props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+//		props.put("mail.debug", "true");
+			Session session = Session.getDefaultInstance(props);
+
+			String correoRemitente = "zapateriaargento198@gmail.com";
+			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
+			String correoReceptor = cliente.getCorreo();
+			String asunto = "Correo de registro de cliente";
+			String mensaje = "Bienvenido " + cliente.getNombre() + " a ZapateriaArgento, ansiamos por su futura compra";
+			MimeMessage message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress(correoRemitente));
+
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
+
+			message.setSubject(asunto);
+			message.setText(mensaje);
+
+			Transport t = session.getTransport("smtp");
+			t.connect(correoRemitente, contrasenia);
+			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
+			t.close();
+		} catch (AddressException e) {
+//		Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+			JOptionPane.showMessageDialog(null, "Error, el primero xd");
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			JOptionPane.showMessageDialog(null, "Error, el segundo xd");
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 }

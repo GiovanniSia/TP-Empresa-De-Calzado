@@ -31,6 +31,7 @@ import dto.ProvinciaDTO;
 import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
 import modelo.Cliente;
+import modelo.EnviadorDeMails;
 import modelo.HistorialCambioCliente;
 import modelo.Localidad;
 import modelo.Pais;
@@ -141,7 +142,7 @@ public class ControladorAltaCliente {
 //		});
 		
 		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
-		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir(a));
+		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir());
 		this.ventanaAltaCliente.getBtnUbicacion().addActionListener(a -> pasarAEditarUbicacion(a));
 		this.ventanaAltaCliente.getBtnEditar().addActionListener(a -> editarCliente(a));
 		
@@ -178,7 +179,7 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.show();
 	}
 	
-	public void salir(ActionEvent a) {
+	public void salir() {
 		this.ventanaAltaCliente.cerrar();
 		this.controladorGestionarClientes.inicializar();
 		this.controladorGestionarClientes.mostrarVentana();
@@ -339,55 +340,11 @@ public class ControladorAltaCliente {
 				JOptionPane.showMessageDialog(null, "Se agrego el nuevo cliente al sistema");	
 			}
 			
-			enviarMailDeBienvenida(cliente);
+			EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
 			borrarDatosDeLosText();
-			
+			salir();
 		}
 	}	
-	
-	public void enviarMailDeBienvenida(ClienteDTO cliente) {
-		try {
-			Properties props = new Properties();
-			props.setProperty("mail.smtp.host", "smtp.gmail.com");
-			props.setProperty("mail.smtp.starttls.enable", "true");
-			props.setProperty("mail.smtp.port", "587");
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-//		props.put("mail.debug", "true");
-			Session session = Session.getDefaultInstance(props);
-
-			String correoRemitente = "zapateriaargento198@gmail.com";
-			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
-			String correoReceptor = cliente.getCorreo();
-			String asunto = "Correo de registro de cliente";
-			String mensaje = "Bienvenido " + cliente.getNombre() + " a ZapateriaArgento, ansiamos por su futura compra";
-			MimeMessage message = new MimeMessage(session);
-
-			message.setFrom(new InternetAddress(correoRemitente));
-
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
-
-			message.setSubject(asunto);
-			message.setText(mensaje);
-
-			Transport t = session.getTransport("smtp");
-			t.connect(correoRemitente, contrasenia);
-			t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
-			t.close();
-
-			JOptionPane.showMessageDialog(null, "Correo enviado");
-
-		} catch (AddressException e) {
-//		Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-			JOptionPane.showMessageDialog(null, "Error, el primero xd");
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			JOptionPane.showMessageDialog(null, "Error, el segundo xd");
-			e.printStackTrace();
-		}
-	}
-		
-	
 	
 	public ClienteDTO obtenerClienteDeVista() {
 		String nombre = this.ventanaAltaCliente.getTextNombre().getText();
