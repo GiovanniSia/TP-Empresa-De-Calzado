@@ -237,7 +237,7 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "Error al actualizar el cliente ", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+		verificarClienteFuturoMoroso(clienteActualizado);
 		cambiarEstadoClienteAutomaticoMoroso(clienteActualizado);
 		
 		JOptionPane.showMessageDialog(null, "Cliente actualizado con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -246,14 +246,8 @@ public class ControladorAltaCliente {
 	
 public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) {
 		
-		System.out.println(" El cliente actualizado es : " + clienteSeteado.getIdCliente());
-		System.out.println(" El cliente credito disponible es : " + clienteActualizado.getCreditoDisponible());
-		System.out.println(" El cliente limite de credito es : " + clienteActualizado.getLimiteCredito());
-		
-		System.out.println("Credito Disponible es igual a Limite credito: "+(clienteActualizado.getCreditoDisponible() == clienteActualizado.getLimiteCredito()));
 		if (clienteActualizado.getCreditoDisponible() == clienteActualizado.getLimiteCredito()) {
-			System.out.println(" existe en tabla primera deuda ciente : "+ existeEnTablaPrimeraDeudaCliente(clienteSeteado) );
-			if (existeEnTablaPrimeraDeudaCliente(clienteSeteado)) {
+			if (existeEnTablaPrimeraDeudaCliente()) {
 				
 				if (obtenerPrimeraDeudaClienteDeCliente() != null) {
 					PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
@@ -276,7 +270,7 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		return null;
 	}
 
-	public boolean existeEnTablaPrimeraDeudaCliente(ClienteDTO clienteActualizado) {
+	public boolean existeEnTablaPrimeraDeudaCliente() {
 		PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
 		List<PrimeraDeudaClienteDTO> listaPrimeraDeudaCliente;
 		listaPrimeraDeudaCliente = primeraDeudaCliente.readAll();
@@ -288,6 +282,35 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		return false;
 	}
 
+	
+	
+	public void verificarClienteFuturoMoroso(ClienteDTO clienteActualizado) {
+		if (esFuturoMoroso(clienteActualizado)) {
+			if (!existeEnTablaPrimeraDeudaCliente()) {
+				PrimeraDeudaCliente primeraDeudaCliente = new PrimeraDeudaCliente(new DAOSQLFactory());
+				int idCliente = clienteSeteado.getIdCliente();
+				String fechaDeuda = obtenerFechaDeHoy();
+				PrimeraDeudaClienteDTO clienteMoroso = new PrimeraDeudaClienteDTO(0, idCliente, fechaDeuda);
+				primeraDeudaCliente.insert(clienteMoroso);
+			}
+		}
+	}
+
+
+	public boolean esFuturoMoroso(ClienteDTO clienteActualizado) {
+		if (clienteActualizado.getCreditoDisponible() < clienteActualizado.getLimiteCredito()) {
+			return true;
+		}
+		return false;
+	}
+
+	public String obtenerFechaDeHoy() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String fecha = dtf.format(LocalDateTime.now());
+		return fecha;
+	}
+	
+	
 	public void salirEditar() {
 		this.clienteSeteado = null;
 		this.ventanaAltaCliente.getBtnEditar().setVisible(false);
@@ -296,7 +319,7 @@ public void cambiarEstadoClienteAutomaticoMoroso(ClienteDTO clienteActualizado) 
 		this.controladorGestionarClientes.mostrarVentana();
 
 	}
-
+	
 	public void guadarHistorialDeCambioDeCliente(ClienteDTO clienteSeteado, ClienteDTO clienteActualizado) {
 		int id = 0;
 		int idEmpleado = this.idEmpleado;
