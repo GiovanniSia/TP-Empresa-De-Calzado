@@ -12,6 +12,7 @@ encoding//reportes/caja/ingresosTotales.jrxml=UTF-8
 encoding//reportes/ranking/SucursalesQueNoVendieron.jrxml=UTF-8
 encoding//reportes/ranking/rankingVentasXSucursal.jrxml=UTF-8
 encoding//reportes/rankingVendedores/rankingVentasXvendedor.jrxml=UTF-8
+encoding//reportes/reporteStock/riesgoStock.jrxml=UTF-8
 encoding//reportes/riesgoStock/productoSinProveedor.jrxml=UTF-8
 encoding//reportes/riesgoStock/productosYProveedores.jrxml=UTF-8
 encoding//reportes/riesgoStock/riesgoStock.jrxml=UTF-8
