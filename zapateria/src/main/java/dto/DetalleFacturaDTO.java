@@ -2,13 +2,14 @@ package dto;
 
 public class DetalleFacturaDTO {
 	
-	int id, idProducto, cantidad;
+	int id, idProducto;
+	double cantidad;
 	String descripcion;
 	double precioCosto, precioVenta, monto;
 	int idFactura;
 	String unidadMedida;
 	
-	public DetalleFacturaDTO(int id, int idProducto, int cantidad, String descripcion, double precioCosto,
+	public DetalleFacturaDTO(int id, int idProducto, double cantidad, String descripcion, double precioCosto,
 			double precioVenta, double monto, int idFactura, String unidadMedida) {
 		super();
 		this.id = id;
@@ -31,7 +32,7 @@ public class DetalleFacturaDTO {
 		return idProducto;
 	}
 
-	public int getCantidad() {
+	public double getCantidad() {
 		return cantidad;
 	}
 
@@ -59,19 +60,4 @@ public class DetalleFacturaDTO {
 		return unidadMedida;
 	}
 
-	
-	
-	
-	/*
-	   `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `IdProducto` int(11) NOT NULL,
-  `Cantidad` int(11) NOT NULL,
-  `Descripcion` varchar(45) NOT NULL,
-  `PrecioCosto` double(45,2) NOT NULL,
-  `PrecioVenta` double(45,2) NOT NULL,
-  `Monto` double(45,2) NOT NULL,
-  `idFactura` int(11) NOT NULL,
-  `UnidadMedida` varchar(45) NOT NULL, 
-	 
-	 */
 }

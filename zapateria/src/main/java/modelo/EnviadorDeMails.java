@@ -102,9 +102,9 @@ public class EnviadorDeMails {
 			
 			String mensaje="";
 			if(esPrimerCompraDe(cliente)) {
-				mensaje = "Que onda <b>" + cliente.getNombre() + "</b>, gracias por TU PRIMER compra en <i>Zapateria Argento</i>";
+				mensaje = "Hola <b>" + cliente.getNombre() + "</b>, gracias por realizar TU PRIMER compra en <i>Zapateria Argento</i>";
 			}else {
-				mensaje = "Que onda <b>" + cliente.getNombre() + "</b>, gracias por comprar xd";	
+				mensaje = "Hola <b>" + cliente.getNombre() + "</b>, gracias por comprar en <i>Zapateria Argento</i>";	
 			}
 			
 			
@@ -172,15 +172,22 @@ public class EnviadorDeMails {
 			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
 			String correoReceptor = cliente.getCorreo();
 			String asunto = "Correo de registro de cliente";
-			String mensaje = "Bienvenido " + cliente.getNombre() + " a ZapateriaArgento, ansiamos por su futura compra";
+			String mensaje = "Bienvenido <b>" + cliente.getNombre() + "</b> a <i>ZapateriaArgento</i>, ansiamos por su futura compra";
 			MimeMessage message = new MimeMessage(session);
 
+			BodyPart texto = new MimeBodyPart();
+			texto.setContent(mensaje, "text/html");
+
+			MimeMultipart multiParte = new MimeMultipart();
+			multiParte.addBodyPart(texto);			
+			
 			message.setFrom(new InternetAddress(correoRemitente));
 
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
 
 			message.setSubject(asunto);
 			message.setText(mensaje);
+			message.setContent(multiParte);
 
 			Transport t = session.getTransport("smtp");
 			t.connect(correoRemitente, contrasenia);

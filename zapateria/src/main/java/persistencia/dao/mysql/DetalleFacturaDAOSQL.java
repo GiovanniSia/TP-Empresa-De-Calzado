@@ -27,7 +27,7 @@ public class DetalleFacturaDAOSQL implements DetalleFacturaDAO{
 
 			statement.setInt(1, detalleFactura.getId());
 			statement.setInt(2, detalleFactura.getIdProducto());
-			statement.setInt(3, detalleFactura.getCantidad());
+			statement.setDouble(3, detalleFactura.getCantidad());
 			statement.setString(4, detalleFactura.getDescripcion());
 			statement.setDouble(5, detalleFactura.getPrecioCosto());
 			statement.setDouble(6, detalleFactura.getPrecioVenta());
@@ -72,7 +72,7 @@ public class DetalleFacturaDAOSQL implements DetalleFacturaDAO{
 	{
 		int id = resultSet.getInt("Id");
 		int idProducto = resultSet.getInt("IdProducto");
-		int cantidad = resultSet.getInt("Cantidad");
+		double cantidad = resultSet.getDouble("Cantidad");
 		String descripcion = resultSet.getString("Descripcion");
 		double precioCosto = resultSet.getDouble("PrecioCosto");
 		double precioVenta = resultSet.getDouble("PrecioVenta");

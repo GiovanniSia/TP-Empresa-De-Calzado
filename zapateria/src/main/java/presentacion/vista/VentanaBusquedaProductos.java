@@ -427,7 +427,7 @@ public class VentanaBusquedaProductos {
 			@Override
 		    public void windowClosing(WindowEvent e) {
 		        int confirm = JOptionPane.showOptionDialog(
-		             null, "�Est�s seguro que quieres salir?. Se perder� todos los progresos que se hayan realizado", 
+		             null, "Estas seguro que quieres salir?. Se perderan todos los progresos que se hayan realizado", 
 		             "Advertencia", JOptionPane.YES_NO_OPTION,
 		             JOptionPane.QUESTION_MESSAGE, null, null, null);
 		        if (confirm == 0) {

@@ -562,13 +562,17 @@ public class ControladorRealizarVenta {
 
 		String nroFacturaCompleto = generarNroSucursal() + tipoFactura + generarNroFacturaSecuencial(tipoFactura);
 		int idSucursal = this.carritoACobrar.getIdSucursal();
+		
+		
 		double descuento = this.descuento;
-
-//		double totalBruto = this.carritoACobrar.getTotal(); 
-//		double totalFactura = calcularTotal(client);//Habria que chequearlo mejor por el impuesto afip
+		BigDecimal descuentoAux = new BigDecimal(descuento).setScale(0, RoundingMode.HALF_UP);
+		descuento = descuentoAux.doubleValue();
 
 		double totalBruto = calcularTotalBruto(client);
+		
 		double totalFactura = this.carritoACobrar.getTotal() - this.descuento;
+		BigDecimal totalFacturaAux = new BigDecimal(totalFactura).setScale(0, RoundingMode.HALF_UP);
+		totalFactura = totalFacturaAux.doubleValue();
 
 		String tipoVenta = client.getTipoCliente();// mayorista/minorista
 
@@ -582,8 +586,16 @@ public class ControladorRealizarVenta {
 		String correo = client.getCorreo();
 
 		String impuestoAFIP = obtenerNombreCategoria(client);
+		
 		double IVA = calcularIVA(client) ? ((21 * totalFactura) / 100) : 0.0;
+		BigDecimal IVAaux = new BigDecimal(IVA).setScale(0, RoundingMode.HALF_UP);
+		IVA = IVAaux.doubleValue();
+		
+		
 		totalBruto = calcularIVA(client) ? totalFactura - ((21 * totalFactura) / 100) : totalFactura;
+		BigDecimal totalBrutoAux = new BigDecimal(totalBruto).setScale(0, RoundingMode.HALF_UP);
+		totalBruto = totalBrutoAux.doubleValue();
+		
 		this.facturaGenerada = new FacturaDTO(id, montoPendiente, idCliente, nombreCliente, idCajero, nombreCajero,
 				idVendedor, nombreVendedor, fecha, tipoFactura, nroFacturaCompleto, idSucursal, descuento, totalBruto,
 				totalFactura, tipoVenta, calle, altura, pais, provincia, localidad, codPostal, CUIL, correo,
@@ -607,16 +619,25 @@ public class ControladorRealizarVenta {
 		for (DetalleCarritoDTO detalleCarrito : this.detalleCarritoACobrar) {
 			int id = 0;
 			int idProd = detalleCarrito.getIdProducto();
-			int cant = (int) detalleCarrito.getCantidad();
+			
+			double cant = detalleCarrito.getCantidad();
+			BigDecimal cantidad = new BigDecimal(cant).setScale(0, RoundingMode.HALF_UP);
+			cant = cantidad.doubleValue();
+			
 			MaestroProductoDTO producto = this.maestroProducto.selectMaestroProducto(idProd);
 			String descr = producto.getDescripcion();
 			double precioCosto = producto.getPrecioCosto();
 
 			double precioVenta = detalleCarrito.getPrecio() / detalleCarrito.getCantidad();
 			double precioVentaConIVA = calcularIVA(client) ? (precioVenta - (21 * precioVenta) / 100) : precioVenta;
+			BigDecimal precVentaConIVAaux = new BigDecimal(precioVentaConIVA).setScale(0, RoundingMode.HALF_UP);
+			precioVentaConIVA = precVentaConIVAaux.doubleValue();
+			
 
 			double monto = precioVenta * cant;
 			double montoConIVA = calcularIVA(client) ? (monto - ((21 * monto) / 100)) : monto;
+			BigDecimal montoConIVAaux = new BigDecimal(montoConIVA).setScale(0, RoundingMode.HALF_UP);
+			montoConIVA = montoConIVAaux.doubleValue();
 
 			int idFactura = factura.getIdFactura();
 			String unidadMedida = "" + producto.getUnidadMedida();// CHEQUEAR
