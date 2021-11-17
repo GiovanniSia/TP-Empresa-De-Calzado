@@ -32,18 +32,26 @@
 zapateria.maestroproductos as mp LEFT OUTER JOIN zapateria.stock as st2 
 on (mp.IdMaestroProducto = st2.IdProducto AND st2.IdSucursal = '$P!{IdSucursal}' )
 
-LEFT OUTER JOIN zapateria.proveedor as pp
-on mp.IdProveedor = pp.IdProveedor
 LEFT OUTER JOIN zapateria.productosdeproveedor as pdp 
 on (pdp.IdProveedor = mp.IdProveedor AND pdp.IdMaestroProducto = mp.IdMaestroProducto)
+LEFT OUTER JOIN zapateria.proveedor as pp
+on pdp.IdProveedor = pp.IdProveedor
 
 , zapateria.sucursales as suc
 
 WHERE mp.Estado LIKE 'Activo'
  AND mp.Tipo LIKE '$P!{TipoProducto}'
 AND suc.IdSucursal = '$P!{IdSucursal}'
+
+AND (mp.PuntoRepositorio >=(select SUM(sto.StockDisponible) 
+ 	FROM zapateria.stock as sto where sto.IdSucursal = '$P!{IdSucursal}'
+ 	 AND sto.IdProducto =  mp.IdMaestroProducto) OR (select SUM(sto.StockDisponible) 
+ 	FROM zapateria.stock as sto where sto.IdSucursal = '$P!{IdSucursal}'
+ 	 AND sto.IdProducto =  mp.IdMaestroProducto) is null)
+
+ group by mp.IdMaestroProducto order by pdp.IdProveedor
  
- group by mp.IdMaestroProducto]]>
+ ]]>
 	</queryString>
 	<field name="IdMaestroProducto" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IdMaestroProducto"/>
@@ -159,6 +167,34 @@ AND suc.IdSucursal = '$P!{IdSucursal}'
 		<property name="com.jaspersoft.studio.field.tree.path" value="stock"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Id"/>
+		<property name="com.jaspersoft.studio.field.label" value="Id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_21" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdProveedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdProveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
+	</field>
+	<field name="COLUMN_22" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdMaestroProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdMaestroProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
+	</field>
+	<field name="PrecioVenta" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="PrecioVenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="PrecioVenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CantidadPorLote" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="CantidadPorLote"/>
+		<property name="com.jaspersoft.studio.field.label" value="CantidadPorLote"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="Idproveedor" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Idproveedor"/>
 		<property name="com.jaspersoft.studio.field.label" value="Idproveedor"/>
@@ -181,34 +217,6 @@ AND suc.IdSucursal = '$P!{IdSucursal}'
 		<property name="com.jaspersoft.studio.field.name" value="LimiteCredito"/>
 		<property name="com.jaspersoft.studio.field.label" value="LimiteCredito"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="Id"/>
-		<property name="com.jaspersoft.studio.field.label" value="Id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="COLUMN_25" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="IdProveedor"/>
-		<property name="com.jaspersoft.studio.field.label" value="IdProveedor"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
-	</field>
-	<field name="COLUMN_26" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="IdMaestroProducto"/>
-		<property name="com.jaspersoft.studio.field.label" value="IdMaestroProducto"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
-	</field>
-	<field name="PrecioVenta" class="java.lang.Double">
-		<property name="com.jaspersoft.studio.field.name" value="PrecioVenta"/>
-		<property name="com.jaspersoft.studio.field.label" value="PrecioVenta"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="CantidadPorLote" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="CantidadPorLote"/>
-		<property name="com.jaspersoft.studio.field.label" value="CantidadPorLote"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="productosdeproveedor"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="COLUMN_29" class="java.lang.Integer">
@@ -273,6 +281,85 @@ AND suc.IdSucursal = '$P!{IdSucursal}'
 		<property name="com.jaspersoft.studio.field.name" value="SUM(st2.StockDisponible)"/>
 		<property name="com.jaspersoft.studio.field.label" value="SUM(st2.StockDisponible)"/>
 	</field>
+	<group name="Proveedores">
+		<groupExpression><![CDATA[$F{COLUMN_21}]]></groupExpression>
+		<groupHeader>
+			<band height="73">
+				<frame>
+					<reportElement mode="Opaque" x="8" y="57" width="548" height="16" backcolor="#4F4F4F" uuid="b7670adb-852e-43c7-ad6d-cd09f3f3347b">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<staticText>
+						<reportElement mode="Transparent" x="39" y="0" width="100" height="16" forecolor="#FFFFFF" uuid="4e6f16dc-a9b0-4a6b-9930-33253740da20"/>
+						<text><![CDATA[    Descripcion]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="139" y="0" width="60" height="16" forecolor="#FFFFFF" uuid="590410a6-52f1-4a2b-be47-7ecc0c4f6f61"/>
+						<text><![CDATA[Talle]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="3" y="0" width="34" height="16" forecolor="#FFFFFF" uuid="18f753a8-43a2-4524-a3d6-59f86a57baca"/>
+						<text><![CDATA[Código]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="199" y="0" width="60" height="16" forecolor="#FFFFFF" uuid="1505f406-955a-4de8-acea-98e582978e14"/>
+						<text><![CDATA[Uni. Medida]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="259" y="0" width="84" height="16" forecolor="#FFFFFF" uuid="b34f2044-b561-4b50-9b9b-b9b0cd68b9c3"/>
+						<text><![CDATA[Punto reposicion]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="344" y="0" width="84" height="16" forecolor="#FFFFFF" uuid="fc161ec0-1856-4f43-ad06-7649cdece773"/>
+						<text><![CDATA[Stock actual]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="428" y="0" width="59" height="16" forecolor="#FFFFFF" uuid="3a714d68-7bee-4608-96c9-b1ec1440a21c"/>
+						<text><![CDATA[CantXlote]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="487" y="0" width="59" height="16" forecolor="#FFFFFF" uuid="6776ad2c-e931-4c48-bf90-e7abaaaf69d9"/>
+						<text><![CDATA[PrecioXlote]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement mode="Opaque" x="8" y="2" width="548" height="16" backcolor="#4F4F4F" uuid="75a7c1d2-3a71-41ba-a243-f7b0fe0ea739"/>
+					<staticText>
+						<reportElement mode="Transparent" x="100" y="0" width="120" height="16" forecolor="#FFFFFF" uuid="c1e79f90-da1c-45c4-a91c-15badb5fe6b0"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[Proveedor]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="236" y="0" width="154" height="16" forecolor="#FFFFFF" uuid="b97345dc-d570-445f-857c-018828c6aba7"/>
+						<text><![CDATA[Correo]]></text>
+					</staticText>
+					<staticText>
+						<reportElement mode="Transparent" x="3" y="0" width="87" height="16" forecolor="#FFFFFF" uuid="8b924efd-8b3c-4975-a510-1dc1f7269aa6"/>
+						<textElement textAlignment="Center"/>
+						<text><![CDATA[Código proveedor]]></text>
+					</staticText>
+				</frame>
+				<textField>
+					<reportElement x="11" y="22" width="46" height="14" uuid="4b22cc58-1897-49d8-bc9a-93ff7c5cbe06"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{COLUMN_21}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="108" y="22" width="120" height="14" uuid="c626d30e-b94a-4371-ad1e-485dc9d733a3"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="244" y="22" width="154" height="14" uuid="76a5e232-77c9-47ed-a468-c9ac48fac404"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[String.valueOf($F{CorreoElectronico})]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -349,51 +436,24 @@ AND suc.IdSucursal = '$P!{IdSucursal}'
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="68" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="8" y="12" width="548" height="24" backcolor="#2E2A2A" uuid="2785da37-397d-4a79-a8a9-e1e49f0e5207"/>
+				<reportElement mode="Opaque" x="13" y="17" width="548" height="24" backcolor="#2E2A2A" uuid="d6362186-2962-4ff5-88c5-0cdb89e24c97"/>
 				<staticText>
-					<reportElement x="15" y="3" width="270" height="25" forecolor="#FFFFFF" uuid="38d090b1-5c19-4d19-a3c0-586d3f01e85c"/>
+					<reportElement x="15" y="3" width="270" height="25" forecolor="#FFFFFF" uuid="a1767b4b-5b59-4a05-adbe-5a3c6556d547"/>
 					<textElement>
 						<font fontName="Arial" size="14"/>
 					</textElement>
 					<text><![CDATA[Productos activos con riesgo de stock:]]></text>
 				</staticText>
 			</frame>
-			<frame>
-				<reportElement mode="Opaque" x="6" y="52" width="548" height="16" backcolor="#4F4F4F" uuid="b2c30393-cb4a-4971-82b6-a3b420c2f68d"/>
-				<staticText>
-					<reportElement mode="Transparent" x="39" y="0" width="100" height="16" forecolor="#FFFFFF" uuid="3f769746-4e20-47c8-98e7-011ad145792b"/>
-					<text><![CDATA[    Descripcion]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="139" y="0" width="60" height="16" forecolor="#FFFFFF" uuid="6561cd26-8d48-4594-a19e-a9e1d4f60254"/>
-					<text><![CDATA[Talle]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="3" y="0" width="34" height="16" forecolor="#FFFFFF" uuid="3b5ce8df-473f-4ce2-86a3-040008f2ebde"/>
-					<text><![CDATA[Código]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="199" y="0" width="60" height="16" forecolor="#FFFFFF" uuid="61f964e7-8777-48a6-891c-9b81a5844554"/>
-					<text><![CDATA[Uni. Medida]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="259" y="0" width="84" height="16" forecolor="#FFFFFF" uuid="33e749fd-10af-46ef-8092-04d3c33cee2b"/>
-					<text><![CDATA[Punto reposicion]]></text>
-				</staticText>
-				<staticText>
-					<reportElement mode="Transparent" x="344" y="0" width="84" height="16" forecolor="#FFFFFF" uuid="1884b3b8-2e2d-4863-a191-92396c0b6c2c"/>
-					<text><![CDATA[Stock actual]]></text>
-				</staticText>
-			</frame>
 		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="26" splitType="Stretch">
 			<printWhenExpression><![CDATA[($F{SUM(st2.StockDisponible)} == null) || ($F{PuntoRepositorio}>=$F{SUM(st2.StockDisponible)})]]></printWhenExpression>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="4" y="5" width="38" height="14" uuid="95084df5-4966-4f57-9192-6bc847b25cae"/>
@@ -426,6 +486,16 @@ AND suc.IdSucursal = '$P!{IdSucursal}'
 			<line>
 				<reportElement x="3" y="25" width="548" height="1" uuid="cdb09af5-e758-4ae8-a59a-8d8db62a6a70"/>
 			</line>
+			<textField>
+				<reportElement x="431" y="5" width="59" height="14" uuid="5eb6ed27-3af1-4285-90fb-b9b84b1ef7a2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CantidadPorLote}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="5" width="59" height="14" uuid="88d3a086-d456-40f5-9b5c-e86ab969eb79"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PrecioVenta}]]></textFieldExpression>
+			</textField>
 			<ellipse>
 				<reportElement style="colorStock" x="550" y="5" width="14" height="14" uuid="bcc8a13e-27bc-4376-82b6-896646eec5e1">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
