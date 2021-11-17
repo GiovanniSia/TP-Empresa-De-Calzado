@@ -25,7 +25,7 @@ import dto.PedidosPendientesDTO;
 import dto.ProveedorDTO;
 import persistencia.dao.mysql.DAOSQLFactory;
 
-public class EnviadorDeMails {
+public class EnviadorDeMails extends Thread{
 
 	
 	//se recibe un proveedor con todos sus pedidos

@@ -74,7 +74,17 @@ public class ReporteFactura {
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
 			
-			guardarFactura(this.reporte,this.reporteLleno,cliente);
+			Thread guardarFactura = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					System.out.println("se ejecuta el thread de envio de mails");
+					EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
+				}	
+			});
+			guardarFactura.start();
+			
+			
+			guardarFactura(reporte,reporteLleno,cliente);
 			
 			log.info("Se cargó correctamente el reporte");
 		} catch (JRException ex) {
@@ -197,20 +207,6 @@ public class ReporteFactura {
 			System.err.println("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper"+ ex.getMessage());
 		}
 	}
-	
-	/*
-	@SuppressWarnings({ "deprecation", "rawtypes" })
-	private void descargarPDF(String nroFacturaCompleto) {
-		String destino = "facturas"+ File.separator + "" + nroFacturaCompleto +".pdf";
-		try{
-			JRExporter exporter = new JRPdfExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.reporteLleno);
-			exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, destino);
-			exporter.exportReport();
-		}catch(Exception e){
-			System.err.println( "Error iReport: " + e.getMessage() );
-		}
-	}*/
 
 	public void mostrar() {
 		this.reporteViewer = new JasperViewer(this.reporteLleno, false);
@@ -234,7 +230,14 @@ public class ReporteFactura {
 		    
 			JasperExportManager.exportReportToPdfFile(jasperPrint, urlFactura);
 			
-			EnviadorDeMails.enviarFacturaACliente(cliente,urlFactura);
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					EnviadorDeMails.enviarFacturaACliente(cliente,urlFactura);	
+				}
+					
+			});
+			thread.start();
 			
 		} catch (JRException ex) {
 			System.err.println("Error iReport: " + ex.getMessage());
@@ -242,5 +245,5 @@ public class ReporteFactura {
 		  
 		
 	}
-
 }
+

@@ -404,7 +404,7 @@ public class ControladorAltaCliente {
 		}
 
 	}
-
+	
 	public void registrarCliente(ActionEvent a) {
 
 		if (todosLosCamposSonValidos()) {
@@ -423,11 +423,23 @@ public class ControladorAltaCliente {
 			}
 			
 			guardarHistorialParaNuevoCliente(cliente);
-			EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
+
+			Thread envioMail = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					System.out.println("se ejecuta el thread");
+					EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
+				}
+					
+			});
+			envioMail.start();
+
 			borrarDatosDeLosText();
 			salir();
+			System.out.println("THREAD ENVIOMAIL ESTA VIVO: "+envioMail.isAlive());
 		}
 	}	
+
 	
 	public void guardarHistorialParaNuevoCliente(ClienteDTO clienteNuevo) {
 		int id = 0;

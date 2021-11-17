@@ -448,6 +448,7 @@ public class ControladorRealizarVenta {
 
 			// Consultamos si quiere ver la factura
 			// si selecciona que si devuelve un 0, no un 1, y la x un -1
+			
 			ReporteFactura reporte = new ReporteFactura(this.facturaGenerada.getNroFacturaCompleta(), idSucursal,this.clienteCarrito);
 			int resp = JOptionPane.showConfirmDialog(null, "Pago efectuado con exito. \nDesea ver la factura?",
 					"Ver Factura", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -459,6 +460,9 @@ public class ControladorRealizarVenta {
 			this.ventanaRealizarVenta.cerrar();
 			vaciarDatosPrevios();
 			this.controladorVisualizarCarritos.actualizarVentana();
+			
+			
+			
 
 		} else {
 			JOptionPane.showMessageDialog(null, "Todav�a no se han pagado todos los productos!");
