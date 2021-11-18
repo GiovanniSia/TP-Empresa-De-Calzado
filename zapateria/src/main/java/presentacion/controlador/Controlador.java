@@ -344,6 +344,8 @@ public class Controlador {
 				.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
 		
+		// VER FACTURAS HECHAS
+		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
 
 	}
 
@@ -538,6 +540,9 @@ public class Controlador {
 		// ver COmpras virutales
 		this.controladorVisualizarComprasVirtuales = new ControladorVisualizarComprasVirtuales(this);
 		this.controladorReporteRankingVentaXSucursal = new ControladorReporteRankingVentaXSucursal(this);
+		
+		// VER FACTURAS HECHAS
+		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
 
 	}
 
@@ -725,6 +730,8 @@ public class Controlador {
 		this.ventanaAdministrador.getBtnTareasAutomaticas().addActionListener(a -> pasarAConfig(a));
 		this.ventanaAdministrador.getBtnGestionarProveedores().addActionListener(a -> pasarAConsultarProveedores(a));
 		this.ventanaAdministrador.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		
+		this.ventanaAdministrador.getBtnVerFacturas().addActionListener(a -> this.pasarAVerFactura(a));
 	}
 
 	public void escucharBotonesVentanaCajero() {
@@ -766,6 +773,8 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 
 		this.ventanaSupervisor.getBtnGestionarSucursales().addActionListener(a -> pasarAGestionarSucursales(a));
+		
+		this.ventanaSupervisor.getBtnVerFactura().addActionListener(a -> this.pasarAVerFactura(a));
 	}
 
 	public void escucharBotonesVentanaGerente() {
