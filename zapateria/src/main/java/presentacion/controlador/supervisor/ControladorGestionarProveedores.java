@@ -74,7 +74,7 @@ public class ControladorGestionarProveedores {
 		//ESTE ES PARA ASIGNAR UN PROD AL PROV
 		this.ventanaConsultarProveedores.getBtnAsignarProdAProveedor().addActionListener(a -> pasarAAsignarProductoAProveedor(a));
 		
-		this.ventanaConsultarProveedores.getBtnRegresar().addActionListener(a -> cerrarVentana(a));
+		this.ventanaConsultarProveedores.getBtnRegresar().addActionListener(a -> salir(a));
 		
 		
 		this.ventanaConsultarProveedores.getTextNombre().addKeyListener(new KeyAdapter() {
@@ -93,7 +93,7 @@ public class ControladorGestionarProveedores {
 		
 	}
 	
-	public void cerrarVentana(ActionEvent a) {
+	public void salir(ActionEvent a) {
 		//si el boton seleccionar prov es visible significa que se abrio la ventana desde alta prod
 		if(this.ventanaConsultarProveedores.getBtnSeleccionarProveedor().isVisible()) {
 			this.ventanaConsultarProveedores.cerrar();
@@ -148,6 +148,10 @@ public class ControladorGestionarProveedores {
 		this.ventanaConsultarProveedores.getBtnAniadir().setVisible(true);
 		this.ventanaConsultarProveedores.getBtnEditar().setVisible(true);
 		this.ventanaConsultarProveedores.show();
+	}
+	
+	public void cerrarVentana() {
+		this.ventanaConsultarProveedores.cerrar();
 	}
 	
 	public void mostrarBotonEditar() {

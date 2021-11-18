@@ -436,7 +436,7 @@ public class ControladorAltaCliente {
 
 			borrarDatosDeLosText();
 			salir();
-			System.out.println("THREAD ENVIOMAIL ESTA VIVO: "+envioMail.isAlive());
+//			System.out.println("THREAD ENVIOMAIL ESTA VIVO: "+envioMail.isAlive());
 		}
 	}	
 

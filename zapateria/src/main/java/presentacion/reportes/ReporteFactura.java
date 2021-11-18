@@ -78,14 +78,10 @@ public class ReporteFactura {
 				@Override
 				public void run() {
 					System.out.println("se ejecuta el thread de envio de mails");
-					EnviadorDeMails.enviarMailDeBienvenidaACliente(cliente);
-				}	
+					guardarFactura(reporte,reporteLleno,cliente);				}	
 			});
 			guardarFactura.start();
-			
-			
-			guardarFactura(reporte,reporteLleno,cliente);
-			
+						
 			log.info("Se cargó correctamente el reporte");
 		} catch (JRException ex) {
 			log.error("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
@@ -132,10 +128,10 @@ public class ReporteFactura {
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
 						
-			log.info("Se cargó correctamente el reporte");
+			log.info("Se carga correctamente el reporte");
 			//descargarPDF(nroFacturaCompleto);
 		} catch (JRException ex) {
-			log.error("Ocurrió un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
+			log.error("Ocurrio un error mientras se cargaba el archivo ReporteAgenda.Jasper", ex);
 		}
 	}
 	

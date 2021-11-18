@@ -160,7 +160,10 @@ public class ControladorAltaProducto {
 	public void mostrarVentana() {
 		this.ventanaAltaProducto.show();
 	}
-		
+	
+	public void cerrarVentana() {
+		this.ventanaAltaProducto.cerrar();
+	}
 	
 	public void mostrarVentanaEditar() {
 		llenarDatos();
@@ -171,7 +174,8 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.show();
 	}
 	
-	public void salir() {
+	public void salir() {		
+		this.controladorConsultarProveedor.cerrarVentana();
 		this.ventanaAltaProducto.cerrar();
 		this.productoAEditar = null;
 		this.proveedoresEnTabla.removeAll(this.proveedoresEnTabla);
