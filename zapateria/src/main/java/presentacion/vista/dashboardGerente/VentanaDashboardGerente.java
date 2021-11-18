@@ -79,6 +79,8 @@ public class VentanaDashboardGerente {
 	ChartPanel panelTorta2;
 	private JButton btnVerFacturas;
 	private JLabel lblcierreDeCaja_1;
+	private JButton btnReporteRiesgoStock;
+	private JLabel lblcierreDeCaja_3;
 
 	/**
 	 * Launch the application.
@@ -395,6 +397,18 @@ public class VentanaDashboardGerente {
 		lblcierreDeCaja_1.setBounds(236, 582, 82, 40);
 		panel.add(lblcierreDeCaja_1);
 		
+		btnReporteRiesgoStock = new JButton("");
+		btnReporteRiesgoStock.setForeground(new Color(51, 102, 153));
+		btnReporteRiesgoStock.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnReporteRiesgoStock.setBackground(new Color(51, 102, 204));
+		btnReporteRiesgoStock.setBounds(215, 602, 40, 40);
+		panel.add(btnReporteRiesgoStock);
+		
+		lblcierreDeCaja_3 = new JLabel("<html>Riesgo Stock</html>");
+		lblcierreDeCaja_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblcierreDeCaja_3.setBounds(265, 602, 82, 40);
+		panel.add(lblcierreDeCaja_3);
+		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(383, 50, 320, 246);
@@ -614,5 +628,9 @@ public class VentanaDashboardGerente {
 
 	public JButton getBtnVerFacturas() {
 		return btnVerFacturas;
+	}
+
+	public JButton getBtnReporteRiesgoStock() {
+		return btnReporteRiesgoStock;
 	}
 }

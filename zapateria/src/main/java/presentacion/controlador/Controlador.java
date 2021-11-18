@@ -425,6 +425,9 @@ public class Controlador {
 		this.controladorVerPasos = new ControladorVerPasos();
 		this.controladorVerPasos.setControlador(this);
 		this.controladorTareasAutomatizadas = new ControladorTareasAutomatizadas(this, config);
+		
+		// Ver reporte riesgo stock
+		ControladorReporteRiesgoStock = new ControladorReporteRiesgoStock(this, this.sucursalObj);
 
 	}
 
@@ -543,6 +546,8 @@ public class Controlador {
 		
 		// VER FACTURAS HECHAS
 		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
+		// Ver reporte riesgo stock
+		ControladorReporteRiesgoStock = new ControladorReporteRiesgoStock(this, this.sucursalObj);
 
 	}
 
@@ -644,6 +649,9 @@ public class Controlador {
 		
 		// VER FACTURAS HECHAS
 		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
+		
+		// Ver reporte riesgo stock
+		ControladorReporteRiesgoStock = new ControladorReporteRiesgoStock(this, this.sucursalObj);
 				
 		//GRAFICO
 		iniciarGraficos();
@@ -775,6 +783,8 @@ public class Controlador {
 		this.ventanaSupervisor.getBtnGestionarSucursales().addActionListener(a -> pasarAGestionarSucursales(a));
 		
 		this.ventanaSupervisor.getBtnVerFactura().addActionListener(a -> this.pasarAVerFactura(a));
+		
+		this.ventanaSupervisor.getBtnReporteRiesgoStock().addActionListener(a -> this.pasarAVerReporteRiesgoStock(a));
 	}
 
 	public void escucharBotonesVentanaGerente() {
@@ -802,6 +812,8 @@ public class Controlador {
 		this.ventanaDashboardGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		
 		this.ventanaDashboardGerente.getBtnVerFacturas().addActionListener(a -> this.pasarAVerFactura(a));
+		
+		this.ventanaDashboardGerente.getBtnReporteRiesgoStock().addActionListener(a -> this.pasarAVerReporteRiesgoStock(a));
 
 	}
 
@@ -812,6 +824,8 @@ public class Controlador {
 				.addActionListener(a -> pasarAGestionarRecetasYPasos(a));
 		this.ventanaSupervisorFabrica.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
 		this.ventanaSupervisorFabrica.getBtnParametrosEnvioProveedor().addActionListener(a -> pasarAConfig(a));;
+		
+		this.ventanaSupervisorFabrica.getBtnReporteRiesgoStock().addActionListener(a -> this.pasarAVerReporteRiesgoStock(a));
 	}
 
 	public void obtenerDatosPropertiesSucursal() {
@@ -1046,6 +1060,11 @@ public class Controlador {
 	private void pasarAVerRanking(ActionEvent a) {
 		cerrarTodasLasVentanas();
 		this.controladorReporteRankingVentaXSucursal.inicializar();
+	}
+	
+	private void pasarAVerReporteRiesgoStock(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		this.ControladorReporteRiesgoStock.inicializar();
 	}
 	
 	private void pasarAVerFactura(ActionEvent a) {
