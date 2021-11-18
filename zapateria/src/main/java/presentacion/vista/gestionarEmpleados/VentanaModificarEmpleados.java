@@ -166,7 +166,7 @@ public class VentanaModificarEmpleados extends JFrame {
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 				boolean numeros = key >= 48 && key <= 57;
-				if (txtCUIL.getText().length() >= 12 || !numeros) {
+				if (txtCUIL.getText().length() >= 11 || !numeros) {
 					e.consume();
 				}
 			}
@@ -216,6 +216,15 @@ public class VentanaModificarEmpleados extends JFrame {
 		contentPane.add(separator);
 		
 		txtClaveNueva = new JPasswordField();
+		txtClaveNueva.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtClaveNueva.getText().length() >= 50) {
+					e.consume();
+				}
+			}
+		});
 		txtClaveNueva.setBounds(177, 258, 116, 20);
 		txtClaveNueva.setEditable(false);
 		contentPane.add(txtClaveNueva);
