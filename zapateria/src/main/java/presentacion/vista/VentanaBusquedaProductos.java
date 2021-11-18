@@ -83,6 +83,7 @@ public class VentanaBusquedaProductos {
 	private JLabel lblNewLabel_2;
 	private JTextField textCantidadListaProductos;
 	private JTextField textCantidadCarrito;
+	private JButton btnInformacionElegirProductos;
 	/**
 	 * Launch the application.
 	 */
@@ -416,6 +417,11 @@ public class VentanaBusquedaProductos {
 		lblFondo.setBounds(0, 24, 960, 720);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 		frame.getContentPane().add(lblFondo);
+		
+		btnInformacionElegirProductos = new JButton("");
+		btnInformacionElegirProductos.setBounds(894, 57, 33, 32);
+		cambiarIconoBotones(btnInformacionElegirProductos, "help.png");	
+		frame.getContentPane().add(btnInformacionElegirProductos);
 	}
 	
 	

@@ -11,6 +11,7 @@ import dto.ClienteDTO;
 import modelo.Cliente;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaCliente;
+import presentacion.vista.VentanaInformacionBusquedaCliente;
 
 public class ControladorBusquedaCliente {
 	private VentanaBusquedaCliente ventanaBusquedaCliente;
@@ -23,12 +24,15 @@ public class ControladorBusquedaCliente {
 //	VentanaMenuSistemaDeVentas ventanaMenuSistemaDeVentas;
 	
 	private ClienteDTO clienteSeleccionado;
+	
+	private VentanaInformacionBusquedaCliente ventanaInformacionBusquedaCliente;
 
 	public ControladorBusquedaCliente(Controlador controlador, Cliente cliente) {
 		this.controlador = controlador;
 //		this.ventanaMenuSistemaDeVentas = new VentanaMenuSistemaDeVentas(); 
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 		this.cliente = cliente;
+		ventanaInformacionBusquedaCliente = new VentanaInformacionBusquedaCliente();
 	}
 
 	public void setControladorBusquedaProducto(ControladorBusquedaProductos c) {
@@ -41,6 +45,7 @@ public class ControladorBusquedaCliente {
 
 		this.ventanaBusquedaCliente = new VentanaBusquedaCliente();
 
+		this.ventanaBusquedaCliente.getBtnInformacionElegirCliente().addActionListener(p -> mostrarVentanaInformacion(p));
 		// Botones
 		this.ventanaBusquedaCliente.getBtnAtras().addActionListener(a -> atras(a));
 		this.ventanaBusquedaCliente.getBtnPasarAVenta().addActionListener(p -> pasarAVenta(p));
@@ -90,6 +95,11 @@ public class ControladorBusquedaCliente {
 				txtNombre, "Apellido", txtApellido, "CUIL", txtCUIL, null, null);
 		llenarTabla(clienteAproximados);
 	}
+	
+	public void mostrarVentanaInformacion(ActionEvent b) {
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		ventanaInformacionBusquedaCliente.show();
+	}
 
 	public void atras(ActionEvent a) {
 		this.ventanaBusquedaCliente.cerrar();
@@ -100,6 +110,7 @@ public class ControladorBusquedaCliente {
 	public void pasarAVenta(ActionEvent p) {
 		if (clienteSeleccionado() && esClienteInactivo()) {
 			this.ventanaBusquedaCliente.cerrar();
+			this.ventanaInformacionBusquedaCliente.cerrar();
 			this.controladorBusquedaProductos.establecerClienteElegido(this.clienteSeleccionado);
 			controladorBusquedaProductos.inicializar();
 		}

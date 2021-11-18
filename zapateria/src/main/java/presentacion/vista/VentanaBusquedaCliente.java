@@ -22,6 +22,8 @@ import persistencia.conexion.Conexion;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaBusquedaCliente extends JFrame {
 
@@ -48,6 +50,8 @@ public class VentanaBusquedaCliente extends JFrame {
 	private JButton btnAtras;
 	private JLabel lblAtrs;
 
+	private JButton btnInformacionElegirCliente;
+	
 	public VentanaBusquedaCliente() {
 		initialize();
 	}
@@ -186,6 +190,11 @@ public class VentanaBusquedaCliente extends JFrame {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_2.add(lblLogo);
 		
+		btnInformacionElegirCliente = new JButton("");
+		btnInformacionElegirCliente.setBounds(763, 60, 33, 32);
+		cambiarIconoBotones(btnInformacionElegirCliente, "help.png");	
+		frame.getContentPane().add(btnInformacionElegirCliente);
+		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 24, 854, 642);
 		cambiarIconoLabel(lblFondo, "fondo.png");
@@ -274,4 +283,9 @@ public class VentanaBusquedaCliente extends JFrame {
 	public JTextField getTxtFieldCodCliente() {
 		return txtFieldCodCliente;
 	}
+
+	public JButton getBtnInformacionElegirCliente() {
+		return btnInformacionElegirCliente;
+	}
+	
 }
