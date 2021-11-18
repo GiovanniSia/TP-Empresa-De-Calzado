@@ -21,7 +21,7 @@ public class ControladorReporteRiesgoStock implements ActionListener {
 		this.sucursal = sucursal;
 		this.controlador = controlador;
 		ventanaPrincipal = new VentanaVerReporteRiesgoStock();
-		
+		ventanaPrincipal.getLblSucursal().setText("Sucursal "+ this.sucursal.getNombre());
 		asginarFuncionesABotones();
 	}
 	

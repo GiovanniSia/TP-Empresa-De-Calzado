@@ -33,6 +33,8 @@ public class VentanaVerReporteRiesgoStock extends JFrame {
 	private JTextField txtSegundoFlag;
 	
 	JLabel lblSucursal;
+	private JLabel lblNewLabel_1_1_2;
+	private JLabel lblNewLabel_1_1_3;
 
 	public VentanaVerReporteRiesgoStock() {
 		initialize();
@@ -81,14 +83,24 @@ public class VentanaVerReporteRiesgoStock extends JFrame {
 		panel.add(lblNewLabel_1_1_1);
 		
 		txtPrimerFlag = new JTextField();
-		txtPrimerFlag.setBounds(223, 55, 60, 29);
+		txtPrimerFlag.setBounds(209, 57, 44, 29);
 		panel.add(txtPrimerFlag);
 		txtPrimerFlag.setColumns(10);
 		
 		txtSegundoFlag = new JTextField();
 		txtSegundoFlag.setColumns(10);
-		txtSegundoFlag.setBounds(223, 99, 60, 29);
+		txtSegundoFlag.setBounds(209, 99, 44, 29);
 		panel.add(txtSegundoFlag);
+		
+		lblNewLabel_1_1_2 = new JLabel("%");
+		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel_1_1_2.setBounds(263, 99, 20, 29);
+		panel.add(lblNewLabel_1_1_2);
+		
+		lblNewLabel_1_1_3 = new JLabel("%");
+		lblNewLabel_1_1_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel_1_1_3.setBounds(263, 55, 20, 29);
+		panel.add(lblNewLabel_1_1_3);
 		
 		lblNewLabel = new JLabel("Ver reporte riesgo stock");
 		lblNewLabel.setBounds(10, 21, 324, 32);
