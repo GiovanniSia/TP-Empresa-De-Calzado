@@ -1,8 +1,6 @@
 package presentacion.vista;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
@@ -33,7 +31,6 @@ public class VentanaInformacionBusquedaProductos extends JFrame {
 	private JLabel lblTalle_3;
 	private JLabel lblImagenCantidadYBtnAgregar;
 	private JLabel lblTalle_4;
-	private JLabel lblImagenCarritoCompra;
 	private JLabel lblTalle_5;
 	private JLabel lblImagenCantidadBtnBorrar;
 	private JLabel lblTalle_6;
@@ -56,7 +53,7 @@ public class VentanaInformacionBusquedaProductos extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 543, 691);
+		frame.setBounds(100, 100, 591, 712);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -100,7 +97,7 @@ public class VentanaInformacionBusquedaProductos extends JFrame {
 		lblImagenFiltros = new JLabel("");
 		lblImagenFiltros.setForeground(Color.WHITE);
 		lblImagenFiltros.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenFiltros.setBounds(10, 150, 384, 42);
+		lblImagenFiltros.setBounds(109, 151, 358, 43);
 		cambiarIconoLabel(lblImagenFiltros, "BusquedaProductosFiltro.png");
 		contentPane.add(lblImagenFiltros);
 		
@@ -112,67 +109,60 @@ public class VentanaInformacionBusquedaProductos extends JFrame {
 		lblImagenProductoSeleccionado = new JLabel("");
 		lblImagenProductoSeleccionado.setForeground(Color.WHITE);
 		lblImagenProductoSeleccionado.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenProductoSeleccionado.setBounds(10, 212, 513, 42);
+		lblImagenProductoSeleccionado.setBounds(10, 212, 557, 50);
 		cambiarIconoLabel(lblImagenProductoSeleccionado, "BusquedaProductosProductoSeleccionado.png");
 		contentPane.add(lblImagenProductoSeleccionado);
 		
 		lblTalle_3 = new JLabel("A continuacion elegimos la cantidad que queremos del producto y presionamos el boton \"Agregar\"");
 		lblTalle_3.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblTalle_3.setBounds(10, 254, 529, 13);
+		lblTalle_3.setBounds(10, 263, 529, 13);
 		contentPane.add(lblTalle_3);
 		
 		lblImagenCantidadYBtnAgregar = new JLabel("");
 		lblImagenCantidadYBtnAgregar.setForeground(Color.WHITE);
 		lblImagenCantidadYBtnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenCantidadYBtnAgregar.setBounds(154, 265, 199, 61);
+		lblImagenCantidadYBtnAgregar.setBounds(180, 278, 188, 73);
 		cambiarIconoLabel(lblImagenCantidadYBtnAgregar, "BusquedaProductosCantidadBtnAgregar.png");
 		contentPane.add(lblImagenCantidadYBtnAgregar);
 		
 		lblTalle_4 = new JLabel("Se agrega automaticamente el producto en el carrito de la compra");
 		lblTalle_4.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblTalle_4.setBounds(10, 326, 509, 13);
+		lblTalle_4.setBounds(10, 351, 513, 13);
 		contentPane.add(lblTalle_4);
-		
-		lblImagenCarritoCompra = new JLabel("");
-		lblImagenCarritoCompra.setForeground(Color.WHITE);
-		lblImagenCarritoCompra.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenCarritoCompra.setBounds(135, 337, 259, 76);
-		cambiarIconoLabel(lblImagenCarritoCompra, "BusquedaProductosCarritoCompra.png");
-		contentPane.add(lblImagenCarritoCompra);
 		
 		lblTalle_5 = new JLabel("Si seleccionamos el producto podemos editar su cantidad o borrarlo del carrito");
 		lblTalle_5.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblTalle_5.setBounds(14, 413, 509, 13);
+		lblTalle_5.setBounds(10, 375, 509, 13);
 		contentPane.add(lblTalle_5);
 		
 		lblImagenCantidadBtnBorrar = new JLabel("");
 		lblImagenCantidadBtnBorrar.setForeground(Color.WHITE);
 		lblImagenCantidadBtnBorrar.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenCantidadBtnBorrar.setBounds(135, 437, 259, 76);
+		lblImagenCantidadBtnBorrar.setBounds(124, 399, 328, 113);
 		cambiarIconoLabel(lblImagenCantidadBtnBorrar, "BusquedaProductosEditarCantidadBtnQuitarDelCarrito.png");
 		contentPane.add(lblImagenCantidadBtnBorrar);
 		
-		lblTalle_6 = new JLabel("Cada vez que agregamos productos al carrito se actualiza el totol a pagar");
+		lblTalle_6 = new JLabel("Cada vez que agregamos productos al carrito se actualiza el total a pagar");
 		lblTalle_6.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblTalle_6.setBounds(14, 518, 509, 13);
+		lblTalle_6.setBounds(10, 523, 509, 13);
 		contentPane.add(lblTalle_6);
 		
 		lblImagenTotalPagar = new JLabel("");
 		lblImagenTotalPagar.setForeground(Color.WHITE);
 		lblImagenTotalPagar.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblImagenTotalPagar.setBounds(145, 533, 165, 31);
+		lblImagenTotalPagar.setBounds(164, 547, 236, 40);
 		cambiarIconoLabel(lblImagenTotalPagar, "BusquedaProductosTotalPagar.png");
 		contentPane.add(lblImagenTotalPagar);
 		
 		lblTalle_7 = new JLabel("Por ultimo, para finalizar la venta se presiona el boton \"Confirmar Pedido\"");
 		lblTalle_7.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-		lblTalle_7.setBounds(14, 564, 509, 13);
+		lblTalle_7.setBounds(10, 591, 509, 13);
 		contentPane.add(lblTalle_7);
 		
 		lblConfirmarPedido = new JLabel("");
 		lblConfirmarPedido.setForeground(Color.WHITE);
 		lblConfirmarPedido.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblConfirmarPedido.setBounds(171, 588, 165, 53);
+		lblConfirmarPedido.setBounds(152, 605, 248, 70);
 		cambiarIconoLabel(lblConfirmarPedido, "BusquedaProductosConfirmarPedido.png");
 		contentPane.add(lblConfirmarPedido);
 	}

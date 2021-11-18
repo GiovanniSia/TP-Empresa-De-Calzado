@@ -31,10 +31,10 @@ public class VentanaInformacionBusquedaCliente extends JFrame {
 	private JLabel lblLuegoPresioneEn;
 	private JLabel lblImagenBtnElegirProductos;
 
-//	public static void main(String[] args){
-//		VentanaInformacionBusquedaCliente a = new VentanaInformacionBusquedaCliente();
-//		a.show();
-//	}
+	public static void main(String[] args){
+		VentanaInformacionBusquedaCliente a = new VentanaInformacionBusquedaCliente();
+		a.show();
+	}
 
 	public VentanaInformacionBusquedaCliente() {
 		this.initialize();
@@ -46,7 +46,7 @@ public class VentanaInformacionBusquedaCliente extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 637, 426);
+		frame.setBounds(100, 100, 817, 426);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,11 +57,11 @@ public class VentanaInformacionBusquedaCliente extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 621, 53);
+		panel.setBounds(0, 0, 801, 53);
 		contentPane.add(panel);
 
 		lblImagenFiltro = new JLabel("");
-		lblImagenFiltro.setBounds(10, 140, 485, 53);
+		lblImagenFiltro.setBounds(10, 140, 528, 57);
 		cambiarIconoLabel(lblImagenFiltro, "BusquedaClienteFiltro.png");
 		contentPane.add(lblImagenFiltro);
 
@@ -94,7 +94,7 @@ public class VentanaInformacionBusquedaCliente extends JFrame {
 		contentPane.add(lblAContinuacionSeleccionamos);
 
 		JLabel lblImagenSeleccionarCliente = new JLabel("");
-		lblImagenSeleccionarCliente.setBounds(10, 239, 601, 63);
+		lblImagenSeleccionarCliente.setBounds(10, 239, 784, 53);
 		cambiarIconoLabel(lblImagenSeleccionarCliente, "BusquedaClienteSeleccionado.png");
 		contentPane.add(lblImagenSeleccionarCliente);
 
@@ -104,7 +104,7 @@ public class VentanaInformacionBusquedaCliente extends JFrame {
 		contentPane.add(lblLuegoPresioneEn);
 
 		lblImagenBtnElegirProductos = new JLabel("");
-		lblImagenBtnElegirProductos.setBounds(382, 311, 216, 65);
+		lblImagenBtnElegirProductos.setBounds(401, 303, 186, 67);
 		cambiarIconoLabel(lblImagenBtnElegirProductos, "BusquedaClienteBotonElegirProductos.png");
 		contentPane.add(lblImagenBtnElegirProductos);
 	}
