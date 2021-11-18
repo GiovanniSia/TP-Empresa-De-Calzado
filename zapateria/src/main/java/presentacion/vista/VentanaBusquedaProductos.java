@@ -413,15 +413,15 @@ public class VentanaBusquedaProductos {
 		});
 		panel.add(textCantidadCarrito);
 		
-		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 24, 960, 720);
-		cambiarIconoLabel(lblFondo, "fondo.png");
-		frame.getContentPane().add(lblFondo);
-		
 		btnInformacionElegirProductos = new JButton("");
 		btnInformacionElegirProductos.setBounds(894, 57, 33, 32);
 		cambiarIconoBotones(btnInformacionElegirProductos, "help.png");	
 		frame.getContentPane().add(btnInformacionElegirProductos);
+		
+		JLabel lblFondo = new JLabel("");
+		lblFondo.setBounds(0, 24, 960, 720);
+		cambiarIconoLabel(lblFondo, "fondo.png");
+		frame.getContentPane().add(lblFondo);
 	}
 	
 	
@@ -692,6 +692,10 @@ public class VentanaBusquedaProductos {
 
 	public JTextField getTextCantidadCarrito() {
 		return textCantidadCarrito;
+	}
+
+	public JButton getBtnInformacionElegirProductos() {
+		return btnInformacionElegirProductos;
 	}
 	
 	
