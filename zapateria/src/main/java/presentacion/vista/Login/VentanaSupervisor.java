@@ -93,13 +93,13 @@ public class VentanaSupervisor extends JFrame {
 		lblSucursal = new JLabel("Sucursal:");
 		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(803, 28, 145, 19);
+		lblSucursal.setBounds(585, 28, 326, 19);
 		panel.add(lblSucursal);
 		
 		lblEmpleado = new JLabel("Empleado:");
 		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEmpleado.setBounds(593, 28, 145, 19);
+		lblEmpleado.setBounds(218, 28, 294, 19);
 		panel.add(lblEmpleado);
 
 		btnGenerarOrdenDe = new JButton("Orden de Manufactura");

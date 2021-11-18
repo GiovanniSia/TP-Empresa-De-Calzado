@@ -682,34 +682,13 @@ public class ControladorRealizarVenta {
 		this.listaDeIngresosARegistrar.removeAll(this.listaDeIngresosARegistrar);
 	}
 
-//	public String generarNroSucursal() {
-//		String nroSucursal = "" + this.carritoACobrar.getIdSucursal();
-//		String nroSucFactura = "" + nroSucursal;
-//		while (nroSucFactura.length() < 5) {
-//			nroSucFactura = "0" + nroSucFactura;
-//		}
-//		return nroSucFactura;
-//	}
-
 	public String generarNroSucursal() {
 		SucursalDTO sucursal = this.sucursal.select(idSucursal);
 		return sucursal.getNroSucursal();
 	}
 
 	public String generarNroFacturaSecuencial(String tipoFactura) {
-		/*
-		 * ArrayList<FacturaDTO> todasLasFacturas = (ArrayList<FacturaDTO>)
-		 * this.factura.readAll(); if (todasLasFacturas.size() == 0) { return "1"; }
-		 * FacturaDTO ultFactura = todasLasFacturas.get(todasLasFacturas.size() - 1);
-		 * String nroCompletoUlt = ultFactura.getNroFacturaCompleta();
-		 * 
-		 * String ultSec = ""; // damos por hecho que 1 dig sera para el tipo de
-		 * factura, y 5 para el nro de // sucursal for (int i = 6; i <
-		 * nroCompletoUlt.length(); i++) { ultSec = ultSec + nroCompletoUlt.charAt(i);//
-		 * obtenemos los ult 8 dig secuenciales } int viejoSuma =
-		 * Integer.parseInt(ultSec); int nuevoSec = (viejoSuma + 1); return "" +
-		 * nuevoSec;
-		 */
+
 		String nroFacturaSec = "";
 		FacturaDTO ultFactura = obtenerUltFacturaParaSerie(tipoFactura);
 

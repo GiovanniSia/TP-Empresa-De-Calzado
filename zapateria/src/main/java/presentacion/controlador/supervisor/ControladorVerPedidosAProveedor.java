@@ -426,7 +426,7 @@ public class ControladorVerPedidosAProveedor {
 	public BigDecimal sumarTodoElStock(int idMP) {
 		BigDecimal cant=new BigDecimal(0);
 		for(StockDTO s: listaStock) {
-			if(s.getIdProducto() == idMP) {
+			if(s.getIdProducto() == idMP && this.idSucursal==s.getIdSucursal()) {
 				BigDecimal stockDisp = new BigDecimal(s.getStockDisponible());
 				cant = cant.add(stockDisp);
 			}

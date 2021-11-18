@@ -74,13 +74,13 @@ public class VentanaCajero extends JFrame {
 		lblSucursal = new JLabel("Sucursal:");
 		lblSucursal.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(537, 28, 140, 19);
+		lblSucursal.setBounds(413, 28, 268, 19);
 		panel.add(lblSucursal);
 		
 		lblEmpleado = new JLabel("Empleado:");
 		lblEmpleado.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEmpleado.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblEmpleado.setBounds(343, 28, 140, 19);
+		lblEmpleado.setBounds(185, 28, 225, 19);
 		panel.add(lblEmpleado);
 
 		JPanel panel_1 = new JPanel();
