@@ -41,6 +41,7 @@ public class ControladorVerFacturas implements ActionListener {
 
 	public ControladorVerFacturas(Controlador controlador, SucursalDTO sucursal) {
 		this.sucursal = sucursal;
+		this.controlador = controlador;
 		modeloFactura = new Factura(new DAOSQLFactory());
 		this.egresos = new Egresos(new DAOSQLFactory());
 		ventanaPrincipal = new VentanaVerFabricaciones();

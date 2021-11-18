@@ -77,6 +77,8 @@ public class VentanaDashboardGerente {
 	JPanel panel_1;
 	JPanel panel_1_1;
 	ChartPanel panelTorta2;
+	private JButton btnVerFacturas;
+	private JLabel lblcierreDeCaja_1;
 
 	/**
 	 * Launch the application.
@@ -381,6 +383,18 @@ public class VentanaDashboardGerente {
 		separator_2.setBounds(34, 506, 275, 11);
 		panel.add(separator_2);
 		
+		btnVerFacturas = new JButton("");
+		btnVerFacturas.setForeground(new Color(51, 102, 153));
+		btnVerFacturas.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnVerFacturas.setBackground(new Color(51, 102, 204));
+		btnVerFacturas.setBounds(186, 582, 40, 40);
+		panel.add(btnVerFacturas);
+		
+		lblcierreDeCaja_1 = new JLabel("<html>Ver facturas</html>");
+		lblcierreDeCaja_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblcierreDeCaja_1.setBounds(236, 582, 82, 40);
+		panel.add(lblcierreDeCaja_1);
+		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(383, 50, 320, 246);
@@ -596,5 +610,9 @@ public class VentanaDashboardGerente {
 
 	public void setPanelTorta2(ChartPanel panelTorta2) {
 		this.panelTorta2 = panelTorta2;
+	}
+
+	public JButton getBtnVerFacturas() {
+		return btnVerFacturas;
 	}
 }

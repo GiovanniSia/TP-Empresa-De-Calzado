@@ -61,12 +61,14 @@ import presentacion.controlador.gerente.ControladorGestionarSucursales;
 import presentacion.controlador.gerente.ControladorHistorialDeCambiosDeCliente;
 import presentacion.controlador.gestionarEmpleados.ControladorGestionarEmpleados;
 import presentacion.controlador.reporteRanking.ControladorReporteRankingVentaXSucursal;
+import presentacion.controlador.reporteRiesgoStock.ControladorReporteRiesgoStock;
 import presentacion.controlador.supervisor.ControladorAltaProducto;
 import presentacion.controlador.supervisor.ControladorAltaProveedor;
 import presentacion.controlador.supervisor.ControladorAsignarProductoAProveedor;
 import presentacion.controlador.supervisor.ControladorGestionarProveedores;
 import presentacion.controlador.supervisor.ControladorGenerarPedidoAProveedorManualmente;
 import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
+import presentacion.controlador.verFacturas.ControladorVerFacturas;
 import presentacion.controlador.supervisor.ControladorGestionarProductos;
 import presentacion.vista.Login.VentanaAdministrador;
 import presentacion.vista.Login.VentanaCajero;
@@ -146,6 +148,10 @@ public class Controlador {
 	private ControladorAltaProveedor controladorAltaProveedor;
 
 	ControladorGenerarPedidoAProveedorManualmente controladorGenerarPedidoAProveedorManualmente;
+	
+	private ControladorReporteRiesgoStock ControladorReporteRiesgoStock;
+	
+	private ControladorVerFacturas controladorVerFacturas;
 
 	// Ver pedidos pendientes
 	private ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
@@ -337,6 +343,7 @@ public class Controlador {
 		this.controladorGestionarClientes
 				.setControladorHistorialDeCambiosDeCliente(controladorHistorialDeCambiosDeCliente);
 		this.controladorHistorialDeCambiosDeCliente.setControladorGestionarClientes(controladorGestionarClientes);
+		
 
 	}
 
@@ -349,6 +356,9 @@ public class Controlador {
 		// Registrar Venta
 		this.controladorCierreCaja = new ControladorCierreCaja(this, caja, ingresos, egresos, empleado);
 		this.controladorVisualizarCarritos = new ControladorVisualizarCarritos(this, carrito, detalleCarrito, cliente,maestroProducto, stock, factura, medioPago, empleado, detalleFactura, ingresos);
+		
+		// VER FACTURAS HECHAS
+		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
 	}
 
 	public void inicializarControladoresVendedor() {
@@ -627,6 +637,9 @@ public class Controlador {
 		this.controladorVerPasos = new ControladorVerPasos();
 		this.controladorVerPasos.setControlador(this);
 		
+		// VER FACTURAS HECHAS
+		controladorVerFacturas = new ControladorVerFacturas(this, this.sucursalObj);
+				
 		//GRAFICO
 		iniciarGraficos();
 
@@ -721,6 +734,8 @@ public class Controlador {
 		this.ventanaCajero.getBtnCierreDeCaja().addActionListener(a -> pasarACierreDeCaja(a));
 
 		this.ventanaCajero.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		
+		this.ventanaCajero.getBtnVerFacturas().addActionListener(a-> pasarAVerFactura(a));
 	}
 
 	public void escucharBotonesVentanaVendedor() {
@@ -776,6 +791,8 @@ public class Controlador {
 
 		this.ventanaDashboardGerente.getBtnGestionarSucursales().addActionListener(a -> pasarAGestionarSucursales(a));
 		this.ventanaDashboardGerente.getBtnCerrarSesion().addActionListener(a -> cerrarSesion(a));
+		
+		this.ventanaDashboardGerente.getBtnVerFacturas().addActionListener(a -> this.pasarAVerFactura(a));
 
 	}
 
@@ -1020,6 +1037,11 @@ public class Controlador {
 	private void pasarAVerRanking(ActionEvent a) {
 		cerrarTodasLasVentanas();
 		this.controladorReporteRankingVentaXSucursal.inicializar();
+	}
+	
+	private void pasarAVerFactura(ActionEvent a) {
+		cerrarTodasLasVentanas();
+		this.controladorVerFacturas.inicializar();
 	}
 
 	public void setControladorLogin(ControladorLogin controladorLogin) {
