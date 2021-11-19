@@ -310,10 +310,18 @@ public class ControladorBusquedaProductos {
 		}
 		MaestroProductoDTO productoSeleccionado = productosEnTabla.get(filaSeleccionada);
 		StockDTO stockDeProductoSeleccionado = this.stockEnTabla.get(filaSeleccionada);
-//		System.out.println("fila seleccionada: "+filaSeleccionada);
-//		System.out.println("productoId: "+productoSeleccionado.getIdMaestroProducto()+", stockId: "+stockDeProductoSeleccionado.getIdStock());
-//		int cantSeleccionada = (int) this.vistaBusquedaProductos.getSpinnerProductos().getValue();
-		double cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
+		
+		
+		double cantSeleccionada=0;
+		try {
+			cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Debe escribir un numero");
+			this.vistaBusquedaProductos.getTextCantidadListaProductos().setText("");
+			return;
+		}
+		
+		
 		if(!laCantidadEsValida(cantSeleccionada,productoSeleccionado,stockDeProductoSeleccionado,null)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es valida");
 			return;
@@ -411,6 +419,7 @@ public class ControladorBusquedaProductos {
 		int filaSeleccionada = this.vistaBusquedaProductos.getTableCarrito().getSelectedRow();
 		if(this.vistaBusquedaProductos.getTableCarrito().getSelectedRow()==-1) {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para descontar");
+			this.vistaBusquedaProductos.getTextCantidadCarrito().setText("");
 			return;
 		}
 		if(this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("") ||this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("0")) {
@@ -422,7 +431,16 @@ public class ControladorBusquedaProductos {
 		StockDTO stockDeProd = productoEnCarrito.getStock();
 		//si el valor que se acaba de actualizar es el mismo al de la cantidad original significa que no se hizo click sobre la tabla, no se desconto valor desde el spinner
 //		int valorDelSpinner = (int)this.vistaBusquedaProductos.getSpinnerCarrito().getValue(); 
-		double valorDelSpinner = Double.parseDouble( this.vistaBusquedaProductos.getTextCantidadCarrito().getText());
+		double valorDelSpinner = 0;
+		
+		try {
+			valorDelSpinner = Double.parseDouble( this.vistaBusquedaProductos.getTextCantidadCarrito().getText());
+		}catch(NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Debe escribir un numero");
+			this.vistaBusquedaProductos.getTextCantidadCarrito().setText("");
+			return;
+		}
+		
 		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
 			return;
 		}		

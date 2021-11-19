@@ -108,10 +108,6 @@ public class ControladorAltaCliente {
 
 		this.ventanaAltaCliente = new VentanaAltaCliente();
 
-//		this.ventanaEditarPais = new VentanaEditarPais();
-//		this.ventanaEditarProvincia = new VentanaEditarProvincia();
-//		this.ventanaEditarLocalidad = new VentanaEditarLocalidad();
-
 		this.controladorEditarPais.inicializar();
 		this.controladorEditarProvincia.inicializar();
 		this.controladorEditarLocalidad.inicializar();
@@ -124,23 +120,6 @@ public class ControladorAltaCliente {
 		this.ventanaAltaCliente.getComboBoxPais().addActionListener(a -> actualizarCbUbicacionDadoPais());
 
 		this.ventanaAltaCliente.getComboBoxProvincia().addActionListener(a -> actualizarCbUbicacionDadaProv());
-
-//		this.ventanaAltaCliente.getComboBoxPais().addItemListener(new ItemListener() {
-//			@Override
-//			public void itemStateChanged(ItemEvent e) {
-//				System.out.println("se ejecuta la escucha de cb pais");
-//				actualizarCbUbicacionDadoPais(); 
-//				
-//			}
-//		});
-//		
-//		this.ventanaAltaCliente.getComboBoxProvincia().addItemListener(new ItemListener() {
-//			@Override
-//			public void itemStateChanged(ItemEvent e) {
-//				System.out.println("se ejecuta la escucha de cb localidad");
-//				actualizarCbUbicacionDadaProv(); 	
-//			}
-//		});
 
 		this.ventanaAltaCliente.getBtnRegistrar().addActionListener(a -> registrarCliente(a));
 		this.ventanaAltaCliente.getBtnCancelar().addActionListener(a -> salir());
@@ -549,16 +528,27 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "El nombre no puede ser vacio");
 			return false;
 		}
+		if(nombre.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Nombre no puede ser mayor a 44");
+			return false;	
+		}
+		
 		String apellido = this.ventanaAltaCliente.getTextApellido().getText();
 		if (apellido.equals("")) {
-			JOptionPane.showMessageDialog(null, "El apellido no puede ser vacio");
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Apellido no puede ser mayor a 44");
 			return false;
 		}
+		if(apellido.length()>=44) {
+			JOptionPane.showMessageDialog(null, "El nombre no puede ser vacio");
+			return false;
+		}
+		
 		String CUIL = this.ventanaAltaCliente.getTextCUIL().getText();
 		if (CUIL.equals("") || CUIL.length() != 11) {
 			JOptionPane.showMessageDialog(null, "El CUIL no es correcto");
 			return false;
 		}
+		
 		String mail = this.ventanaAltaCliente.getTextCorreo().getText();
 		boolean m = mail
 				.matches("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -566,6 +556,11 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}
+		if(mail.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Mail no puede ser mayor a 44");
+			return false;
+		}
+		
 		if (this.ventanaAltaCliente.getComboBoxImpuestoAFIP().getSelectedItem() == "Sin seleccionar") {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de impuesto AFIP");
 			return false;
@@ -579,6 +574,11 @@ public class ControladorAltaCliente {
 			JOptionPane.showMessageDialog(null, "El saldo inicial es incorrecto");
 			return false;
 		}
+		if(saldoInicial.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres para Saldo inicial no puede ser mayor a 44");
+			return false;
+		}
+		
 		if (this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString() != null
 				&& !this.ventanaAltaCliente.getTextLimiteCredito().getText().equals("")) {
 			String tipoEstado = this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString();
@@ -589,10 +589,6 @@ public class ControladorAltaCliente {
 				return false;
 			}
 
-//			if (!tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) != Double.parseDouble(limiteCredito)) {
-//				JOptionPane.showMessageDialog(null, "El cliente tiene que ser moroso");
-//				return false;
-//			}
 		}
 
 		String pais = (String) this.ventanaAltaCliente.getComboBoxPais().getSelectedItem();

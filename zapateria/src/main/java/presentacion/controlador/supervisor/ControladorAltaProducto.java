@@ -64,10 +64,6 @@ public class ControladorAltaProducto {
 		this.controladorConsultarProveedor.setControladorAltaProducto(this);
 	}
 	
-//	public void setControladorConsultarProveedor(ControladorGestionarProveedores controladorConsultarProveedor) {
-//		this.controladorConsultarProveedor=controladorConsultarProveedor;
-//	}
-	
 	public void setControladorGestionarProductos(ControladorGestionarProductos controladorGestionarProductos) {
 		this.controladorGestionarProductos = controladorGestionarProductos;
 	}
@@ -238,6 +234,11 @@ public class ControladorAltaProducto {
 			JOptionPane.showMessageDialog(null, "La descripcion no puede ser vacia");
 			return false;
 		}
+		if(descripcion.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Descripcion no puede ser mayor a 44 caracteres");
+			return false;	
+		}
+		
 		String tipo =(String) this.ventanaAltaProducto.getComboBoxTipo().getSelectedItem();
 		if(tipo.equals("Sin seleccionar")) {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de producto");
@@ -248,25 +249,36 @@ public class ControladorAltaProducto {
 			JOptionPane.showMessageDialog(null, "Debe seleccionar si es fabricado por la propia empresa o no");
 			return false;
 		}
+				
 		String costo = this.ventanaAltaProducto.getTextCosto().getText();
-		if((costo.equals("") || Double.parseDouble(costo)<=0) && this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem().toString().equals("Si")) {
-			JOptionPane.showMessageDialog(null, "El costo de produccion no es valido");
-			return false;
+		
+		if(productoPropio.equals("Si")) {
+			if(!validarCampoNumerico(costo,"Costo")) {
+				return false;
+			}
 		}
+		
 		String precioMayorista = this.ventanaAltaProducto.getTextPrecioMayorista().getText();
-		if((precioMayorista.equals("") || Double.parseDouble(precioMayorista)<=0) && !tipo.equals("Materia Prima")) {
-			JOptionPane.showMessageDialog(null, "El precio mayorista es invalido");
-			return false;
+		if(tipo.equals("Producto Terminado")) {
+			if(!validarCampoNumerico(precioMayorista,"Precio Mayorista")) {
+				return false;
+			}	
 		}
+		
 		String precioMinorista = this.ventanaAltaProducto.getTextPrecioMinorista().getText();
-		if((precioMinorista.equals("") || Double.parseDouble(precioMinorista)<=0) && !tipo.equals("Materia Prima")) {
-			JOptionPane.showMessageDialog(null, "El precio minorista es invalido");
-			return false;
+		if(tipo.equals("Producto Terminado")) {
+			if(!validarCampoNumerico(precioMinorista,"Precio Minorista")) {
+				return false;
+			}
 		}
+		
 		String puntoRepMinimo = this.ventanaAltaProducto.getTextPuntoRepMinimo().getText();
-		if(puntoRepMinimo.equals("") || Integer.parseInt(puntoRepMinimo)<=0) {
-			JOptionPane.showMessageDialog(null, "Debe establecer un punto de reposicion minimo");
+		if(!validarCampoNumerico(puntoRepMinimo,"Punto de Reposicion Minimo")) {
 			return false;
+		}		
+		if(puntoRepMinimo.length()>3) {
+			JOptionPane.showMessageDialog(null, "El punto de reposicion minimo no puede ser mayor a 999");
+			return false;	
 		}
 		
 		String talle = this.ventanaAltaProducto.getComboBoxTalle().getSelectedItem().toString();
@@ -288,13 +300,21 @@ public class ControladorAltaProducto {
 		}
 		
 		String cantARep = this.ventanaAltaProducto.getTextCantidadAReponer().getText();
-		if(cantARep.equals("") || Integer.parseInt(cantARep)<=0){
-			JOptionPane.showMessageDialog(null, "Debe establecer una cantidad por defecto para reponer");
+		if(!validarCampoNumerico(cantARep,"Cantidad a reponer")) {
+			return false;
+		}		
+		if(cantARep.length()>3) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Cantidad a Reponer es invalida");
+			return false;	
+		}
+		
+		
+		String diasRep = this.ventanaAltaProducto.getTextDiasParaReponer().getText();
+		if(!validarCampoNumerico(diasRep,"Dias a reponer")) {
 			return false;
 		}
-		String diasRep = this.ventanaAltaProducto.getTextDiasParaReponer().getText();
-		if(diasRep.equals("") || Integer.parseInt(diasRep)<=0){
-			JOptionPane.showMessageDialog(null, "Debe establecer una cantidad de dias para reponer");
+		if(diasRep.length()>3) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de Dias a Reponer es invalida");
 			return false;
 		}
 		
@@ -309,6 +329,33 @@ public class ControladorAltaProducto {
 				
 		return true;
 	}
+	
+	public boolean validarCampoNumerico(String valor,String nombreCampo) {
+				
+		//Costo, precioMayorista o minorista pueden ser vacios si son materia prima
+		if(valor.equals("")) {
+			JOptionPane.showMessageDialog(null, "El campo "+ nombreCampo+" no puede ser vacio");
+			return false;	
+		}
+		if(valor.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres para el campo "+ nombreCampo+" no puede ser mayor a 44");
+			return false;		
+		}
+		
+		try {
+			Double.parseDouble(valor);
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Debe escribir un valor numerico para el campo "+nombreCampo);
+			return false;	
+		}
+		if((Double.parseDouble(valor)<=0) ) {
+			JOptionPane.showMessageDialog(null, "El valor del campo "+nombreCampo+" no puede ser menor a 0");
+			return false;
+		}
+		
+		return true;
+	}
+	
 	
 	public void agregarProducto(ActionEvent a ) {
 		if(todosLosCamposSonCorrectos()) {

@@ -13,6 +13,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
@@ -119,8 +120,7 @@ public class VentanaBusquedaProductos {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		
-		
+				
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(248, 248, 255));
 		frame.setBounds(100, 100, 953, 654);
@@ -196,18 +196,7 @@ public class VentanaBusquedaProductos {
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
-/*
-		spinnerModelCarrito = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
-		spinnerCarrito = new JSpinner(spinnerModelCarrito);
-		spinnerCarrito.setBounds(681, 40, 47, 19);
-		panel.add(spinnerCarrito);
-
-		spinnerModelProductos = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
-		spinnerProductos = new JSpinner(spinnerModelProductos);
-		spinnerProductos.setBounds(390, 137, 47, 19);
-		panel.add(spinnerProductos);
-		*/
-		
+	
 		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		
 		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
@@ -298,30 +287,31 @@ public class VentanaBusquedaProductos {
 		cambiarIconoBotones(btnAniadirProd,  "carrito2.png");
 		panel.add(btnAniadirProd);
 		
-				cambiarIconoBotones(btnAniadirProd,  "meterCarrito.png");
-				panel.add(btnAniadirProd);
-				
-				btnQuitarProducto = new JButton("");
-				btnQuitarProducto.setBounds(844, 23, 39, 37);
-				cambiarIconoBotones(btnQuitarProducto,  "trash2.png");
-				panel.add(btnQuitarProducto);
-				
-				JLabel lblTotal = new JLabel("Total: ");
-				lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
-				lblTotal.setBounds(615, 364, 63, 39);
-				panel.add(lblTotal);
-				
-				scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-				scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
-				scrollPaneCarrito.setBounds(588, 70, 321, 284);
-				panel.add(scrollPaneCarrito);
-				
-				tableCarrito = new JTable(modelTablaCarrito);
-				
-				this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
-				this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
-				tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-				scrollPaneCarrito.setViewportView(tableCarrito);
+		cambiarIconoBotones(btnAniadirProd, "meterCarrito.png");
+		panel.add(btnAniadirProd);
+
+		btnQuitarProducto = new JButton("");
+		btnQuitarProducto.setBounds(844, 23, 39, 37);
+		cambiarIconoBotones(btnQuitarProducto, "trash2.png");
+		panel.add(btnQuitarProducto);
+
+		JLabel lblTotal = new JLabel("Total: ");
+		lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 17));
+		lblTotal.setBounds(615, 364, 63, 39);
+		panel.add(lblTotal);
+
+		scrollPaneCarrito = new JScrollPane(this.tableCarrito, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneCarrito.setViewportBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPaneCarrito.setBounds(588, 70, 321, 284);
+		panel.add(scrollPaneCarrito);
+
+		tableCarrito = new JTable(modelTablaCarrito);
+
+		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
+		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
+		tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		scrollPaneCarrito.setViewportView(tableCarrito);
 				
 		JLabel lblCantidad = new JLabel("Cambiar cantidad");
 		lblCantidad.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -397,6 +387,7 @@ public class VentanaBusquedaProductos {
 				}
 			}
 		});
+//		textCantidadListaProductos.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null"); 
 		panel.add(textCantidadListaProductos);
 		
 		textCantidadCarrito = new JTextField();
@@ -410,6 +401,7 @@ public class VentanaBusquedaProductos {
 				}
 			}
 		});
+//		textCantidadCarrito.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		panel.add(textCantidadCarrito);
 		
 		JLabel lblFondo = new JLabel("");

@@ -115,18 +115,36 @@ public class ControladorAltaProveedor {
 			JOptionPane.showMessageDialog(null, "El nombre no puede ser vacio");
 			return false;
 		}
+		if(nombre.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de nombre no puede ser mayor a 44");
+			return false;	
+		}
+		
 		String mail = this.ventanaAltaProveedor.getTextCorreo().getText();
 		boolean m = mail.matches("^[A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 		if(!m) {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}
+		if(mail.length()>=44) {
+			JOptionPane.showMessageDialog(null, "La cantidad de caracteres de mail no puede ser mayor a 44");
+			return false;	
+		}
+		
 		String limiteDeCredit = this.ventanaAltaProveedor.getTextLimiteCredito().getText();
 		if(limiteDeCredit.equals("")) {
 			JOptionPane.showMessageDialog(null, "El limite de credito no puede ser vacio");
 			return false;		
 		}else{
-			double limiteDeCredito = Double.parseDouble(limiteDeCredit);
+			double limiteDeCredito = 0;
+			try {
+				limiteDeCredito = Double.parseDouble(limiteDeCredit);
+			}
+			catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Debe establecer un numero para el limite de credito");
+				return false;
+			}
+			
 			if(limiteDeCredito<0) {
 				JOptionPane.showMessageDialog(null, "El limite de credito no puede ser menor a 0");
 				return false;	

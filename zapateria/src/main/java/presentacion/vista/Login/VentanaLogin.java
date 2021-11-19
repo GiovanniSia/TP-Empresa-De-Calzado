@@ -9,12 +9,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +25,8 @@ import persistencia.conexion.Conexion;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
+
+
 import javax.swing.JProgressBar;
 
 public class VentanaLogin extends JFrame {
@@ -104,12 +108,17 @@ public class VentanaLogin extends JFrame {
 		});
 		txtFieldCorreo.setColumns(10);
 
+		InputMap map2 = txtFieldCorreo.getInputMap(JTextField.WHEN_FOCUSED);
+		map2.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null"); 
+		
 		txtFieldContra = new JPasswordField();
 		txtFieldContra.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldContra.setBounds(140, 94, 129, 29);
 		panel_1.add(txtFieldContra);
 		txtFieldContra.setBorder(null);
-
+		txtFieldContra.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null"); 
+		
+		
 		lblContrasenia = new JLabel("Contrase\u00F1a");
 		lblContrasenia.setForeground(new Color(255, 255, 255));
 		lblContrasenia.setBounds(10, 93, 120, 30);
