@@ -3,7 +3,6 @@ package presentacion.controlador.Cajero;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +41,7 @@ public class ControladorEgresosCaja {
 	private TipoEgresos tipoEgresos;
 
 	private int idSucursal = 0;
+
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
 			sucursalProperties sucursalProp = sucursalProperties.getInstance();
@@ -110,15 +110,15 @@ public class ControladorEgresosCaja {
 
 	public void actualizarLblBalance() {
 		this.ventanaEgresoCaja.getLblActualizarTotalBalanceCaja()
-				.setText("$" + new BigInteger("" + obtenerValorBalance() + ""));
+				.setText("$" + new BigDecimal("" + obtenerValorBalance() + "").setScale(2, RoundingMode.HALF_UP));
 	}
 
-	public int obtenerValorBalance() {
+	public double obtenerValorBalance() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 
-		int totalIngresos = 0;
-		int totalEgresos = 0;
+		double totalIngresos = 0.0;
+		double totalEgresos = 0.0;
 		if (ingresos.getIngresosAproximado("Fecha", fecha, null, null).size() != 0) {
 			totalIngresos = ObtenerTotalIngreso();
 		}
@@ -127,7 +127,7 @@ public class ControladorEgresosCaja {
 			totalEgresos = obtenerTotalEgreso();
 		}
 
-		int balanceCaja = totalIngresos - totalEgresos;
+		double balanceCaja = totalIngresos - totalEgresos;
 		return balanceCaja;
 	}
 
@@ -137,18 +137,18 @@ public class ControladorEgresosCaja {
 		return ingresos.getIngresosAproximado("Fecha", fecha, null, null);
 	}
 
-	public int ObtenerTotalIngreso() {
+	public double ObtenerTotalIngreso() {
 		this.ingresosEnTabla = obtenerIngresosDeHoy();
-		int total = 0;
+		double total = 0;
 		for (IngresosDTO i : ingresosEnTabla) {
 			total += i.getTotal();
 		}
 		return total;
 	}
 
-	public int obtenerTotalEgreso() {
+	public double obtenerTotalEgreso() {
 		this.egresosEnTabla = obtenerEgresosDeHoy();
-		int total = 0;
+		double total = 0;
 		for (EgresosDTO e : egresosEnTabla) {
 			total += e.getTotal();
 		}
@@ -176,51 +176,48 @@ public class ControladorEgresosCaja {
 			}
 			if (tipoEgresoSeleccionado.equals("Nota Credito")) {
 				/*
+				 * String nc = this.ventanaEgresoCaja.getTxtFieldNC().getText();
+				 * ingresarEgreso(nc);
+				 */
+				// * * * * * * * * * * * * * * *
 				String nc = this.ventanaEgresoCaja.getTxtFieldNC().getText();
-				ingresarEgreso(nc);
-				*/
-				//* * * * * * * * * * * * * * *
-				String nc = this.ventanaEgresoCaja.getTxtFieldNC().getText();
-				if(nroFacturaExiste(nc)) {
-					if(yaExisteNotaCredito(nc)) {
-						JOptionPane.showMessageDialog(null,
-								"Ya existe una nota de credito asociada a esta factura", "Error",
-								JOptionPane.ERROR_MESSAGE);
+				if (nroFacturaExiste(nc)) {
+					if (yaExisteNotaCredito(nc)) {
+						JOptionPane.showMessageDialog(null, "Ya existe una nota de credito asociada a esta factura",
+								"Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					ingresarEgreso(nc);
 					MotivoEgreso modeloMotivo = new MotivoEgreso(new DAOSQLFactory());
-					modeloMotivo.insert(new MotivoEgresoDTO(nc,"Este egreso se hizo para la factura: "+nc));
+					modeloMotivo.insert(new MotivoEgresoDTO(nc, "Este egreso se hizo para la factura: " + nc));
 					ReporteNotaCredito notaCredito = new ReporteNotaCredito(nc);
 					notaCredito.mostrar();
-				}else {
-					JOptionPane.showMessageDialog(null,
-							"El numero de factura no corresponde a una factura existente", "Error",
-							JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "El numero de factura no corresponde a una factura existente",
+							"Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				//* * * * * * * * * * * * * * * 
+				// * * * * * * * * * * * * * * *
 			}
 			if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
-				
+
 				try {
 					Double.parseDouble(ppNroProveedor);
 					Double.parseDouble(ppNroOrdenCompra);
 					Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-				}catch(NumberFormatException e){
+				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Los campos deben ser numericos");
-					return;	
+					return;
 				}
-				
-				
+
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),ppNroProveedor)){
-                    ingresarEgreso(detalle);
-                }else {
-                    JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
-                }
+				if (registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra), ppNroProveedor)) {
+					ingresarEgreso(detalle);
+				} else {
+					JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
+				}
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
 		}
@@ -230,27 +227,27 @@ public class ControladorEgresosCaja {
 	private boolean nroFacturaExiste(String nc) {
 		boolean ret = false;
 		Factura modeloFactura = new Factura(new DAOSQLFactory());
-		for(FacturaDTO f: modeloFactura.readAll()) {
+		for (FacturaDTO f : modeloFactura.readAll()) {
 			ret = ret || f.getNroFacturaCompleta().equals(nc);
 		}
 		return ret;
 	}
-	
+
 	private boolean yaExisteNotaCredito(String nc) {
 		boolean ret = false;
-		for(EgresosDTO e: this.egresos.readAll()) {
+		for (EgresosDTO e : this.egresos.readAll()) {
 			ret = ret || e.getDetalle().toLowerCase().equals(nc.toLowerCase());
 		}
 		return ret;
 	}
 
-	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra,String nroProveedor) {
+	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra, String nroProveedor) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
 			if (p.getId() == ppNroOrdenCompra && Integer.parseInt(nroProveedor) == p.getIdProveedor()) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago))
-						.setScale(2, RoundingMode.HALF_UP);
-				
+				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago)).setScale(2,
+						RoundingMode.HALF_UP);
+
 				double pagoRestante = p.getPrecioTotal() - pago;
 
 				boolean update = true;
@@ -283,7 +280,7 @@ public class ControladorEgresosCaja {
 
 				return true;
 			}
-			
+
 		}
 		return false;
 	}
@@ -335,8 +332,19 @@ public class ControladorEgresosCaja {
 			JOptionPane.showMessageDialog(null, "El monto supera lo disponible");
 			return false;
 		}
-
+		if(!formatoTasaConversionEsValido(this.ventanaEgresoCaja.getTxtFieldMonto().getText())) {
+			JOptionPane.showMessageDialog(null, "Formato invalido. Ej: 40 o 40.01");
+			return false;
+		}
 		return true;
+	}
+	
+	public boolean formatoTasaConversionEsValido(String precio) {
+		boolean expresion = precio.matches("^[0-9]+(\\.[0-9]{1,2})?$");
+		if (expresion) {
+			return true;
+		}
+		return false;
 	}
 
 	public void tipoEgresoSeleccionado() {
@@ -404,8 +412,7 @@ public class ControladorEgresosCaja {
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String tipo = obtenerAbrebiaturaMedioPago(this.ventanaEgresoCaja.getMedioPagoSeleccionado());
 		String Detalle = detalle;
-		int Monto = Integer.parseInt(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-
+		double Monto = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
 //		insert into Egresos values(0,idSucursal,fecha,hora,tipoEgresoSeleccionado,"EFE","Choripan",Monto);	
 
 		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgresoSeleccionado, tipo, Detalle,
