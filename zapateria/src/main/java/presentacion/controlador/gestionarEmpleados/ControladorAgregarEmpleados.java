@@ -131,7 +131,12 @@ public class ControladorAgregarEmpleados {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}
-
+		
+		if(yaExisteCorreoElectronico(CorreoElectronico)){
+			JOptionPane.showMessageDialog(null, "Ya existe una cuenta que usa ese correo electronico");
+			return false;
+		}
+		
 		String claveNueva = this.ventanaAgregarEmpleados.getTxtClaveNueva().getText();
 		String claveRepetida = this.ventanaAgregarEmpleados.getTxtRepetirClave().getText();
 		if (!claveNueva.equals(claveRepetida)) {
@@ -150,6 +155,13 @@ public class ControladorAgregarEmpleados {
 			return false;
 		}
 
+		return true;
+	}
+	
+	public boolean yaExisteCorreoElectronico(String CorreoElectronico) {
+		if(empleado.selectUserCorreo(CorreoElectronico)==null) {
+			return false;
+		}
 		return true;
 	}
 

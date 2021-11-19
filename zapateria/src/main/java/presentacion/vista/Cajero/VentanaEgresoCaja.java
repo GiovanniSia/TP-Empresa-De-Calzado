@@ -20,6 +20,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.JComboBox;
@@ -126,6 +127,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblNewLabel_2);
 
 		txtFieldMonto = new JTextField();
+		txtFieldMonto.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldMonto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldMonto.addKeyListener(new KeyAdapter() {
 			@Override
@@ -177,13 +179,14 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblAS);
 
 		txtFieldAS = new JTextField();
+		txtFieldAS.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldAS.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 
 				boolean numeros = key >= 48 && key <= 57;
-				if (txtFieldAS.getText().length() >= 9 || !numeros) {
+				if (txtFieldAS.getText().length() >= 18 || !numeros) {
 					e.consume();
 				}
 			}
@@ -210,13 +213,14 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblPP1);
 
 		txtFieldPPNroProveedor = new JTextField();
+		txtFieldPPNroProveedor.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldPPNroProveedor.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
 
 				boolean numeros = key >= 48 && key <= 57;
-				if (txtFieldPPNroProveedor.getText().length() >= 9 || !numeros) {
+				if (txtFieldPPNroProveedor.getText().length() >= 18 || !numeros) {
 					e.consume();
 				}
 			}
@@ -231,6 +235,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblNroOrdenDe);
 
 		txtFieldPPNroOrdenCompra = new JTextField();
+		txtFieldPPNroOrdenCompra.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldPPNroOrdenCompra.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldPPNroOrdenCompra.addKeyListener(new KeyAdapter() {
 			@Override
@@ -238,7 +243,7 @@ public class VentanaEgresoCaja extends JFrame {
 				int key = e.getKeyChar();
 
 				boolean numeros = key >= 48 && key <= 57;
-				if (txtFieldPPNroOrdenCompra.getText().length() >= 9 || !numeros) {
+				if (txtFieldPPNroOrdenCompra.getText().length() >= 18 || !numeros) {
 					e.consume();
 				}
 			}
@@ -258,12 +263,8 @@ public class VentanaEgresoCaja extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				int key = e.getKeyChar();
-				/*
-				boolean numeros = key >= 48 && key <= 57;
-				if (txtFieldNC.getText().length() >= 9 || !numeros) {
-					e.consume();
-				}*/
-				if (txtFieldNC.getText().length() >= 9) {
+		
+				if (txtFieldNC.getText().length() >= 18) {
 					e.consume();
 				}
 			}

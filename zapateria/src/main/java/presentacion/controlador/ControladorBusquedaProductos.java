@@ -37,6 +37,8 @@ import modelo.Stock;
 import modelo.Sucursal;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.vista.VentanaBusquedaProductos;
+import presentacion.vista.VentanaInformacionBusquedaProductos;
+
 import java.time.LocalDateTime;
 
 public class ControladorBusquedaProductos {
@@ -77,6 +79,8 @@ public class ControladorBusquedaProductos {
 	VentanaBusquedaProductos vistaBusquedaProductos;
 	
 	ClienteDTO clienteSeleccionado;
+	
+	private VentanaInformacionBusquedaProductos ventanaInformacionBusquedaProductos;
 		
 	public ControladorBusquedaProductos(MaestroProducto maestroProducto, Stock stock, Sucursal sucursal,Carrito carrito,DetalleCarrito detalleCarrito) {
 		this.sucursal = sucursal;
@@ -84,6 +88,7 @@ public class ControladorBusquedaProductos {
 		this.stock = stock;
 		this.carrito = carrito;
 		this.detalleCarrito = detalleCarrito;
+		ventanaInformacionBusquedaProductos = new VentanaInformacionBusquedaProductos();
 	}
 	
 	public void setControladorBusquedaCliente(ControladorBusquedaCliente c) {
@@ -101,6 +106,7 @@ public class ControladorBusquedaProductos {
 		this.listaCarrito = carrito.readAll();
 		
 		this.vistaBusquedaProductos = new VentanaBusquedaProductos();
+		this.vistaBusquedaProductos.getBtnInformacionElegirProductos().addActionListener(a -> mostrarInformacionVentanaBusquedaProducto(a));
 		this.maestroProducto = new MaestroProducto(new DAOSQLFactory());
 		
 		this.vistaBusquedaProductos.getTxtNombreProducto().addKeyListener(new KeyAdapter() {
@@ -299,6 +305,9 @@ public class ControladorBusquedaProductos {
 		return m.getEstado().equals("Activo") && m.getTipo().equals("PT");
 	}
 	
+	private void mostrarInformacionVentanaBusquedaProducto(ActionEvent a){
+		ventanaInformacionBusquedaProductos.show();
+	}
 	
 	//Carrito
 	
@@ -539,6 +548,7 @@ public class ControladorBusquedaProductos {
 	
 	public void volverAtras(ActionEvent a) {
 		this.vistaBusquedaProductos.cerrar();
+		this.ventanaInformacionBusquedaProductos.cerrar();
 //		Cliente cliente = new Cliente(new DAOSQLFactory());
 //		ControladorBusquedaCliente c = new ControladorBusquedaCliente(cliente);
 		
@@ -565,6 +575,7 @@ public class ControladorBusquedaProductos {
 				guardarVentaArmada();
 				descontarDelStock();
 				this.vistaBusquedaProductos.cerrar();
+				this.ventanaInformacionBusquedaProductos.cerrar();
 				this.controladorBusquedaCliente.inicializar();
 				this.controladorBusquedaCliente.mostrarVentana();
 			}

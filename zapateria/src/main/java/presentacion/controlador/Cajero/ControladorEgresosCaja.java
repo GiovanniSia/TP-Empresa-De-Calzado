@@ -205,10 +205,11 @@ public class ControladorEgresosCaja {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				ingresarEgreso(detalle);
-
-				registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra));
-
+				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra))){
+                    ingresarEgreso(detalle);
+                }else {
+                    JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
+                }
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
 		}
@@ -232,7 +233,7 @@ public class ControladorEgresosCaja {
 		return ret;
 	}
 
-	private void registrarPedidoComoPagado(int ppNroOrdenCompra) {
+	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
 			if (p.getId() == ppNroOrdenCompra) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
@@ -269,9 +270,11 @@ public class ControladorEgresosCaja {
 					}
 				}
 
-				return;
+				return true;
 			}
+			
 		}
+		return false;
 	}
 
 	public boolean validarCampos() {

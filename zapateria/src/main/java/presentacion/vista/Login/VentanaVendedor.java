@@ -39,9 +39,6 @@ public class VentanaVendedor extends JFrame {
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_5;
-	private JButton btnInfoArmarVenta;
-	private JButton btnInfoClientes;
-	private JButton btnInfoProductos;
 
 	public VentanaVendedor() {
 		this.initialize();
@@ -139,42 +136,6 @@ public class VentanaVendedor extends JFrame {
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_5.setBounds(535, 30, 120, 43);
 		panel_1.add(lblNewLabel_5);
-
-		btnInfoArmarVenta = new JButton("");
-		btnInfoArmarVenta.setBounds(130, 205, 25, 25);
-		cambiarIconoBotones(btnInfoArmarVenta, "help.png");
-		panel_1.add(btnInfoArmarVenta);
-
-		btnInfoClientes = new JButton("");
-		btnInfoClientes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null,
-						"Se puede ver todos los clientes del sistema y poder agregar nuevos",
-						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
-			}
-		});
-		btnInfoClientes.setBounds(380, 205, 25, 25);
-		cambiarIconoBotones(btnInfoClientes, "help.png");
-		panel_1.add(btnInfoClientes);
-
-		btnInfoProductos = new JButton("");
-		btnInfoProductos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null,
-						"Se puede ver todos los productos del sistema",
-						"Cliente", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
-			}
-		});
-		btnInfoProductos.setBounds(630, 205, 25, 25);
-		cambiarIconoBotones(btnInfoProductos, "help.png");
-		panel_1.add(btnInfoProductos);
-		btnInfoArmarVenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null,
-						"Es para realizar una nueva venta, \n 1. Tiene que elegir el cilente y en el caso \n de no estarlo entonces agregarlo. \n 2. Tiene que seleccionar los productos que \n quiere el cliente. \n 3. Por ultimo, finalizar pedido",
-						"Armar Venta", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE);
-			}
-		});
 
 		lblNewLabel_1 = new JLabel("Cerrar Sesion");
 		lblNewLabel_1.setBounds(80, 349, 132, 60);

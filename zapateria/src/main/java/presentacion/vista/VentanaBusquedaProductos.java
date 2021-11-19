@@ -84,6 +84,7 @@ public class VentanaBusquedaProductos {
 	private JLabel lblNewLabel_2;
 	private JTextField textCantidadListaProductos;
 	private JTextField textCantidadCarrito;
+	private JButton btnInformacionElegirProductos;
 	/**
 	 * Launch the application.
 	 */
@@ -404,6 +405,11 @@ public class VentanaBusquedaProductos {
 //		textCantidadCarrito.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		panel.add(textCantidadCarrito);
 		
+		btnInformacionElegirProductos = new JButton("");
+		btnInformacionElegirProductos.setBounds(894, 57, 33, 32);
+		cambiarIconoBotones(btnInformacionElegirProductos, "help.png");	
+		frame.getContentPane().add(btnInformacionElegirProductos);
+		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 24, 960, 720);
 		cambiarIconoLabel(lblFondo, "fondo.png");
@@ -678,6 +684,10 @@ public class VentanaBusquedaProductos {
 
 	public JTextField getTextCantidadCarrito() {
 		return textCantidadCarrito;
+	}
+
+	public JButton getBtnInformacionElegirProductos() {
+		return btnInformacionElegirProductos;
 	}
 	
 	
