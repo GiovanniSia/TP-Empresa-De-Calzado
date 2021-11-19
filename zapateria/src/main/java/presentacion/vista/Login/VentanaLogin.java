@@ -97,7 +97,7 @@ public class VentanaLogin extends JFrame {
 		txtFieldCorreo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (txtFieldCorreo.getText().length() >= 40) {
+				if (txtFieldCorreo.getText().length() >= 30) {
 					e.consume();
 				}
 			}
@@ -105,6 +105,15 @@ public class VentanaLogin extends JFrame {
 		txtFieldCorreo.setColumns(10);
 
 		txtFieldContra = new JPasswordField();
+		txtFieldContra.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (txtFieldContra.getText().length() >= 50) {
+					e.consume();
+				}
+			}
+		});
 		txtFieldContra.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldContra.setBounds(140, 94, 129, 29);
 		panel_1.add(txtFieldContra);
@@ -130,15 +139,7 @@ public class VentanaLogin extends JFrame {
 		panel_1.add(lblSucursal);
 		lblSucursal.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtFieldContra.addKeyListener(new KeyAdapter() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (txtFieldContra.getText().length() >= 40) {
-					e.consume();
-				}
-			}
-		});
+
 
 		btnIniciarSesion = new JButton("");
 		btnIniciarSesion.setBounds(358, 264, 60, 60);
