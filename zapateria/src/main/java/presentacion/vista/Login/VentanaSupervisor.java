@@ -56,6 +56,10 @@ public class VentanaSupervisor extends JFrame {
 	private JLabel lblNewLabel_12;
 	private JLabel lblNewLabel_13;
 	private JPanel panel_1;
+	private JButton btnVerFactura;
+	private JLabel lblNewLabel;
+	private JButton btnReporteRiesgoStock;
+	private JLabel lblriesgoStock;
 
 	public VentanaSupervisor() {
 		this.initialize();
@@ -67,7 +71,7 @@ public class VentanaSupervisor extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 1000, 626);
+		frame.setBounds(100, 100, 1151, 626);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,7 +84,7 @@ public class VentanaSupervisor extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(1, 0, 983, 53);
+		panel.setBounds(1, 0, 1134, 53);
 		contentPane.add(panel);
 		
 		lblLogo = new JLabel("");
@@ -126,12 +130,12 @@ public class VentanaSupervisor extends JFrame {
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(11, 64, 963, 438);
+		panel_1.setBounds(11, 64, 1114, 438);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
 		btnArmarVenta = new JButton("");
-		btnArmarVenta.setBounds(822, 161, 120, 120);
+		btnArmarVenta.setBounds(822, 53, 120, 120);
 		panel_1.add(btnArmarVenta);
 		btnArmarVenta.setForeground(new Color(51, 102, 153));
 		btnArmarVenta.setFont(new Font("Segoe UI", Font.BOLD, 20));
@@ -139,7 +143,7 @@ public class VentanaSupervisor extends JFrame {
 		cambiarIconoBotones(btnArmarVenta, "tag.png");
 		
 		lblNewLabel_3 = new JLabel("<html><center>Armar Venta</center></html>");
-		lblNewLabel_3.setBounds(822, 119, 120, 43);
+		lblNewLabel_3.setBounds(822, 11, 120, 43);
 		panel_1.add(lblNewLabel_3);
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -283,9 +287,37 @@ public class VentanaSupervisor extends JFrame {
 																				panel_1.add(lblNewLabel_13);
 																				lblNewLabel_13.setHorizontalAlignment(SwingConstants.CENTER);
 																				lblNewLabel_13.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+																				
+																				btnVerFactura = new JButton("");
+																				btnVerFactura.setForeground(new Color(51, 102, 153));
+																				btnVerFactura.setFont(new Font("Segoe UI", Font.BOLD, 20));
+																				btnVerFactura.setBackground(new Color(51, 102, 204));
+																				btnVerFactura.setBounds(822, 271, 120, 120);
+																				cambiarIconoBotones(btnVerFactura, "facturaver.png");
+																				panel_1.add(btnVerFactura);
+																				
+																				lblNewLabel = new JLabel("<html><center>Ver Facturas</center></html>");
+																				lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+																				lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+																				lblNewLabel.setBounds(822, 228, 120, 43);
+																				panel_1.add(lblNewLabel);
+																				
+																				btnReporteRiesgoStock = new JButton("");
+																				btnReporteRiesgoStock.setForeground(new Color(51, 102, 153));
+																				btnReporteRiesgoStock.setFont(new Font("Segoe UI", Font.BOLD, 20));
+																				btnReporteRiesgoStock.setBackground(new Color(51, 102, 204));
+																				btnReporteRiesgoStock.setBounds(974, 172, 120, 120);
+																				cambiarIconoBotones(btnReporteRiesgoStock, "stock.png");
+																				panel_1.add(btnReporteRiesgoStock);
+																				
+																				lblriesgoStock = new JLabel("<html><center>Riesgo Stock</center></html>");
+																				lblriesgoStock.setHorizontalAlignment(SwingConstants.CENTER);
+																				lblriesgoStock.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+																				lblriesgoStock.setBounds(974, 130, 120, 43);
+																				panel_1.add(lblriesgoStock);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 1000, 750);
+		lblFondo.setBounds(0, 0, 1280, 960);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 		
@@ -390,5 +422,13 @@ public class VentanaSupervisor extends JFrame {
 
 	public JLabel getLblEmpleado() {
 		return lblEmpleado;
+	}
+
+	public JButton getBtnVerFactura() {
+		return btnVerFactura;
+	}
+
+	public JButton getBtnReporteRiesgoStock() {
+		return btnReporteRiesgoStock;
 	}
 }

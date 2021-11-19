@@ -20,7 +20,7 @@ public class ReporteListaStockFaltante {
 	private JasperPrint reporteLleno;
 	private Logger log = Logger.getLogger(ReporteProducto.class);
 	
-	public ReporteListaStockFaltante(int idSucursal) {
+	public ReporteListaStockFaltante(int idSucursal, int flagMasChico, int flagMasGrande) {
 		Map<String, Object> parametersMap = new HashMap<String, Object>();
 		parametersMap.put("IdSucursal", idSucursal);
 		if(this.esFabrica(idSucursal)) {
@@ -28,9 +28,11 @@ public class ReporteListaStockFaltante {
 		}else {
 			parametersMap.put("TipoProducto", "PT");
 		}
+		parametersMap.put("primerFlag", flagMasChico);
+		parametersMap.put("segundoFlag", flagMasGrande);
 		try {
 			this.reporte = (JasperReport) JRLoader
-					.loadObjectFromFile("reportes"+File.separator+"stockFaltante"+File.separator+"stockFaltante.jasper");
+					.loadObjectFromFile("reportes"+File.separator+"reporteStock"+File.separator+"riesgoStock.jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
 			log.info("Se cargó correctamente el reporte");
@@ -57,7 +59,7 @@ public class ReporteListaStockFaltante {
 	}
 	
 	public static void main(String[] args){
-		ReporteListaStockFaltante reporte = new ReporteListaStockFaltante(1);
+		ReporteListaStockFaltante reporte = new ReporteListaStockFaltante(2,25,45);
 		reporte.mostrar();
 	}
 

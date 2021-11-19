@@ -37,6 +37,8 @@ public class VentanaCajero extends JFrame {
 	private JLabel lblNewLabel_1_2;
 	private JLabel lblNewLabel_1_3;
 	private JLabel lblNewLabel_1_4;
+	
+	private JButton btnVerFacturas;
 
 	public VentanaCajero() {
 		this.initialize();
@@ -48,7 +50,7 @@ public class VentanaCajero extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 708, 397);
+		frame.setBounds(100, 100, 864, 397);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +63,7 @@ public class VentanaCajero extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(0, 0, 719, 53);
+		panel.setBounds(0, 0, 848, 53);
 		contentPane.add(panel);
 		
 		lblLogo = new JLabel("");
@@ -85,7 +87,7 @@ public class VentanaCajero extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(10, 66, 672, 216);
+		panel_1.setBounds(10, 66, 828, 216);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -141,6 +143,19 @@ public class VentanaCajero extends JFrame {
 		lblNewLabel_1_4.setBounds(514, 21, 120, 43);
 		panel_1.add(lblNewLabel_1_4);
 		
+		btnVerFacturas = new JButton("");
+		btnVerFacturas.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnVerFacturas.setBackground(new Color(51, 102, 204));
+		btnVerFacturas.setBounds(672, 61, 120, 120);
+		cambiarIconoBotones(btnVerFacturas, "facturaver.png");
+		panel_1.add(btnVerFacturas);
+		
+		JLabel lblNewLabel_1_4_1 = new JLabel("<html>Ver facturas</html>");
+		lblNewLabel_1_4_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_4_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_1_4_1.setBounds(672, 21, 120, 43);
+		panel_1.add(lblNewLabel_1_4_1);
+		
 		lblNewLabel_1 = new JLabel("Cerrar Sesion");
 		lblNewLabel_1.setBounds(80, 293, 132, 60);
 		contentPane.add(lblNewLabel_1);
@@ -156,7 +171,7 @@ public class VentanaCajero extends JFrame {
 		cambiarIconoBotones(btnCerrarSesion, "exit.png");
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 720, 540);
+		lblFondo.setBounds(0, 0, 960, 720);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
@@ -226,5 +241,9 @@ public class VentanaCajero extends JFrame {
 
 	public JLabel getLblEmpleado() {
 		return lblEmpleado;
+	}
+
+	public JButton getBtnVerFacturas() {
+		return btnVerFacturas;
 	}
 }
