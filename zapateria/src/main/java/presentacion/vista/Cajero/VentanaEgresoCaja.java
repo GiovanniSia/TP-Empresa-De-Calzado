@@ -127,7 +127,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblNewLabel_2);
 
 		txtFieldMonto = new JTextField();
-		txtFieldMonto.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+//		txtFieldMonto.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldMonto.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldMonto.addKeyListener(new KeyAdapter() {
 			@Override
@@ -179,7 +179,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblAS);
 
 		txtFieldAS = new JTextField();
-		txtFieldAS.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+//		txtFieldAS.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldAS.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -213,7 +213,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblPP1);
 
 		txtFieldPPNroProveedor = new JTextField();
-		txtFieldPPNroProveedor.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+//		txtFieldPPNroProveedor.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldPPNroProveedor.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -235,7 +235,7 @@ public class VentanaEgresoCaja extends JFrame {
 		contentPane.add(lblNroOrdenDe);
 
 		txtFieldPPNroOrdenCompra = new JTextField();
-		txtFieldPPNroOrdenCompra.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+//		txtFieldPPNroOrdenCompra.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		txtFieldPPNroOrdenCompra.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		txtFieldPPNroOrdenCompra.addKeyListener(new KeyAdapter() {
 			@Override

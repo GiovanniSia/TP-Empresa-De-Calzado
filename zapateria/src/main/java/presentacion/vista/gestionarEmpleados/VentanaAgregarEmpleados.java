@@ -22,6 +22,7 @@ import persistencia.conexion.Conexion;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
@@ -221,7 +222,9 @@ public class VentanaAgregarEmpleados extends JFrame {
 		txtRepetirClave.setBounds(164, 204, 116, 22);
 		panel.add(txtRepetirClave);
 		txtRepetirClave.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-
+		txtRepetirClave.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+		
+		
 		JLabel lblRepetirClave = new JLabel("Repetir Clave");
 		lblRepetirClave.setBounds(164, 180, 114, 20);
 		panel.add(lblRepetirClave);
@@ -239,7 +242,9 @@ public class VentanaAgregarEmpleados extends JFrame {
 		txtClaveNueva.setBounds(164, 154, 116, 22);
 		panel.add(txtClaveNueva);
 		txtClaveNueva.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-
+		txtClaveNueva.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
+		
+		
 		JLabel lblClave = new JLabel("Clave Nueva");
 		lblClave.setBounds(164, 130, 114, 20);
 		panel.add(lblClave);

@@ -367,14 +367,7 @@ public class ControladorAltaProducto {
 			if(!insert) {
 				JOptionPane.showMessageDialog(null, "Ha ocurrido un error al insertar el nuevo producto");
 				return;
-			}
-			
-			//se asigna al proveedor como proveedor de este material
-//			
-//			ProductoDeProveedorDTO prodDeProv = new ProductoDeProveedorDTO();
-//			
-//			this.productoDeProveedor.insert();
-			
+			}			
 			asignarProveedoresAProducto();
 			
 			JOptionPane.showMessageDialog(null, "Produto agregado con éxito");
@@ -422,17 +415,6 @@ public class ControladorAltaProducto {
 	}
 	
 	public int obtenerProveedorPreferenciado() {
-		/*
-		String resp = (String) this.ventanaAltaProducto.getComboBoxFabricado().getSelectedItem();
-		if(resp.equals("Si")) {
-			return 0;
-		}
-		if(this.proveedorElegido==null) {
-			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun proveedor");
-		}
-		
-		return this.proveedorElegido.getId();
-		*/
 		int id=0;
 		for(int i=0; i<this.productoDeProveedorEnTabla.size(); i++) {
 			if((Boolean)this.ventanaAltaProducto.getTableProveedores().getValueAt(i, 5)==true) {

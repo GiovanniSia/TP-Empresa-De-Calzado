@@ -169,10 +169,6 @@ public class ControladorModificarEmpleados {
 			JOptionPane.showMessageDialog(null, "El formato de mail es incorrecto");
 			return false;
 		}
-		if(yaExisteCorreoElectronico(CorreoElectronicoNuevo)){
-			JOptionPane.showMessageDialog(null, "Ya existe una cuenta que usa ese correo electronico");
-			return false;
-		}
 		
 		if (checkboxActivado && ClaveNuevo.equals("")) {
 			JOptionPane.showMessageDialog(null, "La clave no puede ser vacia");

@@ -204,8 +204,19 @@ public class ControladorEgresosCaja {
 			if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
+				
+				try {
+					Double.parseDouble(ppNroProveedor);
+					Double.parseDouble(ppNroOrdenCompra);
+					Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+				}catch(NumberFormatException e){
+					JOptionPane.showMessageDialog(null, "Los campos deben ser numericos");
+					return;	
+				}
+				
+				
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra))){
+				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),ppNroProveedor)){
                     ingresarEgreso(detalle);
                 }else {
                     JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
@@ -233,9 +244,9 @@ public class ControladorEgresosCaja {
 		return ret;
 	}
 
-	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra) {
+	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra,String nroProveedor) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
-			if (p.getId() == ppNroOrdenCompra) {
+			if (p.getId() == ppNroOrdenCompra && Integer.parseInt(nroProveedor) == p.getIdProveedor()) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
 				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago))
 						.setScale(2, RoundingMode.HALF_UP);
@@ -320,7 +331,7 @@ public class ControladorEgresosCaja {
 			return false;
 		}
 
-		if (Integer.parseInt(this.ventanaEgresoCaja.getTxtFieldMonto().getText()) > obtenerValorBalance()) {
+		if (Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText()) > obtenerValorBalance()) {
 			JOptionPane.showMessageDialog(null, "El monto supera lo disponible");
 			return false;
 		}

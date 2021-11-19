@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -227,6 +228,7 @@ public class VentanaModificarEmpleados extends JFrame {
 		});
 		txtClaveNueva.setBounds(177, 258, 116, 20);
 		txtClaveNueva.setEditable(false);
+		txtClaveNueva.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
 		contentPane.add(txtClaveNueva);
 		
 		checkboxCambiarClave = new JCheckBox("Cambiar Clave");
@@ -242,6 +244,7 @@ public class VentanaModificarEmpleados extends JFrame {
 				}
 			}
 		});
+		
 		checkboxCambiarClave.setBounds(176, 230, 116, 23);
 		contentPane.add(checkboxCambiarClave);
 		
