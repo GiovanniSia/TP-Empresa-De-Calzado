@@ -82,7 +82,8 @@ public class Controlador {
 	
 	private int cantSucursalesEnGrafico = 4;
 	private int cantVendedorEnGrafico = 4;
-	private Double minimoNecesarioParaIngresarEnLosGraficos = 0.1;
+	private int limiteDeCantidadParaLosGraficos = 7;
+	private Double minimoNecesarioParaIngresarEnLosGraficos = 0.0;
 	private int diasParaAtras = 1000;
 
 	private int idSucursal = 0;
@@ -265,6 +266,8 @@ public class Controlador {
 			this.ventanaDashboardGerente.getLblSucursal().setText("Sucursal: " + sucursalObj.getNombre());
 			inicializarControladoresGerente();
 			escucharBotonesVentanaGerente();
+			
+			inicializarBotonesParaGraficosGerente();
 		}
 		
 		generarOrdenesFabricacion.actualizarTodosLosTrabajosListosParaLosEnvios();
@@ -696,6 +699,7 @@ public class Controlador {
 		this.ventanaDashboardGerente.getPanel_1_1().remove(this.ventanaDashboardGerente.getPanelTorta2());
 		this.ventanaDashboardGerente.setPanelTorta2(panelTorta2);
 		this.ventanaDashboardGerente.getPanel_1_1().add(this.ventanaDashboardGerente.getPanelTorta2());
+		this.ventanaDashboardGerente.getPanel_1_1().repaint();
 	}
 	
 	private DefaultPieDataset getDatosVentasXSucursales() {
@@ -723,6 +727,7 @@ public class Controlador {
 		this.ventanaDashboardGerente.getPanel_1().remove(this.ventanaDashboardGerente.getPanelTorta());
 		this.ventanaDashboardGerente.setPanelTorta(panelTorta);
 		this.ventanaDashboardGerente.getPanel_1().add(this.ventanaDashboardGerente.getPanelTorta());
+		this.ventanaDashboardGerente.getPanel_1().repaint();
 	}
 	
 	// * * * * FIN GRAFICOS * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -1074,6 +1079,45 @@ public class Controlador {
 
 	public void setControladorLogin(ControladorLogin controladorLogin) {
 		this.controladorLogin = controladorLogin;
+	}
+	
+	//
+	//	GRAFICOS
+	//
+	
+	private void inicializarBotonesParaGraficosGerente() {
+		this.ventanaDashboardGerente.getBtnBajarCantEmpleados().addActionListener(r -> bajarCantidadEmpleados(r));
+		this.ventanaDashboardGerente.getBtnSubirCantEmpleados().addActionListener(r -> subirCantidadEmpleados(r));
+		this.ventanaDashboardGerente.getBtnBajarCantSucursales().addActionListener(r -> bajarCantidadSucursales(r));
+		this.ventanaDashboardGerente.getBtnSubirCantSucursales().addActionListener(r -> subirCantidadSucursales(r));
+	}
+	
+	private void subirCantidadSucursales(ActionEvent r) {
+		if(cantSucursalesEnGrafico != limiteDeCantidadParaLosGraficos) {
+			cantSucursalesEnGrafico = cantSucursalesEnGrafico+1;
+			this.iniciarGraficos();
+		}
+	}
+	
+	private void bajarCantidadSucursales(ActionEvent r) {
+		if(!(cantSucursalesEnGrafico<=1)) {
+			cantSucursalesEnGrafico = cantSucursalesEnGrafico-1;
+			this.iniciarGraficos();
+		}
+	}
+	
+	private void subirCantidadEmpleados(ActionEvent r) {
+		if(cantVendedorEnGrafico != limiteDeCantidadParaLosGraficos) {
+			cantVendedorEnGrafico = cantVendedorEnGrafico+1;
+			this.iniciarGraficos();
+		}
+	}
+	
+	private void bajarCantidadEmpleados(ActionEvent r) {
+		if(!(cantVendedorEnGrafico<=1)) {
+			cantVendedorEnGrafico = cantVendedorEnGrafico-1;
+			this.iniciarGraficos();
+		}
 	}
 
 }

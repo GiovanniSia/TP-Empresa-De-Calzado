@@ -81,6 +81,11 @@ public class VentanaDashboardGerente {
 	private JLabel lblcierreDeCaja_1;
 	private JButton btnReporteRiesgoStock;
 	private JLabel lblcierreDeCaja_3;
+	
+	JButton btnSubirCantSucursales;
+	JButton btnBajarCantSucursales;
+	JButton btnSubirCantEmpleados;
+	JButton btnBajarCantEmpleados;
 
 	/**
 	 * Launch the application.
@@ -122,8 +127,36 @@ public class VentanaDashboardGerente {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
+				
+				btnBajarCantEmpleados = new JButton("");
+				btnBajarCantEmpleados.setForeground(new Color(51, 102, 153));
+				btnBajarCantEmpleados.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnBajarCantEmpleados.setBackground(new Color(51, 102, 204));
+				btnBajarCantEmpleados.setBounds(861, 580, 40, 40);
+				frame.getContentPane().add(btnBajarCantEmpleados);
+				
+				btnSubirCantEmpleados = new JButton("");
+				btnSubirCantEmpleados.setForeground(new Color(51, 102, 153));
+				btnSubirCantEmpleados.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnSubirCantEmpleados.setBackground(new Color(51, 102, 204));
+				btnSubirCantEmpleados.setBounds(861, 529, 40, 40);
+				frame.getContentPane().add(btnSubirCantEmpleados);
 		
-		JLabel lblRankingDeVentas_2 = new JLabel("Ranking de Ventas x Vendedor");
+				btnBajarCantSucursales = new JButton("");
+				btnBajarCantSucursales.setForeground(new Color(51, 102, 153));
+				btnBajarCantSucursales.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnBajarCantSucursales.setBackground(new Color(51, 102, 204));
+				btnBajarCantSucursales.setBounds(861, 250, 40, 40);
+				frame.getContentPane().add(btnBajarCantSucursales);
+		
+		btnSubirCantSucursales = new JButton("");
+		btnSubirCantSucursales.setForeground(new Color(51, 102, 153));
+		btnSubirCantSucursales.setFont(new Font("Segoe UI", Font.BOLD, 20));
+		btnSubirCantSucursales.setBackground(new Color(51, 102, 204));
+		btnSubirCantSucursales.setBounds(861, 199, 40, 40);
+		frame.getContentPane().add(btnSubirCantSucursales);
+		
+		JLabel lblRankingDeVentas_2 = new JLabel("Ranking de Ventas x Vendedor(total en pesos)");
 		lblRankingDeVentas_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRankingDeVentas_2.setForeground(Color.WHITE);
 		lblRankingDeVentas_2.setFont(new Font("Segoe UI", Font.ITALIC, 16));
@@ -462,7 +495,7 @@ public class VentanaDashboardGerente {
 		
 		panel_1_1.add(panelTorta2);
 		
-		JLabel lblRankingDeVentas = new JLabel("Ranking de Ventas x Sucursal");
+		JLabel lblRankingDeVentas = new JLabel("Ranking de Ventas x Sucursal (total en pesos)");
 		lblRankingDeVentas.setForeground(new Color(255, 255, 255));
 		lblRankingDeVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRankingDeVentas.setFont(new Font("Segoe UI", Font.ITALIC, 16));
@@ -624,5 +657,21 @@ public class VentanaDashboardGerente {
 
 	public JButton getBtnReporteRiesgoStock() {
 		return btnReporteRiesgoStock;
+	}
+
+	public JButton getBtnSubirCantSucursales() {
+		return btnSubirCantSucursales;
+	}
+
+	public JButton getBtnBajarCantSucursales() {
+		return btnBajarCantSucursales;
+	}
+
+	public JButton getBtnSubirCantEmpleados() {
+		return btnSubirCantEmpleados;
+	}
+
+	public JButton getBtnBajarCantEmpleados() {
+		return btnBajarCantEmpleados;
 	}
 }
