@@ -216,10 +216,8 @@ public class ControladorEgresosCaja {
 				
 				
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),ppNroProveedor)){
+				if(sePudoRegistrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),Integer.parseInt(ppNroProveedor))){
                     ingresarEgreso(detalle);
-                }else {
-                    JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
                 }
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
@@ -244,48 +242,61 @@ public class ControladorEgresosCaja {
 		return ret;
 	}
 
-	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra,String nroProveedor) {
+	private boolean sePudoRegistrarPedidoComoPagado(int ppNroOrdenCompra,int nroProveedor) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
-			if (p.getId() == ppNroOrdenCompra && Integer.parseInt(nroProveedor) == p.getIdProveedor()) {
+			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {
 				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago))
-						.setScale(2, RoundingMode.HALF_UP);
 				
-				double pagoRestante = p.getPrecioTotal() - pago;
-
+				double totalPagado = p.getTotalPagado()+pago;
+				double pagoRestante = p.getPrecioTotal()-totalPagado;
 				boolean update = true;
-				boolean updateTotal = true;
+
+				if( p.getPrecioTotal()<totalPagado) {
+					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido ("+pagoRestante+")");
+					return false;
+				}
+				
+				//se completa el pago
 				if (pagoRestante <= 0) {
-					update = this.pedidosPendientes.cambiarEstado(p.getId(), "Pagado");
+					
+					p.setEstado("Pagado");
+					p.setTotalPagado(totalPagado);
+					
+					update = this.pedidosPendientes.update(p,p.getId());
 
 					if (!update) {
 						JOptionPane.showMessageDialog(null,
 								"Ha ocurrido un error al marcar como completo el pedido: " + p.getId(), "Error",
 								JOptionPane.ERROR_MESSAGE);
+						return false;
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'",
-								"Pago", JOptionPane.INFORMATION_MESSAGE);
+								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'","Pago", JOptionPane.INFORMATION_MESSAGE);
+						return true;
 					}
 
-				} else {
-					updateTotal = this.pedidosPendientes.updateTotal(p.getId(), pagoRestante);
-
-					if (!updateTotal) {
-						JOptionPane.showMessageDialog(null,
-								"Ha ocurrido un error al actualizar el total del pedido: " + p.getId(), "Error",
-								JOptionPane.ERROR_MESSAGE);
+				} 
+				//se paga una parte del pedido
+				else {
+					p.setTotalPagado(totalPagado);
+					update = this.pedidosPendientes.update(p,p.getId());
+					if (!update) {
+						JOptionPane.showMessageDialog(null,	"Ha ocurrido un error al actualizar el total del pedido: " + p.getId(), "Error",JOptionPane.ERROR_MESSAGE);
+						return false;
 					} else {
+						
+						BigDecimal pagoRestant = new BigDecimal(pagoRestante).setScale(2, RoundingMode.HALF_UP);
+						
 						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: " + p.getId()
-								+ ".\nNuevo saldo: " + pagoRestanteMostrar, "Pago", JOptionPane.INFORMATION_MESSAGE);
+								+ ".\nNuevo saldo: " + pagoRestant, "Pago", JOptionPane.INFORMATION_MESSAGE);
+						return true;
 					}
-				}
-
-				return true;
+				}			
 			}
 			
 		}
-		return false;
+		JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
+        return false;
 	}
 
 	public boolean validarCampos() {

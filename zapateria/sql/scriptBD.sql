@@ -452,6 +452,7 @@ CREATE TABLE `PedidosPendientes`
 	`FechaCompleto` Date DEFAULT NULL,
     `HoraCompleto` TIME DEFAULT NULL,
     `UnidadMedida` varchar(45) NOT NULL,
+	`TotalPagado` double(45,2) NOT NULL,
     PRIMARY KEY(`Id`)
 );
 
