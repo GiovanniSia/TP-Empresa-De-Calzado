@@ -73,8 +73,8 @@ public class VentanaVerFabricaciones extends JFrame {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255, 180));
-		panel.setBounds(0, 117, 902, 330);
+		panel.setBackground(new Color(248, 248, 255));
+		panel.setBounds(0, 109, 902, 330);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -180,14 +180,14 @@ public class VentanaVerFabricaciones extends JFrame {
 
 		
 		lblNewLabel = new JLabel("Facturas");
-		lblNewLabel.setBounds(10, 49, 389, 67);
+		lblNewLabel.setBounds(10, 56, 389, 53);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		
 		panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		panel_1.setBackground(Color.WHITE);
+		panel_1.setBackground(new Color(153, 204, 255));
 		panel_1.setBounds(0, 0, 902, 53);
 		frame.getContentPane().add(panel_1);
 		
@@ -195,30 +195,30 @@ public class VentanaVerFabricaciones extends JFrame {
 		lblLogo.setForeground(Color.WHITE);
 		lblLogo.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblLogo.setBounds(10, 5, 165, 42);
-		cambiarIconoLabel(lblLogo, "argentoshoes.png");
+		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_1.add(lblLogo);
 		
 		btnSalir = new JButton("");
-		btnSalir.setBounds(10, 458, 60, 60);
+		btnSalir.setBounds(10, 450, 60, 60);
 		frame.getContentPane().add(btnSalir);
 		cambiarIconoBotones(btnSalir,  "back2.png");
 		
 				JLabel lblAtras = new JLabel("Atras");
-				lblAtras.setBounds(80, 458, 90, 60);
+				lblAtras.setBounds(80, 450, 90, 60);
 				frame.getContentPane().add(lblAtras);
 				lblAtras.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 				
 						btnVerFactura = new JButton("");
-						btnVerFactura.setBounds(559, 458, 60, 60);
+						btnVerFactura.setBounds(559, 450, 60, 60);
 						frame.getContentPane().add(btnVerFactura);
 						btnVerFactura.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 							}
 						});
-						cambiarIconoBotones(btnVerFactura,  "right.png");
+						cambiarIconoBotones(btnVerFactura,  "facturaver.png");
 						
 						lblVerFactura = new JLabel("Ver factura");
-						lblVerFactura.setBounds(629, 458, 138, 60);
+						lblVerFactura.setBounds(629, 450, 138, 60);
 						frame.getContentPane().add(lblVerFactura);
 						lblVerFactura.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 						
@@ -257,6 +257,8 @@ public class VentanaVerFabricaciones extends JFrame {
 
 	public void cambiarIconoBotones(JButton boton, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/"+ruta));
+		ImageIcon Icono = new ImageIcon(Imagen.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+		boton.setIcon(Icono);
 	}
 	
 	public void cambiarIconoLabel(JLabel label, String ruta) {

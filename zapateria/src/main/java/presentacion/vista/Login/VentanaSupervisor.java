@@ -71,7 +71,7 @@ public class VentanaSupervisor extends JFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 1131, 626);
+		frame.setBounds(100, 100, 1151, 626);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,7 +84,7 @@ public class VentanaSupervisor extends JFrame {
 		panel.setLayout(null);
 		panel.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		panel.setBackground(new Color(153, 204, 255));
-		panel.setBounds(1, 0, 1124, 53);
+		panel.setBounds(1, 0, 1134, 53);
 		contentPane.add(panel);
 		
 		lblLogo = new JLabel("");
@@ -130,7 +130,7 @@ public class VentanaSupervisor extends JFrame {
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(248, 248, 255));
-		panel_1.setBounds(11, 64, 1104, 438);
+		panel_1.setBounds(11, 64, 1114, 438);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -293,6 +293,7 @@ public class VentanaSupervisor extends JFrame {
 																				btnVerFactura.setFont(new Font("Segoe UI", Font.BOLD, 20));
 																				btnVerFactura.setBackground(new Color(51, 102, 204));
 																				btnVerFactura.setBounds(822, 271, 120, 120);
+																				cambiarIconoBotones(btnVerFactura, "facturaver.png");
 																				panel_1.add(btnVerFactura);
 																				
 																				lblNewLabel = new JLabel("<html><center>Ver Facturas</center></html>");
@@ -306,6 +307,7 @@ public class VentanaSupervisor extends JFrame {
 																				btnReporteRiesgoStock.setFont(new Font("Segoe UI", Font.BOLD, 20));
 																				btnReporteRiesgoStock.setBackground(new Color(51, 102, 204));
 																				btnReporteRiesgoStock.setBounds(974, 172, 120, 120);
+																				cambiarIconoBotones(btnReporteRiesgoStock, "stock.png");
 																				panel_1.add(btnReporteRiesgoStock);
 																				
 																				lblriesgoStock = new JLabel("<html><center>Riesgo Stock</center></html>");
@@ -315,7 +317,7 @@ public class VentanaSupervisor extends JFrame {
 																				panel_1.add(lblriesgoStock);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 1000, 750);
+		lblFondo.setBounds(0, 0, 1280, 960);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 		

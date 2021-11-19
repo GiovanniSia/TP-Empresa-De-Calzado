@@ -116,7 +116,7 @@ public class VentanaDashboardGerente {
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(67, 73, 86));
-		frame.setBounds(100, 100, 1190, 692);
+		frame.setBounds(100, 100, 906, 692);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
@@ -127,17 +127,17 @@ public class VentanaDashboardGerente {
 		lblRankingDeVentas_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRankingDeVentas_2.setForeground(Color.WHITE);
 		lblRankingDeVentas_2.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-		lblRankingDeVentas_2.setBounds(383, 348, 320, 22);
+		lblRankingDeVentas_2.setBounds(531, 342, 320, 22);
 		frame.getContentPane().add(lblRankingDeVentas_2);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 340, 653);
+		panel.setBounds(0, 0, 490, 653);
 		panel.setBackground(new Color(248, 248, 255));
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(34, 331, 275, 11);
+		separator.setBounds(34, 331, 415, 11);
 		panel.add(separator);
 		
 		btnGestionarProveedores = new JButton("");
@@ -149,13 +149,13 @@ public class VentanaDashboardGerente {
 		panel.add(btnGestionarProveedores);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setBounds(10, 11, 319, 86);
+		lblLogo.setBounds(80, 11, 319, 86);
 		panel.add(lblLogo);
 		cambiarIconoLabel(lblLogo,"argentoshoes.png");
 		
 		lblGerente = new JLabel("Gerente:");
 		lblGerente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblGerente.setBounds(10, 95, 166, 22);
+		lblGerente.setBounds(65, 96, 166, 22);
 		panel.add(lblGerente);
 		
 		btnGestionarProductos = new JButton("");
@@ -294,7 +294,7 @@ public class VentanaDashboardGerente {
 		
 		lblSucursal = new JLabel("Sucursal:");
 		lblSucursal.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblSucursal.setBounds(186, 95, 171, 22);
+		lblSucursal.setBounds(241, 96, 171, 22);
 		panel.add(lblSucursal);
 		
 		lblProveedores = new JLabel("Proveedores");
@@ -378,40 +378,42 @@ public class VentanaDashboardGerente {
 		panel.add(lblcierreDeCaja_2);
 		
 		separator_1 = new JSeparator();
-		separator_1.setBounds(34, 393, 275, 11);
+		separator_1.setBounds(34, 393, 415, 11);
 		panel.add(separator_1);
 		
 		separator_2 = new JSeparator();
-		separator_2.setBounds(34, 506, 275, 11);
+		separator_2.setBounds(34, 506, 415, 11);
 		panel.add(separator_2);
 		
 		btnVerFacturas = new JButton("");
 		btnVerFacturas.setForeground(new Color(51, 102, 153));
 		btnVerFacturas.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnVerFacturas.setBackground(new Color(51, 102, 204));
-		btnVerFacturas.setBounds(186, 582, 40, 40);
+		btnVerFacturas.setBounds(317, 404, 40, 40);
+		cambiarIconoBotones(btnVerFacturas, "facturaver.png");
 		panel.add(btnVerFacturas);
 		
-		lblcierreDeCaja_1 = new JLabel("<html>Ver facturas</html>");
+		lblcierreDeCaja_1 = new JLabel("<html>Ver Facturas</html>");
 		lblcierreDeCaja_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblcierreDeCaja_1.setBounds(236, 582, 82, 40);
+		lblcierreDeCaja_1.setBounds(367, 404, 82, 40);
 		panel.add(lblcierreDeCaja_1);
 		
 		btnReporteRiesgoStock = new JButton("");
 		btnReporteRiesgoStock.setForeground(new Color(51, 102, 153));
 		btnReporteRiesgoStock.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		btnReporteRiesgoStock.setBackground(new Color(51, 102, 204));
-		btnReporteRiesgoStock.setBounds(215, 602, 40, 40);
+		btnReporteRiesgoStock.setBounds(317, 231, 40, 40);
+		cambiarIconoBotones(btnReporteRiesgoStock, "stock.png");
 		panel.add(btnReporteRiesgoStock);
 		
-		lblcierreDeCaja_3 = new JLabel("<html>Riesgo Stock</html>");
+		lblcierreDeCaja_3 = new JLabel("<html>Reporte de Riesgo Stock</html>");
 		lblcierreDeCaja_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblcierreDeCaja_3.setBounds(265, 602, 82, 40);
+		lblcierreDeCaja_3.setBounds(367, 231, 82, 40);
 		panel.add(lblcierreDeCaja_3);
 		
 		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255));
-		panel_1.setBounds(383, 50, 320, 246);
+		panel_1.setBounds(531, 44, 320, 246);
 		panel_1.setBorder(null);
 		frame.getContentPane().add(panel_1);
 		
@@ -436,7 +438,7 @@ public class VentanaDashboardGerente {
 		
 		panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
-		panel_1_1.setBounds(383, 380, 320, 246);
+		panel_1_1.setBounds(531, 374, 320, 246);
 		frame.getContentPane().add(panel_1_1);
 		
 		int e1 = 12000;
@@ -460,21 +462,11 @@ public class VentanaDashboardGerente {
 		
 		panel_1_1.add(panelTorta2);
 		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setLayout(null);
-		panel_1_2.setBounds(803, 50, 320, 246);
-		frame.getContentPane().add(panel_1_2);
-		
-		JPanel panel_1_3 = new JPanel();
-		panel_1_3.setLayout(null);
-		panel_1_3.setBounds(803, 380, 320, 246);
-		frame.getContentPane().add(panel_1_3);
-		
 		JLabel lblRankingDeVentas = new JLabel("Ranking de Ventas x Sucursal");
 		lblRankingDeVentas.setForeground(new Color(255, 255, 255));
 		lblRankingDeVentas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRankingDeVentas.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-		lblRankingDeVentas.setBounds(383, 17, 320, 22);
+		lblRankingDeVentas.setBounds(531, 11, 320, 22);
 		frame.getContentPane().add(lblRankingDeVentas);
 		
 		
