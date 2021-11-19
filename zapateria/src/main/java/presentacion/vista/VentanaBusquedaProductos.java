@@ -308,9 +308,15 @@ public class VentanaBusquedaProductos {
 
 		tableCarrito = new JTable(modelTablaCarrito);
 
-		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(103);
-		this.tableCarrito.getColumnModel().getColumn(0).setResizable(false);
+		this.tableCarrito.getColumnModel().getColumn(0).setPreferredWidth(100);
+		this.tableCarrito.getColumnModel().getColumn(1).setPreferredWidth(100);
+		this.tableCarrito.getColumnModel().getColumn(2).setPreferredWidth(100);
+		this.tableCarrito.getColumnModel().getColumn(3).setPreferredWidth(100);
+		this.tableCarrito.getColumnModel().getColumn(4).setPreferredWidth(80);
 		tableCarrito.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		this.tableCarrito.getTableHeader().setReorderingAllowed(false);
+		this.tableCarrito.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		this.tableCarrito.doLayout();
 		scrollPaneCarrito.setViewportView(tableCarrito);
 				
 		JLabel lblCantidad = new JLabel("Cambiar cantidad");
