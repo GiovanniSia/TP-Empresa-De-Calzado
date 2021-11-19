@@ -138,20 +138,18 @@ public class ControladorBusquedaProductos {
 				int filaSeleccionada = vistaBusquedaProductos.getTableCarrito().getSelectedRow();
 				if(filaSeleccionada==-1) return;
 //				//cuando se clickea en la tabla, se actualiza el spinner
-//				if(productosEnCarrito.get(filaSeleccionada).getCantidad() > Integer.MAX_VALUE) {
-//					
-//				}else {
-//					vistaBusquedaProductos.getSpinnerCarrito().setValue((int) productosEnCarrito.get(filaSeleccionada).getCantidad());	
-//				}
-				BigDecimal valor = new BigDecimal(productosEnCarrito.get(filaSeleccionada).getCantidad()).setScale(2, RoundingMode.HALF_UP); 
-				vistaBusquedaProductos.getTextCantidadCarrito().setText(""+valor);
+
+				
+				BigDecimal valorr = new BigDecimal(productosEnCarrito.get(filaSeleccionada).getCantidad()).setScale(0, RoundingMode.HALF_UP);
+				vistaBusquedaProductos.getSpinnerCantCarrito().setValue(valorr.doubleValue());
+				
 			}
 			
 		});
 
-		this.vistaBusquedaProductos.getTextCantidadCarrito().addKeyListener(new KeyAdapter() {
+		this.vistaBusquedaProductos.getSpinnerCantCarrito().addChangeListener(new ChangeListener() {
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void stateChanged(ChangeEvent e) {
 				modificarCantDeCarritoDadoSpinner();
 			}
 		});
@@ -159,7 +157,6 @@ public class ControladorBusquedaProductos {
 		this.vistaBusquedaProductos.getSpinnerPrecioHasta().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-//				modificarValorMaximoDeSpinnerDesde();
 				realizarBusqueda();
 			}
 		});
@@ -207,11 +204,7 @@ public class ControladorBusquedaProductos {
 				ValidadorTeclado.aceptarLetrasYEspacios(e);
 			}
 		}));
-		this.vistaBusquedaProductos.getTextCantidadCarrito().addKeyListener((new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				ValidadorTeclado.aceptarSoloNumeros(e);
-			}
-		}));
+
 		this.vistaBusquedaProductos.getTextCantidadListaProductos().addKeyListener((new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				ValidadorTeclado.aceptarSoloNumeros(e);
@@ -293,8 +286,8 @@ public class ControladorBusquedaProductos {
 		}else {
 			preci = m.getPrecioMinorista();
 		}
-		BigDecimal precio = new BigDecimal(preci).setScale(2, RoundingMode.HALF_UP);
-		BigDecimal stockDisp = new BigDecimal(s.getStockDisponible()).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal precio = new BigDecimal(preci).setScale(0, RoundingMode.HALF_UP);
+		BigDecimal stockDisp = new BigDecimal(s.getStockDisponible()).setScale(0, RoundingMode.HALF_UP);
 		String codLote = s.getCodigoLote();
 		Object[] fila = { nombre,talle,precio,stockDisp,codLote};
 		this.vistaBusquedaProductos.getModelTabla().addRow(fila);
@@ -324,6 +317,7 @@ public class ControladorBusquedaProductos {
 		double cantSeleccionada=0;
 		try {
 			cantSeleccionada =Double.parseDouble(this.vistaBusquedaProductos.getTextCantidadListaProductos().getText());
+			cantSeleccionada = new BigDecimal(cantSeleccionada).setScale(0, RoundingMode.HALF_UP).doubleValue();
 		}catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Debe escribir un numero");
 			this.vistaBusquedaProductos.getTextCantidadListaProductos().setText("");
@@ -384,8 +378,8 @@ public class ControladorBusquedaProductos {
 			}else {
 				total = m.getProducto().getPrecioMinorista() * m.getCantidad();
 			}
-			BigDecimal b = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP);
-			BigDecimal cantObj = new BigDecimal(m.getCantidad()).setScale(2, RoundingMode.HALF_UP);
+			BigDecimal b = new BigDecimal(total).setScale(0, RoundingMode.HALF_UP);
+			BigDecimal cantObj = new BigDecimal(m.getCantidad()).setScale(0, RoundingMode.HALF_UP);
 			
 			String codLote = m.getStock().getCodigoLote();
 			String talle = m.getProducto().getTalle();
@@ -407,7 +401,7 @@ public class ControladorBusquedaProductos {
 			}
 			
 		}
-		BigDecimal precio = new BigDecimal(this.Preciototal).setScale(2, RoundingMode.HALF_UP);
+		BigDecimal precio = new BigDecimal(this.Preciototal).setScale(0, RoundingMode.HALF_UP);
 		this.vistaBusquedaProductos.getLblValorTotal().setText("$"+precio);
 	}
 	
@@ -428,10 +422,10 @@ public class ControladorBusquedaProductos {
 		int filaSeleccionada = this.vistaBusquedaProductos.getTableCarrito().getSelectedRow();
 		if(this.vistaBusquedaProductos.getTableCarrito().getSelectedRow()==-1) {
 			JOptionPane.showMessageDialog(null, "No ha seleccionado ningun producto para descontar");
-			this.vistaBusquedaProductos.getTextCantidadCarrito().setText("");
+			this.vistaBusquedaProductos.getSpinnerCantCarrito().setValue("");
 			return;
 		}
-		if(this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("") ||this.vistaBusquedaProductos.getTextCantidadCarrito().getText().equals("0")) {
+		if(this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals("") || this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals("0")) {
 			quitarProductoDelCarrito(null);
 			return;
 		}
@@ -443,20 +437,17 @@ public class ControladorBusquedaProductos {
 		double valorDelSpinner = 0;
 		
 		try {
-			valorDelSpinner = Double.parseDouble( this.vistaBusquedaProductos.getTextCantidadCarrito().getText());
+//			valorDelSpinner = Double.parseDouble( this.vistaBusquedaProductos.getTextCantidadCarrito().getText());
+			valorDelSpinner = (double)this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue();
 		}catch(NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Debe escribir un numero");
-			this.vistaBusquedaProductos.getTextCantidadCarrito().setText("");
+			this.vistaBusquedaProductos.getSpinnerCantCarrito().setValue("");
 			return;
 		}
-		
+		valorDelSpinner = new BigDecimal(valorDelSpinner).setScale(0, RoundingMode.HALF_UP).doubleValue();
 		if(valorDelSpinner == this.productosEnCarrito.get(filaSeleccionada).getCantidad()) {
 			return;
 		}		
-//		if(valorDelSpinner == 0) {
-//			quitarProductoDelCarrito(null);
-//			return;
-//		}
 		if(!laCantidadEsValida(valorDelSpinner,productoEnCarrito.getProducto(),stockDeProd,productoEnCarrito)) {
 			JOptionPane.showMessageDialog(null, "La cantidad elegida no es válida");
 			return;

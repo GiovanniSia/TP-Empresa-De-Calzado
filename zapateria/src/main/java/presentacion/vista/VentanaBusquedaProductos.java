@@ -83,8 +83,8 @@ public class VentanaBusquedaProductos {
 	private JButton btnAtras;
 	private JLabel lblNewLabel_2;
 	private JTextField textCantidadListaProductos;
-	private JTextField textCantidadCarrito;
 	private JButton btnInformacionElegirProductos;
+	private JSpinner spinnerCantCarrito;
 	/**
 	 * Launch the application.
 	 */
@@ -197,7 +197,6 @@ public class VentanaBusquedaProductos {
 		frame.getContentPane().add(lblNewLabel);
 		
 		//Spinners
-	
 		spinnerModelDesde = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
 		
 		spinnerModelHasta = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 100); //default value,lower bound,upper bound,increment by
@@ -391,20 +390,6 @@ public class VentanaBusquedaProductos {
 //		textCantidadListaProductos.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null"); 
 		panel.add(textCantidadListaProductos);
 		
-		textCantidadCarrito = new JTextField();
-		textCantidadCarrito.setColumns(10);
-		textCantidadCarrito.setBounds(688, 41, 84, 19);
-		textCantidadCarrito.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (textCantidadCarrito.getText().length() >= 44) {
-					e.consume();
-				}
-			}
-		});
-//		textCantidadCarrito.getInputMap(JTextField.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, org.w3c.dom.events.Event.AT_TARGET), "null");
-		panel.add(textCantidadCarrito);
-		
 		btnInformacionElegirProductos = new JButton("");
 		btnInformacionElegirProductos.setBounds(894, 57, 33, 32);
 		cambiarIconoBotones(btnInformacionElegirProductos, "help.png");	
@@ -414,9 +399,13 @@ public class VentanaBusquedaProductos {
 		lblFondo.setBounds(0, 24, 960, 720);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 		frame.getContentPane().add(lblFondo);
+		
+		//Spinners
+		SpinnerModel spinnerModelcantCarrito = new SpinnerNumberModel(0, 0, Double.MAX_VALUE, 1); //default value,lower bound,upper bound,increment by
+		spinnerCantCarrito = new JSpinner(spinnerModelcantCarrito);
+		spinnerCantCarrito.setBounds(689, 41, 120, 19);
+		panel.add(spinnerCantCarrito);		
 	}
-	
-	
 	
 	public void show() {
 		this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -457,9 +446,7 @@ public class VentanaBusquedaProductos {
 	public JTextField getTxtNombreProducto() {
 		return txtNombreProducto;
 	}
-//	public JTextField getTxtIdSucursal() {
-//		return txtIdSucursal;
-//	}
+
 	public JTable getTable() {
 		return tableProductosFiltrados;
 	}
@@ -470,48 +457,33 @@ public class VentanaBusquedaProductos {
 		return nombreColumnasProductosFiltrados;
 	}
 	
-	
 	public JTable getTableProductosFiltrados() {
 		return tableProductosFiltrados;
 	}
-
-
 
 	public DefaultTableModel getModelTablaProductosFiltrados() {
 		return modelTablaProductosFiltrados;
 	}
 
-
-
 	public String[] getNombreColumnasProductosFiltrados() {
 		return nombreColumnasProductosFiltrados;
 	}
-
-
 
 	public JTable getTableCarrito() {
 		return tableCarrito;
 	}
 
-
-
 	public DefaultTableModel getModelTablaCarrito() {
 		return modelTablaCarrito;
 	}
-
-
 
 	public String[] getNombreColumnasCarrito() {
 		return nombreColumnasCarrito;
 	}
 
-
-
 	public JLabel getLblValorTotal() {
 		return lblValorTotal;
 	}
-
-
 
 	public JTextField getTxtTalle() {
 		return txtTalle;
@@ -524,13 +496,9 @@ public class VentanaBusquedaProductos {
 		return btnQuitarProducto;
 	}
 
-
-
 	public JButton getBtnAtras() {
 		return btnAtras;
 	}
-
-
 
 	public JButton getBtnPasarAElegir() {
 		return btnArmarVenta;
@@ -544,19 +512,13 @@ public class VentanaBusquedaProductos {
 		return tableCliente;
 	}
 
-
-
 	public DefaultTableModel getModelTablaCliente() {
 		return modelTablaCliente;
 	}
 
-
-
 	public String[] getNombreColumnasCliente() {
 		return nombreColumnasCliente;
 	}
-
-
 
 	public JScrollPane getScrollPaneCliente() {
 		return scrollPaneCliente;
@@ -590,106 +552,73 @@ public class VentanaBusquedaProductos {
 		this.spinnerPrecioDesde = spinnerPrecioDesde;
 	}
 
-
-
 	public JFrame getFrame() {
 		return frame;
 	}
-
-
 
 	public JScrollPane getScrollPaneProductosFiltrados() {
 		return scrollPaneProductosFiltrados;
 	}
 
-
-
 	public JScrollPane getScrollPaneCarrito() {
 		return scrollPaneCarrito;
 	}
-
-
 
 	public JLabel getLblNombre() {
 		return lblNombre;
 	}
 
-
-
 	public JLabel getLblTalle() {
 		return lblTalle;
 	}
-
-
 
 	public JLabel getLblSubtitulo() {
 		return lblSubtitulo;
 	}
 
-
-
 	public JButton getBtnArmarVenta() {
 		return btnArmarVenta;
 	}
-
-
 
 	public JLabel getLblCantidad_1() {
 		return lblCantidad_1;
 	}
 
-
-
 	public JLabel getLblQuitarDelCarrito() {
 		return lblQuitarDelCarrito;
 	}
-
-
 
 	public JLabel getLblPrecioDesde() {
 		return lblPrecioDesde;
 	}
 
-
-
 	public JLabel getLblPrecioHasta() {
 		return lblPrecioHasta;
 	}
-
-
 
 	public SpinnerModel getSpinnerModelProductos() {
 		return spinnerModelProductos;
 	}
 
-
-
 	public SpinnerModel getSpinnerModelCarrito() {
 		return spinnerModelCarrito;
 	}
-
-
 
 	public JLabel getLblNewLabel_2() {
 		return lblNewLabel_2;
 	}
 
-
-
 	public JTextField getTextCantidadListaProductos() {
 		return textCantidadListaProductos;
-	}
-
-
-
-	public JTextField getTextCantidadCarrito() {
-		return textCantidadCarrito;
 	}
 
 	public JButton getBtnInformacionElegirProductos() {
 		return btnInformacionElegirProductos;
 	}
 	
-	
+	public JSpinner getSpinnerCantCarrito() {
+		return spinnerCantCarrito;
+	}
+
 }
 
