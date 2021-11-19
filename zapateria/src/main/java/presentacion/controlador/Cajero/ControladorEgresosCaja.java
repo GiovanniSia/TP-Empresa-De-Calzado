@@ -342,6 +342,13 @@ public class ControladorEgresosCaja {
 			return false;
 		}
 
+		try {
+			Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "El campo monto es incorrecto");
+			return false;	
+		}
+		
 		if (Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText()) > obtenerValorBalance()) {
 			JOptionPane.showMessageDialog(null, "El monto supera lo disponible");
 			return false;

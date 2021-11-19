@@ -265,7 +265,10 @@ public class ControladorVerPedidosAProveedor {
 		String fechaHora = p.getFecha()+" - "+p.getHora();
 		String fechaHoraEnvio = p.getFechaEnvioMail() != null ? p.getFechaEnvioMail()+" - "+p.getHoraEnvioMail() : "-";
 		String fechaHoraCierre = p.getFechaCompleto() != null ? p.getFechaCompleto()+" - "+p.getHoraCompleto() : "-";
-		Object[] fila = {id,proveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre};
+		
+		BigDecimal totalPagado = new BigDecimal(p.getTotalPagado()).setScale(2, RoundingMode.HALF_UP);
+		
+		Object[] fila = {id,proveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre,totalPagado};
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().addRow(fila);
 		this.pedidosPendientesEnTabla.add(p);	
 	}
