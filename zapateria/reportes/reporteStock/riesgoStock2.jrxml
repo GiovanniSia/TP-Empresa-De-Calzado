@@ -49,9 +49,7 @@ AND (mp.PuntoRepositorio >=(select SUM(sto.StockDisponible)
  	FROM zapateria.stock as sto where sto.IdSucursal = '$P!{IdSucursal}'
  	 AND sto.IdProducto =  mp.IdMaestroProducto) is null)
 
- group by mp.IdMaestroProducto order by pdp.IdProveedor
- 
- ]]>
+ group by mp.IdMaestroProducto order by pdp.IdProveedor]]>
 	</queryString>
 	<field name="IdMaestroProducto" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="IdMaestroProducto"/>
@@ -342,17 +340,17 @@ AND (mp.PuntoRepositorio >=(select SUM(sto.StockDisponible)
 				<textField>
 					<reportElement x="11" y="22" width="46" height="14" uuid="4b22cc58-1897-49d8-bc9a-93ff7c5cbe06"/>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{COLUMN_21}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{COLUMN_21} == null? "-" : $F{COLUMN_21})]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="108" y="22" width="120" height="14" uuid="c626d30e-b94a-4371-ad1e-485dc9d733a3"/>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{Nombre} == null? "Sin proveedor" : $F{Nombre})]]></textFieldExpression>
 				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="244" y="22" width="154" height="14" uuid="76a5e232-77c9-47ed-a468-c9ac48fac404"/>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[String.valueOf($F{CorreoElectronico})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($F{CorreoElectronico} == null? "-" : String.valueOf($F{CorreoElectronico}))]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -481,7 +479,7 @@ AND (mp.PuntoRepositorio >=(select SUM(sto.StockDisponible)
 			<textField>
 				<reportElement x="347" y="5" width="84" height="14" uuid="5d45a28c-9bdc-47ea-8253-f7749b22393d"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{SUM(st2.StockDisponible)}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{SUM(st2.StockDisponible)}==null? 0 : $F{SUM(st2.StockDisponible)})]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="3" y="25" width="548" height="1" uuid="cdb09af5-e758-4ae8-a59a-8d8db62a6a70"/>
@@ -489,12 +487,12 @@ AND (mp.PuntoRepositorio >=(select SUM(sto.StockDisponible)
 			<textField>
 				<reportElement x="431" y="5" width="59" height="14" uuid="5eb6ed27-3af1-4285-90fb-b9b84b1ef7a2"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{CantidadPorLote}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{CantidadPorLote}==null? 0 : $F{CantidadPorLote})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="490" y="5" width="59" height="14" uuid="88d3a086-d456-40f5-9b5c-e86ab969eb79"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{PrecioVenta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{PrecioVenta} == null? 0 : $F{PrecioVenta})]]></textFieldExpression>
 			</textField>
 			<ellipse>
 				<reportElement style="colorStock" x="550" y="5" width="14" height="14" uuid="bcc8a13e-27bc-4376-82b6-896646eec5e1">

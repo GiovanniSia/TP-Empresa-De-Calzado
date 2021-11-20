@@ -32,7 +32,7 @@ public class ReporteListaStockFaltante {
 		parametersMap.put("segundoFlag", flagMasGrande);
 		try {
 			this.reporte = (JasperReport) JRLoader
-					.loadObjectFromFile("reportes"+File.separator+"reporteStock"+File.separator+"riesgoStock.jasper");
+					.loadObjectFromFile("reportes"+File.separator+"reporteStock"+File.separator+"riesgoStock2.jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap,
 					Conexion.getConexion().getSQLConexion());
 			log.info("Se cargó correctamente el reporte");
