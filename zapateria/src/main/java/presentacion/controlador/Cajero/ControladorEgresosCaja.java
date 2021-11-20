@@ -17,6 +17,7 @@ import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
 import dto.MotivoEgresoDTO;
 import dto.PedidosPendientesDTO;
+import dto.ProveedorDTO;
 import dto.TipoEgresosDTO;
 import inicioSesion.sucursalProperties;
 import modelo.Egresos;
@@ -24,6 +25,7 @@ import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MedioPagoEgreso;
 import modelo.PedidosPendientes;
+import modelo.Proveedor;
 import modelo.TipoEgresos;
 import modelo.compraVirtual.MotivoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
@@ -204,19 +206,26 @@ public class ControladorEgresosCaja {
 			if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
-				
+				String pago = this.ventanaEgresoCaja.getTxtFieldMonto().getText();
 				try {
 					Double.parseDouble(ppNroProveedor);
 					Double.parseDouble(ppNroOrdenCompra);
-					Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+					Double.parseDouble(pago);
 				}catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(null, "Los campos deben ser numericos");
 					return;	
 				}
 				
-				
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				if(sePudoRegistrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),Integer.parseInt(ppNroProveedor))){
+				if(this.ventanaEgresoCaja.getCbTipoMedioPago().getSelectedItem().equals("Nota Credito")) {
+					ProveedorDTO provSeleccionado = obtenerProveedor(Integer.parseInt(ppNroProveedor));
+					if(provSeleccionado.getLimiteCredito() < Double.parseDouble(pago)) {
+						JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad elegida supera el limite de credito con el que se le puede pagar a este proveedor");
+						return;
+					}
+				}
+				
+				if(sePudoRegistrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),Integer.parseInt(ppNroProveedor),Double.parseDouble(pago))){
                     ingresarEgreso(detalle);
                 }
 			}
@@ -242,11 +251,9 @@ public class ControladorEgresosCaja {
 		return ret;
 	}
 
-	private boolean sePudoRegistrarPedidoComoPagado(int ppNroOrdenCompra,int nroProveedor) {
+	private boolean sePudoRegistrarPedidoComoPagado(int ppNroOrdenCompra,int nroProveedor,double pago) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
-			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {
-				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-				
+			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {				
 				double totalPagado = p.getTotalPagado()+pago;
 				double pagoRestante = p.getPrecioTotal()-totalPagado;
 				boolean update = true;
@@ -299,6 +306,16 @@ public class ControladorEgresosCaja {
         return false;
 	}
 
+	public ProveedorDTO obtenerProveedor(int id) {
+		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
+		ArrayList<ProveedorDTO> todosLosProveedores = (ArrayList<ProveedorDTO>) proveedor.readAll();
+		for(ProveedorDTO p: todosLosProveedores) {
+			if(p.getId()==id) {
+				return p;
+			}
+		}return null;
+	}
+	
 	public boolean validarCampos() {
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String medioPagoSeleccionado = this.ventanaEgresoCaja.getMedioPagoSeleccionado();
@@ -380,7 +397,6 @@ public class ControladorEgresosCaja {
 	public void llenarCBTipoEgreso() {
 		for (TipoEgresosDTO te : this.listaTipoEgresos) {
 			this.ventanaEgresoCaja.getCbTipoEgreso().addItem(te.getDescripcion());
-			;
 		}
 	}
 
@@ -389,6 +405,9 @@ public class ControladorEgresosCaja {
 		for (MedioPagoEgresoDTO mpe : this.listaMedioPagoEgreso) {
 			if (!mpe.getIdMoneda().equals("NC")) {
 				this.ventanaEgresoCaja.getCbTipoMedioPago().addItem(mpe.getDescripcion());
+			}
+			if(mpe.getIdMoneda().equals("NC") && this.ventanaEgresoCaja.getTipoEgresoSeleccionado().equals("Pago proveedor")) {
+				this.ventanaEgresoCaja.getCbTipoMedioPago().addItem(mpe.getDescripcion());	
 			}
 
 		}
