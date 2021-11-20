@@ -425,7 +425,8 @@ public class ControladorBusquedaProductos {
 			this.vistaBusquedaProductos.getSpinnerCantCarrito().setValue("");
 			return;
 		}
-		if(this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals("") || this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals("0")) {
+		
+		if(this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals("") || this.vistaBusquedaProductos.getSpinnerCantCarrito().getValue().equals(0.0)) {
 			quitarProductoDelCarrito(null);
 			return;
 		}

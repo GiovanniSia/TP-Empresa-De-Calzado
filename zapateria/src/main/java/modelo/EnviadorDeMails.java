@@ -102,9 +102,13 @@ public class EnviadorDeMails extends Thread{
 			
 			String mensaje="";
 			if(esPrimerCompraDe(cliente)) {
-				mensaje = "Hola <b>" + cliente.getNombre() + "</b>, gracias por realizar TU PRIMER compra en <i>Zapateria Argento</i>";
+				mensaje = "Hola, <b>" + cliente.getNombre() + "</b>"
+						+ "<br>Gracias por su primer compra en <i>Zapateria Argento</i>!"
+						+ "<br>Adjuntamos la <b>factura</b> correspondiente a ella. <i>Que tenga buen dia</i>!";
 			}else {
-				mensaje = "Hola <b>" + cliente.getNombre() + "</b>, gracias por comprar en <i>Zapateria Argento</i>";	
+				mensaje = "Hola, <b>" + cliente.getNombre() + "</b>! "
+						+ "<br>Gracias por su compra en <i>Zapateria Argento</i>!"
+						+ "<br>Adjuntamos la <b>factura</b> correspondiente a ella. <i>Que tenga buen dia</i>!";	
 			}
 			
 			
@@ -172,7 +176,11 @@ public class EnviadorDeMails extends Thread{
 			String contrasenia = "zapateriaArgento123ContraseniaIndestructible";
 			String correoReceptor = cliente.getCorreo();
 			String asunto = "Correo de registro de cliente";
-			String mensaje = "Bienvenido <b>" + cliente.getNombre() + "</b> a <i>ZapateriaArgento</i>, ansiamos por su futura compra";
+			
+			String mensaje = "Hola, <b>" + cliente.getNombre() + "</b>!."
+					+ "<br>Le damos la bienvenida a <i>ZapateriaArgento</i>!"
+					+ "<br>Esperamos con ansias su primer compra!";			
+			
 			MimeMessage message = new MimeMessage(session);
 
 			BodyPart texto = new MimeBodyPart();
