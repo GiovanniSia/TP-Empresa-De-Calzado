@@ -84,7 +84,7 @@ public class Controlador {
 	private int cantVendedorEnGrafico = 4;
 	private int limiteDeCantidadParaLosGraficos = 7;
 	private Double minimoNecesarioParaIngresarEnLosGraficos = 0.0;
-	private int diasParaAtras = 1000;
+	private int diasParaAtras = 49;
 
 	private int idSucursal = 0;
 	private String tipoEmpleado = "";
@@ -1090,6 +1090,13 @@ public class Controlador {
 		this.ventanaDashboardGerente.getBtnSubirCantEmpleados().addActionListener(r -> subirCantidadEmpleados(r));
 		this.ventanaDashboardGerente.getBtnBajarCantSucursales().addActionListener(r -> bajarCantidadSucursales(r));
 		this.ventanaDashboardGerente.getBtnSubirCantSucursales().addActionListener(r -> subirCantidadSucursales(r));
+		
+		this.ventanaDashboardGerente.getBtnBajarDias1().addActionListener(r -> bajarDia1(r));
+		this.ventanaDashboardGerente.getBtnBajarDias10().addActionListener(r -> bajarDia10(r));
+		this.ventanaDashboardGerente.getBtnSubirDia1().addActionListener(r -> subirDia1(r));
+		this.ventanaDashboardGerente.getBtnSubirDia10().addActionListener(r -> subirDia10(r));
+		
+		actualizarLabelDiasParaAtras();
 	}
 	
 	private void subirCantidadSucursales(ActionEvent r) {
@@ -1119,5 +1126,41 @@ public class Controlador {
 			this.iniciarGraficos();
 		}
 	}
+	
+	private void bajarDia1(ActionEvent r) {
+		if(diasParaAtras<=1) {
+			return;
+		}
+		diasParaAtras = diasParaAtras -1;
+		this.iniciarGraficos();
+		actualizarLabelDiasParaAtras();
+	}
+	
+	private void bajarDia10(ActionEvent r) {
+		if(diasParaAtras<=10) {
+			diasParaAtras = 1;
+		}else {
+			diasParaAtras = diasParaAtras - 10;
+		}
+		this.iniciarGraficos();
+		actualizarLabelDiasParaAtras();
+	}
+	
+	private void subirDia1(ActionEvent r) {
+		diasParaAtras = diasParaAtras + 1;
+		this.iniciarGraficos();
+		actualizarLabelDiasParaAtras();
+	}
+	
+	private void subirDia10(ActionEvent r) {
+		diasParaAtras = diasParaAtras + 10;
+		this.iniciarGraficos();
+		actualizarLabelDiasParaAtras();
+	}
+	
+	private void actualizarLabelDiasParaAtras() {
+		this.ventanaDashboardGerente.getLblDiasParaAtras().setText("Dias atras = "+diasParaAtras);
+	}
+
 
 }

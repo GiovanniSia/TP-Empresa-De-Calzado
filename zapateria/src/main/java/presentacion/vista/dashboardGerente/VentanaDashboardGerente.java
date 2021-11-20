@@ -86,6 +86,11 @@ public class VentanaDashboardGerente {
 	JButton btnBajarCantSucursales;
 	JButton btnSubirCantEmpleados;
 	JButton btnBajarCantEmpleados;
+	private JButton btnBajarDias1;
+	private JButton btnSubirDia1;
+	private JButton btnBajarDias10;
+	private JButton btnSubirDia10;
+	JLabel lblDiasParaAtras;
 
 	/**
 	 * Launch the application.
@@ -127,6 +132,41 @@ public class VentanaDashboardGerente {
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
+				
+				btnBajarDias1 = new JButton("");
+				btnBajarDias1.setForeground(new Color(51, 102, 153));
+				btnBajarDias1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnBajarDias1.setBackground(new Color(51, 102, 204));
+				btnBajarDias1.setBounds(570, 301, 40, 40);
+				frame.getContentPane().add(btnBajarDias1);
+				
+				btnSubirDia1 = new JButton("");
+				btnSubirDia1.setForeground(new Color(51, 102, 153));
+				btnSubirDia1.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnSubirDia1.setBackground(new Color(51, 102, 204));
+				btnSubirDia1.setBounds(781, 301, 40, 40);
+				frame.getContentPane().add(btnSubirDia1);
+				
+				btnBajarDias10 = new JButton("");
+				btnBajarDias10.setForeground(new Color(51, 102, 153));
+				btnBajarDias10.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnBajarDias10.setBackground(new Color(51, 102, 204));
+				btnBajarDias10.setBounds(520, 301, 40, 40);
+				frame.getContentPane().add(btnBajarDias10);
+				
+				btnSubirDia10 = new JButton("");
+				btnSubirDia10.setForeground(new Color(51, 102, 153));
+				btnSubirDia10.setFont(new Font("Segoe UI", Font.BOLD, 20));
+				btnSubirDia10.setBackground(new Color(51, 102, 204));
+				btnSubirDia10.setBounds(831, 301, 40, 40);
+				frame.getContentPane().add(btnSubirDia10);
+				
+				lblDiasParaAtras = new JLabel("Ranking de Ventas x Vendedor(total en pesos)");
+				lblDiasParaAtras.setHorizontalAlignment(SwingConstants.CENTER);
+				lblDiasParaAtras.setForeground(Color.WHITE);
+				lblDiasParaAtras.setFont(new Font("Segoe UI", Font.ITALIC, 16));
+				lblDiasParaAtras.setBounds(620, 309, 151, 22);
+				frame.getContentPane().add(lblDiasParaAtras);
 				
 				btnBajarCantEmpleados = new JButton("");
 				btnBajarCantEmpleados.setForeground(new Color(51, 102, 153));
@@ -673,5 +713,25 @@ public class VentanaDashboardGerente {
 
 	public JButton getBtnBajarCantEmpleados() {
 		return btnBajarCantEmpleados;
+	}
+
+	public JButton getBtnBajarDias1() {
+		return btnBajarDias1;
+	}
+
+	public JButton getBtnSubirDia1() {
+		return btnSubirDia1;
+	}
+
+	public JButton getBtnBajarDias10() {
+		return btnBajarDias10;
+	}
+
+	public JButton getBtnSubirDia10() {
+		return btnSubirDia10;
+	}
+
+	public JLabel getLblDiasParaAtras() {
+		return lblDiasParaAtras;
 	}
 }
