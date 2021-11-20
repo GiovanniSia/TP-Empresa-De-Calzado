@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -1158,8 +1159,11 @@ public class Controlador {
 		actualizarLabelDiasParaAtras();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void actualizarLabelDiasParaAtras() {
-		this.ventanaDashboardGerente.getLblDiasParaAtras().setText("Dias atras = "+diasParaAtras);
+		Date fechaAtras = new Date();
+		fechaAtras.setDate(Integer.valueOf(fechaAtras.getDate())-diasParaAtras);
+		this.ventanaDashboardGerente.getLblDiasParaAtras().setText("Desde "+fechaAtras.getDate()+"-"+fechaAtras.getMonth()+"-"+(fechaAtras.getYear()+1900));
 	}
 
 
