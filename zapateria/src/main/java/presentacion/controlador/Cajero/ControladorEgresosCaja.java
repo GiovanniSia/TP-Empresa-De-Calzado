@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import dto.EgresosDTO;
+import dto.EmpleadoDTO;
 import dto.FacturaDTO;
 import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
@@ -20,6 +21,7 @@ import dto.ProveedorDTO;
 import dto.TipoEgresosDTO;
 import inicioSesion.sucursalProperties;
 import modelo.Egresos;
+import modelo.Empleado;
 import modelo.Factura;
 import modelo.Ingresos;
 import modelo.MaestroProducto;
@@ -179,7 +181,7 @@ public class ControladorEgresosCaja {
 		if (validarCampos()) {
 
 			String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
-			if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {
+			if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {	
 				String as = this.ventanaEgresoCaja.getTxtFieldAS().getText();
 				ingresarEgreso(as);
 			}
@@ -336,6 +338,17 @@ public class ControladorEgresosCaja {
 		String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 		String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
 
+
+		
+		
+		if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {
+			if(!existeEmpleado(as)) {
+				JOptionPane.showMessageDialog(null, "El empleado no existe");
+				return false;
+			}
+		}
+		
+		
 		if (tipoEgresoSeleccionado == null || tipoEgresoSeleccionado.equals("")) {
 			JOptionPane.showMessageDialog(null, "Elige un tipo de egreso");
 			return false;
@@ -449,26 +462,23 @@ public class ControladorEgresosCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaEgresoCaja.cerrar();
-		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.cerrar();
+		if(this.controladorVerPedidosAProveedor!=null) {	
+			this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.cerrar();
+		}
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
 	public void ingresarEgreso(String detalle) {
-		/*
-		 * CREATE TABLE `Egresos` ( `Id` int(11) NOT NULL AUTO_INCREMENT, `IdSucursal`
-		 * int(11) NOT NULL, `Fecha` DATE NOT NULL, `Hora` TIME NOT NULL, `Tipo`
-		 * varchar(45) NOT NULL, `MedioPago` varchar(45) NOT NULL, `Detalle` varchar(45)
-		 * NOT NULL, `Total` double(45,2) NOT NULL, PRIMARY KEY (`Id`) );
-		 */
+		
+		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String fecha = dtf.format(LocalDateTime.now());
 		DateTimeFormatter dtfhora = DateTimeFormatter.ofPattern("hh:mm");
 		String hora = dtfhora.format(LocalDateTime.now());
-		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
+//		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String tipo = obtenerAbrebiaturaMedioPago(this.ventanaEgresoCaja.getMedioPagoSeleccionado());
 		String Detalle = detalle;
 		double Monto = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-//		insert into Egresos values(0,idSucursal,fecha,hora,tipoEgresoSeleccionado,"EFE","Choripan",Monto);	
 
 		EgresosDTO egresoNuevo = new EgresosDTO(0, idSucursal, fecha, hora, tipoEgresoSeleccionado, tipo, Detalle,
 				Monto);
@@ -478,6 +488,18 @@ public class ControladorEgresosCaja {
 
 	}
 
+	public boolean existeEmpleado(String detalle) {
+		Empleado empleado = new Empleado(new DAOSQLFactory());
+		 List<EmpleadoDTO> listaEmpleados  = new ArrayList<EmpleadoDTO>();
+		 listaEmpleados = empleado.readAll();
+		for (EmpleadoDTO e : listaEmpleados) {
+			if(e.getCUIL().equals(detalle)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public String obtenerAbrebiaturaMedioPago(String medioPago) {
 		for (MedioPagoEgresoDTO mp : listaMedioPagoEgreso) {
 			if (mp.getDescripcion().equals(medioPago)) {

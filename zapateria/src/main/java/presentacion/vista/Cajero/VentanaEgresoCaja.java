@@ -174,7 +174,7 @@ public class VentanaEgresoCaja extends JFrame {
 		lblNewLabel_2_1.setBounds(272, 83, 130, 22);
 		contentPane.add(lblNewLabel_2_1);
 
-		lblAS = new JLabel("N\u00B0 Legajo:");
+		lblAS = new JLabel("CUIL:");
 		lblAS.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblAS.setBounds(219, 143, 58, 18);
 		contentPane.add(lblAS);
