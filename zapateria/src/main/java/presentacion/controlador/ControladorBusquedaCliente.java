@@ -145,8 +145,6 @@ public class ControladorBusquedaCliente {
 	public boolean esClienteInactivo() {
 		int filaSeleccionada = this.ventanaBusquedaCliente.getTablaClientes().getSelectedRow();
 
-		System.out.println(this.clienteEnTabla.get(filaSeleccionada).getNombre());
-
 		String estado = this.clienteEnTabla.get(filaSeleccionada).getEstado();
 
 		if (estado.equals("Inactivo")) {

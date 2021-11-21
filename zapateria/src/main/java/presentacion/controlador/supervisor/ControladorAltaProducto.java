@@ -568,7 +568,6 @@ public class ControladorAltaProducto {
 					if (cantProdLotes.equals("")) {
 						JOptionPane.showMessageDialog(null, "El valor no puede ser nulo", "Informacion",JOptionPane.OK_OPTION);
 					} else {
-						System.out.println("logitud de string: "+(""+cantProdLotes).length());
 						cantidadDeProductosPorLote = Integer.parseInt(cantProdLotes);
 						if (cantProdLotes.length() >8) {
 							JOptionPane.showMessageDialog(null, "La cantidad de caracteres no puede ser mayor a 8", "Informacion",	JOptionPane.OK_OPTION);

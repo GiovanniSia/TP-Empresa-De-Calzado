@@ -255,11 +255,16 @@ public class ControladorEgresosCaja {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
 			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {				
 				double totalPagado = p.getTotalPagado()+pago;
+				System.out.println("TOTAL PAGADO: "+p.getTotalPagado());
+				System.out.println("SE PAGA: "+pago);
+				
 				double pagoRestante = p.getPrecioTotal()-totalPagado;
+				System.out.println("PAGO RESTANTE: "+pagoRestante);
+				System.out.println("TOTAL PAGADO: "+totalPagado);
 				boolean update = true;
 
 				if( p.getPrecioTotal()<totalPagado) {
-					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido ("+pagoRestante+")");
+					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido ("+p.getTotalPagado()+")");
 					return false;
 				}
 				
@@ -295,7 +300,7 @@ public class ControladorEgresosCaja {
 						BigDecimal pagoRestant = new BigDecimal(pagoRestante).setScale(2, RoundingMode.HALF_UP);
 						
 						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: " + p.getId()
-								+ ".\nNuevo saldo: " + pagoRestant, "Pago", JOptionPane.INFORMATION_MESSAGE);
+								+ ".\nNueva cantidad restante a pagar: " + pagoRestant, "Pago", JOptionPane.INFORMATION_MESSAGE);
 						return true;
 					}
 				}			
