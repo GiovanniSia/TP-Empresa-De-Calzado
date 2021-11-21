@@ -126,7 +126,7 @@ public class VentanaDashboardGerente {
 		}
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(67, 73, 86));
-		frame.setBounds(100, 100, 906, 692);
+		frame.setBounds(100, 100, 915, 692);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
@@ -139,6 +139,7 @@ public class VentanaDashboardGerente {
 				btnBajarDias1.setBackground(new Color(51, 102, 204));
 				btnBajarDias1.setBounds(570, 301, 40, 40);
 				frame.getContentPane().add(btnBajarDias1);
+				cambiarIconoBotones(btnBajarDias1,"down.png");
 				
 				btnSubirDia1 = new JButton("");
 				btnSubirDia1.setForeground(new Color(51, 102, 153));
@@ -146,6 +147,7 @@ public class VentanaDashboardGerente {
 				btnSubirDia1.setBackground(new Color(51, 102, 204));
 				btnSubirDia1.setBounds(781, 301, 40, 40);
 				frame.getContentPane().add(btnSubirDia1);
+				cambiarIconoBotones(btnSubirDia1,"up.png");
 				
 				btnBajarDias10 = new JButton("");
 				btnBajarDias10.setForeground(new Color(51, 102, 153));
@@ -153,6 +155,7 @@ public class VentanaDashboardGerente {
 				btnBajarDias10.setBackground(new Color(51, 102, 204));
 				btnBajarDias10.setBounds(520, 301, 40, 40);
 				frame.getContentPane().add(btnBajarDias10);
+				cambiarIconoBotones(btnBajarDias10,"down2.png");
 				
 				btnSubirDia10 = new JButton("");
 				btnSubirDia10.setForeground(new Color(51, 102, 153));
@@ -160,6 +163,7 @@ public class VentanaDashboardGerente {
 				btnSubirDia10.setBackground(new Color(51, 102, 204));
 				btnSubirDia10.setBounds(831, 301, 40, 40);
 				frame.getContentPane().add(btnSubirDia10);
+				cambiarIconoBotones(btnSubirDia10,"up2.png");
 				
 				lblDiasParaAtras = new JLabel("Ranking de Ventas x Vendedor(total en pesos)");
 				lblDiasParaAtras.setHorizontalAlignment(SwingConstants.CENTER);
@@ -174,6 +178,7 @@ public class VentanaDashboardGerente {
 				btnBajarCantEmpleados.setBackground(new Color(51, 102, 204));
 				btnBajarCantEmpleados.setBounds(861, 580, 40, 40);
 				frame.getContentPane().add(btnBajarCantEmpleados);
+				cambiarIconoBotones(btnBajarCantEmpleados,"minus.png");
 				
 				btnSubirCantEmpleados = new JButton("");
 				btnSubirCantEmpleados.setForeground(new Color(51, 102, 153));
@@ -181,6 +186,7 @@ public class VentanaDashboardGerente {
 				btnSubirCantEmpleados.setBackground(new Color(51, 102, 204));
 				btnSubirCantEmpleados.setBounds(861, 529, 40, 40);
 				frame.getContentPane().add(btnSubirCantEmpleados);
+				cambiarIconoBotones(btnSubirCantEmpleados,"plus.png");
 		
 				btnBajarCantSucursales = new JButton("");
 				btnBajarCantSucursales.setForeground(new Color(51, 102, 153));
@@ -188,6 +194,7 @@ public class VentanaDashboardGerente {
 				btnBajarCantSucursales.setBackground(new Color(51, 102, 204));
 				btnBajarCantSucursales.setBounds(861, 250, 40, 40);
 				frame.getContentPane().add(btnBajarCantSucursales);
+				cambiarIconoBotones(btnBajarCantSucursales,"minus.png");
 		
 		btnSubirCantSucursales = new JButton("");
 		btnSubirCantSucursales.setForeground(new Color(51, 102, 153));
@@ -195,6 +202,7 @@ public class VentanaDashboardGerente {
 		btnSubirCantSucursales.setBackground(new Color(51, 102, 204));
 		btnSubirCantSucursales.setBounds(861, 199, 40, 40);
 		frame.getContentPane().add(btnSubirCantSucursales);
+		cambiarIconoBotones(btnSubirCantSucursales,"plus.png");
 		
 		JLabel lblRankingDeVentas_2 = new JLabel("Ranking de Ventas x Vendedor(total en pesos)");
 		lblRankingDeVentas_2.setHorizontalAlignment(SwingConstants.CENTER);

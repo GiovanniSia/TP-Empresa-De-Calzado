@@ -158,6 +158,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 		btnReporteRiesgoStock.setBackground(new Color(51, 102, 204));
 		btnReporteRiesgoStock.setBounds(724, 11, 120, 120);
 		panel_1.add(btnReporteRiesgoStock);
+		this.cambiarIconoBotones(btnReporteRiesgoStock, "stock.png");
 		
 		lblNewLabel_4_2 = new JLabel("<html>Riesgo Stock</html>");
 		lblNewLabel_4_2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
