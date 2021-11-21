@@ -2,6 +2,8 @@ package presentacion.controlador.Cajero;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -86,13 +88,13 @@ public class ControladorIngresosCaja {
 		this.ventanaIngresosCaja.getLblActualizarFechaHoy().setText(fecha);
 	}
 
-	public String obtenerSaldoActual() {
+	public BigDecimal obtenerSaldoActual() {
 		ControladorEgresosCaja a = new ControladorEgresosCaja();
-		return "" + a.obtenerValorBalance() + "";
+		return new BigDecimal(a.obtenerValorBalance()).setScale(2, RoundingMode.HALF_UP);
 	}
 
-	public void actualizarSaldoActual(String Saldo) {
-		this.ventanaIngresosCaja.getLblActualizarSaldoActual().setText(Saldo);
+	public void actualizarSaldoActual(BigDecimal Saldo) {
+		this.ventanaIngresosCaja.getLblActualizarSaldoActual().setText(""+Saldo);
 	}
 
 	public void estadoDeLaCaja() {
@@ -164,10 +166,7 @@ public class ControladorIngresosCaja {
 			JOptionPane.showMessageDialog(null, "El campo no puede ser cero");
 			return;
 		}
-		if (Integer.parseInt(obtenerSaldoActual()) >= 1000000000) {
-			JOptionPane.showMessageDialog(null, "Recarga invalida, se supero el limite. Limite: 1.000.000.000");
-			return;
-		}
+
 		ingresarRecarga();
 		this.ventanaIngresosCaja.cerrar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
