@@ -18,10 +18,12 @@ public class PedidosPendientesDTO {
 	String fechaCompleto;
 	String horaCompleto;
 	String unidadMedida;
+	double totalPagado;
+	
 
 	public PedidosPendientesDTO(int id, int idProveedor, String nombreProveedor, int idMaestroProducto,
 			String nombreMaestroProducto, double cantidad, String fecha, String hora, double precioUnidad,
-			double precioTotal, String estado, int idSucursal,int idEmpleado, String fechaEnvioMail,String horaEnvioMail,String fechaCompleto,String horaCompleto, String unidadMedida) {
+			double precioTotal, String estado, int idSucursal,int idEmpleado, String fechaEnvioMail,String horaEnvioMail,String fechaCompleto,String horaCompleto, String unidadMedida,double totalPagado) {
 		super();
 		this.id = id;
 		this.idProveedor = idProveedor;
@@ -41,6 +43,7 @@ public class PedidosPendientesDTO {
 		this.horaCompleto = horaCompleto;
 		this.fechaCompleto = fechaCompleto;
 		this.unidadMedida = unidadMedida;
+		this.totalPagado = totalPagado;
 	}
 	
 	public int getId() {
@@ -185,5 +188,13 @@ public class PedidosPendientesDTO {
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
+	public double getTotalPagado() {
+		return totalPagado;
+	}
+
+	public void setTotalPagado(double totalPagado) {
+		this.totalPagado = totalPagado;
+	}
+	
 	
 }

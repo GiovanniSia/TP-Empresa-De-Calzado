@@ -130,7 +130,7 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 		int h = Integer.parseInt(hora.substring(0, 2));
 		int min = Integer.parseInt(hora.substring(3, 5));
 		int seg = Integer.parseInt(hora.substring(6, 8));
-		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
+//		 System.out.println("fecha: "+anio+"/"+mes+"/"+diaActual+" "+h+":"+min+":"+seg);
 		return new Date(anio,mes,diaActual,h,min,seg);//fecha de hoy 21/10/21
 	}
 	
@@ -153,7 +153,7 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 				}	
 			}
 			if(pedidosDeProv.size()!=0) {
-				imprimirMail(pedidosDeProv);
+//				imprimirMail(pedidosDeProv);
 				EnviadorDeMails.enviarMailAProveedor(prov,pedidosDeProv);
 				marcarPedidoComoEnviado(pedidosDeProv);
 //				System.out.println("se envia el mail!!");
@@ -178,9 +178,7 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
 		    pedido.setFechaEnvioMail(fecha);
 		    
 		    boolean update = pedidosPendietes.update(pedido,pedido.getId());
-		    
-//			boolean update = pedidosPendietes.cambiarEstado(pedido.getId(), "Enviado");
-		    
+		    		    
 			if(!update) {
 				System.out.println("ha ocurrido un error al marcar al pedido: "+pedido.getNombreMaestroProducto()+" - "+pedido.getCantidad()+" como enviado");
 			}
@@ -218,7 +216,7 @@ public class EnviarCorreosAProveedoresAutomatico extends Thread{
                         return true;
                     }
                     if (eventKind == ENTRY_MODIFY) {
-                        System.out.println("Se modifico el coso");
+                        System.out.println("Archivo properties modificado");
                         return true;
                     }
                     

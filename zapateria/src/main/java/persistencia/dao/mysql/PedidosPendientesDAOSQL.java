@@ -14,7 +14,7 @@ import persistencia.dao.interfaz.PedidosPendientesDAO;
 
 public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 
-	private static final String insert = "INSERT INTO PedidosPendientes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String insert = "INSERT INTO PedidosPendientes VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String delete = "DELETE FROM PedidosPendientes WHERE Id=?";
 	private static final String finalzarPedido = "UPDATE PedidosPendientes SET Estado=?, FechaCompleto=?, HoraCompleto=? WHERE Id=?";
 	private static final String readAll = "SELECT * FROM PedidosPendientes";
@@ -23,7 +23,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 	
 	private static final String cambiarEstado = "UPDATE PedidosPendientes SET Estado=? WHERE Id=?";
 	
-	private static final String update = "UPDATE PedidosPendientes SET IdProveedor=?, NombreProveedor=?, IdMaestroProducto=?, NombreMaestroProducto=?, Cantidad=?, Fecha=?, Hora=?, PrecioUnidad=?, PrecioTotal=?, Estado=?, IdSucursal=?, IdEmpleado=?, FechaEnvioMail=?, HoraEnvioMail=?, FechaCompleto=?, HoraCompleto=?, UnidadMedida=? WHERE Id=?";
+	private static final String update = "UPDATE PedidosPendientes SET IdProveedor=?, NombreProveedor=?, IdMaestroProducto=?, NombreMaestroProducto=?, Cantidad=?, Fecha=?, Hora=?, PrecioUnidad=?, PrecioTotal=?, Estado=?, IdSucursal=?, IdEmpleado=?, FechaEnvioMail=?, HoraEnvioMail=?, FechaCompleto=?, HoraCompleto=?, UnidadMedida=?, TotalPagado=? WHERE Id=?";
 	@Override
 	public boolean insert(PedidosPendientesDTO pedido) {
  		PreparedStatement statement;
@@ -50,6 +50,7 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 			statement.setString(16, pedido.getFechaCompleto());
 			statement.setString(17, pedido.getHoraCompleto());
 			statement.setString(18, pedido.getUnidadMedida());
+			statement.setDouble(19, pedido.getTotalPagado());
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -152,7 +153,9 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 			statement.setString(15, nuevopedido.getFechaCompleto());
 			statement.setString(16, nuevopedido.getHoraCompleto());
 			statement.setString(17, nuevopedido.getUnidadMedida());
-			statement.setInt(18, nuevopedido.getId());
+			statement.setDouble(18, nuevopedido.getTotalPagado());
+			statement.setInt(19, nuevopedido.getId());
+			
 
 			if (statement.executeUpdate() > 0) {
 				conexion.commit();
@@ -226,7 +229,8 @@ public class PedidosPendientesDAOSQL implements PedidosPendientesDAO{
 		String fechaCompleto = resultSet.getString("FechaCompleto");
 		String horaCompleto = resultSet.getString("HoraCompleto");
 		String unidadMedida = resultSet.getString("UnidadMedida");
-		return new PedidosPendientesDTO(id,idProveedor,nombreProveedor,idMaestroProducto,nombreMaestroProducto,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSucursal,idEmpleado,fechaEnvioMail,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
+		double totalPagado = resultSet.getDouble("TotalPagado");
+		return new PedidosPendientesDTO(id,idProveedor,nombreProveedor,idMaestroProducto,nombreMaestroProducto,cantidad,fecha,hora,precioUnidad,precioTotal,estado,idSucursal,idEmpleado,fechaEnvioMail,horaEnvio,fechaCompleto,horaCompleto,unidadMedida,totalPagado);
 	}
 	
 	

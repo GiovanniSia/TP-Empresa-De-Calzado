@@ -423,7 +423,8 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 	    String fechaCompleto = null;
 	    String horaCompleto = null;
 	    String unidadMedida = this.productoElegido.getUnidadMedida();
-	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal.doubleValue(),fecha,hora,precioUnidad.doubleValue(),precioTotal.doubleValue(),estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida);
+	    double totalPagado=0;
+	    PedidosPendientesDTO p = new PedidosPendientesDTO(0,idProv,nombreProv,idMaestroProd,nombreMaestroprod,cantidadTotal.doubleValue(),fecha,hora,precioUnidad.doubleValue(),precioTotal.doubleValue(),estado,idSuc,this.idEmpleado,fechaEnvio,horaEnvio,fechaCompleto,horaCompleto,unidadMedida,totalPagado);
 		    
 	    // si selecciona que si devuelve un 0, no un 1, y la x un -1
 	    int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea realizar el pedido?",

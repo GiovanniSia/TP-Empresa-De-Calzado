@@ -17,17 +17,22 @@ import dto.IngresosDTO;
 import dto.MedioPagoEgresoDTO;
 import dto.MotivoEgresoDTO;
 import dto.PedidosPendientesDTO;
+import dto.ProveedorDTO;
 import dto.TipoEgresosDTO;
 import inicioSesion.sucursalProperties;
 import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
+import modelo.MaestroProducto;
 import modelo.MedioPagoEgreso;
 import modelo.PedidosPendientes;
+import modelo.Proveedor;
+import modelo.Stock;
 import modelo.TipoEgresos;
 import modelo.compraVirtual.MotivoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
+import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.reportes.ReporteNotaCredito;
 import presentacion.vista.Cajero.VentanaEgresoCaja;
 
@@ -41,6 +46,9 @@ public class ControladorEgresosCaja {
 	private List<TipoEgresosDTO> listaTipoEgresos;
 	private TipoEgresos tipoEgresos;
 
+	
+	ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
+	
 	private int idSucursal = 0;
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
@@ -61,6 +69,10 @@ public class ControladorEgresosCaja {
 
 	private List<EgresosDTO> egresosEnTabla;
 
+	Stock stock;
+	MaestroProducto maestroProducto;
+	
+	
 	public ControladorEgresosCaja() {
 		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
@@ -106,6 +118,7 @@ public class ControladorEgresosCaja {
 
 		// Cambia el estado de combobox
 		this.ventanaEgresoCaja.getCbTipoEgreso().addActionListener(a -> tipoEgresoSeleccionado());
+		this.ventanaEgresoCaja.getBtnVerPedidos().addActionListener(a -> pasarAVerPedidosAProveedor());
 	}
 
 	public void actualizarLblBalance() {
@@ -204,22 +217,27 @@ public class ControladorEgresosCaja {
 			if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 				String ppNroProveedor = this.ventanaEgresoCaja.getTxtFieldPPNroProveedor().getText();
 				String ppNroOrdenCompra = this.ventanaEgresoCaja.getTxtFieldPPNroOrdenCompra().getText();
-				
+				String pago = this.ventanaEgresoCaja.getTxtFieldMonto().getText();
 				try {
 					Double.parseDouble(ppNroProveedor);
 					Double.parseDouble(ppNroOrdenCompra);
-					Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+					Double.parseDouble(pago);
 				}catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(null, "Los campos deben ser numericos");
 					return;	
 				}
 				
-				
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
-				if(registrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),ppNroProveedor)){
+				if(this.ventanaEgresoCaja.getCbTipoMedioPago().getSelectedItem().equals("Nota Credito")) {
+					ProveedorDTO provSeleccionado = obtenerProveedor(Integer.parseInt(ppNroProveedor));
+					if(provSeleccionado.getLimiteCredito() < Double.parseDouble(pago)) {
+						JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad elegida supera el limite de credito con el que se le puede pagar a este proveedor");
+						return;
+					}
+				}
+				
+				if(sePudoRegistrarPedidoComoPagado(Integer.parseInt(ppNroOrdenCompra),Integer.parseInt(ppNroProveedor),Double.parseDouble(pago))){
                     ingresarEgreso(detalle);
-                }else {
-                    JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
                 }
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
@@ -244,50 +262,71 @@ public class ControladorEgresosCaja {
 		return ret;
 	}
 
-	private boolean registrarPedidoComoPagado(int ppNroOrdenCompra,String nroProveedor) {
+	private boolean sePudoRegistrarPedidoComoPagado(int ppNroOrdenCompra,int nroProveedor,double pago) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
-			if (p.getId() == ppNroOrdenCompra && Integer.parseInt(nroProveedor) == p.getIdProveedor()) {
-				double pago = Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
-				BigDecimal pagoRestanteMostrar = new BigDecimal("" + (p.getPrecioTotal() - pago))
-						.setScale(2, RoundingMode.HALF_UP);
-				
-				double pagoRestante = p.getPrecioTotal() - pago;
-
+			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {				
+				double totalPagado = p.getTotalPagado()+pago;
+				double pagoRestante = p.getPrecioTotal()-totalPagado;
 				boolean update = true;
-				boolean updateTotal = true;
+
+				if( p.getPrecioTotal()<totalPagado) {
+					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido ("+p.getTotalPagado()+")");
+					return false;
+				}
+				
+				//se completa el pago
 				if (pagoRestante <= 0) {
-					update = this.pedidosPendientes.cambiarEstado(p.getId(), "Pagado");
+					
+					p.setEstado("Pagado");
+					p.setTotalPagado(totalPagado);
+					
+					update = this.pedidosPendientes.update(p,p.getId());
 
 					if (!update) {
 						JOptionPane.showMessageDialog(null,
 								"Ha ocurrido un error al marcar como completo el pedido: " + p.getId(), "Error",
 								JOptionPane.ERROR_MESSAGE);
+						return false;
 					} else {
 						JOptionPane.showMessageDialog(null,
-								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'",
-								"Pago", JOptionPane.INFORMATION_MESSAGE);
+								"Se ha completado el pago del pedido: " + p.getId() + ".\nPedido marcado como 'Pagado'","Pago", JOptionPane.INFORMATION_MESSAGE);
+						return true;
 					}
 
-				} else {
-					updateTotal = this.pedidosPendientes.updateTotal(p.getId(), pagoRestante);
-
-					if (!updateTotal) {
-						JOptionPane.showMessageDialog(null,
-								"Ha ocurrido un error al actualizar el total del pedido: " + p.getId(), "Error",
-								JOptionPane.ERROR_MESSAGE);
+				} 
+				//se paga una parte del pedido
+				else {
+					p.setTotalPagado(totalPagado);
+					update = this.pedidosPendientes.update(p,p.getId());
+					if (!update) {
+						JOptionPane.showMessageDialog(null,	"Ha ocurrido un error al actualizar el total del pedido: " + p.getId(), "Error",JOptionPane.ERROR_MESSAGE);
+						return false;
 					} else {
+						
+						BigDecimal pagoRestant = new BigDecimal(pagoRestante).setScale(2, RoundingMode.HALF_UP);
+						
 						JOptionPane.showMessageDialog(null, "Se ha pagado una parte del total del pedido: " + p.getId()
-								+ ".\nNuevo saldo: " + pagoRestanteMostrar, "Pago", JOptionPane.INFORMATION_MESSAGE);
+								+ ".\nNueva cantidad restante a pagar: " + pagoRestant, "Pago", JOptionPane.INFORMATION_MESSAGE);
+						return true;
 					}
-				}
-
-				return true;
+				}			
 			}
 			
 		}
-		return false;
+		JOptionPane.showMessageDialog(ventanaEgresoCaja, "No se ha encontrado el pedido");
+        return false;
 	}
 
+	public ProveedorDTO obtenerProveedor(int id) {
+		Proveedor proveedor = new Proveedor(new DAOSQLFactory());
+		ArrayList<ProveedorDTO> todosLosProveedores = (ArrayList<ProveedorDTO>) proveedor.readAll();
+		for(ProveedorDTO p: todosLosProveedores) {
+			if(p.getId()==id) {
+				return p;
+			}
+		}return null;
+	}
+	
 	public boolean validarCampos() {
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		String medioPagoSeleccionado = this.ventanaEgresoCaja.getMedioPagoSeleccionado();
@@ -331,6 +370,13 @@ public class ControladorEgresosCaja {
 			return false;
 		}
 
+		try {
+			Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "El campo monto es incorrecto");
+			return false;	
+		}
+		
 		if (Double.parseDouble(this.ventanaEgresoCaja.getTxtFieldMonto().getText()) > obtenerValorBalance()) {
 			JOptionPane.showMessageDialog(null, "El monto supera lo disponible");
 			return false;
@@ -340,21 +386,26 @@ public class ControladorEgresosCaja {
 	}
 
 	public void tipoEgresoSeleccionado() {
+		
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarAS();
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Faltante")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarFA();
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Nota Credito")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarNC();
 			llenarCBMedioPagoNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 			this.ventanaEgresoCaja.mostrarPP();
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(true);
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 	}
@@ -362,7 +413,6 @@ public class ControladorEgresosCaja {
 	public void llenarCBTipoEgreso() {
 		for (TipoEgresosDTO te : this.listaTipoEgresos) {
 			this.ventanaEgresoCaja.getCbTipoEgreso().addItem(te.getDescripcion());
-			;
 		}
 	}
 
@@ -371,6 +421,9 @@ public class ControladorEgresosCaja {
 		for (MedioPagoEgresoDTO mpe : this.listaMedioPagoEgreso) {
 			if (!mpe.getIdMoneda().equals("NC")) {
 				this.ventanaEgresoCaja.getCbTipoMedioPago().addItem(mpe.getDescripcion());
+			}
+			if(mpe.getIdMoneda().equals("NC") && this.ventanaEgresoCaja.getTipoEgresoSeleccionado().equals("Pago proveedor")) {
+				this.ventanaEgresoCaja.getCbTipoMedioPago().addItem(mpe.getDescripcion());	
 			}
 
 		}
@@ -387,6 +440,7 @@ public class ControladorEgresosCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaEgresoCaja.cerrar();
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.cerrar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -433,4 +487,22 @@ public class ControladorEgresosCaja {
 		this.ventanaEgresoCaja.show();
 	}
 
+	public void pasarAVerPedidosAProveedor() {
+		stock = new Stock(new DAOSQLFactory());
+		maestroProducto = new MaestroProducto(new DAOSQLFactory());
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(null,pedidosPendientes, this.stock,this.maestroProducto);
+		this.controladorVerPedidosAProveedor.inicializar();
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnSalir().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnConfirmarCancelacionDe().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnConfirmarPedido().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getLblCancelar().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getLblConfirmar().setVisible(false);
+		
+		
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnSalirAEgresos().setVisible(true);
+		
+		
+		this.controladorVerPedidosAProveedor.mostrarVentana();
+	}
+	
 }

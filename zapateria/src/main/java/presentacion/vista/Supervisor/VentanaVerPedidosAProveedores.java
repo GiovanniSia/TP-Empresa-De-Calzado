@@ -42,7 +42,7 @@ public class VentanaVerPedidosAProveedores {
 	
 	private JTable tablePedidos;
 	private DefaultTableModel modelTablaPedidos;
-	private String[] nombreColumnasTablaPedidos = {"Id","Proveedor","Producto","Cantidad","Uni. Medida","Precio de pedido","Estado","Fecha - hora de alta","Fecha - hora de envio","Fecha - hora de cierre"};
+	private String[] nombreColumnasTablaPedidos = {"Id","Proveedor","Id Proveedor","Producto","Cantidad","Uni. Medida","Precio de pedido","Estado","Fecha - hora de alta","Fecha - hora de envio","Fecha - hora de cierre","Total pagado"};
 
 	
 	private JButton btnSalir;
@@ -59,11 +59,12 @@ public class VentanaVerPedidosAProveedores {
 	private JSpinner spinnerHoraHasta;
 	
 	private JComboBox<String> comboBoxEstadoSolo;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
+	private JLabel lblConfirmar;
+	private JLabel lblCancelar;
 	private JLabel lblNewLabel_5;
 	private JPanel panel_1;
 	private JLabel lblLogo;
+	private JButton btnSalirAEgresos;
 
 
 	/**
@@ -292,15 +293,15 @@ public class VentanaVerPedidosAProveedores {
 		spinnerHoraHasta.setValue(new Date(0, 0,0, 00, 0, 0));
 		panelTabla.add(spinnerHoraHasta);
 		
-		lblNewLabel_3 = new JLabel("Confirmar Pedido Completado");
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_3.setBounds(462, 463, 212, 60);
-		panel.add(lblNewLabel_3);
+		lblConfirmar = new JLabel("Confirmar Pedido Completado");
+		lblConfirmar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblConfirmar.setBounds(462, 463, 247, 60);
+		panel.add(lblConfirmar);
 		
-		lblNewLabel_4 = new JLabel("Confirmar Cancelacion de Pedido");
-		lblNewLabel_4.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(789, 463, 231, 60);
-		panel.add(lblNewLabel_4);
+		lblCancelar = new JLabel("Confirmar Cancelacion de Pedido");
+		lblCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblCancelar.setBounds(789, 463, 281, 60);
+		panel.add(lblCancelar);
 		
 		lblNewLabel_5 = new JLabel("Atras");
 		lblNewLabel_5.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -321,12 +322,21 @@ public class VentanaVerPedidosAProveedores {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel_1.add(lblLogo);
 		
+		btnSalirAEgresos = new JButton("");
+		btnSalirAEgresos.setBounds(155, 462, 60, 60);
+		cambiarIconoBotones(btnSalirAEgresos,  "back2.png");
+		panel.add(btnSalirAEgresos);
+		btnSalirAEgresos.setVisible(false);
+		
+		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(1, 0, 1280, 960);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
 	
+
+
 	public void cambiarIconoLabel(JLabel label, String ruta) {
 		ImageIcon Imagen = new ImageIcon(getClass().getResource("/imagenes/" + ruta));
 		ImageIcon Icono = new ImageIcon(
@@ -433,4 +443,16 @@ public class VentanaVerPedidosAProveedores {
 	public JComboBox<String> getComboBoxEstadoSolo() {
 		return comboBoxEstadoSolo;
 	}
+	public JButton getBtnSalirAEgresos() {
+		return btnSalirAEgresos;
+	}
+
+	public JLabel getLblConfirmar() {
+		return lblConfirmar;
+	}
+
+	public JLabel getLblCancelar() {
+		return lblCancelar;
+	}
+	
 }
