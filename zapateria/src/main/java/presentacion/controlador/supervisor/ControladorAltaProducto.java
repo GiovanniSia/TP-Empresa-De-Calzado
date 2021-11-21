@@ -740,14 +740,12 @@ public class ControladorAltaProducto {
 		this.ventanaAltaProducto.getComboBoxUnidadDeMedida().setSelectedItem(talle);
 		boolean seEncontroTalle=false;
 		for(int i=0; i< this.ventanaAltaProducto.getComboBoxTalle().getItemCount();i++) {
-			System.out.println("cb: "+this.ventanaAltaProducto.getComboBoxTalle().getItemAt(i).toString()+", talle: "+talle);
 			if(this.ventanaAltaProducto.getComboBoxTalle().getItemAt(i).equals(talle)) {
 				this.ventanaAltaProducto.getComboBoxTalle().setSelectedIndex(i);
 				seEncontroTalle=true;
 			}		
 		}
 		if(!seEncontroTalle) {
-			System.out.println("no se encontro, se crea uno nuevo");
 			this.ventanaAltaProducto.getComboBoxTalle().addItem(talle);	
 			this.ventanaAltaProducto.getComboBoxTalle().setSelectedItem(talle);	
 		}
@@ -794,7 +792,6 @@ public class ControladorAltaProducto {
 				for(ProveedorDTO p: this.todosLosProveedores) {
 					if(p.getId() == pp.getIdProveedor()) {
 						this.proveedoresEnTabla.add(p);
-						System.out.println("se añade prov: "+p.getNombre()+" a la lista");
 						this.productoDeProveedorEnTabla.add(pp);
 						refrescarTabla();
 					}

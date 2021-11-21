@@ -230,7 +230,8 @@ public class ControladorEgresosCaja {
 				String detalle = ppNroProveedor + " - " + ppNroOrdenCompra;
 				if(this.ventanaEgresoCaja.getCbTipoMedioPago().getSelectedItem().equals("Nota Credito")) {
 					ProveedorDTO provSeleccionado = obtenerProveedor(Integer.parseInt(ppNroProveedor));
-					if(provSeleccionado.getLimiteCredito() < Double.parseDouble(pago)) {
+//					if(provSeleccionado.getLimiteCredito() < Double.parseDouble(pago)) {
+					if(laCantidadDeCreditoNoSuperaElLimite(Integer.parseInt(ppNroProveedor),Integer.parseInt(ppNroOrdenCompra),Double.parseDouble(pago),provSeleccionado)){
 						JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad elegida supera el limite de credito con el que se le puede pagar a este proveedor");
 						return;
 					}
@@ -264,13 +265,13 @@ public class ControladorEgresosCaja {
 
 	private boolean sePudoRegistrarPedidoComoPagado(int ppNroOrdenCompra,int nroProveedor,double pago) {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
-			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {				
+			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && p.getEstado().equals("Recibido")) {				
 				double totalPagado = p.getTotalPagado()+pago;
 				double pagoRestante = p.getPrecioTotal()-totalPagado;
 				boolean update = true;
 
 				if( p.getPrecioTotal()<totalPagado) {
-					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido ("+p.getTotalPagado()+")");
+					JOptionPane.showMessageDialog(ventanaEgresoCaja, "La cantidad ingresada supera el total a pagar para este pedido (total a pagar: "+(p.getPrecioTotal()-p.getTotalPagado())+")");
 					return false;
 				}
 				
@@ -533,6 +534,62 @@ public class ControladorEgresosCaja {
 		
 		
 		this.controladorVerPedidosAProveedor.mostrarVentana();
+	}
+	
+	
+	public boolean laCantidadDeCreditoNoSuperaElLimite(int nroProveedor,int nroOrdenCompra,double pago,ProveedorDTO p) {
+		double cantidadDeCreditoUsado = pago;
+		
+		//detalle = nroProv - nroOrdenCompra
+		
+		ArrayList<EgresosDTO> listaDeEgresos = (ArrayList<EgresosDTO>) this.egresos.readAll();
+		for(EgresosDTO e: listaDeEgresos) {
+			if(e.getMedioPago().equals("NC") && e.getTipo().equals("Pago proveedor") && e.getIdSucursal() == this.idSucursal) {
+			int nroProvEgreso = obtenerIdProvEgreso(e.getDetalle());
+			int nroOrdenCompraEgreso = obtenerNroOrdenCompraEgreso(e.getDetalle()); 
+//			System.out.println(e.getDetalle());
+//			System.out.println("nroProvEgreso: "+nroProvEgreso);
+//			System.out.println("nroOrdenCOmpraEgreso: "+nroOrdenCompraEgreso);
+//			System.out.println("--------------");
+				if(nroProvEgreso == nroProveedor && nroOrdenCompraEgreso == nroOrdenCompra) {
+					cantidadDeCreditoUsado +=e.getTotal();
+//					System.out.println("se encontro un egreso igual, se suma");
+				}
+			}
+		}
+		
+		System.out.println("cantidad usado con este nuevo valor: "+cantidadDeCreditoUsado+", limite de credito para este prov: "+p.getLimiteCredito());
+		
+		return p.getLimiteCredito() < cantidadDeCreditoUsado;
+	}
+	
+	public int obtenerIdProvEgreso(String detalle) {
+		String ret ="";
+		int i=0;
+		while(detalle.length() > i && detalle.charAt(i) != ' ') {
+			ret = ret+detalle.charAt(i);
+			i++;
+		}
+		return Integer.parseInt(ret);
+	}
+
+	public int obtenerNroOrdenCompraEgreso(String detalle) {
+		String ret ="";
+		int i=0;
+		// 4 - 14
+		while(detalle.charAt(i) != '-') {
+			i++;
+		}
+		//como luego del '-' sigue un espacio le sumamos +2
+		i = i + 2;
+		while(i <= (detalle.length()-1)) {
+			ret = ret+detalle.charAt(i);
+
+			i++;
+
+			
+		}
+		return Integer.parseInt(ret);		
 	}
 	
 }
