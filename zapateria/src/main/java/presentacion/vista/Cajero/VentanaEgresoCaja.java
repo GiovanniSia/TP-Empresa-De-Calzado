@@ -62,6 +62,7 @@ public class VentanaEgresoCaja extends JFrame {
 	private JPanel panel_1;
 	private JPanel panel;
 	private JLabel lblLogo;
+	private JButton btnVerPedidos;
 
 	public VentanaEgresoCaja() {
 		try {
@@ -299,6 +300,12 @@ public class VentanaEgresoCaja extends JFrame {
 		panel_1.setBackground(new Color(248, 248, 255));
 		panel_1.setBounds(0, 65, 485, 295);
 		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		btnVerPedidos = new JButton("Ver pedidos");
+		btnVerPedidos.setBounds(32, 232, 117, 31);
+		panel_1.add(btnVerPedidos);
+		btnVerPedidos.setVisible(false);
 		
 		JLabel lblFondo = new JLabel("");
 		lblFondo.setBounds(0, 53, 640, 480);
@@ -477,4 +484,8 @@ public class VentanaEgresoCaja extends JFrame {
 		VentanaEgresoCaja a = new VentanaEgresoCaja();
 		a.show();
 	}
+	public JButton getBtnVerPedidos() {
+		return btnVerPedidos;
+	}
+	
 }

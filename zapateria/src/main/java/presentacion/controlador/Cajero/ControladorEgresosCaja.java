@@ -23,13 +23,16 @@ import inicioSesion.sucursalProperties;
 import modelo.Egresos;
 import modelo.Factura;
 import modelo.Ingresos;
+import modelo.MaestroProducto;
 import modelo.MedioPagoEgreso;
 import modelo.PedidosPendientes;
 import modelo.Proveedor;
+import modelo.Stock;
 import modelo.TipoEgresos;
 import modelo.compraVirtual.MotivoEgreso;
 import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
+import presentacion.controlador.supervisor.ControladorVerPedidosAProveedor;
 import presentacion.reportes.ReporteNotaCredito;
 import presentacion.vista.Cajero.VentanaEgresoCaja;
 
@@ -43,6 +46,9 @@ public class ControladorEgresosCaja {
 	private List<TipoEgresosDTO> listaTipoEgresos;
 	private TipoEgresos tipoEgresos;
 
+	
+	ControladorVerPedidosAProveedor controladorVerPedidosAProveedor;
+	
 	private int idSucursal = 0;
 	public void obtenerDatosPropertiesSucursalEmpleado() {
 		try {
@@ -63,6 +69,10 @@ public class ControladorEgresosCaja {
 
 	private List<EgresosDTO> egresosEnTabla;
 
+	Stock stock;
+	MaestroProducto maestroProducto;
+	
+	
 	public ControladorEgresosCaja() {
 		obtenerDatosPropertiesSucursalEmpleado();
 		this.ventanaEgresoCaja = new VentanaEgresoCaja();
@@ -108,6 +118,7 @@ public class ControladorEgresosCaja {
 
 		// Cambia el estado de combobox
 		this.ventanaEgresoCaja.getCbTipoEgreso().addActionListener(a -> tipoEgresoSeleccionado());
+		this.ventanaEgresoCaja.getBtnVerPedidos().addActionListener(a -> pasarAVerPedidosAProveedor());
 	}
 
 	public void actualizarLblBalance() {
@@ -255,12 +266,7 @@ public class ControladorEgresosCaja {
 		for (PedidosPendientesDTO p : this.listaPedidosPendientes) {
 			if (p.getId() == ppNroOrdenCompra && nroProveedor == p.getIdProveedor() && !p.getEstado().equals("Pagado")) {				
 				double totalPagado = p.getTotalPagado()+pago;
-				System.out.println("TOTAL PAGADO: "+p.getTotalPagado());
-				System.out.println("SE PAGA: "+pago);
-				
 				double pagoRestante = p.getPrecioTotal()-totalPagado;
-				System.out.println("PAGO RESTANTE: "+pagoRestante);
-				System.out.println("TOTAL PAGADO: "+totalPagado);
 				boolean update = true;
 
 				if( p.getPrecioTotal()<totalPagado) {
@@ -380,21 +386,26 @@ public class ControladorEgresosCaja {
 	}
 
 	public void tipoEgresoSeleccionado() {
+		
 		String tipoEgresoSeleccionado = this.ventanaEgresoCaja.getTipoEgresoSeleccionado();
 		if (tipoEgresoSeleccionado.equals("Adelanto de sueldo")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarAS();
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Faltante")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarFA();
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Nota Credito")) {
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(false);
 			this.ventanaEgresoCaja.mostrarNC();
 			llenarCBMedioPagoNotaCredito();
 		}
 		if (tipoEgresoSeleccionado.equals("Pago proveedor")) {
 			this.ventanaEgresoCaja.mostrarPP();
+			this.ventanaEgresoCaja.getBtnVerPedidos().setVisible(true);
 			llenarCBMedioPagoQueNoSeaNotaCredito();
 		}
 	}
@@ -429,6 +440,7 @@ public class ControladorEgresosCaja {
 
 	public void atras(ActionEvent a) {
 		this.ventanaEgresoCaja.cerrar();
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.cerrar();
 		this.controlador.mostrarVentanaMenuDeSistemas();
 	}
 
@@ -475,4 +487,22 @@ public class ControladorEgresosCaja {
 		this.ventanaEgresoCaja.show();
 	}
 
+	public void pasarAVerPedidosAProveedor() {
+		stock = new Stock(new DAOSQLFactory());
+		maestroProducto = new MaestroProducto(new DAOSQLFactory());
+		this.controladorVerPedidosAProveedor = new ControladorVerPedidosAProveedor(null,pedidosPendientes, this.stock,this.maestroProducto);
+		this.controladorVerPedidosAProveedor.inicializar();
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnSalir().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnConfirmarCancelacionDe().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnConfirmarPedido().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getLblCancelar().setVisible(false);
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getLblConfirmar().setVisible(false);
+		
+		
+		this.controladorVerPedidosAProveedor.ventanaVerPedidosAProveedor.getBtnSalirAEgresos().setVisible(true);
+		
+		
+		this.controladorVerPedidosAProveedor.mostrarVentana();
+	}
+	
 }

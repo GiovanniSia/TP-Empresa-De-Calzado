@@ -30,6 +30,7 @@ import modelo.PedidosPendientes;
 import modelo.Stock;
 import modelo.generarOrdenesFabricacion;
 import presentacion.controlador.Controlador;
+import presentacion.controlador.Cajero.ControladorEgresosCaja;
 import presentacion.vista.Supervisor.VentanaVerPedidosAProveedores;
 
 public class ControladorVerPedidosAProveedor {
@@ -50,9 +51,11 @@ public class ControladorVerPedidosAProveedor {
 	MaestroProducto maestroProducto;
 	List<MaestroProductoDTO> todosLosProductos;
 	
-	VentanaVerPedidosAProveedores ventanaVerPedidosAProveedor;
+	public VentanaVerPedidosAProveedores ventanaVerPedidosAProveedor;
 	
 	Controlador controlador;
+	
+	ControladorEgresosCaja controladorEgresosCaja;
 	
 	public ControladorVerPedidosAProveedor(Controlador controlador,PedidosPendientes pedidosPendientes, Stock stock,MaestroProducto maestroProducto) {
 		this.pedidosPendientes = pedidosPendientes;
@@ -139,10 +142,13 @@ public class ControladorVerPedidosAProveedor {
 		
 		this.ventanaVerPedidosAProveedor.getComboBoxEstadoSolo().addActionListener(a -> realizarBusqueda(a));
 		
+		this.ventanaVerPedidosAProveedor.getBtnSalirAEgresos().addActionListener(a -> regresarAEgresos());
+		
 		setearDatosDeProperties();
 		llenarComboBoxes();
 		llenarTablaCompleta();
 	}
+
 	
 	public void setearDatosDeProperties() {
 		empleadoProperties empleado = empleadoProperties.getInstance();
@@ -249,6 +255,7 @@ public class ControladorVerPedidosAProveedor {
 	public void escribirTabla(PedidosPendientesDTO p) {
 		int id = p.getId();
 		String proveedor = p.getNombreProveedor();
+		int idProveedor = p.getIdProveedor();
 		String prod = p.getNombreMaestroProducto();
 		
 		double cantidad = p.getCantidad();
@@ -268,7 +275,7 @@ public class ControladorVerPedidosAProveedor {
 		
 		BigDecimal totalPagado = new BigDecimal(p.getTotalPagado()).setScale(2, RoundingMode.HALF_UP);
 		
-		Object[] fila = {id,proveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre,totalPagado};
+		Object[] fila = {id,proveedor,idProveedor,prod,cant,unidadMedida,precioTotal,estado,fechaHora,fechaHoraEnvio,fechaHoraCierre,totalPagado};
 		this.ventanaVerPedidosAProveedor.getModelTablaPedidos().addRow(fila);
 		this.pedidosPendientesEnTabla.add(p);	
 	}
@@ -312,8 +319,8 @@ public class ControladorVerPedidosAProveedor {
 			return;
 		}
 		PedidosPendientesDTO pedidoSeleccionado = this.pedidosPendientesEnTabla.get(filaSeleccionada);
-		if(pedidoSeleccionado.getEstado().equals("Completado")) {
-			 JOptionPane.showMessageDialog(null, "No se puede cancelar el pedido. El pedido ya esta completado", "Error", JOptionPane.ERROR_MESSAGE);
+		if(pedidoSeleccionado.getEstado().equals("Recibido") || pedidoSeleccionado.getEstado().equals("Pagado")) {
+			 JOptionPane.showMessageDialog(null, "No se puede cancelar el pedido.", "Error", JOptionPane.ERROR_MESSAGE);
 			 return;
 		}
 		
@@ -449,13 +456,7 @@ public class ControladorVerPedidosAProveedor {
 		}
 	}
 	
-	
-//	public static void main(String[] args) {
-//		PedidosPendientes pedido = new PedidosPendientes(new DAOSQLFactory());
-//		Stock stock = new Stock(new DAOSQLFactory());
-//		ControladorVerPedidosAProveedor c = new ControladorVerPedidosAProveedor(pedido,stock);
-//		c.inicializar();
-//		c.mostrarVentana();
-//	}
-	
+	public void regresarAEgresos() {
+		this.ventanaVerPedidosAProveedor.cerrar();
+	}
 }
