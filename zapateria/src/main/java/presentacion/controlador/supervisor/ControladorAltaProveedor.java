@@ -51,6 +51,7 @@ public class ControladorAltaProveedor {
 	}
 
 	public void mostarVentanaEditar() {
+		this.ventanaAltaProveedor.getLblSubtitulo().setText("Editar Proveedor");
 		this.ventanaAltaProveedor.getLblEditar().setVisible(true);
 		this.ventanaAltaProveedor.getBtnEditar().setVisible(true);
 		setearDatos();

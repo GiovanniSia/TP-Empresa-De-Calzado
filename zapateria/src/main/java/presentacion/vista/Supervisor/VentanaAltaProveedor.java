@@ -42,6 +42,8 @@ public class VentanaAltaProveedor {
 	private JLabel lblLogo;
 
 	private JLabel lblTitulo;
+
+	private JLabel lblSubtitulo;
 	/**
 	 * Launch the application.
 	 */
@@ -84,7 +86,7 @@ public class VentanaAltaProveedor {
 		frame.setLocationRelativeTo(null);
 		frame.setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage());
 
-		JLabel lblSubtitulo = new JLabel("Registrar Proveedor");
+		lblSubtitulo = new JLabel("Registrar Proveedor");
 		lblSubtitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		lblSubtitulo.setBounds(10, 47, 403, 52);
 		frame.getContentPane().add(lblSubtitulo);
@@ -286,4 +288,10 @@ public class VentanaAltaProveedor {
 	public JLabel getLblEditar() {
 		return lblEditar;
 	}
+
+	public JLabel getLblSubtitulo() {
+		return lblSubtitulo;
+	}
+	
+	
 }

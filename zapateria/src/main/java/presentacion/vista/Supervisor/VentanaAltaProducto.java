@@ -73,6 +73,8 @@ public class VentanaAltaProducto {
 
 	private JLabel lblNewLabel_2;
 	private JPanel panel_1;
+
+	private JLabel lblTitulo;
 	/**
 	 * Launch the application.
 	 */
@@ -129,10 +131,10 @@ public class VentanaAltaProducto {
 		cambiarIconoLabel(lblLogo, "argentoshoes2.png");
 		panel.add(lblLogo);
 
-		JLabel lblNewLabel = new JLabel("Registrar Producto");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblNewLabel.setBounds(10, 49, 403, 53);
-		frame.getContentPane().add(lblNewLabel);
+		lblTitulo = new JLabel("Registrar Producto");
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitulo.setBounds(10, 49, 403, 53);
+		frame.getContentPane().add(lblTitulo);
 
 		JLabel lblNewLabel_1 = new JLabel("Descripcion");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -638,6 +640,10 @@ public class VentanaAltaProducto {
 
 	public JLabel getLblEditarProducto() {
 		return lblEditarProducto;
+	}
+
+	public JLabel getLblTitulo() {
+		return lblTitulo;
 	}
 	
 }

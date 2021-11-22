@@ -163,6 +163,7 @@ public class ControladorAltaProducto {
 	
 	public void mostrarVentanaEditar() {
 		llenarDatos();
+		this.ventanaAltaProducto.getLblTitulo().setText("Editar Producto");
 		this.ventanaAltaProducto.getLblRegistrarProducto().setVisible(false);
 		this.ventanaAltaProducto.getBtnRegistrar().setVisible(false);
 		this.ventanaAltaProducto.getBtnEditar().setVisible(true);

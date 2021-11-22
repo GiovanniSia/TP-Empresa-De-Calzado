@@ -25,14 +25,11 @@ import dto.MaestroProductoDTO;
 import dto.StockDTO;
 import inicioSesion.empleadoProperties;
 import inicioSesion.sucursalProperties;
-import modelo.Cliente;
+
 import modelo.MaestroProducto;
-import modelo.PedidosPendientes;
-import modelo.ProductoDeProveedor;
-import modelo.Proveedor;
+
 import modelo.Stock;
 import modelo.generarOrdenesFabricacion;
-import persistencia.dao.mysql.DAOSQLFactory;
 import presentacion.controlador.Controlador;
 import presentacion.controlador.ValidadorTeclado;
 import presentacion.vista.Supervisor.VentanaGestionarProductos;

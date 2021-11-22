@@ -61,7 +61,7 @@ public class VentanaAltaCliente {
 	private JLabel lblEstado;
 	private JComboBox<String> comboBoxEstado;	
 	private JPanel panel;
-	private JLabel lblRegistrarCliente_1;
+	private JLabel lblTitulo;
 
 	private JLabel lblEditarCliente;
 	
@@ -443,11 +443,11 @@ public class VentanaAltaCliente {
 		panel.setBounds(0, 97, 666, 294);
 		frame.getContentPane().add(panel);
 		
-		lblRegistrarCliente_1 = new JLabel("Registrar Cliente");
-		lblRegistrarCliente_1.setHorizontalAlignment(SwingConstants.LEFT);
-		lblRegistrarCliente_1.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		lblRegistrarCliente_1.setBounds(10, 50, 312, 53);
-		frame.getContentPane().add(lblRegistrarCliente_1);
+		lblTitulo = new JLabel("Registrar Cliente");
+		lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		lblTitulo.setBounds(10, 50, 312, 53);
+		frame.getContentPane().add(lblTitulo);
 		lblEstado.setVisible(false);
 		
 		JLabel lblFondo = new JLabel("");
@@ -591,5 +591,8 @@ public class VentanaAltaCliente {
 	
 	public JLabel getLblEditarCliente() {
 		return lblEditarCliente;
+	}
+	public JLabel getLblTitulo() {
+		return lblTitulo;
 	}
 }
