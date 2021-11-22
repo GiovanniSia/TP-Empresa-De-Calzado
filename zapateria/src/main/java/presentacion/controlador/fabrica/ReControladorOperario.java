@@ -322,6 +322,7 @@ public class ReControladorOperario implements ActionListener {
 		
 		if(ordenesEnLista.size() > filasSeleccionadas[0]) {	//Escogio una orden sin trabajar
 			if(this.empleado.getTipoEmpleado().toLowerCase().equals("gerente")) {
+				this.mostrarMensajeEmergente("Gerente, seleccione una orden completa para poder ingresar el dia de llegada.");
 				return;
 			}
 			OrdenFabricaDTO ordenATrabajar = ordenesEnLista.get(filasSeleccionadas[0]);
@@ -333,6 +334,7 @@ public class ReControladorOperario implements ActionListener {
 			fabricacionTrabajando = trabajosEnLista.get(ventanaPrincipal.getTablaFabricacionesEnMarcha().getSelectedRows()[0]-ordenesEnLista.size());
 			if(fabricacionTrabajando.getEstado().equals("activo")) {
 				if(this.empleado.getTipoEmpleado().toLowerCase().equals("gerente")) {
+					this.mostrarMensajeEmergente("Gerente, seleccione una orden completa para poder ingresar el dia de llegada.");
 					return;
 				}
 				reiniciarTablaIngredientesDeUnTrabajo();
