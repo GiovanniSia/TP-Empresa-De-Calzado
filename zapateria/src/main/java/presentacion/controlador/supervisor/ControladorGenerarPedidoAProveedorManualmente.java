@@ -292,6 +292,15 @@ public class ControladorGenerarPedidoAProveedorManualmente {
 		if(cant.equals("")) {
 			canti = 0;
 		}else {
+			
+			try {
+				Double.parseDouble(cant);
+			}catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "El campo cantidad es incorrecto");
+				this.ventanaGenerarPedidoProveedor.getTextCantidad().setText("0");
+				cant="0";
+			}
+			
 			canti = Double.parseDouble(cant);
 		}
 		
