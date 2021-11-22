@@ -298,6 +298,8 @@ private static final long serialVersionUID = 1L;
 		btnAtras.setVisible(true);
 		lblAgregarProducto.setVisible(false);
 		lblAtrs_2.setVisible(true);
+		btnEditar.setVisible(false);
+		lbleditarProducto.setVisible(false);
 	}
 	
 
