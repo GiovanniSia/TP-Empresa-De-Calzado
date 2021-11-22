@@ -313,6 +313,13 @@ public class VentanaEgresoCaja extends JFrame {
 		cambiarIconoLabel(lblFondo, "fondo.png");
 
 	}
+	
+	public void ocultarCampos() {
+		ocultarAS();
+		ocultarFA();
+		ocultarPP();
+		ocultarNC();
+	}
 
 	public void mostrarAS() {
 		this.lblAS.setVisible(true);

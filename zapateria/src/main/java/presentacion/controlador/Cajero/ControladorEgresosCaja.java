@@ -242,6 +242,7 @@ public class ControladorEgresosCaja {
                 }
 			}
 			this.ventanaEgresoCaja.limpiarCampos();
+			this.ventanaEgresoCaja.ocultarCampos();
 		}
 		actualizarLblBalance();
 	}
@@ -356,18 +357,18 @@ public class ControladorEgresosCaja {
 		}
 
 		if (tipoEgresoSeleccionado.equals("Adelanto de sueldo") && as.equals("")) {
-			JOptionPane.showMessageDialog(null, "El campo de tipo de egreso no puede estar vacio");
+			JOptionPane.showMessageDialog(null, "El campo de CUIL no puede estar vacio");
 			return false;
 		}
 
 		if (tipoEgresoSeleccionado.equals("Nota Credito") && nc.equals("")) {
-			JOptionPane.showMessageDialog(null, "El campo de tipo de egreso no puede estar vacio");
+			JOptionPane.showMessageDialog(null, "El campo Nro Factura no puede estar vacio");
 			return false;
 		}
 
 		if (tipoEgresoSeleccionado.equals("Pago proveedor")
 				&& (ppNroProveedor.equals("") || ppNroOrdenCompra.equals(""))) {
-			JOptionPane.showMessageDialog(null, "El campo de tipo de egreso no puede estar vacio");
+			JOptionPane.showMessageDialog(null, "Los campos Nro Proveedor y/o Nro Orden de Compra no puede estar vacio");
 			return false;
 		}
 
