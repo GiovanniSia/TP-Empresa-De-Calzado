@@ -30,6 +30,8 @@ import presentacion.vista.fabrica.receta.VerPasos;
 
 public class ControladorVerPasos implements ActionListener {
 	
+	private int cantidadIngredientesPermitido = 99999;
+	
 	VerPasos ventanaPrincipal;
 	ModeloPaso modeloPaso;
 	Fabricacion modeloFabricacion;
@@ -501,10 +503,18 @@ public class ControladorVerPasos implements ActionListener {
 		}
 		//Double cantidadUsar = (Double) this.ventanaPrincipal.getSpinnerCantidadIngrediente().getValue();
 		Double cantidadUsar = Double.valueOf(this.ventanaPrincipal.getTextFieldCantidadIngrediente().getText());
+		if(cantidadUsar > cantidadIngredientesPermitido) {
+			this.mostrarMensajeEmergente("La cantidad sobrepasa el limite perimitido");
+			return;
+		}
 		for(int x = 0; x<pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().size();x++) {
 			MaestroProductoDTO m = pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().get(x);
 			yaEstaba = yaEstaba || m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto();
 			if(m.getIdMaestroProducto() == ingredienteSeleccionado.getIdMaestroProducto()) {
+				if(pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().get(x)+cantidadUsar > cantidadIngredientesPermitido) {
+					this.mostrarMensajeEmergente("La cantidad sobrepasa el limite perimitido");
+					return;
+				}
 				//pasoDeRecetaSeleccionado.getPasosDTO().getMateriales().remove(x);
 				pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().set(x, pasoDeRecetaSeleccionado.getPasosDTO().getCantidadUsada().get(x)+cantidadUsar);
 			}
