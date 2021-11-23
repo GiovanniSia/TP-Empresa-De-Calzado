@@ -84,7 +84,7 @@ public class ControladorAsignarProductoAProveedor {
 	
 	public void llenarTablas() {
 		llenarTablaProveedor();
-		llenarTablaTodosLosProductos();
+		llenarTablaTodosLosProductos((ArrayList<MaestroProductoDTO>)this.todosLosProductos);
 		llenarTablaProductosDelProveedor();
 	}
 	
@@ -92,50 +92,9 @@ public class ControladorAsignarProductoAProveedor {
 	public void filtrarBusqueda() {
 		String nombre = this.ventanaAsignarProductoAProveedor.getTextNombre().getText();
 		ArrayList<MaestroProductoDTO> tablaFilatrada = (ArrayList<MaestroProductoDTO>) this.maestroProducto.getFiltroModificarMProdcto("Descripcion", nombre, null, null, null, null, null, null);
-		llenarTablaFiltrada(tablaFilatrada);
+		llenarTablaTodosLosProductos(tablaFilatrada);
 	}
-	
-	
-	public void llenarTablaFiltrada(ArrayList<MaestroProductoDTO> tablaFiltrada) {
-		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setRowCount(0);//borrar datos de la tabla
-		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setColumnCount(0);
-		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setColumnIdentifiers(this.ventanaAsignarProductoAProveedor.getNombreColumnasProductos());
-		this.todosLosProductoEnTabla.removeAll(this.todosLosProductoEnTabla);
-		
-		for(MaestroProductoDTO prod: tablaFiltrada) {
-			
-			boolean deboAgregar=true;
-			MaestroProductoDTO maestroProducto=prod;
-			for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-				deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto() ;
 
-			}
-			deboAgregar = deboAgregar && prod.getFabricado().equals("N");
-//			"Descripcion","Tipo","Costo de produccion","Precio Mayorista","Precio Minorista","Punto de Rep minimo","Talle"
-
-			if(deboAgregar) {
-				String descr = maestroProducto.getDescripcion();
-				String tipo = maestroProducto.getTipo();
-				 
-				BigDecimal cost = new BigDecimal(maestroProducto.getPrecioCosto()).setScale(2, RoundingMode.HALF_UP);
-				String costo = ""+cost;
-				
-				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-				String precioMayorista = ""+precioMayo;
-				
-				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-				String precioMiniorista =""+precioMino;
-				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
-				String talle = maestroProducto.getTalle();
-				String[] fila = {descr,tipo,costo,precioMayorista,precioMiniorista,puntoRepMinimo,talle};
-				this.ventanaAsignarProductoAProveedor.getModelTablaProductos().addRow(fila);
-				this.todosLosProductoEnTabla.add(maestroProducto);	
-			}
-			
-		}
-	}
-	
-	
 	
 	public void llenarTablaProveedor() {
 		this.ventanaAsignarProductoAProveedor.getModelTablaProvElegido().setRowCount(0);//borrar datos de la tabla
@@ -151,13 +110,13 @@ public class ControladorAsignarProductoAProveedor {
 				
 	}
 	
-	public void llenarTablaTodosLosProductos() {
+	public void llenarTablaTodosLosProductos(ArrayList<MaestroProductoDTO> listaProductos) {
 		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setRowCount(0);//borrar datos de la tabla
 		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setColumnCount(0);
 		this.ventanaAsignarProductoAProveedor.getModelTablaProductos().setColumnIdentifiers(this.ventanaAsignarProductoAProveedor.getNombreColumnasProductos());
 		this.todosLosProductoEnTabla.removeAll(this.todosLosProductoEnTabla);
 		
-		for(MaestroProductoDTO prod: this.todosLosProductos) {
+		for(MaestroProductoDTO prod: listaProductos) {
 
 //			boolean deboAgregar=true;
 			boolean deboAgregar=productoTieneProveedorAsignado(prod);
@@ -174,11 +133,9 @@ public class ControladorAsignarProductoAProveedor {
 				String costo = ""+cost;
 				
 				BigDecimal precioMayo = new BigDecimal(maestroProducto.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-;
 				String precioMayorista = ""+precioMayo;
 				
 				BigDecimal precioMino = new BigDecimal(maestroProducto.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP);
-;
 				String precioMiniorista =""+precioMino;
 				String puntoRepMinimo = ""+maestroProducto.getPuntoRepositorio();
 				String talle = maestroProducto.getTalle();
@@ -192,19 +149,6 @@ public class ControladorAsignarProductoAProveedor {
 	}
 	
 	public boolean productoTieneProveedorAsignado(MaestroProductoDTO prod) {
-//		boolean deboAgregar=true;
-//		boolean prodEsProvistoPorEsteProv = true;
-//		for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
-//			
-//			//si al menos un pp pertenece al mp entonces no se agrega
-//			deboAgregar = deboAgregar && prod.getIdMaestroProducto() != p.getIdMaestroProducto();
-//			
-//			if(!deboAgregar) {
-//				return deboAgregar || p.getIdProveedor() != this.proveedorElegido.getId();
-//			}
-//		}
-//		return true;
-		
 		for(ProductoDeProveedorDTO p: this.listaProductosDeProveedor) {
 			if(p.getIdMaestroProducto() == prod.getIdMaestroProducto() && p.getIdProveedor() == this.proveedorElegido.getId()) {
 				return false;
@@ -229,10 +173,8 @@ public class ControladorAsignarProductoAProveedor {
 					String costo = ""+p.getPrecioCosto();
 					
 					BigDecimal precioMayorista = new BigDecimal(p.getPrecioMayorista()).setScale(2, RoundingMode.HALF_UP);
-//					String precioMayorista = ""+precioMayo;
 					
 					BigDecimal precioMinorista = new BigDecimal(p.getPrecioMinorista()).setScale(2, RoundingMode.HALF_UP); 
-//					String precioMinorista =""+precioMino;
 					String puntoRepMinimo = ""+p.getPuntoRepositorio();
 					String talle = p.getTalle();
 					
@@ -271,8 +213,21 @@ public class ControladorAsignarProductoAProveedor {
 			return;
 		}
 		
-		double precioVenta = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextPrecioVenta().getText());
-		double cantPorLote = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextCantPorLote().getText());
+		double precioVenta = 0;
+		try {
+			precioVenta = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextPrecioVenta().getText());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Debe escribir un valor numerico para el campo Precio de Venta");
+			return;	
+		}
+		
+		double cantPorLote = 0;
+		try {
+			cantPorLote = Double.parseDouble(this.ventanaAsignarProductoAProveedor.getTextCantPorLote().getText());
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Debe escribir un valor numerico para el campo Cantidad de Productos por Lote");
+			return;	
+		}
 		
 		if(precioVenta<=0) {
 	   		 JOptionPane.showMessageDialog(null, "El precio de venta no puede ser menor a 0", "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -298,7 +253,7 @@ public class ControladorAsignarProductoAProveedor {
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 		
-		llenarTablaTodosLosProductos();
+		llenarTablaTodosLosProductos((ArrayList<MaestroProductoDTO>)this.todosLosProductos);
 		llenarTablaProductosDelProveedor();
 				
 		return;
@@ -317,7 +272,7 @@ public class ControladorAsignarProductoAProveedor {
 		this.todosLosProductos = this.maestroProducto.readAll();
 		this.listaProductosDeProveedor = this.productoDeProveedor.readAll();
 			
-		llenarTablaTodosLosProductos();
+		llenarTablaTodosLosProductos((ArrayList<MaestroProductoDTO>)this.todosLosProductos);
 		llenarTablaProductosDelProveedor();
 	}
 	

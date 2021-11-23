@@ -571,6 +571,14 @@ public class ControladorAltaCliente {
 			return false;
 		}
 		String saldoInicial = this.ventanaAltaCliente.getTextSaldoInicial().getText();
+		
+		try {
+			Double.parseDouble(saldoInicial);
+		}catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "Debe escribir un valor numerico para el campo credito disponible");
+			return false;	
+		}
+		
 		if (saldoInicial.equals("") || Double.parseDouble(saldoInicial) <= 0) {
 			JOptionPane.showMessageDialog(null, "El saldo inicial es incorrecto");
 			return false;
@@ -585,6 +593,13 @@ public class ControladorAltaCliente {
 			String tipoEstado = this.ventanaAltaCliente.getComboBoxEstado().getSelectedItem().toString();
 			String limiteCredito = this.ventanaAltaCliente.getTextLimiteCredito().getText();
 
+			try {
+				Double.parseDouble(limiteCredito);
+			}catch(NumberFormatException e){
+				JOptionPane.showMessageDialog(null, "Debe escribir un valor numerico para el campo Limite de crédito");
+				return false;	
+			}
+			
 			if (tipoEstado.equals("Moroso") && Double.parseDouble(saldoInicial) == Double.parseDouble(limiteCredito)) {
 				JOptionPane.showMessageDialog(null, "El cliente no puede ser moroso");
 				return false;
@@ -643,7 +658,6 @@ public class ControladorAltaCliente {
 				return false;
 			}
 		}
-
 		return true;
 
 	}
