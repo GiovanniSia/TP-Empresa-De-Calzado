@@ -166,7 +166,7 @@ public class VentanaSupervisorFabrica extends JFrame {
 		panel_1.add(lblNewLabel_4_2);
 		
 		JLabel lblFondo = new JLabel("");
-		lblFondo.setBounds(0, 0, 720, 540);
+		lblFondo.setBounds(0, 0, 1000, 750);
 		frame.getContentPane().add(lblFondo);
 		cambiarIconoLabel(lblFondo, "fondo.png");
 	}
