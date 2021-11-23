@@ -51,13 +51,15 @@ public class generarOrdenesFabricacion {
 		//OrdenFabricaDTO orden = new OrdenFabricaDTO(0,producto.getIdMaestroProducto(), fechaRequerido, producto.getCantidadAReponer(), codLote, idSucursal);
 		String fechaRequerido = crearFechaRequerido(producto);
 		String codLote = crearCodigoLote(producto);
-		OrdenFabricaDTO orden = fabricarOrdenFabricacion(producto.getIdMaestroProducto(), fechaRequerido, producto.getCantidadAReponer(), codLote, idSucursal);
+		Double cantReponer = producto.getPuntoRepositorio()-contarStockDeUnProductoEnUnaSucursal(idSucursal, producto.getIdMaestroProducto());
+		cantReponer = cantReponer + producto.getCantidadAReponer();
+		OrdenFabricaDTO orden = fabricarOrdenFabricacion(producto.getIdMaestroProducto(), fechaRequerido, cantReponer, codLote, idSucursal);
 		//DAOSQLFactory a = new DAOSQLFactory();
 		//a.createOrdenFabricaDAO().insert(orden);
 		insertarOrdenFabricacion(orden);
 	}
 	
-	private static OrdenFabricaDTO fabricarOrdenFabricacion(int idProducto, String fechaRequerido, int getCantidadAReponer, String codLote, int idSucursal) {
+	private static OrdenFabricaDTO fabricarOrdenFabricacion(int idProducto, String fechaRequerido, Double getCantidadAReponer, String codLote, int idSucursal) {
 		OrdenFabricaDTO orden = new OrdenFabricaDTO(0,idProducto, fechaRequerido, getCantidadAReponer, codLote, idSucursal);
 		return orden;
 	}

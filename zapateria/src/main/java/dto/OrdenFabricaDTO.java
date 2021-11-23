@@ -4,17 +4,17 @@ public class OrdenFabricaDTO {
 	private int IdOrdenFabrica;
 	private int IdProd;
 	private String FechaRequerido;
-	private int Cantidad;
+	private Double Cantidad;
 	private String CodigoLote;
 	private int IdSucursal;
 
-	public OrdenFabricaDTO(int idOrdenFabrica, int idProd, String fechaRequerido, int cantidad, String codigoLote,
+	public OrdenFabricaDTO(int idOrdenFabrica, int idProd, String fechaRequerido, Double getCantidadAReponer, String codigoLote,
 			int idSucursal) {
 		super();
 		IdOrdenFabrica = idOrdenFabrica;
 		IdProd = idProd;
 		FechaRequerido = fechaRequerido;
-		Cantidad = cantidad;
+		Cantidad = getCantidadAReponer;
 		CodigoLote = codigoLote;
 		IdSucursal = idSucursal;
 	}
@@ -43,11 +43,11 @@ public class OrdenFabricaDTO {
 		FechaRequerido = fechaRequerido;
 	}
 
-	public int getCantidad() {
+	public Double getCantidad() {
 		return Cantidad;
 	}
 
-	public void setCantidad(int cantidad) {
+	public void setCantidad(Double cantidad) {
 		Cantidad = cantidad;
 	}
 

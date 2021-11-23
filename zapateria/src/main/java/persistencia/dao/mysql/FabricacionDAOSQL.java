@@ -271,7 +271,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
 		int IdProd = resultSet.getInt("IdProd");
 		String FechaRequerido = resultSet.getString("FechaRequerido");
-		int Cantidad = resultSet.getInt("Cantidad");
+		Double Cantidad = resultSet.getDouble("Cantidad");
 		String CodigoLote = resultSet.getString("CodigoLote");
 		int IdSucursal = resultSet.getInt("IdSucursal");
 		return new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
@@ -477,7 +477,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			int IdOrdenFabrica;
 			int IdProd;
 			String FechaRequerido;
-			int Cantidad;
+			Double Cantidad;
 			String CodigoLote;
 			int IdSucursal;
 			if (resultSet.next()) {
@@ -485,7 +485,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 				IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
 				IdProd = resultSet.getInt("IdProd");
 				FechaRequerido = resultSet.getString("FechaRequerido");
-				Cantidad = resultSet.getInt("Cantidad");
+				Cantidad = resultSet.getDouble("Cantidad");
 				CodigoLote = resultSet.getString("CodigoLote");
 				System.out.println(CodigoLote);
 				IdSucursal = resultSet.getInt("IdSucursal");
@@ -516,7 +516,7 @@ public class FabricacionDAOSQL implements FabricacionDAO{
 			statement.setInt(1, fabri.getIdSucursal());
 			statement.setInt(2, fabri.getIdProd());
 			statement.setString(3, fabri.getCodigoLote());
-			statement.setInt(4, fabri.getCantidad());
+			statement.setDouble(4, fabri.getCantidad());
 			if(statement.executeUpdate() > 0)
 			{
 				conexion.commit();

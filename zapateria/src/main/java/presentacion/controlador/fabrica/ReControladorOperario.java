@@ -876,13 +876,13 @@ public class ReControladorOperario implements ActionListener {
 		ventanaElegirReceta.getModelOrdenes().setColumnIdentifiers(ventanaElegirReceta.getNombreColumnas());
 	}
 	
-	private boolean existeMaterialSuficiente(RecetaDTO receta, int cantidadDeseada) {
+	private boolean existeMaterialSuficiente(RecetaDTO receta, Double double1) {
 		boolean ret = true;
 		List<PasoDeRecetaDTO> pasos = modeloFabricacion.readAllPasosFromOneReceta(receta.getIdReceta());
 		for(PasoDeRecetaDTO p: pasos) {
 			int x = 0;
 			for(MaestroProductoDTO mp: p.getPasosDTO().getMateriales()) {
-				ret = ret && hayStockSuficienteDeUnMaterial(mp.getIdMaestroProducto(), p.getPasosDTO().getCantidadUsada().get(x)*cantidadDeseada);
+				ret = ret && hayStockSuficienteDeUnMaterial(mp.getIdMaestroProducto(), p.getPasosDTO().getCantidadUsada().get(x)*double1);
 				x++;
 			}
 		}

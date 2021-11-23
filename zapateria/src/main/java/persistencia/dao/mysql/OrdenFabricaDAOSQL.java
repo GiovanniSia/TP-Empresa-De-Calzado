@@ -37,7 +37,7 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 			//statement.setString(3, "1987-01-01");
 			//+getYear()+"-"+getMonth()+"-"+getDay()
 			
-			statement.setInt(3, ordenAInsertar.getCantidad());
+			statement.setDouble(3, ordenAInsertar.getCantidad());
 			statement.setString(4, ordenAInsertar.getCodigoLote());
 			statement.setInt(5, ordenAInsertar.getIdSucursal());
 			if (statement.executeUpdate() > 0) {
@@ -77,7 +77,7 @@ public class OrdenFabricaDAOSQL implements OrdenFabricaDAO{
 		int IdOrdenFabrica = resultSet.getInt("IdOrdenFabrica");
 		int IdProd = resultSet.getInt("IdProd");
 		String FechaRequerido = resultSet.getString("FechaRequerido");
-		int Cantidad = resultSet.getInt("Cantidad");
+		Double Cantidad = resultSet.getDouble("Cantidad");
 		String CodigoLote = resultSet.getString("CodigoLote");
 		int IdSucursal = resultSet.getInt("IdSucursal");
 		return new OrdenFabricaDTO(IdOrdenFabrica,IdProd,FechaRequerido,Cantidad,CodigoLote,IdSucursal);
