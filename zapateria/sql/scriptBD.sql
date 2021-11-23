@@ -509,18 +509,26 @@ INSERT INTO medioPago values ("MPA","Mercado Pago",1);
 INSERT INTO medioPago values ("CC","Cuenta Corriente",1);
 INSERT INTO medioPago values ("PV","Portal Virtual",1);
 
-INSERT INTO maestroProductos values(1,"ZapatillaNike"    ,"PT","S",100 ,7000 ,2020,1500,2,"M",200,"Activo",36,100);
-INSERT INTO maestroProductos values(2,"ZapatillaPuma"    ,"PT","N",200 ,8000 ,4000,2   ,4,"XL",200,"Activo",10,100);
-INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  ,"PT","S",100 ,1050 ,2000,5   ,1,"XXL",300,"Activo",200,100);
-INSERT INTO maestroProductos values(4,"ZapatillaReebok"  ,"PT","S",1000,5000 ,6000,3   ,2,"N",300,"Activo",1000,1);
-INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  ,"PT","S",100 ,5050 ,2000,5   ,1,"M",300,"Activo",200,100);
-INSERT INTO maestroProductos values(6,"ZapatillaAdidas"  ,"PT","S",100 ,8050 ,1100,5   ,2,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(1,"Zapatilla Argento P1"    ,"PT","S",100 ,7000 ,2020,1500,2,"M",200,"Activo",36,100);
+INSERT INTO maestroProductos values(2,"ZapatillaPuma"    		,"PT","N",200 ,8000 ,4000,2   ,4,"XL",200,"Activo",10,100);
+INSERT INTO maestroProductos values(3,"ZapatillaAdidas"  		,"PT","N",100 ,1050 ,2000,5   ,1,"XXL",300,"Activo",200,100);
+INSERT INTO maestroProductos values(4,"ZapatillaReebok"  		,"PT","N",1000,5000 ,6000,3   ,2,"N",300,"Activo",1000,1);
+INSERT INTO maestroProductos values(5,"ZapatillaAdidas"  		,"PT","N",100 ,5050 ,2000,5   ,1,"M",300,"Activo",200,100);
+INSERT INTO maestroProductos values(6,"Zapatilla ungro"  		,"PT","N",100 ,8050 ,1100,5   ,2,"XL",300,"Activo",200,100);
 
-INSERT INTO maestroProductos values(7,"Pegamento"  ,"MP","N",100 ,1050,2000,5  ,1,"XXL","frasco x 4Lts","Activo",200,100);
-INSERT INTO maestroProductos values(8,"Goma espuma"  ,"MP","N",1000,5000,6000,3  ,2,"N","5mm Rollo 1 X 20 Mts","Activo",1000,1);
-INSERT INTO maestroProductos values(9,"Hilo 100 mts"  ,"MP","N",100 ,5050,2000,5  ,1,"M","1 bobina x 100 mts","Activo",200,100);
+INSERT INTO maestroProductos values(7,"Pegamento industrial M1"	,"MP","N",100 ,1050,2000,5  ,1,"XXL","Litro","Activo",200,100);
+INSERT INTO maestroProductos values(8,"Goma espuma","MP","N",1000,5000,6000,3  ,2,"N","Placa 1x1mts","Activo",1000,1);
+INSERT INTO maestroProductos values(9,"Hilo de 0.4 cm","MP","N",100 ,5050,2000,5  ,1,"M","Rollo de 1 mts","Activo",200,100);
 
-INSERT INTO maestroProductos values(10,"ZapatillaXXX"     ,"PT","N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
+INSERT INTO maestroProductos values(10,"ZapatillaXXX","PT"		,"N",100 ,8050 ,1100 ,200,1,"M",300,"Activo",300,10);
+
+INSERT INTO maestroProductos values(11,"Pegamento industrial Ref","MP","N",100 ,1050,2000,5  ,1,"XXL","Litro","Activo",200,100);
+INSERT INTO maestroProductos values(12,"Cordones color rojo"	,"MP","N",100 ,1050,2000,5  ,1,"-","Unidad","Activo",200,100);
+INSERT INTO maestroProductos values(13,"Cordones color blanco"	,"MP","N",100 ,1050,2000,5  ,1,"-","Unidad","Activo",200,100);
+INSERT INTO maestroProductos values(14,"Silical gel"			,"MP","N",100 ,1050,2000,5  ,1,"-","Bolsita gel-silice","Activo",200,100);
+INSERT INTO maestroProductos values(15,"Caja de zapatilla Argento","MP","N",100 ,1050,2000,5  ,1,"-","1x0.50 mts","Activo",200,100);
+INSERT INTO maestroProductos values(16,"Ojal"					,"MP","N",100 ,1050,2000,5  ,1,"-","5 mm","Activo",200,100);
+INSERT INTO maestroProductos values(17,"Plantilla talle M"		,"MP","N",100 ,1050,2000,5  ,1,"M","Par","Activo",200,100);
 
 insert into proveedor values(1,"Naik","zapateriaargento198@gmail.com",20000);
 insert into proveedor values(2,"Adida","zapateriaargento198@gmail.com",3000);
@@ -540,6 +548,14 @@ insert into stock values(10,1,9,'LOTECREADOAMANO4',500);
 
 INSERT INTO stock VALUES(11,2,10,"ASDF11111",1000);
 
+insert into stock values(12,1,11,'LOTECREADOAMANO5',1500);
+insert into stock values(13,1,12,'LOTECREADOAMANO6',2500);
+insert into stock values(14,1,13,'LOTECREADOAMANO7',3500);
+insert into stock values(15,1,14,'LOTECREADOAMANO8',4000);
+insert into stock values(16,1,15,'LOTECREADOAMANO9',3000);
+insert into stock values(17,1,16,'LOTECREADOAMANO0',2500);
+insert into stock values(18,1,17,'LOTECREADOAMANO1',2500);
+
 insert into clientes values(1, "Consumidor Final", "","00000000","",0,0,"Minorista","E","Activo","0","0","","","","0");
 insert into clientes values(2, "Juan", "Lopez","33233232129","zapateriaargento198@gmail.com",100,100,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 insert into clientes values(3, "Adriana", "Aula","22233282123","zapateriaargento198@gmail.com",200,200,"Mayorista","E","Activo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
@@ -549,7 +565,7 @@ insert into clientes values(6, "Delta", "Aula","93223232123","zapateriaargento19
 insert into clientes values(7, "Puda", "Pula","23333232124","zapateriaargento198@gmail.com",200,100,"Mayorista","E","Inactivo","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 insert into clientes values(8, "Vicentino", "Reboredo","53333732123","zapateriaargento198@gmail.com",200,100,"Mayorista","RI","Moroso","1002","201","Argentina","Buenos Aires","Bella Vista","1661");
 
-insert into recetas values(1,1,'Receta eficiente','Activo');
+insert into recetas values(1,1,'Receta principal','Activo');
 
 insert into paso values(1,"Cortado","Activo");
 insert into paso values(2,"Aparado","Activo");
@@ -569,63 +585,32 @@ insert into materialesDePaso values(1,7,10,5);
 insert into materialesDePaso values(2,8,6,1);
 insert into materialesDePaso values(3,9,7,5);
 
-insert into recetas values(2,1,'Receta Dupli','Activo');
+insert into recetas values(2,1,'Receta secundaria','Activo');
 insert into pasosReceta values(7,2,1,1);
 insert into pasosReceta values(8,2,2,4);
 insert into pasosReceta values(9,2,3,6);
 insert into materialesDePaso values(4,9,7,9);
 insert into stock values(7,1,9,'LOTECREADOAMANO',70);
 
-insert into recetas values(3,1,'Receta Auxiliar','Activo');
-insert into pasosReceta values(10,3,1,2);
-insert into pasosReceta values(11,3,2,5);
-
-insert into recetas values(4,2,'Receta sin material','Activo');
-insert into pasosReceta values(12,4,1,1);
-insert into pasosReceta values(13,4,2,2);
-insert into ordenfabrica values(1,1,'2011-02-5',20,'L493132',3);
-
-insert into recetas values(5,3,'Receta sin material','Activo');
-insert into pasosReceta values(14,5,1,1);
-insert into pasosReceta values(15,5,2,2);
-
-insert into recetas values(6,4,'Receta sin material','Activo');
-insert into pasosReceta values(16,6,1,1);
-insert into pasosReceta values(17,6,2,2);
-
-insert into recetas values(7,5,'Receta sin material','Activo');
-insert into pasosReceta values(18,7,1,1);
-insert into pasosReceta values(19,7,2,2);
-
-insert into recetas values(8,6,'Receta sin material','Activo');
-insert into pasosReceta values(20,8,1,1);
-insert into pasosReceta values(21,8,2,2);
-/*
-insert into ordenfabrica values(1,1,'2020-03-20',36,'L123123',1);
-insert into ordenfabrica values(2,1,'2019-06-19',10,'L213132',2);
-insert into ordenfabrica values(3,2,'2021-03-20',7,'L393132',2);
-insert into ordenfabrica values(4,2,'2018-10-10',20,'L493132',3);
-insert into ordenfabrica values(5,1,'2011-02-5',20,'L493132',3);
-*/
-insert into sucursales values(1, '14513123','Juan doming.','596','BSAS','TORTGUITAS','ARG','1234','La fabrica',"0000");
-INSERT INTO sucursales VALUES(2, "72342323", "JOSE HERNANDEZ","123","BSAS","TORTGUITAS","ARG","1234","Polvorines","1234");
-INSERT INTO sucursales VALUES(3, "62348323", "Peron","1434","BSAS","TORTGUITAS","ARG","1224","Los hermanos","0003");
-insert into sucursales values(4,'12243423','Ituzaingo','2323','BSAS','TORTGUITAS','ARG','123','grand borg',"0006");
-insert into sucursales values(5,'22342623','Puente alcorta','232','BSAS','TORTGUITAS','ARG','123','Don torcuachino',"0808");
-insert into sucursales values(6,'42342323','Ruta 8','1232','BSAS','TORTGUITAS','ARG','123','El tata',"3132");
+insert into sucursales values(1,'14513123','Uruguay','596','Buenos Aires','Tortuguitas','Argentina','1234','La fabrica',"0000");
+INSERT INTO sucursales VALUES(2,"72342323","Jose Hernandez","123","Buenos Aires","Alberti","Argentina","1234","El mas grande","1234");
+INSERT INTO sucursales VALUES(3,"62348323","Avenida Peron","1434","Buenos Aires","Campana","Argentina","1224","Los hermanos","0003");
+insert into sucursales values(4,'12243423','Ituzaingo','2323','Buenos Aires','Carapachay','Argentina','123','Tenis voladoras',"0006");
+insert into sucursales values(5,'22342623','Manuel de Pinazo','232','Buenos Aires','Castelli','Argentina','123','El querido',"0808");
+insert into sucursales values(6,'42342323','Ruta 8','1232','Buenos Aires','Lincoln','Argentina','123','Lincoln',"3132");
 
 insert into ingresos values (1,2,'2021-10-18','12:20','VT',1,'A','aaaa','EFE',100,1,'',1000);
 insert into ingresos values (2,3,'2021-10-17','12:20','VT',2,'A','aaaa','EFE',150,1,'',600);
 insert into ingresos values (3,4,'2021-10-16','12:20','VT',2,'A','aaaa','USD',100,3,'',300);
 
 insert into factura values (1,0,1,'nombre cliente',1,'nombre cajero',1,'PEREZ PEPE','2021-10-18','B','1234B00000001',2,00,1000,1000,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-18','B','0003B00000001',3,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
-insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-18','B','0006B00000001',4,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (2,0,2,'nombre cliente',1,'nombre cajero',2,'JUAN VENDEDOR','2021-10-17','B','0003B00000001',3,00,600,600,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
+insert into factura values (3,0,3,'nombre cliente',1,'nombre cajero',3,'JOAQUIN ADOLFO','2021-10-16','B','0006B00000001',4,00,300,300,'Mayorista','CALLE FALSA','1234','Argentina','BSAS','Tortuguitas','1667','cuil','Correo electronico','CF',0);
 
 INSERT INTO empleados VALUES(1,"123","Pepe","Perez","pepe@gmail.com","Cajero",aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (2, 512,'Juan','Vera','juan@gmail.com','Vendedor',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (3, 523,'Joaquin','Adolfo','joaquin@gmail.com','Vendedor',aes_encrypt('1234','AES'));
-insert into zapateria.empleados values (4, 153,'Fernando','Lel','fer@gmail.com','Vendedor',aes_encrypt('1234','AES'));
+insert into zapateria.empleados values (4, 153,'Fernando','Carpincho','fer@gmail.com','Vendedor',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (5, 153541,'Ivo','Robotnik','ivo@gmail.com','Vendedor',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (6, 4233,'Camila','Alfano','camila@gmail.com','Supervisor',aes_encrypt('1234','AES'));
 insert into zapateria.empleados values (7, 1773,'Josselyn','Llanos','josselyn@gmail.com','Supervisor de Fabrica',aes_encrypt('1234','AES'));
