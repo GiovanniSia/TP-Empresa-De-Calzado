@@ -5,13 +5,11 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="IdSucursal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *, ingr.Hora as horita FROM zapateria.ingresos as ingr, zapateria.factura as factu 
-WHERE ingr.IdSucursal = '$P!{IdSucursal}' AND (ingr.Fecha = 
-(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
-AND (ingr.nroFactura = factu.NroFacturaCompleta))
-OR (ingr.Fecha = 
-(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}') 
-AND (ingr.Tipo = 'SI'))]]>
+		<![CDATA[SELECT *, ingr.Hora as horita 
+FROM zapateria.ingresos as ingr LEFT OUTER JOIN zapateria.factura as factu on 
+(ingr.nroFactura = factu.NroFacturaCompleta) WHERE 
+ingr.Fecha = 
+(SELECT MAX(Fecha) FROM zapateria.caja as caja2 WHERE caja2.IdSucursal = '$P!{IdSucursal}')]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="Id"/>
