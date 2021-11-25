@@ -52,6 +52,9 @@ public class generarOrdenesFabricacion {
 		String fechaRequerido = crearFechaRequerido(producto);
 		String codLote = crearCodigoLote(producto);
 		Double cantReponer = producto.getPuntoRepositorio()-contarStockDeUnProductoEnUnaSucursal(idSucursal, producto.getIdMaestroProducto());
+		if(cantReponer <= 0.0) {
+			cantReponer = 0.0;
+		}
 		cantReponer = cantReponer + producto.getCantidadAReponer();
 		OrdenFabricaDTO orden = fabricarOrdenFabricacion(producto.getIdMaestroProducto(), fechaRequerido, cantReponer, codLote, idSucursal);
 		//DAOSQLFactory a = new DAOSQLFactory();

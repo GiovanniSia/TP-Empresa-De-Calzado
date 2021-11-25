@@ -505,6 +505,7 @@ public class ControladorGestionarProductos {
 
 	public void generarPedido(MaestroProductoDTO productoSeleccionado, int cantidad) {
 		productoSeleccionado.setCantidadAReponer(cantidad);
+		productoSeleccionado.setPuntoRepositorio(0);
 		generarOrdenesFabricacion.crearOrdenFabricacion(idSucursal, productoSeleccionado);
 		mostrarMensajeEmergente(
 				"Orden generada exitosamente para el producto " + productoSeleccionado.getDescripcion());
